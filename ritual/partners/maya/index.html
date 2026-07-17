@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya &amp; the Table, a Ritual creator store concept by Nathan J. Song</title>
+<style>
+  :root{
+    --bg:#FAF3E7; --ink:#3B2E25; --accent:#C96F4A; --accent-deep:#A85535; --accent-ink:#fff;
+    --card:#fff; --line:#eadfcb; --muted:#8a7a6a; --soft:#F3E6D2; --gold:#E9B98A;
+    --ryellow:#FFD601;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  button{font:inherit;cursor:pointer}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  .concept-bar{background:#141414;color:#f4f1e8;font-size:11.5px;padding:7px 14px;text-align:center;line-height:1.5}
+  .concept-bar strong{color:var(--ryellow)}
+  .announce{background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;text-align:center;padding:8px 14px}
+  .announce b{background:#fff;color:var(--accent);border-radius:6px;padding:1px 7px}
+
+  /* header */
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,243,231,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .hd{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 20px}
+  .logo{font-weight:800;font-size:17px;letter-spacing:-.01em;cursor:pointer;white-space:nowrap}
+  .logo span{color:var(--accent)}
+  .logo small{display:block;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  nav.main{display:flex;gap:4px;margin-left:6px}
+  nav.main button{border:0;background:transparent;font-weight:700;font-size:13.5px;color:var(--muted);padding:8px 12px;border-radius:999px}
+  nav.main button:hover{color:var(--ink);background:var(--soft)}
+  nav.main button.on{color:#fff;background:var(--ink)}
+  .hd .cartbtn{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:800;font-size:13px}
+  .hd .cartbtn .n{background:var(--accent);color:#fff;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:11.5px;padding:0 6px}
+  @media(max-width:640px){nav.main{display:none}.mobile-nav{display:flex !important}}
+  .mobile-nav{display:none;gap:4px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none}
+  .mobile-nav::-webkit-scrollbar{display:none}
+  .mobile-nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;font-weight:700;font-size:12.5px;color:var(--muted);padding:7px 13px;border-radius:999px}
+  .mobile-nav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+  .view{display:none}
+  .view.on{display:block}
+
+  /* ============ HOME ============ */
+  .hero{background:linear-gradient(160deg,var(--gold) 0%,var(--accent) 82%);color:#fff;text-align:center;padding:74px 20px 66px}
+  .hero .kick{font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;opacity:.92;margin-bottom:13px}
+  .hero h1{font-size:clamp(32px,5.4vw,52px);line-height:1.08;font-weight:800;max-width:16ch;margin:0 auto 16px}
+  .hero p{max-width:52ch;margin:0 auto 24px;font-size:17px;opacity:.96}
+  .hero .cta{display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--accent-deep);border:0;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;box-shadow:0 10px 26px rgba(60,25,5,.25)}
+  .hero .cta:hover{transform:translateY(-1px)}
+  .codechip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1.5px dashed rgba(255,255,255,.6);border-radius:999px;padding:8px 16px;font-weight:800;font-size:13px;margin-top:16px}
+  .codechip b{background:#fff;color:var(--accent);border-radius:6px;padding:2px 8px}
+
+  .trust{border-bottom:1px solid var(--line);background:#fff}
+  .trust .in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+  @media(min-width:700px){.trust .in{grid-template-columns:repeat(4,1fr)}}
+  .trust .t{background:#fff;padding:14px 10px;text-align:center;font-size:12px;font-weight:700;color:var(--muted)}
+  .trust .t b{display:block;color:var(--ink);font-size:13px}
+
+  section.block{padding:52px 0 10px}
+  .bhead{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:20px}
+  .bhead h2{font-size:26px;font-weight:800;letter-spacing:-.01em}
+  .bhead a{font-size:13px;font-weight:700;color:var(--accent-deep);text-decoration:underline;cursor:pointer}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;padding-bottom:30px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;cursor:pointer}
+  .pcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(80,40,10,.13)}
+  .pimg{aspect-ratio:1/.8;display:grid;place-items:center;background:var(--soft);color:var(--accent)}
+  .pimg svg{width:72px;height:96px}
+  .pbody{padding:14px 15px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .ptag{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .pname{font-size:15.5px;font-weight:800;line-height:1.25}
+  .pwhy{font-size:12.5px;color:var(--muted);line-height:1.45;flex:1}
+  .prices{font-size:12.5px;color:var(--muted)}
+  .prices b{font-size:16px;color:var(--ink)}
+  .pcard .go{border:0;background:var(--soft);color:var(--accent-deep);font-weight:800;font-size:12.5px;padding:10px;border-radius:999px}
+  .pcard .go:hover{background:var(--accent);color:#fff}
+
+  /* story blocks (Broadcast image-with-text rhythm) */
+  .story{display:grid;grid-template-columns:1fr;gap:22px;align-items:center;margin:14px 0 36px}
+  @media(min-width:760px){.story{grid-template-columns:1fr 1fr;gap:40px}.story.flip .st-art{order:2}}
+  .st-art{border-radius:20px;min-height:280px;display:grid;place-items:center;background:linear-gradient(150deg,var(--soft),#fff);border:1px solid var(--line)}
+  .st-art svg{width:150px;height:190px;color:var(--accent)}
+  .st-txt .kick{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:8px}
+  .st-txt h3{font-size:23px;font-weight:800;line-height:1.2;margin-bottom:10px}
+  .st-txt p{font-size:14.5px;color:var(--muted);margin-bottom:10px}
+
+  /* routine timeline */
+  .routine{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:50px 0 40px;margin-top:20px}
+  .routine h2{font-size:26px;font-weight:800;margin-bottom:6px}
+  .routine .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .rsteps{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.rsteps{grid-template-columns:1fr 1fr 1fr}}
+  .rstep{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--bg)}
+  .rstep .when{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep)}
+  .rstep h4{font-size:16px;font-weight:800;margin:6px 0 6px}
+  .rstep p{font-size:13px;color:var(--muted);margin-bottom:10px}
+  .rstep .rlink{font-size:12.5px;font-weight:800;color:var(--accent-deep);text-decoration:underline;cursor:pointer}
+
+  /* testimonial strip */
+  .tstrip{padding:50px 0 26px}
+  .tgrid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.tgrid{grid-template-columns:1fr 1fr 1fr}}
+  .tcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px 18px}
+  .tcard p{font-size:13.5px;line-height:1.55;margin-bottom:9px}
+  .tcard b{font-size:12px;color:var(--muted)}
+  .stars{color:var(--accent);letter-spacing:2px;font-size:13px;margin-bottom:7px}
+
+  /* economics strip */
+  .econ{padding:44px 0 56px}
+  .econ h2{font-size:24px;font-weight:800;margin-bottom:16px}
+  .econ-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:640px){.econ-grid{grid-template-columns:1fr 1fr 1fr}}
+  .etile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px 18px}
+  .etile .big{font-size:26px;font-weight:800;color:var(--accent)}
+  .etile b{display:block;font-size:14.5px;margin:4px 0 4px}
+  .etile p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+  .newsletter{background:var(--ink);color:#f6efe3;padding:46px 20px;text-align:center}
+  .newsletter h3{font-size:22px;font-weight:800;margin-bottom:8px}
+  .newsletter p{font-size:13.5px;color:#cbbfa9;max-width:46ch;margin:0 auto 18px}
+  .nl-row{display:flex;gap:8px;max-width:420px;margin:0 auto}
+  .nl-row input{flex:1;font:inherit;font-size:14px;padding:13px 15px;border-radius:999px;border:0}
+  .nl-row button{border:0;background:var(--accent);color:#fff;font-weight:800;padding:0 22px;border-radius:999px}
+
+  /* ============ SHOP ============ */
+  .shophero{background:#fff;border-bottom:1px solid var(--line);padding:38px 0 0}
+  .shophero h1{font-size:30px;font-weight:800;margin-bottom:4px}
+  .shophero p{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:13px;color:var(--muted);padding:8px 15px;border-radius:999px}
+  .tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .shopgrid{padding:26px 0 40px}
+
+  /* ============ PDP ============ */
+  .crumb{font-size:12px;color:var(--muted);padding:18px 0 0}
+  .crumb a{text-decoration:underline;cursor:pointer}
+  .pdp{display:grid;grid-template-columns:1fr;gap:26px;padding:16px 0 30px}
+  @media(min-width:820px){.pdp{grid-template-columns:1.05fr 1fr;gap:44px}}
+  .gal{position:sticky;top:96px;align-self:start}
+  .gal-main{background:var(--soft);border:1px solid var(--line);border-radius:20px;aspect-ratio:1/.92;display:grid;place-items:center;color:var(--accent)}
+  .gal-main svg{width:150px;height:200px}
+  .gal-badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .gbadge{font-size:11px;font-weight:800;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted)}
+  .pd-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep)}
+  .pd h1{font-size:28px;font-weight:800;line-height:1.15;margin:6px 0 8px}
+  .pd .maya{background:var(--soft);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:11px 14px;font-size:13.5px;margin:12px 0 16px}
+  .pd .maya b{color:var(--accent-deep)}
+  .benefits{margin:0 0 18px}
+  .benefits li{list-style:none;font-size:14px;margin:7px 0;padding-left:26px;position:relative}
+  .benefits li::before{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:5px;background:var(--accent);opacity:.16}
+  .benefits li::after{content:"";position:absolute;left:4.5px;top:8px;width:7px;height:5px;border-left:2.2px solid var(--accent-deep);border-bottom:2.2px solid var(--accent-deep);transform:rotate(-45deg)}
+  .buybox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+  .opt{display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;cursor:pointer}
+  .opt.on{border-color:var(--accent);background:var(--soft)}
+  .opt .ol b{font-size:14px;display:block}
+  .opt .ol span{font-size:11.5px;color:var(--muted)}
+  .opt .op{font-weight:800;font-size:16px}
+  .opt .op small{display:block;font-weight:600;font-size:10.5px;color:var(--muted);text-align:right}
+  .qtyrow{display:flex;align-items:center;gap:12px;margin:12px 0}
+  .qtyrow button{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:800;font-size:16px}
+  .qtyrow span{font-weight:800;min-width:20px;text-align:center}
+  .atc{width:100%;border:0;background:var(--accent);color:#fff;font-weight:800;font-size:15.5px;padding:15px;border-radius:999px}
+  .atc:hover{background:var(--accent-deep)}
+  .buybox .note{font-size:11px;color:var(--muted);text-align:center;margin-top:9px}
+  .accs{margin:20px 0}
+  .acc{border-bottom:1px solid var(--line)}
+  .acc button.ah{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;padding:14px 2px;font-weight:800;font-size:14px;color:var(--ink)}
+  .acc .ab{display:none;font-size:13.5px;color:var(--muted);padding:0 2px 14px;line-height:1.6}
+  .acc.open .ab{display:block}
+  .acc .car{transition:transform .2s;font-size:12px;color:var(--muted)}
+  .acc.open .car{transform:rotate(90deg)}
+  .related{padding:10px 0 50px}
+  .related h3{font-size:20px;font-weight:800;margin-bottom:14px}
+
+  /* sticky mobile ATC */
+  .satc{position:fixed;left:0;right:0;bottom:0;z-index:70;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(60,30,5,.12);padding:10px 14px;display:none;align-items:center;gap:12px}
+  .satc.show{display:flex}
+  .satc .sn{flex:1;min-width:0}
+  .satc .sn b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .satc .sn span{font-size:11.5px;color:var(--muted)}
+  .satc button{border:0;background:var(--accent);color:#fff;font-weight:800;font-size:13.5px;padding:12px 18px;border-radius:999px;white-space:nowrap}
+
+  /* ============ cart drawer + checkout (shared pattern) ============ */
+  .overlay{position:fixed;inset:0;background:rgba(30,20,10,.45);z-index:85;opacity:0;visibility:hidden;transition:.25s}
+  .overlay.show{opacity:1;visibility:visible}
+  .drawer{position:fixed;inset:0 0 0 auto;width:min(430px,100vw);z-index:90;background:#fff;box-shadow:-18px 0 50px rgba(40,20,5,.3);transform:translateX(102%);transition:transform .3s ease;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .dr-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .dr-head b{font-size:17px}
+  .dr-x{border:0;background:transparent;color:var(--muted);font-size:20px;font-weight:800}
+  .dr-code{margin:14px 18px 0;display:flex;align-items:center;gap:9px;background:var(--soft);border:1.5px dashed var(--accent);border-radius:10px;padding:10px 13px;font-size:13px;font-weight:700}
+  .dr-code b{background:var(--accent);color:#fff;border-radius:6px;padding:2px 8px;font-size:12px}
+  .ship-meter{margin:10px 18px 0;font-size:11.5px;color:var(--muted)}
+  .ship-meter .bar{height:7px;background:var(--soft);border-radius:999px;overflow:hidden;margin-top:5px}
+  .ship-meter .bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+  .dr-items{flex:1;overflow:auto;padding:10px 18px}
+  .dr-empty{color:var(--muted);font-size:14px;text-align:center;padding:40px 10px}
+  .li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .li-img{width:52px;height:64px;border-radius:10px;background:var(--soft);display:grid;place-items:center;flex:0 0 auto;color:var(--accent)}
+  .li-img svg{width:30px;height:42px}
+  .li-main{flex:1;min-width:0}
+  .li-name{font-size:13.5px;font-weight:800;line-height:1.25}
+  .li-mode{display:inline-flex;gap:5px;margin-top:6px}
+  .li-mode button{border:1px solid var(--line);background:#fff;color:var(--muted);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .li-mode button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .li-qty{display:inline-flex;align-items:center;gap:8px;margin-top:7px}
+  .li-qty button{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:#fff;font-weight:800;line-height:1}
+  .li-qty span{font-size:13px;font-weight:700;min-width:14px;text-align:center}
+  .li-price{text-align:right;font-size:13.5px;font-weight:800;white-space:nowrap}
+  .li-price small{display:block;font-weight:600;color:var(--muted);font-size:10.5px}
+  .li-rm{border:0;background:transparent;color:var(--muted);font-size:11px;text-decoration:underline;margin-top:6px;padding:0}
+  .earnbox{margin:12px 18px 0;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.5}
+  .dr-math{border-top:1px solid var(--line);padding:14px 18px;font-size:13.5px}
+  .dm-row{display:flex;justify-content:space-between;margin:4px 0;color:var(--muted)}
+  .dm-row.total{color:var(--ink);font-weight:800;font-size:16px;margin-top:8px}
+  .dm-row.disc{color:var(--accent-deep);font-weight:700}
+  .dr-checkout{margin:14px 18px 8px;border:0;background:var(--accent);color:#fff;font-weight:800;font-size:15px;padding:15px;border-radius:999px}
+  .dr-note{text-align:center;font-size:10.5px;color:var(--muted);margin:0 18px 14px}
+  .comodal{position:fixed;inset:0;z-index:95;display:none;place-items:center;padding:18px;background:rgba(30,20,10,.55)}
+  .comodal.show{display:grid}
+  .cobox{background:#fff;border-radius:18px;max-width:430px;width:100%;padding:26px 24px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+  .cobox h3{font-size:21px;font-weight:800;margin-bottom:6px}
+  .cobox .cosub{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .corow{display:flex;justify-content:space-between;font-size:13.5px;margin:5px 0;color:var(--muted)}
+  .corow.b{color:var(--ink);font-weight:800;font-size:15px}
+  .cohr{border:0;border-top:1px solid var(--line);margin:12px 0}
+  .coearn{background:var(--soft);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.55;margin-top:6px}
+  .cobox .close{width:100%;margin-top:16px;border:0;background:var(--ink);color:#fff;font-weight:800;padding:13px;border-radius:999px}
+  .codemo{font-size:10.5px;color:var(--muted);text-align:center;margin-top:10px}
+
+  /* Nathan */
+  .nwrap{position:fixed;left:16px;bottom:16px;z-index:80}
+  .nchip{width:52px;height:52px;border-radius:50%;background:var(--ryellow);border:3px solid #fff;box-shadow:0 8px 26px rgba(40,20,5,.3);display:grid;place-items:center;font-weight:900;font-size:19px;color:#141414;position:relative}
+  .nchip::after{content:"";position:absolute;top:-1px;right:-1px;width:12px;height:12px;border-radius:3px;background:#141414;border:2px solid #fff}
+  .nb{position:absolute;left:0;bottom:62px;width:min(360px,calc(100vw - 34px));background:rgba(20,18,14,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#f6f3ea;border:1px solid rgba(255,255,255,.08);border-radius:16px;border-bottom-left-radius:5px;padding:16px 17px 14px;font-size:13px;line-height:1.55;opacity:0;visibility:hidden;transform:translateY(6px);transition:.3s}
+  .nb.show{opacity:1;visibility:visible;transform:none}
+  .nb .who{font-weight:800;color:var(--ryellow);font-size:11.5px;margin-bottom:8px;display:flex;justify-content:space-between}
+  .nb .who span:last-child{cursor:pointer;color:#bbb}
+  .nb .tag{display:inline-block;background:rgba(255,214,1,.16);color:var(--ryellow);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:8px}
+  .nb .nav{display:flex;justify-content:space-between;margin-top:12px}
+  .nb .nav button{background:transparent;border:1px solid #555;color:#eee;border-radius:8px;padding:5px 12px;font-size:11.5px;font-weight:700}
+
+  footer.end{background:#141414;color:#8f8b80;padding:34px 20px 30px;margin-top:10px}
+  .fgrid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:20px;font-size:12.5px}
+  @media(min-width:700px){.fgrid{grid-template-columns:2fr 1fr 1fr}}
+  .fgrid h4{color:#f4f1e8;font-size:13px;margin-bottom:8px}
+  .fgrid a{display:block;color:#8f8b80;text-decoration:none;margin:4px 0;cursor:pointer}
+  .fgrid a:hover{color:#f4f1e8}
+  .legal{max-width:1080px;margin:22px auto 0;border-top:1px solid #2c2c2c;padding-top:14px;font-size:11px;line-height:1.6}
+  .legal b{color:var(--ryellow)}
+  .pimg img{width:84%;height:84%;object-fit:contain}
+  .gal-main img{width:76%;height:82%;object-fit:contain}
+  .li-img img{width:100%;height:100%;object-fit:contain}
+  .st-art img{max-width:82%;max-height:86%;object-fit:contain}
+  /* ============ shared mega-nav: Ritual creator network ============ */
+  .meganav{background:#142B6F;color:#fff}
+  .mn-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px 16px;padding:9px 20px;flex-wrap:wrap}
+  .mn-badge{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;letter-spacing:.01em}
+  .mn-badge b{font-weight:800}
+  .mn-badge .tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFD601;border:1px solid rgba(255,214,1,.5);border-radius:5px;padding:2px 6px}
+  .mn-note{font-size:10.5px;color:#9fb0e0;line-height:1.3}
+  .mn-switch{margin-left:auto;display:inline-flex;align-items:center;gap:9px}
+  .mn-lab{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#9fb0e0;white-space:nowrap}
+  .mn-seg{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px}
+  .mn-seg a{text-decoration:none;font-size:12.5px;font-weight:800;color:#cdd6f2;padding:6px 14px;border-radius:999px;white-space:nowrap;transition:.15s}
+  .mn-seg a:hover{color:#fff}
+  .mn-seg a.on{background:#FFD601;color:#142B6F}
+  @media(max-width:680px){.mn-note{display:none}.mn-switch{margin-left:0;width:100%}}
+
+  /* ============ image viewer: soft lightbox (Maya) ============ */
+  .pimg{position:relative}
+  .zoombtn{position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:rgba(255,253,248,.94);color:var(--ink);display:grid;place-items:center;cursor:zoom-in;opacity:0;transition:opacity .2s}
+  .pcard:hover .zoombtn{opacity:1}
+  @media(hover:none){.zoombtn{opacity:1}}
+  .st-art img.pmimg{cursor:zoom-in}
+  .gal-main{position:relative;cursor:zoom-in}
+  .gal-main::after{content:"Click to enlarge";position:absolute;right:12px;bottom:12px;font-size:10.5px;font-weight:700;color:var(--muted);background:rgba(255,253,248,.92);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+  .imgviewer{position:fixed;inset:0;z-index:220;display:none;align-items:center;justify-content:center;padding:26px;background:rgba(43,32,22,.55);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+  .imgviewer.show{display:flex;animation:mvFade .3s ease}
+  @keyframes mvFade{from{opacity:0}}
+  .imgv-card{position:relative;background:#FFFDF8;border-radius:24px;box-shadow:0 30px 90px rgba(40,24,8,.4);padding:20px 20px 16px;max-width:min(620px,92vw);width:100%;text-align:center;animation:mvPop .35s ease}
+  @keyframes mvPop{from{transform:scale(.95) translateY(12px);opacity:0}}
+  .imgv-img{background:var(--soft);border-radius:16px;aspect-ratio:1/.9;overflow:hidden;display:grid;place-items:center}
+  .imgv-img img{max-width:88%;max-height:88%;object-fit:contain}
+  .imgv-cap{font-weight:800;font-size:16px;margin-top:12px;color:var(--ink)}
+  .imgv-cap:empty{display:none}
+  .imgv-sub{font-size:11px;color:var(--muted);margin-top:3px}
+  .imgv-x{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1}
+
+  /* ============ annual prepay + subscription push ============ */
+  .opt .ol .chip{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:2.5px 8px;margin:2px 0 3px}
+  .chip.pop{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+  .chip.gift{background:var(--accent);color:#fff}
+  .opt .ol .ysave{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+  .li.gift{opacity:.98}
+  .li.gift .li-img{color:var(--accent)}
+  .li.gift .li-img svg{width:70%;height:70%}
+  .gift-tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-top:3px}
+  .li-price.free{font-weight:800;color:var(--accent)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bottle" viewBox="0 0 60 84">
+    <rect x="18" y="2" width="24" height="10" rx="2.5" fill="currentColor" opacity=".85"/>
+    <path d="M14 18 C14 13.6 17.6 12 22 12 L38 12 C42.4 12 46 13.6 46 18 L46 74 C46 79 42 82 37 82 L23 82 C18 82 14 79 14 74 Z" fill="currentColor" opacity=".28"/>
+    <path d="M14 30 L46 30 L46 66 L14 66 Z" fill="#fff" opacity=".82"/>
+    <circle cx="30" cy="48" r="9" fill="currentColor" opacity=".9"/>
+  </symbol>
+  <symbol id="trio" viewBox="0 0 160 200">
+    <use href="#bottle" x="0" y="40" width="70" height="98"/>
+    <use href="#bottle" x="50" y="10" width="86" height="120"/>
+    <use href="#bottle" x="100" y="50" width="62" height="86"/>
+  </symbol>
+  <symbol id="shaker" viewBox="0 0 60 84">
+    <rect x="26" y="0" width="8" height="6" rx="2" fill="currentColor"/>
+    <path d="M20 6 L40 6 L38 15 L22 15 Z" fill="currentColor" opacity=".9"/>
+    <path d="M16 15 L44 15 L40 78 C40 81.4 37 83.5 33 83.5 L27 83.5 C23 83.5 20 81.4 20 78 Z" fill="currentColor" opacity=".3"/>
+    <path d="M17.2 26 L42.8 26" stroke="currentColor" stroke-width="2.4" opacity=".55"/>
+    <circle cx="30" cy="50" r="7.5" fill="currentColor" opacity=".85"/>
+    <circle cx="30" cy="50" r="3.4" fill="#fff" opacity=".85"/>
+  </symbol>
+  <symbol id="samples" viewBox="0 0 84 60">
+    <g transform="rotate(-9 16 30)"><rect x="6" y="14" width="20" height="32" rx="3.5" fill="currentColor" opacity=".38"/><rect x="6" y="14" width="20" height="7" rx="3.5" fill="currentColor" opacity=".7"/></g>
+    <rect x="32" y="10" width="20" height="36" rx="3.5" fill="currentColor" opacity=".62"/><rect x="32" y="10" width="20" height="7" rx="3.5" fill="currentColor" opacity=".9"/>
+    <g transform="rotate(9 68 30)"><rect x="58" y="14" width="20" height="32" rx="3.5" fill="currentColor" opacity=".38"/><rect x="58" y="14" width="20" height="7" rx="3.5" fill="currentColor" opacity=".7"/></g>
+  </symbol>
+</svg>
+
+<div class="meganav"><div class="mn-in"><a class="mn-badge" href="/ritual/partners/" style="color:inherit;text-decoration:none"><svg class="mn-logo" viewBox="0 0 71 22" width="62" height="19" aria-hidden="true"><path fill="#fff" d="M28.9111 6.6709H31.4873V10.0801H28.9111V17.041C28.9712 17.9664 29.387 18.3994 30.2061 18.3994C31.0239 18.3993 31.6335 18.0398 32.1289 17.6445V21.1953C31.4055 21.7024 30.178 22.0699 28.8154 21.9893C27.9091 21.9352 26.8466 21.5471 26.1016 20.7822C25.4569 19.9782 25.1348 19.1801 25.1348 17.8252V10.0801H23.2041V6.6709H25.1348V1.77344H28.9111V6.6709ZM56.7275 6.50977C58.7147 6.50979 60.401 7.44226 61.0332 8.25391L61.3838 6.69043H64.4062V21.7227H61.3838L61.0332 20.1592C60.401 20.971 58.7454 21.9033 56.7275 21.9033C52.4218 21.9033 49.168 18.7162 49.168 14.207C49.168 9.69702 52.4218 6.50977 56.7275 6.50977ZM37.1885 14.4434C37.1885 17.0917 38.3737 18.2363 40.5449 18.2363C42.7148 18.2362 43.9307 16.6706 43.9307 14.4434V6.67285H47.667V21.7197H44.2812L43.9307 20.0049C43.2367 20.9083 41.8105 21.9004 39.7305 21.9004C35.9928 21.9003 33.4522 19.704 33.4521 15.7012V6.67285H37.1885V14.4434ZM6.74902 0.734375C12.5749 0.734413 15.8563 4.03766 15.8564 8.43066C15.8564 11.3671 14.3504 13.74 11.6572 15.083L16.0977 21.7217H11.5713L7.88574 16.127H3.77637V21.7217H0V0.734375H6.74902ZM21.458 21.7217H17.6826V6.6709H21.458V21.7217ZM70.1211 21.7217H66.3457V0.734375H70.1211V21.7217ZM56.8486 10.0693C54.556 10.0695 52.7891 11.9457 52.7891 14.207C52.7892 16.4677 54.5563 18.3426 56.8486 18.3428C59.086 18.3428 60.7987 16.4678 60.7988 14.207C60.7988 11.9456 59.086 10.0693 56.8486 10.0693ZM3.78125 12.2676H7.14062C9.81594 12.2676 11.8967 11.0718 11.8965 8.43066C11.8963 5.78895 9.8158 4.59377 7.14062 4.59375H3.78125V12.2676ZM19.5566 0C20.912 0 22.0107 1.11198 22.0107 2.4834C22.0107 3.85525 20.912 4.96777 19.5566 4.96777C18.2011 4.96774 17.1025 3.85523 17.1025 2.4834C17.1026 1.112 18.2009 3.69585e-05 19.5566 0Z"></path></svg> Partner Affiliate of <b>Ritual.com</b><span class="tag">concept</span></a><span class="mn-note">Independent concept by Nathan J. Song, not affiliated with Ritual</span><div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="/ritual.html">Funnel</a><a href="/ritual/partners/">Circle</a><a href="/ritual/partners/maya/" class="on">Maya</a><a href="/ritual/partners/lex/">Lex</a><a href="/ritual/partners/ava/">Ava</a></div></div></div></div>
+<div class="announce">Free shipping over $50 &nbsp;&#10022;&nbsp; Code <b>MAYA10</b> applied, 10% off everything &nbsp;&#10022;&nbsp; Prepay a year, get a free shaker + 2 shake samples</div>
+
+<header class="site">
+  <div class="hd">
+    <div class="logo" onclick="go('home')">Maya <span>&amp;</span> the Table<small>Partner Affiliate of Ritual.com</small></div>
+    <nav class="main">
+      <button data-v="home" class="on" onclick="go('home')">Home</button>
+      <button data-v="shop" onclick="go('shop')">Shop all</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">Our routine</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About Maya</button>
+    </nav>
+    <button class="cartbtn" onclick="openCart()">Cart <span class="n" id="cartN">0</span></button>
+  </div>
+  <div class="mobile-nav">
+    <button data-v="home" class="on" onclick="go('home')">Home</button>
+    <button data-v="shop" onclick="go('shop')">Shop all</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">Our routine</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About</button>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<main class="view on" id="view-home">
+  <div class="hero">
+    <p class="kick">Maya's Ritual shop</p>
+    <h1>The vitamins on our kitchen counter.</h1>
+    <p>You've seen them behind every breakfast video. This is my whole store: the exact formulas my family takes, traceable to the source, because I read labels for a living.</p>
+    <button class="cta" onclick="go('shop')">Shop our routine</button>
+    <br><span class="codechip">Your code <b>MAYA10</b> saves 10% on everything</span>
+  </div>
+
+  <div class="trust"><div class="in">
+    <div class="t"><b>Made Traceable</b>every ingredient, sourced in the open</div>
+    <div class="t"><b>Third-party tested</b>for purity and potency</div>
+    <div class="t"><b>Vegan friendly</b>algae omega-3, lichen D3</div>
+    <div class="t"><b>Cancel anytime</b>subscriptions without games</div>
+  </div></div>
+
+  <div class="wrap">
+    <section class="block">
+      <div class="bhead"><h2>The daily table</h2><a onclick="go('shop','daily')">Shop the collection</a></div>
+      <div class="grid" id="home-featured"></div>
+    </section>
+
+    <section class="block" id="about" style="padding-top:26px">
+      <div class="story">
+        <div class="st-art"><img class="pmimg staimg" alt="" src="https://ritual.com/cdn/shop/files/Magnesium_EFW_SYN_HYA.webp?v=1773686764" data-fn="Magnesium_EFW_SYN_HYA.webp?v=1773686764" data-s="1" onerror="imgFB(this)"></div>
+        <div class="st-txt">
+          <p class="kick">Why I switched</p>
+          <h3>I spent years squinting at labels in the grocery aisle.</h3>
+          <p>Proprietary blends. Mystery sourcing. Doses that looked impressive until you checked the form. Ritual was the first brand that showed me where every single ingredient comes from, down to the supplier.</p>
+          <p>So the whole family moved over. This store is just my counter, organized.</p>
+        </div>
+      </div>
+      <div class="story flip">
+        <div class="st-art"><img class="pmimg staimg" alt="" src="https://ritual.com/cdn/shop/files/PDP_EFW18_Bottle.jpg?v=1770263110" data-fn="PDP_EFW18_Bottle.jpg?v=1770263110" data-s="1" onerror="imgFB(this)"></div>
+        <div class="st-txt">
+          <p class="kick">The honest part</p>
+          <h3>I earn from this store, and I want you to know exactly how much.</h3>
+          <p>Ritual pays me 5% of every order placed here, calculated before tax and shipping. If you keep a subscription going, I keep earning a small monthly share, which means my incentive is that you actually love the routine, not that you buy once.</p>
+          <p>Your 10% discount comes out of Ritual's side, never added to your price.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="routine" id="routine">
+    <div class="wrap">
+      <h2>Shop the routine</h2>
+      <p class="sub">A day at our table, and what's on it.</p>
+      <div class="rsteps">
+        <div class="rstep"><span class="when">7:10 am, breakfast</span><h4>The multivitamins</h4><p>Hers next to the coffee, his next to the toaster. The delayed-release capsule is gentle on empty stomachs, so no one waits.</p><span class="rlink" onclick="go('pdp','efw')">Essential for Women 18+</span><br><span class="rlink" onclick="go('pdp','efm')">Essential for Men 18+</span></div>
+        <div class="rstep"><span class="when">3:30 pm, school run</span><h4>The kids-proof omega-3</h4><p>Algae sourced, so no fishy burps in the carpool. The one supplement nobody in this house complains about.</p><span class="rlink" onclick="go('pdp','o3')">Omega-3 DHA and EPA</span></div>
+        <div class="rstep"><span class="when">9:40 pm, finally quiet</span><h4>The wind-down shelf</h4><p>Magnesium for the tension I carry in my shoulders, and a gentle melatonin for nights the toddler wins.</p><span class="rlink" onclick="go('pdp','mag')">Magnesium+</span><br><span class="rlink" onclick="go('pdp','sleep')">Sleep BioSeries</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="tstrip">
+      <div class="bhead"><h2>From the group chat</h2><span style="font-size:11px;color:var(--muted)">Illustrative reviews, for the concept</span></div>
+      <div class="tgrid">
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"Bought the prenatal through Maya's link during my second pregnancy. The traceability page sold my skeptical husband in one scroll."</p><b>Jenna R.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"The 10% off made it cheaper than the store brand I was settling for. My mom is on the 50+ one now too."</p><b>Priya S.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"I love that Maya shows what she earns. It made me trust the recommendation more, not less."</p><b>Dana W.</b></div>
+      </div>
+    </section>
+
+    <section class="econ">
+      <h2>How Maya's store works</h2>
+      <div class="econ-grid">
+        <div class="etile"><span class="big">10%</span><b>You save on every order</b><p>Code MAYA10 is applied automatically at checkout, on your whole cart.</p></div>
+        <div class="etile"><span class="big">5%</span><b>Maya earns on every sale</b><p>Calculated on the order total before tax and shipping. Her store, her earnings, printed on the receipt.</p></div>
+        <div class="etile"><span class="big">$5/mo</span><b>Subscriptions count, monthly</b><p>Keep a $100 monthly subscription and Maya earns $5 from Ritual every month it renews.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="newsletter">
+    <h3>Sunday dinner, in email form.</h3>
+    <p>One note a week: what we're cooking, what we're taking, and early access to Maya's restocks. Demo form, nothing is stored.</p>
+    <div class="nl-row"><input type="email" placeholder="you@email.com" aria-label="Email address"><button onclick="this.textContent='Joined!';setTimeout(()=>this.textContent='Join',1600)">Join</button></div>
+  </div>
+</main>
+
+<!-- ================= SHOP ================= -->
+<main class="view" id="view-shop">
+  <div class="shophero"><div class="wrap">
+    <h1>Shop all</h1>
+    <p>Everything on our counter, in one place. MAYA10 applies to all of it.</p>
+    <div class="tabs" id="shopTabs"></div>
+  </div></div>
+  <div class="wrap"><div class="grid shopgrid" id="shopGrid"></div></div>
+</main>
+
+<!-- ================= PDP ================= -->
+<main class="view" id="view-pdp">
+  <div class="wrap">
+    <p class="crumb"><a onclick="go('home')">Home</a> &nbsp;/&nbsp; <a onclick="go('shop')">Shop all</a> &nbsp;/&nbsp; <span id="crumbName"></span></p>
+    <div class="pdp">
+      <div class="gal">
+        <div class="gal-main" id="galMain"><svg><use href="#bottle"/></svg></div>
+        <div class="gal-badges"><span class="gbadge">Made Traceable</span><span class="gbadge">Third-party tested</span><span class="gbadge">Delayed-release capsule</span></div>
+      </div>
+      <div class="pd">
+        <span class="pd-tag" id="pdTag"></span>
+        <h1 id="pdName"></h1>
+        <div class="maya" id="pdMaya"></div>
+        <ul class="benefits" id="pdBenefits"></ul>
+        <div class="buybox">
+          <div class="opt on" id="optSub" onclick="pdMode('sub')">
+            <span class="ol"><b>Subscribe monthly</b><span class="chip pop">Most popular</span><span>10% code applies, skip or cancel anytime</span></span>
+            <span class="op" id="pdSubPrice"></span>
+          </div>
+          <div class="opt" id="optYear" onclick="pdMode('year')">
+            <span class="ol"><b>Prepay the year</b><span class="chip gift">Free shaker + 2 shake samples</span><span class="ysave" id="pdYearSave"></span></span>
+            <span class="op" id="pdYearPrice"></span>
+          </div>
+          <div class="opt" id="optOnce" onclick="pdMode('once')">
+            <span class="ol"><b>One-time purchase</b><span>no commitment</span></span>
+            <span class="op" id="pdOncePrice"></span>
+          </div>
+          <div class="qtyrow"><button onclick="pdQty(-1)" aria-label="Less">&#8722;</button><span id="pdQty">1</span><button onclick="pdQty(1)" aria-label="More">+</button></div>
+          <button class="atc" id="pdAtc" onclick="pdAdd()"></button>
+          <p class="note">MAYA10 applies in the cart. Maya earns 5% of this order, before tax and shipping. Prepay the year and a free shaker plus 2 Daily Shake samples ship with your first box.</p>
+        </div>
+        <div class="accs" id="pdAccs"></div>
+      </div>
+    </div>
+    <div class="related"><h3>Goes well with</h3><div class="grid" id="pdRelated"></div></div>
+  </div>
+</main>
+
+<!-- sticky mobile ATC -->
+<div class="satc" id="satc">
+  <span class="sn"><b id="satcName"></b><span id="satcPrice"></span></span>
+  <button onclick="pdAdd()">Add to cart</button>
+</div>
+
+<button style="display:none" id="unused"></button>
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dr-head"><b>Our family cart</b><button class="dr-x" onclick="closeCart()" aria-label="Close">&#10005;</button></div>
+  <div class="dr-code">Code <b>MAYA10</b> applied: 10% off your whole order</div>
+  <div class="ship-meter" id="shipMeter"></div>
+  <div class="dr-items" id="drItems"></div>
+  <div class="earnbox" id="earnBox"></div>
+  <div class="dr-math" id="drMath"></div>
+  <button class="dr-checkout" onclick="checkout()">Checkout</button>
+  <p class="dr-note">Demo checkout. No payment is taken. Subscription prices from ritual.com at time of build; one-time pricing illustrative.</p>
+</aside>
+<div class="comodal" id="comodal" role="dialog" aria-modal="true"><div class="cobox" id="cobox"></div></div>
+
+<div class="nwrap" id="nathan">
+  <div class="nb" id="nb">
+    <div class="who"><span>Nathan &middot; why this works</span><span onclick="nbHide()">&#10005;</span></div>
+    <span class="tag" id="nbTag"></span>
+    <div id="nbBody"></div>
+    <div class="nav"><button onclick="nbStep(-1)">Prev</button><button onclick="nbStep(1)">Next</button></div>
+  </div>
+  <div class="nchip" onclick="nbToggle()" title="Nathan's commentary">N</div>
+</div>
+
+<footer class="end">
+  <div class="fgrid">
+    <div><h4>Maya &amp; the Table</h4><p style="max-width:38ch">A creator store concept: one influencer, her own branded Ritual storefront, honest economics on the receipt.</p></div>
+    <div><h4>Shop</h4><a onclick="go('shop','daily')">The daily table</a><a onclick="go('shop','mother')">Motherhood</a><a onclick="go('shop','grand')">The grandparents</a><a onclick="go('shop','extras')">Little extras</a></div>
+    <div><h4>The concept</h4><a onclick="nbToggle()">Nathan's commentary</a><a onclick="go('home')">About this store</a></div>
+  </div>
+  <div class="legal"><b>Nathan J. Song</b> &middot; Creator store concept for the Ritual Growth PM role. Not affiliated with or endorsed by Ritual. Maya is a fictional persona and reviews are illustrative. Subscription prices reflect ritual.com published regular pricing at time of build; one-time pricing is illustrative. Product descriptions paraphrase Ritual's public messaging.</div>
+</footer>
+
+<script>
+/* ============ catalog: Ritual published subscription prices (regular) ============ */
+const PRODUCTS={
+  efw:{name:"Essential for Women Multivitamin 18+",tag:"Multivitamin",col:"daily",sub:33,once:39,
+    maya:"The one on my shelf for four years. I take it with coffee because the delayed-release capsule doesn't argue with an empty stomach.",
+    benefits:["9 traceable nutrients women commonly lack, including methylated folate","Vegan D3 sourced from lichen, omega-3 DHA from microalgae","Delayed-release capsule designed to be gentle on an empty stomach"],
+    inside:"Folate as methylated 5-MTHF, vegan D3, B12, iron, omega-3 DHA, boron, vitamin E, magnesium, and K2. Every ingredient's source and supplier is published on Ritual's Made Traceable pages.",
+    rel:["efm","o3","mag"]},
+  efm:{name:"Essential for Men Multivitamin 18+",tag:"Multivitamin",col:"daily",sub:33,once:39,
+    maya:"The husband multivitamin. He forgets nothing because it lives next to the coffee maker, which is the only system that has ever worked.",
+    benefits:["10 key nutrients formulated for men's daily foundations","Vegan D3 and A, plus magnesium and boron","Same traceable sourcing and delayed-release capsule as the women's line"],
+    inside:"Vitamin A, D3, E, K2, B12, folate, magnesium, zinc, boron, and omega-3 DHA, with sources published ingredient by ingredient.",
+    rel:["efw","o3","sleep"]},
+  efw50:{name:"Essential for Women Multivitamin 50+",tag:"Multivitamin",col:"grand",sub:39,once:45,
+    maya:"Bought this for my mom after she asked what I was taking. Formulated for 50+, and she likes that there's no iron in it.",
+    benefits:["Formulated for women 50+ with no iron","Vitamin D3 and K2 for bone support foundations","Gentle delayed-release capsule, no mystery blends"],
+    inside:"D3, K2, B12, B6, folate, magnesium, boron, vitamin E, and omega-3 DHA, tailored to post-menopausal needs.",
+    rel:["efm50","o3","mag"]},
+  efm50:{name:"Essential for Men Multivitamin 50+",tag:"Multivitamin",col:"grand",sub:39,once:45,
+    maya:"Grandpa's bottle at our house now. He was a multivitamin skeptic until he read where each ingredient comes from.",
+    benefits:["Formulated for men 50+","D3, K2, and magnesium foundations","Traceable sourcing, delayed-release capsule"],
+    inside:"Vitamin A, D3, E, K2, B12, folate, magnesium, zinc, and boron, formulated for 50+.",
+    rel:["efw50","o3","sleep"]},
+  pre:{name:"Essential for Women Prenatal",tag:"Pregnancy",col:"mother",sub:39,once:45,
+    maya:"What I took through my third pregnancy. Choline and DHA that most prenatals skip, and gentle enough for the queasy weeks.",
+    benefits:["12 traceable nutrients for pregnancy, including methylated folate","Choline and omega-3 DHA for baby's brain development","Designed to be gentle on morning-sickness stomachs"],
+    inside:"Methylated folate, choline, omega-3 DHA from algae, vegan D3, iron, B12, biotin, and iodine, with published sourcing.",
+    rel:["choline","post","o3"]},
+  post:{name:"Essential Postnatal",tag:"Postpartum",col:"mother",sub:39,once:45,
+    maya:"The fourth-trimester one nobody tells you about. Made for recovery and nursing, when your body is still doing heavy lifting.",
+    benefits:["Supports postpartum recovery and lactation nutrition","Continues choline and DHA through nursing","Same traceable, delayed-release approach as the prenatal"],
+    inside:"Builds on the prenatal with vitamin A and C plus continued choline, DHA, and methylated B vitamins for the postpartum year.",
+    rel:["pre","choline","sleep"]},
+  choline:{name:"Natal Choline",tag:"Mom to baby",col:"mother",sub:29,once:35,
+    maya:"The brain-building nutrient for baby that most prenatals underdose. We stacked it with mine on my OB's nod.",
+    benefits:["Supports baby's brain development in pregnancy","Pairs with the prenatal to reach meaningful choline intake","Single-ingredient and fully traceable"],
+    inside:"Choline bitartrate at a dose designed to complement the prenatal, with source published.",
+    rel:["pre","post","o3"]},
+  fert:{name:"Fertility Support",tag:"Preconception",col:"mother",sub:99,once:105,
+    maya:"For friends in the trying season. A science-first preconception formula, not a hope-and-herbs blend.",
+    benefits:["Preconception support built on studied ingredients","Pairs with the prenatal as you transition","Traceable sourcing, no proprietary blends"],
+    inside:"A preconception formulation with published ingredient sourcing; see Ritual's page for the current formula details.",
+    rel:["pre","choline","efw"]},
+  shake:{name:"Daily Shake, Vanilla",tag:"Protein",col:"extras",sub:44,once:50,
+    maya:"My lunch insurance on chaos days. Blends smooth with frozen banana, and the kids steal sips.",
+    benefits:["Complete plant protein for daily use","Vanilla that works with fruit, coffee, or plain water","Third-party tested, traceable sourcing"],
+    inside:"Pea protein with a complete amino acid profile and no artificial sweetener aftertaste, sources published.",
+    rel:["mag","o3","efw"]},
+  o3:{name:"Omega-3 DHA and EPA",tag:"Essentials",col:"extras",sub:33,once:39,
+    maya:"Algae sourced, so no fishy burps in the carpool. The one supplement nobody in this house complains about.",
+    benefits:["DHA and EPA from microalgae, not fish","No fishy aftertaste or burps","Sustainable and fully traceable source"],
+    inside:"Omega-3 DHA and EPA from cultivated microalgae, the same source fish get theirs from, one step earlier.",
+    rel:["efw","efm","mag"]},
+  iron:{name:"Iron BioSeries",tag:"Essentials",col:"extras",sub:22,once:26,
+    maya:"For the tired-all-the-time seasons. Slow-release so it doesn't wreck your stomach like the drugstore kind did mine.",
+    benefits:["Slow-release iron designed for absorption","Gentler on the stomach than standard iron salts","Single-ingredient, traceable"],
+    inside:"Iron in a slow-release BioSeries capsule designed to reduce the GI side effects common with iron supplements.",
+    rel:["efw","pre","mag"]},
+  mag:{name:"Magnesium+ Mind and Muscle",tag:"Recovery",col:"extras",sub:50,once:56,
+    maya:"The shoulders-down-from-ears mineral. I take it after dinner and sleep like the toddler should.",
+    benefits:["Supports muscle relaxation and calm","Evening-friendly, pairs with the wind-down routine","Traceable forms, no proprietary blend"],
+    inside:"Magnesium in absorbable forms with published sourcing, formulated for mind and muscle support.",
+    rel:["sleep","stress","efw"]},
+  stress:{name:"Stress Relief BioSeries",tag:"Calm",col:"extras",sub:54,once:60,
+    maya:"For the weeks when the calendar wins. Clinically studied ashwagandha, not a mystery calm blend.",
+    benefits:["Built on clinically studied ashwagandha","Designed for daily stress support, not sedation","Traceable, third-party tested"],
+    inside:"A BioSeries formulation centered on clinically studied ashwagandha, with sources published.",
+    rel:["mag","sleep","syn"]},
+  sleep:{name:"Sleep BioSeries Melatonin",tag:"Sleep",col:"extras",sub:25,once:30,
+    maya:"For nights the toddler wins. A considered dose of melatonin, no groggy morning tax.",
+    benefits:["A gentle, considered melatonin dose","BioSeries release designed for natural-feeling sleep","No next-morning grogginess by design"],
+    inside:"Melatonin in a controlled-release BioSeries capsule, dosed for effectiveness without the hangover feeling.",
+    rel:["mag","stress","efw"]},
+  syn:{name:"Synbiotic+",tag:"Gut health",col:"extras",sub:54,once:60,
+    maya:"Gut first, everything else second. Pre, pro, and postbiotics in one capsule instead of three bottles.",
+    benefits:["Prebiotics, probiotics, and postbiotics in one","Delayed-release capsule targets the colon","Two of the most studied probiotic strains"],
+    inside:"A 3-in-1 with clinically studied strains and a delayed-release capsule designed to reach the colon.",
+    rel:["stress","mag","efw"]},
+  hya:{name:"HyaCera",tag:"Skin",col:"extras",sub:54,once:60,
+    maya:"Skin hydration from within. Two traceable ingredients, and my winter skin noticed.",
+    benefits:["Supports skin hydration from within","Two studied ingredients, nothing else","Traceable and third-party tested"],
+    inside:"Hyaluronic acid support via two studied ingredients with published sourcing.",
+    rel:["syn","efw","stress"]}
+,
+  natbio:{name:"Natalbiotic",tag:"Pregnancy",col:"mother",sub:60,once:66,
+    maya:"The microbiome piece of pregnancy most people miss. I added it in my third.",
+    benefits:["Prenatal microbiome and gut support","Clinically studied strains for pregnancy","Traceable, delayed-release capsule"],
+    inside:"A prenatal-specific synbiotic with clinically studied strains, sources published.",
+    rel:["pre","choline","post"]},
+  shakepp:{name:"Daily Shake, Pregnancy and Postpartum",tag:"Protein",col:"mother",sub:44,once:50,
+    maya:"My one-handed lunch in the newborn fog. Made for pregnancy and nursing.",
+    benefits:["Complete plant protein for pregnancy and nursing","Folate, choline, and DHA built in","Third-party tested, traceable"],
+    inside:"Pea-protein shake formulated for pregnancy and postpartum, with added prenatal nutrients, sources published.",
+    rel:["shake","post","pre"]},
+  shakechoc:{name:"Daily Shake, Chocolate",tag:"Protein",col:"extras",sub:44,once:50,
+    maya:"The kids vote chocolate. Same clean protein, blends into anything.",
+    benefits:["Complete plant protein, chocolate","No artificial-sweetener aftertaste","Third-party tested, traceable"],
+    inside:"The chocolate flavor of the Daily Shake, complete pea protein with published sourcing.",
+    rel:["shake","efw","mag"]},
+  k_dh18:{name:"Daily Health 18+ Support",tag:"Support Ritual",col:"kits",sub:87,once:96,
+    maya:"Ritual's Daily Health 18+ Support: the 18+ multivitamin with everyday essentials in one subscription.",
+    benefits:["Women's or men's 18+ multivitamin","Paired everyday essentials","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["efw","o3","syn"]},
+  k_dh50:{name:"Daily Health 50+ Support",tag:"Support Ritual",col:"kits",sub:93,once:102,
+    maya:"Ritual's Daily Health 50+ Support: the 50+ multivitamin with age-tuned essentials, together.",
+    benefits:["50+ multivitamin foundation","Age-tuned essentials","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["efw50","o3","mag"]},
+  k_dn:{name:"Day and Night Support",tag:"Support Ritual",col:"kits",sub:104,once:114,
+    maya:"Ritual's Day and Night Support: daily foundations plus the evening wind-down, bundled.",
+    benefits:["Daily foundations for the morning","Evening wind-down support","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["efw","mag","sleep"]},
+  k_preN:{name:"Prenatal Essential Support",tag:"Support Ritual",col:"kits",sub:68,once:75,
+    maya:"Ritual's Prenatal Essential Support: the prenatal with the core pregnancy add-ons.",
+    benefits:["Essential prenatal multivitamin","Core pregnancy add-ons","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["pre","choline","o3"]},
+  k_preg:{name:"Pregnancy and Microbiome Support",tag:"Support Ritual",col:"kits",sub:128,once:140,
+    maya:"Ritual's Pregnancy and Microbiome Support: prenatal plus gut and microbiome support.",
+    benefits:["Prenatal multivitamin","Gut and microbiome support","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["pre","natbio","choline"]},
+  k_post:{name:"Postpartum Nutrient and Breastfeeding Support",tag:"Support Ritual",col:"kits",sub:128,once:140,
+    maya:"Ritual's Postpartum Nutrient and Breastfeeding Support: recovery and nursing, bundled.",
+    benefits:["Postnatal recovery nutrients","Nursing and lactation support","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["post","shakepp","choline"]},
+  k_mtb:{name:"Mom-to-Baby Support",tag:"Support Ritual",col:"kits",sub:101,once:111,
+    maya:"Ritual's Mom-to-Baby Support: prenatal plus the brain-building choline, together.",
+    benefits:["Prenatal multivitamin","Added brain-building choline","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["pre","choline","natbio"]},
+  k_fert:{name:"Fertility Support Bundle",tag:"Support Ritual",col:"kits",sub:138,once:150,
+    maya:"Ritual's Fertility Support: preconception support as one complete routine.",
+    benefits:["Preconception support","Transitions into the prenatal","One subscription, one delivery"],
+    inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
+    rel:["fert","pre","efw"]}
+};
+const COLS={all:"All products",daily:"The daily table",mother:"Motherhood",grand:"The grandparents",extras:"Little extras",kits:"Support Rituals"};
+const FEATURED=["efw","efm","pre","o3"];
+const CODE="MAYA10", CREATOR="Maya", SHIP_FREE=50;
+
+const IMG={efw:"PDP_EFW18_Bottle.jpg?v=1770263110",efw50:"PDP_EFW50_Bottle.jpg?v=1770263110",efm:"PDP_EFM18_Pills_Animated.gif?v=1770263132",efm50:"PDP_EFM50_Bottle.jpg?v=1770263114",pre:"PDP_EPRE_Bottle_No_Scent.jpg?v=1770263108",post:"PDP-EPOST-Bottle-No-Essence.jpg?v=1770263105",choline:"PDP-Choline-Bottle.jpg?v=1770263104",natbio:"PDP-NTLB-Carousel-01.jpg?v=1770263126",fert:"PDP-FS-Package-1.jpg?v=1770263112",shake:"PDP-PD18-Bag_f125fdc4-6812-45b7-a56e-faf0bf89e3c2.jpg?v=1774026738",shakepp:"PDP-PDPP-Bag.jpg?v=1770263120",shakechoc:"pdp-hero-PD18-chocolate-01_a51055ea-ef0b-4a51-9c5b-4bd1ee66b793.jpg?v=1771529730",o3:"PDP-Omega-Bottle.jpg?v=1770263103",iron:"PDP_Iron_Bottle.jpg?v=1770263136",mag:"PDP-MAG-Carousel-01.jpg?v=1770263110",stress:"PDP-Stress-Bottle.jpg?v=1770263109",sleep:"PDP_SLP_Bottle.jpg?v=1770263109",syn:"PDP-SYN-Bottle.jpg?v=1770263121",hya:"PDP_HYA_Bottle_1.jpg?v=1770263106",k_dh18:"Essential_GutDuo.webp?v=1773185920",k_dh50:"Essential-_-Gut-Duo-for-Women-50.webp?v=1773185976",k_dn:"Day-_-Night-Recovery.webp?v=1773185848",k_preN:"Mom-to-Baby-Set-for-Prenatal.webp?v=1773186642",k_preg:"Essential_Natalbiotic_CholineTrioforPrenatal.webp?v=1773186462",k_post:"Essential_Natalbiotic_SkinTrioforPostnatal.webp?v=1773186390",k_mtb:"Essential_-Omega-_-Choline-Trio-for-Prenatal.webp?v=1773186519",k_fert:"Essential_FertilitySupportforPrenatal.webp?v=1773186081"};
+
+function imgExt(fn){var m=fn.split("?")[0];var d=m.lastIndexOf(".");return d>0?m.slice(d):".jpg";}
+function imgHTML(id){var fn=IMG[id];if(!fn)return '<svg><use href="#bottle"/></svg>';return '<img class="pmimg" loading="lazy" alt="" src="product-images/'+id+imgExt(fn)+'" data-fn="'+fn+'" onerror="imgFB(this)">';}
+function imgFB(el){var s=+(el.dataset.s||0),fn=el.dataset.fn;if(s===0){el.dataset.s="1";el.src="https://ritual.com/cdn/shop/files/"+fn;}else if(s===1){el.dataset.s="2";el.src="https://cdn.shopify.com/s/files/1/0626/8842/8126/files/"+fn;}else{el.outerHTML='<svg><use href="#bottle"/></svg>';}}
+
+const cart={}; /* key: id_mode -> {id,mode,qty} */
+let view="home", curTab="all", pdpId=null, pdpM="sub", pdpQ=1;
+
+function money(n){return "$"+n.toFixed(2);}
+function track(ev,p){console.log("[maya-store]",ev,p||{});}
+
+/* ============ routing ============ */
+function go(v,arg){
+  if(v==="pdp"){pdpId=arg;pdpM="sub";pdpQ=1;renderPDP();}
+  if(v==="shop"){curTab=arg||curTab||"all";renderShop();}
+  view=v;
+  document.querySelectorAll(".view").forEach(el=>el.classList.remove("on"));
+  document.getElementById("view-"+v).classList.add("on");
+  document.querySelectorAll("nav.main button[data-v], .mobile-nav button[data-v]").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+  document.getElementById("satc").classList.remove("show");
+  window.scrollTo({top:0});
+  track("view",{view:v,arg:arg||null});
+}
+
+/* ============ cards ============ */
+function card(id){
+  const p=PRODUCTS[id];
+  return '<div class="pcard" onclick="go(\'pdp\',\''+id+'\')">'+
+    '<div class="pimg">'+imgHTML(id)+'<button class="zoombtn" aria-label="Enlarge image" onclick="event.stopPropagation();zoomCard(this,&quot;'+id+'&quot;)"><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"M15.4 15.4 21 21\"/><path d=\"M10.5 7.9v5.2M7.9 10.5h5.2\"/></svg></button></div>'+
+    '<div class="pbody">'+
+      '<span class="ptag">'+p.tag+'</span>'+
+      '<span class="pname">'+p.name+'</span>'+
+      '<p class="pwhy">'+p.maya.split(".")[0]+'.</p>'+
+      '<p class="prices"><b>'+money(p.sub)+'</b>/mo subscribed &middot; '+money(p.once)+' one time</p>'+
+      '<button class="go">View product</button>'+
+    '</div></div>';
+}
+function renderHome(){document.getElementById("home-featured").innerHTML=FEATURED.map(card).join("");}
+function renderShop(){
+  document.getElementById("shopTabs").innerHTML=Object.keys(COLS).map(k=>'<button class="'+(k===curTab?"on":"")+'" onclick="curTab=\''+k+'\';renderShop()">'+COLS[k]+'</button>').join("");
+  const ids=Object.keys(PRODUCTS).filter(id=>curTab==="all"||PRODUCTS[id].col===curTab);
+  document.getElementById("shopGrid").innerHTML=ids.map(card).join("");
+}
+
+/* ============ PDP ============ */
+function renderPDP(){
+  const p=PRODUCTS[pdpId];
+  document.getElementById("crumbName").textContent=p.name;
+  document.getElementById("pdTag").textContent=p.tag;
+  document.getElementById("pdName").textContent=p.name;
+  var _gm=document.getElementById("galMain");if(_gm)_gm.innerHTML=imgHTML(pdpId);
+  document.getElementById("pdMaya").innerHTML="<b>Why it's in my store:</b> "+p.maya;
+  document.getElementById("pdBenefits").innerHTML=p.benefits.map(b=>"<li>"+b+"</li>").join("");
+  document.getElementById("pdSubPrice").innerHTML=money(p.sub)+"<small>per month</small>";
+  document.getElementById("pdOncePrice").innerHTML=money(p.once)+"<small>one time</small>";
+  document.getElementById("pdYearPrice").innerHTML=money(p.sub*12)+"<small>12 months</small>";
+  var _ys=(p.once-p.sub)*12;
+  document.getElementById("pdYearSave").textContent=_ys>0?("Save "+money(_ys)+" a year vs one-time, price locked 12 months"):"Price locked for 12 months";
+  document.getElementById("pdAccs").innerHTML=[
+    ["What's inside",p.inside],
+    ["Made Traceable","Ritual publishes the final source and supplier of each ingredient on its traceability pages, for example vegan D3 from lichen and omega-3 DHA from microalgae. That receipt-level sourcing is the reason this store exists."],
+    ["How to take it","Follow the label on the real product. Most Ritual capsules are delayed-release and designed to be taken any time, with or without food."],
+    ["Maya's store economics","Your MAYA10 code takes 10% off. Maya earns 5% of the order before tax and shipping, and a monthly share while a subscription stays active. Annual prepay counts as twelve months of subscription paid upfront, so the whole year of creator residuals is paid on day one, and a free shaker plus 2 Daily Shake samples ship with the first box. Printed on your receipt at checkout."]
+  ].map((a,i)=>'<div class="acc'+(i===0?" open":"")+'"><button class="ah" onclick="this.parentElement.classList.toggle(\'open\')">'+a[0]+'<span class="car">&#9656;</span></button><div class="ab">'+a[1]+'</div></div>').join("");
+  document.getElementById("pdRelated").innerHTML=p.rel.map(card).join("");
+  pdMode("sub");
+  document.getElementById("satcName").textContent=p.name;
+}
+function pdMode(m){
+  pdpM=m;
+  document.getElementById("optSub").classList.toggle("on",m==="sub");
+  document.getElementById("optYear").classList.toggle("on",m==="year");
+  document.getElementById("optOnce").classList.toggle("on",m==="once");
+  syncPdCta();
+}
+function pdQty(d){pdpQ=Math.max(1,pdpQ+d);document.getElementById("pdQty").textContent=pdpQ;syncPdCta();}
+function syncPdCta(){
+  const p=PRODUCTS[pdpId];
+  const price=(pdpM==="sub"?p.sub:pdpM==="year"?p.sub*12:p.once)*pdpQ;
+  document.getElementById("pdAtc").textContent="Add to cart, "+money(price)+(pdpM==="sub"?" per month":pdpM==="year"?" for the year":"");
+  document.getElementById("satcPrice").textContent=money(price)+(pdpM==="sub"?" /mo":pdpM==="year"?" /yr":"");
+}
+function pdAdd(){
+  const key=pdpId+"_"+pdpM;
+  if(!cart[key])cart[key]={id:pdpId,mode:pdpM,qty:0};
+  cart[key].qty+=pdpQ;
+  renderCart();openCart();
+  track("add_to_cart",{product:pdpId,mode:pdpM,qty:pdpQ});
+}
+/* sticky ATC shows when buybox scrolls out on PDP */
+window.addEventListener("scroll",()=>{
+  if(view!=="pdp")return;
+  const bb=document.querySelector(".buybox").getBoundingClientRect();
+  document.getElementById("satc").classList.toggle("show",bb.bottom<0);
+},{passive:true});
+
+/* ============ cart ============ */
+function chQty(key,d){const it=cart[key];if(!it)return;it.qty+=d;if(it.qty<=0)delete cart[key];renderCart();}
+function rmItem(key){delete cart[key];renderCart();}
+function setMode(key,nm){
+  const it=cart[key];if(!it||it.mode===nm)return;
+  const nk=it.id+"_"+nm;
+  if(cart[nk]){cart[nk].qty+=it.qty;}else{cart[nk]={id:it.id,mode:nm,qty:it.qty};}
+  delete cart[key];renderCart();
+}
+function totals(){
+  let subtotal=0,subMonthly=0,yearTotal=0,count=0;
+  Object.values(cart).forEach(it=>{
+    const p=PRODUCTS[it.id], price=it.mode==="sub"?p.sub:it.mode==="year"?p.sub*12:p.once;
+    subtotal+=price*it.qty;count+=it.qty;
+    if(it.mode==="sub")subMonthly+=p.sub*it.qty;
+    if(it.mode==="year")yearTotal+=p.sub*12*it.qty;
+  });
+  const discount=subtotal*0.10, after=subtotal-discount;
+  return {subtotal,discount,after,count,subMonthly,yearTotal,hasYear:yearTotal>0,earnNow:after*0.05,earnMonthly:subMonthly*0.9*0.05};
+}
+function renderCart(){
+  const keys=Object.keys(cart), box=document.getElementById("drItems");
+  if(!keys.length){box.innerHTML='<div class="dr-empty">Your cart is empty. Go shop the counter.</div>';}
+  else{
+    box.innerHTML=keys.map(k=>{
+      const it=cart[k],p=PRODUCTS[it.id],price=(it.mode==="sub"?p.sub:it.mode==="year"?p.sub*12:p.once);
+      return '<div class="li">'+
+        '<div class="li-img">'+imgHTML(it.id)+'</div>'+
+        '<div class="li-main"><div class="li-name">'+p.name+'</div>'+
+        '<div class="li-mode">'+(
+          '<button class="'+(it.mode==="sub"?"on":"")+'" onclick="setMode(\''+k+'\',\'sub\')">Monthly '+money(p.sub)+'</button>'+
+          '<button class="'+(it.mode==="year"?"on":"")+'" onclick="setMode(\''+k+'\',\'year\')">Year '+money(p.sub*12)+'</button>'+
+          '<button class="'+(it.mode==="once"?"on":"")+'" onclick="setMode(\''+k+'\',\'once\')">Once '+money(p.once)+'</button>')+
+        '</div>'+
+        '<div class="li-qty"><button onclick="chQty(\''+k+'\',-1)" aria-label="Less">&#8722;</button><span>'+it.qty+'</span><button onclick="chQty(\''+k+'\',1)" aria-label="More">+</button></div>'+
+        '<button class="li-rm" onclick="rmItem(\''+k+'\')">Remove</button></div>'+
+        '<div class="li-price">'+money(price*it.qty)+(it.mode==="sub"?'<small>per month</small>':it.mode==="year"?'<small>for 12 months</small>':'')+'</div>'+
+      '</div>';
+    }).join("");
+    if(Object.values(cart).some(it=>it.mode==="year")){
+      box.innerHTML+='<div class="li gift"><div class="li-img"><svg viewBox="0 0 60 84"><use href="#shaker"/></svg></div>'+
+        '<div class="li-main"><div class="li-name">Ritual Shaker</div><div class="gift-tag">Free with annual prepay</div></div>'+
+        '<div class="li-price free">FREE</div></div>'+
+        '<div class="li gift"><div class="li-img"><svg viewBox="0 0 84 60"><use href="#samples"/></svg></div>'+
+        '<div class="li-main"><div class="li-name">Daily Shake samples, 2 flavors</div><div class="gift-tag">Free with annual prepay</div></div>'+
+        '<div class="li-price free">FREE</div></div>';
+    }
+  }
+  const t=totals();
+  document.getElementById("cartN").textContent=t.count;
+  const toFree=Math.max(0,SHIP_FREE-t.after);
+  document.getElementById("shipMeter").innerHTML= t.count?
+    (toFree>0?('Add '+money(toFree)+' more for free shipping'):'You have free shipping!')+
+    '<div class="bar"><i style="width:'+Math.min(100,(t.after/SHIP_FREE)*100)+'%"></i></div>':'';
+  document.getElementById("drMath").innerHTML=
+    '<div class="dm-row"><span>Subtotal</span><span>'+money(t.subtotal)+'</span></div>'+
+    '<div class="dm-row disc"><span>'+CODE+' (10% off)</span><span>&#8722;'+money(t.discount)+'</span></div>'+
+    (t.hasYear?'<div class="dm-row disc"><span>Annual gift, shaker + samples</span><span>FREE</span></div>':'')+
+    '<div class="dm-row"><span>Shipping and tax</span><span>calculated at checkout</span></div>'+
+    '<div class="dm-row total"><span>Total</span><span>'+money(t.after)+'</span></div>';
+  document.getElementById("earnBox").innerHTML= t.count?
+    ('<b>'+CREATOR+' earns from this order:</b> <b>'+money(t.earnNow)+'</b> (5% of your total before tax and shipping)'+
+     (t.earnMonthly>0?'<br><b>Plus '+money(t.earnMonthly)+' every month</b> your subscription stays active.':'')+
+     (t.hasYear?'<br><b>'+money(t.yearTotal*0.9*0.05)+'</b> of it is a full year of subscription residuals, paid upfront by your prepay.':''))
+    :'Add products to see what '+CREATOR+' earns from your order.';
+}
+function openCart(){document.getElementById("drawer").classList.add("open");document.getElementById("overlay").classList.add("show");}
+function closeCart(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("show");}
+function checkout(){
+  const t=totals();if(!t.count)return;
+  document.getElementById("cobox").innerHTML=
+    '<h3>Order placed (demo)</h3><p class="cosub">Here is exactly where the money goes.</p>'+
+    '<div class="corow"><span>Subtotal</span><span>'+money(t.subtotal)+'</span></div>'+
+    '<div class="corow"><span>'+CODE+' saved you</span><span>&#8722;'+money(t.discount)+'</span></div>'+
+    '<div class="corow b"><span>You paid (before tax and shipping)</span><span>'+money(t.after)+'</span></div>'+
+    (t.hasYear?'<div class="corow"><span>Free annual gift</span><span>Shaker + 2 shake samples</span></div>':'')+
+    '<hr class="cohr">'+
+    '<div class="coearn"><b>'+CREATOR+' earns '+money(t.earnNow)+'</b> from this order, 5% of the total excluding tax and shipping.'+
+    (t.earnMonthly>0?' Because '+money(t.subMonthly*0.9)+' of it is subscription, she also earns <b>'+money(t.earnMonthly)+' every month</b> it stays active. A kept $100 subscription pays its creator $5 from Ritual, monthly.':'')+
+    (t.hasYear?' The prepaid year hands Maya twelve months of subscription residuals on day one.':'')+'</div>'+
+    '<button class="close" onclick="document.getElementById(\'comodal\').classList.remove(\'show\')">Back to the store</button>'+
+    '<p class="codemo">Demo only. No payment, no data stored.</p>';
+  document.getElementById("comodal").classList.add("show");
+  track("checkout_demo",{total:t.after.toFixed(2),creator_now:t.earnNow.toFixed(2),creator_monthly:t.earnMonthly.toFixed(2)});
+}
+
+/* ============ Nathan ============ */
+const NOTES=[
+  {tag:"Annual prepay",text:"The year prepay is the LTV lever. A subscriber Ritual would normally earn back over 12 uncertain months pays on day one, churn is zero for the year, and the shaker plus samples cost less than one month of paid acquisition. Maya also collects her full year of 5% residuals upfront, which is why creators will push annual harder than any banner we could design."},
+  {tag:"The full build",text:"This is portal one taken to a complete theme: home, collections, product pages, cart, and checkout, all in Broadcast DNA. One catalog object drives every page, so this entire store is still just Maya's config file rendered four different ways."},
+  {tag:"Broadcast DNA",text:"Storytelling first: a full-bleed warm hero, image-with-text story blocks, a shop-the-routine timeline instead of a product wall, and soft rounded cards. Her audience buys the family's day, so the store is organized as a day, not a catalog."},
+  {tag:"The PDP",text:"The product page runs the top-theme conversion stack: subscribe-first option cards, benefit checks, accordions for depth without clutter, related products, and a sticky add-to-cart bar that appears when the buy box scrolls away. That sticky bar is a standard in Impact, Prestige, and Broadcast for a reason."},
+  {tag:"Honest economics",text:"The store says out loud what Maya earns: 5% of every order before tax and shipping, plus a monthly share while subscriptions stay active. A $100 kept subscription pays her $5 every month. Disclosure builds trust, and the recurring share points her content at retention, Ritual's most valuable metric."},
+  {tag:"The cart",text:"Free-shipping progress meter, per-line subscribe or one-time toggles, and the creator's earnings printed next to the totals. The drawer is where storefronts win or lose, so it carries the trust story too."},
+  {tag:"Built to scale",text:"Lex and Ava get this same full build by swapping the config: palette, type, copy voice, and catalog picks. Storefront number forty is a data file. That is what turns a partnership into a program."}
+];
+let nIdx=0,nOpen=false;
+function nbRender(){document.getElementById("nbTag").textContent=NOTES[nIdx].tag;document.getElementById("nbBody").textContent=NOTES[nIdx].text;}
+function nbToggle(){nOpen=!nOpen;document.getElementById("nb").classList.toggle("show",nOpen);if(nOpen)nbRender();}
+function nbHide(){nOpen=false;document.getElementById("nb").classList.remove("show");}
+function nbStep(d){nIdx=(nIdx+d+NOTES.length)%NOTES.length;nbRender();}
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();nbHide();document.getElementById("comodal").classList.remove("show");}});
+
+renderHome();renderShop();renderCart();
+
+/* ============ image viewer ============ */
+function openViewer(im,label){
+  if(!im)return;
+  var box=document.getElementById("imgvImg");
+  box.classList.remove("zoomed");
+  box.innerHTML="";
+  var c=document.createElement("img");
+  c.src=im.src;c.alt="";
+  c.dataset.fn=im.dataset.fn||"";
+  c.dataset.s=im.dataset.s||"0";
+  c.onerror=function(){imgFB(c);};
+  box.appendChild(c);
+  document.getElementById("imgvCap").textContent=label||"";
+  document.getElementById("imgv").classList.add("show");
+  document.documentElement.style.overflow="hidden";
+  track("image_zoom",{label:label||null});
+}
+function closeViewer(){
+  document.getElementById("imgv").classList.remove("show");
+  document.documentElement.style.overflow="";
+}
+function zoomCard(btn,id){
+  var im=btn.closest(".pimg").querySelector("img.pmimg");
+  if(im)openViewer(im,PRODUCTS[id]?PRODUCTS[id].name:"");
+}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeViewer();});
+document.addEventListener("click",function(e){
+  var im=e.target.closest("#galMain img.pmimg");
+  if(im){openViewer(im,(pdpId&&PRODUCTS[pdpId])?PRODUCTS[pdpId].name:"");return;}
+  var st=e.target.closest(".st-art img.pmimg");
+  if(st){openViewer(st,"");return;}
+});
+</script>
+
+<div class="imgviewer" id="imgv" onclick="if(event.target===this)closeViewer()">
+  <div class="imgv-card">
+    <button class="imgv-x" onclick="closeViewer()" aria-label="Close">&times;</button>
+    <div class="imgv-img" id="imgvImg"></div>
+    <div class="imgv-cap" id="imgvCap"></div>
+    <div class="imgv-sub">Click outside the card or press Esc to close</div>
+  </div>
+</div>
+
+</body>
+</html>

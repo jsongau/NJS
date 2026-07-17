@@ -303,9 +303,13 @@
   .li.gift .li-img svg{width:70%;height:70%}
   .gift-tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-top:3px}
   .li-price.free{font-weight:800;color:var(--accent)}
+  .nav-orig{display:inline-flex !important;align-items:center;gap:6px;color:var(--accent) !important}
+  .nav-orig svg{width:18px;height:12px}
+  .origimg{width:58%;height:58%;color:var(--accent)}
 </style>
 </head>
 <body>
+<script>window.imgFB=window.imgFB||function(el){(window.__fbq=window.__fbq||[]).push(el)};</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="bottle" viewBox="0 0 60 84">
@@ -332,9 +336,20 @@
     <rect x="32" y="10" width="20" height="36" rx="3.5" fill="currentColor" opacity=".62"/><rect x="32" y="10" width="20" height="7" rx="3.5" fill="currentColor" opacity=".9"/>
     <g transform="rotate(9 68 30)"><rect x="58" y="14" width="20" height="32" rx="3.5" fill="currentColor" opacity=".38"/><rect x="58" y="14" width="20" height="7" rx="3.5" fill="currentColor" opacity=".7"/></g>
   </symbol>
+  <symbol id="tray" viewBox="0 0 96 56">
+    <rect x="2" y="20" width="92" height="30" rx="8" fill="currentColor" opacity=".26"/>
+    <rect x="8" y="25" width="10" height="20" rx="3" fill="currentColor" opacity=".78"/>
+    <rect x="21" y="25" width="10" height="20" rx="3" fill="currentColor" opacity=".62"/>
+    <rect x="34" y="25" width="10" height="20" rx="3" fill="currentColor" opacity=".78"/>
+    <rect x="47" y="25" width="10" height="20" rx="3" fill="currentColor" opacity=".62"/>
+    <rect x="60" y="25" width="10" height="20" rx="3" fill="currentColor" opacity=".78"/>
+    <rect x="73" y="25" width="10" height="20" rx="3" fill="currentColor" opacity=".62"/>
+    <rect x="84" y="12" width="10" height="9" rx="3" fill="currentColor" opacity=".9" transform="rotate(-28 84 21)"/>
+    <circle cx="13" cy="35" r="2.2" fill="#fff" opacity=".9"/><circle cx="39" cy="35" r="2.2" fill="#fff" opacity=".9"/><circle cx="65" cy="35" r="2.2" fill="#fff" opacity=".9"/>
+  </symbol>
 </svg>
 
-<div class="meganav"><div class="mn-in"><a class="mn-badge" href="/ritual/partners/" style="color:inherit;text-decoration:none"><svg class="mn-logo" viewBox="0 0 71 22" width="62" height="19" aria-hidden="true"><path fill="#fff" d="M28.9111 6.6709H31.4873V10.0801H28.9111V17.041C28.9712 17.9664 29.387 18.3994 30.2061 18.3994C31.0239 18.3993 31.6335 18.0398 32.1289 17.6445V21.1953C31.4055 21.7024 30.178 22.0699 28.8154 21.9893C27.9091 21.9352 26.8466 21.5471 26.1016 20.7822C25.4569 19.9782 25.1348 19.1801 25.1348 17.8252V10.0801H23.2041V6.6709H25.1348V1.77344H28.9111V6.6709ZM56.7275 6.50977C58.7147 6.50979 60.401 7.44226 61.0332 8.25391L61.3838 6.69043H64.4062V21.7227H61.3838L61.0332 20.1592C60.401 20.971 58.7454 21.9033 56.7275 21.9033C52.4218 21.9033 49.168 18.7162 49.168 14.207C49.168 9.69702 52.4218 6.50977 56.7275 6.50977ZM37.1885 14.4434C37.1885 17.0917 38.3737 18.2363 40.5449 18.2363C42.7148 18.2362 43.9307 16.6706 43.9307 14.4434V6.67285H47.667V21.7197H44.2812L43.9307 20.0049C43.2367 20.9083 41.8105 21.9004 39.7305 21.9004C35.9928 21.9003 33.4522 19.704 33.4521 15.7012V6.67285H37.1885V14.4434ZM6.74902 0.734375C12.5749 0.734413 15.8563 4.03766 15.8564 8.43066C15.8564 11.3671 14.3504 13.74 11.6572 15.083L16.0977 21.7217H11.5713L7.88574 16.127H3.77637V21.7217H0V0.734375H6.74902ZM21.458 21.7217H17.6826V6.6709H21.458V21.7217ZM70.1211 21.7217H66.3457V0.734375H70.1211V21.7217ZM56.8486 10.0693C54.556 10.0695 52.7891 11.9457 52.7891 14.207C52.7892 16.4677 54.5563 18.3426 56.8486 18.3428C59.086 18.3428 60.7987 16.4678 60.7988 14.207C60.7988 11.9456 59.086 10.0693 56.8486 10.0693ZM3.78125 12.2676H7.14062C9.81594 12.2676 11.8967 11.0718 11.8965 8.43066C11.8963 5.78895 9.8158 4.59377 7.14062 4.59375H3.78125V12.2676ZM19.5566 0C20.912 0 22.0107 1.11198 22.0107 2.4834C22.0107 3.85525 20.912 4.96777 19.5566 4.96777C18.2011 4.96774 17.1025 3.85523 17.1025 2.4834C17.1026 1.112 18.2009 3.69585e-05 19.5566 0Z"></path></svg> Partner Affiliate of <b>Ritual.com</b><span class="tag">concept</span></a><span class="mn-note">Independent concept by Nathan J. Song, not affiliated with Ritual</span><div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="/ritual.html">Funnel</a><a href="/ritual/partners/">Circle</a><a href="/ritual/partners/maya/" class="on">Maya</a><a href="/ritual/partners/lex/">Lex</a><a href="/ritual/partners/ava/">Ava</a></div></div></div></div>
+<div class="meganav"><div class="mn-in"><a class="mn-badge" href="/ritual/partners/" style="color:inherit;text-decoration:none"><svg class="mn-logo" viewBox="0 0 71 22" width="62" height="19" aria-hidden="true"><path fill="#fff" d="M28.9111 6.6709H31.4873V10.0801H28.9111V17.041C28.9712 17.9664 29.387 18.3994 30.2061 18.3994C31.0239 18.3993 31.6335 18.0398 32.1289 17.6445V21.1953C31.4055 21.7024 30.178 22.0699 28.8154 21.9893C27.9091 21.9352 26.8466 21.5471 26.1016 20.7822C25.4569 19.9782 25.1348 19.1801 25.1348 17.8252V10.0801H23.2041V6.6709H25.1348V1.77344H28.9111V6.6709ZM56.7275 6.50977C58.7147 6.50979 60.401 7.44226 61.0332 8.25391L61.3838 6.69043H64.4062V21.7227H61.3838L61.0332 20.1592C60.401 20.971 58.7454 21.9033 56.7275 21.9033C52.4218 21.9033 49.168 18.7162 49.168 14.207C49.168 9.69702 52.4218 6.50977 56.7275 6.50977ZM37.1885 14.4434C37.1885 17.0917 38.3737 18.2363 40.5449 18.2363C42.7148 18.2362 43.9307 16.6706 43.9307 14.4434V6.67285H47.667V21.7197H44.2812L43.9307 20.0049C43.2367 20.9083 41.8105 21.9004 39.7305 21.9004C35.9928 21.9003 33.4522 19.704 33.4521 15.7012V6.67285H37.1885V14.4434ZM6.74902 0.734375C12.5749 0.734413 15.8563 4.03766 15.8564 8.43066C15.8564 11.3671 14.3504 13.74 11.6572 15.083L16.0977 21.7217H11.5713L7.88574 16.127H3.77637V21.7217H0V0.734375H6.74902ZM21.458 21.7217H17.6826V6.6709H21.458V21.7217ZM70.1211 21.7217H66.3457V0.734375H70.1211V21.7217ZM56.8486 10.0693C54.556 10.0695 52.7891 11.9457 52.7891 14.207C52.7892 16.4677 54.5563 18.3426 56.8486 18.3428C59.086 18.3428 60.7987 16.4678 60.7988 14.207C60.7988 11.9456 59.086 10.0693 56.8486 10.0693ZM3.78125 12.2676H7.14062C9.81594 12.2676 11.8967 11.0718 11.8965 8.43066C11.8963 5.78895 9.8158 4.59377 7.14062 4.59375H3.78125V12.2676ZM19.5566 0C20.912 0 22.0107 1.11198 22.0107 2.4834C22.0107 3.85525 20.912 4.96777 19.5566 4.96777C18.2011 4.96774 17.1025 3.85523 17.1025 2.4834C17.1026 1.112 18.2009 3.69585e-05 19.5566 0Z"></path></svg> Partner Affiliate of <b>Ritual.com</b><span class="tag">concept</span></a><span class="mn-note">Independent concept by Nathan J. Song, not affiliated with Ritual</span><div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="/ritual/">Funnel</a><a href="/ritual/partners/">Circle</a><a href="/ritual/partners/maya/" class="on">Maya</a><a href="/ritual/partners/lex/">Lex</a><a href="/ritual/partners/ava/">Ava</a></div></div></div></div>
 <div class="announce">Free shipping over $50 &nbsp;&#10022;&nbsp; Code <b>MAYA10</b> applied, 10% off everything &nbsp;&#10022;&nbsp; Prepay a year, get a free shaker + 2 shake samples</div>
 
 <header class="site">
@@ -342,7 +357,7 @@
     <div class="logo" onclick="go('home')">Maya <span>&amp;</span> the Table<small>Partner Affiliate of Ritual.com</small></div>
     <nav class="main">
       <button data-v="home" class="on" onclick="go('home')">Home</button>
-      <button data-v="shop" onclick="go('shop')">Shop all</button>
+      <button data-v="shop" onclick="go('shop')">Shop all</button><button class="nav-orig" onclick="go('pdp','tray')"><svg viewBox="0 0 96 56"><use href="#tray"/></svg> Sunday Tray</button>
       <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">Our routine</button>
       <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About Maya</button>
     </nav>
@@ -350,7 +365,7 @@
   </div>
   <div class="mobile-nav">
     <button data-v="home" class="on" onclick="go('home')">Home</button>
-    <button data-v="shop" onclick="go('shop')">Shop all</button>
+    <button data-v="shop" onclick="go('shop')">Shop all</button><button class="nav-orig" onclick="go('pdp','tray')"><svg viewBox="0 0 96 56"><use href="#tray"/></svg> Sunday Tray</button>
     <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">Our routine</button>
     <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About</button>
   </div>
@@ -479,7 +494,7 @@
           </div>
           <div class="qtyrow"><button onclick="pdQty(-1)" aria-label="Less">&#8722;</button><span id="pdQty">1</span><button onclick="pdQty(1)" aria-label="More">+</button></div>
           <button class="atc" id="pdAtc" onclick="pdAdd()"></button>
-          <p class="note">MAYA10 applies in the cart. Maya earns 5% of this order, before tax and shipping. Prepay the year and a free shaker plus 2 Daily Shake samples ship with your first box.</p>
+          <p class="note" id="pdNote">MAYA10 applies in the cart. Maya earns 5% of this order, before tax and shipping. Prepay the year and a free shaker plus 2 Daily Shake samples ship with your first box.</p>
         </div>
         <div class="accs" id="pdAccs"></div>
       </div>
@@ -665,17 +680,23 @@ const PRODUCTS={
     maya:"Ritual's Fertility Support: preconception support as one complete routine.",
     benefits:["Preconception support","Transitions into the prenatal","One subscription, one delivery"],
     inside:"A Ritual Support Ritual bundle; see ritual.com for exact contents and current pricing.",
-    rel:["fert","pre","efw"]}
+    rel:["fert","pre","efw"]},
+  tray:{name:"Maya's Sunday Tray",tag:"Maya Original",col:"extras",sub:24,once:24,
+    maya:"My own design. Seven little doors on the kitchen counter, so Sunday night takes care of the whole week.",
+    benefits:["Seven labeled compartments, one week of routine","Sits flat by the coffee maker, lids click shut","Fits Ritual capsules, fish oil, and the kids' gummies"],
+    inside:"Maya's original product, not a Ritual item. A countertop weekly vitamin organizer with a warm bamboo look finish.",
+    rel:["efw","efm","o3"]}
 };
 const COLS={all:"All products",daily:"The daily table",mother:"Motherhood",grand:"The grandparents",extras:"Little extras",kits:"Support Rituals"};
-const FEATURED=["efw","efm","pre","o3"];
+const FEATURED=["efw","efm","pre","tray"];
 const CODE="MAYA10", CREATOR="Maya", SHIP_FREE=50;
 
 const IMG={efw:"PDP_EFW18_Bottle.jpg?v=1770263110",efw50:"PDP_EFW50_Bottle.jpg?v=1770263110",efm:"PDP_EFM18_Pills_Animated.gif?v=1770263132",efm50:"PDP_EFM50_Bottle.jpg?v=1770263114",pre:"PDP_EPRE_Bottle_No_Scent.jpg?v=1770263108",post:"PDP-EPOST-Bottle-No-Essence.jpg?v=1770263105",choline:"PDP-Choline-Bottle.jpg?v=1770263104",natbio:"PDP-NTLB-Carousel-01.jpg?v=1770263126",fert:"PDP-FS-Package-1.jpg?v=1770263112",shake:"PDP-PD18-Bag_f125fdc4-6812-45b7-a56e-faf0bf89e3c2.jpg?v=1774026738",shakepp:"PDP-PDPP-Bag.jpg?v=1770263120",shakechoc:"pdp-hero-PD18-chocolate-01_a51055ea-ef0b-4a51-9c5b-4bd1ee66b793.jpg?v=1771529730",o3:"PDP-Omega-Bottle.jpg?v=1770263103",iron:"PDP_Iron_Bottle.jpg?v=1770263136",mag:"PDP-MAG-Carousel-01.jpg?v=1770263110",stress:"PDP-Stress-Bottle.jpg?v=1770263109",sleep:"PDP_SLP_Bottle.jpg?v=1770263109",syn:"PDP-SYN-Bottle.jpg?v=1770263121",hya:"PDP_HYA_Bottle_1.jpg?v=1770263106",k_dh18:"Essential_GutDuo.webp?v=1773185920",k_dh50:"Essential-_-Gut-Duo-for-Women-50.webp?v=1773185976",k_dn:"Day-_-Night-Recovery.webp?v=1773185848",k_preN:"Mom-to-Baby-Set-for-Prenatal.webp?v=1773186642",k_preg:"Essential_Natalbiotic_CholineTrioforPrenatal.webp?v=1773186462",k_post:"Essential_Natalbiotic_SkinTrioforPostnatal.webp?v=1773186390",k_mtb:"Essential_-Omega-_-Choline-Trio-for-Prenatal.webp?v=1773186519",k_fert:"Essential_FertilitySupportforPrenatal.webp?v=1773186081"};
 
 function imgExt(fn){var m=fn.split("?")[0];var d=m.lastIndexOf(".");return d>0?m.slice(d):".jpg";}
-function imgHTML(id){var fn=IMG[id];if(!fn)return '<svg><use href="#bottle"/></svg>';return '<img class="pmimg" loading="lazy" alt="" src="product-images/'+id+imgExt(fn)+'" data-fn="'+fn+'" onerror="imgFB(this)">';}
+function imgHTML(id){if(id==="tray")return '<svg class="origimg"><use href="#tray"/></svg>';var fn=IMG[id];if(!fn)return '<svg><use href="#bottle"/></svg>';return '<img class="pmimg" loading="lazy" alt="" src="product-images/'+id+imgExt(fn)+'" data-fn="'+fn+'" onerror="imgFB(this)">';}
 function imgFB(el){var s=+(el.dataset.s||0),fn=el.dataset.fn;if(s===0){el.dataset.s="1";el.src="https://ritual.com/cdn/shop/files/"+fn;}else if(s===1){el.dataset.s="2";el.src="https://cdn.shopify.com/s/files/1/0626/8842/8126/files/"+fn;}else{el.outerHTML='<svg><use href="#bottle"/></svg>';}}
+if(window.__fbq){var __q=window.__fbq;window.__fbq=null;__q.forEach(function(el){imgFB(el);});}
 
 const cart={}; /* key: id_mode -> {id,mode,qty} */
 let view="home", curTab="all", pdpId=null, pdpM="sub", pdpQ=1;
@@ -719,6 +740,7 @@ function renderShop(){
 /* ============ PDP ============ */
 function renderPDP(){
   const p=PRODUCTS[pdpId];
+  var _orig=(pdpId==="tray");
   document.getElementById("crumbName").textContent=p.name;
   document.getElementById("pdTag").textContent=p.tag;
   document.getElementById("pdName").textContent=p.name;
@@ -736,8 +758,12 @@ function renderPDP(){
     ["How to take it","Follow the label on the real product. Most Ritual capsules are delayed-release and designed to be taken any time, with or without food."],
     ["Maya's store economics","Your MAYA10 code takes 10% off. Maya earns 5% of the order before tax and shipping, and a monthly share while a subscription stays active. Annual prepay counts as twelve months of subscription paid upfront, so the whole year of creator residuals is paid on day one, and a free shaker plus 2 Daily Shake samples ship with the first box. Printed on your receipt at checkout."]
   ].map((a,i)=>'<div class="acc'+(i===0?" open":"")+'"><button class="ah" onclick="this.parentElement.classList.toggle(\'open\')">'+a[0]+'<span class="car">&#9656;</span></button><div class="ab">'+a[1]+'</div></div>').join("");
+  if(_orig){document.getElementById("pdAccs").innerHTML=[["Materials","Bamboo look shell with recycled inner cups. Wipes clean with a damp cloth, no dishwasher."],["How it works","Fill it on Sunday night. Each door is labeled by day, and the whole tray fits under a cabinet."],["Maya's own line","This one is mine, not Ritual's. The store sells what my family actually uses, and this is how we remember to use it."]].map((a,i)=>'<div class="acc'+(i===0?" open":"")+'"><button class="ah" onclick="this.parentElement.classList.toggle(\'open\')">'+a[0]+'<span class="car">&#9656;</span></button><div class="ab">'+a[1]+'</div></div>').join("");}
   document.getElementById("pdRelated").innerHTML=p.rel.map(card).join("");
-  pdMode("sub");
+  document.getElementById("optSub").style.display=_orig?"none":"";
+  document.getElementById("optYear").style.display=_orig?"none":"";
+  var _pn=document.getElementById("pdNote");if(_pn)_pn.textContent=_orig?"Maya's original product, not a Ritual item. She keeps all of this one.":"MAYA10 applies in the cart. Maya earns 5% of this order, before tax and shipping. Prepay the year and a free shaker plus 2 Daily Shake samples ship with your first box.";
+  pdMode(_orig?"once":"sub");
   document.getElementById("satcName").textContent=p.name;
 }
 function pdMode(m){
@@ -797,7 +823,7 @@ function renderCart(){
       return '<div class="li">'+
         '<div class="li-img">'+imgHTML(it.id)+'</div>'+
         '<div class="li-main"><div class="li-name">'+p.name+'</div>'+
-        '<div class="li-mode">'+(
+        '<div class="li-mode">'+(it.id==="tray"?'<button class="on">One-time only</button>':
           '<button class="'+(it.mode==="sub"?"on":"")+'" onclick="setMode(\''+k+'\',\'sub\')">Monthly '+money(p.sub)+'</button>'+
           '<button class="'+(it.mode==="year"?"on":"")+'" onclick="setMode(\''+k+'\',\'year\')">Year '+money(p.sub*12)+'</button>'+
           '<button class="'+(it.mode==="once"?"on":"")+'" onclick="setMode(\''+k+'\',\'once\')">Once '+money(p.once)+'</button>')+
@@ -856,6 +882,7 @@ function checkout(){
 
 /* ============ Nathan ============ */
 const NOTES=[
+  {tag:"Her own product",text:"Maya sells her own Sunday Tray next to the Ritual catalog. It is hers, not Ritual's, and the page says so. A partner store that carries the partner's own line gives her audience a reason to visit that no other Ritual page has."},
   {tag:"Annual prepay",text:"The year prepay is the LTV lever. A subscriber Ritual would normally earn back over 12 uncertain months pays on day one, churn is zero for the year, and the shaker plus samples cost less than one month of paid acquisition. Maya also collects her full year of 5% residuals upfront, which is why creators will push annual harder than any banner we could design."},
   {tag:"The full build",text:"This is portal one taken to a complete theme: home, collections, product pages, cart, and checkout, all in Broadcast DNA. One catalog object drives every page, so this entire store is still just Maya's config file rendered four different ways."},
   {tag:"Broadcast DNA",text:"Storytelling first: a full-bleed warm hero, image-with-text story blocks, a shop-the-routine timeline instead of a product wall, and soft rounded cards. Her audience buys the family's day, so the store is organized as a day, not a catalog."},

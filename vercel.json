@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/ritual.html", "destination": "/ritual", "permanent": true }
+  ]
+}

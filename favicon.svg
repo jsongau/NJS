@@ -1,16 +1,22 @@
-<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><style>@font-face{font-family:'Archivo';font-style:italic;font-weight:900;src:url(data:font/woff2;base64,d09GMgABAAAAAAN0ABAAAAAABvgAAAMYAAIAQgAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbZBwqBmA/U1RBVFYAPBEICoIYggcBNgIkAwwLCAAEIAWEeAcgDAcbyQUgHgVu0zNWiIcqOSHhLzcqnLzj+efv/Vz73Pvf9EKlpnAt2DgU7FhxhAIcsC44lpA/g8ZRc7SjhCY3C/kq/Nif9lfz14meumAE2+5J7ZtvTqgOod7/XE7vaA3A9fGGwIGc2eECWwPoQK6xNZECDWjTmBhI5lkYYO69dJtoUJc0yBId+YUJ5gERJSKYdUQT5RPbw0uU/BAINkrqMBIEeR/q2yiBILoyLaaVddTYJYpCgYhSlLGekMfKtwDQy5EqDxPqL2UJeVN2XAT38kjTL0DgH3jx7HiHPvDcRYsjqtCfUtSBQC1SDoE9VCKmNayjwlWUX0JApSjgy2sVKMjbFM6kaFAGq0RRoMKHEEiEHFDlgSgyQUCR2I8K1M7QIYiiVo0E5KnJOBlGAJGRYAk0MKDwCvIVAh0Q2bFl8mfyrBwc5OGrrxfyZvJh9Koa4uWuaeD2CPy8wgUU2c18TBUVOO+dZCqdnu6nyO6b2pKdujpaM+daeKbSy/2QVcPPWJ1Nkb3EWDLRg/PazkmZySfnAsuFMofnemiHQ7Yvm9yxxFhm7+oXzi6Jl6f/mRcUgZEIPOdsUtPXciM73aS46ameKB1fzY0ImyaDNWd64v/Cl7w1v8KsbGNA+0+J4Nw0kvtIqWupmuCSOKalo+YTV5Q4cmNheXn6zAu/Lh7IDcw1N9q894ZgBAjKo/vz5ngmZfyRaFTPwL9/wu3Af30zDsJAVPphVwKlQYHQeedHAP7vaq49GwFepFURXjYL1OoMHwo0H0VBYNe8b2jSGcB3cCGu6oEy7wKap/6huxVlmNhNmDK4liwVBcxnCigwmzWgwbwLhI/JwX2SYMwNKw7XA59GoQKYJvX9KHEuVBLMgk+g0txyYA58Dp1EACECAaLDF/jyyTYBV2BKjZpwmr0rgjcQzGEZsmexaXhEoM/FA5dkWHRym8RncSaxaLYcJhFmycQRGHYAx6QRTKhSp06DEXtHju3MEnaeJvqDozGOV3hN+pyGxmHDiA2DTHpDapntihoR+MctmLVwzGEIM37COK0H9Z8UJH+EuhwAAAA=) format('woff2')} text{font-family:'Archivo',sans-serif;font-style:italic;font-weight:900}</style><defs>
-    <linearGradient id="gold" x1="0" y1="0" x2="0.4" y2="1">
-      <stop offset="0" stop-color="#f6e7b4"/><stop offset=".42" stop-color="#e8cf86"/>
-      <stop offset=".7" stop-color="#caa85a"/><stop offset="1" stop-color="#a9863f"/>
-    </linearGradient>
-    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0" stop-color="#161a23"/><stop offset=".5" stop-color="#0c0f16"/><stop offset="1" stop-color="#05070c"/>
-    </linearGradient>
-    <radialGradient id="sheen" cx="32%" cy="24%" r="80%">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".10"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient></defs>
-  <rect x="1.5" y="1.5" width="61" height="61" rx="16" fill="url(#bg)"/>
-  <rect x="1.5" y="1.5" width="61" height="61" rx="16" fill="url(#sheen)"/>
-  <rect x="4.5" y="4.5" width="55" height="55" rx="13" fill="none" stroke="url(#gold)" stroke-width="1.1" opacity=".55"/>
-  <text x="33" y="45.5" font-size="40" text-anchor="middle" fill="url(#gold)" letter-spacing="-2">NS</text>
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<style>@font-face{font-family:'Archivo';font-style:italic;font-weight:900;src:url(data:font/woff2;base64,d09GMgABAAAAAAN0ABAAAAAABvgAAAMYAAIAQgAAAAAAAAAAAAAAAAAAAAAAAAAAGhYbZBwqBmA/U1RBVFYAPBEICoIYggcBNgIkAwwLCAAEIAWEeAcgDAcbyQUgHgVu0zNWiIcqOSHhLzcqnLzj+efv/Vz73Pvf9EKlpnAt2DgU7FhxhAIcsC44lpA/g8ZRc7SjhCY3C/kq/Nif9lfz14meumAE2+5J7ZtvTqgOod7/XE7vaA3A9fGGwIGc2eECWwPoQK6xNZECDWjTmBhI5lkYYO69dJtoUJc0yBId+YUJ5gERJSKYdUQT5RPbw0uU/BAINkrqMBIEeR/q2yiBILoyLaaVddTYJYpCgYhSlLGekMfKtwDQy5EqDxPqL2UJeVN2XAT38kjTL0DgH3jx7HiHPvDcRYsjqtCfUtSBQC1SDoE9VCKmNayjwlWUX0JApSjgy2sVKMjbFM6kaFAGq0RRoMKHEEiEHFDlgSgyQUCR2I8K1M7QIYiiVo0E5KnJOBlGAJGRYAk0MKDwCvIVAh0Q2bFl8mfyrBwc5OGrrxfyZvJh9Koa4uWuaeD2CPy8wgUU2c18TBUVOO+dZCqdnu6nyO6b2pKdujpaM+daeKbSy/2QVcPPWJ1Nkb3EWDLRg/PazkmZySfnAsuFMofnemiHQ7Yvm9yxxFhm7+oXzi6Jl6f/mRcUgZEIPOdsUtPXciM73aS46ameKB1fzY0ImyaDNWd64v/Cl7w1v8KsbGNA+0+J4Nw0kvtIqWupmuCSOKalo+YTV5Q4cmNheXn6zAu/Lh7IDcw1N9q894ZgBAjKo/vz5ngmZfyRaFTPwL9/wu3Af30zDsJAVPphVwKlQYHQeedHAP7vaq49GwFepFURXjYL1OoMHwo0H0VBYNe8b2jSGcB3cCGu6oEy7wKap/6huxVlmNhNmDK4liwVBcxnCigwmzWgwbwLhI/JwX2SYMwNKw7XA59GoQKYJvX9KHEuVBLMgk+g0txyYA58Dp1EACECAaLDF/jyyTYBV2BKjZpwmr0rgjcQzGEZsmexaXhEoM/FA5dkWHRym8RncSaxaLYcJhFmycQRGHYAx6QRTKhSp06DEXtHju3MEnaeJvqDozGOV3hN+pyGxmHDiA2DTHpDapntihoR+MctmLVwzGEIM37COK0H9Z8UJH+EuhwAAAA=) format('woff2')} text{font-family:'Archivo',sans-serif;font-style:italic;font-weight:900}</style>
+<defs>
+  <linearGradient id="ice" x1="0" y1="0" x2="0.35" y2="1">
+    <stop offset="0" stop-color="#aef2ff"/><stop offset=".45" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f7bff"/>
+  </linearGradient>
+  <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+    <stop offset="0" stop-color="#161a23"/><stop offset=".5" stop-color="#0c0f16"/><stop offset="1" stop-color="#05070c"/>
+  </linearGradient>
+  <linearGradient id="pk" x1="0" y1="1" x2="1" y2="0">
+    <stop offset="0" stop-color="#ff2d78"/><stop offset="1" stop-color="#ff5c96"/>
+  </linearGradient>
+  <radialGradient id="sheen" cx="32%" cy="22%" r="80%">
+    <stop offset="0" stop-color="#ffffff" stop-opacity=".09"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect x="1.5" y="1.5" width="61" height="61" rx="16" fill="url(#bg)"/>
+<rect x="1.5" y="1.5" width="61" height="61" rx="16" fill="url(#sheen)"/>
+<rect x="4.5" y="4.5" width="55" height="55" rx="13" fill="none" stroke="url(#ice)" stroke-width="1" opacity=".4"/>
+<text x="31" y="41.5" font-size="31" text-anchor="middle" fill="url(#ice)" letter-spacing="-1.2">NS</text>
+<path d="M 12 55.5 C 25 58.4 41 55.5 53.5 47 C 42 53.6 26.5 55.8 14 54.2 Z" fill="url(#pk)"/>
 </svg>

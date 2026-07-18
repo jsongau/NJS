@@ -514,7 +514,7 @@
     <div class="pdp">
       <div class="gal">
         <div class="gal-main" id="galMain"><svg><use href="#bottle"/></svg></div>
-        <div class="gal-badges"><span class="gbadge">Made Traceable</span><span class="gbadge">Third-party tested</span><span class="gbadge">Delayed-release capsule</span></div>
+        <div class="gal-badges" id="galBadges"><span class="gbadge">Made Traceable</span><span class="gbadge">Third-party tested</span><span class="gbadge">Delayed-release capsule</span></div>
       </div>
       <div class="pd">
         <span class="pd-tag" id="pdTag"></span>
@@ -768,7 +768,7 @@ function card(id){
       '<span class="ptag">'+p.tag+'</span>'+
       '<span class="pname">'+p.name+'</span>'+
       '<p class="pwhy">'+p.note.split(".")[0]+'.</p>'+
-      '<p class="prices"><b>'+money(p.sub)+'</b>/mo subscribed &middot; '+money(p.once)+' one time</p>'+
+      '<p class="prices">'+(p.sub===p.once?('<b>'+money(p.once)+'</b> one time'):('<b>'+money(p.sub)+'</b>/mo subscribed &middot; '+money(p.once)+' one time'))+'</p>'+
       '<button class="go">View product</button>'+
     '</div></div>';
 }
@@ -805,6 +805,7 @@ function renderPDP(){
   document.getElementById("optSub").style.display=_orig?"none":"";
   document.getElementById("optYear").style.display=_orig?"none":"";
   var _pn=document.getElementById("pdNote");if(_pn)_pn.textContent=_orig?"Lex's original product, not a Ritual item. She keeps all of this one.":"LEX10 applies in the cart. Lex earns 5% of this order, before tax and shipping. Prepay the year and a free shaker plus 2 Daily Shake samples ship with your first order.";
+  var _gb=document.getElementById("galBadges");if(_gb)_gb.innerHTML=_orig?'<span class="gbadge">Heavy cotton weave</span><span class="gbadge">Thumb loop + hook and loop</span><span class="gbadge">Machine washable</span>':'<span class="gbadge">Made Traceable</span><span class="gbadge">Third-party tested</span><span class="gbadge">Delayed-release capsule</span>';
   pdMode(_orig?"once":"sub");
   document.getElementById("satcName").textContent=p.name;
 }

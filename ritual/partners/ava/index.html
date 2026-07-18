@@ -795,7 +795,7 @@ function card(id){
       '<span class="ptag">'+p.tag+'</span>'+
       '<span class="pname">'+p.name+'</span>'+
       '<p class="pwhy">'+p.note.split(".")[0]+'.</p>'+
-      '<p class="prices"><b>'+money(p.sub)+'</b>/mo subscribed &middot; '+money(p.once)+' one time</p>'+
+      '<p class="prices">'+(p.sub===p.once?('<b>'+money(p.once)+'</b> one time'):('<b>'+money(p.sub)+'</b>/mo subscribed &middot; '+money(p.once)+' one time'))+'</p>'+
       '<button class="go">View product</button>'+
     '</div></div>';
 }

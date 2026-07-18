@@ -573,6 +573,30 @@
     .controls .inner{gap:10px 14px}
     .chan-grid{grid-template-columns:repeat(3,1fr)}
   }
+
+  /* ============ nav cleanup: concept dropdown + bottom disclaimer ============ */
+  .concept-foot{position:fixed;left:0;right:0;bottom:0;z-index:65;font-size:10.5px;padding:6px 14px;line-height:1.45}
+  @media(max-width:600px){.concept-foot .cf-mid{display:none}.concept-foot{font-size:10px;padding:5px 10px}}
+  .sticky-cta{bottom:52px}
+  @media(max-width:600px){.sticky-cta{bottom:42px}}
+  .cmenu{position:relative}
+  .cmenu-btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#142B6F;background:transparent;border:1.5px solid #142B6F;border-radius:999px;padding:6px 13px;cursor:pointer;transition:background .15s,color .15s}
+  .cmenu-btn:hover,.cmenu.open .cmenu-btn{background:#142B6F;color:#fff}
+  .cm-car{font-size:9px;transition:transform .2s}
+  .cmenu.open .cm-car{transform:rotate(180deg)}
+  .cmenu-panel{position:absolute;top:calc(100% + 10px);left:0;z-index:90;width:min(330px,calc(100vw - 28px));background:#142B6F;color:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(10,16,40,.35);padding:18px 18px 16px;display:none}
+  .cmenu.open .cmenu-panel{display:block;animation:cmIn .22s ease-out}
+  @keyframes cmIn{from{opacity:0;transform:translateY(-6px)}}
+  .cm-head{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cm-head b{font-weight:800}
+  .cm-tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFD601;border:1px solid rgba(255,214,1,.5);border-radius:5px;padding:2px 6px}
+  .cm-note{font-size:11px;color:#9fb0e0;line-height:1.5;margin:7px 0 13px}
+  .cm-cta{display:inline-flex;align-items:center;gap:8px;background:#FFD601;color:#142B6F;border:0;border-radius:999px;font:inherit;font-weight:800;font-size:12.5px;padding:9px 16px;cursor:pointer;transition:transform .15s;width:100%;justify-content:center}
+  .cm-cta:hover{transform:translateY(-1px)}
+  .cm-cta .new{background:#142B6F;color:#FFD601;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:5px;padding:2px 6px}
+  .cm-links{display:flex;flex-direction:column;gap:2px;margin-top:12px;border-top:1px solid rgba(255,255,255,.14);padding-top:11px}
+  .cm-links a{color:#cdd6f2;font-size:12px;font-weight:700;text-decoration:none;padding:6px 2px;border-radius:6px}
+  .cm-links a:hover{color:#fff}
 </style>
 </head>
 <body>
@@ -937,18 +961,26 @@
 
 
 <!-- Sticky header: disclaimer + logo + controls stay visible while scrolling -->
-<div class="meganav"><div class="mn-in"><span class="mn-badge"><svg class="mn-logo" viewBox="0 0 71 22" width="62" height="19" aria-hidden="true"><path fill="#fff" d="M28.9111 6.6709H31.4873V10.0801H28.9111V17.041C28.9712 17.9664 29.387 18.3994 30.2061 18.3994C31.0239 18.3993 31.6335 18.0398 32.1289 17.6445V21.1953C31.4055 21.7024 30.178 22.0699 28.8154 21.9893C27.9091 21.9352 26.8466 21.5471 26.1016 20.7822C25.4569 19.9782 25.1348 19.1801 25.1348 17.8252V10.0801H23.2041V6.6709H25.1348V1.77344H28.9111V6.6709ZM56.7275 6.50977C58.7147 6.50979 60.401 7.44226 61.0332 8.25391L61.3838 6.69043H64.4062V21.7227H61.3838L61.0332 20.1592C60.401 20.971 58.7454 21.9033 56.7275 21.9033C52.4218 21.9033 49.168 18.7162 49.168 14.207C49.168 9.69702 52.4218 6.50977 56.7275 6.50977ZM37.1885 14.4434C37.1885 17.0917 38.3737 18.2363 40.5449 18.2363C42.7148 18.2362 43.9307 16.6706 43.9307 14.4434V6.67285H47.667V21.7197H44.2812L43.9307 20.0049C43.2367 20.9083 41.8105 21.9004 39.7305 21.9004C35.9928 21.9003 33.4522 19.704 33.4521 15.7012V6.67285H37.1885V14.4434ZM6.74902 0.734375C12.5749 0.734413 15.8563 4.03766 15.8564 8.43066C15.8564 11.3671 14.3504 13.74 11.6572 15.083L16.0977 21.7217H11.5713L7.88574 16.127H3.77637V21.7217H0V0.734375H6.74902ZM21.458 21.7217H17.6826V6.6709H21.458V21.7217ZM70.1211 21.7217H66.3457V0.734375H70.1211V21.7217ZM56.8486 10.0693C54.556 10.0695 52.7891 11.9457 52.7891 14.207C52.7892 16.4677 54.5563 18.3426 56.8486 18.3428C59.086 18.3428 60.7987 16.4678 60.7988 14.207C60.7988 11.9456 59.086 10.0693 56.8486 10.0693ZM3.78125 12.2676H7.14062C9.81594 12.2676 11.8967 11.0718 11.8965 8.43066C11.8963 5.78895 9.8158 4.59377 7.14062 4.59375H3.78125V12.2676ZM19.5566 0C20.912 0 22.0107 1.11198 22.0107 2.4834C22.0107 3.85525 20.912 4.96777 19.5566 4.96777C18.2011 4.96774 17.1025 3.85523 17.1025 2.4834C17.1026 1.112 18.2009 3.69585e-05 19.5566 0Z"></path></svg> Growth Concept Funnel for <b>Ritual.com</b><span class="tag">concept</span></span><span class="mn-note">Independent concept by Nathan J. Song, not affiliated with Ritual</span><div class="mn-switch"><button class="mn-cta" onclick="openPartners()"><span class="new">New</span> Introducing the Partner Circle</button></div></div></div>
 <div class="topbar">
-<div class="concept-bar">
-  <strong>GROWTH CONCEPT</strong> &nbsp;·&nbsp; Prepared by <strong>Nathan&nbsp;J.&nbsp;Song</strong>, Growth PM candidate &nbsp;·&nbsp; A demonstration only, <strong>not affiliated with or endorsed by Ritual</strong> &nbsp;·&nbsp; <a class="concept-strat" href="strategy.html" onclick="return openStrategy(event)">Read my growth strategy</a>
-</div>
 <!-- Brand header with clickable logo -->
 <div class="brandbar">
   <div class="inner">
     <button class="logo" onclick="goHome()" aria-label="Ritual, back to start" title="Back to start">
       <svg viewBox="0 0 71 22" height="22" width="71" fill="none" aria-hidden="true"><path fill="#142B6F" d="M28.9111 6.6709H31.4873V10.0801H28.9111V17.041C28.9712 17.9664 29.387 18.3994 30.2061 18.3994C31.0239 18.3993 31.6335 18.0398 32.1289 17.6445V21.1953C31.4055 21.7024 30.178 22.0699 28.8154 21.9893C27.9091 21.9352 26.8466 21.5471 26.1016 20.7822C25.4569 19.9782 25.1348 19.1801 25.1348 17.8252V10.0801H23.2041V6.6709H25.1348V1.77344H28.9111V6.6709ZM56.7275 6.50977C58.7147 6.50979 60.401 7.44226 61.0332 8.25391L61.3838 6.69043H64.4062V21.7227H61.3838L61.0332 20.1592C60.401 20.971 58.7454 21.9033 56.7275 21.9033C52.4218 21.9033 49.168 18.7162 49.168 14.207C49.168 9.69702 52.4218 6.50977 56.7275 6.50977ZM37.1885 14.4434C37.1885 17.0917 38.3737 18.2363 40.5449 18.2363C42.7148 18.2362 43.9307 16.6706 43.9307 14.4434V6.67285H47.667V21.7197H44.2812L43.9307 20.0049C43.2367 20.9083 41.8105 21.9004 39.7305 21.9004C35.9928 21.9003 33.4522 19.704 33.4521 15.7012V6.67285H37.1885V14.4434ZM6.74902 0.734375C12.5749 0.734413 15.8563 4.03766 15.8564 8.43066C15.8564 11.3671 14.3504 13.74 11.6572 15.083L16.0977 21.7217H11.5713L7.88574 16.127H3.77637V21.7217H0V0.734375H6.74902ZM21.458 21.7217H17.6826V6.6709H21.458V21.7217ZM70.1211 21.7217H66.3457V0.734375H70.1211V21.7217ZM56.8486 10.0693C54.556 10.0695 52.7891 11.9457 52.7891 14.207C52.7892 16.4677 54.5563 18.3426 56.8486 18.3428C59.086 18.3428 60.7987 16.4678 60.7988 14.207C60.7988 11.9456 59.086 10.0693 56.8486 10.0693ZM3.78125 12.2676H7.14062C9.81594 12.2676 11.8967 11.0718 11.8965 8.43066C11.8963 5.78895 9.8158 4.59377 7.14062 4.59375H3.78125V12.2676ZM19.5566 0C20.912 0 22.0107 1.11198 22.0107 2.4834C22.0107 3.85525 20.912 4.96777 19.5566 4.96777C18.2011 4.96774 17.1025 3.85523 17.1025 2.4834C17.1026 1.112 18.2009 3.69585e-05 19.5566 0Z"></path></svg>
-      <span class="tag">concept</span>
     </button>
+
+    <div class="cmenu" id="cmenu">
+      <button class="cmenu-btn" id="cmenuBtn" aria-expanded="false" aria-haspopup="true" onclick="toggleCmenu(event)">Concept <span class="cm-car">&#9662;</span></button>
+      <div class="cmenu-panel" id="cmenuPanel" role="menu" aria-label="About this concept">
+        <div class="cm-head">Growth Concept Funnel for <b>Ritual.com</b><span class="cm-tag">concept</span></div>
+        <p class="cm-note">Independent concept by Nathan J. Song, not affiliated with Ritual.</p>
+        <button class="cm-cta" onclick="closeCmenu();openPartners()"><span class="new">New</span> Introducing the Partner Circle</button>
+        <div class="cm-links">
+          <a href="/ritual/partners/">The Partner Circle page</a>
+          <a href="strategy.html" onclick="closeCmenu();return openStrategy(event)">Read my growth strategy</a>
+        </div>
+      </div>
+    </div>
 
     <div class="theme-seg">
       <span class="tlab">Color theme</span>
@@ -3998,6 +4030,10 @@ positionThemePill();
 function openPartners(){var o=document.getElementById('pnOv');if(o){o.classList.add('show');document.body.style.overflow='hidden';if(window.track){try{track('open_partners');}catch(_){}}}}
 function closePartners(){var o=document.getElementById('pnOv');if(o){o.classList.remove('show');document.body.style.overflow='';}}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closePartners();});
+function toggleCmenu(e){if(e)e.stopPropagation();var c=document.getElementById("cmenu");var open=c.classList.toggle("open");document.getElementById("cmenuBtn").setAttribute("aria-expanded",open?"true":"false");if(open&&window.track){try{track("open_concept_menu");}catch(_){}}}
+function closeCmenu(){var c=document.getElementById("cmenu");c.classList.remove("open");document.getElementById("cmenuBtn").setAttribute("aria-expanded","false");}
+document.addEventListener("click",function(e){var c=document.getElementById("cmenu");if(c&&c.classList.contains("open")&&!e.target.closest("#cmenu"))closeCmenu();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCmenu();});
 function openStrategy(e){ if(e){e.preventDefault();} var o=document.getElementById('stratOv'); if(o){o.classList.add('show'); document.body.style.overflow='hidden'; if(window.track){try{track('open_strategy');}catch(_){}} } return false; }
 function closeStrategy(){ var o=document.getElementById('stratOv'); if(o){o.classList.remove('show'); document.body.style.overflow='';} }
 document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeStrategy(); } });
@@ -4772,5 +4808,10 @@ showFstep(1); render(); positionThemePill(); track('page_view');
   </div>
 </div>
 
+
+<!-- concept disclaimer: slim bottom sticky -->
+<div class="concept-bar concept-foot">
+  <strong>GROWTH CONCEPT</strong> &nbsp;&middot;&nbsp; <span class="cf-mid">Prepared by <strong>Nathan&nbsp;J.&nbsp;Song</strong>, Growth PM candidate &nbsp;&middot;&nbsp; A demonstration only, </span><strong>not affiliated with or endorsed by Ritual</strong> &nbsp;&middot;&nbsp; <a class="concept-strat" href="strategy.html" onclick="return openStrategy(event)">Read my growth strategy</a>
+</div>
 </body>
 </html>

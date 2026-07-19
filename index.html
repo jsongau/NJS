@@ -2229,8 +2229,8 @@
 </div>
 <script id="twin-js">
 (function(){
-  var FN_URL = "https://uqefyfqwwkkvydkgepgf.supabase.co/functions/v1/twin-chat";
-  var ANON = "sb_publishable_0Y-o-QD73luyTYUcjWRWzQ_7b9ogFLs";
+  var FN_URL = "https://abgyhmsrfetcgrbkrfvi.supabase.co/functions/v1/twin-chat";
+  var ANON = "sb_publishable_uHJ27sVlgNrQjlXvPJ0NAg_QtQHZwpA";
   var GREETING = "Hi, I'm Agent NS, Nathan's AI twin, grounded in his real experience across operations and AI enablement. Ask me anything, or tap a question below.";
   var STARTERS = [
     "How have you turned a struggling operation into a scalable one?",
@@ -2342,7 +2342,7 @@
       if(!resp.ok || !resp.body){
         var err={}; try{ err=await resp.json(); }catch(e){}
         think.remove();
-        if(resp.status===503){ maintBubble(); }
+        if(resp.status===503 || resp.status===429){ maintBubble(); }
         else{ bubble('bot', err.error || "Sorry, I had trouble responding just now. Try again, or email natejmsong@gmail.com."); }
         busy=false; send.disabled=!input.value.trim(); return;
       }

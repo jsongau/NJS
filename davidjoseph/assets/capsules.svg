@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 320" role="img" aria-label="Two delayed-release Mira capsules with a suspended beadlet">
+  <defs>
+    <linearGradient id="cOil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FBEEF3"/><stop offset="1" stop-color="#F3D9DE"/>
+    </linearGradient>
+    <radialGradient id="cBead" cx=".35" cy=".3" r=".85">
+      <stop offset="0" stop-color="#F6C7D9"/><stop offset="1" stop-color="#E07A9F"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="230" cy="286" rx="150" ry="16" fill="#4A2E4D" opacity=".08"/>
+  <!-- capsule 1 -->
+  <g transform="translate(150 150) rotate(-24)">
+    <rect x="-120" y="-34" width="240" height="68" rx="34" fill="url(#cOil)" stroke="#E3B9C8" stroke-width="2.5"/>
+    <path d="M0 -34 h86 a34 34 0 0 1 34 34 a34 34 0 0 1 -34 34 h-86 Z" fill="#E9C6D2" opacity=".55"/>
+    <line x1="0" y1="-33" x2="0" y2="33" stroke="#D9A9BC" stroke-width="2" opacity=".7"/>
+    <ellipse cx="-64" cy="-14" rx="30" ry="10" fill="#FFFFFF" opacity=".55"/>
+    <circle cx="-40" cy="4" r="15" fill="url(#cBead)"/>
+    <circle cx="-40" cy="4" r="15" fill="none" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="2"/>
+  </g>
+  <!-- capsule 2 -->
+  <g transform="translate(300 176) rotate(18)">
+    <rect x="-120" y="-32" width="240" height="64" rx="32" fill="url(#cOil)" stroke="#E3B9C8" stroke-width="2.5"/>
+    <path d="M0 -32 h88 a32 32 0 0 1 32 32 a32 32 0 0 1 -32 32 h-88 Z" fill="#E9C6D2" opacity=".55"/>
+    <line x1="0" y1="-31" x2="0" y2="31" stroke="#D9A9BC" stroke-width="2" opacity=".7"/>
+    <ellipse cx="-58" cy="-13" rx="28" ry="9" fill="#FFFFFF" opacity=".5"/>
+    <circle cx="52" cy="2" r="13" fill="url(#cBead)"/>
+    <circle cx="52" cy="2" r="13" fill="none" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="2"/>
+  </g>
+</svg>

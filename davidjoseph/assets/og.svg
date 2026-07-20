@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Win a Year of Mira">
+  <defs>
+    <linearGradient id="ogBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FBF7F4"/><stop offset="1" stop-color="#F3D9DE"/>
+    </linearGradient>
+    <linearGradient id="ogGlass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F8ECEF"/><stop offset=".5" stop-color="#FFFFFF"/><stop offset="1" stop-color="#EAD9E0"/>
+    </linearGradient>
+    <linearGradient id="ogCap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6B4A6E"/><stop offset="1" stop-color="#4A2E4D"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogBg)"/>
+  <circle cx="1040" cy="120" r="220" fill="#E07A9F" opacity=".08"/>
+  <circle cx="150" cy="560" r="180" fill="#4A2E4D" opacity=".05"/>
+  <!-- text block -->
+  <text x="96" y="150" font-family="-apple-system,'Segoe UI',sans-serif" font-size="22" letter-spacing="5" fill="#E07A9F" font-weight="700">MIRA · PRENATAL GIVEAWAY</text>
+  <text x="92" y="270" font-family="Georgia, serif" font-size="92" fill="#4A2E4D">Win a Year of</text>
+  <text x="92" y="372" font-family="Georgia, serif" font-size="92" fill="#4A2E4D" font-style="italic">Mira nutrition.</text>
+  <text x="96" y="440" font-family="-apple-system,'Segoe UI',sans-serif" font-size="27" fill="#6E6270">Clean, vegan, fully traceable prenatal &amp; women's multivitamins.</text>
+  <text x="96" y="482" font-family="-apple-system,'Segoe UI',sans-serif" font-size="27" fill="#6E6270">Enter free. No purchase necessary.</text>
+  <g font-family="-apple-system,'Segoe UI',sans-serif" font-size="19" fill="#4A2E4D" font-weight="600">
+    <rect x="96" y="524" width="220" height="52" rx="26" fill="#E07A9F"/>
+    <text x="206" y="557" text-anchor="middle" fill="#3A1B2A" font-weight="700">Enter the giveaway</text>
+    <text x="340" y="557" fill="#8A7A8C" font-weight="500">A growth-funnel concept by Nathan J. Song</text>
+  </g>
+  <!-- bottle -->
+  <g transform="translate(890 168) scale(1.02)">
+    <ellipse cx="105" cy="330" rx="96" ry="15" fill="#4A2E4D" opacity=".10"/>
+    <rect x="66" y="18" width="78" height="34" rx="9" fill="url(#ogGlass)" stroke="#E3CBD4" stroke-width="2"/>
+    <rect x="56" y="-16" width="98" height="46" rx="12" fill="url(#ogCap)"/>
+    <rect x="30" y="42" width="150" height="278" rx="26" fill="url(#ogGlass)" stroke="#E3CBD4" stroke-width="2"/>
+    <path d="M42 150 h126 v118 a12 12 0 0 1 -12 12 h-102 a12 12 0 0 1 -12 -12 Z" fill="#FFFFFF" stroke="#EAD9E0" stroke-width="1.5"/>
+    <path d="M54 150 h102 a12 12 0 0 1 12 12 v20 h-126 v-20 a12 12 0 0 1 12 -12 Z" fill="#E07A9F"/>
+    <text x="105" y="176" text-anchor="middle" font-family="Georgia, serif" font-size="13" letter-spacing="3" fill="#FFFFFF">MIRA</text>
+    <text x="105" y="222" text-anchor="middle" font-family="Georgia, serif" font-size="27" fill="#4A2E4D">Prenatal</text>
+    <text x="105" y="248" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" letter-spacing="1.5" fill="#8A7A8C">MULTI + DHA</text>
+  </g>
+</svg>

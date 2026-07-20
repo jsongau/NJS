@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 340" role="img" aria-label="Mira sample pack">
+  <defs>
+    <linearGradient id="sPouch" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBF7F4"/><stop offset="1" stop-color="#F3D9DE"/>
+    </linearGradient>
+    <radialGradient id="sBead" cx=".35" cy=".3" r=".85">
+      <stop offset="0" stop-color="#F6C7D9"/><stop offset="1" stop-color="#E07A9F"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="230" cy="312" rx="160" ry="16" fill="#4A2E4D" opacity=".08"/>
+  <!-- pouch -->
+  <g>
+    <path d="M150 96 h160 a10 10 0 0 1 10 10 v150 a20 20 0 0 1 -20 20 h-140 a20 20 0 0 1 -20 -20 v-150 a10 10 0 0 1 10 -10 Z" fill="url(#sPouch)" stroke="#E3CBD4" stroke-width="2.5"/>
+    <!-- crimped top -->
+    <rect x="140" y="78" width="180" height="22" rx="5" fill="#EAD9E0" stroke="#E3CBD4" stroke-width="2"/>
+    <g fill="#D9BEC8"><rect x="150" y="80" width="3" height="18"/><rect x="162" y="80" width="3" height="18"/><rect x="174" y="80" width="3" height="18"/><rect x="186" y="80" width="3" height="18"/><rect x="198" y="80" width="3" height="18"/><rect x="210" y="80" width="3" height="18"/><rect x="222" y="80" width="3" height="18"/><rect x="234" y="80" width="3" height="18"/><rect x="246" y="80" width="3" height="18"/><rect x="258" y="80" width="3" height="18"/><rect x="270" y="80" width="3" height="18"/><rect x="282" y="80" width="3" height="18"/><rect x="294" y="80" width="3" height="18"/><rect x="306" y="80" width="3" height="18"/></g>
+    <!-- label band -->
+    <rect x="165" y="150" width="130" height="86" rx="10" fill="#FFFFFF" opacity=".92" stroke="#EAD9E0"/>
+    <text x="230" y="182" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#4A2E4D">Mira</text>
+    <text x="230" y="204" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="11" letter-spacing="2.5" fill="#8A7A8C">SAMPLE PACK</text>
+    <text x="230" y="224" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10.5" letter-spacing="1" fill="#6E8F7A">7-day trial · 2 capsules a day</text>
+  </g>
+  <!-- capsule in front -->
+  <g transform="translate(346 250) rotate(20)">
+    <rect x="-42" y="-16" width="84" height="32" rx="16" fill="#FDF3F7" stroke="#E3B9C8" stroke-width="2"/>
+    <path d="M0 -16 h26 a16 16 0 0 1 16 16 a16 16 0 0 1 -16 16 h-26 Z" fill="#F0CBD8" opacity=".6"/>
+    <circle cx="-16" cy="0" r="8.5" fill="url(#sBead)"/>
+  </g>
+</svg>

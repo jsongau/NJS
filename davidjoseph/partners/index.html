@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Partner Circle · A Mira Growth Concept by Nathan J. Song</title>
+<meta name="description" content="A partner affiliate program concept for Mira: creator storefronts in their own voice, a private 10% preference for followers, 5% partner earnings including kept subscriptions.">
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --navy:#4A2E4D; --navy-deep:#0d1636; --cream:#FBF7F4; --card:#ffffff;
+    --gold:#C5A253; --gold-soft:#B89D62; --gold-line:rgba(197,162,83,.55);
+    --ink:#4A2E4D; --body:#3d4666; --muted:#6E6270; --faint:#8b91a8;
+    --hairline:#e6dfcd; --serif:Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--cream);color:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  /* ============ shared mega-nav ============ */
+  .meganav{background:#4A2E4D;color:#fff}
+  .mn-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px 16px;padding:9px 20px;flex-wrap:wrap}
+  .mn-badge{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;letter-spacing:.01em;color:#fff;text-decoration:none}
+  .mn-badge b{font-weight:800}
+  .mn-badge .tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#E07A9F;border:1px solid rgba(224,122,159,.5);border-radius:5px;padding:2px 6px}
+  .mn-note{font-size:10.5px;color:#C9A9CC;line-height:1.3}
+  .mn-switch{margin-left:auto;display:inline-flex;align-items:center;gap:9px}
+  .mn-lab{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#C9A9CC;white-space:nowrap}
+  .mn-seg{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px}
+  .mn-seg a{text-decoration:none;font-size:12.5px;font-weight:800;color:#E7D6E9;padding:6px 14px;border-radius:999px;white-space:nowrap;transition:.15s}
+  .mn-seg a:hover{color:#fff}
+  .mn-seg a.on{background:#E07A9F;color:#4A2E4D}
+  @media(max-width:680px){.mn-note{display:none}.mn-switch{margin-left:0;width:100%}}
+
+  main{max-width:880px;margin:0 auto;padding:0 22px}
+
+  /* ============ hero ============ */
+  .hero{text-align:center;padding:64px 0 46px;border-bottom:1px solid var(--hairline)}
+  .seal{width:92px;height:92px;margin:0 auto 16px;display:block}
+  .kick{font-size:10.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft)}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,6vw,52px);letter-spacing:.005em;line-height:1.1;color:var(--ink);margin:12px 0 16px}
+  h1 i{font-style:italic}
+  .hero p{font-size:15px;line-height:1.7;max-width:58ch;margin:0 auto}
+  .hero .rule{width:34px;height:1px;background:var(--gold-line);margin:26px auto 0}
+
+  /* ============ sections ============ */
+  section{padding:52px 0;border-bottom:1px solid var(--hairline)}
+  .sec-kick{text-align:center;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft)}
+  h2{font-family:var(--serif);font-weight:400;text-align:center;font-size:clamp(24px,3.6vw,32px);color:var(--ink);margin:8px 0 8px}
+  .sec-sub{text-align:center;font-size:13.5px;color:var(--muted);max-width:52ch;margin:0 auto 30px;line-height:1.65}
+
+  .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .lcard{background:var(--card);border:1px solid var(--hairline);border-radius:4px;padding:26px 22px;text-align:center}
+  .lcard .no{font-family:var(--serif);font-size:13px;color:var(--gold);letter-spacing:.12em}
+  .lcard h3{font-family:var(--serif);font-weight:400;font-size:18.5px;color:var(--ink);margin:8px 0 10px}
+  .lcard .lr{width:22px;height:1px;background:var(--hairline);margin:0 auto 12px}
+  .lcard p{font-size:12.5px;line-height:1.65;color:var(--muted)}
+  .lcard b{color:var(--ink);font-weight:700}
+
+  .numbers{display:flex;justify-content:center;gap:52px;flex-wrap:wrap;margin-top:38px}
+  .num{text-align:center}
+  .num .v{font-family:var(--serif);font-size:38px;color:var(--ink);line-height:1}
+  .num .v small{font-size:18px}
+  .num .l{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);margin-top:8px;display:block}
+
+  /* ============ partner cards ============ */
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .pcard{display:flex;flex-direction:column;align-items:center;text-decoration:none;background:var(--card);border:1px solid var(--hairline);border-radius:4px;padding:28px 18px 24px;text-align:center;transition:border-color .25s ease,transform .25s ease}
+  .pcard:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .arch{position:relative;width:86px;height:104px;border-radius:999px 999px 3px 3px;background:var(--navy);display:grid;place-items:center;margin-bottom:16px;overflow:hidden}
+  .sprig{position:absolute;inset:0;width:100%;height:100%;opacity:.4}
+  .mono{position:relative;font-family:var(--serif);font-size:34px;line-height:1;color:var(--gold)}
+  .pname{font-family:var(--serif);font-weight:400;font-size:17.5px;color:var(--ink);margin-bottom:4px}
+  .prole{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:12px}
+  .prule{width:26px;height:1px;background:var(--hairline);margin-bottom:12px}
+  .pdesc{font-size:12px;line-height:1.6;color:var(--muted);max-width:26ch}
+  .pgo{display:inline-block;position:relative;margin-top:14px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);padding-bottom:3px}
+  .pgo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:bottom right;transition:transform .25s ease-out}
+  .pcard:hover .pgo::after{transform:scaleX(1);transform-origin:bottom left}
+
+  /* ============ dual campaign ============ */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+  .dcard{background:var(--card);border:1px solid var(--hairline);border-radius:4px;padding:24px 22px}
+  .dcard h3{font-family:var(--serif);font-weight:400;font-size:17.5px;color:var(--ink);margin-bottom:9px}
+  .dcard p{font-size:12.5px;line-height:1.65;color:var(--muted)}
+
+  /* ============ note from Nathan ============ */
+  .note{background:var(--navy);color:#e7ebf7;border-radius:5px;padding:36px 36px 32px;margin:52px 0;text-align:center}
+  .note .kick{color:var(--gold)}
+  .note h2{color:#fff;margin-top:8px}
+  .note p{font-size:13.5px;line-height:1.7;color:#c3cbe6;max-width:60ch;margin:12px auto 0}
+  .note .cta{display:inline-block;margin-top:22px;background:#E07A9F;color:#4A2E4D;font-weight:800;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;border-radius:999px;padding:12px 24px;transition:transform .15s}
+  .note .cta:hover{transform:translateY(-1px)}
+
+  footer{text-align:center;padding:34px 22px 46px;font-size:10.5px;color:var(--faint);line-height:1.7}
+  footer a{color:var(--muted)}
+
+  @media(max-width:760px){.tri,.pgrid,.duo{grid-template-columns:1fr}.numbers{gap:30px}}
+</style>
+<link rel="canonical" href="https://nathanjsong.com/davidjoseph/partners"><meta property="og:type" content="website"><meta property="og:site_name" content="Mira (concept)"><meta property="og:title" content="The Mira Partner Circle · creator storefronts"><meta property="og:description" content="A growth-funnel concept and work sample by Nathan J. Song."><meta property="og:url" content="https://nathanjsong.com/davidjoseph/partners"><meta property="og:image" content="https://nathanjsong.com/davidjoseph/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="The Mira Partner Circle · creator storefronts"><meta name="twitter:description" content="A growth-funnel concept and work sample by Nathan J. Song."><meta name="twitter:image" content="https://nathanjsong.com/davidjoseph/assets/og.png"><meta name="theme-color" content="#4A2E4D"><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"></head>
+<body>
+
+<div class="meganav"><div class="mn-in"><a class="mn-badge" href="/davidjoseph/partners/"><svg viewBox="0 0 96 24" height="22" aria-hidden="true"><text x="1" y="19" font-family="Georgia,serif" font-size="21" font-weight="600" letter-spacing=".3" fill="currentColor">Mira</text><circle cx="86" cy="16" r="3.4" fill="#E07A9F"/></svg> Partner Affiliate program · <b>Mira</b><span class="tag">concept</span></a><span class="mn-note">A concept by Nathan J. Song · Mira is a fictional brand</span><div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="/davidjoseph/">Funnel</a><a href="/davidjoseph/partners/" class="on">Circle</a><a href="/davidjoseph/partners/maya/">Maya</a><a href="/davidjoseph/partners/lex/">Lex</a><a href="/davidjoseph/partners/ava/">Ava</a></div></div></div></div>
+
+<main>
+
+<div class="hero">
+  <svg class="seal" viewBox="0 0 84 84" aria-hidden="true">
+    <circle cx="42" cy="42" r="41" fill="none" stroke="#C5A253" stroke-width="1"/>
+    <circle cx="42" cy="42" r="26" fill="none" stroke="#C5A253" stroke-width=".7" opacity=".7"/>
+    <defs><path id="sealArc" d="M42 9.5 a32.5 32.5 0 1 1 -0.01 0"/></defs>
+    <text font-size="7" letter-spacing="2.2" fill="#B89D62" font-family="Georgia,serif"><textPath href="#sealArc">THE PARTNER CIRCLE &#183; A GROWTH CONCEPT &#183;</textPath></text>
+    <text x="42" y="49.5" text-anchor="middle" font-family="Georgia,serif" font-size="21" fill="#4A2E4D">M</text>
+  </svg>
+  <div class="kick">By invitation &middot; concept</div>
+  <h1>The Partner <i>Circle</i></h1>
+  <p>A partner affiliate program concept for Mira. A small circle of creators, each with a storefront in their own voice, selling the real Mira catalog at published subscription prices. Their audiences arrive already trusting the person who invited them.</p>
+  <div class="rule"></div>
+</div>
+
+<section>
+  <div class="sec-kick">The economics</div>
+  <h2>How the Circle works</h2>
+  <p class="sec-sub">Three sides of one arrangement, printed on every receipt so nothing is hidden.</p>
+  <div class="tri">
+    <div class="lcard">
+      <div class="no">I</div>
+      <h3>The follower</h3>
+      <div class="lr"></div>
+      <p>Receives a <b>private 10% preference on every order</b>, applied automatically with the partner's code. No hunting for coupons, no games at checkout.</p>
+    </div>
+    <div class="lcard">
+      <div class="no">II</div>
+      <h3>The partner</h3>
+      <div class="lr"></div>
+      <p>Earns <b>5% of every sale</b> before tax and shipping, <b>including every month a subscription stays active</b>. A kept $100 subscription pays its partner $5 from Mira, monthly. An annual prepay hands the partner the full year of residuals on day one.</p>
+    </div>
+    <div class="lcard">
+      <div class="no">III</div>
+      <h3>The brand</h3>
+      <div class="lr"></div>
+      <p>Gains a storefront it never had to design, an audience it never had to buy, and <b>subscription revenue defended by a person</b>, not a discount. Both sides share one ad budget.</p>
+    </div>
+  </div>
+  <div class="numbers">
+    <div class="num"><span class="v">10<small>%</small></span><span class="l">Follower preference</span></div>
+    <div class="num"><span class="v">5<small>%</small></span><span class="l">Partner share, incl. subscriptions</span></div>
+    <div class="num"><span class="v">12<small>mo</small></span><span class="l">Prepay, residuals on day one</span></div>
+    <div class="num"><span class="v">1</span><span class="l">Shared ad budget</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-kick">Why it compounds</div>
+  <h2>Two audiences, one campaign</h2>
+  <p class="sec-sub">The program is built to run dual campaigns: the partner promotes the store to their audience while Mira's paid media points at the same page.</p>
+  <div class="duo">
+    <div class="dcard">
+      <h3>For acquisition</h3>
+      <p>Every partner storefront is a landing page with built-in trust. Paid traffic converts against a person's recommendation instead of a brand claim, and the partner's organic reach lowers the blended acquisition cost of the whole campaign.</p>
+    </div>
+    <div class="dcard">
+      <h3>For retention</h3>
+      <p>Because partners earn monthly on kept subscriptions, they are paid to defend retention, answering questions, showing routines, reminding their audience why they stayed. Churn stops being the brand's problem alone.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-kick">The partners</div>
+  <h2>Three storefronts, three voices</h2>
+  <p class="sec-sub">Each store is fully built: the complete Mira catalog, subscriptions pushed first, annual prepay with a free shaker and shake samples, and a cart that shows the partner's earnings on every order.</p>
+  <div class="pgrid">
+    <a class="pcard" href="/davidjoseph/partners/maya/">
+      <span class="arch"><svg class="sprig" viewBox="0 0 78 94" aria-hidden="true" fill="none" stroke="#C5A253" stroke-width="1"><path d="M12 94 C12 70 16 52 28 38"/><path d="M20 72 C13 70 8 64 7 56 C15 59 19 64 20 72Z"/><path d="M23 58 C29 55 31 48 30 41 C24 46 22 51 23 58Z"/><path d="M66 94 C66 74 63 60 52 48"/><path d="M60 76 C67 74 71 68 72 60 C64 63 61 68 60 76Z"/></svg><span class="mono">M</span></span>
+      <span class="pname">Maya &amp; the Table</span>
+      <span class="prole">The family kitchen</span>
+      <span class="prule"></span>
+      <span class="pdesc">A warm, story-led store built around the daily routine, with her own Sunday Apron.</span>
+      <span class="pgo">Enter the store</span>
+    </a>
+    <a class="pcard" href="/davidjoseph/partners/lex/">
+      <span class="arch"><svg class="sprig" viewBox="0 0 78 94" aria-hidden="true" fill="none" stroke="#C5A253" stroke-width="1"><path d="M12 94 C12 70 16 52 28 38"/><path d="M20 72 C13 70 8 64 7 56 C15 59 19 64 20 72Z"/><path d="M23 58 C29 55 31 48 30 41 C24 46 22 51 23 58Z"/><path d="M66 94 C66 74 63 60 52 48"/><path d="M60 76 C67 74 71 68 72 60 C64 63 61 68 60 76Z"/></svg><span class="mono">L</span></span>
+      <span class="pname">Coach Lex</span>
+      <span class="prole">The training floor</span>
+      <span class="prule"></span>
+      <span class="pdesc">A dark, bold team store where every product is tested fuel, with her own wrist wraps.</span>
+      <span class="pgo">Enter the store</span>
+    </a>
+    <a class="pcard" href="/davidjoseph/partners/ava/">
+      <span class="arch"><svg class="sprig" viewBox="0 0 78 94" aria-hidden="true" fill="none" stroke="#C5A253" stroke-width="1"><path d="M12 94 C12 70 16 52 28 38"/><path d="M20 72 C13 70 8 64 7 56 C15 59 19 64 20 72Z"/><path d="M23 58 C29 55 31 48 30 41 C24 46 22 51 23 58Z"/><path d="M66 94 C66 74 63 60 52 48"/><path d="M60 76 C67 74 71 68 72 60 C64 63 61 68 60 76Z"/></svg><span class="mono">A</span></span>
+      <span class="pname">Aligned with Ava</span>
+      <span class="prole">The studio</span>
+      <span class="prule"></span>
+      <span class="pdesc">A high-energy store, with her own grip socks line.</span>
+      <span class="pgo">Enter the store</span>
+    </a>
+  </div>
+</section>
+
+<div class="note">
+  <div class="kick">A note from the author</div>
+  <h2>Why I built this</h2>
+  <p>Mira already wins on traceability and trust. The Partner Circle extends that trust through people: a follower's first order arrives with a friend's recommendation attached, and the subscription that follows has a human reason to survive. Every page here is a working build, the funnel, the three stores, the carts, the economics, made to show how I think about growth, not just talk about it.</p>
+  <a class="cta" href="/davidjoseph/">See the giveaway funnel</a>
+</div>
+
+</main>
+
+<footer>
+  A growth-funnel concept by Nathan J. Song. Mira is a fictional brand.<br>
+  All product names, prices, and illustrations are original to this concept. Maya, Lex, and Ava are illustrative partner personas.
+</footer>
+
+</body>
+</html>

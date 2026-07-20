@@ -9,3 +9,4 @@
 
 ## 2026-07-18
 - Shipped v80 to production (commit d52f4f3): Agent NS interactive "core brain" (press-and-hold NS seal → charge + burst + spoken affirmation), 40 sayings across 4 hold-duration tiers, tap-to-play element sounds with PDF opening in a new tab, luxury gallery theme-toggle chimes, mobile layout polish, clickable email + phone (mailto/tel), and the finalized pink-strike NS favicons.
+- 2026-07-20 - /davidjoseph published: full Ritual->Mira reskin (fictional prenatal brand) as a David Joseph Growth Lead work sample; new davidjoseph/ folder (funnel + Partner Circle + 3 creator stores) with 9 original SVGs; all ritual.com deps removed; OG/canonical/favicon added.

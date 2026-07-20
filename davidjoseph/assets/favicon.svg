@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mira">
+  <rect width="64" height="64" rx="16" fill="#4A2E4D"/>
+  <path d="M16 46 V22 c0-1 1.4-1.6 2.2-.7 L32 37 l13.8-15.7 c.8-.9 2.2-.3 2.2.7 V46" fill="none" stroke="#FBF7F4" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="32" cy="49" r="4.4" fill="#E07A9F"/>
+</svg>

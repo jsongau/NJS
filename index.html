@@ -525,21 +525,24 @@
     transition:transform .75s cubic-bezier(.5,0,.2,1),opacity .75s ease}
   .salon-overlay.open .slat{transform:rotateX(82deg);opacity:.1}
 
-  .salon-blurb{font-family:'Inter',sans-serif;color:#cfd4e8;font-size:13px;line-height:1.6;
-    max-width:48ch;margin:0 auto 2px}
+  .salon-blurb{font-family:'Inter',sans-serif;color:#cfd4e8;font-size:13px;line-height:1.65;
+    max-width:46ch;margin:13px auto 0}
 
-  .salon-chips{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:452px;margin:11px auto 2px}
+  .salon-chips{display:grid;grid-template-columns:1fr 1fr;gap:9px;max-width:452px;margin:24px auto 6px;position:relative}
+  .salon-chips::before{content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%);width:48px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.55}
   .s-chip{border:1px solid rgba(232,207,134,.4);color:var(--gold-h);background:rgba(232,207,134,.06);
     padding:8px 14px;border-radius:100px;font-size:12px;cursor:pointer;transition:.2s;
     font-family:'JetBrains Mono',monospace;letter-spacing:.03em;text-align:center}
   .s-chip:hover{background:rgba(255,255,255,.07);transform:translateY(-2px);box-shadow:0 0 16px -6px var(--acc);border-color:var(--acc)}
   .s-chip.active{background:var(--acc-soft);color:#fff;border-color:var(--acc);box-shadow:0 6px 20px -8px var(--acc)}
 
-  .salon-detail{min-height:32px;margin:9px auto 2px;max-width:46ch;color:#dfe3f2;font-size:13.5px;
-    line-height:1.6;opacity:0;transform:translateY(6px);transition:.32s ease}
+  .salon-detail{min-height:20px;margin:12px auto 4px;width:min(500px,100%);max-width:none;box-sizing:border-box;
+    padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+    color:#dfe3f2;font-size:12.5px;line-height:1.6;opacity:0;transform:translateY(6px);transition:.32s ease}
   .salon-detail.show{opacity:1;transform:none}
 
-  .salon-continue{margin-top:15px;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:9px;
+  .salon-continue{margin-top:22px;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:9px;
     padding:12px 26px;border-radius:100px;border:1px solid var(--gold);
     background:linear-gradient(180deg,var(--gold-h),var(--gold) 42%,var(--gold-d));color:#231903;
     font-family:'Archivo',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;
@@ -555,6 +558,87 @@
   @media(prefers-reduced-motion:reduce){
     .curtain,.slat,.salon,.salon-overlay{transition-duration:.001ms!important}
     .mote,.salon-title,.salon-continue::after,.seal .wreath,.tieback{animation:none!important}
+  }
+
+  /* ═══════════════ COVERCAPY — "COVERAGE CONCIERGE" HIGH-TECH MODAL THEME ═══════════════ */
+  /* CoverCapy opens like a calm coverage check: a clean slate + tech grid, the shield
+     mark draws itself, a scan line sweeps it, a verified badge and ring confirm. Cool
+     cyan, precise, reassuring — high-tech equipment meets concierge care. */
+  .salon--cc{
+    --acc:#22d3ee; --cc-ink:#eaf6fb; --cc-mint:#7fffd4;
+    background:
+      radial-gradient(120% 80% at 50% 0%,rgba(34,211,238,.20),transparent 55%),
+      radial-gradient(100% 120% at 50% 120%,rgba(0,0,0,.5),transparent 60%),
+      linear-gradient(180deg,#0e1c27,#081119)!important;
+    box-shadow:
+      0 44px 130px -30px rgba(0,0,0,.9),
+      0 0 90px -18px var(--acc),
+      0 0 0 1px rgba(34,211,238,.30),
+      0 0 0 6px rgba(6,12,18,.7),
+      0 0 0 7px rgba(34,211,238,.22) inset!important;
+  }
+  .salon--cc::after{opacity:.10}
+  .salon--cc .valance,.salon--cc .curtain,.salon--cc .tieback,
+  .salon--cc .filigree,.salon--cc .salon-motes,.salon--cc .blinds,
+  .salon--cc .seal{display:none!important}
+  .salon--cc .salon-body{padding:176px 10% 26px}
+  .salon--cc .salon-eyebrow{color:#7fe9f7}
+  .salon--cc .salon-title{
+    background:linear-gradient(100deg,#22d3ee,#eaf6fb 46%,#c9f6fb 60%,#22d3ee);
+    background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent}
+  .salon--cc .salon-tag{color:#bfe9f2}
+  .salon--cc .salon-blurb{color:#cfe6ee}
+  .salon--cc .salon-detail{color:#dff2f7}
+  .salon--cc .salon-close{border-color:rgba(34,211,238,.4);color:var(--cc-ink)}
+  .salon--cc .salon-close:hover{background:rgba(34,211,238,.2)}
+  .salon--cc .s-chip{border-color:rgba(34,211,238,.4);color:var(--cc-ink);background:rgba(34,211,238,.08)}
+  .salon--cc .s-chip:hover{border-color:var(--acc);box-shadow:0 0 16px -6px var(--acc)}
+  .salon--cc .s-chip.active{background:rgba(34,211,238,.2);border-color:var(--acc);color:#fff;box-shadow:0 6px 20px -8px var(--acc)}
+  .salon--cc .salon-continue{
+    border-color:var(--acc);color:#04222a;
+    background:linear-gradient(180deg,#9bf0fb,#22d3ee 55%,#12a5c0);
+    box-shadow:0 12px 32px -10px rgba(34,211,238,.7)}
+
+  .cc-scene{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .4s ease}
+  .salon--cc .cc-scene{opacity:1}
+  .cc-grid{position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(34,211,238,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.09) 1px,transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(120% 70% at 50% 12%,#000,transparent 72%);mask-image:radial-gradient(120% 70% at 50% 12%,#000,transparent 72%)}
+  .cc-glow{position:absolute;top:30px;left:50%;transform:translateX(-50%);width:250px;height:250px;border-radius:50%;
+    background:radial-gradient(circle,rgba(34,211,238,.30),transparent 62%);filter:blur(6px)}
+  .cc-shield{position:absolute;top:22px;left:50%;width:132px;height:152px;z-index:3;
+    opacity:0;transform:translateX(-50%) scale(.92)}
+  .salon--cc .cc-shield{opacity:1;transform:translateX(-50%) scale(1);transition:opacity .4s ease,transform .5s cubic-bezier(.34,1.56,.64,1)}
+  .cc-shield svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 10px rgba(34,211,238,.5))}
+  .cc-draw{stroke-dasharray:1;stroke-dashoffset:1}
+  .salon--cc.scan .cc-outline{animation:ccDraw .7s ease .15s forwards}
+  .salon--cc.scan .cc-mark{animation:ccDraw .6s ease .5s forwards}
+  @keyframes ccDraw{to{stroke-dashoffset:0}}
+  .cc-fill{opacity:0}
+  .salon--cc.scan .cc-fill{animation:ccFade .5s ease 1.05s forwards}
+  @keyframes ccFade{to{opacity:1}}
+  .cc-check{stroke-dasharray:1;stroke-dashoffset:1}
+  .cc-badge{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.4)}
+  .salon--cc.scan .cc-badge{animation:ccBadge .4s cubic-bezier(.34,1.56,.64,1) 1.15s forwards}
+  @keyframes ccBadge{0%{opacity:0;transform:scale(.4)}100%{opacity:1;transform:scale(1)}}
+  .salon--cc.scan .cc-check{animation:ccDraw .35s ease 1.3s forwards}
+  .cc-scanline{position:absolute;left:8%;right:8%;top:20%;height:2px;border-radius:2px;opacity:0;
+    background:linear-gradient(90deg,transparent,#7fffd4,transparent);box-shadow:0 0 12px 2px rgba(127,255,212,.6)}
+  .salon--cc.scan .cc-scanline{animation:ccScanLine 1s cubic-bezier(.5,0,.5,1) .55s}
+  @keyframes ccScanLine{0%{opacity:0;top:16%}12%{opacity:1}88%{opacity:1}100%{opacity:0;top:86%}}
+  .cc-ring{position:absolute;top:44%;left:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;
+    border:2px solid rgba(127,255,212,.7);opacity:0}
+  .salon--cc.scan .cc-ring{animation:ccRing .9s ease 1.15s}
+  @keyframes ccRing{0%{opacity:.8;transform:scale(.3)}100%{opacity:0;transform:scale(1.5)}}
+
+  @media(max-width:560px){.salon--cc .salon-body{padding-top:160px}.cc-shield{width:118px;height:138px}}
+  @media(prefers-reduced-motion:reduce){
+    .cc-shield,.cc-draw,.cc-fill,.cc-check,.cc-badge,.cc-scanline,.cc-ring{animation:none!important;transition:none!important}
+    .salon--cc .cc-shield{opacity:1!important;transform:translateX(-50%) scale(1)!important}
+    .salon--cc .cc-draw,.salon--cc .cc-check{stroke-dashoffset:0!important}
+    .salon--cc .cc-fill,.salon--cc .cc-badge{opacity:1!important;transform:none!important}
+    .cc-scanline,.cc-ring{display:none!important}
   }
 
   /* ═══════════════ BOBA NIGHT — "MIDNIGHT POUR" DESSERT MODAL THEME ═══════════════ */
@@ -578,7 +662,8 @@
   .salon--boba .valance,.salon--boba .curtain,.salon--boba .tieback,
   .salon--boba .filigree,.salon--boba .salon-motes,.salon--boba .blinds,
   .salon--boba .seal{display:none!important}
-  .salon--boba .salon-body{padding-top:178px}
+  .salon--boba .salon-body{padding:178px 9% 26px}
+  .salon--boba .salon-detail{max-width:none}
   .salon--boba .salon-eyebrow{color:var(--bn-cream)}
   .salon--boba .salon-title{
     background:linear-gradient(100deg,#b46bd6,#f4efe7 46%,#fcf9f3 60%,#c5a46d);
@@ -624,14 +709,22 @@
   .salon--boba.brew .bn-cup::after{animation:bnGloss 1.1s ease .5s 1 forwards}
   @keyframes bnGloss{to{transform:translateX(120%)}}
 
-  /* -- pearls -- */
-  .bn-pearls{position:absolute;inset:0;clip-path:polygon(24% 34%,76% 34%,71% 92%,29% 92%)}
-  .bn-pearl{position:absolute;top:74%;width:13px;height:13px;margin-left:-6.5px;border-radius:50%;
-    background:radial-gradient(circle at 34% 30%,#5a3a22,#1a0f08 62%);box-shadow:0 1px 3px rgba(0,0,0,.5);opacity:0}
-  .bn-pearl::after{content:"";position:absolute;top:2px;left:3px;width:4px;height:3px;border-radius:50%;background:rgba(255,255,255,.6)}
-  .salon--boba.brew .bn-pearl{animation:bnDrop .55s cubic-bezier(.34,1.56,.64,1) forwards}
-  @keyframes bnDrop{0%{transform:translateY(-150px) scale(.6);opacity:0}40%{opacity:1}
-    72%{transform:translateY(4px) scaleX(1.16) scaleY(.84)}100%{transform:translateY(0) scale(1);opacity:1}}
+  /* -- pearls: colorful, stacked into a pile -- */
+  .bn-pearls{position:absolute;inset:0;clip-path:polygon(22% 33%,78% 33%,72% 95%,28% 95%)}
+  .bn-pearl{position:absolute;width:15px;height:15px;margin:-7.5px 0 0 -7.5px;border-radius:50%;
+    box-shadow:0 1px 3px rgba(0,0,0,.55),inset 0 -2px 3px rgba(0,0,0,.35);opacity:0}
+  .bn-pearl::after{content:"";position:absolute;top:2.5px;left:3.5px;width:4.5px;height:3.5px;border-radius:50%;background:rgba(255,255,255,.72)}
+  .salon--boba.brew .bn-pearl{animation:bnDrop .5s cubic-bezier(.34,1.56,.64,1) var(--d,0s) both}
+  @keyframes bnDrop{0%{transform:translateY(-150px) scale(.55);opacity:0}45%{opacity:1}
+    75%{transform:translateY(3px) scaleX(1.16) scaleY(.84)}100%{transform:translateY(0) scale(1);opacity:1}}
+
+  /* -- the lid drops on, then the straw punches in -- */
+  .bn-lid{opacity:0;transform:translateY(-30px)}
+  .salon--boba.brew .bn-lid{animation:bnLidOn .45s cubic-bezier(.34,1.56,.64,1) 1.05s both}
+  @keyframes bnLidOn{0%{opacity:0;transform:translateY(-30px)}60%{opacity:1;transform:translateY(2px)}100%{opacity:1;transform:translateY(0)}}
+  .bn-straw{opacity:0;transform:translateY(-44px)}
+  .salon--boba.brew .bn-straw{animation:bnStrawIn .5s cubic-bezier(.5,-0.2,.3,1.5) 1.5s both}
+  @keyframes bnStrawIn{0%{opacity:0;transform:translateY(-44px)}55%{opacity:1;transform:translateY(5px)}100%{opacity:1;transform:translateY(0)}}
 
   /* -- steam -- */
   .bn-steam{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:56px;height:38px}
@@ -644,8 +737,9 @@
 
   @media(max-width:560px){.salon--boba .salon-body{padding-top:162px}.bn-cup{width:116px;height:136px}}
   @media(prefers-reduced-motion:reduce){
-    .bn-liquid,.bn-pearl,.bn-wave,.bn-steam i,.bn-star,.bn-cup,.bn-cup::after{animation:none!important;transition:none!important}
+    .bn-liquid,.bn-pearl,.bn-wave,.bn-steam i,.bn-star,.bn-cup,.bn-cup::after,.bn-lid,.bn-straw{animation:none!important;transition:none!important}
     .salon--boba .bn-cup{opacity:1!important;transform:translateX(-50%) scale(1)!important}
+    .salon--boba .bn-lid,.salon--boba .bn-straw{opacity:1!important;transform:none!important}
     .salon--boba.brew .bn-liquid{transform:translateY(30px)!important}
     .salon--boba.brew .bn-pearl{opacity:1!important;transform:none!important}
     .bn-star{opacity:.4!important}
@@ -1161,7 +1255,7 @@
 
 <!-- ─── TOP NAV ─── -->
 <header class="topnav" id="topnav">
-  <div class="topnav-brand">Nathan J. Song</div>
+  <div class="topnav-brand">Nathan J<span class="dot">.</span> Song</div>
   <div class="topnav-right">
     <button class="dl-btn" id="dlBtn" aria-label="Download as PDF">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -2029,12 +2123,36 @@
           <g stroke="#c5a46d" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round">
             <path d="M34 58 H106 L99 150 A6 6 0 0 1 93 156 H47 A6 6 0 0 1 41 150 Z"/>
             <path d="M27 58 H113"/>
-            <path d="M41 58 L47 40 H93 L99 58"/>
-            <path d="M72 40 V25 M72 25 H95" opacity=".92"/>
+          </g>
+          <g class="bn-lid">
+            <path d="M33 58 Q33 38 70 38 Q107 38 107 58 Z" fill="rgba(214,169,238,.30)" stroke="#c5a46d" stroke-width="2.3" stroke-linejoin="round" stroke-linecap="round"/>
+            <ellipse cx="70" cy="43" rx="9" ry="3.2" fill="#e3c6f4" opacity=".7"/>
+          </g>
+          <g class="bn-straw">
+            <path d="M88 15 L66 110" stroke="#ff6b9d" stroke-width="7" stroke-linecap="round"/>
+            <path d="M88 15 L66 110" stroke="#ffd6e6" stroke-width="7" stroke-linecap="round" stroke-dasharray="4 10"/>
           </g>
         </svg>
         <span class="bn-steam"><i></i><i></i><i></i></span>
         <div class="bn-pearls" id="bnPearls"></div>
+      </div>
+    </div>
+
+    <div class="cc-scene" aria-hidden="true">
+      <span class="cc-grid"></span>
+      <span class="cc-glow"></span>
+      <div class="cc-shield">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <path class="cc-fill" d="M12 2.6 20 5.6 V11 C20 16.2 16.5 19.6 12 21.4 C7.5 19.6 4 16.2 4 11 V5.6 Z" fill="rgba(34,211,238,.10)"/>
+          <path class="cc-draw cc-outline" pathLength="1" d="M12 2.6 20 5.6 V11 C20 16.2 16.5 19.6 12 21.4 C7.5 19.6 4 16.2 4 11 V5.6 Z" stroke="#22d3ee" stroke-width="0.9" stroke-linejoin="round" stroke-linecap="round"/>
+          <path class="cc-draw cc-mark" pathLength="1" d="M9.4 9.2 C9.4 8 10.4 7.6 11 8.2 C11.4 8.6 12.6 8.6 13 8.2 C13.6 7.6 14.6 8 14.6 9.2 C14.6 10.8 13.9 12 13.5 13.6 C13.3 14.4 12.6 14.4 12.4 13.4 L12 11.6 L11.6 13.4 C11.4 14.4 10.7 14.4 10.5 13.6 C10.1 12 9.4 10.8 9.4 9.2 Z" stroke="#8becf7" stroke-width="0.8" stroke-linejoin="round" stroke-linecap="round"/>
+          <g class="cc-badge">
+            <circle cx="17.2" cy="16.6" r="2.9" fill="#0b1a22" stroke="#7fffd4" stroke-width="0.6"/>
+            <path class="cc-check" pathLength="1" d="M15.9 16.6 L16.9 17.6 L18.6 15.5" stroke="#7fffd4" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </svg>
+        <span class="cc-scanline"></span>
+        <span class="cc-ring"></span>
       </div>
     </div>
 
@@ -2139,20 +2257,44 @@
     var lp=ac.createBiquadFilter(); lp.type='lowpass'; lp.Q.value=0.7; lp.frequency.setValueAtTime(320,t); lp.frequency.linearRampToValueAtTime(1200,t+dur*0.75);
     var env=ac.createGain(); env.gain.setValueAtTime(0.0001,t); env.gain.linearRampToValueAtTime(1,t+0.4); env.gain.linearRampToValueAtTime(1,t+dur-0.25); env.gain.linearRampToValueAtTime(0.0001,t+dur); lp.connect(env).connect(ac.destination);
     for(var i=0;i<ns.length;i++){ var o=ac.createOscillator(); o.type='triangle'; o.detune.value=(i-1)*4; o.frequency.setValueAtTime(ns[i]*0.94,t); o.frequency.exponentialRampToValueAtTime(ns[i],t+0.45); var vg=ac.createGain(); vg.gain.value=0.05; o.connect(vg).connect(lp); o.start(t); o.stop(t+dur+0.05); } }
-  function bobaOpenSound(){ ctx(); bobaSwell(0); bobaPour(0.15); bobaPop(0.5); bobaPop(0.62); bobaPop(0.76); bobaJelly(0.82); bobaSparkle(1.0); }
+  function bobaLid(delay){ var ac=ctx(); if(!ac||ac.state!=='running')return; var t=ac.currentTime+(delay||0);
+    var o=ac.createOscillator(), g=ac.createGain(); o.type='sine'; o.frequency.setValueAtTime(300,t); o.frequency.exponentialRampToValueAtTime(150,t+0.09);
+    g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.12,t+0.006); g.gain.exponentialRampToValueAtTime(0.0001,t+0.12);
+    var n=ac.createBufferSource(); n.buffer=bNoise(ac,0.05); var nf=ac.createBiquadFilter(); nf.type='highpass'; nf.frequency.value=2000; var ng=ac.createGain(); ng.gain.setValueAtTime(0.06,t); ng.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
+    o.connect(g).connect(ac.destination); n.connect(nf).connect(ng).connect(ac.destination); o.start(t); o.stop(t+0.14); n.start(t); n.stop(t+0.06); }
+  function bobaOpenSound(){ ctx(); bobaSwell(0); bobaPour(0.15);
+    bobaPop(0.42); bobaPop(0.52); bobaPop(0.62); bobaPop(0.74); bobaPop(0.86); bobaPop(0.98);
+    bobaLid(1.08); bobaJelly(1.12); bobaPop(1.52); bobaSparkle(1.74); }
+  /* ---------- CoverCapy: clean high-tech "coverage verified" cues ---------- */
+  function ccScan(delay){ var ac=ctx(); if(!ac||ac.state!=='running')return; var t=ac.currentTime+(delay||0); var dur=0.55;
+    var sc=ac.createBufferSource(); sc.buffer=bNoise(ac,dur+0.1);
+    var bp=ac.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=6; bp.frequency.setValueAtTime(500,t); bp.frequency.exponentialRampToValueAtTime(3200,t+dur);
+    var g=ac.createGain(); g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(0.05,t+0.08); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    sc.connect(bp).connect(g).connect(ac.destination); sc.start(t); sc.stop(t+dur+0.1); }
+  function ccChime(delay){ var ac=ctx(); if(!ac||ac.state!=='running')return; var t0=ac.currentTime+(delay||0);
+    var notes=[659.25,987.77,1318.5];
+    for(var i=0;i<notes.length;i++){ var ot=t0+i*0.08, o=ac.createOscillator(), g=ac.createGain(); o.type='sine'; o.frequency.value=notes[i];
+      g.gain.setValueAtTime(0.0001,ot); g.gain.exponentialRampToValueAtTime(0.09,ot+0.004); g.gain.exponentialRampToValueAtTime(0.0001,ot+0.7);
+      o.connect(g).connect(ac.destination); o.start(ot); o.stop(ot+0.75); } }
+  function ccConfirm(delay){ var ac=ctx(); if(!ac||ac.state!=='running')return; var t=ac.currentTime+(delay||0); var dur=0.7; var ns=[164.81,246.94,329.63];
+    var lp=ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.setValueAtTime(400,t); lp.frequency.linearRampToValueAtTime(1400,t+dur*0.7);
+    var env=ac.createGain(); env.gain.setValueAtTime(0.0001,t); env.gain.linearRampToValueAtTime(1,t+0.3); env.gain.linearRampToValueAtTime(0.0001,t+dur); lp.connect(env).connect(ac.destination);
+    for(var i=0;i<ns.length;i++){ var o=ac.createOscillator(); o.type='triangle'; o.frequency.value=ns[i]; var vg=ac.createGain(); vg.gain.value=0.05; o.connect(vg).connect(lp); o.start(t); o.stop(t+dur+0.05); } }
+  function ccOpenSound(){ ctx(); ccConfirm(0); ccScan(0.25); ccChime(0.95); }
+  function buildCcScene(){ /* shield + grid are static markup; the scan class drives the reveal */ }
 
   /* ---------- project data ---------- */
   var DATA={
     covercapy:{
-      name:'CoverCapy', mono:'CC', acc:'#22d3ee', url:'https://www.covercapy.com',
+      name:'CoverCapy', mono:'CC', acc:'#22d3ee', url:'https://www.covercapy.com', theme:'cc',
       eyebrow:'Case Study · No. I',
-      tag:'A patient-first dental coverage concierge.',
-      blurb:'CoverCapy makes the confusing part of dental care clear. Compare PPO plans, see what treatment might cost, and find an in-network dentist before you book.',
+      tag:'A patient first dental coverage concierge.',
+      blurb:'CoverCapy helps you verify your insurance with a dentist, so you can find the right one without guesswork. Clearer coverage is better care.',
       features:[
-        ['Insurance Verification','Know exactly what your plan covers before the first visit, not after the bill arrives.'],
-        ['Provider Discovery','Find a dentist who actually takes your plan, matched by your network and location.'],
-        ['Patient Intake','One calm, guided flow that captures everything once, so nothing gets asked twice.'],
-        ['Live Dashboards','Watch every case move in real time, with a heads-up the moment something needs attention.']
+        ['Compare Plans','See waiting periods, annual maximums, coverage, and networks, then pick the plan that fits.'],
+        ['Estimate Costs','Know what treatment may cost with a plan before you commit. It’s an estimate, not a quote.'],
+        ['Confirm the Dentist','Check that a dentist takes the plan, and send the office a verification request instead of playing phone tag.'],
+        ['Ready to Book','The practice gets a verified patient whose first visit starts with care, not paperwork.']
       ]
     },
     zodi:{
@@ -2171,12 +2313,12 @@
       name:'Boba Night', mono:'BN', acc:'#b46bd6', url:'https://www.bobanight.com/', theme:'boba',
       eyebrow:'Case Study · No. III',
       tag:'The night guide to Southern California boba.',
-      blurb:'334 tea shops across 46 cities, every drink checked against an official menu. A late-night directory of real hours and honest picks — nothing paid to be here.',
+      blurb:'Boba Night helps you find good boba in a new city. Pick a place, see the shops worth trying, and check who’s open before you go.',
       features:[
-        ['The Tea Concierge','Tell it your mood and the hour; it points you to a shop that’s open and worth the trip tonight.'],
-        ['City After Dark','The region by city — the 626, Orange County, Greater LA, San Diego, the Inland Empire — sorted for the late crowd.'],
-        ['The House Edit','A verified shortlist, not a popularity contest. Menus checked, sources shown, nothing invented.'],
-        ['The Society Directory','Search every shop by drink, city, or what’s still open, on a map that only trusts what it can verify.']
+        ['The Tea Concierge','Say what you’re in the mood for and it points you to a shop that fits.'],
+        ['City After Dark','Browse by city and neighborhood to see what’s good and what’s open late.'],
+        ['The House Edit','A short list of the standouts in each area, so you’re not scrolling forever.'],
+        ['The Society Directory','Search by drink, city, or what’s open right now, straight on the map.']
       ]
     }
   };
@@ -2218,9 +2360,18 @@
         stars.appendChild(st); } }
     var pearls=document.getElementById('bnPearls');
     if(pearls){ pearls.innerHTML='';
-      var xs=[42,52,50,60,46,56];
-      for(var j=0;j<xs.length;j++){ var p=document.createElement('span'); p.className='bn-pearl';
-        p.style.left=xs[j]+'%'; p.style.animationDelay=(0.34+j*0.11)+'s';
+      var pile=[
+        {x:50,y:127,c:'#2a1a10',d:0.42},
+        {x:64,y:128,c:'#a06fe0',d:0.52},
+        {x:78,y:127,c:'#ff6b9d',d:0.62},
+        {x:57,y:116,c:'#8bc34a',d:0.74},
+        {x:71,y:116,c:'#ffb03a',d:0.86},
+        {x:64,y:106,c:'#6aa8ff',d:0.98}
+      ];
+      for(var j=0;j<pile.length;j++){ var p=document.createElement('span'); p.className='bn-pearl';
+        p.style.left=pile[j].x+'px'; p.style.top=pile[j].y+'px';
+        p.style.background='radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),'+pile[j].c+' 58%)';
+        p.style.setProperty('--d',pile[j].d+'s');
         pearls.appendChild(p); } }
   }
 
@@ -2254,14 +2405,20 @@
     det.textContent=d.features[0][1]; det.classList.add('show');
 
     buildSlats(); buildMotes();
-    var isBoba = d.theme==='boba';
+    var theme = d.theme||'';
+    var isBoba = theme==='boba', isCc = theme==='cc';
     salon.classList.toggle('salon--boba', isBoba);
+    salon.classList.toggle('salon--cc', isCc);
     if(isBoba){ buildBobaScene(); }
+    if(isCc){ buildCcScene(); }
     ov.classList.add('open'); ov.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
     if(isBoba){
       salon.classList.remove('brew'); void salon.offsetWidth; salon.classList.add('brew');
       bobaOpenSound();
+    } else if(isCc){
+      salon.classList.remove('scan'); void salon.offsetWidth; salon.classList.add('scan');
+      ccOpenSound();
     } else {
       setTimeout(function(){ arp([523.25,659.25,783.99,1046.5],0.11,0.13); }, 150); // regal flourish
     }
@@ -2269,7 +2426,7 @@
   function close(){
     ov.classList.remove('open'); ov.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
-    salon.classList.remove('brew');
+    salon.classList.remove('brew'); salon.classList.remove('scan');
     tone(392,0.11,0.005,0.3,true);
   }
   function go(){

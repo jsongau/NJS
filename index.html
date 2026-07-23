@@ -115,6 +115,7 @@
     transition: transform .55s cubic-bezier(.2,.85,.2,1), opacity .4s ease;
     opacity: 0;
     white-space: nowrap;
+    max-width: calc(100vw - 440px); /* keeps clear of Ask Agent NS as more projects join; chips scroll inside */
   }
   /* Electric Edge — glowing accent rim */
   .dock::before{
@@ -156,24 +157,80 @@
     flex-shrink: 0;
   }
 
-  .dock-project {
+  /* Portfolio label — small tab riding the dock's top edge */
+  .dock-label {
+    position: absolute;
+    top: -11px;
+    left: 16px;
+    z-index: 2;
+    padding: 3px 10px 2px;
+    border-radius: 100px;
+    background: #0d1117;
+    border: 1px solid rgba(34,211,238,.28);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    line-height: 1.4;
+    pointer-events: none;
+  }
+
+  /* project chips live in their own scroll lane; NS brand + CTA stay pinned */
+  .dock-scroll {
     display: flex;
     align-items: center;
-    gap: 7px;
-    height: 36px;
+    gap: 2px;
+    min-width: 0;
+    border-radius: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent);
+  }
+  .dock-scroll::-webkit-scrollbar { display: none; }
+
+  .dock-project {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 7px;
+    align-items: center;
+    height: 44px;
     padding: 0 13px;
     border-radius: 12px;
+    transition: background .15s ease;
+    cursor: pointer;
+    position: relative;
+    flex: none;
+    scroll-snap-align: start;
+  }
+  .dock-project .picon { grid-row: 1 / span 2; }
+  .dp-name {
     font-size: 13px;
     font-weight: 500;
     color: var(--muted);
-    transition: background .15s ease, color .15s ease;
-    cursor: pointer;
-    position: relative;
+    line-height: 1.15;
+    transition: color .15s ease;
+  }
+  .dp-date {
+    grid-column: 2;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.3;
   }
   .dock-project:hover {
     background: rgba(255,255,255,.06);
-    color: var(--ink);
   }
+  .dock-project:hover .dp-name { color: var(--ink); }
 
 
   .sdot {
@@ -224,16 +281,24 @@
   .dock .picon svg{display:block}
   .dock .picon.cc{color:#22d3ee}
   .dock .picon.za{color:#a855f7}
+  .dock .picon.bn{color:#b46bd6}
+  .dock .picon.bv{color:#F0552B}
   @keyframes iconBreath{0%,100%{opacity:.82;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
   .dock .picon{animation:iconBreath 3.4s ease-in-out infinite}
   .dock .picon.za{animation-delay:-1.7s}
+  .dock .picon.bn{animation-delay:-.9s}
+  .dock .picon.bv{animation-delay:-2.5s}
 
+  @media(max-width:1080px){
+    body{padding-bottom:150px}
+    .dock{max-width:calc(100vw - 20px)} /* Agent NS button rides above the dock here, so the dock can use the full width */
+  }
   @media(max-width:860px){
     .hero,.grid{grid-template-columns:1fr}
     .grid{gap:44px}
     .hero-right{align-items:stretch}
     .hero-right .cta{align-self:flex-start;width:auto}
-    .dock{max-width:calc(100vw - 20px);bottom:10px;overflow-x:auto}
+    .dock{max-width:calc(100vw - 20px);bottom:calc(10px + env(safe-area-inset-bottom,0px))}
     /* mobile: NS seal sits beside the name instead of a big block below */
     .hero{position:relative}
     .hero-right{will-change:auto;filter:none!important}
@@ -243,6 +308,7 @@
   @media(prefers-reduced-motion:reduce){
     .reveal,.stagger>*{transition:none;opacity:1;filter:none;transform:none!important}
     .name .ltr{opacity:1;transform:none}
+    .dock .picon{animation:none}
   }
 
   /* ─── TOP NAV ─── */
@@ -274,7 +340,11 @@
   body.light .dock{background:rgba(230,234,242,.94);border-color:transparent;box-shadow:0 10px 34px -10px rgba(0,0,0,.18),0 0 30px -8px rgba(47,123,255,.30);}
   body.light .dock-brand{box-shadow:none;}
   body.light .dock-sep{background:rgba(0,0,0,.1);}
+  body.light .dock-label{background:#eef2f9;border-color:rgba(47,123,255,.35);color:#1c4fd8;}
   body.light .dock-project:hover{background:rgba(0,0,0,.05);}
+  body.light .dp-name{color:#2d3748;}
+  body.light .dock-project:hover .dp-name{color:#0d1117;}
+  body.light .dp-date{color:#5a6577;}
   body.light .dock-cta{background:rgba(13,17,23,.9);color:#e6eaf2;}
   body.light .dock-cta:hover{background:#0d1117;}
   body.light .theme-toggle{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:var(--muted);}
@@ -502,6 +572,10 @@
 
   .salon-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.32em;
     text-transform:uppercase;color:var(--gold);opacity:.85;margin-bottom:9px}
+  @media(max-width:560px){
+    .tieback{display:none}
+    .salon-eyebrow{font-size:8.5px;letter-spacing:.16em}
+  }
   .salon-title{font-family:'Archivo',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;
     letter-spacing:.005em;font-size:clamp(26px,4.6vw,40px);line-height:1;
     background:linear-gradient(100deg,var(--gold-d),var(--gold-h) 46%,var(--gold) 56%,var(--gold-d));
@@ -549,6 +623,14 @@
     letter-spacing:.03em;font-size:13.5px;cursor:pointer;transition:transform .18s;
     box-shadow:0 12px 32px -10px rgba(232,207,134,.65)}
   .salon-continue:hover{transform:translateY(-2px)}
+  .salon-continue.is-soon,
+  .salon--bv .salon-continue.is-soon,.salon--cc .salon-continue.is-soon,.salon--boba .salon-continue.is-soon{
+    background:linear-gradient(180deg,#3a3b42,#2a2b31)!important;border-color:rgba(255,255,255,.16)!important;
+    color:#9aa0ad!important;box-shadow:none!important;cursor:not-allowed!important;opacity:.85}
+  .salon-continue.is-soon:hover,.salon--bv .salon-continue.is-soon:hover{transform:none!important}
+  .salon-continue.is-soon::after{display:none!important}
+  .salon-trust{margin:13px auto 0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--acc);opacity:.7;text-align:center}
   .salon-continue::after{content:"";position:absolute;top:0;left:-60%;width:38%;height:100%;
     background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);
     transform:skewX(-20deg);animation:sweep 3.4s ease-in-out infinite}
@@ -558,6 +640,94 @@
   @media(prefers-reduced-motion:reduce){
     .curtain,.slat,.salon,.salon-overlay{transition-duration:.001ms!important}
     .mote,.salon-title,.salon-continue::after,.seal .wreath,.tieback{animation:none!important}
+  }
+
+  /* ═══════════════ BOXVACAY — "SUNDOWN ROUND" MUAY THAI x THAILAND MODAL THEME ═══════════════ */
+  /* A held breath, then one roundhouse strike lands on a Thai kick pad and the
+     impact-flash blooms into a Thailand sunset that opens the wordmark. Warm ember
+     and marigold on near-black; its own temperature vs the cyan, gold and violet siblings. */
+  .salon--bv{
+    --acc:#F0552B; --bv-marigold:#F2B341; --bv-ivory:#F4EEE2; --bv-sand:#B8A793;
+    background:
+      radial-gradient(120% 78% at 50% 6%,rgba(240,85,43,.16),transparent 56%),
+      radial-gradient(100% 120% at 50% 120%,rgba(0,0,0,.6),transparent 60%),
+      linear-gradient(180deg,#1A1210,#0B0A0C)!important;
+    box-shadow:
+      0 44px 130px -30px rgba(0,0,0,.92),
+      0 0 90px -18px var(--acc),
+      0 0 0 1px rgba(242,179,65,.28),
+      0 0 0 6px rgba(9,7,6,.7),
+      0 0 0 7px rgba(240,85,43,.22) inset!important;
+  }
+  .salon--bv::after{opacity:.10}
+  .salon--bv .valance,.salon--bv .curtain,.salon--bv .tieback,
+  .salon--bv .filigree,.salon--bv .salon-motes,.salon--bv .blinds,
+  .salon--bv .seal{display:none!important}
+  .salon--bv .salon-body{padding:178px 10% 26px}
+  .salon--bv .salon-eyebrow{color:var(--bv-marigold)}
+  .salon--bv .salon-title{
+    background:linear-gradient(100deg,#F0552B,#F4EEE2 46%,#F2B341 62%,#F0552B);
+    background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:none}
+  .salon--bv.strike .salon-title{animation:bvTitleClip .55s ease-out .47s both}
+  @keyframes bvTitleClip{0%{clip-path:circle(0% at 50% -30%);opacity:0}30%{opacity:1}100%{clip-path:circle(170% at 50% -30%);opacity:1}}
+  .salon--bv .salon-tag{color:#e9dcc4}
+  .salon--bv .salon-blurb{color:var(--bv-sand)}
+  .salon--bv .salon-detail{color:#e4dccb}
+  .salon--bv .salon-close{border-color:rgba(242,179,65,.4);color:var(--bv-ivory)}
+  .salon--bv .salon-close:hover{background:rgba(240,85,43,.2)}
+  .salon--bv .s-chip{border-color:rgba(242,179,65,.4);color:var(--bv-ivory);background:rgba(240,85,43,.08)}
+  .salon--bv .s-chip:hover{border-color:var(--acc);box-shadow:0 0 16px -6px var(--acc)}
+  .salon--bv .s-chip.active{background:rgba(240,85,43,.22);border-color:var(--acc);color:#fff;box-shadow:0 6px 20px -8px var(--acc)}
+  .salon--bv .salon-continue{
+    border-color:var(--acc);color:#160a06;
+    background:linear-gradient(180deg,#F6C46A,#F0552B 62%,#c9401c);
+    box-shadow:0 12px 32px -10px rgba(240,85,43,.7)}
+
+  /* -- the sundown scene -- */
+  .bv-scene{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .4s ease}
+  .salon--bv .bv-scene{opacity:1}
+  .bv-backdrop{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:320px;height:240px;border-radius:50%;
+    background:radial-gradient(circle at 50% 55%,rgba(240,85,43,.14),transparent 62%);filter:blur(10px);opacity:.55}
+  .bv-emblem{position:absolute;top:20px;left:50%;width:130px;height:150px;z-index:3;transform:translateX(-50%)}
+  .bv-emblem svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 8px 20px rgba(0,0,0,.55))}
+  .bv-pad{transform-box:fill-box;transform-origin:50% 32%;transform:rotate(-6deg)}
+  .salon--bv.strike .bv-pad{animation:bvPad 1s cubic-bezier(.34,1.56,.64,1) forwards}
+  @keyframes bvPad{0%{transform:rotate(-6deg) scale(1)}9%{transform:rotate(-8deg) scale(.965)}29%{transform:rotate(-8deg) scale(.965)}45%{transform:rotate(4deg) scale(1.03) translateX(6px)}64%{transform:rotate(-6.8deg) scale(.99)}100%{transform:rotate(-6deg) scale(1)}}
+  .bv-bloom{position:absolute;top:48%;left:50%;width:150px;height:150px;border-radius:50%;
+    background:radial-gradient(circle,rgba(240,85,43,.9),rgba(242,179,65,.45) 45%,transparent 70%);
+    transform:translate(-50%,-50%) scale(0);opacity:0}
+  .salon--bv.strike .bv-bloom{animation:bvBloom .9s ease-out .45s forwards}
+  @keyframes bvBloom{0%{opacity:0;transform:translate(-50%,-50%) scale(0)}22%{opacity:.95}100%{opacity:.3;transform:translate(-50%,-50%) scale(1.5)}}
+  .bv-shock{position:absolute;top:48%;left:50%;width:40px;height:40px;border-radius:50%;border:2px solid rgba(242,179,65,.7);
+    transform:translate(-50%,-50%) scale(.3);opacity:0}
+  .salon--bv.strike .bv-shock{animation:bvShock .55s ease-out .45s}
+  @keyframes bvShock{0%{opacity:.8;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(3.6)}}
+  .bv-streak{position:absolute;top:48%;left:50%;width:54px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,transparent,#F2B341,#F0552B);box-shadow:0 0 12px 2px rgba(240,85,43,.55);
+    transform-origin:right center;opacity:0}
+  .salon--bv.strike .bv-streak{animation:bvStreak .17s cubic-bezier(.7,0,.9,.3) .29s forwards}
+  @keyframes bvStreak{0%{opacity:0;transform:translate(-90px,60px) rotate(-40deg) scaleX(.4)}45%{opacity:1}100%{opacity:0;transform:translate(-6px,4px) rotate(-40deg) scaleX(1.5)}}
+  .bv-dust{position:absolute;top:48%;left:50%}
+  .bv-dust i{position:absolute;top:0;left:0;width:4px;height:4px;border-radius:50%;background:#EDE6D8;box-shadow:0 0 4px rgba(237,230,216,.5);opacity:0}
+  .salon--bv.strike .bv-dust i{animation:bvDust .8s ease-out .46s forwards}
+  @keyframes bvDust{0%{opacity:0;transform:translate(0,0) scale(1)}18%{opacity:.9}100%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(.4)}}
+  .bv-horizon{position:absolute;top:154px;left:13%;right:13%;height:22px;opacity:0;overflow:visible}
+  .bv-horizon svg{width:100%;height:100%;overflow:visible}
+  .bv-horizon path{stroke-dasharray:1;stroke-dashoffset:1}
+  .salon--bv.strike .bv-horizon{opacity:.55;transition:opacity .4s ease .78s}
+  .salon--bv.strike .bv-horizon path{animation:bvDrawH .32s ease .78s forwards}
+  @keyframes bvDrawH{to{stroke-dashoffset:0}}
+
+  @media(max-width:560px){.salon--bv .salon-body{padding-top:162px}.bv-emblem{width:116px;height:136px}.bv-horizon{top:128px}}
+  @media(prefers-reduced-motion:reduce){
+    .salon--bv .bv-pad,.salon--bv .bv-bloom,.salon--bv .bv-shock,.salon--bv .bv-streak,.salon--bv .bv-dust i,.salon--bv .bv-horizon path,.salon--bv .salon-title{animation:none!important;transition:none!important}
+    .salon--bv .bv-streak,.salon--bv .bv-shock{display:none!important}
+    .salon--bv .bv-bloom{opacity:.16!important;transform:translate(-50%,-50%) scale(1.4)!important}
+    .salon--bv .bv-pad{transform:rotate(-6deg)!important}
+    .salon--bv .bv-horizon{opacity:.5!important}
+    .salon--bv .bv-horizon path{stroke-dashoffset:0!important}
+    .salon--bv .salon-title{clip-path:none!important;opacity:1!important}
+    .salon--bv .bv-dust i{opacity:0!important}
   }
 
   /* ═══════════════ COVERCAPY — "COVERAGE CONCIERGE" HIGH-TECH MODAL THEME ═══════════════ */
@@ -798,9 +968,12 @@
     .sec-head h2{font-size:clamp(26px,8vw,40px)}
     .dock{padding:5px;gap:0}
     .dock-brand{width:32px;height:32px;font-size:12px}
-    .dock-project{padding:0 9px;font-size:12px;gap:5px}
+    .dock-project{padding:0 9px;column-gap:5px;height:40px}
+    .dp-name{font-size:12px}
+    .dp-date{font-size:8px;letter-spacing:.12em}
     .dock-cta{padding:0 12px;font-size:12px}
     .dock-sep{margin:0 3px}
+    .dock-label{left:12px}
   }
 </style>
 
@@ -1088,9 +1261,12 @@
   .twin-send:disabled{opacity:.4;cursor:default}
   .twin-send:not(:disabled):hover{filter:brightness(1.08)}
   .twin-disc{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.04em;color:#41505f;text-align:center;padding:0 12px 9px}
+  @media (max-width:1080px){
+    .twin-fab{bottom:92px}
+  }
   @media (max-width:560px){
     .twin-panel{right:0;bottom:0;width:100vw;max-width:100vw;height:88vh;max-height:88vh;border-radius:18px 18px 0 0}
-    .twin-fab{right:14px;bottom:78px;padding:10px 14px}
+    .twin-fab{right:14px;bottom:calc(78px + env(safe-area-inset-bottom,0px));padding:10px 14px}
     .twin-fab .tf-label{display:inline}
   }
   @media print{.twin-fab,.twin-panel{display:none!important}}
@@ -1422,19 +1598,27 @@
 </div>
 
 <!-- ─── AWWWARDS-STYLE BOTTOM BAR ─── -->
-<nav class="dock" id="dock">
+<nav class="dock" id="dock" aria-label="Personal portfolio">
+  <span class="dock-label" aria-hidden="true">Personal Portfolio</span>
   <div class="dock-brand">NS</div>
 
   <div class="dock-sep"></div>
+  <!-- Add a project: copy one .dock-project chip (new icon svg, dp-name, dp-date, next data-sfx index, unique data-key)
+       and add the matching entry in DATA inside the salon script. soon:true shows it greyed as "Coming soon". -->
+  <div class="dock-scroll">
   <a class="dock-project" href="https://www.covercapy.com" target="_blank" rel="noopener" data-sfx="0" data-key="covercapy">
-    <span class="picon cc" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"><defs><filter id="glowCC" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#glowCC)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 20 5.6 V11 C20 16.2 16.5 19.6 12 21.4 C7.5 19.6 4 16.2 4 11 V5.6 Z"/><path d="M9.4 9.2 C9.4 8 10.4 7.6 11 8.2 C11.4 8.6 12.6 8.6 13 8.2 C13.6 7.6 14.6 8 14.6 9.2 C14.6 10.8 13.9 12 13.5 13.6 C13.3 14.4 12.6 14.4 12.4 13.4 L12 11.6 L11.6 13.4 C11.4 14.4 10.7 14.4 10.5 13.6 C10.1 12 9.4 10.8 9.4 9.2 Z"/></g></svg></span>CoverCapy
+    <span class="picon cc" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"><defs><filter id="glowCC" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#glowCC)" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 20 5.6 V11 C20 16.2 16.5 19.6 12 21.4 C7.5 19.6 4 16.2 4 11 V5.6 Z"/><path d="M9.4 9.2 C9.4 8 10.4 7.6 11 8.2 C11.4 8.6 12.6 8.6 13 8.2 C13.6 7.6 14.6 8 14.6 9.2 C14.6 10.8 13.9 12 13.5 13.6 C13.3 14.4 12.6 14.4 12.4 13.4 L12 11.6 L11.6 13.4 C11.4 14.4 10.7 14.4 10.5 13.6 C10.1 12 9.4 10.8 9.4 9.2 Z"/></g></svg></span><span class="dp-name">CoverCapy</span><span class="dp-date">May 2026</span>
   </a>
   <a class="dock-project" href="https://www.zodianimal.com/" target="_blank" rel="noopener" data-sfx="1" data-key="zodi">
-    <span class="picon za" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"><defs><filter id="glowZA" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#glowZA)"><path d="M20 15.2 A8.2 8.2 0 1 1 11.4 3.4 A6.4 6.4 0 0 0 20 15.2 Z" fill="currentColor"/><path d="M18 3 L18.8 5.4 L21.2 6.2 L18.8 7 L18 9.4 L17.2 7 L14.8 6.2 L17.2 5.4 Z" fill="currentColor"/><circle cx="9" cy="17.4" r="0.9" fill="currentColor"/></g></svg></span>Zodi Animal
+    <span class="picon za" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"><defs><filter id="glowZA" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#glowZA)"><path d="M20 15.2 A8.2 8.2 0 1 1 11.4 3.4 A6.4 6.4 0 0 0 20 15.2 Z" fill="currentColor"/><path d="M18 3 L18.8 5.4 L21.2 6.2 L18.8 7 L18 9.4 L17.2 7 L14.8 6.2 L17.2 5.4 Z" fill="currentColor"/><circle cx="9" cy="17.4" r="0.9" fill="currentColor"/></g></svg></span><span class="dp-name">Zodi Animal</span><span class="dp-date">June 2026</span>
   </a>
   <a class="dock-project" href="https://www.bobanight.com/" target="_blank" rel="noopener" data-sfx="2" data-key="boba">
-    <span class="picon bn" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"><defs><filter id="glowBN" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#glowBN)" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 8 H17.4 L16.2 20 A1.7 1.7 0 0 1 14.5 21.6 H9.5 A1.7 1.7 0 0 1 7.8 20 Z"/><path d="M5.4 8 H18.6"/><path d="M14.2 8 L16.4 3.2"/><circle cx="10" cy="17.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="13.6" cy="17.8" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="14.6" r="1.1" fill="currentColor" stroke="none"/></g></svg></span>Boba Night
+    <span class="picon bn" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"><defs><filter id="glowBN" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#glowBN)" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 8 H17.4 L16.2 20 A1.7 1.7 0 0 1 14.5 21.6 H9.5 A1.7 1.7 0 0 1 7.8 20 Z"/><path d="M5.4 8 H18.6"/><path d="M14.2 8 L16.4 3.2"/><circle cx="10" cy="17.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="13.6" cy="17.8" r="1.1" fill="currentColor" stroke="none"/><circle cx="12" cy="14.6" r="1.1" fill="currentColor" stroke="none"/></g></svg></span><span class="dp-name">Boba Night</span><span class="dp-date">July 2026</span>
   </a>
+  <a class="dock-project" href="https://www.boxvacay.com" target="_blank" rel="noopener" data-sfx="3" data-key="boxvacay">
+    <span class="picon bv" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow:visible"><defs><filter id="glowBV" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#glowBV)" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17 H20"/><path d="M8.4 17 A3.6 3.6 0 0 1 15.6 17"/><path d="M12 6.6 V8.9 M6.6 8.7 L8.2 10.7 M17.4 8.7 L15.8 10.7"/></g></svg></span><span class="dp-name">BoxVacay</span><span class="dp-date">July 2026</span>
+  </a>
+  </div>
   <div class="dock-sep"></div>
   <a class="dock-cta contact-btn" href="mailto:natejmsong@gmail.com" data-contact>Get in touch<span class="cta-shine" aria-hidden="true"></span></a>
 </nav>
@@ -2156,6 +2340,27 @@
       </div>
     </div>
 
+    <div class="bv-scene" aria-hidden="true">
+      <span class="bv-backdrop"></span>
+      <div class="bv-emblem">
+        <span class="bv-bloom"></span>
+        <span class="bv-shock"></span>
+        <svg viewBox="0 0 140 168" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <defs><linearGradient id="bvPadGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a07a4e"/><stop offset="1" stop-color="#2a1c12"/></linearGradient></defs>
+          <g class="bv-pad">
+            <rect x="53" y="30" width="34" height="98" rx="16" fill="url(#bvPadGrad)" stroke="#F2B341" stroke-width="1.6"/>
+            <rect x="58" y="35" width="24" height="88" rx="11" fill="none" stroke="#F2B341" stroke-width=".7" opacity=".4"/>
+            <line x1="70" y1="39" x2="70" y2="119" stroke="#F2B341" stroke-width="1" stroke-dasharray="3 4" opacity=".55"/>
+            <rect x="49" y="55" width="42" height="7" rx="3.5" fill="#8C6A45" stroke="#F2B341" stroke-width=".6"/>
+            <rect x="49" y="95" width="42" height="7" rx="3.5" fill="#8C6A45" stroke="#F2B341" stroke-width=".6"/>
+          </g>
+        </svg>
+        <span class="bv-streak"></span>
+        <div class="bv-dust" id="bvDust"></div>
+      </div>
+      <span class="bv-horizon"><svg viewBox="0 0 200 26" preserveAspectRatio="none"><path d="M4 22 L26 20 L42 10 L58 20 L86 18 L108 6 L128 19 L150 15 L172 20 L196 18" stroke="#F4EEE2" stroke-width="1.2" fill="none" pathLength="1"/></svg></span>
+    </div>
+
     <button class="salon-close" id="salonClose" aria-label="Close">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6 L18 18 M18 6 L6 18"/></svg>
     </button>
@@ -2188,6 +2393,7 @@
       <p class="salon-blurb" id="salonBlurb"></p>
       <div class="salon-chips" id="salonChips"></div>
       <div class="salon-detail" id="salonDetail"></div>
+      <div class="salon-trust" id="salonTrust"></div>
       <button class="salon-continue" id="salonContinue">Visit the site</button>
     </div>
 
@@ -2282,12 +2488,49 @@
     for(var i=0;i<ns.length;i++){ var o=ac.createOscillator(); o.type='triangle'; o.frequency.value=ns[i]; var vg=ac.createGain(); vg.gain.value=0.05; o.connect(vg).connect(lp); o.start(t); o.stop(t+dur+0.05); } }
   function ccOpenSound(){ ctx(); ccConfirm(0); ccScan(0.25); ccChime(0.95); }
   function buildCcScene(){ /* shield + grid are static markup; the scan class drives the reveal */ }
+  /* ---------- BoxVacay: "Sundown Round" struck-pad cues (synthesized, no files) ---------- */
+  function bvOpenSound(){
+    var ac=ctx(); if(!ac||ac.state!=='running') return; var t0=ac.currentTime;
+    var hb=ac.createOscillator(), hg=ac.createGain(), hl=ac.createBiquadFilter();
+    hl.type='lowpass'; hl.frequency.value=120; hb.type='sine'; hb.frequency.value=48;
+    hg.gain.setValueAtTime(0.0001,t0); hg.gain.linearRampToValueAtTime(0.035,t0+0.1); hg.gain.setValueAtTime(0.035,t0+0.42); hg.gain.exponentialRampToValueAtTime(0.0001,t0+0.72);
+    hb.connect(hl).connect(hg).connect(ac.destination); hb.start(t0); hb.stop(t0+0.76);
+    var ct=t0+0.09, cs=ac.createBufferSource(); cs.buffer=bNoise(ac,0.05); var chp=ac.createBiquadFilter(); chp.type='highpass'; chp.frequency.value=3500; var cg=ac.createGain(); cg.gain.setValueAtTime(0.03,ct); cg.gain.exponentialRampToValueAtTime(0.0001,ct+0.04); cs.connect(chp).connect(cg).connect(ac.destination); cs.start(ct); cs.stop(ct+0.06);
+    var wt=t0+0.29, ws=ac.createBufferSource(); ws.buffer=bNoise(ac,0.22); var wbp=ac.createBiquadFilter(); wbp.type='bandpass'; wbp.Q.value=1.1; wbp.frequency.setValueAtTime(400,wt); wbp.frequency.exponentialRampToValueAtTime(3200,wt+0.13); var wg=ac.createGain(); wg.gain.setValueAtTime(0.0001,wt); wg.gain.linearRampToValueAtTime(0.07,wt+0.09); wg.gain.exponentialRampToValueAtTime(0.0001,wt+0.16); ws.connect(wbp).connect(wg).connect(ac.destination); ws.start(wt); ws.stop(wt+0.2);
+    var kt=t0+0.45;
+    var ko=ac.createOscillator(), kg=ac.createGain(); ko.type='sine'; ko.frequency.setValueAtTime(120,kt); ko.frequency.exponentialRampToValueAtTime(55,kt+0.09); kg.gain.setValueAtTime(0.0001,kt); kg.gain.exponentialRampToValueAtTime(0.22,kt+0.005); kg.gain.exponentialRampToValueAtTime(0.0001,kt+0.13); ko.connect(kg).connect(ac.destination); ko.start(kt); ko.stop(kt+0.16);
+    var kn=ac.createBufferSource(); kn.buffer=bNoise(ac,0.05); var knb=ac.createBiquadFilter(); knb.type='bandpass'; knb.Q.value=2; knb.frequency.value=1200; var kng=ac.createGain(); kng.gain.setValueAtTime(0.14,kt); kng.gain.exponentialRampToValueAtTime(0.0001,kt+0.04); kn.connect(knb).connect(kng).connect(ac.destination); kn.start(kt); kn.stop(kt+0.06);
+    var rp=[[600,0.10,0.5],[1440,0.06,0.3],[2280,0.04,0.2]];
+    for(var i=0;i<rp.length;i++){ var ro=ac.createOscillator(), rg=ac.createGain(); ro.type='sine'; ro.frequency.value=rp[i][0]; rg.gain.setValueAtTime(0.0001,kt); rg.gain.exponentialRampToValueAtTime(rp[i][1],kt+0.004); rg.gain.exponentialRampToValueAtTime(0.0001,kt+rp[i][2]); ro.connect(rg).connect(ac.destination); ro.start(kt); ro.stop(kt+rp[i][2]+0.05); }
+    var bt=t0+0.47, bns=[293.66,369.99,440]; var blp=ac.createBiquadFilter(); blp.type='lowpass'; blp.frequency.setValueAtTime(800,bt); blp.frequency.linearRampToValueAtTime(2600,bt+0.42); var benv=ac.createGain(); benv.gain.setValueAtTime(0.0001,bt); benv.gain.linearRampToValueAtTime(0.9,bt+0.18); benv.gain.exponentialRampToValueAtTime(0.0001,bt+0.7); blp.connect(benv).connect(ac.destination);
+    for(var j=0;j<bns.length;j++){ var bo=ac.createOscillator(); bo.type=(j===1?'triangle':'sine'); bo.frequency.value=bns[j]; var bvg=ac.createGain(); bvg.gain.value=0.05; bo.connect(bvg).connect(blp); bo.start(bt); bo.stop(bt+0.75); }
+    var dt=t0+0.47, dsr=ac.createBufferSource(); dsr.buffer=bNoise(ac,0.3); var dhp=ac.createBiquadFilter(); dhp.type='highpass'; dhp.frequency.value=5000; var dg=ac.createGain(); dg.gain.setValueAtTime(0.02,dt); dg.gain.exponentialRampToValueAtTime(0.0001,dt+0.3); dsr.connect(dhp).connect(dg).connect(ac.destination); dsr.start(dt); dsr.stop(dt+0.32);
+    var cf=[440,523.25,587.33,698.46], coff=[0,0.085,0.155,0.26];
+    for(var k=0;k<4;k++){ var tt=t0+0.9+coff[k]; var co=ac.createOscillator(), cog=ac.createGain(); co.type='triangle'; co.frequency.value=cf[k]; cog.gain.setValueAtTime(0.0001,tt); cog.gain.exponentialRampToValueAtTime(k===3?0.12:0.07,tt+0.004); cog.gain.exponentialRampToValueAtTime(0.0001,tt+(k===3?0.16:0.05)); co.connect(cog).connect(ac.destination); co.start(tt); co.stop(tt+0.2);
+      if(k===3){ var sbo=ac.createOscillator(), sbg=ac.createGain(); sbo.type='sine'; sbo.frequency.setValueAtTime(160,tt); sbo.frequency.exponentialRampToValueAtTime(70,tt+0.12); sbg.gain.setValueAtTime(0.0001,tt); sbg.gain.exponentialRampToValueAtTime(0.1,tt+0.005); sbg.gain.exponentialRampToValueAtTime(0.0001,tt+0.14); sbo.connect(sbg).connect(ac.destination); sbo.start(tt); sbo.stop(tt+0.16); } }
+    var pt=t0+1.05, po=ac.createOscillator(), pg=ac.createGain(); po.type='triangle'; po.frequency.value=220; pg.gain.setValueAtTime(0.0001,pt); pg.gain.exponentialRampToValueAtTime(0.05,pt+0.005); pg.gain.exponentialRampToValueAtTime(0.0001,pt+0.26); po.connect(pg).connect(ac.destination); po.start(pt); po.stop(pt+0.3);
+    var xt=t0+1.2, xo=ac.createOscillator(), xg=ac.createGain(); xo.type='sine'; xo.frequency.setValueAtTime(95,xt); xo.frequency.exponentialRampToValueAtTime(58,xt+0.1); xg.gain.setValueAtTime(0.0001,xt); xg.gain.exponentialRampToValueAtTime(0.14,xt+0.008); xg.gain.exponentialRampToValueAtTime(0.0001,xt+0.14); xo.connect(xg).connect(ac.destination); xo.start(xt); xo.stop(xt+0.16);
+    var xn=ac.createBufferSource(); xn.buffer=bNoise(ac,0.05); var xlp=ac.createBiquadFilter(); xlp.type='lowpass'; xlp.frequency.value=500; var xng=ac.createGain(); xng.gain.setValueAtTime(0.06,xt); xng.gain.exponentialRampToValueAtTime(0.0001,xt+0.05); xn.connect(xlp).connect(xng).connect(ac.destination); xn.start(xt); xn.stop(xt+0.06);
+  }
+  function buildBvScene(){
+    var dust=document.getElementById('bvDust');
+    if(dust){ dust.innerHTML='';
+      for(var i=0;i<10;i++){ var p=document.createElement('i');
+        var ang=(-150+Math.random()*120)*Math.PI/180; var dist=28+Math.random()*48;
+        p.style.setProperty('--dx',(Math.cos(ang)*dist).toFixed(1)+'px');
+        p.style.setProperty('--dy',(Math.sin(ang)*dist-8).toFixed(1)+'px');
+        p.style.animationDelay=(Math.random()*0.05).toFixed(3)+'s';
+        dust.appendChild(p); } }
+  }
 
-  /* ---------- project data ---------- */
+  /* ---------- project data ----------
+     Add a project: one entry here + one dock chip in the nav above.
+     Fields: name, mono, acc, url, theme? (cc|boba|bv|blank=gold salon), soon? (true = greyed "Coming soon"),
+     cta? (button text when live), trust? (small line above the button), eyebrow, tag, blurb, features[4]. */
   var DATA={
     covercapy:{
       name:'CoverCapy', mono:'CC', acc:'#22d3ee', url:'https://www.covercapy.com', theme:'cc',
-      eyebrow:'Case Study · No. I',
+      eyebrow:'Est. May 2026',
       tag:'A patient first dental coverage concierge.',
       blurb:'CoverCapy helps you verify your insurance with a dentist, so you can find the right one without guesswork. Clearer coverage is better care.',
       features:[
@@ -2299,7 +2542,7 @@
     },
     zodi:{
       name:'Zodi Animal', mono:'ZA', acc:'#a855f7', url:'https://www.zodianimal.com/',
-      eyebrow:'Case Study · No. II',
+      eyebrow:'Est. June 2026',
       tag:'Eastern and Western astrology, read as one.',
       blurb:'Zodi Animal reads Eastern and Western systems as one: Primal Zodiac Animal, Purple Star Astrology, BaZi and Saju four-pillars, Feng Shui, and the five elements. A dark, celestial reading room, not another horoscope app.',
       features:[
@@ -2311,7 +2554,7 @@
     },
     boba:{
       name:'Boba Night', mono:'BN', acc:'#b46bd6', url:'https://www.bobanight.com/', theme:'boba',
-      eyebrow:'Case Study · No. III',
+      eyebrow:'Est. July 2026',
       tag:'The night guide to Southern California boba.',
       blurb:'Boba Night helps you find good boba in a new city. Pick a place, see the shops worth trying, and check who’s open before you go.',
       features:[
@@ -2319,6 +2562,19 @@
         ['City After Dark','Browse by city and neighborhood to see what’s good and what’s open late.'],
         ['The House Edit','A short list of the standouts in each area, so you’re not scrolling forever.'],
         ['The Society Directory','Search by drink, city, or what’s open right now, straight on the map.']
+      ]
+    },
+    boxvacay:{
+      name:'BoxVacay', mono:'BV', acc:'#F0552B', url:'https://boxvacay.com', theme:'bv', soon:false, cta:'Explore Camps',
+      eyebrow:'Est. July 2026',
+      tag:'Everything you need to plan your Muay Thai trip.',
+      blurb:'Honest guides covering training quality, pricing, accommodations, beginner experience, fight opportunities, nearby food, and everything worth knowing before you book.',
+      trust:'Independent research. No paid rankings.',
+      features:[
+        ['Camp Reviews','What training there is really like, not the brochure version.'],
+        ['Current Pricing','What a session, a week, and a month actually cost right now.'],
+        ['Fight Opportunities','Where to get matched for a real fight when you’re ready.'],
+        ['Local Tips','Where to eat, stay, and recover between sessions.']
       ]
     }
   };
@@ -2386,7 +2642,11 @@
     document.getElementById('salonBlurb').textContent=d.blurb;
     document.getElementById('salonMono').textContent=d.mono;
     document.getElementById('blindsLabel').textContent='✦  '+d.name+'  ✦';
-    document.getElementById('salonContinue').textContent='Visit '+d.name;
+    var _tr=document.getElementById('salonTrust'); _tr.textContent=d.trust||''; _tr.style.display=d.trust?'block':'none';
+    var _cta=document.getElementById('salonContinue');
+    _cta.textContent = d.soon ? 'Coming soon' : (d.cta || ('Visit '+d.name));
+    _cta.classList.toggle('is-soon', !!d.soon);
+    _cta.setAttribute('aria-disabled', d.soon ? 'true' : 'false');
 
     var chips=document.getElementById('salonChips'); chips.innerHTML='';
     var det=document.getElementById('salonDetail');
@@ -2406,11 +2666,13 @@
 
     buildSlats(); buildMotes();
     var theme = d.theme||'';
-    var isBoba = theme==='boba', isCc = theme==='cc';
+    var isBoba = theme==='boba', isCc = theme==='cc', isBv = theme==='bv';
     salon.classList.toggle('salon--boba', isBoba);
     salon.classList.toggle('salon--cc', isCc);
+    salon.classList.toggle('salon--bv', isBv);
     if(isBoba){ buildBobaScene(); }
     if(isCc){ buildCcScene(); }
+    if(isBv){ buildBvScene(); }
     ov.classList.add('open'); ov.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
     if(isBoba){
@@ -2419,6 +2681,9 @@
     } else if(isCc){
       salon.classList.remove('scan'); void salon.offsetWidth; salon.classList.add('scan');
       ccOpenSound();
+    } else if(isBv){
+      salon.classList.remove('strike'); void salon.offsetWidth; salon.classList.add('strike');
+      bvOpenSound();
     } else {
       setTimeout(function(){ arp([523.25,659.25,783.99,1046.5],0.11,0.13); }, 150); // regal flourish
     }
@@ -2426,11 +2691,11 @@
   function close(){
     ov.classList.remove('open'); ov.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
-    salon.classList.remove('brew'); salon.classList.remove('scan');
+    salon.classList.remove('brew'); salon.classList.remove('scan'); salon.classList.remove('strike');
     tone(392,0.11,0.005,0.3,true);
   }
   function go(){
-    if(!current) return;
+    if(!current || current.soon) return;
     window.open(current.url,'_blank','noopener');   // synchronous so it isn't popup-blocked
     tone(659.25,0.14,0.005,0.26,true);
     setTimeout(function(){ tone(987.77,0.12,0.005,0.3,true); }, 95);
@@ -2444,7 +2709,7 @@
   document.addEventListener('keydown',function(e){ if(e.key==='Escape' && ov.classList.contains('open')) close(); });
 
   /* ---------- dock projects: sound + open modal (no direct navigation) ---------- */
-  var notes=[880.0, 1174.7, 987.77];
+  var notes=[880.0, 1174.7, 987.77, 659.25];
   document.querySelectorAll('.dock-project').forEach(function(el){
     var i=parseInt(el.getAttribute('data-sfx')||'0',10);
     var n=notes[i]||notes[0];

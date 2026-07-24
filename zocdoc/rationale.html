@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Design rationale, NJS x Zocdoc concept, by Nathan J. Song</title>
+<title>Product strategy, NJS x Zocdoc concept, by Nathan J. Song</title>
 <style>
   :root{
     --yellow:#F9E13F; --ink:#1D1C1D; --cream:#FFFFFF; --mint:#0E7C6B;
@@ -36,20 +36,74 @@
   .hl{background:linear-gradient(transparent 84%, var(--yellow) 84%)}
   ul{margin:0 0 14px 20px}
   li{margin-bottom:8px;max-width:62ch}
+  .quote{font-family:var(--serif);font-size:20px;line-height:1.4;max-width:56ch;padding:4px 0 4px 18px;border-left:3px solid var(--yellow);margin:18px 0}
+  .flows{display:grid;grid-template-columns:1fr 1.45fr;gap:18px;margin:22px 0}
+  @media(max-width:620px){.flows{grid-template-columns:1fr}}
+  .flow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .flow h3{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+  .flow.old h3{color:var(--muted)}
+  .flow.new h3{color:var(--mint)}
+  .flow ol{list-style:none;margin:0}
+  .flow ol li{position:relative;padding:0 0 16px 26px;margin:0;font-size:14px;max-width:none}
+  .flow ol li small{display:block;color:var(--muted);font-size:12.5px}
+  .flow ol li::before{content:"";position:absolute;left:2px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--muted)}
+  .flow.new ol li::before{background:var(--mint)}
+  .flow ol li::after{content:"";position:absolute;left:6px;top:20px;bottom:2px;width:2px;background:var(--line)}
+  .flow ol li:last-child{padding-bottom:0}
+  .flow ol li:last-child::after{display:none}
+  .flow .end{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--muted)}
+  .flow.new .end{color:var(--good);font-weight:600}
+  .map{margin:20px 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .map svg{display:block;width:100%;height:auto}
+  .map figcaption{font-size:12.5px;color:var(--muted);padding:8px 8px 2px;text-align:center}
+  .mx{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+  @media(max-width:560px){.mx{grid-template-columns:1fr}}
+  .mx .m{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .mx .m b{display:block;font-size:14px;margin-bottom:3px}
+  .mx .m span{font-size:13px;color:var(--muted);line-height:1.5;display:block}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="kick"><i></i>Design rationale · candidate concept</div>
-  <h1>A toothpaste brand that pays people to see the dentist</h1>
-  <p class="lede">NJS x Zocdoc, a product design concept by Nathan J. Song, built as a working page rather than a slide deck. This is the thinking behind it, written the way I would present it to a design crit.</p>
+  <div class="kick"><i></i>Product strategy · candidate concept</div>
+  <h1>A patient acquisition engine, disguised as a toothpaste brand</h1>
+  <p class="lede">NJS x Zocdoc, a working concept by Nathan J. Song. The toothpaste is the vehicle. The product is a system that routes a cosmetic desire, whiter teeth, into completed preventive care, and turns a CPG marketing budget into a patient acquisition channel for Zocdoc. This is the thinking behind it, written the way I would present it to a product review.</p>
 
-  <h2><span class="num">1</span>The brief I gave myself</h2>
-  <p>Zocdoc's mission is to give power to the patient. The hard version of that problem is not search or booking UX, it is that millions of people simply never initiate care. Nobody wakes up wanting a dental checkup. People do wake up wanting whiter teeth.</p>
-  <p>So the brief: <b>design a consumer product experience where wanting whiter teeth ends with a booked dentist appointment.</b> A nano-hydroxyapatite toothpaste brand is the vehicle because its honest story, repair over bleach, points at dentistry instead of away from it.</p>
+  <h2><span class="num">1</span>The product challenge</h2>
+  <p class="quote">How might a consumer wellness product increase preventive dental visits while creating a patient acquisition channel that providers and Zocdoc do not have to pay for?</p>
+  <p>Zocdoc's mission is to give power to the patient. The hard version of that problem is not search UX or booking UX, it is that millions of people never initiate care at all. Acquisition today is bought with ads and search. This concept explores a third channel: consumer products whose own economics improve when their customers see a doctor.</p>
 
-  <h2><span class="num">2</span>The loop</h2>
-  <p>The sweepstakes rents attention. The booking handoff is the business:</p>
+  <h2><span class="num">2</span>The hypothesis</h2>
+  <p>Nobody wakes up wanting a dental checkup. People wake up wanting whiter teeth. Those two desires are usually served by different industries that never speak, cosmetics on one side, dentistry on the other.</p>
+  <p><b>The hypothesis: if the commercial incentive and the clinical advice point in the same direction, vanity can be made to fund prevention.</b> A nano-hydroxyapatite toothpaste brand is the right vehicle because its honest story, repair over bleach, points at dentistry instead of away from it. The test is whether a cosmetic desire can be routed into a completed appointment without a single deceptive step along the way.</p>
+
+  <h2><span class="num">3</span>The system</h2>
+  <p>A standard CPG funnel ends at the receipt. This one is built as a loop, and the last step funds the first:</p>
+  <div class="flows">
+    <div class="flow old">
+      <h3>The standard CPG funnel</h3>
+      <ol>
+        <li>Paid ads<small>attention, bought at market rate</small></li>
+        <li>Landing page<small>one persuasive surface</small></li>
+        <li>One purchase<small>and a follow-up email</small></li>
+      </ol>
+      <div class="end">Ends at the receipt. The next customer is bought all over again, at full price.</div>
+    </div>
+    <div class="flow new">
+      <h3>This system</h3>
+      <ol>
+        <li>Creator storefronts and a sweepstakes<small>attention arrives through people, not just ads</small></li>
+        <li>Education that earns each claim<small>mechanism, evidence, honest concessions</small></li>
+        <li>Insurance-first booking on Zocdoc<small>coverage asked before dentists are shown</small></li>
+        <li>A completed checkup<small>verified by the appointment, not a promise</small></li>
+        <li>20% subscription unlock<small>the discount activates on the booking</small></li>
+        <li>Referral and creator commission<small>paid on product, never on appointments</small></li>
+        <li>Repeat care, twice a year<small>the checkup cadence becomes the retention cadence</small></li>
+      </ol>
+      <div class="end">Loops. Every kept subscription funds the next booking incentive.</div>
+    </div>
+  </div>
+  <p>Who funds what, and why each party stays in the loop:</p>
   <div class="loop">
     <div class="row"><span class="who">NJS</span><span class="what">Funds a 20% subscription discount that activates only on a verified Zocdoc booking.<small>It buys a customer who sees a dentist twice a year, the customer most likely to keep teeth, habits, and subscriptions.</small></span></div>
     <div class="row"><span class="who">The patient</span><span class="what">Gets cheaper toothpaste for doing the thing their dentist already wanted.<small>The incentive and the health advice point the same direction, which is why this loop can be marketed with a straight face.</small></span></div>
@@ -57,27 +111,83 @@
   </div>
   <p>Even the prize obeys the loop: the winner’s year of NJS ships a season at a time, and shipment one unlocks at the first checkup booked through Zocdoc. A prize that costs money is a liability; a prize that walks its winner into a dentist’s chair is an asset with a marketing budget.</p>
 
-  <h2><span class="num">3</span>Design decisions worth defending</h2>
+  <h2><span class="num">4</span>Five stakeholders, one loop</h2>
+  <p>This was designed as an ecosystem, not a page. Five parties, each with a reason to stay:</p>
+  <figure class="map">
+    <svg viewBox="0 0 720 470" role="img" aria-label="Stakeholder map: the patient, dentists, NJS, and creators all connect through Zocdoc at the center. The patient books care on Zocdoc, dentists gain patients, NJS funds the discount, creators carry the booking CTA, and creators earn on product only.">
+      <g stroke="#d8d4c8" stroke-width="1.6">
+        <line x1="360" y1="68" x2="360" y2="200"/>
+        <line x1="280" y1="226" x2="200" y2="226"/>
+        <line x1="440" y1="226" x2="520" y2="226"/>
+        <line x1="360" y1="256" x2="360" y2="390"/>
+        <line x1="296" y1="62" x2="152" y2="198"/>
+        <line x1="424" y1="62" x2="568" y2="198"/>
+        <line x1="586" y1="252" x2="428" y2="398"/>
+      </g>
+      <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#8a8a8a" style="paint-order:stroke" stroke="#ffffff" stroke-width="4" text-anchor="middle">
+        <text x="360" y="140" dx="34">books care</text>
+        <text x="240" y="214">gains patients</text>
+        <text x="480" y="190">funds the discount</text>
+        <text x="360" y="330" dx="52">CTA at every checkout</text>
+        <text x="204" y="120">shows up</text>
+        <text x="516" y="120">20% off after checkup</text>
+        <text x="530" y="336">earns on product only</text>
+      </g>
+      <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="middle">
+        <rect x="280" y="18" width="160" height="50" rx="12" fill="#fafaf7" stroke="#e0ddd2"/>
+        <text x="360" y="40" font-size="14" font-weight="700" fill="#1D1C1D">The patient</text>
+        <text x="360" y="56" font-size="10.5" fill="#8a8a8a">wants whiter teeth</text>
+        <rect x="40" y="202" width="160" height="50" rx="12" fill="#fafaf7" stroke="#e0ddd2"/>
+        <text x="120" y="224" font-size="14" font-weight="700" fill="#1D1C1D">Dentists</text>
+        <text x="120" y="240" font-size="10.5" fill="#8a8a8a">the supply side</text>
+        <rect x="520" y="202" width="160" height="50" rx="12" fill="#fafaf7" stroke="#e0ddd2"/>
+        <text x="600" y="224" font-size="14" font-weight="700" fill="#1D1C1D">NJS</text>
+        <text x="600" y="240" font-size="10.5" fill="#8a8a8a">the CPG brand</text>
+        <rect x="280" y="390" width="160" height="50" rx="12" fill="#fafaf7" stroke="#e0ddd2"/>
+        <text x="360" y="412" font-size="14" font-weight="700" fill="#1D1C1D">Creators</text>
+        <text x="360" y="428" font-size="10.5" fill="#8a8a8a">the Smile Circle</text>
+        <rect x="280" y="198" width="160" height="58" rx="14" fill="#F9E13F" stroke="#1D1C1D" stroke-width="1.6"/>
+        <text x="360" y="224" font-size="15" font-weight="800" fill="#1D1C1D">Zocdoc</text>
+        <text x="360" y="242" font-size="10.5" fill="#1D1C1D">the marketplace in the middle</text>
+      </g>
+    </svg>
+    <figcaption>Every relationship routes through the marketplace, which is exactly where Zocdoc wants to sit.</figcaption>
+  </figure>
+  <p>The creator layer is the acquisition engine's front door: three working storefronts, the Smile Circle, where audiences arrive already trusting the person who invited them, and every checkout closes with a Zocdoc booking CTA.</p>
+
+  <h2><span class="num">5</span>The measurement plan</h2>
+  <p>Not page views, and not entries. These are the instruments I would wire before launch:</p>
+  <div class="mx">
+    <div class="m"><b>Booking attach rate</b><span>The share of entrants who complete a Zocdoc booking within 14 days. The headline number for the whole concept.</span></div>
+    <div class="m"><b>Cost per verified booking</b><span>Measured against Zocdoc's existing paid channels. If this channel is not cheaper, the loop does not deserve to exist.</span></div>
+    <div class="m"><b>Subscription activation</b><span>The share of bookers who turn the 20% unlock into an active subscription, the moment NJS gets paid back.</span></div>
+    <div class="m"><b>Six-month retention, split by checkup</b><span>Subscribers who completed a checkup versus those who did not. The number that proves or kills the thesis that patients who show up, stay.</span></div>
+    <div class="m"><b>Referral participation</b><span>The share of subscribers who bring in at least one entrant, the loop's organic growth coefficient.</span></div>
+    <div class="m"><b>Creator conversion</b><span>Bookings and product sales per storefront session, per creator. Ranks the Smile Circle and decides who gets the next storefront.</span></div>
+  </div>
+  <p>No projections appear anywhere in this concept on purpose. A portfolio piece that invents its own results would fail the exact trust bar the page argues for; the honest version is naming the instruments and the decision each one drives.</p>
+
+  <h2><span class="num">6</span>The compliance line</h2>
+  <p>A healthcare marketplace cannot borrow growth mechanics blindly, so the whole system observes one bright line: <b>creators earn commission on product, never on appointments.</b> The booking discount rewards the patient directly, no influencer is paid per checkup, and the funnel's urgency is real, one weekly cutoff, identical for every visitor. Growth that a healthcare brand cannot put its name on is not growth, it is a liability on a delay.</p>
+
+  <h2><span class="num">7</span>Design decisions worth defending</h2>
   <div class="card"><b>Insurance-first booking.</b><p>The demo booking flow asks for insurance before showing dentists, mirroring the real product truth: on Zocdoc, coverage is the search filter that decides everything else. Putting the least glamorous question first is a sequencing decision, it prevents the heartbreak pattern of falling for a dentist you cannot afford.</p></div>
   <div class="card"><b>The winner state is designed, not implied.</b><p>Sweepstakes funnels design the entry and ignore the win. The toggle on the thank-you page shows both states because the winner experience is where the retention mechanics live. Designing the 0.1% case is what separates a funnel that converts from a system that compounds.</p></div>
   <div class="card"><b>Trust is sequenced, not sprinkled.</b><p>A free year of product triggers "what's the catch" in the first viewport, so the proof strip answers it in the same viewport. Then the page earns each claim in order: mechanism, ingredients, honest comparisons with real concessions, expectation timeline, objections. Every module concedes something true, fluoride's record, bleach's power, because a page that never admits anything is a page nobody believes.</p></div>
   <div class="card"><b>Honest urgency only.</b><p>The countdown is a real weekly cutoff, Sunday 8 PM Pacific, identical for every visitor, never resetting per session. Deceptive timers convert until they get screenshotted. In healthcare-adjacent products the trust bar is higher, so the urgency pattern has to survive scrutiny, not just clicks.</p></div>
-  <div class="card"><b>Two brands, one token system.</b><p>The NJS mint theme and the Zocdoc co-brand theme are the same components under different design tokens. The toggle in the header is a working demonstration of how a co-branded partnership surface would ship without forking the codebase.</p></div>
+  <div class="card"><b>Two brands, one token system.</b><p>The NJS theme and the Zocdoc co-brand theme are the same components under different design tokens, and the co-brand surface ships behind a URL parameter. A working demonstration of how a partnership page would launch without forking the codebase.</p></div>
   <div class="card"><b>Accessibility is in the bones.</b><p>Real tablist keyboard patterns on the comparison and timeline modules, radiogroup semantics in the quiz, focus management into opened detail panels, reduced-motion fallbacks on every animation, and honest urgency doubling as an accessible one, the countdown is a labeled timer, not a flashing div.</p></div>
 
-  <h2><span class="num">4</span>What I would test first</h2>
+  <h2><span class="num">8</span>What I would test first</h2>
   <ul>
     <li>Repair framing against whitening framing in the hero, the A/B toggle on the page is the visible version of that plan.</li>
     <li>Booking placement: post-entry only, or also as a pre-entry path for the audience that wants the discount more than the prize.</li>
     <li>Discount depth: 10, 20, and 30 percent against six-month subscription retention, not against click-through.</li>
     <li>Winner-loop framing: does "your first shipment unlocks at your first checkup" read as delightful or as strings attached? The copy that wins decides how the rules get written.</li>
   </ul>
-
-  <h2><span class="num">5</span>What success looks like</h2>
-  <p>Not entries. <b>Booking attach rate</b>: the share of entrants who complete a Zocdoc booking within 14 days. <b>Cost per verified booking</b> against Zocdoc's existing paid channels. <b>Six-month subscription retention</b> split by checkup completion, the number that proves the loop's thesis that patients who show up, stay.</p>
   <p>If the attach rate holds above the cost of the discount, this stops being a toothpaste funnel and becomes a repeatable pattern: <span class="hl">any health-adjacent consumer brand can subsidize its customers into care, through Zocdoc.</span> Toothpaste and dentists is just the first pairing.</p>
 
-  <p class="foot">Independent product design concept by Nathan J. Song, prepared as a portfolio demonstration for Zocdoc's Principal Product Designer role. Not affiliated with, endorsed by, or connected to Zocdoc. NJS is a fictional brand; the booking flow is a designed demo and no real appointments are made.</p>
+  <p class="foot">Independent product design concept by Nathan J. Song, prepared as a portfolio demonstration for Zocdoc's Principal Product Designer role. Not affiliated with, endorsed by, or connected to Zocdoc. NJS is a fictional brand; the booking flow is a designed demo, no real appointments are made, and no performance figures are projected or implied.</p>
 </div>
 </body>
 </html>

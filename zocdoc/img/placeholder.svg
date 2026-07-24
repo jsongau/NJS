@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+<rect width="800" height="600" fill="#F6FBF9"/><ellipse cx="400" cy="290" rx="300" ry="230" fill="#E8F6F2"/>
+<path d="M340 210 q60 70 120 0" stroke="#0E7C6B" stroke-width="10" fill="none" stroke-linecap="round"/>
+<circle cx="345" cy="195" r="9" fill="#0E7C6B"/><circle cx="455" cy="195" r="9" fill="#0E7C6B"/>
+<text x="400" y="390" text-anchor="middle" font-family="Georgia,serif" font-size="56" font-weight="bold" fill="#12352F">NJS</text>
+<text x="400" y="440" text-anchor="middle" font-family="Arial" font-size="22" fill="#6E8C85">image placeholder</text>
+</svg>

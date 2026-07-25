@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product strategy, Ringside x WWE concept, by Nathan J. Song</title>
+<style>
+  :root{
+    --gold:#F3D06A; --ink:#17171C; --cream:#FFFFFF; --accent:#9E1B32;
+    --muted:#5f5f66; --line:#e7e2d6; --card:#faf8f4;
+    --good:#1c7a4a; --warn:#b26a00;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--cream);color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:44px 24px 80px}
+  .kick{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .kick i{width:14px;height:14px;border-radius:4px;background:var(--gold);display:inline-block}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,42px);line-height:1.12;margin-bottom:12px}
+  .lede{font-size:17px;color:var(--muted);max-width:58ch}
+  h2{font-family:var(--serif);font-weight:400;font-size:24px;margin:44px 0 12px;padding-top:26px;border-top:1px solid var(--line)}
+  p{margin:0 0 14px;max-width:66ch}
+  p b{font-weight:800}
+  .num{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--gold);font-size:13px;font-weight:800;margin-right:9px;vertical-align:-6px;font-family:var(--sans)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:18px 0}
+  .card b{display:block;margin-bottom:4px}
+  .card p{font-size:14.5px;color:var(--muted);margin-bottom:10px}
+  .card p:last-child{margin-bottom:0}
+  .loop{display:grid;gap:10px;margin:18px 0}
+  .loop .row{display:flex;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .loop .who{flex:none;width:92px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);padding-top:2px}
+  .loop .what{font-size:14.5px;color:var(--ink)}
+  .loop .what small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  .hl{background:linear-gradient(transparent 84%, var(--gold) 84%)}
+  ul{margin:0 0 14px 20px}
+  li{margin-bottom:8px;max-width:62ch}
+  .quote{font-family:var(--serif);font-size:20px;line-height:1.4;max-width:56ch;padding:4px 0 4px 18px;border-left:3px solid var(--gold);margin:18px 0}
+  .flows{display:grid;grid-template-columns:1fr 1.45fr;gap:18px;margin:22px 0}
+  @media(max-width:620px){.flows{grid-template-columns:1fr}}
+  .flow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .flow h3{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+  .flow.old h3{color:var(--muted)}
+  .flow.new h3{color:var(--accent)}
+  .flow ol{list-style:none;margin:0}
+  .flow ol li{position:relative;padding:0 0 16px 26px;margin:0;font-size:14px;max-width:none}
+  .flow ol li small{display:block;color:var(--muted);font-size:12.5px}
+  .flow ol li::before{content:"";position:absolute;left:2px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--muted)}
+  .flow.new ol li::before{background:var(--accent)}
+  .flow ol li::after{content:"";position:absolute;left:6px;top:20px;bottom:2px;width:2px;background:var(--line)}
+  .flow ol li:last-child{padding-bottom:0}
+  .flow ol li:last-child::after{display:none}
+  .flow .end{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--muted)}
+  .flow.new .end{color:var(--good);font-weight:600}
+  .mx{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+  @media(max-width:560px){.mx{grid-template-columns:1fr}}
+  .mx .m{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .mx .m b{display:block;font-size:14px;margin-bottom:3px}
+  .mx .m span{font-size:13px;color:var(--muted);line-height:1.5;display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick"><i></i>Product strategy · candidate concept</div>
+  <h1>A waitlist is not an asset until it converts</h1>
+  <p class="lede">Ringside x WWE, a working concept by Nathan J. Song for the Manager, Membership Growth role. The sweepstakes is the vehicle. The product is a conversion system that walks an owned fan audience from waitlist sign-up to paid membership, the exact motion the role owns. This is the thinking behind it, written the way I would present it in a weekly readout.</p>
+
+  <h2><span class="num">1</span>The product challenge</h2>
+  <p class="quote">How do you convert a large and growing waitlist into paid members using only owned channels, without spending the trust that got fans onto the list in the first place?</p>
+  <p>WWE opened the door on a paid fan membership this year, and the waitlist-to-founding-member motion is happening right now, which makes this the rare portfolio concept aimed at a live problem rather than a hypothetical one. The role is explicitly owned-channel: no paid media parachute, just email, SMS, web, app, and the landing pages between them. This page is one of those landing pages, built end to end.</p>
+
+  <h2><span class="num">2</span>The hypothesis</h2>
+  <p>Fans do not join memberships because they were persuaded. They join because a specific moment made not being a member feel expensive: the presale they missed, the drop that sold out, the seat they could not get.</p>
+  <p><b>The hypothesis: a waitlist converts when waiting is made visible and claiming is made cheap.</b> Show the fan their place in line, let referrals move them up, attach a founding price that locks on claim, and put a sweepstakes on top so the funnel is worth visiting even for the fan who is not ready to pay. Every mechanic on this page exists to move one number: paid conversion from the waitlist.</p>
+
+  <h2><span class="num">3</span>The system</h2>
+  <p>A standard waitlist sends one launch email and prays. This one is built as a ladder, and every rung is an owned-channel touch:</p>
+  <div class="flows">
+    <div class="flow old">
+      <h3>The standard waitlist</h3>
+      <ol>
+        <li>Sign up<small>a form and a thank-you</small></li>
+        <li>Silence<small>weeks of nothing</small></li>
+        <li>One launch email<small>and a prayer to the open rate</small></li>
+      </ol>
+      <div class="end">Converts the fans who were already sold, loses everyone the silence cooled off.</div>
+    </div>
+    <div class="flow new">
+      <h3>This system</h3>
+      <ol>
+        <li>Sweepstakes entry doubles as waitlist sign-up<small>a reason to act today, not at launch</small></li>
+        <li>A visible place in line<small>position shown the moment you join</small></li>
+        <li>Referrals move you up<small>sharing pays in position and entries, costs the business nothing</small></li>
+        <li>Weekly drawings keep the list warm<small>a real cutoff every Sunday, honest urgency on a schedule</small></li>
+        <li>The founding price lock<small>claiming early is cheaper than waiting, visibly and permanently</small></li>
+        <li>A 40-second claim flow<small>plan, start date, lock, three choices, no dead ends</small></li>
+        <li>Winners become the retention cohort<small>a member with a year of receipts and zero sunk cost</small></li>
+      </ol>
+      <div class="end">Every week the list gets warmer or shorter, and both outcomes are wins.</div>
+    </div>
+  </div>
+  <p>Who gets what, and why each party stays in the loop:</p>
+  <div class="loop">
+    <div class="row"><span class="who">The fan</span><span class="what">A free shot at the year, a visible place in line, and a price that rewards deciding early.<small>The incentive and the fandom point the same direction, which is why this funnel can be sent to an owned list with a straight face.</small></span></div>
+    <div class="row"><span class="who">The waitlist</span><span class="what">Stops being a spreadsheet and becomes a game with weekly heartbeats.<small>Position, referrals, and drawings give the lifecycle team a reason to email that is not "still coming soon."</small></span></div>
+    <div class="row"><span class="who">WWE</span><span class="what">Converts owned attention into recurring membership revenue without a dollar of paid media.<small>And every claim event, drop-off, and referral feeds the weekly readout that decides next week's test.</small></span></div>
+  </div>
+  <p>Even the prize obeys the loop: the winner's free year starts at claim, stamps a permanent member number, and gifts a second year to a friend. A prize that costs money is a liability; a prize that manufactures the cleanest retention cohort in the program is a research budget.</p>
+
+  <h2><span class="num">4</span>The measurement plan</h2>
+  <p>The job description lists the weekly readout, so this concept instruments exactly that list. Not page views, these:</p>
+  <div class="mx">
+    <div class="m"><b>Waitlist growth</b><span>Net new sign-ups per week, split by source: organic, referral, sweepstakes entry. The referral share is the health metric.</span></div>
+    <div class="m"><b>Email engagement</b><span>Opens and clicks per lifecycle send, benchmarked send over send. The weekly drawing gives every email a reason to exist.</span></div>
+    <div class="m"><b>Click-through and landing conversion</b><span>List to landing, landing to entry. The A/B toggle on the hero is the first test in the queue, live-moment framing against stop-paying-per-event.</span></div>
+    <div class="m"><b>Checkout completion</b><span>Claim-flow starts against claims finished. Three steps, each instrumented, so the drop-off names the fix.</span></div>
+    <div class="m"><b>Paid member conversion</b><span>The headline number: share of the waitlist converted to paid, weekly and cumulative, split by cohort and by segment answer from the quiz.</span></div>
+    <div class="m"><b>Retention and renewal</b><span>Founding cohort against later cohorts, winners against payers. The winner cohort is the control group the program gets for free.</span></div>
+  </div>
+  <p>No projections appear anywhere in this concept on purpose. A growth candidate who invents his own conversion rates is auditioning for the wrong skill; the honest version is naming the instruments and the decision each one drives.</p>
+
+  <h2><span class="num">5</span>The honest-growth line</h2>
+  <p>A family entertainment brand cannot borrow dark patterns, so the whole system observes bright lines: <b>the countdown is a real weekly cutoff, identical for every visitor. The sweepstakes is free, and buying changes no odds, with the mail-in path printed where people can see it. Scarcity is only invoked where it is true</b>, the founding window really closes, which is why the page is allowed to say so. Growth that a TV-PG brand cannot put its name on is not growth, it is a liability on a delay.</p>
+
+  <h2><span class="num">6</span>Design decisions worth defending</h2>
+  <div class="card"><b>Entry and waitlist are one action.</b><p>Fans should never choose between the fun path and the useful path. One email field feeds both: the drawing entry and the held place in line. Every future lifecycle touch inherits that dual frame, you might win, and you are getting closer either way.</p></div>
+  <div class="card"><b>Plan size comes first in the claim flow.</b><p>Household size is the only question that changes the price, so it leads. The start-date step absorbs the biggest claim objection, wrong timing, by letting the year begin at the Rumble or Mania instead of today. Objection-ordered flows outperform information-ordered ones.</p></div>
+  <div class="card"><b>The winner state is designed, not implied.</b><p>Sweepstakes funnels design the entry and ignore the win. The toggle on the thank-you page shows both states because the winner cohort is the program's free retention experiment, and an unclaimed prize is a churned member who never even paid.</p></div>
+  <div class="card"><b>No streaming, and the page says so.</b><p>The shows live with broadcast partners, and a membership concept that pretended otherwise would prove the builder never checked. The benefit explorer covers what has no broadcast home: presales, drops, points, community, event day. Doing the homework is a feature.</p></div>
+  <div class="card"><b>Segments are collected as play.</b><p>Fan type, benefit priority, and household shape arrive through a three-tap quiz and an era grid instead of a survey. Those are the exact fields launch sequencing needs, gathered at the moment of highest interest and zero friction.</p></div>
+  <div class="card"><b>Accessibility is in the bones.</b><p>Real tablist keyboard patterns on the comparison and calendar modules, radiogroup semantics in the quiz, focus management in the claim flow, reduced-motion fallbacks everywhere, and the countdown is a labeled timer, not a flashing div.</p></div>
+
+  <h2><span class="num">7</span>What I would test first</h2>
+  <ul>
+    <li>Hero framing: the live moment against the stop-paying-per-event pitch, the A/B toggle on the page is the visible version of that plan.</li>
+    <li>Claim timing: founding lock offered immediately after entry, or after the first referral, when investment is proven.</li>
+    <li>Position mechanics: does showing the exact waitlist number beat showing a percentile, and where does moving up stop motivating and start feeling rigged.</li>
+    <li>Winner framing: does "your free year starts when you claim" read as delightful or as strings attached. The copy that wins decides how the rules get written.</li>
+  </ul>
+  <p>If the claim rate holds, this stops being one funnel and becomes the repeatable launch playbook: <span class="hl">every future benefit drop, event push, and seasonal moment re-runs the same ladder with new stakes.</span> The membership is the product; the ladder is the machine that sells it.</p>
+
+  <p class="foot">Independent membership growth concept by Nathan J. Song, prepared as a portfolio demonstration for WWE's Manager, Membership Growth role. Not affiliated with, endorsed by, or connected to WWE or TKO Group Holdings. Ringside is a fictional membership name; all pricing is concept pricing; the claim flow is a designed demo and no real memberships exist. No performance figures are projected or implied.</p>
+</div>
+</body>
+</html>

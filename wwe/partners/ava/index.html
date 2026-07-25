@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ava in Motion, a Ring Circle creator store concept by Nathan J. Song</title>
+<meta name="description" content="Ava in Motion, a Ring Circle creator storefront for the fictional Ringside membership. Ringside members pay half on every product. Independent concept by Nathan J. Song for the WWE Manager, Membership Growth application.">
+<meta property="og:title" content="Ava in Motion, a Ring Circle creator store concept">
+<meta property="og:description" content="Entrance-music cardio energy, the shared Ring Circle drop, and Ringside member pricing at 50% off. Independent concept by Nathan J. Song, not affiliated with WWE or TKO Group Holdings.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#FAF8F4; --ink:#17171C; --accent:#9E1B32; --accent-deep:#7E1426; --accent-ink:#fff;
+    --card:#FFFFFF; --line:#e7e2d6; --muted:#6f6d67; --soft:#F1EBDC; --gold:#F3D06A;
+    --ryellow:#F3D06A;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  button{font:inherit;cursor:pointer}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  .concept-bar{background:#141414;color:#f4f1e8;font-size:11.5px;padding:7px 14px;text-align:center;line-height:1.5}
+  .concept-bar strong{color:var(--ryellow)}
+  .announce{background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;text-align:center;padding:8px 14px}
+  .announce b{background:#fff;color:var(--accent);border-radius:6px;padding:1px 7px}
+
+  /* header */
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,243,231,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .hd{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 20px}
+  .logo{font-weight:800;font-size:17px;letter-spacing:-.01em;cursor:pointer;white-space:nowrap}
+  .logo span{color:var(--accent)}
+  .logo small{display:block;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  nav.main{display:flex;gap:4px;margin-left:6px}
+  nav.main button{border:0;background:transparent;font-weight:700;font-size:13.5px;color:var(--muted);padding:8px 12px;border-radius:999px}
+  nav.main button:hover{color:var(--ink);background:var(--soft)}
+  nav.main button.on{color:#fff;background:var(--ink)}
+  .hd .cartbtn{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:800;font-size:13px}
+  .hd .cartbtn .n{background:var(--accent);color:#fff;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:11.5px;padding:0 6px}
+  @media(max-width:640px){nav.main{display:none}.mobile-nav{display:flex !important}}
+  .mobile-nav{display:none;gap:4px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none}
+  .mobile-nav::-webkit-scrollbar{display:none}
+  .mobile-nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;font-weight:700;font-size:12.5px;color:var(--muted);padding:7px 13px;border-radius:999px}
+  .mobile-nav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+  .view{display:none}
+  .view.on{display:block}
+
+  /* ============ HOME (Prestige DNA) ============ */
+  .hero{background:linear-gradient(180deg,#FBFAF6,#EDEBE2);color:var(--ink);text-align:center;padding:88px 20px 74px;border-bottom:1px solid var(--line)}
+  .hero .kick{font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:20px}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.8vw,50px);line-height:1.18;letter-spacing:.01em;max-width:20ch;margin:0 auto 18px}
+  .hero p{max-width:48ch;margin:0 auto 26px;font-size:16px;color:var(--muted)}
+  .hero .cta{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;border:0;font-weight:700;letter-spacing:.04em;font-size:13.5px;padding:15px 30px;border-radius:2px}
+  .hero .cta:hover{background:var(--accent-deep)}
+  .codechip{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--accent);border-radius:2px;padding:10px 16px;font-weight:600;letter-spacing:.04em;font-size:12px;margin-left:14px;color:var(--accent-deep);vertical-align:middle}
+  .codechip b{background:var(--accent);color:#fff;border-radius:2px;padding:2px 9px;letter-spacing:.06em}
+  .trust{border-bottom:1px solid var(--line);background:#fff}
+  .trust .in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+  @media(min-width:700px){.trust .in{grid-template-columns:repeat(4,1fr)}}
+  .trust .t{background:#fff;padding:14px 10px;text-align:center;font-size:12px;font-weight:700;color:var(--muted)}
+  .trust .t b{display:block;color:var(--ink);font-size:13px}
+
+  section.block{padding:52px 0 10px}
+  .bhead{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:20px}
+  .bhead h2{font-size:26px;font-weight:800;letter-spacing:-.01em}
+  .bhead a{font-size:13px;font-weight:700;color:var(--accent-deep);text-decoration:underline;cursor:pointer}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;padding-bottom:30px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;cursor:pointer}
+  .pcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(80,40,10,.13)}
+  .pimg{aspect-ratio:1/.8;display:grid;place-items:center;background:var(--soft);color:var(--accent)}
+  .pimg svg{width:72px;height:96px}
+  .pbody{padding:14px 15px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .ptag{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .pname{font-size:15.5px;font-weight:800;line-height:1.25}
+  .pwhy{font-size:12.5px;color:var(--muted);line-height:1.45;flex:1}
+  .prices{font-size:12.5px;color:var(--muted)}
+  .prices b{font-size:16px;color:var(--ink)}
+  .pcard .go{border:0;background:var(--soft);color:var(--accent-deep);font-weight:800;font-size:12.5px;padding:10px;border-radius:999px}
+  .pcard .go:hover{background:var(--accent);color:#fff}
+
+  /* story blocks (Broadcast image-with-text rhythm) */
+  .story{display:grid;grid-template-columns:1fr;gap:22px;align-items:center;margin:14px 0 36px}
+  @media(min-width:760px){.story{grid-template-columns:1fr 1fr;gap:40px}.story.flip .st-art{order:2}}
+  .st-art{border-radius:20px;min-height:280px;display:grid;place-items:center;background:linear-gradient(150deg,var(--soft),#fff);border:1px solid var(--line)}
+  .st-art svg{width:150px;height:190px;color:var(--accent)}
+  .st-txt .kick{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:8px}
+  .st-txt h3{font-size:23px;font-weight:800;line-height:1.2;margin-bottom:10px}
+  .st-txt p{font-size:14.5px;color:var(--muted);margin-bottom:10px}
+
+  /* routine timeline */
+  .routine{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:50px 0 40px;margin-top:20px}
+  .routine h2{font-size:26px;font-weight:800;margin-bottom:6px}
+  .routine .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .rsteps{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.rsteps{grid-template-columns:1fr 1fr 1fr}}
+  .rstep{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--bg)}
+  .rstep .when{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep)}
+  .rstep h4{font-size:16px;font-weight:800;margin:6px 0 6px}
+  .rstep p{font-size:13px;color:var(--muted);margin-bottom:10px}
+  .rstep .rlink{font-size:12.5px;font-weight:800;color:var(--accent-deep);text-decoration:underline;cursor:pointer}
+
+  /* testimonial strip */
+  .tstrip{padding:50px 0 26px}
+  .tgrid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.tgrid{grid-template-columns:1fr 1fr 1fr}}
+  .tcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px 18px}
+  .tcard p{font-size:13.5px;line-height:1.55;margin-bottom:9px}
+  .tcard b{font-size:12px;color:var(--muted)}
+  .stars{color:var(--accent);letter-spacing:2px;font-size:13px;margin-bottom:7px}
+
+  /* economics strip */
+  .econ{padding:44px 0 56px}
+  .econ h2{font-size:24px;font-weight:800;margin-bottom:16px}
+  .econ-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:640px){.econ-grid{grid-template-columns:1fr 1fr 1fr}}
+  .etile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px 18px}
+  .etile .big{font-size:26px;font-weight:800;color:var(--accent)}
+  .etile b{display:block;font-size:14.5px;margin:4px 0 4px}
+  .etile p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+  .newsletter{background:var(--ink);color:#f6efe3;padding:46px 20px;text-align:center}
+  .newsletter h3{font-size:22px;font-weight:800;margin-bottom:8px}
+  .newsletter p{font-size:13.5px;color:#cbbfa9;max-width:46ch;margin:0 auto 18px}
+  .nl-row{display:flex;gap:8px;max-width:420px;margin:0 auto}
+  .nl-row input{flex:1;font:inherit;font-size:14px;padding:13px 15px;border-radius:999px;border:0}
+  .nl-row button{border:0;background:var(--accent);color:#fff;font-weight:800;padding:0 22px;border-radius:999px}
+
+  /* ============ SHOP ============ */
+  .shophero{background:#fff;border-bottom:1px solid var(--line);padding:38px 0 0}
+  .shophero h1{font-size:30px;font-weight:800;margin-bottom:4px}
+  .shophero p{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:13px;color:var(--muted);padding:8px 15px;border-radius:999px}
+  .tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .shopgrid{padding:26px 0 40px}
+
+  /* ============ PDP ============ */
+  .crumb{font-size:12px;color:var(--muted);padding:18px 0 0}
+  .crumb a{text-decoration:underline;cursor:pointer}
+  .pdp{display:grid;grid-template-columns:1fr;gap:26px;padding:16px 0 30px}
+  @media(min-width:820px){.pdp{grid-template-columns:1.05fr 1fr;gap:44px}}
+  .gal{position:sticky;top:96px;align-self:start}
+  .gal-main{background:var(--soft);border:1px solid var(--line);border-radius:20px;aspect-ratio:1/.92;display:grid;place-items:center;color:var(--accent)}
+  .gal-main svg{width:150px;height:200px}
+  .gal-badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .gbadge{font-size:11px;font-weight:800;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted)}
+  .pd-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep)}
+  .pd h1{font-size:28px;font-weight:800;line-height:1.15;margin:6px 0 8px}
+  .pd .maya{background:var(--soft);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:11px 14px;font-size:13.5px;margin:12px 0 16px}
+  .pd .maya b{color:var(--accent-deep)}
+  .benefits{margin:0 0 18px}
+  .benefits li{list-style:none;font-size:14px;margin:7px 0;padding-left:26px;position:relative}
+  .benefits li::before{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:5px;background:var(--accent);opacity:.16}
+  .benefits li::after{content:"";position:absolute;left:4.5px;top:8px;width:7px;height:5px;border-left:2.2px solid var(--accent-deep);border-bottom:2.2px solid var(--accent-deep);transform:rotate(-45deg)}
+  .buybox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+  .opt{display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;cursor:pointer}
+  .opt.on{border-color:var(--accent);background:var(--soft)}
+  .opt .ol b{font-size:14px;display:block}
+  .opt .ol span{font-size:11.5px;color:var(--muted)}
+  .opt .op{font-weight:800;font-size:16px}
+  .opt .op small{display:block;font-weight:600;font-size:10.5px;color:var(--muted);text-align:right}
+  .qtyrow{display:flex;align-items:center;gap:12px;margin:12px 0}
+  .qtyrow button{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:800;font-size:16px}
+  .qtyrow span{font-weight:800;min-width:20px;text-align:center}
+  .atc{width:100%;border:0;background:var(--accent);color:#fff;font-weight:800;font-size:15.5px;padding:15px;border-radius:999px}
+  .atc:hover{background:var(--accent-deep)}
+  .buybox .note{font-size:11px;color:var(--muted);text-align:center;margin-top:9px}
+  .accs{margin:20px 0}
+  .acc{border-bottom:1px solid var(--line)}
+  .acc button.ah{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;padding:14px 2px;font-weight:800;font-size:14px;color:var(--ink)}
+  .acc .ab{display:none;font-size:13.5px;color:var(--muted);padding:0 2px 14px;line-height:1.6}
+  .acc.open .ab{display:block}
+  .acc .car{transition:transform .2s;font-size:12px;color:var(--muted)}
+  .acc.open .car{transform:rotate(90deg)}
+  .related{padding:10px 0 50px}
+  .related h3{font-size:20px;font-weight:800;margin-bottom:14px}
+
+  /* sticky mobile ATC */
+  .satc{position:fixed;left:0;right:0;bottom:0;z-index:70;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(60,30,5,.12);padding:10px 14px;display:none;align-items:center;gap:12px}
+  .satc.show{display:flex}
+  .satc .sn{flex:1;min-width:0}
+  .satc .sn b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .satc .sn span{font-size:11.5px;color:var(--muted)}
+  .satc button{border:0;background:var(--accent);color:#fff;font-weight:800;font-size:13.5px;padding:12px 18px;border-radius:999px;white-space:nowrap}
+
+  /* ============ cart drawer + checkout (shared pattern) ============ */
+  .overlay{position:fixed;inset:0;background:rgba(30,20,10,.45);z-index:85;opacity:0;visibility:hidden;transition:.25s}
+  .overlay.show{opacity:1;visibility:visible}
+  .drawer{position:fixed;inset:0 0 0 auto;width:min(430px,100vw);z-index:90;background:#fff;box-shadow:-18px 0 50px rgba(40,20,5,.3);transform:translateX(102%);transition:transform .3s ease;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .dr-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .dr-head b{font-size:17px}
+  .dr-x{border:0;background:transparent;color:var(--muted);font-size:20px;font-weight:800}
+  .dr-code{margin:14px 18px 0;display:flex;align-items:center;gap:9px;background:var(--soft);border:1.5px dashed var(--accent);border-radius:10px;padding:10px 13px;font-size:13px;font-weight:700}
+  .dr-code b{background:var(--accent);color:#fff;border-radius:6px;padding:2px 8px;font-size:12px}
+  .ship-meter{margin:10px 18px 0;font-size:11.5px;color:var(--muted)}
+  .ship-meter .bar{height:7px;background:var(--soft);border-radius:999px;overflow:hidden;margin-top:5px}
+  .ship-meter .bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+  .dr-items{flex:1;overflow:auto;padding:10px 18px}
+  .dr-empty{color:var(--muted);font-size:14px;text-align:center;padding:40px 10px}
+  .li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .li-img{width:52px;height:64px;border-radius:10px;background:var(--soft);display:grid;place-items:center;flex:0 0 auto;color:var(--accent)}
+  .li-img svg{width:30px;height:42px}
+  .li-main{flex:1;min-width:0}
+  .li-name{font-size:13.5px;font-weight:800;line-height:1.25}
+  .li-mode{display:inline-flex;gap:5px;margin-top:6px}
+  .li-mode button{border:1px solid var(--line);background:#fff;color:var(--muted);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .li-mode button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .li-qty{display:inline-flex;align-items:center;gap:8px;margin-top:7px}
+  .li-qty button{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:#fff;font-weight:800;line-height:1}
+  .li-qty span{font-size:13px;font-weight:700;min-width:14px;text-align:center}
+  .li-price{text-align:right;font-size:13.5px;font-weight:800;white-space:nowrap}
+  .li-price small{display:block;font-weight:600;color:var(--muted);font-size:10.5px}
+  .li-rm{border:0;background:transparent;color:var(--muted);font-size:11px;text-decoration:underline;margin-top:6px;padding:0}
+  .earnbox{margin:12px 18px 0;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.5}
+  .dr-math{border-top:1px solid var(--line);padding:14px 18px;font-size:13.5px}
+  .dm-row{display:flex;justify-content:space-between;margin:4px 0;color:var(--muted)}
+  .dm-row.total{color:var(--ink);font-weight:800;font-size:16px;margin-top:8px}
+  .dm-row.disc{color:var(--accent-deep);font-weight:700}
+  .dr-checkout{margin:14px 18px 8px;border:0;background:var(--accent);color:#fff;font-weight:800;font-size:15px;padding:15px;border-radius:999px}
+  .dr-note{text-align:center;font-size:10.5px;color:var(--muted);margin:0 18px 14px}
+  .comodal{position:fixed;inset:0;z-index:95;display:none;place-items:center;padding:18px;background:rgba(30,20,10,.55)}
+  .comodal.show{display:grid}
+  .cobox{background:#fff;border-radius:18px;max-width:430px;width:100%;padding:26px 24px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+  .cobox h3{font-size:21px;font-weight:800;margin-bottom:6px}
+  .cobox .cosub{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .corow{display:flex;justify-content:space-between;font-size:13.5px;margin:5px 0;color:var(--muted)}
+  .corow.b{color:var(--ink);font-weight:800;font-size:15px}
+  .cohr{border:0;border-top:1px solid var(--line);margin:12px 0}
+  .coearn{background:var(--soft);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.55;margin-top:6px}
+  .cobox .close{width:100%;margin-top:16px;border:0;background:var(--ink);color:#fff;font-weight:800;padding:13px;border-radius:999px}
+  .codemo{font-size:10.5px;color:var(--muted);text-align:center;margin-top:10px}
+
+  /* Nathan */
+  .nwrap{position:fixed;left:16px;bottom:16px;z-index:80}
+  .nchip{width:52px;height:52px;border-radius:50%;background:var(--ryellow);border:3px solid #fff;box-shadow:0 8px 26px rgba(40,20,5,.3);display:grid;place-items:center;font-weight:900;font-size:19px;color:#141414;position:relative}
+  .nchip::after{content:"";position:absolute;top:-1px;right:-1px;width:12px;height:12px;border-radius:3px;background:#141414;border:2px solid #fff}
+  .nb{position:absolute;left:0;bottom:62px;width:min(360px,calc(100vw - 34px));background:rgba(20,18,14,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#f6f3ea;border:1px solid rgba(255,255,255,.08);border-radius:16px;border-bottom-left-radius:5px;padding:16px 17px 14px;font-size:13px;line-height:1.55;opacity:0;visibility:hidden;transform:translateY(6px);transition:.3s}
+  .nb.show{opacity:1;visibility:visible;transform:none}
+  .nb .who{font-weight:800;color:var(--ryellow);font-size:11.5px;margin-bottom:8px;display:flex;justify-content:space-between}
+  .nb .who span:last-child{cursor:pointer;color:#bbb}
+  .nb .tag{display:inline-block;background:rgba(255,214,1,.16);color:var(--ryellow);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:8px}
+  .nb .nav{display:flex;justify-content:space-between;margin-top:12px}
+  .nb .nav button{background:transparent;border:1px solid #555;color:#eee;border-radius:8px;padding:5px 12px;font-size:11.5px;font-weight:700}
+
+  footer.end{background:#141414;color:#8f8b80;padding:34px 20px 30px;margin-top:10px}
+  .fgrid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:20px;font-size:12.5px}
+  @media(min-width:700px){.fgrid{grid-template-columns:2fr 1fr 1fr}}
+  .fgrid h4{color:#f4f1e8;font-size:13px;margin-bottom:8px}
+  .fgrid a{display:block;color:#8f8b80;text-decoration:none;margin:4px 0;cursor:pointer}
+  .fgrid a:hover{color:#f4f1e8}
+  .legal{max-width:1080px;margin:22px auto 0;border-top:1px solid #2c2c2c;padding-top:14px;font-size:11px;line-height:1.6}
+  .legal b{color:var(--ryellow)}
+
+  /* ============ Movement styling (Ava, dynamic) ============ */
+  body{letter-spacing:0}
+  .bhead h2,.shophero h1,.pd h1,.st-txt h3,.routine h2,.econ h2,.newsletter h3,.related h3{font-family:var(--sans);font-weight:800;letter-spacing:-.01em}
+  .routine h2,.econ h2,.bhead h2{text-transform:uppercase}
+  .pname{font-family:var(--sans);font-weight:800;font-size:15px}
+  .pcard,.buybox,.etile,.rstep,.tcard,.gal-main,.drawer,.cobox,.st-art,.li-img,.dr-code,.earnbox{border-radius:6px}
+  .cta,.atc,.dr-checkout,.hd .cartbtn,.pcard .go,.tabs button,.nl-row input,.nl-row button,.opt,.cobox .close{border-radius:4px}
+  nav.main button,.mobile-nav button{border-radius:4px}
+  .stars{color:var(--accent);letter-spacing:3px}
+  .announce{background:var(--ink);color:#fff;font-weight:700;letter-spacing:.02em}
+  .announce b{background:var(--accent);color:#fff}
+  .hero{background:var(--bg);text-align:left;padding:52px 0 40px;overflow:hidden}
+  .hero .in{max-width:1080px;margin:0 auto;padding:0 20px}
+  .hero .kick{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .hero h1{font-family:var(--sans);font-weight:900;font-size:clamp(44px,9vw,102px);line-height:.9;letter-spacing:-.03em;text-transform:uppercase;color:var(--ink);margin:0 0 8px}
+  .hero h1 .w{display:inline-block;opacity:0;transform:translateY(30px);animation:heroword .6s cubic-bezier(.2,.8,.2,1) forwards}
+  .hero h1 .em{color:var(--accent)}
+  .hero p{max-width:50ch;font-size:16.5px;color:var(--muted);margin:14px 0 22px}
+  .hero .cta{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;border:0;font-weight:800;font-size:14.5px;letter-spacing:.02em;padding:16px 30px;border-radius:4px;text-transform:uppercase}
+  .hero .cta:hover{background:var(--accent-deep)}
+  .codechip{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid var(--ink);border-radius:4px;padding:11px 16px;font-weight:800;font-size:12.5px;margin-left:12px;color:var(--ink);text-transform:uppercase;vertical-align:middle}
+  .codechip b{background:var(--ink);color:#fff;border-radius:3px;padding:2px 8px}
+  @keyframes heroword{to{opacity:1;transform:none}}
+  .marquee{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;border-top:3px solid var(--accent);border-bottom:3px solid var(--accent)}
+  .mq-track{display:inline-block;padding:12px 0;animation:mq 20s linear infinite;font-weight:900;font-size:18px;letter-spacing:.04em;text-transform:uppercase;will-change:transform}
+  .mq-track span{padding:0 18px}
+  .mq-track .dot{color:var(--accent)}
+  .marquee:hover .mq-track{animation-play-state:paused}
+  @keyframes mq{to{transform:translateX(-50%)}}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in-view{opacity:1;transform:none}
+  .pcard{position:relative}
+  .pcard .pimg{position:relative;overflow:hidden}
+  .pcard .pimg::after{content:"View product";position:absolute;left:0;right:0;bottom:0;background:var(--ink);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:9px;transform:translateY(100%);transition:transform .22s}
+  .pcard:hover .pimg::after{transform:none}
+  .pcard:hover .pimg img{transform:scale(1.06)}
+  .pcard .pimg img{transition:transform .3s}
+  .statbar{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .statbar .in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+  @media(min-width:700px){.statbar .in{grid-template-columns:repeat(4,1fr)}}
+  .statbar .st{background:var(--card);padding:26px 14px;text-align:center}
+  .statbar .st b{display:block;font-size:34px;font-weight:900;letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
+  .statbar .st span{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:6px;display:block}
+  .statbar .note{grid-column:1/-1;background:var(--card);text-align:center;font-size:10.5px;color:var(--muted);padding:0 0 12px}
+  .sockbar{background:var(--accent);color:#fff}
+  .sockbar .in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:16px 20px;flex-wrap:wrap}
+  .sockbar .sk-art{width:58px;height:58px;flex:0 0 auto;color:#fff}
+  .sockbar .sk-tx{flex:1;min-width:200px}
+  .sockbar .sk-tx b{display:block;font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:.01em}
+  .sockbar .sk-tx span{font-size:13px;opacity:.94}
+  .sockbar .sk-btn{background:#fff;color:var(--accent);border:0;font-weight:800;font-size:13px;padding:12px 20px;border-radius:4px;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+  .nav-sock{display:inline-flex !important;align-items:center;gap:6px;color:var(--accent) !important}
+  .nav-sock svg{width:15px;height:15px}
+  .sockimg{width:66%;height:66%;object-fit:contain;color:var(--accent)}
+  .pimg img{width:84%;height:84%;object-fit:contain}
+  .gal-main img{width:76%;height:82%;object-fit:contain}
+  .li-img img{width:100%;height:100%;object-fit:contain}
+  .st-art img{max-width:82%;max-height:86%;object-fit:contain}
+  /* ============ shared mega-nav: The Ring Circle creator network ============ */
+  .meganav{background:#17171C;color:#fff}
+  .mn-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px 16px;padding:9px 20px;flex-wrap:wrap}
+  .mn-badge{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;letter-spacing:.01em}
+  .mn-badge b{font-weight:800}
+  .mn-badge .tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#F3D06A;border:1px solid rgba(243,208,106,.5);border-radius:5px;padding:2px 6px}
+  .mn-note{font-size:10.5px;color:#bdbdbd;line-height:1.3}
+  .mn-switch{margin-left:auto;display:inline-flex;align-items:center;gap:9px}
+  .mn-lab{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#bdbdbd;white-space:nowrap}
+  .mn-seg{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px}
+  .mn-seg a{text-decoration:none;font-size:12.5px;font-weight:800;color:#d9d9d9;padding:6px 14px;border-radius:999px;white-space:nowrap;transition:.15s}
+  .mn-seg a:hover{color:#fff}
+  .mn-seg a.on{background:#F3D06A;color:#17171C}
+  @media(max-width:680px){.mn-note{display:none}.mn-switch{margin-left:0;width:100%}}
+
+  /* ============ image viewer: springy pop + pan zoom (Ava) ============ */
+  .pimg{position:relative}
+  .zoombtn{position:absolute;right:10px;bottom:10px;width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);background:var(--accent);color:#fff;display:grid;place-items:center;cursor:zoom-in;opacity:0;transition:opacity .2s,transform .2s}
+  .pcard:hover .zoombtn{opacity:1}
+  .zoombtn:hover{transform:scale(1.14) rotate(8deg)}
+  @media(hover:none){.zoombtn{opacity:1}}
+  .st-art img.pmimg{cursor:zoom-in}
+  .gal-main{position:relative;cursor:zoom-in}
+  .gal-main::after{content:"Click to zoom";position:absolute;right:12px;bottom:12px;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--accent);border:2px solid var(--ink);border-radius:999px;padding:5px 11px}
+  .imgviewer{position:fixed;inset:0;z-index:220;display:none;align-items:center;justify-content:center;padding:26px;background:rgba(14,14,14,.82)}
+  .imgviewer.show{display:flex}
+  .imgv-card{position:relative;background:var(--bg);border:2px solid var(--ink);border-radius:22px;box-shadow:8px 8px 0 var(--accent);padding:16px;max-width:min(640px,92vw);width:100%}
+  .imgviewer.show .imgv-card{animation:avSpring .55s cubic-bezier(.2,1.5,.35,1)}
+  @keyframes avSpring{0%{transform:scale(.6) rotate(-3deg);opacity:0}}
+  .imgv-img{background:#fff;border-radius:14px;aspect-ratio:1/.9;overflow:hidden;display:grid;place-items:center;cursor:zoom-in}
+  .imgv-img img{max-width:86%;max-height:86%;object-fit:contain;transition:transform .25s ease;will-change:transform}
+  .imgv-img.zoomed{cursor:zoom-out}
+  .imgv-img.zoomed img{transform:scale(2.2)}
+  .imgv-cap{font-weight:900;text-transform:uppercase;letter-spacing:.02em;font-size:15px;margin-top:12px}
+  .imgv-cap:empty{display:none}
+  .imgv-sub{font-size:11px;color:var(--muted);margin-top:3px}
+  .imgv-x{position:absolute;top:-14px;right:-14px;background:var(--accent);color:#fff;border:2px solid var(--ink);width:40px;height:40px;border-radius:50%;font-weight:900;font-size:16px;cursor:pointer;transition:transform .2s;line-height:1}
+  .imgv-x:hover{transform:rotate(90deg) scale(1.1)}
+
+  /* ============ annual prepay + subscription push ============ */
+  .opt .ol .chip{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:2.5px 8px;margin:2px 0 3px}
+  .chip.pop{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+  .chip.gift{background:var(--accent);color:#fff}
+  .opt .ol .ysave{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+  .li.gift{opacity:.98}
+  .li.gift .li-img{color:var(--accent)}
+  .li.gift .li-img svg{width:70%;height:70%}
+  .gift-tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-top:3px}
+  .li-price.free{font-weight:800;color:var(--accent)}
+</style>
+
+<style>
+  /* Ringside layer (theme-independent, Ringside brand constants) */
+  .rsband{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#F3D06A;color:#17171C;border-radius:14px;padding:18px 20px;margin:26px 0 8px}
+  .rsband svg{flex:none}
+  .rsband div{flex:1;min-width:220px}
+  .rsband b{display:block;font-size:15.5px;font-weight:800}
+  .rsband span{display:block;font-size:13px;line-height:1.55;margin-top:2px}
+  .rsband a{flex:none;background:#17171C;color:#F3D06A;text-decoration:none;font-weight:800;font-size:13px;padding:11px 18px;border-radius:999px}
+  .dr-rs{display:flex;align-items:center;gap:10px;background:#F3D06A;color:#17171C;border-radius:12px;padding:12px 14px;margin:10px 18px 0}
+  .dr-rs svg{flex:none}
+  .dr-rs span{flex:1;font-size:11.5px;line-height:1.45}
+  .dr-rs b{font-weight:800}
+  .dr-rs a{flex:none;background:#17171C;color:#F3D06A;text-decoration:none;font-weight:800;font-size:11.5px;padding:8px 13px;border-radius:999px}
+  .cors{display:block;background:#F3D06A;color:#17171C;border-radius:12px;padding:14px 16px;margin:14px 0 4px;font-size:13px;line-height:1.55;text-align:left}
+  .cors .rsl{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+  .cors b{font-weight:800}
+  .cors a{display:inline-block;background:#17171C;color:#F3D06A;text-decoration:none;font-weight:800;font-size:12.5px;padding:9px 16px;border-radius:999px;margin-top:9px}
+</style>
+</head>
+<body>
+<script>window.imgFB=window.imgFB||function(el){(window.__fbq=window.__fbq||[]).push(el)};</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bottle" viewBox="0 0 60 84">
+    <rect x="18" y="2" width="24" height="10" rx="2.5" fill="currentColor" opacity=".85"/>
+    <path d="M14 18 C14 13.6 17.6 12 22 12 L38 12 C42.4 12 46 13.6 46 18 L46 74 C46 79 42 82 37 82 L23 82 C18 82 14 79 14 74 Z" fill="currentColor" opacity=".28"/>
+    <path d="M14 30 L46 30 L46 66 L14 66 Z" fill="#fff" opacity=".82"/>
+    <circle cx="30" cy="48" r="9" fill="currentColor" opacity=".9"/>
+  </symbol>
+  <symbol id="trio" viewBox="0 0 160 200">
+    <use href="#bottle" x="0" y="40" width="70" height="98"/>
+    <use href="#bottle" x="50" y="10" width="86" height="120"/>
+    <use href="#bottle" x="100" y="50" width="62" height="86"/>
+  </symbol>
+  <symbol id="shaker" viewBox="0 0 60 84">
+    <rect x="26" y="0" width="8" height="6" rx="2" fill="currentColor"/>
+    <path d="M20 6 L40 6 L38 15 L22 15 Z" fill="currentColor" opacity=".9"/>
+    <path d="M16 15 L44 15 L40 78 C40 81.4 37 83.5 33 83.5 L27 83.5 C23 83.5 20 81.4 20 78 Z" fill="currentColor" opacity=".3"/>
+    <path d="M17.2 26 L42.8 26" stroke="currentColor" stroke-width="2.4" opacity=".55"/>
+    <circle cx="30" cy="50" r="7.5" fill="currentColor" opacity=".85"/>
+    <circle cx="30" cy="50" r="3.4" fill="#fff" opacity=".85"/>
+  </symbol>
+  <symbol id="samples" viewBox="0 0 84 60">
+    <g transform="rotate(-9 16 30)"><rect x="6" y="14" width="20" height="32" rx="3.5" fill="currentColor" opacity=".38"/><rect x="6" y="14" width="20" height="7" rx="3.5" fill="currentColor" opacity=".7"/></g>
+    <rect x="32" y="10" width="20" height="36" rx="3.5" fill="currentColor" opacity=".62"/><rect x="32" y="10" width="20" height="7" rx="3.5" fill="currentColor" opacity=".9"/>
+    <g transform="rotate(9 68 30)"><rect x="58" y="14" width="20" height="32" rx="3.5" fill="currentColor" opacity=".38"/><rect x="58" y="14" width="20" height="7" rx="3.5" fill="currentColor" opacity=".7"/></g>
+  </symbol>
+  <symbol id="sock" viewBox="0 0 100 100">
+    <path d="M36 12 h24 a4 4 0 0 1 4 4 v34 c0 6 3 9 9 12 l12 6 a13 13 0 0 1 -6 25 h-19 a17 17 0 0 1 -17 -17 V16 a4 4 0 0 1 4 -4 z" fill="currentColor"/>
+    <rect x="36" y="15" width="24" height="3" fill="#fff" opacity=".85"/>
+    <rect x="36" y="21" width="24" height="2.5" fill="#fff" opacity=".5"/>
+    <g fill="#fff" opacity=".9"><circle cx="58" cy="84" r="2.4"/><circle cx="66" cy="82" r="2.4"/><circle cx="74" cy="84" r="2.4"/><circle cx="62" cy="90" r="2.4"/><circle cx="70" cy="89" r="2.4"/></g>
+  </symbol>
+</svg>
+
+<div class="meganav"><div class="mn-in"><a class="mn-badge" href="/wwe/partners/" style="color:inherit;text-decoration:none"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><path d="M5 8.2h14M5 12h14M5 15.8h14" stroke="#17171C" stroke-width="2" stroke-linecap="round"/></svg> <b>The Ring Circle</b>&nbsp;creator store &middot; <b>Ringside</b> members save 50%<span class="tag">concept</span></a><span class="mn-note">Independent concept by Nathan J. Song, not affiliated with WWE or TKO. Ringside is a fictional membership.</span><div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="/wwe/">Funnel</a><a href="/wwe/partners/">Circle</a><a href="/wwe/partners/maya/">Maya</a><a href="/wwe/partners/lex/">Lex</a><a href="/wwe/partners/ava/" class="on">Ava</a></div></div></div></div>
+<div class="announce">New drop &nbsp;&middot;&nbsp; Ava's Grip Socks &nbsp;&middot;&nbsp; Ringside members get <b>50% off</b> everything here &nbsp;&middot;&nbsp; Code AVA10 takes 10% if you are not one yet</div>
+
+<header class="site">
+  <div class="hd">
+    <div class="logo" onclick="go('home')">Ava <span>in</span> Motion<small>A Ring Circle store &middot; Ringside members save 50%</small></div>
+    <nav class="main">
+      <button data-v="home" class="on" onclick="go('home')">Home</button>
+      <button data-v="shop" onclick="go('shop')">Shop all</button><button class="nav-sock" onclick="go('pdp','socks')"><svg viewBox="0 0 100 100"><use href="#sock"/></svg> Grip Socks</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The week</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About Ava</button>
+    </nav>
+    <button class="cartbtn" onclick="openCart()">Cart <span class="n" id="cartN">0</span></button>
+  </div>
+  <div class="mobile-nav">
+    <button data-v="home" class="on" onclick="go('home')">Home</button>
+    <button data-v="shop" onclick="go('shop')">Shop all</button><button class="nav-sock" onclick="go('pdp','socks')"><svg viewBox="0 0 100 100"><use href="#sock"/></svg> Grip Socks</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The week</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About</button>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<main class="view on" id="view-home">
+  <div class="hero">
+    <div class="in">
+      <p class="kick">Ava &middot; entrance-music cardio &middot; The Ring Circle</p>
+      <h1><span class="w" style="animation-delay:.05s">Move</span> <span class="w" style="animation-delay:.15s">like</span> <span class="w" style="animation-delay:.25s">the</span> <span class="w em" style="animation-delay:.35s">roster.</span></h1>
+      <p>My 6am cardio classes run on walkout music, and the gear has to keep up. The eight-piece Ring Circle drop, tested through intervals and watch parties, plus the grip socks I made because the studio pair kept slipping.</p>
+      <button class="cta mag" onclick="go('shop')">Shop the drop</button>
+      <span class="codechip">Code <b>AVA10</b> takes 10% off</span>
+      <span class="codechip">Ringside members pay <b>half</b></span>
+    </div>
+  </div>
+
+  <div class="marquee"><div class="mq-track" id="mqTrack"></div></div>
+
+  <div class="statbar"><div class="in">
+    <div class="st"><b data-count="6">0</b><span>days a week I train</span></div>
+    <div class="st"><b data-count="2400" data-suffix="+">0</b><span>classes taught to walkout songs</span></div>
+    <div class="st"><b data-count="18" data-suffix="k">0</b><span>moving with me</span></div>
+    <div class="st"><b data-count="50" data-suffix="%">0</b><span>off for Ringside members</span></div>
+    <div class="note">Community figures are illustrative, for the concept. Member pricing is the real mechanic.</div>
+  </div></div>
+
+  <div class="sockbar"><div class="in">
+    <span class="sk-art"><svg viewBox="0 0 100 100"><use href="#sock"/></svg></span>
+    <div class="sk-tx"><b>Ava Original: The Grip Socks</b><span>The studio pair kept slipping, so I made my own. Grippy sole, seamless toe, and Ringside members pay half here too.</span></div>
+    <button class="sk-btn mag" onclick="go('pdp','socks')">Shop the socks</button>
+  </div></div>
+
+  <div class="trust"><div class="in">
+    <div class="t"><b>Ringside members</b>50% off every product here</div>
+    <div class="t"><b>Code AVA10</b>10% off for everyone else</div>
+    <div class="t"><b>Ava earns 5%</b>on product only, printed on the receipt</div>
+    <div class="t"><b>Concept store</b>demo checkout, concept pricing</div>
+  </div></div>
+
+  <div class="wrap">
+    <section class="block">
+      <div class="bhead"><h2>The drop</h2><a onclick="go('shop','all')">See everything</a></div>
+      <div class="grid" id="home-featured"></div>
+    </section>
+
+    <section class="block" id="about" style="padding-top:26px">
+      <div class="story">
+        <div class="st-art"><img class="pmimg staimg" alt="" src="../../img/rs-arena.jpg" onerror="imgFB(this)"></div>
+        <div class="st-txt">
+          <p class="kick">Why this store</p>
+          <h3>My cardio classes run on entrance themes. The merch has to keep up.</h3>
+          <p>Every class I teach opens with somebody's music, and you learn a lot about a roster when eighteen people hit their intervals to it. This drop is what survives that room: the tee that breathes, the pins that travel on a gym bag, the posters that turn a plain wall into a card.</p>
+          <p>Eight pieces from the shared Ring Circle drop, plus the grip socks I made myself.</p>
+        </div>
+      </div>
+      <div class="story flip">
+        <div class="st-art"><img class="pmimg staimg" alt="" src="../../img/rs-card.jpg" onerror="imgFB(this)"></div>
+        <div class="st-txt">
+          <p class="kick">The honest part</p>
+          <h3>I earn from this store, and I would rather you know.</h3>
+          <p>The Ring Circle pays me 5% of every product order here, before tax and shipping. My code AVA10 takes 10% off for you and comes from the program's side, never added to your price.</p>
+          <p>Ringside members pay half on everything instead. The member price replaces my code, it does not stack, and I earn nothing when someone joins Ringside. Memberships carry zero commission, by design.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="routine" id="routine">
+    <div class="wrap">
+      <h2>The training week</h2>
+      <p class="sub">A week between the studio and the watch party, and what it wears.</p>
+      <div class="rsteps">
+        <div class="rstep"><span class="when">6am, studio</span><h4>Entrance-theme cardio</h4><p>Intervals to walkout music, six days a week. The tee breathes through a full set and the socks grip the floor when the tempo turns over.</p><span class="rlink" onclick="go('pdp','tee')">Main Event Tee</span><br><span class="rlink" onclick="go('pdp','socks')">Ava's Grip Socks</span></div>
+        <div class="rstep"><span class="when">Saturday night</span><h4>The watch party</h4><p>Prediction deck on the table, banner kit on the wall, and the living room turns into a house show. Losers of the deck hold the plank on Monday.</p><span class="rlink" onclick="go('pdp','cards')">Prediction Deck</span><br><span class="rlink" onclick="go('pdp','banner')">Watch-Party Banner Kit</span></div>
+        <div class="rstep"><span class="when">The big four weekends</span><h4>Main event mode</h4><p>Posters up, pins on the jacket, playlist rebuilt for the card. If you are on the fence about Ringside, run the math at checkout, members pay half on all of it.</p><span class="rlink" onclick="go('pdp','posters')">Era Poster Series</span><br><a class="rlink" href="/wwe/">See Ringside</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="tstrip">
+      <div class="bhead"><h2>In their words</h2><span style="font-size:11px;color:var(--muted)">Illustrative reviews, for the concept</span></div>
+      <div class="tgrid">
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"Ava teaches cardio to walkout songs at 6am and prints what she earns on my receipt. The only creator shop I trust."</p><b>Elise M.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"Bought the tee and the grip socks in one order. The checkout showed me what a member would have paid and the math would not leave me alone. I joined."</p><b>Nora P.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"Three posters, three eras, and one argument with my brother that has not ended since. My hallway looks like a card now."</p><b>Grace L.</b></div>
+      </div>
+    </section>
+
+    <section class="econ">
+      <h2>How the drop works</h2>
+      <div class="econ-grid">
+        <div class="etile"><span class="big">10%</span><b>Everyone saves with her code</b><p>AVA10 applies quietly at checkout. If you are a Ringside member you do not need it, the member price already wins and the two never stack.</p></div>
+        <div class="etile"><span class="big">50%</span><b>Members pay half</b><p>Ringside members get 50% off every product in every Ring Circle store. $99 a year, concept pricing, and the receipt shows the payback in real numbers.</p></div>
+        <div class="etile"><span class="big">5%</span><b>Ava earns on product</b><p>Measured on the product total before tax and shipping. Product only, never memberships, printed on the receipt.</p></div>
+      </div>
+    </section>
+    <div class="rsband"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><path d="M5 8.2h14M5 12h14M5 15.8h14" stroke="#17171C" stroke-width="2" stroke-linecap="round"/></svg><div><b>Ringside members: 50% off this store.</b><span>Every checkout prints the same math, what you paid, what a member would have paid, and how fast a $99 year covers itself. Ava earns nothing on memberships, that is by design.</span></div><a href="/wwe/">See Ringside</a></div>
+  </div>
+
+  <div class="newsletter">
+    <h3>Move with me.</h3>
+    <p>One note a week: what the class playlist looks like, what I am wearing to the next watch party, and first dibs on the next sock drop. Demo form, nothing is stored.</p>
+    <div class="nl-row"><input type="email" placeholder="you@email.com" aria-label="Email address"><button onclick="this.textContent='Joined';setTimeout(()=>this.textContent='Join',1600)">Join</button></div>
+  </div>
+</main>
+
+<!-- ================= SHOP ================= -->
+<main class="view" id="view-shop">
+  <div class="shophero"><div class="wrap">
+    <h1>Shop all</h1>
+    <p>The whole drop, one place. AVA10 takes 10% off, Ringside members pay half.</p>
+    <div class="tabs" id="shopTabs"></div>
+  </div></div>
+  <div class="wrap"><div class="grid shopgrid" id="shopGrid"></div></div>
+</main>
+
+<!-- ================= PDP ================= -->
+<main class="view" id="view-pdp">
+  <div class="wrap">
+    <p class="crumb"><a onclick="go('home')">Home</a> &nbsp;/&nbsp; <a onclick="go('shop')">Shop all</a> &nbsp;/&nbsp; <span id="crumbName"></span></p>
+    <div class="pdp">
+      <div class="gal">
+        <div class="gal-main" id="galMain"><svg><use href="#bottle"/></svg></div>
+        <div class="gal-badges" id="galBadges"><span class="gbadge">Ring Circle drop</span><span class="gbadge">Concept pricing</span><span class="gbadge">Members pay half</span></div>
+      </div>
+      <div class="pd">
+        <span class="pd-tag" id="pdTag"></span>
+        <h1 id="pdName"></h1>
+        <div class="maya" id="pdMaya"></div>
+        <ul class="benefits" id="pdBenefits"></ul>
+        <div class="buybox">
+          <div class="opt on" id="optOnce" onclick="pdMode('once')">
+            <span class="ol"><b>One-time purchase</b><span class="chip pop">Ringside members pay half</span><span>Code AVA10 takes 10% off for everyone else</span></span>
+            <span class="op" id="pdOncePrice"></span>
+          </div>
+          <div class="qtyrow"><button onclick="pdQty(-1)" aria-label="Less">&#8722;</button><span id="pdQty">1</span><button onclick="pdQty(1)" aria-label="More">+</button></div>
+          <button class="atc" id="pdAtc" onclick="pdAdd()"></button>
+          <p class="note" id="pdNote">AVA10 applies in the cart. Ringside members pay half instead. Ava earns 5% of this order, product only.</p>
+        </div>
+        <div class="accs" id="pdAccs"></div>
+      </div>
+    </div>
+    <div class="related"><h3>Goes well with</h3><div class="grid" id="pdRelated"></div></div>
+  </div>
+</main>
+
+<!-- sticky mobile ATC -->
+<div class="satc" id="satc">
+  <span class="sn"><b id="satcName"></b><span id="satcPrice"></span></span>
+  <button onclick="pdAdd()">Add to cart</button>
+</div>
+
+<button style="display:none" id="unused"></button>
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dr-head"><b>Your haul</b><button class="dr-x" onclick="closeCart()" aria-label="Close">&#10005;</button></div>
+  <div class="dr-code" id="drCode">Code <b>AVA10</b> applied: 10% off. Ringside members pay half instead</div>
+  <div class="ship-meter" id="shipMeter"></div>
+  <div class="dr-items" id="drItems"></div>
+  <div class="earnbox" id="earnBox"></div>
+  <div class="dr-math" id="drMath"></div>
+  <div class="dr-rs"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><path d="M5 8.2h14M5 12h14M5 15.8h14" stroke="#17171C" stroke-width="2" stroke-linecap="round"/></svg><span><label style="display:flex;align-items:flex-start;gap:7px;cursor:pointer;font-weight:800"><input type="checkbox" id="memberTgl" onchange="toggleMember(this.checked)" style="margin-top:2px"> I'm a Ringside member (demo)</label><span style="display:block;margin-top:3px">Members pay half on every product here. $99/yr, concept pricing, never stacks with AVA10.</span></span><a href="/wwe/">Join</a></div>
+  <button class="dr-checkout" onclick="checkout()">Checkout</button>
+  <p class="dr-note">Demo checkout. No payment is taken. Ringside is a fictional membership; all pricing is concept pricing.</p>
+</aside>
+<div class="comodal" id="comodal" role="dialog" aria-modal="true"><div class="cobox" id="cobox"></div></div>
+
+<div class="nwrap" id="nathan">
+  <div class="nb" id="nb">
+    <div class="who"><span>Nathan &middot; why this works</span><span onclick="nbHide()">&#10005;</span></div>
+    <span class="tag" id="nbTag"></span>
+    <div id="nbBody"></div>
+    <div class="nav"><button onclick="nbStep(-1)">Prev</button><button onclick="nbStep(1)">Next</button></div>
+  </div>
+  <div class="nchip" onclick="nbToggle()" title="Nathan's commentary">N</div>
+</div>
+
+<footer class="end">
+  <div class="fgrid">
+    <div><h4>Ava in Motion</h4><p style="max-width:38ch">A creator store concept: one instructor, her corner of the Ring Circle, Ringside member pricing on everything, honest economics on the receipt.</p></div>
+    <div><h4>Shop</h4><a onclick="go('shop','gear')">Ring gear</a><a onclick="go('shop','watch')">Watch party</a><a onclick="go('shop','collect')">Collect</a><a onclick="go('shop','all')">The whole drop</a></div>
+    <div><h4>The concept</h4><a onclick="nbToggle()">Nathan's commentary</a><a onclick="go('home')">About this store</a><a href="/wwe/">Ringside</a><a href="/wwe/partners/">The Ring Circle</a></div>
+  </div>
+  <div class="legal"><b>Nathan J. Song</b> &middot; Independent concept by Nathan J. Song, built for the WWE Manager, Membership Growth application. Not affiliated with, sponsored by, or endorsed by WWE or TKO Group Holdings. Ringside is a fictional membership; Maya, Lex, and Ava are illustrative creator personas; all pricing is concept pricing. Reviews are illustrative. Memberships carry no creator commission by design.</div>
+</footer>
+
+<script>
+/* ============ catalog: Ring Circle concept merch, concept pricing, member price = half ============ */
+const PRODUCTS={
+  tee:{name:"Main Event Tee",tag:"Ring gear",col:"gear",sub:28,once:28,
+    note:"The shirt for the big four weekends. Breathes through a full cardio set and still reads across an arena.",
+    benefits:["Heavyweight cotton that keeps its shape through the wash","Front print that reads from the cheap seats","The class uniform, six days a week"],
+    inside:"Heavyweight cotton tee, front print, cut to move. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["pins","posters","socks"]},
+  hoodie:{name:"Gorilla Position Hoodie",tag:"Ring gear",col:"gear",sub:58,once:58,
+    note:"Heavyweight, for cold arenas and colder parking lots after the show. I warm up in mine before the room fills.",
+    benefits:["Heavyweight fleece, arena air conditioning proof","Hood that fits over a post-class headphone habit","Kangaroo pocket sized for a prediction deck"],
+    inside:"Heavyweight fleece hoodie with front pocket. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["tee","jacket","cards"]},
+  jacket:{name:"Entrance Jacket",tag:"Ring gear",col:"gear",sub:88,once:88,
+    note:"Walk in like you have music. I teach the opening track in mine and take it off exactly when the beat drops.",
+    benefits:["Light shell that moves like a walkout, not a windbreaker","Snap front, comes off in one motion","Pin-friendly lapel, see the pin set"],
+    inside:"Lightweight snap-front shell built for entrances. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["pins","hoodie","tee"]},
+  cards:{name:"Prediction Deck",tag:"Watch party",col:"watch",sub:18,once:18,
+    note:"Watch-party prediction cards. My class votes every Friday, and losers hold the plank on Monday.",
+    benefits:["Call the card before the card starts","Scoring that keeps a living room loud for three hours","Small enough for a hoodie pocket"],
+    inside:"A deck of watch-party prediction cards with a simple scoring system. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["banner","bundle","pins"]},
+  pins:{name:"Enamel Pin Set",tag:"Collect",col:"collect",sub:16,once:16,
+    note:"Three pins, one per era you argue about. Mine live on my gym bag and start conversations in every lobby.",
+    benefits:["Three enamel pins, one per era","Rubber clutch backs that survive a gym bag","The cheapest way to start an argument at a watch party"],
+    inside:"Three enamel pins with rubber clutch backs. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["posters","tee","jacket"]},
+  banner:{name:"Watch-Party Banner Kit",tag:"Watch party",col:"watch",sub:24,once:24,
+    note:"Turn a living room into a house show. Ten minutes of tape and the wall does the rest of the work.",
+    benefits:["Banners, string lights of the paper kind, and a door sign","Sets up in ten minutes, stores flat","Makes the smallest apartment feel like a front row"],
+    inside:"A kit of banners and paper decorations for watch nights. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["cards","bundle","posters"]},
+  posters:{name:"Era Poster Series",tag:"Collect",col:"collect",sub:32,once:32,
+    note:"Three prints, three eras. My hallway is a permanent card and guests pick fights with it constantly.",
+    benefits:["Three prints, three eras of the business","Sized for standard frames, no custom framing tax","The hallway upgrade that starts every debate"],
+    inside:"Three era-themed art prints in standard frame sizes. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["pins","tee","banner"]},
+  bundle:{name:"The House Show Bundle",tag:"Watch party",col:"watch",sub:74,once:74,
+    note:"Tee plus deck plus banner, family night in a box. The order I tell new people in class to start with.",
+    benefits:["Main Event Tee, Prediction Deck, and Banner Kit together","One box, one watch night, fully equipped","Priced under the three pieces bought alone"],
+    inside:"The Main Event Tee, the Prediction Deck, and the Watch-Party Banner Kit in one box. Concept product, concept pricing, nothing ships from this demo.",
+    rel:["cards","banner","tee"]},
+  socks:{name:"Ava's Grip Socks",tag:"Ava Original",col:"gear",sub:22,once:22,
+    note:"The studio pair kept slipping, so I made my own. Grippy sole, seamless toe, and they survive the wash.",
+    benefits:["Silicone grip sole for studio floors and living rooms","Seamless toe, no rub through pivots","Machine washable, holds its shape"],
+    inside:"Ava's own product, designed for studio cardio and cross-training. Her line inside the Ring Circle store.",
+    rel:["tee","hoodie","cards"]}
+};
+const COLS={all:"The whole drop",gear:"Ring gear",watch:"Watch party",collect:"Collect"};
+const FEATURED=["tee","pins","posters","socks"];
+const CODE="AVA10", CREATOR="Ava", SHIP_FREE=30, RINGSIDE_YR=99;
+
+const IMG={tee:"p-tee.jpg",hoodie:"p-hoodie.jpg",jacket:"p-jacket.jpg",cards:"p-cards.jpg",pins:"p-pins.jpg",banner:"p-banner.jpg",posters:"p-posters.jpg",bundle:"p-bundle.jpg"};
+
+function imgExt(fn){return ".jpg";}
+function imgHTML(id){if(id==="socks")return '<svg class="origimg"><use href="#sock"/></svg>';var fn=IMG[id];if(!fn)return '<svg><use href="#bottle"/></svg>';return '<img class="pmimg" loading="lazy" alt="" src="../img/'+fn+'" onerror="imgFB(this)">';}
+function imgFB(el){el.outerHTML='<svg><use href="#bottle"/></svg>';}
+if(window.__fbq){var __q=window.__fbq;window.__fbq=null;__q.forEach(function(el){imgFB(el);});}
+
+const cart={}; /* key: id_mode, value {id,mode,qty} */
+let view="home", curTab="all", pdpId=null, pdpM="sub", pdpQ=1;
+
+function money(n){return "$"+n.toFixed(2);}
+function track(ev,p){console.log("[ava-store]",ev,p||{});}
+
+/* ============ routing ============ */
+function go(v,arg){
+  if(v==="pdp"){pdpId=arg;pdpM="sub";pdpQ=1;renderPDP();}
+  if(v==="shop"){curTab=arg||curTab||"all";renderShop();}
+  view=v;
+  document.querySelectorAll(".view").forEach(el=>el.classList.remove("on"));
+  document.getElementById("view-"+v).classList.add("on");
+  document.querySelectorAll("nav.main button[data-v], .mobile-nav button[data-v]").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+  document.getElementById("satc").classList.remove("show");
+  window.scrollTo({top:0});
+  track("view",{view:v,arg:arg||null});
+}
+
+/* ============ cards ============ */
+function card(id){
+  const p=PRODUCTS[id];
+  return '<div class="pcard" onclick="go(\'pdp\',\''+id+'\')">'+
+    '<div class="pimg">'+imgHTML(id)+'<button class="zoombtn" aria-label="Enlarge image" onclick="event.stopPropagation();zoomCard(this,&quot;'+id+'&quot;)"><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"M15.4 15.4 21 21\"/><path d=\"M10.5 7.9v5.2M7.9 10.5h5.2\"/></svg></button></div>'+
+    '<div class="pbody">'+
+      '<span class="ptag">'+p.tag+'</span>'+
+      '<span class="pname">'+p.name+'</span>'+
+      '<p class="pwhy">'+p.note.split(".")[0]+'.</p>'+
+      '<p class="prices">'+'<b>'+money(p.once)+'</b> &middot; Ringside members '+money(p.once/2)+'</p>'+
+      '<button class="go">View product</button>'+
+    '</div></div>';
+}
+function renderHome(){document.getElementById("home-featured").innerHTML=FEATURED.map(card).join("");}
+function renderShop(){
+  document.getElementById("shopTabs").innerHTML=Object.keys(COLS).map(k=>'<button class="'+(k===curTab?"on":"")+'" onclick="curTab=\''+k+'\';renderShop()">'+COLS[k]+'</button>').join("");
+  const ids=Object.keys(PRODUCTS).filter(id=>curTab==="all"||PRODUCTS[id].col===curTab);
+  document.getElementById("shopGrid").innerHTML=ids.map(card).join("");
+}
+
+/* ============ PDP ============ */
+function renderPDP(){
+  const p=PRODUCTS[pdpId];
+  var _sock=(pdpId==="socks");
+  document.getElementById("crumbName").textContent=p.name;
+  document.getElementById("pdTag").textContent=p.tag;
+  document.getElementById("pdName").textContent=p.name;
+  var _gm=document.getElementById("galMain");if(_gm)_gm.innerHTML=imgHTML(pdpId);
+  document.getElementById("pdMaya").innerHTML="<b>Why it's in my drop:</b> "+p.note;
+  document.getElementById("pdBenefits").innerHTML=p.benefits.map(b=>"<li>"+b+"</li>").join("");
+  document.getElementById("pdOncePrice").innerHTML=money(p.once)+"<small>members "+money(p.once/2)+"</small>";
+  var accs=_sock?[
+    ["Materials","Grippy silicone sole, seamless toe, breathable knit. Machine washable, tumble low."],
+    ["Fit","One size fits most. Designed to stay put through intervals, pivots, and a hundred walkout songs a week."],
+    ["Ava's own line","These are Ava's product, not part of the shared drop. She designed them, she keeps the margin, and the Ringside member price applies here like everywhere else in the store."]
+  ]:[
+    ["The details",p.inside],
+    ["Made honest","This is a concept store. Ringside is a fictional membership, the Ring Circle creators are illustrative personas, and every price on this page is concept pricing. No payment is taken, nothing ships, and none of it is official WWE product."],
+    ["Ava's store economics","Code AVA10 takes 10% off. Ringside members pay half instead, the member price replaces the code and the two never stack. Ava earns 5% of the product total before tax and shipping, product only, never memberships. All of it is printed on your receipt at checkout."]
+  ];
+  document.getElementById("pdAccs").innerHTML=accs.map((a,i)=>'<div class="acc'+(i===0?" open":"")+'"><button class="ah" onclick="this.parentElement.classList.toggle(\'open\')">'+a[0]+'<span class="car">&#9656;</span></button><div class="ab">'+a[1]+'</div></div>').join("");
+  document.getElementById("pdRelated").innerHTML=p.rel.map(card).join("");
+  var _pn=document.getElementById("pdNote");if(_pn)_pn.textContent=_sock?"Ava's original product, her own line inside the Ring Circle. The Ringside member half price applies here too.":"AVA10 applies in the cart. Ringside members pay half instead, both prices are shown above. Ava earns 5% of this order, product only.";
+  var _gb=document.getElementById("galBadges");if(_gb)_gb.innerHTML=_sock?'<span class="gbadge">Grippy sole</span><span class="gbadge">Seamless toe</span><span class="gbadge">Members pay half</span>':'<span class="gbadge">Ring Circle drop</span><span class="gbadge">Concept pricing</span><span class="gbadge">Members pay half</span>';
+  pdMode("once");
+  document.getElementById("satcName").textContent=p.name;
+}
+function pdMode(m){
+  pdpM="once";
+  document.getElementById("optOnce").classList.add("on");
+  syncPdCta();
+}
+function pdQty(d){pdpQ=Math.max(1,pdpQ+d);document.getElementById("pdQty").textContent=pdpQ;syncPdCta();}
+function syncPdCta(){
+  const p=PRODUCTS[pdpId];
+  const price=p.once*pdpQ;
+  document.getElementById("pdAtc").textContent="Add to cart, "+money(price);
+  document.getElementById("satcPrice").textContent=money(price)+" (members "+money(price/2)+")";
+}
+function pdAdd(){
+  const key=pdpId+"_"+pdpM;
+  if(!cart[key])cart[key]={id:pdpId,mode:pdpM,qty:0};
+  cart[key].qty+=pdpQ;
+  renderCart();openCart();
+  track("add_to_cart",{product:pdpId,mode:pdpM,qty:pdpQ});
+}
+/* sticky ATC shows when buybox scrolls out on PDP */
+window.addEventListener("scroll",()=>{
+  if(view!=="pdp")return;
+  const bb=document.querySelector(".buybox").getBoundingClientRect();
+  document.getElementById("satc").classList.toggle("show",bb.bottom<0);
+},{passive:true});
+
+/* ============ cart ============ */
+function chQty(key,d){const it=cart[key];if(!it)return;it.qty+=d;if(it.qty<=0)delete cart[key];renderCart();}
+function rmItem(key){delete cart[key];renderCart();}
+let member=false;
+function toggleMember(v){member=!!v;renderCart();track("member_demo_toggle",{on:member});}
+function totals(){
+  let subtotal=0,count=0;
+  Object.values(cart).forEach(it=>{
+    const p=PRODUCTS[it.id];
+    subtotal+=p.once*it.qty;count+=it.qty;
+  });
+  const discount=member?subtotal*0.5:subtotal*0.10;
+  const after=subtotal-discount;
+  const memberAfter=subtotal*0.5;
+  return {subtotal,discount,after,count,memberAfter,drop:after-memberAfter,earnNow:after*0.05};
+}
+function renderCart(){
+  const keys=Object.keys(cart), box=document.getElementById("drItems");
+  if(!keys.length){box.innerHTML='<div class="dr-empty">Your cart is empty. Go shop the drop.</div>';}
+  else{
+    box.innerHTML=keys.map(k=>{
+      const it=cart[k],p=PRODUCTS[it.id],price=p.once;
+      return '<div class="li">'+
+        '<div class="li-img">'+imgHTML(it.id)+'</div>'+
+        '<div class="li-main"><div class="li-name">'+p.name+'</div>'+
+        '<div class="li-mode"><button class="on">'+money(p.once)+' &middot; members '+money(p.once/2)+'</button></div>'+
+        '<div class="li-qty"><button onclick="chQty(\''+k+'\',-1)" aria-label="Less">&#8722;</button><span>'+it.qty+'</span><button onclick="chQty(\''+k+'\',1)" aria-label="More">+</button></div>'+
+        '<button class="li-rm" onclick="rmItem(\''+k+'\')">Remove</button></div>'+
+        '<div class="li-price">'+money((member?price/2:price)*it.qty)+(member?'<small>member price</small>':'')+'</div>'+
+      '</div>';
+    }).join("");
+  }
+  const t=totals();
+  document.getElementById("cartN").textContent=t.count;
+  const toFree=Math.max(0,SHIP_FREE-t.after);
+  document.getElementById("shipMeter").innerHTML= t.count?
+    (toFree>0?('Add '+money(toFree)+' more for free shipping'):'You have free shipping!')+
+    '<div class="bar"><i style="width:'+Math.min(100,(t.after/SHIP_FREE)*100)+'%"></i></div>':'';
+  document.getElementById("drCode").innerHTML=member?
+    'Ringside member pricing on. <b>AVA10</b> does not stack, the member price already wins':
+    'Code <b>AVA10</b> applied: 10% off. Ringside members pay half instead';
+  document.getElementById("drMath").innerHTML=
+    '<div class="dm-row"><span>Subtotal</span><span>'+money(t.subtotal)+'</span></div>'+
+    '<div class="dm-row disc"><span>'+(member?'Ringside member, 50% off':CODE+' (10% off)')+'</span><span>&#8722;'+money(t.discount)+'</span></div>'+
+    '<div class="dm-row"><span>Shipping and tax</span><span>calculated at checkout</span></div>'+
+    '<div class="dm-row total"><span>Total</span><span>'+money(t.after)+'</span></div>';
+  document.getElementById("earnBox").innerHTML= t.count?
+    ('<b>'+CREATOR+' earns from this order:</b> <b>'+money(t.earnNow)+'</b> (5% of the product total before tax and shipping). Product only, never memberships.'+
+     (member?'':'<br>A Ringside member would pay <b>'+money(t.memberAfter)+'</b> for this cart.'))
+    :'Add products to see what '+CREATOR+' earns from your order.';
+}
+function openCart(){document.getElementById("drawer").classList.add("open");document.getElementById("overlay").classList.add("show");}
+function closeCart(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("show");}
+function checkout(){
+  const t=totals();if(!t.count)return;
+  var rsMark='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><path d="M5 8.2h14M5 12h14M5 15.8h14" stroke="#17171C" stroke-width="2" stroke-linecap="round"/></svg>';
+  var rsBlock;
+  if(member){
+    var covered=Math.min(100,Math.round(t.discount/RINGSIDE_YR*100));
+    rsBlock='<div class="cors"><span class="rsl">'+rsMark+' Ringside member pricing</span><b>Member pricing did its work.</b> Ringside took <b>'+money(t.discount)+'</b> off this order, which is '+covered+'% of the $99 membership year back in one receipt.'+(t.discount<RINGSIDE_YR?' '+Math.ceil(RINGSIDE_YR/t.discount)+' orders like this and the year has paid for itself.':' This one order paid for the whole year.')+' '+CREATOR+' earns nothing on the membership itself, product only. <a href="/wwe/">About Ringside</a></div>';
+  }else{
+    rsBlock='<div class="cors"><span class="rsl">'+rsMark+' The Ringside math</span><b>Join Ringside for $99/yr and this cart drops by '+money(t.drop)+'</b>, from '+money(t.after)+' to the member price of '+money(t.memberAfter)+'.'+(t.drop>0?' At this rate the membership pays for itself in '+Math.ceil(RINGSIDE_YR/t.drop)+' orders.':'')+' The member 50% replaces the AVA10 code, it does not stack. '+CREATOR+' earns $0 if you join, memberships carry zero creator commission. <a href="/wwe/">Join Ringside</a></div>';
+  }
+  document.getElementById("cobox").innerHTML=
+    '<h3>Order placed (demo)</h3><p class="cosub">Here is exactly where the money goes.</p>'+
+    '<div class="corow"><span>Subtotal</span><span>'+money(t.subtotal)+'</span></div>'+
+    '<div class="corow"><span>'+(member?'Ringside member, 50% off':CODE+' saved you')+'</span><span>&#8722;'+money(t.discount)+'</span></div>'+
+    '<div class="corow b"><span>You paid (before tax and shipping)</span><span>'+money(t.after)+'</span></div>'+
+    '<hr class="cohr">'+
+    '<div class="coearn"><b>'+CREATOR+' earns '+money(t.earnNow)+'</b> from this order, 5% of the product total excluding tax and shipping. Commission is on product only, never on memberships.</div>'+
+    rsBlock+
+    '<button class="close" onclick="document.getElementById(\'comodal\').classList.remove(\'show\')">Back to the store</button>'+
+    '<p class="codemo">Demo only. No payment, no data stored. All pricing is concept pricing.</p>';
+  document.getElementById("comodal").classList.add("show");
+  track("checkout_demo",{total:t.after.toFixed(2),member:member,creator_now:t.earnNow.toFixed(2)});
+}
+
+/* ============ Nathan ============ */
+const NOTES=[
+  {tag:"What this is",text:"The creator layer of the Ringside funnel at /wwe/. Ava is one of three personas in The Ring Circle, storefronts on shared rails: same catalog, same economics, one config file of difference. The funnel sells the membership. These stores are where the membership earns its keep, because members pay half on every product here."},
+  {tag:"The Ringside layer",text:"Membership as purchasing power, not content. Every price on this page prints twice, regular and member, and checkout computes the gap from the real cart, never a canned number. A $99 membership that takes $57 off a single cart is not a discount, it is an argument, and the receipt is the one making it."},
+  {tag:"The math on 50%",text:"Why half off works: merch margin absorbs a deep member discount, membership revenue and the retention it buys pay for the rest, and the habit compounds, a member checks the store because being a member makes every drop half price. The caveat, printed on purpose: 50% is concept pricing chosen to make the mechanic legible. The real number is a pricing test, not a slogan."},
+  {tag:"The compliance line",text:"One rule holds the program together: creators earn 5% on product, never on memberships. The join CTA carries zero commission, so no creator has a reason to oversell the membership, and the 50% rewards the fan, not the promoter. The code and the member price never stack, and the store says so wherever money appears."},
+  {tag:"Her own brand",text:"The grip socks are the tell. Ava shipped her own product because the studio pair kept slipping, and it checks out here like anything else, member pricing included. That is the roadmap: creators start on shared Ring Circle rails, learn their numbers from receipts, then launch their own line through the same store."},
+  {tag:"The growth loop",text:"Ava sends her audience in, WWE points owned channels at the same page, and every checkout ends with membership math computed from that cart. Product commerce carries member acquisition, and the fan on the fence gets a number instead of a pitch. That is waitlist-to-paid conversion doing its job at the receipt."},
+  {tag:"Built to move",text:"Marquee, kinetic type, count-up stats, scroll reveals, all vanilla, all driven by the same config as the calmer stores. Ava's audience trains to walkout music, so her storefront moves. Creator forty inherits whatever motion their brand needs, config, not redesign."}
+];
+let nIdx=0,nOpen=false;
+function nbRender(){document.getElementById("nbTag").textContent=NOTES[nIdx].tag;document.getElementById("nbBody").textContent=NOTES[nIdx].text;}
+function nbToggle(){nOpen=!nOpen;document.getElementById("nb").classList.toggle("show",nOpen);if(nOpen)nbRender();}
+function nbHide(){nOpen=false;document.getElementById("nb").classList.remove("show");}
+function nbStep(d){nIdx=(nIdx+d+NOTES.length)%NOTES.length;nbRender();}
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();nbHide();document.getElementById("comodal").classList.remove("show");}});
+
+renderHome();renderShop();renderCart();
+/* ===== Ava dynamic ===== */
+(function(){
+  var t=document.getElementById('mqTrack');
+  if(t){var ph='<span>Walk out</span><span class="dot">/</span><span>Work</span><span class="dot">/</span><span>Watch party</span><span class="dot">/</span><span>Members pay half</span><span class="dot">/</span><span>Big four</span><span class="dot">/</span><span>Repeat</span>';t.innerHTML=ph+ph;}
+  document.querySelectorAll('#view-home .story,#view-home .rstep,#view-home .tcard,#view-home .etile,#view-home .statbar,#view-home .sockbar,#view-home .bhead,#view-home .trust').forEach(function(e){e.classList.add('reveal');});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in-view');io.unobserve(x.target);}});},{threshold:.14});
+    document.querySelectorAll('.reveal').forEach(function(e){io.observe(e);});
+    function cu(el){var tg=+el.dataset.count,sf=el.dataset.suffix||'',d=1200,s=null;function st(ts){if(!s)s=ts;var p=Math.min(1,(ts-s)/d);el.textContent=Math.round(tg*p).toLocaleString()+sf;if(p<1)requestAnimationFrame(st);}requestAnimationFrame(st);}
+    var io2=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){cu(x.target);io2.unobserve(x.target);}});},{threshold:.5});
+    document.querySelectorAll('[data-count]').forEach(function(e){io2.observe(e);});
+  }else{document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in-view');});}
+  document.querySelectorAll('.mag').forEach(function(b){b.style.transition='transform .2s cubic-bezier(.2,.8,.2,1)';b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.25)+'px,'+((e.clientY-r.top-r.height/2)*0.3)+'px)';});b.addEventListener('mouseleave',function(){b.style.transform='none';});});
+})();
+
+/* ============ image viewer ============ */
+function openViewer(im,label){
+  if(!im)return;
+  var box=document.getElementById("imgvImg");
+  box.classList.remove("zoomed");
+  box.innerHTML="";
+  var c=document.createElement("img");
+  c.src=im.src;c.alt="";
+  c.dataset.fn=im.dataset.fn||"";
+  c.dataset.s=im.dataset.s||"0";
+  c.onerror=function(){imgFB(c);};
+  box.appendChild(c);
+  document.getElementById("imgvCap").textContent=label||"";
+  document.getElementById("imgv").classList.add("show");
+  document.documentElement.style.overflow="hidden";
+  track("image_zoom",{label:label||null});
+}
+function closeViewer(){
+  document.getElementById("imgv").classList.remove("show");
+  document.documentElement.style.overflow="";
+}
+function zoomCard(btn,id){
+  var im=btn.closest(".pimg").querySelector("img.pmimg");
+  if(im)openViewer(im,PRODUCTS[id]?PRODUCTS[id].name:"");
+}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeViewer();});
+document.addEventListener("click",function(e){
+  var im=e.target.closest("#galMain img.pmimg");
+  if(im){openViewer(im,(pdpId&&PRODUCTS[pdpId])?PRODUCTS[pdpId].name:"");return;}
+  var st=e.target.closest(".st-art img.pmimg");
+  if(st){openViewer(st,"");return;}
+});
+
+/* Ava only: click photo to zoom, cursor pans the zoomed image (delegated, viewer markup sits after this script) */
+document.addEventListener("click",function(e){
+  var zw=e.target.closest("#imgvImg");
+  if(zw)zw.classList.toggle("zoomed");
+});
+document.addEventListener("mousemove",function(e){
+  var zw=document.getElementById("imgvImg");
+  if(!zw||!zw.classList.contains("zoomed"))return;
+  var r=zw.getBoundingClientRect(),im=zw.querySelector("img");
+  if(!im)return;
+  im.style.transformOrigin=((e.clientX-r.left)/r.width*100)+"% "+((e.clientY-r.top)/r.height*100)+"%";
+});
+</script>
+
+<div class="imgviewer" id="imgv" onclick="if(event.target===this)closeViewer()">
+  <div class="imgv-card">
+    <button class="imgv-x" onclick="closeViewer()" aria-label="Close">&times;</button>
+    <div class="imgv-img" id="imgvImg"></div>
+    <div class="imgv-cap" id="imgvCap"></div>
+    <div class="imgv-sub">Click the photo to zoom in, move the cursor to pan. Esc closes.</div>
+  </div>
+</div>
+
+</body>
+</html>

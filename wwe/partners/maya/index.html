@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya's Watch Night, a Ring Circle creator store concept by Nathan J. Song</title>
+<meta name="description" content="Maya's Watch Night: a family watch-party storefront in The Ring Circle, the creator layer of the Ringside membership concept. Ringside members get 50% off every product. Independent concept by Nathan J. Song.">
+<meta property="og:title" content="Maya's Watch Night, a Ring Circle creator store concept">
+<meta property="og:description" content="Family watch-night merch with honest economics. Ringside members get 50% off every product. Independent concept by Nathan J. Song for the WWE Manager, Membership Growth application.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#FAF8F4; --ink:#17171C; --accent:#9E1B32; --accent-deep:#7C1527; --accent-ink:#fff;
+    --card:#fff; --line:#e7e2d6; --muted:#7d7568; --soft:#F4EEDF; --gold:#F3D06A;
+    --ryellow:#F3D06A;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  button{font:inherit;cursor:pointer}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  .concept-bar{background:#141414;color:#f4f1e8;font-size:11.5px;padding:7px 14px;text-align:center;line-height:1.5}
+  .concept-bar strong{color:var(--ryellow)}
+  .announce{background:var(--accent);color:#fff;font-size:12.5px;font-weight:700;text-align:center;padding:8px 14px}
+  .announce b{background:#fff;color:var(--accent);border-radius:6px;padding:1px 7px}
+
+  /* header */
+  header.site{position:sticky;top:0;z-index:60;background:rgba(250,248,244,.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .hd{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 20px}
+  .logo{font-weight:800;font-size:17px;letter-spacing:-.01em;cursor:pointer;white-space:nowrap}
+  .logo span{color:var(--accent)}
+  .logo small{display:block;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  nav.main{display:flex;gap:4px;margin-left:6px}
+  nav.main button{border:0;background:transparent;font-weight:700;font-size:13.5px;color:var(--muted);padding:8px 12px;border-radius:999px}
+  nav.main button:hover{color:var(--ink);background:var(--soft)}
+  nav.main button.on{color:#fff;background:var(--ink)}
+  .hd .cartbtn{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-weight:800;font-size:13px}
+  .hd .cartbtn .n{background:var(--accent);color:#fff;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:11.5px;padding:0 6px}
+  @media(max-width:640px){nav.main{display:none}.mobile-nav{display:flex !important}}
+  .mobile-nav{display:none;gap:4px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none}
+  .mobile-nav::-webkit-scrollbar{display:none}
+  .mobile-nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;font-weight:700;font-size:12.5px;color:var(--muted);padding:7px 13px;border-radius:999px}
+  .mobile-nav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+  .view{display:none}
+  .view.on{display:block}
+
+  /* ============ HOME ============ */
+  .hero{background:linear-gradient(160deg,#B23048 0%,var(--accent) 46%,#54101F 100%);color:#fff;text-align:center;padding:74px 20px 66px}
+  .hero .kick{font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;opacity:.92;margin-bottom:13px}
+  .hero h1{font-size:clamp(32px,5.4vw,52px);line-height:1.08;font-weight:800;max-width:16ch;margin:0 auto 16px}
+  .hero p{max-width:52ch;margin:0 auto 24px;font-size:17px;opacity:.96}
+  .hero .cta{display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--accent-deep);border:0;font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;box-shadow:0 10px 26px rgba(60,25,5,.25)}
+  .hero .cta:hover{transform:translateY(-1px)}
+  .codechip{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1.5px dashed rgba(255,255,255,.6);border-radius:999px;padding:8px 16px;font-weight:800;font-size:13px;margin-top:16px}
+  .codechip b{background:#fff;color:var(--accent);border-radius:6px;padding:2px 8px}
+
+  .trust{border-bottom:1px solid var(--line);background:#fff}
+  .trust .in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+  @media(min-width:700px){.trust .in{grid-template-columns:repeat(4,1fr)}}
+  .trust .t{background:#fff;padding:14px 10px;text-align:center;font-size:12px;font-weight:700;color:var(--muted)}
+  .trust .t b{display:block;color:var(--ink);font-size:13px}
+
+  section.block{padding:52px 0 10px}
+  .bhead{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:20px}
+  .bhead h2{font-size:26px;font-weight:800;letter-spacing:-.01em}
+  .bhead a{font-size:13px;font-weight:700;color:var(--accent-deep);text-decoration:underline;cursor:pointer}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;padding-bottom:30px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;cursor:pointer}
+  .pcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(80,40,10,.13)}
+  .pimg{aspect-ratio:1/.8;display:grid;place-items:center;background:var(--soft);color:var(--accent)}
+  .pimg svg{width:72px;height:96px}
+  .pbody{padding:14px 15px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .ptag{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .pname{font-size:15.5px;font-weight:800;line-height:1.25}
+  .pwhy{font-size:12.5px;color:var(--muted);line-height:1.45;flex:1}
+  .prices{font-size:12.5px;color:var(--muted)}
+  .prices b{font-size:16px;color:var(--ink)}
+  .pcard .go{border:0;background:var(--soft);color:var(--accent-deep);font-weight:800;font-size:12.5px;padding:10px;border-radius:999px}
+  .pcard .go:hover{background:var(--accent);color:#fff}
+
+  /* story blocks (Broadcast image-with-text rhythm) */
+  .story{display:grid;grid-template-columns:1fr;gap:22px;align-items:center;margin:14px 0 36px}
+  @media(min-width:760px){.story{grid-template-columns:1fr 1fr;gap:40px}.story.flip .st-art{order:2}}
+  .st-art{border-radius:20px;min-height:280px;display:grid;place-items:center;background:linear-gradient(150deg,var(--soft),#fff);border:1px solid var(--line)}
+  .st-art svg{width:150px;height:190px;color:var(--accent)}
+  .st-txt .kick{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:8px}
+  .st-txt h3{font-size:23px;font-weight:800;line-height:1.2;margin-bottom:10px}
+  .st-txt p{font-size:14.5px;color:var(--muted);margin-bottom:10px}
+
+  /* routine timeline */
+  .routine{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:50px 0 40px;margin-top:20px}
+  .routine h2{font-size:26px;font-weight:800;margin-bottom:6px}
+  .routine .sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+  .rsteps{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.rsteps{grid-template-columns:1fr 1fr 1fr}}
+  .rstep{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--bg)}
+  .rstep .when{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep)}
+  .rstep h4{font-size:16px;font-weight:800;margin:6px 0 6px}
+  .rstep p{font-size:13px;color:var(--muted);margin-bottom:10px}
+  .rstep .rlink{font-size:12.5px;font-weight:800;color:var(--accent-deep);text-decoration:underline;cursor:pointer}
+
+  /* testimonial strip */
+  .tstrip{padding:50px 0 26px}
+  .tgrid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.tgrid{grid-template-columns:1fr 1fr 1fr}}
+  .tcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px 18px}
+  .tcard p{font-size:13.5px;line-height:1.55;margin-bottom:9px}
+  .tcard b{font-size:12px;color:var(--muted)}
+  .stars{color:var(--accent);letter-spacing:2px;font-size:13px;margin-bottom:7px}
+
+  /* economics strip */
+  .econ{padding:44px 0 56px}
+  .econ h2{font-size:24px;font-weight:800;margin-bottom:16px}
+  .econ-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:640px){.econ-grid{grid-template-columns:1fr 1fr 1fr}}
+  .etile{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px 18px}
+  .etile .big{font-size:26px;font-weight:800;color:var(--accent)}
+  .etile b{display:block;font-size:14.5px;margin:4px 0 4px}
+  .etile p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+  .newsletter{background:var(--ink);color:#f6efe3;padding:46px 20px;text-align:center}
+  .newsletter h3{font-size:22px;font-weight:800;margin-bottom:8px}
+  .newsletter p{font-size:13.5px;color:#cbbfa9;max-width:46ch;margin:0 auto 18px}
+  .nl-row{display:flex;gap:8px;max-width:420px;margin:0 auto}
+  .nl-row input{flex:1;font:inherit;font-size:14px;padding:13px 15px;border-radius:999px;border:0}
+  .nl-row button{border:0;background:var(--accent);color:#fff;font-weight:800;padding:0 22px;border-radius:999px}
+
+  /* ============ SHOP ============ */
+  .shophero{background:#fff;border-bottom:1px solid var(--line);padding:38px 0 0}
+  .shophero h1{font-size:30px;font-weight:800;margin-bottom:4px}
+  .shophero p{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:13px;color:var(--muted);padding:8px 15px;border-radius:999px}
+  .tabs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .shopgrid{padding:26px 0 40px}
+
+  /* ============ PDP ============ */
+  .crumb{font-size:12px;color:var(--muted);padding:18px 0 0}
+  .crumb a{text-decoration:underline;cursor:pointer}
+  .pdp{display:grid;grid-template-columns:1fr;gap:26px;padding:16px 0 30px}
+  @media(min-width:820px){.pdp{grid-template-columns:1.05fr 1fr;gap:44px}}
+  .gal{position:sticky;top:96px;align-self:start}
+  .gal-main{background:var(--soft);border:1px solid var(--line);border-radius:20px;aspect-ratio:1/.92;display:grid;place-items:center;color:var(--accent)}
+  .gal-main svg{width:150px;height:200px}
+  .gal-badges{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .gbadge{font-size:11px;font-weight:800;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted)}
+  .pd-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep)}
+  .pd h1{font-size:28px;font-weight:800;line-height:1.15;margin:6px 0 8px}
+  .pd .maya{background:var(--soft);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:11px 14px;font-size:13.5px;margin:12px 0 16px}
+  .pd .maya b{color:var(--accent-deep)}
+  .benefits{margin:0 0 18px}
+  .benefits li{list-style:none;font-size:14px;margin:7px 0;padding-left:26px;position:relative}
+  .benefits li::before{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:5px;background:var(--accent);opacity:.16}
+  .benefits li::after{content:"";position:absolute;left:4.5px;top:8px;width:7px;height:5px;border-left:2.2px solid var(--accent-deep);border-bottom:2.2px solid var(--accent-deep);transform:rotate(-45deg)}
+  .buybox{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+  .opt{display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;cursor:default}
+  .opt.on{border-color:var(--accent);background:var(--soft)}
+  .opt .ol b{font-size:14px;display:block}
+  .opt .ol span{font-size:11.5px;color:var(--muted)}
+  .opt .op{font-weight:800;font-size:16px}
+  .opt .op small{display:block;font-weight:600;font-size:10.5px;color:var(--muted);text-align:right}
+  .qtyrow{display:flex;align-items:center;gap:12px;margin:12px 0}
+  .qtyrow button{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-weight:800;font-size:16px}
+  .qtyrow span{font-weight:800;min-width:20px;text-align:center}
+  .atc{width:100%;border:0;background:var(--accent);color:#fff;font-weight:800;font-size:15.5px;padding:15px;border-radius:999px}
+  .atc:hover{background:var(--accent-deep)}
+  .buybox .note{font-size:11px;color:var(--muted);text-align:center;margin-top:9px}
+  .accs{margin:20px 0}
+  .acc{border-bottom:1px solid var(--line)}
+  .acc button.ah{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;padding:14px 2px;font-weight:800;font-size:14px;color:var(--ink)}
+  .acc .ab{display:none;font-size:13.5px;color:var(--muted);padding:0 2px 14px;line-height:1.6}
+  .acc.open .ab{display:block}
+  .acc .car{transition:transform .2s;font-size:12px;color:var(--muted)}
+  .acc.open .car{transform:rotate(90deg)}
+  .related{padding:10px 0 50px}
+  .related h3{font-size:20px;font-weight:800;margin-bottom:14px}
+
+  /* sticky mobile ATC */
+  .satc{position:fixed;left:0;right:0;bottom:0;z-index:70;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(60,30,5,.12);padding:10px 14px;display:none;align-items:center;gap:12px}
+  .satc.show{display:flex}
+  .satc .sn{flex:1;min-width:0}
+  .satc .sn b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .satc .sn span{font-size:11.5px;color:var(--muted)}
+  .satc button{border:0;background:var(--accent);color:#fff;font-weight:800;font-size:13.5px;padding:12px 18px;border-radius:999px;white-space:nowrap}
+
+  /* ============ cart drawer + checkout (shared pattern) ============ */
+  .overlay{position:fixed;inset:0;background:rgba(30,20,10,.45);z-index:85;opacity:0;visibility:hidden;transition:.25s}
+  .overlay.show{opacity:1;visibility:visible}
+  .drawer{position:fixed;inset:0 0 0 auto;width:min(430px,100vw);z-index:90;background:#fff;box-shadow:-18px 0 50px rgba(40,20,5,.3);transform:translateX(102%);transition:transform .3s ease;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .dr-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .dr-head b{font-size:17px}
+  .dr-x{border:0;background:transparent;color:var(--muted);font-size:20px;font-weight:800}
+  .dr-code{margin:14px 18px 0;display:flex;align-items:center;gap:9px;background:var(--soft);border:1.5px dashed var(--accent);border-radius:10px;padding:10px 13px;font-size:13px;font-weight:700}
+  .dr-code b{background:var(--accent);color:#fff;border-radius:6px;padding:2px 8px;font-size:12px}
+  .ship-meter{margin:10px 18px 0;font-size:11.5px;color:var(--muted)}
+  .ship-meter .bar{height:7px;background:var(--soft);border-radius:999px;overflow:hidden;margin-top:5px}
+  .ship-meter .bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+  .dr-items{flex:1;overflow:auto;padding:10px 18px}
+  .dr-empty{color:var(--muted);font-size:14px;text-align:center;padding:40px 10px}
+  .li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+  .li-img{width:52px;height:64px;border-radius:10px;background:var(--soft);display:grid;place-items:center;flex:0 0 auto;color:var(--accent)}
+  .li-img svg{width:30px;height:42px}
+  .li-main{flex:1;min-width:0}
+  .li-name{font-size:13.5px;font-weight:800;line-height:1.25}
+  .li-mode{display:inline-flex;gap:5px;margin-top:6px}
+  .li-mode button{border:1px solid var(--line);background:#fff;color:var(--muted);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .li-mode button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .li-qty{display:inline-flex;align-items:center;gap:8px;margin-top:7px}
+  .li-qty button{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:#fff;font-weight:800;line-height:1}
+  .li-qty span{font-size:13px;font-weight:700;min-width:14px;text-align:center}
+  .li-price{text-align:right;font-size:13.5px;font-weight:800;white-space:nowrap}
+  .li-price small{display:block;font-weight:600;color:var(--muted);font-size:10.5px}
+  .li-rm{border:0;background:transparent;color:var(--muted);font-size:11px;text-decoration:underline;margin-top:6px;padding:0}
+  .earnbox{margin:12px 18px 0;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.5}
+  .dr-math{border-top:1px solid var(--line);padding:14px 18px;font-size:13.5px}
+  .dm-row{display:flex;justify-content:space-between;margin:4px 0;color:var(--muted)}
+  .dm-row.total{color:var(--ink);font-weight:800;font-size:16px;margin-top:8px}
+  .dm-row.disc{color:var(--accent-deep);font-weight:700}
+  .dr-checkout{margin:14px 18px 8px;border:0;background:var(--accent);color:#fff;font-weight:800;font-size:15px;padding:15px;border-radius:999px}
+  .dr-note{text-align:center;font-size:10.5px;color:var(--muted);margin:0 18px 14px}
+  .comodal{position:fixed;inset:0;z-index:95;display:none;place-items:center;padding:18px;background:rgba(30,20,10,.55)}
+  .comodal.show{display:grid}
+  .cobox{background:#fff;border-radius:18px;max-width:430px;width:100%;padding:26px 24px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+  .cobox h3{font-size:21px;font-weight:800;margin-bottom:6px}
+  .cobox .cosub{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .corow{display:flex;justify-content:space-between;font-size:13.5px;margin:5px 0;color:var(--muted)}
+  .corow.b{color:var(--ink);font-weight:800;font-size:15px}
+  .cohr{border:0;border-top:1px solid var(--line);margin:12px 0}
+  .coearn{background:var(--soft);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.55;margin-top:6px}
+  .cobox .close{width:100%;margin-top:16px;border:0;background:var(--ink);color:#fff;font-weight:800;padding:13px;border-radius:999px}
+  .codemo{font-size:10.5px;color:var(--muted);text-align:center;margin-top:10px}
+
+  /* Nathan */
+  .nwrap{position:fixed;left:16px;bottom:16px;z-index:80}
+  .nchip{width:52px;height:52px;border-radius:50%;background:var(--ryellow);border:3px solid #fff;box-shadow:0 8px 26px rgba(40,20,5,.3);display:grid;place-items:center;font-weight:900;font-size:19px;color:#141414;position:relative}
+  .nchip::after{content:"";position:absolute;top:-1px;right:-1px;width:12px;height:12px;border-radius:3px;background:#141414;border:2px solid #fff}
+  .nb{position:absolute;left:0;bottom:62px;width:min(360px,calc(100vw - 34px));background:rgba(20,18,14,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#f6f3ea;border:1px solid rgba(255,255,255,.08);border-radius:16px;border-bottom-left-radius:5px;padding:16px 17px 14px;font-size:13px;line-height:1.55;opacity:0;visibility:hidden;transform:translateY(6px);transition:.3s}
+  .nb.show{opacity:1;visibility:visible;transform:none}
+  .nb .who{font-weight:800;color:var(--ryellow);font-size:11.5px;margin-bottom:8px;display:flex;justify-content:space-between}
+  .nb .who span:last-child{cursor:pointer;color:#bbb}
+  .nb .tag{display:inline-block;background:rgba(243,208,106,.16);color:var(--ryellow);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:8px}
+  .nb .nav{display:flex;justify-content:space-between;margin-top:12px}
+  .nb .nav button{background:transparent;border:1px solid #555;color:#eee;border-radius:8px;padding:5px 12px;font-size:11.5px;font-weight:700}
+
+  footer.end{background:#141414;color:#8f8b80;padding:34px 20px 30px;margin-top:10px}
+  .fgrid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:20px;font-size:12.5px}
+  @media(min-width:700px){.fgrid{grid-template-columns:2fr 1fr 1fr}}
+  .fgrid h4{color:#f4f1e8;font-size:13px;margin-bottom:8px}
+  .fgrid a{display:block;color:#8f8b80;text-decoration:none;margin:4px 0;cursor:pointer}
+  .fgrid a:hover{color:#f4f1e8}
+  .legal{max-width:1080px;margin:22px auto 0;border-top:1px solid #2c2c2c;padding-top:14px;font-size:11px;line-height:1.6}
+  .legal b{color:var(--ryellow)}
+  .pimg img{width:84%;height:84%;object-fit:contain}
+  .gal-main img{width:76%;height:82%;object-fit:contain}
+  .li-img img{width:100%;height:100%;object-fit:contain}
+  .st-art img{max-width:82%;max-height:86%;object-fit:contain}
+  /* ============ shared mega-nav: The Ring Circle creator network ============ */
+  .meganav{background:#17171C;color:#fff}
+  .mn-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px 16px;padding:9px 20px;flex-wrap:wrap}
+  .mn-badge{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:700;letter-spacing:.01em}
+  .mn-badge b{font-weight:800}
+  .mn-badge .tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#F3D06A;border:1px solid rgba(243,208,106,.5);border-radius:5px;padding:2px 6px}
+  .mn-note{font-size:10.5px;color:#bdbdbd;line-height:1.3}
+  .mn-switch{margin-left:auto;display:inline-flex;align-items:center;gap:9px}
+  .mn-lab{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#bdbdbd;white-space:nowrap}
+  .mn-seg{display:inline-flex;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px}
+  .mn-seg a{text-decoration:none;font-size:12.5px;font-weight:800;color:#d9d9d9;padding:6px 14px;border-radius:999px;white-space:nowrap;transition:.15s}
+  .mn-seg a:hover{color:#fff}
+  .mn-seg a.on{background:#F3D06A;color:#17171C}
+  @media(max-width:680px){.mn-note{display:none}.mn-switch{margin-left:0;width:100%}}
+
+  /* ============ image viewer: soft lightbox (Maya) ============ */
+  .pimg{position:relative}
+  .zoombtn{position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:rgba(255,253,248,.94);color:var(--ink);display:grid;place-items:center;cursor:zoom-in;opacity:0;transition:opacity .2s}
+  .pcard:hover .zoombtn{opacity:1}
+  @media(hover:none){.zoombtn{opacity:1}}
+  .st-art img.pmimg{cursor:zoom-in}
+  .gal-main{position:relative;cursor:zoom-in}
+  .gal-main::after{content:"Click to enlarge";position:absolute;right:12px;bottom:12px;font-size:10.5px;font-weight:700;color:var(--muted);background:rgba(255,253,248,.92);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+  .imgviewer{position:fixed;inset:0;z-index:220;display:none;align-items:center;justify-content:center;padding:26px;background:rgba(43,32,22,.55);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+  .imgviewer.show{display:flex;animation:mvFade .3s ease}
+  @keyframes mvFade{from{opacity:0}}
+  .imgv-card{position:relative;background:#FFFDF8;border-radius:24px;box-shadow:0 30px 90px rgba(40,24,8,.4);padding:20px 20px 16px;max-width:min(620px,92vw);width:100%;text-align:center;animation:mvPop .35s ease}
+  @keyframes mvPop{from{transform:scale(.95) translateY(12px);opacity:0}}
+  .imgv-img{background:var(--soft);border-radius:16px;aspect-ratio:1/.9;overflow:hidden;display:grid;place-items:center}
+  .imgv-img img{max-width:88%;max-height:88%;object-fit:contain}
+  .imgv-cap{font-weight:800;font-size:16px;margin-top:12px;color:var(--ink)}
+  .imgv-cap:empty{display:none}
+  .imgv-sub{font-size:11px;color:var(--muted);margin-top:3px}
+  .imgv-x{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1}
+
+  /* ============ annual prepay + subscription push ============ */
+  .opt .ol .chip{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:2.5px 8px;margin:2px 0 3px}
+  .chip.pop{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+  .chip.gift{background:var(--accent);color:#fff}
+  .opt .ol .ysave{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+  .li.gift{opacity:.98}
+  .li.gift .li-img{color:var(--accent)}
+  .li.gift .li-img svg{width:70%;height:70%}
+  .gift-tag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-top:3px}
+  .li-price.free{font-weight:800;color:var(--accent)}
+  .nav-orig{display:inline-flex !important;align-items:center;gap:6px;color:var(--accent) !important}
+  .nav-orig svg{width:13px;height:16px}
+  .origimg{width:58%;height:58%;color:var(--accent)}
+</style>
+
+<style>
+  /* Ringside layer (theme-independent, Ringside brand constants) */
+  .rsband{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#F3D06A;color:#17171C;border-radius:14px;padding:18px 20px;margin:26px 0 8px}
+  .rsband svg{flex:none}
+  .rsband div{flex:1;min-width:220px}
+  .rsband b{display:block;font-size:15.5px;font-weight:800}
+  .rsband span{display:block;font-size:13px;line-height:1.55;margin-top:2px}
+  .rsband a{flex:none;background:#17171C;color:#F3D06A;text-decoration:none;font-weight:800;font-size:13px;padding:11px 18px;border-radius:999px}
+  .dr-rs{display:flex;align-items:center;gap:10px;background:#F3D06A;color:#17171C;border-radius:12px;padding:12px 14px;margin:10px 18px 0}
+  .dr-rs svg{flex:none}
+  .dr-rs span{flex:1;font-size:11.5px;line-height:1.45}
+  .dr-rs b{font-weight:800}
+  .dr-rs a{flex:none;background:#17171C;color:#F3D06A;text-decoration:none;font-weight:800;font-size:11.5px;padding:8px 13px;border-radius:999px}
+  .cors{display:block;background:#F3D06A;color:#17171C;border-radius:12px;padding:14px 16px;margin:14px 0 4px;font-size:13px;line-height:1.55;text-align:left}
+  .cors .rsl{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+  .cors b{font-weight:800}
+  .cors a{display:inline-block;background:#17171C;color:#F3D06A;text-decoration:none;font-weight:800;font-size:12.5px;padding:9px 16px;border-radius:999px;margin-top:9px}
+  .dr-member{margin:10px 18px 0;display:flex;align-items:flex-start;gap:9px;background:#FCF6E3;border:1.5px solid #F3D06A;border-radius:10px;padding:10px 13px;font-size:12.5px;line-height:1.45;cursor:pointer}
+  .dr-member input{margin-top:2px;accent-color:#9E1B32}
+  .dr-member b{color:#8E6B0A}
+  .prices .mem{display:block;color:#8E6B0A;font-weight:700;font-size:12px}
+</style>
+</head>
+<body>
+<script>window.imgFB=window.imgFB||function(el){(window.__fbq=window.__fbq||[]).push(el)};</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bottle" viewBox="0 0 60 84">
+    <rect x="12" y="6" width="4" height="74" rx="2" fill="currentColor" opacity=".65"/>
+    <path d="M18 10 L52 21 L18 33 Z" fill="currentColor" opacity=".85"/>
+    <circle cx="14" cy="7" r="3.4" fill="currentColor"/>
+  </symbol>
+  <symbol id="trio" viewBox="0 0 160 200">
+    <use href="#bottle" x="0" y="40" width="70" height="98"/>
+    <use href="#bottle" x="50" y="10" width="86" height="120"/>
+    <use href="#bottle" x="100" y="50" width="62" height="86"/>
+  </symbol>
+  <symbol id="shaker" viewBox="0 0 60 84">
+    <rect x="26" y="0" width="8" height="6" rx="2" fill="currentColor"/>
+    <path d="M20 6 L40 6 L38 15 L22 15 Z" fill="currentColor" opacity=".9"/>
+    <path d="M16 15 L44 15 L40 78 C40 81.4 37 83.5 33 83.5 L27 83.5 C23 83.5 20 81.4 20 78 Z" fill="currentColor" opacity=".3"/>
+    <path d="M17.2 26 L42.8 26" stroke="currentColor" stroke-width="2.4" opacity=".55"/>
+    <circle cx="30" cy="50" r="7.5" fill="currentColor" opacity=".85"/>
+    <circle cx="30" cy="50" r="3.4" fill="#fff" opacity=".85"/>
+  </symbol>
+  <symbol id="samples" viewBox="0 0 84 60">
+    <g transform="rotate(-9 16 30)"><rect x="6" y="14" width="20" height="32" rx="3.5" fill="currentColor" opacity=".38"/><rect x="6" y="14" width="20" height="7" rx="3.5" fill="currentColor" opacity=".7"/></g>
+    <rect x="32" y="10" width="20" height="36" rx="3.5" fill="currentColor" opacity=".62"/><rect x="32" y="10" width="20" height="7" rx="3.5" fill="currentColor" opacity=".9"/>
+    <g transform="rotate(9 68 30)"><rect x="58" y="14" width="20" height="32" rx="3.5" fill="currentColor" opacity=".38"/><rect x="58" y="14" width="20" height="7" rx="3.5" fill="currentColor" opacity=".7"/></g>
+  </symbol>
+  <symbol id="apron" viewBox="0 0 80 100">
+    <path d="M27 10 L14 1 M53 10 L66 1 M27 10 L53 24 M53 10 L27 24" stroke="currentColor" stroke-width="4.2" opacity=".4" stroke-linecap="round"/>
+    <path d="M27 8 L53 8 L53 34 L69 38 L69 92 Q69 96 64 96 L16 96 Q11 96 11 92 L11 38 L27 34 Z" fill="currentColor" opacity=".82"/>
+    <circle cx="30" cy="13" r="2.1" fill="#fff" opacity=".9"/><circle cx="50" cy="13" r="2.1" fill="#fff" opacity=".9"/>
+    <rect x="33" y="18" width="14" height="12" rx="2" fill="currentColor"/>
+    <path d="M37.5 18 L37.5 30 M42.5 18 L42.5 30" stroke="#fff" stroke-width="1" opacity=".55"/>
+    <rect x="17" y="56" width="21" height="19" rx="2.5" fill="currentColor"/>
+    <rect x="42" y="56" width="21" height="19" rx="2.5" fill="currentColor"/>
+    <path d="M17 60 L38 60 M42 60 L63 60" stroke="#fff" stroke-width="1" stroke-dasharray="2.6 2.2" opacity=".6"/>
+    <path d="M13 44 Q6 47 11 52" fill="none" stroke="currentColor" stroke-width="2.6" opacity=".9" stroke-linecap="round"/>
+    <path d="M14 40 L66 40" stroke="#fff" stroke-width="1.1" stroke-dasharray="3 2.4" opacity=".55"/>
+    <rect x="55" y="82" width="9" height="6.5" rx="1.2" fill="#fff" opacity=".38"/>
+  </symbol>
+</svg>
+
+<div class="meganav"><div class="mn-in"><a class="mn-badge" href="/wwe/partners/" style="color:inherit;text-decoration:none"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><circle cx="12" cy="12" r="6" fill="none" stroke="#17171C" stroke-width="2.4"/><circle cx="12" cy="12" r="2" fill="#17171C"/></svg> <b>The Ring Circle</b>&nbsp;&middot; Ringside members: <b>50% off</b> this store<span class="tag">concept</span></a><span class="mn-note">Independent concept by Nathan J. Song, not affiliated with WWE or TKO Group Holdings. Ringside is a fictional membership.</span><div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="/wwe/">Funnel</a><a href="/wwe/partners/">Circle</a><a href="/wwe/partners/maya/" class="on">Maya</a><a href="/wwe/partners/lex/">Lex</a><a href="/wwe/partners/ava/">Ava</a></div></div></div></div>
+<div class="announce">Free shipping over $30 &nbsp;&#10022;&nbsp; Code <b>MAYA10</b> applied, 10% off everything &nbsp;&#10022;&nbsp; Ringside members get <b>50% off</b> every product here</div>
+
+<header class="site">
+  <div class="hd">
+    <div class="logo" onclick="go('home')">Maya's <span>Watch</span> Night<small>A Ring Circle store &middot; Members save 50%</small></div>
+    <nav class="main">
+      <button data-v="home" class="on" onclick="go('home')">Home</button>
+      <button data-v="shop" onclick="go('shop')">Shop all</button><button class="nav-orig" onclick="go('pdp','apron')"><svg viewBox="0 0 80 100"><use href="#apron"/></svg> Sunday Apron</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">Watch night</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About Maya</button>
+    </nav>
+    <button class="cartbtn" onclick="openCart()">Cart <span class="n" id="cartN">0</span></button>
+  </div>
+  <div class="mobile-nav">
+    <button data-v="home" class="on" onclick="go('home')">Home</button>
+    <button data-v="shop" onclick="go('shop')">Shop all</button><button class="nav-orig" onclick="go('pdp','apron')"><svg viewBox="0 0 80 100"><use href="#apron"/></svg> Sunday Apron</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">Watch night</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About</button>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<main class="view on" id="view-home">
+  <div class="hero">
+    <p class="kick">Maya's Ring Circle store &middot; Ringside partner</p>
+    <h1>Friday night is house show night.</h1>
+    <p>Our living room seats eleven on a good Friday. This store is everything the night actually runs on, the tee, the prediction deck, the banner on the wall, picked by the mom who runs the room.</p>
+    <button class="cta" onclick="go('shop')">Shop the watch night</button>
+    <br><span class="codechip">Code <b>MAYA10</b> saves 10%, Ringside members save <b>50%</b> instead</span>
+  </div>
+
+  <div class="trust"><div class="in">
+    <div class="t"><b>Ringside members</b>50% off every product in this store</div>
+    <div class="t"><b>Code MAYA10</b>10% for everyone else, they do not stack</div>
+    <div class="t"><b>TV-PG living room</b>kids' first heroes watch here too</div>
+    <div class="t"><b>Concept pricing</b>demo store, no payments taken</div>
+  </div></div>
+
+  <div class="wrap">
+    <section class="block">
+      <div class="bhead"><h2>The watch-night shelf</h2><a onclick="go('shop','all')">Shop the collection</a></div>
+      <div class="grid" id="home-featured"></div>
+    </section>
+
+    <section class="block" id="about" style="padding-top:26px">
+      <div class="story">
+        <div class="st-art"><img class="pmimg staimg" alt="" src="../img/p-banner.jpg" onerror="imgFB(this)"></div>
+        <div class="st-txt">
+          <p class="kick">Why our house watches</p>
+          <h3>It started with one kid asking who the good guy was.</h3>
+          <p>Three years later, Friday is the night nobody schedules against. The cousins come over, the deck comes out, the banner goes up, and for two hours our living room is the loudest building in town. It stays TV-PG at our house, first heroes matter.</p>
+          <p>So the whole night got its own shelf. This store is that shelf, organized.</p>
+        </div>
+      </div>
+      <div class="story flip">
+        <div class="st-art"><img class="pmimg staimg" alt="" src="../img/p-bundle.jpg" onerror="imgFB(this)"></div>
+        <div class="st-txt">
+          <p class="kick">The honest part</p>
+          <h3>I earn from this store, and I want you to know exactly how much.</h3>
+          <p>The Ring Circle pays me 5% of every product order placed here, calculated before tax and shipping. Your 10% code comes out of the program's side, never added to your price.</p>
+          <p>And the Ringside membership the checkout keeps mentioning pays me nothing at all. Members get 50% off everything here, that price replaces my code instead of stacking, and I earn on product only, never on memberships. That one is between you and Ringside, on purpose.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="routine" id="routine">
+    <div class="wrap">
+      <h2>Shop the watch night</h2>
+      <p class="sub">A Friday at our house, and what's on it.</p>
+      <div class="rsteps">
+        <div class="rstep"><span class="when">6:30 pm, doors open</span><h4>The room gets dressed</h4><p>Banner up, pennants across the bookshelf, the era posters already on the walls since the day they arrived. Ten minutes and the living room becomes a house show.</p><span class="rlink" onclick="go('pdp','banner')">Watch-Party Banner Kit</span><br><span class="rlink" onclick="go('pdp','posters')">Era Poster Series</span></div>
+        <div class="rstep"><span class="when">7:45 pm, card time</span><h4>Predictions on the table</h4><p>Everyone picks winners before the opener and the pad keeps score. Winner chooses next Friday's dessert, and my daughter has won four straight.</p><span class="rlink" onclick="go('pdp','cards')">Prediction Deck</span><br><span class="rlink" onclick="go('pdp','pins')">Enamel Pin Set</span></div>
+        <div class="rstep"><span class="when">Main event</span><h4>Everybody in the shirt</h4><p>House rule for the big four weekends: the tee goes on before the main event. New guests get the bundle, it dresses the room, the table, and the person in one box.</p><span class="rlink" onclick="go('pdp','tee')">Main Event Tee</span><br><span class="rlink" onclick="go('pdp','bundle')">The House Show Bundle</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="tstrip">
+      <div class="bhead"><h2>From the group chat</h2><span style="font-size:11px;color:var(--muted)">Illustrative reviews, for the concept</span></div>
+      <div class="tgrid">
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"Bought the House Show Bundle through Maya's link. The banner went up for one Friday and my son has not let me take it down since."</p><b>Jenna R.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"Joined Ringside after her checkout showed me the math on my own cart. Half off the hoodie and the jacket covered most of the $99 in one order."</p><b>Priya S.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>"I love that Maya shows what she earns. It made me trust the recommendation more, not less."</p><b>Dana W.</b></div>
+      </div>
+    </section>
+
+    <section class="econ">
+      <h2>How Maya's store works</h2>
+      <div class="econ-grid">
+        <div class="etile"><span class="big">10%</span><b>You save with her code</b><p>Code MAYA10 is applied automatically at checkout. Ringside members get 50% off instead, the two never stack, the member price wins.</p></div>
+        <div class="etile"><span class="big">50%</span><b>Ringside members pay half</b><p>On every product in this store, Maya's apron included. The membership is $99 a year, concept pricing, so two or three orders and it has paid for itself.</p></div>
+        <div class="etile"><span class="big">5%</span><b>Maya earns on every product sale</b><p>Calculated before tax and shipping, printed on the receipt. Product only, never memberships, the Ringside CTA pays her nothing.</p></div>
+      </div>
+    </section>
+    <div class="rsband"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><circle cx="12" cy="12" r="6" fill="none" stroke="#17171C" stroke-width="2.4"/><circle cx="12" cy="12" r="2" fill="#17171C"/></svg><div><b>Ringside members get 50% off this entire store.</b><span>The membership is $99 a year, concept pricing. Every product here at half price, Maya's apron included, and the checkout shows the math on your own cart. Maya earns nothing when you join, creators earn on product, never on memberships.</span></div><a href="/wwe/">See Ringside</a></div>
+  </div>
+
+  <div class="newsletter">
+    <h3>Friday night, in email form.</h3>
+    <p>One note a week: who is on the card, what we're cooking, and early access to Maya's restocks. Demo form, nothing is stored.</p>
+    <div class="nl-row"><input type="email" placeholder="you@email.com" aria-label="Email address"><button onclick="this.textContent='Joined!';setTimeout(()=>this.textContent='Join',1600)">Join</button></div>
+  </div>
+</main>
+
+<!-- ================= SHOP ================= -->
+<main class="view" id="view-shop">
+  <div class="shophero"><div class="wrap">
+    <h1>Shop all</h1>
+    <p>Everything our Friday runs on, in one place. MAYA10 applies to all of it, Ringside members pay half instead.</p>
+    <div class="tabs" id="shopTabs"></div>
+  </div></div>
+  <div class="wrap"><div class="grid shopgrid" id="shopGrid"></div></div>
+</main>
+
+<!-- ================= PDP ================= -->
+<main class="view" id="view-pdp">
+  <div class="wrap">
+    <p class="crumb"><a onclick="go('home')">Home</a> &nbsp;/&nbsp; <a onclick="go('shop')">Shop all</a> &nbsp;/&nbsp; <span id="crumbName"></span></p>
+    <div class="pdp">
+      <div class="gal">
+        <div class="gal-main" id="galMain"><svg><use href="#bottle"/></svg></div>
+        <div class="gal-badges" id="galBadges"><span class="gbadge">Ringside members 50% off</span><span class="gbadge">Concept pricing</span><span class="gbadge">Watch-night tested</span></div>
+      </div>
+      <div class="pd">
+        <span class="pd-tag" id="pdTag"></span>
+        <h1 id="pdName"></h1>
+        <div class="maya" id="pdMaya"></div>
+        <ul class="benefits" id="pdBenefits"></ul>
+        <div class="buybox">
+          <div class="opt" id="optReg">
+            <span class="ol"><b>Regular price</b><span>code MAYA10 takes 10% off in the cart</span></span>
+            <span class="op" id="pdRegPrice"></span>
+          </div>
+          <div class="opt on" id="optMem">
+            <span class="ol"><b>Ringside member price</b><span class="chip gift">50% off</span><span>does not stack with the code, member price wins</span></span>
+            <span class="op" id="pdMemPrice"></span>
+          </div>
+          <div class="qtyrow"><button onclick="pdQty(-1)" aria-label="Less">&#8722;</button><span id="pdQty">1</span><button onclick="pdQty(1)" aria-label="More">+</button></div>
+          <button class="atc" id="pdAtc" onclick="pdAdd()"></button>
+          <p class="note" id="pdNote">MAYA10 applies in the cart, Ringside members pay half instead. Maya earns 5% of this order before tax and shipping, on product only.</p>
+        </div>
+        <div class="accs" id="pdAccs"></div>
+      </div>
+    </div>
+    <div class="related"><h3>Goes well with</h3><div class="grid" id="pdRelated"></div></div>
+  </div>
+</main>
+
+<!-- sticky mobile ATC -->
+<div class="satc" id="satc">
+  <span class="sn"><b id="satcName"></b><span id="satcPrice"></span></span>
+  <button onclick="pdAdd()">Add to cart</button>
+</div>
+
+<button style="display:none" id="unused"></button>
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dr-head"><b>Our family cart</b><button class="dr-x" onclick="closeCart()" aria-label="Close">&#10005;</button></div>
+  <div class="dr-code">Code <b>MAYA10</b> applied: 10% off for non-members</div>
+  <label class="dr-member"><input type="checkbox" id="memberToggle" onchange="toggleMember(this.checked)"><span><b>I'm a Ringside member</b> (demo toggle): 50% off every product, replaces the code</span></label>
+  <div class="ship-meter" id="shipMeter"></div>
+  <div class="dr-items" id="drItems"></div>
+  <div class="earnbox" id="earnBox"></div>
+  <div class="dr-math" id="drMath"></div>
+  <div class="dr-rs"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><circle cx="12" cy="12" r="6" fill="none" stroke="#17171C" stroke-width="2.4"/><circle cx="12" cy="12" r="2" fill="#17171C"/></svg><span><b>Not a member yet?</b> Ringside is $99 a year, concept pricing, and cuts every product here to half. The toggle above previews your cart at member prices.</span><a href="/wwe/" target="_blank" rel="noopener noreferrer">See it</a></div>
+  <button class="dr-checkout" onclick="checkout()">Checkout</button>
+  <p class="dr-note">Demo checkout. No payment is taken. Ringside is a fictional membership; all pricing is concept pricing.</p>
+</aside>
+<div class="comodal" id="comodal" role="dialog" aria-modal="true"><div class="cobox" id="cobox"></div></div>
+
+<div class="nwrap" id="nathan">
+  <div class="nb" id="nb">
+    <div class="who"><span>Nathan &middot; why this works</span><span onclick="nbHide()">&#10005;</span></div>
+    <span class="tag" id="nbTag"></span>
+    <div id="nbBody"></div>
+    <div class="nav"><button onclick="nbStep(-1)">Prev</button><button onclick="nbStep(1)">Next</button></div>
+  </div>
+  <div class="nchip" onclick="nbToggle()" title="Nathan's commentary">N</div>
+</div>
+
+<footer class="end">
+  <div class="fgrid">
+    <div><h4>Maya's Watch Night</h4><p style="max-width:38ch">A creator store concept: one creator, her own Ring Circle storefront on Ringside rails, honest economics on the receipt, members at half price.</p></div>
+    <div><h4>Shop</h4><a onclick="go('shop','wear')">What we wear</a><a onclick="go('shop','party')">The watch party</a><a onclick="go('shop','kits')">Bundles</a><a onclick="go('shop','orig')">Maya's own</a></div>
+    <div><h4>The concept</h4><a onclick="nbToggle()">Nathan's commentary</a><a onclick="go('home')">About this store</a></div>
+  </div>
+  <div class="legal"><b>Independent concept by Nathan J. Song</b>, built for the WWE Manager, Membership Growth application. Not affiliated with, sponsored by, or endorsed by WWE or TKO Group Holdings. Ringside is a fictional membership; Maya, Lex, and Ava are illustrative creator personas; reviews are illustrative, and all pricing is concept pricing.</div>
+</footer>
+
+<script>
+/* ============ catalog: Ring Circle concept merch, all concept pricing ============ */
+const PRODUCTS={
+  tee:{name:"Main Event Tee",tag:"Wear",col:"wear",price:28,
+    maya:"The shirt for the big four weekends. Everybody in theirs by the main event, that is the house rule, and the littlest one sleeps in his.",
+    benefits:["Heavyweight combed cotton that survives a family wash schedule","Kids' cuts through adult 3XL, the whole couch matches","The big four weekends have a uniform, this is ours"],
+    inside:"Heavyweight cotton tee with a front crest print, kids and adult sizes. Ring Circle concept merch, all pricing is concept pricing.",
+    rel:["bundle","cards","hoodie"]},
+  hoodie:{name:"Gorilla Position Hoodie",tag:"Wear",col:"wear",price:58,
+    maya:"Heavyweight, for cold arenas. Mine lives on the hook by the door between live shows, and it has outlasted two winters of bleacher seats.",
+    benefits:["Heavyweight fleece built for arena air conditioning","Front pocket fits a phone and a kid's snack at the same time","The grab-it layer for every drive to a live show"],
+    inside:"Heavyweight fleece pullover with a front pouch and an embroidered chest mark. Ring Circle concept merch, concept pricing.",
+    rel:["jacket","tee","bundle"]},
+  jacket:{name:"Entrance Jacket",tag:"Wear",col:"wear",price:88,
+    maya:"Walk in like you have music. My husband wears his to school pickup and the kids pretend not to know him, which means it works.",
+    benefits:["Satin-finish shell with a quilted lining","Snap front, ribbed cuffs, big back crest","For walking into rooms like the show already started"],
+    inside:"Satin-finish jacket with a quilted lining and a back crest. Ring Circle concept merch, concept pricing.",
+    rel:["hoodie","tee","posters"]},
+  cards:{name:"Prediction Deck",tag:"Watch party",col:"party",price:18,
+    maya:"Watch-party prediction cards. Winner picks next Friday's dessert, and my daughter has won four straight.",
+    benefits:["Prediction cards for every match on the card","Score pad and a house-rules sheet included","Turns the quiet cousins loud by the second match"],
+    inside:"Prediction card deck with a score pad and a house-rules sheet. Ring Circle concept merch, concept pricing.",
+    rel:["banner","pins","bundle"]},
+  pins:{name:"Enamel Pin Set",tag:"Watch party",col:"party",price:16,
+    maya:"Three pins, one per era you argue about. Ours live on the banner between Fridays, like the room is holding its place.",
+    benefits:["Three enamel pins, one per era you argue about","Rubber clutch backs, safe for kid backpacks","Pick your era, wear the argument"],
+    inside:"Set of three enamel pins with rubber clutch backs. Ring Circle concept merch, concept pricing.",
+    rel:["posters","cards","banner"]},
+  banner:{name:"Watch-Party Banner Kit",tag:"Watch party",col:"party",price:24,
+    maya:"Turn a living room into a house show. Ours goes up at 6:30 and the room changes, I cannot explain it better than that.",
+    benefits:["Pennant string, wall banner, and a door sign in one kit","Hangs on the included hooks, no holes in the wall","Up in ten minutes, down in five, survives every Friday"],
+    inside:"Pennant string, wall banner, door sign, and removable hooks. Ring Circle concept merch, concept pricing.",
+    rel:["bundle","posters","cards"]},
+  posters:{name:"Era Poster Series",tag:"Watch party",col:"party",price:32,
+    maya:"Three prints, three eras. One for each kid's wall, and they chose fast, which told me everything.",
+    benefits:["Three matte prints, one per era","Frame-ready standard sizes","Settles which era runs which bedroom"],
+    inside:"Three matte era prints in frame-ready sizes. Ring Circle concept merch, concept pricing.",
+    rel:["pins","banner","jacket"]},
+  bundle:{name:"The House Show Bundle",tag:"Bundle",col:"kits",price:74,
+    maya:"Tee + deck + banner, family night in a box. This is the one I tell other moms to start with.",
+    benefits:["Main Event Tee, Prediction Deck, and Banner Kit together","Dresses the room, the table, and the person in one box","The best per-item price in the store"],
+    inside:"One Main Event Tee, one Prediction Deck, and one Watch-Party Banner Kit, shipped together. Ring Circle concept merch, concept pricing.",
+    rel:["tee","cards","banner"]},
+  apron:{name:"Maya's Sunday Apron",tag:"Maya Original",col:"orig",price:98,
+    maya:"My own design, made for long Sundays at the stove while the go-home show plays in the next room. The straps cross at the back so your neck never knows, and the towel loop sits right where your hand goes.",
+    benefits:["9.5 oz garment washed cotton canvas in terracotta, arrives broken in and softens with every wash","Crossback straps in cream webbing through solid brass D rings, weight on your shoulders, never your neck","Double pen chest pocket, two deep lap pockets, a hidden phone sleeve, and a side towel loop"],
+    inside:"Maya's original product, her own line on the same rails. Bar tacked at every stress point, brass grommets, tonal leather patch, 80 inch straps with a center back slider. Machine wash cold, hang dry, free repairs for life.",
+    rel:["bundle","tee","banner"]}
+};
+const COLS={all:"All products",wear:"What we wear",party:"The watch party",kits:"Bundles",orig:"Maya's own"};
+const FEATURED=["bundle","tee","cards","apron"];
+const CODE="MAYA10", CREATOR="Maya", SHIP_FREE=30, MEMBER_YR=99;
+
+const IMG={tee:"p-tee.jpg",hoodie:"p-hoodie.jpg",jacket:"p-jacket.jpg",cards:"p-cards.jpg",pins:"p-pins.jpg",banner:"p-banner.jpg",posters:"p-posters.jpg",bundle:"p-bundle.jpg"};
+const RLOGO='<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="5" fill="#F3D06A"/><circle cx="12" cy="12" r="6" fill="none" stroke="#17171C" stroke-width="2.4"/><circle cx="12" cy="12" r="2" fill="#17171C"/></svg>';
+
+function imgHTML(id){if(id==="apron")return '<svg class="origimg"><use href="#apron"/></svg>';var fn=IMG[id];if(!fn)return '<svg><use href="#bottle"/></svg>';return '<img class="pmimg" loading="lazy" alt="" src="../img/'+fn+'" onerror="imgFB(this)">';}
+function imgFB(el){el.outerHTML='<svg><use href="#bottle"/></svg>';}
+if(window.__fbq){var __q=window.__fbq;window.__fbq=null;__q.forEach(function(el){imgFB(el);});}
+
+const cart={}; /* key: id, value: {id,qty} */
+let view="home", curTab="all", pdpId=null, pdpQ=1, isMember=false;
+
+function money(n){return "$"+n.toFixed(2);}
+function mprice(p){return p.price/2;}
+function track(ev,p){console.log("[maya-store]",ev,p||{});}
+
+/* ============ routing ============ */
+function go(v,arg){
+  if(v==="pdp"){pdpId=arg;pdpQ=1;renderPDP();}
+  if(v==="shop"){curTab=arg||curTab||"all";renderShop();}
+  view=v;
+  document.querySelectorAll(".view").forEach(el=>el.classList.remove("on"));
+  document.getElementById("view-"+v).classList.add("on");
+  document.querySelectorAll("nav.main button[data-v], .mobile-nav button[data-v]").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+  document.getElementById("satc").classList.remove("show");
+  window.scrollTo({top:0});
+  track("view",{view:v,arg:arg||null});
+}
+
+/* ============ cards ============ */
+function card(id){
+  const p=PRODUCTS[id];
+  return '<div class="pcard" onclick="go(\'pdp\',\''+id+'\')">'+
+    '<div class="pimg">'+imgHTML(id)+'<button class="zoombtn" aria-label="Enlarge image" onclick="event.stopPropagation();zoomCard(this,&quot;'+id+'&quot;)"><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"M15.4 15.4 21 21\"/><path d=\"M10.5 7.9v5.2M7.9 10.5h5.2\"/></svg></button></div>'+
+    '<div class="pbody">'+
+      '<span class="ptag">'+p.tag+'</span>'+
+      '<span class="pname">'+p.name+'</span>'+
+      '<p class="pwhy">'+p.maya.split(".")[0]+'.</p>'+
+      '<p class="prices"><b>'+money(p.price)+'</b> regular<span class="mem">'+money(mprice(p))+' for Ringside members</span></p>'+
+      '<button class="go">View product</button>'+
+    '</div></div>';
+}
+function renderHome(){document.getElementById("home-featured").innerHTML=FEATURED.map(card).join("");}
+function renderShop(){
+  document.getElementById("shopTabs").innerHTML=Object.keys(COLS).map(k=>'<button class="'+(k===curTab?"on":"")+'" onclick="curTab=\''+k+'\';renderShop()">'+COLS[k]+'</button>').join("");
+  const ids=Object.keys(PRODUCTS).filter(id=>curTab==="all"||PRODUCTS[id].col===curTab);
+  document.getElementById("shopGrid").innerHTML=ids.map(card).join("");
+}
+
+/* ============ PDP ============ */
+function renderPDP(){
+  const p=PRODUCTS[pdpId];
+  var _orig=(pdpId==="apron");
+  document.getElementById("crumbName").textContent=p.name;
+  document.getElementById("pdTag").textContent=p.tag;
+  document.getElementById("pdName").textContent=p.name;
+  var _gm=document.getElementById("galMain");if(_gm)_gm.innerHTML=imgHTML(pdpId);
+  document.getElementById("pdMaya").innerHTML="<b>Why it's in my store:</b> "+p.maya;
+  document.getElementById("pdBenefits").innerHTML=p.benefits.map(b=>"<li>"+b+"</li>").join("");
+  document.getElementById("pdRegPrice").innerHTML=money(p.price)+"<small>regular</small>";
+  document.getElementById("pdMemPrice").innerHTML=money(mprice(p))+"<small>Ringside members</small>";
+  document.getElementById("pdAccs").innerHTML=[
+    ["What it is",p.inside],
+    ["The member math","Regular "+money(p.price)+", Ringside members pay "+money(mprice(p))+". The membership is $99 a year, concept pricing, so savings at this rate cover it within a few orders. Member pricing replaces the MAYA10 code, the two never stack."],
+    ["How it fits the night","Friday at our house is doors at 6:30, predictions before the opener, tees on for the main event. Everything in this store earns its spot on that schedule or it does not stay on the shelf."],
+    ["Maya's store economics","Your MAYA10 code takes 10% off. Ringside members get 50% off instead, the member price wins. Maya earns 5% of the product order before tax and shipping, and nothing when you join Ringside, creators earn on product, never on memberships. Printed on your receipt at checkout."]
+  ].map((a,i)=>'<div class="acc'+(i===0?" open":"")+'"><button class="ah" onclick="this.parentElement.classList.toggle(\'open\')">'+a[0]+'<span class="car">&#9656;</span></button><div class="ab">'+a[1]+'</div></div>').join("");
+  if(_orig){document.getElementById("pdAccs").innerHTML=[["Fabric and make","9.5 oz garment washed cotton canvas, bar tacked at every stress point, brass grommets and D rings, cream webbing straps that cross at the back. Garment washed, so it arrives broken in instead of stiff."],["Fit and care","One size, 80 inch straps with a center back slider, so it fits almost every body. Machine wash cold, hang dry, and it softens with every wash. Repairs are free, for life."],["Maya's own line","This one is mine, not program merch. It is the apron the good kitchens wear, crossback so your neck never aches, real hardware, pockets where your hands actually go, in the colors of my kitchen. Ringside members get 50% off this one too, and I still earn only my product commission."]].map((a,i)=>'<div class="acc'+(i===0?" open":"")+'"><button class="ah" onclick="this.parentElement.classList.toggle(\'open\')">'+a[0]+'<span class="car">&#9656;</span></button><div class="ab">'+a[1]+'</div></div>').join("");}
+  document.getElementById("pdRelated").innerHTML=p.rel.map(card).join("");
+  var _pn=document.getElementById("pdNote");if(_pn)_pn.textContent=_orig?"Maya's original product, her own line on the same rails. MAYA10 applies, Ringside members pay half instead, and the discounts never stack.":"MAYA10 applies in the cart, Ringside members pay half instead. Maya earns 5% of this order before tax and shipping, on product only.";
+  var _gb=document.getElementById("galBadges");if(_gb)_gb.innerHTML=_orig?'<span class="gbadge">Garment washed canvas</span><span class="gbadge">Solid brass hardware</span><span class="gbadge">Free repairs for life</span>':'<span class="gbadge">Ringside members 50% off</span><span class="gbadge">Concept pricing</span><span class="gbadge">Watch-night tested</span>';
+  document.getElementById("pdQty").textContent=pdpQ;
+  syncPdCta();
+  document.getElementById("satcName").textContent=p.name;
+}
+function pdQty(d){pdpQ=Math.max(1,pdpQ+d);document.getElementById("pdQty").textContent=pdpQ;syncPdCta();}
+function syncPdCta(){
+  const p=PRODUCTS[pdpId];
+  const reg=p.price*pdpQ, mem=mprice(p)*pdpQ;
+  document.getElementById("pdAtc").textContent="Add to cart, "+money(reg);
+  document.getElementById("satcPrice").textContent=money(reg)+" ("+money(mem)+" for members)";
+}
+function pdAdd(){
+  const key=pdpId;
+  if(!cart[key])cart[key]={id:pdpId,qty:0};
+  cart[key].qty+=pdpQ;
+  renderCart();openCart();
+  track("add_to_cart",{product:pdpId,qty:pdpQ});
+}
+/* sticky ATC shows when buybox scrolls out on PDP */
+window.addEventListener("scroll",()=>{
+  if(view!=="pdp")return;
+  const bb=document.querySelector(".buybox").getBoundingClientRect();
+  document.getElementById("satc").classList.toggle("show",bb.bottom<0);
+},{passive:true});
+
+/* ============ cart ============ */
+function chQty(key,d){const it=cart[key];if(!it)return;it.qty+=d;if(it.qty<=0)delete cart[key];renderCart();}
+function rmItem(key){delete cart[key];renderCart();}
+function toggleMember(v){isMember=v;renderCart();track("member_demo_toggle",{member:v});}
+function totals(){
+  let subtotal=0,memberTotal=0,count=0;
+  Object.values(cart).forEach(it=>{
+    const p=PRODUCTS[it.id];
+    subtotal+=p.price*it.qty;memberTotal+=mprice(p)*it.qty;count+=it.qty;
+  });
+  const codeAfter=subtotal*0.90;
+  const after=isMember?memberTotal:codeAfter;
+  return {subtotal,discount:subtotal-after,after,count,memberTotal,codeAfter,earnNow:after*0.05};
+}
+function renderCart(){
+  const keys=Object.keys(cart), box=document.getElementById("drItems");
+  if(!keys.length){box.innerHTML='<div class="dr-empty">Your cart is empty. Go shop the watch night.</div>';}
+  else{
+    box.innerHTML=keys.map(k=>{
+      const it=cart[k],p=PRODUCTS[it.id],price=isMember?mprice(p):p.price;
+      return '<div class="li">'+
+        '<div class="li-img">'+imgHTML(it.id)+'</div>'+
+        '<div class="li-main"><div class="li-name">'+p.name+'</div>'+
+        '<div class="li-mode"><button class="'+(isMember?"":"on")+'">'+money(p.price)+' regular</button><button class="'+(isMember?"on":"")+'">'+money(mprice(p))+' member</button></div>'+
+        '<div class="li-qty"><button onclick="chQty(\''+k+'\',-1)" aria-label="Less">&#8722;</button><span>'+it.qty+'</span><button onclick="chQty(\''+k+'\',1)" aria-label="More">+</button></div>'+
+        '<button class="li-rm" onclick="rmItem(\''+k+'\')">Remove</button></div>'+
+        '<div class="li-price">'+money(price*it.qty)+(isMember?'<small>member price</small>':'<small>before code</small>')+'</div>'+
+      '</div>';
+    }).join("");
+  }
+  const t=totals();
+  document.getElementById("cartN").textContent=t.count;
+  const toFree=Math.max(0,SHIP_FREE-t.after);
+  document.getElementById("shipMeter").innerHTML= t.count?
+    (toFree>0?('Add '+money(toFree)+' more for free shipping'):'You have free shipping!')+
+    '<div class="bar"><i style="width:'+Math.min(100,(t.after/SHIP_FREE)*100)+'%"></i></div>':'';
+  var mt=document.getElementById("memberToggle");if(mt)mt.checked=isMember;
+  document.getElementById("drMath").innerHTML=
+    '<div class="dm-row"><span>Subtotal, regular prices</span><span>'+money(t.subtotal)+'</span></div>'+
+    (isMember
+      ?'<div class="dm-row disc"><span>Ringside member 50%, replaces '+CODE+'</span><span>&#8722;'+money(t.discount)+'</span></div>'
+      :'<div class="dm-row disc"><span>'+CODE+' (10% off)</span><span>&#8722;'+money(t.discount)+'</span></div>')+
+    '<div class="dm-row"><span>Shipping and tax</span><span>calculated at checkout</span></div>'+
+    '<div class="dm-row total"><span>Total</span><span>'+money(t.after)+'</span></div>'+
+    (!isMember&&t.count?'<div class="dm-row"><span>Same cart as a Ringside member</span><span>'+money(t.memberTotal)+'</span></div>':'');
+  document.getElementById("earnBox").innerHTML= t.count?
+    ('<b>'+CREATOR+' earns from this order:</b> <b>'+money(t.earnNow)+'</b> (5% of the product total before tax and shipping). Product only, she earns nothing on Ringside memberships.')
+    :'Add products to see what '+CREATOR+' earns from your order.';
+}
+function openCart(){document.getElementById("drawer").classList.add("open");document.getElementById("overlay").classList.add("show");}
+function closeCart(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("show");}
+function checkout(){
+  const t=totals();if(!t.count)return;
+  var rs;
+  if(isMember){
+    rs='<div class="cors"><span class="rsl">'+RLOGO+' Ringside member</span><b>Member pricing did the work.</b> Ringside took '+money(t.discount)+' off this cart, 50% on every product, no code needed. '+CREATOR+' earned commission on the product only, the membership pays her nothing. <a href="/wwe/" target="_blank" rel="noopener noreferrer">About Ringside</a></div>';
+  }else{
+    var drop=t.codeAfter-t.memberTotal;
+    var payoff=drop>=MEMBER_YR?' This cart alone saves more than the $99 the membership costs.':(drop>0?' At this rate the membership pays for itself in '+Math.ceil(MEMBER_YR/drop)+' orders.':'');
+    rs='<div class="cors"><span class="rsl">'+RLOGO+' Ringside</span><b>Join Ringside for $99 a year and this cart drops by '+money(drop)+'.</b> You paid '+money(t.after)+' with the '+CODE+' code; a member pays '+money(t.memberTotal)+' for the same cart.'+payoff+' Member pricing replaces the code, and '+CREATOR+' earns nothing when you join, creators earn on product, never on memberships. <a href="/wwe/" target="_blank" rel="noopener noreferrer">See Ringside</a></div>';
+  }
+  document.getElementById("cobox").innerHTML=
+    '<h3>Order placed (demo)</h3><p class="cosub">Here is exactly where the money goes.</p>'+
+    '<div class="corow"><span>Subtotal, regular prices</span><span>'+money(t.subtotal)+'</span></div>'+
+    '<div class="corow"><span>'+(isMember?'Ringside member pricing saved you':CODE+' saved you')+'</span><span>&#8722;'+money(t.discount)+'</span></div>'+
+    '<div class="corow b"><span>You paid (before tax and shipping)</span><span>'+money(t.after)+'</span></div>'+
+    '<hr class="cohr">'+
+    '<div class="coearn"><b>'+CREATOR+' earns '+money(t.earnNow)+'</b> from this order, 5% of the product total excluding tax and shipping. Commission is on product only, never on memberships, so the Ringside block below pays her $0 by design.</div>'+
+    rs+
+    '<button class="close" onclick="document.getElementById(\'comodal\').classList.remove(\'show\')">Back to the store</button>'+
+    '<p class="codemo">Demo only. No payment, no data stored. All pricing is concept pricing.</p>';
+  document.getElementById("comodal").classList.add("show");
+  track("checkout_demo",{total:t.after.toFixed(2),member:isMember,creator_now:t.earnNow.toFixed(2)});
+}
+
+/* ============ Nathan ============ */
+const NOTES=[
+  {tag:"What this is",text:"The creator layer of the Ringside funnel one level up at /wwe/. Maya's store is Ring Circle merch white-labeled to her audience, one config file deep. Every receipt in this store advertises the membership with math computed from the actual cart, which turns creator commerce into a member acquisition channel WWE did not have to buy media for."},
+  {tag:"The Ringside layer",text:"Ringside here is not content, it is purchasing power: members pay half on every product in every Ring Circle store. The receipt does the selling. A $99 membership that saves $57 on one cart is not a discount, it is an argument, and the checkout prints that argument from the visitor's own cart, never a canned number."},
+  {tag:"The math on 50%",text:"Why half off works: merch margin absorbs it, membership revenue and renewal pay for it, and the habit it creates, check the store, you are a member, compounds into order frequency no coupon reaches. The honest caveat: 50% is concept pricing chosen to make the mechanic legible in a demo. The real number is a pricing test, not a slogan."},
+  {tag:"The compliance line",text:"One rule holds the program together: creators earn 5% on product, never on memberships. The join-Ringside CTA carries zero commission, so the membership pitch stays a service to the fan, not a payout to the promoter. And the member 50% does not stack with Maya's 10% code, the member price simply wins, and the store says so in plain text."},
+  {tag:"Her own brand",text:"The Sunday Apron is the tell. Maya already sells a product of her own on the same rails, same cart, same member pricing, same receipt. That is the roadmap: start with shared Ring Circle merch, learn your numbers from the receipts, then launch your own line without leaving the store."},
+  {tag:"The theme DNA",text:"Warm story-led theme: full-bleed hero, story blocks, a shop-the-night timeline instead of a product wall. Maya's audience buys the family's Friday, so the store is organized as a Friday. Same engine as the louder stores, different temperature."},
+  {tag:"Built to scale",text:"Maya is the warm build, Lex is the dark one, Ava is the high-motion one, and all three run one engine with a swapped config. Creator forty is a data file with the Ringside layer baked in. That is a program, not a partnership."}
+];
+let nIdx=0,nOpen=false;
+function nbRender(){document.getElementById("nbTag").textContent=NOTES[nIdx].tag;document.getElementById("nbBody").textContent=NOTES[nIdx].text;}
+function nbToggle(){nOpen=!nOpen;document.getElementById("nb").classList.toggle("show",nOpen);if(nOpen)nbRender();}
+function nbHide(){nOpen=false;document.getElementById("nb").classList.remove("show");}
+function nbStep(d){nIdx=(nIdx+d+NOTES.length)%NOTES.length;nbRender();}
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();nbHide();document.getElementById("comodal").classList.remove("show");}});
+
+renderHome();renderShop();renderCart();
+
+/* ============ image viewer ============ */
+function openViewer(im,label){
+  if(!im)return;
+  var box=document.getElementById("imgvImg");
+  box.classList.remove("zoomed");
+  box.innerHTML="";
+  var c=document.createElement("img");
+  c.src=im.src;c.alt="";
+  c.dataset.fn=im.dataset.fn||"";
+  c.dataset.s=im.dataset.s||"0";
+  c.onerror=function(){imgFB(c);};
+  box.appendChild(c);
+  document.getElementById("imgvCap").textContent=label||"";
+  document.getElementById("imgv").classList.add("show");
+  document.documentElement.style.overflow="hidden";
+  track("image_zoom",{label:label||null});
+}
+function closeViewer(){
+  document.getElementById("imgv").classList.remove("show");
+  document.documentElement.style.overflow="";
+}
+function zoomCard(btn,id){
+  var im=btn.closest(".pimg").querySelector("img.pmimg");
+  if(im)openViewer(im,PRODUCTS[id]?PRODUCTS[id].name:"");
+}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeViewer();});
+document.addEventListener("click",function(e){
+  var im=e.target.closest("#galMain img.pmimg");
+  if(im){openViewer(im,(pdpId&&PRODUCTS[pdpId])?PRODUCTS[pdpId].name:"");return;}
+  var st=e.target.closest(".st-art img.pmimg");
+  if(st){openViewer(st,"");return;}
+});
+</script>
+
+<div class="imgviewer" id="imgv" onclick="if(event.target===this)closeViewer()">
+  <div class="imgv-card">
+    <button class="imgv-x" onclick="closeViewer()" aria-label="Close">&times;</button>
+    <div class="imgv-img" id="imgvImg"></div>
+    <div class="imgv-cap" id="imgvCap"></div>
+    <div class="imgv-sub">Click outside the card or press Esc to close</div>
+  </div>
+</div>
+
+</body>
+</html>

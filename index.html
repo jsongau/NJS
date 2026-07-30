@@ -842,7 +842,7 @@
     background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
     text-shadow:0 2px 18px rgba(244,207,107,.16)}
   .salon--wl .salon-tag{color:#eccf9a}
-  .salon--wl .salon-blurb{color:#e6d8c4}
+  .salon--wl .salon-blurb{color:#e6d8c4;white-space:pre-line}
   .salon--wl .salon-detail{color:#f3e6d2}
   .salon--wl .salon-trust{color:#c9a86e}
   .salon--wl .salon-close{border-color:rgba(244,207,107,.4);color:var(--wl-ink)}
@@ -2490,7 +2490,7 @@
               <stop offset="0" stop-color="#3a2413"/><stop offset="1" stop-color="#160d07"/>
             </linearGradient>
             <radialGradient id="wlField" cx="0.5" cy="0.42" r="0.75">
-              <stop offset="0" stop-color="#42280f"/><stop offset="0.55" stop-color="#241305"/><stop offset="1" stop-color="#120901"/>
+              <stop offset="0" stop-color="#b01722"/><stop offset="0.55" stop-color="#7c0d15"/><stop offset="1" stop-color="#43060b"/>
             </radialGradient>
             <radialGradient id="wlRuby" cx="0.35" cy="0.3" r="0.9">
               <stop offset="0" stop-color="#ff8d84"/><stop offset="0.45" stop-color="#e11a26"/><stop offset="1" stop-color="#6d0a10"/>
@@ -2518,24 +2518,44 @@
             <circle cx="202" cy="66" r="6.5" fill="url(#wlGold)" stroke="#7a5410" stroke-width="1"/>
             <circle cx="202" cy="66" r="3.2" fill="url(#wlRuby)" stroke="#6d0a10" stroke-width=".5"/>
             <circle cx="200.9" cy="64.9" r=".9" fill="#ffd9d4" opacity=".8"/>
-            <path d="M130 18.5 L130 9 L135.5 14 L140 6.5 L144.5 14 L150 9 L150 18.5 Z" fill="url(#wlGold)" stroke="#7a5410" stroke-width=".9"/>
-            <circle cx="140" cy="6.5" r="1.6" fill="#fff3cf" stroke="#7a5410" stroke-width=".4"/>
-            <circle cx="130" cy="9" r="1.2" fill="#fff3cf" stroke="#7a5410" stroke-width=".4"/>
-            <circle cx="150" cy="9" r="1.2" fill="#fff3cf" stroke="#7a5410" stroke-width=".4"/>
-            <rect x="128.5" y="17.5" width="23" height="4.5" rx="1.6" fill="url(#wlGoldDeep)" stroke="#7a5410" stroke-width=".7"/>
-            <circle cx="140" cy="19.8" r="1.8" fill="url(#wlRuby)" stroke="#6d0a10" stroke-width=".4"/>
             <ellipse cx="140" cy="64" rx="40" ry="46" fill="url(#wlGold)" stroke="#7a5410" stroke-width="1.6"/>
             <ellipse cx="140" cy="64" rx="34.5" ry="40.5" fill="none" stroke="#7a5410" stroke-width=".9" opacity=".8"/>
             <ellipse cx="140" cy="63.5" rx="32" ry="38" fill="url(#wlField)" stroke="#f4cf6b" stroke-width=".7"/>
-            <g stroke="#b98a2e" stroke-width="2.6" stroke-linecap="round" opacity=".85">
-              <path d="M143.4 51.7 L150.7 34.1"/><path d="M148.3 56.6 L165.9 49.3"/>
-              <path d="M148.3 63.4 L165.9 70.7"/><path d="M143.4 68.3 L150.7 85.9"/>
-              <path d="M136.6 68.3 L129.3 85.9"/><path d="M131.7 63.4 L114.1 70.7"/>
-              <path d="M131.7 56.6 L114.1 49.3"/><path d="M136.6 51.7 L129.3 34.1"/>
+            <path d="M119 78 C111 67 111 51 121 42" fill="none" stroke="#b98a2e" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M161 78 C169 67 169 51 159 42" fill="none" stroke="#b98a2e" stroke-width="1.6" stroke-linecap="round"/>
+            <g fill="url(#wlGold)" stroke="#7a5410" stroke-width=".4">
+              <ellipse cx="114.8" cy="70.5" rx="4.4" ry="1.8" transform="rotate(-62 114.8 70.5)"/>
+              <ellipse cx="112.6" cy="62.5" rx="4.4" ry="1.8" transform="rotate(-82 112.6 62.5)"/>
+              <ellipse cx="112.9" cy="54.2" rx="4.4" ry="1.8" transform="rotate(-100 112.9 54.2)"/>
+              <ellipse cx="115.4" cy="46.8" rx="4.4" ry="1.8" transform="rotate(-118 115.4 46.8)"/>
+              <ellipse cx="120.2" cy="41.5" rx="4.4" ry="1.8" transform="rotate(-136 120.2 41.5)"/>
+              <ellipse cx="118.2" cy="73.5" rx="3.6" ry="1.5" transform="rotate(-35 118.2 73.5)"/>
+              <ellipse cx="116.2" cy="66.4" rx="3.6" ry="1.5" transform="rotate(-55 116.2 66.4)"/>
+              <ellipse cx="116.1" cy="58.9" rx="3.6" ry="1.5" transform="rotate(-75 116.1 58.9)"/>
+              <ellipse cx="117.8" cy="51.6" rx="3.6" ry="1.5" transform="rotate(-95 117.8 51.6)"/>
+              <ellipse cx="165.2" cy="70.5" rx="4.4" ry="1.8" transform="rotate(62 165.2 70.5)"/>
+              <ellipse cx="167.4" cy="62.5" rx="4.4" ry="1.8" transform="rotate(82 167.4 62.5)"/>
+              <ellipse cx="167.1" cy="54.2" rx="4.4" ry="1.8" transform="rotate(100 167.1 54.2)"/>
+              <ellipse cx="164.6" cy="46.8" rx="4.4" ry="1.8" transform="rotate(118 164.6 46.8)"/>
+              <ellipse cx="159.8" cy="41.5" rx="4.4" ry="1.8" transform="rotate(136 159.8 41.5)"/>
+              <ellipse cx="161.8" cy="73.5" rx="3.6" ry="1.5" transform="rotate(35 161.8 73.5)"/>
+              <ellipse cx="163.8" cy="66.4" rx="3.6" ry="1.5" transform="rotate(55 163.8 66.4)"/>
+              <ellipse cx="163.9" cy="58.9" rx="3.6" ry="1.5" transform="rotate(75 163.9 58.9)"/>
+              <ellipse cx="162.2" cy="51.6" rx="3.6" ry="1.5" transform="rotate(95 162.2 51.6)"/>
             </g>
-            <circle cx="140" cy="57" r="20" fill="url(#wlStarGlow)"/>
-            <path d="M140 42 L143.8 52.7 L155.2 53.1 L146.2 60 L149.4 70.9 L140 64.5 L130.6 70.9 L133.8 60 L124.8 53.1 L136.2 52.7 Z" fill="url(#wlGold)" stroke="#7a5410" stroke-width=".9" stroke-linejoin="round"/>
-            <path d="M140 48.2 L142.12 54.08 L148.37 54.28 L143.42 58.11 L145.17 64.12 L140 60.6 L134.83 64.12 L136.58 58.11 L131.63 54.28 L137.88 54.08 Z" fill="#fff7db" opacity=".4" transform="translate(-0.6,-0.8)"/>
+            <circle cx="140" cy="59" r="18.5" fill="#5c0910" stroke="url(#wlGold)" stroke-width="2.2"/>
+            <circle cx="140" cy="59" r="18.5" fill="url(#wlStarGlow)" opacity=".3"/>
+            <g stroke="#e8b23a" stroke-width=".9" fill="none" opacity=".95">
+              <ellipse cx="140" cy="59" rx="7" ry="18.5"/>
+              <ellipse cx="140" cy="59" rx="13.5" ry="18.5"/>
+              <path d="M140 40.5 V77.5"/>
+              <path d="M123.84 50 Q140 46 156.16 50"/>
+              <path d="M123.84 68 Q140 72 156.16 68"/>
+            </g>
+            <path d="M121.5 59 H158.5" stroke="#e8b23a" stroke-width="1.4"/>
+            <path d="M128 48 A16 16 0 0 1 136 43" stroke="#fff7db" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+            <circle cx="140" cy="21" r="5" fill="url(#wlGold)" stroke="#7a5410" stroke-width=".8"/>
+            <circle cx="140" cy="21" r="3" fill="url(#wlRuby)" stroke="#6d0a10" stroke-width=".4"/>
             <g fill="#fff3cf" stroke="#7a5410" stroke-width=".4">
               <circle cx="173.5" cy="82.2" r="1.5"/><circle cx="106.5" cy="82.2" r="1.5"/>
               <circle cx="173.5" cy="45.8" r="1.5"/><circle cx="106.5" cy="45.8" r="1.5"/>
@@ -2814,7 +2834,7 @@
       name:'Wrestle Lore', mono:'WL', acc:'#e11a26', url:'https://wrestlelore.com/', theme:'wl', cta:'Enter Wrestle Lore',
       eyebrow:'Est. July 2026',
       tag:'Your next favorite match is already out there.',
-      blurb:'Wrestle Lore is a wrestling fan platform for discovering legendary matches, iconic wrestlers, championship histories, and unforgettable rivalries through one connected archive. Whether you’re catching up or reliving the classics, there’s always another great match waiting to be discovered.',
+      blurb:'Wrestle Lore is a wrestling fan platform for exploring legendary matches, iconic wrestlers, championship histories, and unforgettable rivalries in one connected archive.\n\nCatch up on what you missed, go down the rabbit holes, and rate the classics as you watch.',
       trust:'Relive the classics. Discover new favorites.',
       features:[
         ['Match Discovery','Browse classic matches by wrestler, era, or rivalry, each one rated and watchable.'],

@@ -21,3 +21,4 @@
 - Copy sells discovery and the live feed: "Your next favorite match is already out there," the connected-archive blurb, pills for Match Discovery / The Lore Feed / Star Ratings / Go Deeper, closing line "Relive the classics. Discover new favorites."
 - Dock: fifth chip with a gold belt icon, Est. July 2026, hooked into the shared theme-as-data modal.
 - Belt v2 after review: red enamel plate fields (center + hexes), center art swapped from crown/star/sunburst to a gold globe with graticule flanked by laurel branches and a ruby bezel crest set into the rim (original art in the classic international-title spirit). Modal blurb shortened to two paragraphs (white-space pre-line), redundancy cut.
+- Modal height fix: blurb trimmed to two short beats, top padding tightened, ending line moved into the Match Discovery detail panel so the CTA stays above the fold on shorter screens.

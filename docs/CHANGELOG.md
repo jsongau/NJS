@@ -15,3 +15,8 @@
 - Portfolio dock v2: "Personal Portfolio" tab, two-line chips with Est. dates, chips in a scroll lane with the NS mark and Get in touch pinned so the CTA can't clip, safe-area insets.
 - BoxVacay shipped as project four with the recovered "Sundown Round" theme (kick-pad strike scene, strike audio, Explore Camps CTA) — ported from an uncommitted 2026-07-20 preview found in Downloads.
 - Modal plates now read "Est. <month year>" only; Ask Agent NS button clears the dock lane under 1080px; salon tassels hidden on phones (blurb overlap); light-mode chip contrast and Boba icon color fixed.
+
+## 2026-07-30
+- Added **Wrestle Lore** (wrestlelore.com) as project five with a "Title Night" championship reveal (`theme:'wl'`): arena spotlights sweep in, a hand-drawn vector championship belt drops and settles (crowned center plate, deco sunburst, faceted star, ruby gem links, riveted rim, engraved banner, hex side plates on a long stitched strap with snap studs), five rating stars pop in one by one, a glint sweeps the plate, gold sparks fly, and the ring ropes draw in. Synthesized ring-bell open sequence (crowd swell, three bell strikes, brass fanfare), Web Audio only.
+- Copy sells discovery and the live feed: "Your next favorite match is already out there," the connected-archive blurb, pills for Match Discovery / The Lore Feed / Star Ratings / Go Deeper, closing line "Relive the classics. Discover new favorites."
+- Dock: fifth chip with a gold belt icon, Est. July 2026, hooked into the shared theme-as-data modal.

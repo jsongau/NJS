@@ -51,6 +51,11 @@
   .controls{position:relative;z-index:60;background:var(--bone);border-bottom:1px solid var(--line)}
   .controls .inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:11px 20px;max-width:1180px;margin:0 auto}
   .controls .lab{font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .theme-toggle{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;gap:3px;box-shadow:0 1px 3px rgba(20,16,8,.06)}
+  .theme-toggle button{width:36px;height:30px;display:grid;place-items:center;border:0;background:transparent;border-radius:999px;color:var(--muted);cursor:pointer;transition:.18s}
+  .theme-toggle button svg{width:17px;height:17px}
+  .theme-toggle button.on{background:var(--grad-gold);color:#1a1405;box-shadow:0 2px 8px rgba(190,158,74,.4)}
+  .theme-toggle button:not(.on):hover{color:var(--ink)}
   .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
   .seg button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:700;color:var(--muted);padding:7px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
   .seg button.on{background:var(--ink);color:var(--bone)}
@@ -333,14 +338,17 @@
   .sticky-cta a{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-weight:700;font-size:12.5px;text-decoration:none;box-shadow:var(--shadow)}
 
   /* FOMO */
-  .fomo{position:fixed;left:18px;bottom:18px;z-index:65;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 14px;box-shadow:var(--shadow);display:none;align-items:center;gap:11px;max-width:290px}
-  .fomo.show{display:flex;animation:fadein .3s}
-  .fomo-ic{width:34px;height:34px;border-radius:9px;background:var(--mist);display:grid;place-items:center;flex:none;color:var(--flame-deep)}
-  body[data-theme="night"] .fomo-ic{color:var(--flame)}
-  .fomo-ic svg{width:18px;height:18px;fill:currentColor}
-  .fomo-tx{font-size:12.5px;line-height:1.4;color:var(--ink)}
+  .fomo{position:fixed;right:18px;bottom:82px;z-index:65;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:11px 12px;box-shadow:0 16px 40px rgba(20,16,8,.24);display:none;align-items:center;gap:11px;max-width:305px}
+  .fomo.show{display:flex;animation:fomoin .42s cubic-bezier(.2,.9,.3,1.35)}
+  @keyframes fomoin{from{opacity:0;transform:translateY(12px) scale(.95)}to{opacity:1;transform:none}}
+  .fomo-av{width:38px;height:38px;border-radius:50%;background:var(--grad-gold);color:#1a1405;display:grid;place-items:center;font-weight:900;font-size:15px;flex:none;box-shadow:0 0 0 3px rgba(190,158,74,.2)}
+  .fomo-body{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+  .fomo-live{display:inline-flex;align-items:center;gap:6px;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--good)}
+  .fomo-live .ld{width:7px;height:7px;border-radius:50%;background:#2ec26b;box-shadow:0 0 0 0 rgba(46,194,107,.5);animation:ldpulse 1.7s ease-out infinite}
+  @keyframes ldpulse{0%{box-shadow:0 0 0 0 rgba(46,194,107,.5)}100%{box-shadow:0 0 0 7px rgba(46,194,107,0)}}
+  .fomo-tx{font-size:12.5px;line-height:1.35;color:var(--ink)}
   .fomo-tx b{font-weight:800}
-  .fomo-x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:14px;flex:none;align-self:flex-start}
+  .fomo-x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:15px;flex:none;align-self:flex-start;line-height:1}
 
   /* Nathan commentary bubble */
   . nchip{}
@@ -443,6 +451,15 @@
 </div></div>
 
 <div class="controls"><div class="inner">
+  <div class="theme-toggle" id="themeSeg" role="group" aria-label="Color theme">
+    <button class="on" data-theme="warm" aria-label="Warm, light" title="Warm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button data-theme="night" aria-label="Night, dark" title="Night">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+  <div class="divider"></div>
   <span class="lab">You are</span>
   <div class="seg" id="audSeg">
     <button class="on" data-aud="new">New to Pilates</button>
@@ -453,12 +470,6 @@
   <label class="switch ab"><input type="checkbox" id="abToggle"><span class="track"></span> <span class="badge-ab">A/B</span> Headline B</label>
   <div class="divider"></div>
   <label class="switch cm"><input type="checkbox" id="cmToggle" checked><span class="track"></span> Nathan&rsquo;s notes</label>
-  <div class="spring"></div>
-  <span class="lab">Surface</span>
-  <div class="seg" id="themeSeg">
-    <button class="on" data-theme="warm">Warm</button>
-    <button data-theme="night">Night</button>
-  </div>
 </div></div>
 </div>
 
@@ -863,13 +874,15 @@
 <!-- sticky CTA -->
 <div class="sticky-cta" id="stickyCta" aria-hidden="true">
   <button onclick="scrollToForm()">&#9733; Win 3 months free</button>
-  <a href="#" onclick="scrollToForm();return false">Join the founding list</a>
 </div>
 
-<!-- FOMO -->
+<!-- FOMO live-activity widget (bottom-right, above the CTA) -->
 <div class="fomo" id="fomo" role="status" aria-live="polite">
-  <span class="fomo-ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2-6.3-4.6L5.7 21 8 14 2 9.6h7.6z"/></svg></span>
-  <span class="fomo-tx" id="fomoTx"></span>
+  <span class="fomo-av" id="fomoAv">P</span>
+  <div class="fomo-body">
+    <span class="fomo-live"><i class="ld"></i> Live &middot; just now</span>
+    <span class="fomo-tx" id="fomoTx"></span>
+  </div>
   <button class="fomo-x" onclick="fomoStop()" aria-label="Dismiss">&times;</button>
 </div>
 
@@ -1361,9 +1374,12 @@ let fomoI=0,fomoOn=true,fomoT=null;
 function fomoShow(){
   if(!fomoOn)return;
   const f=document.getElementById('fomo');
-  document.getElementById('fomoTx').innerHTML=FOMO[fomoI%FOMO.length]+" <span style='color:var(--muted)'>&middot; demo</span>";
+  const msg=FOMO[fomoI%FOMO.length];
+  document.getElementById('fomoTx').innerHTML=msg+" <span style='color:var(--muted)'>&middot; demo</span>";
+  const nm=(msg.match(/<b>([^<]+)<\/b>/)||[])[1]||'PA';
+  document.getElementById('fomoAv').textContent=nm.trim().charAt(0).toUpperCase();
   f.classList.add('show');fomoI++;
-  fomoT=setTimeout(()=>{f.classList.remove('show');if(fomoOn)fomoT=setTimeout(fomoShow,4500);},5000);
+  fomoT=setTimeout(()=>{f.classList.remove('show');if(fomoOn)fomoT=setTimeout(fomoShow,4500);},5200);
 }
 function fomoStop(){fomoOn=false;document.getElementById('fomo').classList.remove('show');if(fomoT)clearTimeout(fomoT);}
 setTimeout(fomoShow,3500);

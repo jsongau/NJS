@@ -10,6 +10,8 @@
     /* Pilates Addiction brand: black + gold. Nathan's meta-notes stay his signature orange. */
     --flame:#BE9E4A; --flame-deep:#7C6320; --gold:#BE9E4A; --gold-lite:#D8BE72; --gold-deep:#7C6320;
     --grad-gold:linear-gradient(180deg,#D8BE72,#B8912E);
+    --btn-gold:linear-gradient(180deg,#F1E1A0 0%,#D9B85C 44%,#C29B3E 56%,#DFC26C 100%);
+    --btn-sheen:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(120,90,20,.35);
     --orange:#E8503A; --orange-deep:#B8371F;
     --bone:#FBFAF7; --ink:#0C0C0C; --muted:#6b645a; --line:#E7E1D3;
     --card:#ffffff; --sand:#F2ECDE; --mist:#F5F0E6;
@@ -41,9 +43,8 @@
   .brandbar .inner{max-width:1180px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:12px}
   .logo{display:inline-flex;align-items:center;gap:11px;background:none;border:0;cursor:pointer;font:inherit;padding:4px 6px;border-radius:10px}
   .logo:hover{background:rgba(255,255,255,.06)}
-  .logo .mark{width:32px;height:32px;flex:none}
-  .logo .word{font-size:19px;font-weight:800;letter-spacing:.06em;color:#fff;text-transform:uppercase;line-height:1}
-  .logo .word b{color:var(--gold-lite);font-weight:800}
+  .logo .palogo{height:27px;width:auto;flex:none;display:block}
+  .word-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
   .brandbar .home-hint{margin-left:auto;font-size:12px;color:#b3a98f}
   .brandbar .home-hint b{color:var(--gold-lite);font-weight:700}
 
@@ -77,7 +78,8 @@
   [data-note]{scroll-margin-top:200px}
   #formCard{position:sticky;top:150px}
   #step1 > section:first-of-type{padding-top:46px}
-  .eyebrow{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--flame-deep);margin-bottom:14px}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--flame-deep);margin-bottom:14px}
+  .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--grad-gold)}
   body[data-theme="night"] .eyebrow{color:var(--flame)}
   h1{font-size:clamp(30px,4.7vw,52px);line-height:1.04;letter-spacing:-.02em;font-weight:800}
   h1 .hl{background:linear-gradient(transparent 60%, rgba(190,158,74,.30) 60%);padding:0 2px}
@@ -115,8 +117,9 @@
   .deadline .bolt,.deadline b{color:var(--flame-deep)}
   body[data-theme="night"] .deadline .bolt,body[data-theme="night"] .deadline b{color:var(--gold-lite)}
   .countdown{display:flex;align-items:center;justify-content:center;gap:6px;margin:16px 0 4px}
-  .cd-box{background:var(--ink);color:#fff;border-radius:10px;padding:8px 8px;min-width:54px;text-align:center;display:flex;flex-direction:column;gap:2px}
-  .cd-box.big{background:var(--grad-gold);color:#1a1405}
+  .cd-box{background:#17130C;color:#fff;border-radius:10px;padding:8px 8px;min-width:54px;text-align:center;display:flex;flex-direction:column;gap:2px;border:1px solid rgba(190,158,74,.28)}
+  body[data-theme="night"] .cd-box{background:#2b261d;color:#fff;border-color:#3f382c}
+  .cd-box.big{background:var(--grad-gold);color:#1a1405;border-color:transparent}
   .cd-box b{font-size:25px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
   .cd-box span{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.82}
   .cd-sep{font-size:19px;font-weight:800;color:var(--muted)}
@@ -131,8 +134,8 @@
   .field input{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bone);color:var(--ink)}
   .field input:focus{outline:2px solid var(--flame);border-color:transparent}
   .err{color:var(--flame-deep);font-size:12.5px;margin-top:5px;display:none}
-  .fbtn{width:100%;font:inherit;font-size:16px;font-weight:800;color:#1a1405;background:var(--grad-gold);border:0;border-radius:12px;padding:15px;cursor:pointer;transition:.15s;box-shadow:0 10px 24px rgba(190,158,74,.35);text-transform:uppercase;letter-spacing:.03em}
-  .fbtn:hover{filter:brightness(1.05)}
+  .fbtn{width:100%;font:inherit;font-size:15px;font-weight:900;color:#111;background:var(--btn-gold);border:0;border-radius:5px;padding:16px;cursor:pointer;transition:.15s;box-shadow:var(--btn-sheen),0 10px 24px rgba(190,158,74,.32);text-transform:uppercase;letter-spacing:.12em}
+  .fbtn:hover{filter:brightness(1.06)}
   .fstep{display:none}.fstep.on{display:block;animation:fadein .3s}
   @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .consent{display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--muted);margin-top:10px;line-height:1.4}
@@ -176,7 +179,7 @@
   .exp-tab span{font-size:12.5px;color:var(--muted)}
   .exp-tab.on{border-color:var(--flame);box-shadow:0 8px 20px rgba(190,158,74,.14)}
   .exp-tab.on .n{background:var(--flame);color:#fff}
-  .exp-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;min-height:230px}
+  .exp-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;min-height:340px}
   .exp-panel .tag{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--flame-deep)}
   body[data-theme="night"] .exp-panel .tag{color:var(--flame)}
   .exp-panel h3{font-size:23px;font-weight:800;margin:8px 0 10px}
@@ -224,7 +227,7 @@
   body[data-theme="night"] .quiz-res .tag{color:var(--flame)}
   .quiz-res h3{font-size:26px;font-weight:800;margin:8px 0 8px}
   .quiz-res p{font-size:15.5px;color:var(--muted);line-height:1.6}
-  .quiz-res .rebtn{margin-top:18px;background:var(--grad-gold);color:#1a1405;border:0;border-radius:11px;padding:13px 20px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;text-transform:uppercase;letter-spacing:.02em}
+  .quiz-res .rebtn{margin-top:18px;background:var(--btn-gold);color:#111;border:0;border-radius:5px;padding:14px 22px;font:inherit;font-weight:900;font-size:14px;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;box-shadow:var(--btn-sheen)}
   .quiz-restart{background:none;border:0;color:var(--muted);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:12px}
 
   /* reviews */
@@ -250,7 +253,8 @@
   .finalcta h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;max-width:24ch;margin:0 auto;line-height:1.1}
   .finalcta .sub{color:#cfc6b8;margin:12px auto 0}
   .fc-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
-  .fc-enter{background:var(--grad-gold);color:#1a1405;border:0;border-radius:12px;padding:15px 26px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;text-transform:uppercase;letter-spacing:.03em}
+  .fc-enter{background:var(--btn-gold);color:#111;border:0;border-radius:5px;padding:16px 28px;font:inherit;font-weight:900;font-size:15px;cursor:pointer;text-transform:uppercase;letter-spacing:.12em;box-shadow:var(--btn-sheen),0 10px 24px rgba(190,158,74,.3)}
+  .fc-enter:hover{filter:brightness(1.06)}
   .fc-book{background:transparent;color:var(--bone);border:1.5px solid rgba(247,243,237,.4);border-radius:12px;padding:15px 26px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none;display:inline-block}
 
   /* thank-you */
@@ -270,7 +274,7 @@
   .refer{max-width:620px;margin:34px auto 0;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
   .meter{height:10px;background:var(--sand);border-radius:999px;overflow:hidden;margin:16px 0 8px}
   .meter i{display:block;height:100%;width:0;background:var(--flame);transition:width .4s}
-  .invite{background:var(--grad-gold);color:#1a1405;border:0;border-radius:11px;padding:13px 22px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;margin-top:8px;text-transform:uppercase;letter-spacing:.02em}
+  .invite{background:var(--btn-gold);color:#111;border:0;border-radius:5px;padding:14px 24px;font:inherit;font-weight:900;font-size:14px;cursor:pointer;margin-top:8px;text-transform:uppercase;letter-spacing:.1em;box-shadow:var(--btn-sheen)}
   .why-btn{background:none;border:0;color:var(--muted);font:inherit;font-size:12.5px;text-decoration:underline;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin-top:6px}
 
   /* offer cards (bogo + group) */
@@ -300,7 +304,7 @@
   .gb-join{background:var(--ink);color:var(--bone);border:0;border-radius:9px;padding:9px 14px;font:inherit;font-weight:800;font-size:13px;cursor:pointer;flex:none}
   .offer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
   .btn-mini{border:0;border-radius:11px;padding:13px 18px;font:inherit;font-weight:800;font-size:14.5px;cursor:pointer}
-  .btn-mini.primary{background:var(--grad-gold);color:#1a1405;flex:1;min-width:180px}
+  .btn-mini.primary{background:var(--btn-gold);color:#111;flex:1;min-width:180px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;box-shadow:var(--btn-sheen)}
   .btn-mini.ghost{background:var(--bone);color:var(--ink);border:1px solid var(--line)}
   .gb-lead{margin-top:16px;background:var(--good-soft);border:1px solid #cfe3d4;border-radius:12px;padding:16px}
   body[data-theme="night"] .gb-lead{background:#1a231d;border-color:#2c3b30}
@@ -325,7 +329,7 @@
   .squad-calc .big{font-size:34px;font-weight:800;letter-spacing:-.02em}
   .squad-calc .big s{color:var(--muted);font-size:20px;font-weight:700;margin-right:8px}
   .squad-calc .lab{font-size:13px;color:var(--muted);margin-top:4px}
-  .squad-lock{background:var(--grad-gold);color:#1a1405;border:0;border-radius:11px;padding:13px 20px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;margin-top:16px;width:100%;text-transform:uppercase;letter-spacing:.02em}
+  .squad-lock{background:var(--btn-gold);color:#111;border:0;border-radius:5px;padding:15px 20px;font:inherit;font-weight:900;font-size:14px;cursor:pointer;margin-top:16px;width:100%;text-transform:uppercase;letter-spacing:.1em;box-shadow:var(--btn-sheen)}
   .squad-lock:disabled{background:var(--sand);color:var(--muted);cursor:not-allowed}
 
   footer{padding:34px 20px 120px;max-width:1080px;margin:0 auto}
@@ -334,7 +338,7 @@
   /* sticky CTA */
   .sticky-cta{position:fixed;right:18px;bottom:18px;z-index:70;display:none;flex-direction:column;gap:8px;align-items:flex-end}
   .sticky-cta.show{display:flex}
-  .sticky-cta button{background:var(--grad-gold);color:#1a1405;border:0;border-radius:999px;padding:13px 20px;font:inherit;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 12px 30px rgba(190,158,74,.45);display:inline-flex;align-items:center;gap:7px}
+  .sticky-cta button{background:var(--btn-gold);color:#111;border:0;border-radius:5px;padding:14px 22px;font:inherit;font-weight:900;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;box-shadow:var(--btn-sheen),0 12px 30px rgba(190,158,74,.42);display:inline-flex;align-items:center;gap:7px}
   .sticky-cta a{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-weight:700;font-size:12.5px;text-decoration:none;box-shadow:var(--shadow)}
 
   /* FOMO */
@@ -439,13 +443,35 @@
 
 <div class="topbar">
 <div class="brandbar"><div class="inner">
-  <button class="logo" onclick="goHome()" aria-label="Back to top">
-    <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EBD595"/><stop offset="1" stop-color="#B8912E"/></linearGradient></defs>
-      <path d="M14 34V7h8.5a7.5 7.5 0 0 1 0 15H14" stroke="url(#pg)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="28" cy="30.5" r="2.4" fill="url(#pg)"/>
+  <button class="logo" onclick="goHome()" aria-label="Pilates Addiction, back to top">
+    <svg class="palogo" width="138" height="35" viewBox="0 0 138 35" fill="none" aria-hidden="true">
+      <g clip-path="url(#clip0_1_694)">
+        <path d="M37.1006 12.3539H39.4664C40.49 12.3539 41.3808 12.1572 42.1378 11.7638C42.8948 11.3703 43.481 10.8133 43.898 10.0926C44.3141 9.37191 44.5231 8.52713 44.5231 7.55733V7.53803C44.5231 6.56272 44.3151 5.71426 43.898 4.99358C43.481 4.2729 42.8948 3.71308 42.1378 3.31321C41.3808 2.91334 40.491 2.71387 39.4664 2.71387H33.5997V16.337H37.1006V12.353V12.3539ZM37.1006 5.37782H38.6267C39.3642 5.37782 39.942 5.56075 40.3581 5.92569C40.7752 6.29062 40.9832 6.8293 40.9832 7.53987V7.55917C40.9832 8.26423 40.7752 8.80198 40.3581 9.17336C39.942 9.54473 39.3642 9.73041 38.6267 9.73041H37.1006V5.37782Z" fill="white"/>
+        <path d="M49.6319 2.71533H46.131V16.3384H49.6319V2.71533Z" fill="white"/>
+        <path d="M54.7759 2.71533H51.275V16.3375H60.4708V13.5532H54.7759V2.71533Z" fill="white"/>
+        <path d="M66.3755 13.355H70.8591L71.7193 16.338H75.4013L70.7653 2.71484H66.473L61.8371 16.338H65.5191L66.3764 13.355H66.3755ZM68.5806 5.67939H68.6475L70.1383 10.8529H67.0945L68.5806 5.67939Z" fill="white"/>
+        <path d="M78.2529 16.3375H81.7537V5.49971H85.5407V2.71533H74.4566V5.49971H78.2529V16.3375Z" fill="white"/>
+        <path d="M96.5746 13.5532H90.6411V10.7964H96.2217V8.19032H90.6411V5.49971H96.5746V2.71533H87.1402V16.3375H96.5746V13.5532Z" fill="white"/>
+        <path d="M107.736 8.99302C107.106 8.65933 106.302 8.40195 105.323 8.21902L103.911 7.95428C103.173 7.81639 102.635 7.6399 102.298 7.42571C101.961 7.21153 101.793 6.92197 101.793 6.55703V6.54784C101.793 6.29046 101.871 6.05881 102.027 5.85382C102.183 5.64883 102.411 5.48704 102.709 5.36754C103.008 5.24804 103.37 5.18829 103.797 5.18829C104.223 5.18829 104.588 5.24804 104.913 5.36754C105.238 5.48704 105.498 5.65342 105.695 5.86761C105.892 6.08179 106.01 6.33917 106.048 6.6416L106.057 6.74548H109.31L109.301 6.54692C109.263 5.72237 109.023 5.00536 108.581 4.39407C108.139 3.78369 107.514 3.31028 106.707 2.97384C105.899 2.6374 104.92 2.46826 103.769 2.46826C102.719 2.46826 101.783 2.64567 100.959 3.00142C100.135 3.35717 99.4885 3.85723 99.0176 4.50254C98.5466 5.14784 98.3116 5.90805 98.3116 6.78225V6.79144C98.3116 7.83661 98.6664 8.68783 99.3752 9.34508C100.085 10.0033 101.12 10.4574 102.48 10.7092L103.892 10.9832C104.699 11.1339 105.273 11.315 105.61 11.5264C105.947 11.7369 106.115 12.0348 106.115 12.4181V12.4273C106.115 12.7104 106.023 12.9586 105.838 13.1728C105.653 13.387 105.394 13.5552 105.061 13.6784C104.727 13.8006 104.328 13.8622 103.863 13.8622C103.399 13.8622 103.014 13.8006 102.652 13.6784C102.29 13.5552 101.993 13.3851 101.76 13.1682C101.528 12.9513 101.381 12.6948 101.317 12.3988L101.298 12.3041H98.045L98.0543 12.4742C98.1119 13.3429 98.3776 14.0828 98.8513 14.6932C99.325 15.3036 99.9836 15.7706 100.826 16.0951C101.669 16.4195 102.662 16.5813 103.808 16.5813C105.023 16.5813 106.062 16.4002 106.927 16.039C107.792 15.6768 108.453 15.1629 108.911 14.4956C109.369 13.8282 109.597 13.0413 109.597 12.1359V12.1267C109.597 11.3968 109.445 10.7754 109.139 10.2625C108.834 9.74955 108.367 9.3267 107.737 8.99302H107.736Z" fill="white"/>
+        <path d="M40.5513 18.665H37.3272L32.6913 32.2872H36.3733L37.2306 29.3043H41.7142L42.5744 32.2872H46.2564L41.6204 18.665H40.5522H40.5513ZM37.9486 26.8021L39.4348 21.6287H39.5017L40.9925 26.8021H37.9486Z" fill="white"/>
+        <path d="M56.8807 19.439C55.8952 18.9233 54.7118 18.665 53.3324 18.665H47.7333V32.2872H53.3324C54.7183 32.2872 55.9035 32.0151 56.8863 31.4709C57.869 30.9268 58.6205 30.1399 59.1425 29.1113C59.6636 28.0826 59.9246 26.8444 59.9246 25.3966V25.3773C59.9246 23.9295 59.6636 22.7069 59.1425 21.7096C58.6214 20.7122 57.8672 19.9556 56.8816 19.439H56.8807ZM56.3559 25.4049C56.3559 26.3113 56.224 27.066 55.9602 27.6708C55.6964 28.2748 55.3035 28.7298 54.7824 29.035C54.2613 29.3402 53.6213 29.4927 52.8652 29.4927H51.2342V21.4586H52.8652C53.5962 21.4586 54.2242 21.6084 54.749 21.9072C55.2738 22.2059 55.6723 22.6481 55.9463 23.2337C56.2194 23.8192 56.3568 24.5362 56.3568 25.3865V25.4058L56.3559 25.4049Z" fill="white"/>
+        <path d="M70.4848 19.439C69.4992 18.9233 68.3159 18.665 66.9365 18.665H61.3373V32.2872H66.9365C68.3233 32.2872 69.5076 32.0151 70.4903 31.4709C71.4731 30.9268 72.2245 30.1399 72.7465 29.1113C73.2676 28.0826 73.5286 26.8444 73.5286 25.3966V25.3773C73.5286 23.9295 73.2676 22.7069 72.7465 21.7096C72.2255 20.7122 71.4712 19.9556 70.4857 19.439H70.4848ZM69.96 25.4049C69.96 26.3113 69.8281 27.066 69.5643 27.6708C69.3005 28.2748 68.9076 28.7298 68.3865 29.035C67.8654 29.3402 67.2254 29.4927 66.4693 29.4927H64.8382V21.4586H66.4693C67.2003 21.4586 67.8282 21.6084 68.353 21.9072C68.8778 22.2059 69.2763 22.6481 69.5503 23.2337C69.8234 23.8192 69.9609 24.5362 69.9609 25.3865V25.4058L69.96 25.4049Z" fill="white"/>
+        <path d="M78.5018 18.665H75.0009V32.2872H78.5018V18.665Z" fill="white"/>
+        <path d="M89.4364 27.1997C89.3537 27.7099 89.1847 28.1483 88.9311 28.517C88.6766 28.8846 88.3524 29.1678 87.9576 29.3663C87.5629 29.564 87.1114 29.6632 86.6034 29.6632C85.9671 29.6632 85.4144 29.4969 84.9435 29.1632C84.4725 28.8295 84.1103 28.3478 83.8558 27.7191C83.6013 27.0894 83.474 26.3374 83.474 25.4632V25.454C83.474 24.5854 83.6013 23.8417 83.8558 23.2212C84.1103 22.6017 84.4707 22.1246 84.9379 21.7909C85.4051 21.4572 85.9569 21.2908 86.5931 21.2908C87.1337 21.2908 87.6009 21.3947 87.9957 21.6024C88.3896 21.8102 88.7063 22.0952 88.945 22.4573C89.1837 22.8195 89.3407 23.2396 89.4169 23.7176L89.4355 23.85H92.8128L92.8035 23.7654C92.7654 22.746 92.4803 21.8332 91.9499 21.0279C91.4186 20.2227 90.6941 19.5866 89.7745 19.1205C88.8558 18.6544 87.7951 18.4219 86.5931 18.4219C85.2259 18.4219 84.0416 18.7004 83.0402 19.2575C82.038 19.8145 81.2643 20.6189 80.7172 21.6695C80.1701 22.7212 79.897 23.986 79.897 25.4651V25.4743C79.897 26.9533 80.1691 28.22 80.7125 29.2744C81.2559 30.3288 82.0287 31.1359 83.03 31.6957C84.0313 32.2555 85.2194 32.5359 86.5931 32.5359C87.7886 32.5359 88.8456 32.3033 89.7652 31.8372C90.6838 31.3712 91.4121 30.7369 91.9499 29.9353C92.4868 29.1328 92.7784 28.2246 92.823 27.2116V27.1078H89.4559L89.4364 27.2024V27.1997Z" fill="white"/>
+        <path d="M93.2372 21.4494H97.0344V32.2872H100.535V21.4494H104.322V18.665H93.2372V21.4494Z" fill="white"/>
+        <path d="M109.423 18.665H105.922V32.2872H109.423V18.665Z" fill="white"/>
+        <path d="M121.34 19.2784C120.323 18.7057 119.114 18.4189 117.716 18.4189C116.317 18.4189 115.137 18.7057 114.119 19.2784C113.101 19.8511 112.314 20.6628 111.758 21.7144C111.201 22.766 110.923 24.0143 110.923 25.4621V25.4815C110.923 26.9293 111.2 28.1803 111.752 29.2338C112.306 30.2881 113.091 31.1017 114.109 31.6744C115.126 32.247 116.328 32.5339 117.715 32.5339C119.101 32.5339 120.33 32.248 121.345 31.6744C122.359 31.1017 123.141 30.2881 123.691 29.2338C124.241 28.1794 124.516 26.9283 124.516 25.4815V25.4621C124.516 24.0143 124.241 22.7651 123.691 21.7144C123.141 20.6637 122.357 19.8511 121.34 19.2784ZM120.949 25.4815C120.949 26.3308 120.819 27.069 120.558 27.695C120.297 28.321 119.927 28.8054 119.447 29.1492C118.967 29.4921 118.389 29.664 117.716 29.664C117.042 29.664 116.501 29.4939 116.018 29.1538C115.535 28.8137 115.16 28.3311 114.896 27.7051C114.633 27.0791 114.501 26.3382 114.501 25.4815V25.4621C114.501 24.5999 114.633 23.8572 114.896 23.2339C115.16 22.6107 115.536 22.1308 116.022 21.7944C116.509 21.4579 117.073 21.2888 117.716 21.2888C118.358 21.2888 118.949 21.4589 119.433 21.799C119.916 22.1391 120.29 22.6199 120.554 23.2431C120.818 23.8664 120.95 24.6054 120.95 25.4612V25.4805L120.949 25.4815Z" fill="white"/>
+        <path d="M134.508 18.665V26.519H134.448L128.947 18.665H125.97V32.2872H129.471V24.3478H129.534L135.062 32.2872H138V18.665H134.508Z" fill="white"/>
+        <path d="M10.5584 27.1619L6.54662 27.1463C6.44723 27.1463 6.36734 27.2253 6.36734 27.3237V34.7999C6.36734 34.8955 6.4463 34.9736 6.5429 34.9736L10.5639 34.9782C10.6615 34.9782 10.7395 34.9001 10.7395 34.8045L10.7376 27.3402C10.7376 27.2419 10.6578 27.1628 10.5584 27.1619ZM20.1554 26.4826C17.7858 26.4826 15.865 28.3827 15.865 30.7276C15.865 33.0726 17.7849 34.9736 20.1544 34.9736C22.524 34.9736 24.4448 33.0735 24.4448 30.7286C24.4448 28.3836 22.5249 26.4826 20.1554 26.4826ZM22.4682 4.41904C20.4814 2.12186 17.4301 0.438735 14.3342 0.0940208C14.3342 0.0940208 13.802 0.0122086 13.1387 0.00393543C12.8183 -0.000660767 12.6177 -0.000660767 12.4226 0.00393543C12.2359 0.00853162 12.0901 0.0186432 11.9257 0.0305933C5.41898 0.486536 0.450498 5.26841 0 11.7922V34.8137C0 34.9093 0.0780244 34.9874 0.175555 34.9874L4.1966 35.0003C4.29413 35.0003 4.37308 34.923 4.37308 34.8265L4.37122 12.8494C4.37122 8.91687 7.0352 5.5782 10.3995 4.66539C11.2086 4.4457 12.0065 4.34274 12.7783 4.34274C18.2688 4.34274 22.4924 9.55298 20.7953 15.2072C19.8637 18.3115 16.5161 20.8137 13.2558 20.9764C12.9065 20.9938 12.4393 21.0095 11.9897 21.0095C11.647 21.0095 11.3154 21.0003 11.0553 20.9764C10.8667 20.9589 10.7794 20.8743 10.7609 20.6859V12.4366C10.8584 11.3032 11.8086 10.6763 12.7672 10.6763C13.5716 10.6763 14.2023 11.0256 14.5757 11.7748C14.7559 12.136 14.7773 12.3714 14.7773 12.8622V18.4668C14.7773 18.5588 14.8701 18.6222 14.9575 18.5891C15.5268 18.3731 16.0665 18.0918 16.4706 17.8077C20.3504 15.085 19.9835 8.81392 15.5417 6.92304C14.6231 6.53237 13.6905 6.34944 12.7895 6.34944C9.50318 6.34944 6.63671 8.77715 6.39057 12.3594L6.40357 25.0982C6.40357 25.2186 6.47138 25.2977 6.6042 25.3014L11.6888 25.328C13.5753 25.328 15.4442 25.203 17.2434 24.5669C25.6291 21.6024 28.2244 11.0697 22.4701 4.41812L22.4682 4.41904Z" fill="url(#paint0_linear_1_694)"/>
+      </g>
+      <defs>
+        <linearGradient id="paint0_linear_1_694" x1="23.2633" y1="3.40512" x2="3.82997" y2="33.9049" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#C3A14A"/><stop offset="0.25" stop-color="#F6E6AB"/><stop offset="0.77" stop-color="#F7E6B0"/><stop offset="1" stop-color="#C3A14A"/>
+        </linearGradient>
+        <clipPath id="clip0_1_694"><rect width="138" height="35" fill="white"/></clipPath>
+      </defs>
     </svg>
-    <span class="word">Pilates<b>Addiction</b></span>
+    <span class="word-sr">Pilates Addiction</span>
   </button>
   <span class="home-hint">Newport Beach &middot; <b>Now in presale</b></span>
 </div></div>

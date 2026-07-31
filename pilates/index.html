@@ -201,6 +201,36 @@
   .cmp-them{color:var(--muted)}
   .cmp-us svg{width:17px;height:17px;stroke:var(--good);fill:none;stroke-width:2.4;vertical-align:-3px;margin-right:5px}
   .cmp-them svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2.2;vertical-align:-2px;margin-right:5px}
+  /* membership-math calculator */
+  .calc{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
+  .calc-head{max-width:560px;margin:0 auto 4px}
+  .calc-q{font-size:19px;font-weight:700;text-align:center;margin-bottom:14px}
+  .calc-q b{font-size:26px;font-weight:900;color:var(--flame-deep);font-variant-numeric:tabular-nums}
+  body[data-theme="night"] .calc-q b{color:var(--gold-lite)}
+  .calc-range{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:999px;outline:none;cursor:pointer;background:var(--sand)}
+  .calc-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--btn-gold);box-shadow:var(--btn-sheen),0 4px 12px rgba(190,158,74,.5);border:2px solid #fff;cursor:pointer}
+  body[data-theme="night"] .calc-range::-webkit-slider-thumb{border-color:#2b261d}
+  .calc-range::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#C9A544;border:2px solid #fff;box-shadow:0 4px 12px rgba(190,158,74,.5);cursor:pointer}
+  .calc-scale{display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--muted);margin-top:7px;letter-spacing:.04em}
+  .calc-tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+  .ct{position:relative;border:1.5px solid var(--line);border-radius:13px;padding:14px 12px;text-align:center;background:var(--bone);transition:.2s}
+  .ct-name{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .ct-cost{font-size:22px;font-weight:900;margin-top:5px;line-height:1;font-variant-numeric:tabular-nums}
+  .ct-per{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
+  .ct-note{font-size:10.5px;color:var(--muted);margin-top:7px;line-height:1.3}
+  .ct.win{border-color:var(--gold);background:rgba(190,158,74,.08);box-shadow:0 10px 26px rgba(190,158,74,.2);transform:translateY(-3px)}
+  .ct.win .ct-cost{color:var(--flame-deep)}
+  body[data-theme="night"] .ct.win .ct-cost{color:var(--gold-lite)}
+  .ct.out{opacity:.5}
+  .ct-flag{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--btn-gold);color:#111;padding:2px 9px;border-radius:6px;box-shadow:var(--btn-sheen);white-space:nowrap;opacity:0;transition:.2s}
+  .ct.win .ct-flag{opacity:1}
+  .calc-verdict{margin-top:20px;background:var(--mist);border:1px solid var(--line);border-radius:13px;padding:15px 18px;font-size:15px;line-height:1.5;text-align:center}
+  body[data-theme="night"] .calc-verdict{background:rgba(190,158,74,.06)}
+  .calc-verdict b{color:var(--flame-deep)}
+  body[data-theme="night"] .calc-verdict b{color:var(--gold-lite)}
+  .calc-fine{font-size:11.5px;color:var(--muted);margin-top:14px;text-align:center;line-height:1.5}
+  .cmp-bridge{font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-.01em;margin-top:44px;max-width:22ch}
+  @media(max-width:640px){.calc-tiers{grid-template-columns:repeat(2,1fr)}}
 
   /* timeline */
   .tl{margin-top:24px}
@@ -430,7 +460,7 @@
     .cmp-row{grid-template-columns:1fr}
     .cmp-head{display:none}
     .cmp-us::before{content:"Pilates Addiction: ";font-weight:800}
-    .cmp-them::before{content:"Big-box gym: ";font-weight:700;color:var(--muted)}
+    .cmp-them::before{content:"A membership you skip: ";font-weight:700;color:var(--muted)}
     .tl-body{grid-template-columns:1fr}
     .tiers{grid-template-columns:1fr}
     .nbubble{bottom:64px}
@@ -669,11 +699,25 @@
 
 <!-- MODULE: studio vs gym compare -->
 <section class="modsec wrap" id="compare" data-note="compare">
-  <div class="kick">Why members switch</div>
-  <h2>The $10 gym vs the room you <span class="hl">actually go to</span>.</h2>
-  <p class="lead">A cheap membership you skip is the most expensive fitness there is. Here is what changes when a coach knows your name and the room expects you.</p>
+  <div class="kick">The real math</div>
+  <h2>How many classes before <span class="hl">unlimited pays off</span>?</h2>
+  <p class="lead">A single class is $39. Memberships auto-renew monthly and unused classes do not roll over, so the tier that wins is the one that matches how often you actually show up. Drag the slider and watch where each one takes the lead.</p>
+
+  <div class="calc" id="calc">
+    <div class="calc-head">
+      <div class="calc-q">I would come <b id="calcN">8</b> <span id="calcUnit">times</span> a month</div>
+      <input id="calcRange" class="calc-range" type="range" min="1" max="20" value="8" aria-label="Classes per month">
+      <div class="calc-scale"><span>1</span><span>10</span><span>20+</span></div>
+    </div>
+    <div class="calc-tiers" id="calcTiers"></div>
+    <div class="calc-verdict" id="calcVerdict"></div>
+    <p class="calc-fine">Published Pilates Addiction rates: drop-in $39, Bronze $139 for 4 a month, Silver $189 for 8, Gold $259 unlimited. Unused classes do not roll over.</p>
+  </div>
+
+  <h3 class="cmp-bridge">The catch: a tier only pays off if you <span class="hl">actually show up</span>.</h3>
+  <p class="lead" style="margin-top:6px">A booked class with an Educator expecting you is the difference between a studio and a membership you forget you have.</p>
   <div class="cmp">
-    <div class="cmp-row cmp-head"><div>What matters</div><div class="us">Pilates Addiction</div><div>Big-box gym</div></div>
+    <div class="cmp-row cmp-head"><div>What matters</div><div class="us">Pilates Addiction</div><div>A membership you skip</div></div>
     <div class="cmp-row"><div class="cmp-feat">Do you actually show up</div><div class="cmp-us"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Booked class, coach expecting you</div><div class="cmp-them"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>Easy to skip, no one notices</div></div>
     <div class="cmp-row"><div class="cmp-feat">Do you know what to do</div><div class="cmp-us"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Instructor-led, corrected in real time</div><div class="cmp-them"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>Guess, or pay extra for a trainer</div></div>
     <div class="cmp-row"><div class="cmp-feat">Results that last</div><div class="cmp-us"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Strength, mobility, posture you keep</div><div class="cmp-them"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>Cardio you quit by February</div></div>
@@ -1026,7 +1070,7 @@ const NOTES={
   why:{label:"why Pilates Addiction",text:"Every location should feel locally connected while carrying the same core value proposition. The goal is a repeatable messaging framework that explains why Pilates Addiction is different, without every studio reinventing its marketing from scratch."},
   includes:{label:"membership benefits",text:"The giveaway attracts attention, but the membership keeps it. Breaking down everything included helps visitors understand the long-term value of becoming a member, rather than focusing only on the chance to win something free."},
   menu:{label:"the membership tiers",text:"Showing pricing early sets clear expectations and qualifies serious prospects before they ever speak with the studio. Visitors who understand the investment upfront convert more often, because there are fewer surprises later in the journey."},
-  compare:{label:"the gym comparison",text:"The biggest competitor is not another Pilates studio. It is the gym membership people already pay for but rarely use. Rather than compete on price, I reposition accountability, coaching, and community as the real product members are investing in."},
+  compare:{label:"the membership math",text:"I let people run their own price math, then let the numbers route them to Gold, the highest-retention tier, without a hard sell. The real competitor is not another studio. It is the membership they already pay for and skip, so I sell accountability, not a discount. A tool like this is exactly the kind of self-qualifying, data-friendly conversion asset the role asks for."},
   home:{label:"the home reformer",text:"Many prospective members eventually ask whether they should just buy a reformer themselves. That objection is worth meeting head on instead of pretending it does not exist. A reformer can live in someone's home, but accountability, coaching, and community cannot, and those are the reasons members keep showing up."},
   timeline:{label:"the 90-day journey",text:"Most acquisition funnels end when someone becomes a customer. I think that is where the real marketing begins. Each stage of the first ninety days is a chance to reinforce habits, celebrate progress, encourage referrals, and improve long-term retention."},
   quiz:{label:"the class quiz",text:"The quiz is not really about recommending a class. It is about understanding why someone came here in the first place. Whether they are driven by pain relief, strength, or longevity changes how I would talk to them across the rest of their journey."},
@@ -1088,6 +1132,53 @@ document.getElementById('tlTabs').addEventListener('click',e=>{
   const t=e.target.closest('.tl-tab');if(!t)return;renderTL(+t.dataset.tl);track('timeline_tab',{i:+t.dataset.tl});
 });
 renderTL(0);
+
+/* ---------------- MEMBERSHIP MATH CALCULATOR ---------------- */
+function renderCalc(n){
+  var per=function(c){return '$'+Math.round(c/n)+' a class';};
+  var tiers=[
+    {k:'drop',name:'Drop-in',cost:39*n,valid:true,per:per(39*n),note:'$39 each, no commitment'},
+    {k:'bronze',name:'Bronze',cost:139,valid:n<=4,per:n<=4?per(139):'covers 4 a month',note:'4 classes / month'},
+    {k:'silver',name:'Silver',cost:189,valid:n<=8,per:n<=8?per(189):'covers 8 a month',note:'8 classes / month'},
+    {k:'gold',name:'Gold',cost:259,valid:true,per:per(259),note:'Unlimited classes'}
+  ];
+  var winCost=Math.min.apply(null,tiers.filter(function(t){return t.valid;}).map(function(t){return t.cost;}));
+  var winner=tiers.filter(function(t){return t.valid && t.cost===winCost;}).pop();
+  document.getElementById('calcTiers').innerHTML=tiers.map(function(t){
+    var win=t.k===winner.k;
+    return '<div class="ct'+(win?' win':'')+(t.valid?'':' out')+'">'+
+      '<div class="ct-flag">Best value</div>'+
+      '<div class="ct-name">'+t.name+'</div>'+
+      '<div class="ct-cost">$'+t.cost.toLocaleString()+'</div>'+
+      '<div class="ct-per">'+t.per+'</div>'+
+      '<div class="ct-note">'+t.note+'</div></div>';
+  }).join('');
+  var nTxt=n>=20?'20+':n;
+  var v;
+  if(winner.k==='drop'){
+    v='At <b>'+nTxt+' a month</b>, single drop-ins ($'+(39*n)+') still beat locking in. Come a little more often and a membership takes over.';
+  }else if(winner.k==='bronze'){
+    v='At <b>'+nTxt+' a month</b>, <b>Bronze</b> wins at about $'+Math.round(139/n)+' a class. One more class a month and Silver pulls ahead.';
+  }else if(winner.k==='silver'){
+    v='At <b>'+nTxt+' a month</b>, <b>Silver</b> is the sweet spot, about $'+Math.round(189/n)+' a class. Cross into 9 or more and Gold unlimited wins.';
+  }else{
+    v='At <b>'+nTxt+' a month</b>, <b>Gold unlimited</b> is about $'+Math.round(259/n)+' a class and the only tier that keeps up. Drop-ins would run $'+(39*n)+'. That is why unlimited is the tier that pays off.';
+  }
+  document.getElementById('calcVerdict').innerHTML=v;
+  document.getElementById('calcN').textContent=nTxt;
+  document.getElementById('calcUnit').textContent=(n===1?'time':'times');
+  var r=document.getElementById('calcRange');
+  var pct=(n-r.min)/(r.max-r.min)*100;
+  r.style.background='linear-gradient(90deg,#C9A544 '+pct+'%,var(--sand) '+pct+'%)';
+}
+(function(){
+  var r=document.getElementById('calcRange');
+  if(r){
+    r.addEventListener('input',function(){renderCalc(+r.value);});
+    r.addEventListener('change',function(){track('calc_use',{n:+r.value});});
+    renderCalc(+r.value);
+  }
+})();
 
 /* ---------------- QUIZ ---------------- */
 function startQuiz(){

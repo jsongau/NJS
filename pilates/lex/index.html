@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aligned with Ava, a Pilates Addiction creator store (concept by Nathan J. Song)</title>
-<meta name="description" content="Ava's edit of Pilates gear for the Aurum Reformer and the mat: grip socks, the pilates ring, ankle weights, mats and more. Code AVA10 for 10% off. A creator-store concept, not affiliated with Pilates Addiction.">
+<title>Loaded with Lex, a Pilates Addiction creator store (concept by Nathan J. Song)</title>
+<meta name="description" content="Lex's edit of Pilates gear for adding load: her ankle weights, the pilates ring, resistance loops, grip socks, mats and more. Code LEX10 for 10% off. A creator-store concept, not affiliated with Pilates Addiction.">
 <style>
   :root{
-    /* Ava's own Prestige theme: ivory + red-orange accent, serif editorial. Nathan's notes stay orange. */
-    --accent:#FF3B2F; --accent-deep:#DA271B;
-    --gold:#FF3B2F; --gold-lite:#FF6A50; --gold-deep:#C22417;
-    --grad-gold:linear-gradient(180deg,#FF5142,#E22C1F);
+    /* Lex's own Impact theme: dark canvas + electric volt accent, bold uppercase. Nathan's notes stay orange. */
+    --accent:#CCFF2E; --accent-deep:#B6E625;
+    --gold:#CCFF2E; --gold-lite:#DDFF66; --gold-deep:#B6E625;
+    --grad-gold:linear-gradient(180deg,#D4FF4A,#B6E625);
     --orange:#E8503A; --orange-deep:#B8371F;
-    --ink:#0E0E0E; --bone:#F5F4F0; --card:#ffffff; --line:#e6e4dd; --muted:#6f6d67;
-    --sand:#EDEBE4; --mist:#F0EEE8; --good:#3f7d54;
-    --radius:6px; --shadow:0 18px 50px rgba(40,20,5,.10);
+    --ink:#f2f2ef; --bone:#101014; --card:#1a1a20; --line:#2c2c34; --muted:#9a9aa4;
+    --sand:#20202a; --mist:#17171d; --good:#5fbf7a;
+    --radius:8px; --shadow:0 18px 50px rgba(0,0,0,.5);
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --serif:Georgia,"Times New Roman",serif;
   }
@@ -25,69 +25,84 @@
   button{font:inherit;cursor:pointer}
   a{color:inherit;cursor:pointer}
   .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
-  h1,h2,h3,h4{font-family:var(--serif);font-weight:700;letter-spacing:-.01em}
+  h1,h2,h3,h4{font-family:var(--sans);font-weight:800;letter-spacing:-.02em}
 
-  .concept-bar{background:#141414;color:#e9e3d5;font-size:12px;letter-spacing:.02em;padding:8px 16px;text-align:center;line-height:1.5}
-  .concept-bar strong{color:var(--gold-lite)}
+  .concept-bar{background:#000;color:#c9c9cf;font-size:12px;letter-spacing:.02em;padding:8px 16px;text-align:center;line-height:1.5}
+  .concept-bar strong{color:var(--accent)}
 
   /* concept switch */
   .meganav{background:var(--mist);color:var(--muted);border-bottom:1px solid var(--line)}
   .mn-in{max-width:1060px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:11.5px}
   .mn-badge{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:var(--ink)}
-  .mn-badge b{color:var(--accent-deep)}
-  .mn-badge .tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:2px 6px;border-radius:5px}
+  .mn-badge b{color:var(--accent)}
+  .mn-badge .tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#101014;background:var(--accent);padding:2px 6px;border-radius:5px}
   .mn-note{color:var(--muted)}
   .mn-switch{margin-left:auto;display:flex;align-items:center;gap:8px}
   .mn-lab{font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .mn-seg{display:inline-flex;gap:4px}
-  .mn-seg a{font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
-  .mn-seg a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .mn-seg a{font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:4px 11px}
+  .mn-seg a.on{background:var(--accent);color:#101014;border-color:var(--accent)}
 
   /* announce */
-  .announce{background:var(--accent);color:#fff;text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.02em;padding:9px 16px}
-  .announce b{background:#fff;color:var(--accent);border-radius:6px;padding:1px 7px}
+  .announce{background:var(--accent);color:#101014;text-align:center;font-size:12.5px;font-weight:800;letter-spacing:.02em;padding:9px 16px;text-transform:uppercase}
+  .announce b{background:#101014;color:var(--accent);border-radius:6px;padding:1px 7px}
 
   /* header */
-  header.site{position:sticky;top:0;z-index:50;background:rgba(250,243,231,.95);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1px solid var(--line)}
+  header.site{position:sticky;top:0;z-index:50;background:rgba(16,16,20,.92);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1px solid var(--line)}
   .hd{max-width:1060px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}
-  .logo{font-family:var(--serif);font-size:21px;font-weight:700;cursor:pointer;line-height:1;color:var(--ink);display:flex;flex-direction:column}
-  .logo span{color:var(--accent);font-style:italic}
-  .logo small{font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+  .logo{font-family:var(--sans);font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:.01em;cursor:pointer;line-height:1;color:var(--ink);display:flex;flex-direction:column}
+  .logo span{color:var(--accent)}
+  .logo small{font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
   nav.main{margin-left:14px;display:flex;gap:4px}
-  nav.main button{background:none;border:0;color:var(--muted);font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:8px}
-  nav.main button:hover,nav.main button.on{color:#fff;background:var(--ink)}
-  nav.main .nav-sock{color:var(--accent-deep);display:inline-flex;align-items:center;gap:6px}
+  nav.main button{background:none;border:0;color:var(--muted);font-size:13.5px;font-weight:700;padding:8px 12px;border-radius:8px}
+  nav.main button:hover,nav.main button.on{color:#101014;background:var(--accent)}
+  nav.main .nav-sock{color:var(--accent);display:inline-flex;align-items:center;gap:6px}
   nav.main .nav-sock svg{width:16px;height:16px}
   nav.main .nav-sock svg *{stroke:var(--accent)}
-  nav.main .nav-sock.on svg *{stroke:#fff}
-  .cartbtn{margin-left:auto;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 18px;font-weight:800;font-size:13.5px;display:inline-flex;align-items:center;gap:8px}
-  .cartbtn .n{background:var(--accent);color:#fff;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:11.5px}
-  .mobile-nav{display:none;gap:4px;padding:8px 14px;background:var(--card);overflow-x:auto;border-bottom:1px solid var(--line)}
-  .mobile-nav button{flex:0 0 auto;background:#fff;border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;padding:7px 12px;border-radius:999px}
-  .mobile-nav button.on{color:#fff;background:var(--ink);border-color:var(--ink)}
-  .mobile-nav .nav-sock{color:var(--accent-deep)}
+  nav.main .nav-sock.on svg *{stroke:#101014}
+  .cartbtn{margin-left:auto;background:var(--accent);color:#101014;border:0;border-radius:8px;padding:9px 18px;font-weight:800;font-size:13.5px;display:inline-flex;align-items:center;gap:8px}
+  .cartbtn .n{background:#101014;color:var(--accent);border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:11.5px}
+  .mobile-nav{display:none;gap:4px;padding:8px 14px;background:var(--bone);overflow-x:auto;border-bottom:1px solid var(--line)}
+  .mobile-nav button{flex:0 0 auto;background:var(--soft);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;padding:7px 12px;border-radius:8px}
+  .mobile-nav button.on{color:#101014;background:var(--accent);border-color:var(--accent)}
+  .mobile-nav .nav-sock{color:var(--accent)}
 
   /* views */
   .view{display:none}.view.on{display:block;animation:fade .35s}
   @keyframes fade{from{opacity:0}to{opacity:1}}
 
   /* hero */
-  .hero{background:linear-gradient(180deg,#FBFAF6,#EDEBE2);color:var(--ink);padding:78px 20px 66px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
-  .hero::after{content:"";position:absolute;right:-120px;top:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,59,47,.08),transparent 68%)}
+  .hero{background:radial-gradient(120% 150% at 12% 0%,#1d1d28 0%,#101014 62%);color:var(--ink);padding:74px 20px 60px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero::after{content:"";position:absolute;right:-120px;top:-90px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(204,255,46,.12),transparent 66%)}
   .hero .in{max-width:1060px;margin:0 auto;position:relative;z-index:1}
-  .hero .kick{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
-  .hero h1{font-size:clamp(36px,6vw,62px);line-height:1.06;max-width:16ch;font-weight:600}
+  .hero .kick{font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .hero h1{font-size:clamp(40px,7.5vw,78px);line-height:.95;max-width:15ch;font-weight:900;text-transform:uppercase;letter-spacing:-.02em}
   .hero h1 .w{display:inline-block;opacity:0;transform:translateY(14px);animation:rise .5s forwards}
-  .hero h1 .em{color:var(--accent);font-style:italic}
+  .hero h1 .em{color:var(--accent)}
   @keyframes rise{to{opacity:1;transform:none}}
-  .hero p{max-width:50ch;margin:20px 0 24px;font-size:17px;color:var(--muted)}
-  .cta{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:14px 28px;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.03em}
-  .cta:hover{background:var(--accent-deep)}
-  .codechip{display:inline-flex;align-items:center;gap:8px;margin-left:14px;border:1.5px dashed var(--accent);border-radius:999px;padding:9px 16px;font-weight:700;font-size:13.5px;color:var(--accent-deep)}
-  .codechip b{background:var(--accent);color:#fff;border-radius:6px;padding:2px 8px}
+  .hero p{max-width:52ch;margin:18px 0 24px;font-size:16.5px;color:#c9c9cf}
+  .cta{background:var(--accent);color:#101014;border:0;border-radius:8px;padding:14px 28px;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.03em;box-shadow:0 10px 26px rgba(150,200,25,.22)}
+  .cta:hover{transform:translateY(-1px)}
+  .codechip{display:inline-flex;align-items:center;gap:8px;margin-left:14px;border:1.5px solid var(--accent);border-radius:8px;padding:9px 16px;font-weight:800;font-size:13px;color:var(--accent)}
+  .codechip b{background:var(--accent);color:#101014;border-radius:5px;padding:2px 8px}
+  .hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:36px;align-items:center}
+  .hero-left h1{margin-bottom:0}
+  .hero-offer{position:relative;background:#15151b;border:1px solid var(--line);border-radius:16px;padding:24px 24px 20px;overflow:hidden}
+  .hero-offer::before{content:"";position:absolute;top:-70px;right:-40px;width:230px;height:180px;background:radial-gradient(circle,rgba(204,255,46,.20),transparent 66%);pointer-events:none}
+  .ho-tag{position:relative;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:12px}
+  .hero-offer h2{position:relative;font-size:24px;font-weight:900;text-transform:uppercase;line-height:1.08;letter-spacing:-.01em}
+  .hero-offer h2 span{color:var(--accent)}
+  .hero-offer .ho-sub{position:relative;font-size:13.5px;color:#c9c9cf;margin-top:8px}
+  .hero-offer ul{position:relative;list-style:none;margin:16px 0 18px;display:grid;gap:10px}
+  .hero-offer li{position:relative;font-size:13.5px;color:#c9c9cf;line-height:1.45;padding-left:24px}
+  .hero-offer li::before{content:"";position:absolute;left:0;top:2px;width:16px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23CCFF2E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E") no-repeat center}
+  .hero-offer li b{color:var(--ink)}
+  .ho-cta{position:relative;width:100%;background:var(--accent);color:#101014;border:0;border-radius:8px;padding:14px;font-weight:900;font-size:14.5px;text-transform:uppercase;letter-spacing:.03em;cursor:pointer}
+  .ho-cta:hover{transform:translateY(-1px)}
+  .ho-fine{position:relative;font-size:10.5px;color:#6e6e78;margin-top:10px;text-align:center}
 
   /* marquee */
-  .marquee{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:9px 0;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;border-top:3px solid var(--accent);border-bottom:3px solid var(--accent)}
+  .marquee{background:var(--accent);color:#101014;overflow:hidden;white-space:nowrap;padding:10px 0;font-weight:900;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
   .mq-track{display:inline-block;animation:mq 26s linear infinite}
   .mq-track span{margin:0 26px}
   @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -95,17 +110,17 @@
   /* statbar */
   .statbar{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:34px 20px}
   .statbar .in{max-width:1060px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;align-items:flex-end}
-  .statbar .st b{display:block;font-family:var(--serif);font-size:38px;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+  .statbar .st b{display:block;font-family:var(--sans);font-size:38px;font-weight:900;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
   .statbar .st span{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
   .statbar .note{width:100%;font-size:11px;color:var(--muted);margin-top:6px}
 
-  /* sock/hero-product bar */
-  .sockbar{background:var(--accent);color:#fff}
+  /* hero-product bar (ankle weights for Lex) */
+  .sockbar{background:var(--accent);color:#101014}
   .sockbar .in{max-width:1060px;margin:0 auto;padding:22px 20px;display:flex;align-items:center;gap:20px}
-  .sk-art{width:78px;height:78px;border-radius:14px;background:rgba(255,255,255,.14);display:grid;place-items:center;flex:none}
-  .sk-art svg{width:46px;height:46px}.sk-art svg *{stroke:#fff}
-  .sk-tx{flex:1}.sk-tx b{font-family:var(--serif);font-size:19px;display:block}.sk-tx span{font-size:14px;opacity:.94}
-  .sk-btn{background:#fff;color:var(--accent);border:0;border-radius:999px;padding:12px 22px;font-weight:800;font-size:14px;flex:none}
+  .sk-art{width:78px;height:78px;border-radius:12px;background:rgba(16,16,20,.14);display:grid;place-items:center;flex:none}
+  .sk-art svg{width:46px;height:46px}.sk-art svg *{stroke:#101014}
+  .sk-tx{flex:1}.sk-tx b{font-family:var(--sans);font-weight:900;text-transform:uppercase;font-size:18px;display:block}.sk-tx span{font-size:14px;opacity:.85}
+  .sk-btn{background:#101014;color:var(--accent);border:0;border-radius:8px;padding:12px 22px;font-weight:800;font-size:14px;flex:none;text-transform:uppercase;letter-spacing:.02em}
 
   /* trust */
   .trust{border-bottom:1px solid var(--line)}
@@ -123,13 +138,13 @@
   .pcard:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
   .pcard .pimg{aspect-ratio:1;background:var(--sand);display:grid;place-items:center;position:relative}
   .pcard .pimg svg{width:52%;height:52%}.pcard .pimg svg *{stroke:var(--accent)}
-  .pcard .ptag{position:absolute;top:10px;left:10px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--gold);color:#fff;padding:3px 8px;border-radius:5px}
+  .pcard .ptag{position:absolute;top:10px;left:10px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--gold);color:#101014;padding:3px 8px;border-radius:5px}
   .pcard .pb{padding:14px 15px 16px;display:flex;flex-direction:column;flex:1}
   .pcard h3{font-size:16px;line-height:1.2;margin-bottom:5px}
   .pcard .pn{font-size:12.5px;color:var(--muted);line-height:1.45;flex:1}
   .pcard .prices{font-size:13px;margin-top:12px;color:var(--ink)}
   .pcard .prices b{font-size:16px;color:var(--gold-deep)}
-  .pcard .addmini{margin-top:12px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px;font-weight:800;font-size:13px;width:100%}
+  .pcard .addmini{margin-top:12px;background:var(--accent);color:#101014;border:0;border-radius:999px;padding:10px;font-weight:800;font-size:13px;width:100%}
   .pcard .addmini:hover{background:var(--accent)}
 
   /* story */
@@ -146,7 +161,7 @@
   .routine h2{font-size:30px;color:var(--ink)}
   .routine .sub{color:var(--muted);margin:8px 0 26px;font-size:15px}
   .rsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .rstep{background:var(--bone);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .rstep{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:22px}
   .rstep .when{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep)}
   .rstep h4{font-size:19px;color:var(--ink);margin:6px 0 8px}
   .rstep p{font-size:14px;color:var(--muted);line-height:1.5}
@@ -172,16 +187,16 @@
   .newsletter h3{font-size:28px}
   .newsletter p{color:var(--muted);max-width:46ch;margin:10px auto 18px;font-size:15px}
   .nl-row{display:flex;gap:8px;max-width:420px;margin:0 auto}
-  .nl-row input{flex:1;font:inherit;font-size:15px;padding:13px 15px;border:1px solid var(--line);border-radius:10px;background:#fff}
-  .nl-row button{background:var(--grad-gold);color:#fff;border:0;border-radius:10px;padding:13px 22px;font-weight:800}
+  .nl-row input{flex:1;font:inherit;font-size:15px;padding:13px 15px;border:1px solid var(--line);border-radius:8px;background:var(--soft);color:var(--ink)}
+  .nl-row button{background:var(--grad-gold);color:#101014;border:0;border-radius:10px;padding:13px 22px;font-weight:800}
 
   /* shop */
   .shophero{background:var(--card);border-bottom:1px solid var(--line);padding:40px 0 22px}
   .shophero h1{font-size:38px;color:var(--ink)}
   .shophero p{color:var(--muted);margin:8px 0 20px}
   .tabs{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:6px}
-  .tabs button{background:#fff;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700}
-  .tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .tabs button{background:var(--soft);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700}
+  .tabs button.on{background:var(--accent);color:#101014;border-color:var(--accent)}
   .shopgrid{padding:34px 0 60px}
 
   /* pdp */
@@ -197,20 +212,20 @@
   .pd .maya{font-style:italic;color:var(--muted);font-family:var(--serif);font-size:16px;border-left:2px solid var(--gold);padding-left:14px;margin-bottom:16px}
   .benefits{list-style:none;margin-bottom:20px;display:grid;gap:9px}
   .benefits li{font-size:14.5px;display:flex;gap:9px;align-items:flex-start}
-  .benefits li::before{content:"";width:18px;height:18px;flex:none;margin-top:1px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23DA271B' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E") no-repeat center}
+  .benefits li::before{content:"";width:18px;height:18px;flex:none;margin-top:1px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23CCFF2E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E") no-repeat center}
   .buybox{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--card)}
   .opt{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer}
-  .opt.on{border-color:var(--accent);background:rgba(255,59,47,.06)}
+  .opt.on{border-color:var(--accent);background:rgba(204,255,46,.09)}
   .opt .ol{display:flex;flex-direction:column;gap:3px}
   .opt .ol b{font-size:15px}
   .opt .ol span{font-size:12px;color:var(--muted)}
   .opt .chip{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:5px;width:fit-content}
-  .opt .chip.pop{background:var(--gold);color:#fff}
+  .opt .chip.pop{background:var(--gold);color:#101014}
   .opt .chip.gift{background:var(--good);color:#fff}
   .opt .op{font-family:var(--serif);font-size:20px;font-weight:700;white-space:nowrap}
   .qtyrow{display:flex;align-items:center;gap:14px;margin:14px 0}
   .qtyrow button{width:36px;height:36px;border:1px solid var(--line);background:var(--bone);border-radius:8px;font-size:18px}
-  .atc{width:100%;background:var(--grad-gold);color:#fff;border:0;border-radius:12px;padding:15px;font-weight:800;font-size:15.5px;text-transform:uppercase;letter-spacing:.03em}
+  .atc{width:100%;background:var(--grad-gold);color:#101014;border:0;border-radius:12px;padding:15px;font-weight:800;font-size:15.5px;text-transform:uppercase;letter-spacing:.03em}
   .buybox .note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
   .accs{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
   .accs b{color:var(--ink)}
@@ -218,9 +233,9 @@
   .related h3{font-size:22px;margin-bottom:16px}
 
   /* sticky mobile atc */
-  .satc{display:none;position:fixed;bottom:0;left:0;right:0;z-index:45;background:#fff;color:var(--ink);padding:12px 16px;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(60,30,5,.1)}
-  .satc .sn b{display:block;font-size:14px}.satc .sn span{font-size:12px;color:var(--accent-deep)}
-  .satc button{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800}
+  .satc{display:none;position:fixed;bottom:0;left:0;right:0;z-index:45;background:var(--card);color:var(--ink);padding:12px 16px;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(0,0,0,.4)}
+  .satc .sn b{display:block;font-size:14px}.satc .sn span{font-size:12px;color:var(--accent)}
+  .satc button{background:var(--accent);color:#101014;border:0;border-radius:999px;padding:12px 20px;font-weight:800}
 
   /* cart drawer */
   .overlay{position:fixed;inset:0;background:rgba(11,9,6,.5);z-index:80;display:none}
@@ -250,7 +265,7 @@
   .dr-math{padding:0 20px 8px;font-size:13.5px}
   .dr-math .mr{display:flex;justify-content:space-between;padding:4px 0;color:var(--muted)}
   .dr-math .mr.tot{color:var(--ink);font-weight:800;font-size:16px;border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
-  .dr-checkout{margin:8px 20px;background:var(--grad-gold);color:#fff;border:0;border-radius:12px;padding:15px;font-weight:800;font-size:15.5px;text-transform:uppercase;letter-spacing:.03em}
+  .dr-checkout{margin:8px 20px;background:var(--grad-gold);color:#101014;border:0;border-radius:12px;padding:15px;font-weight:800;font-size:15.5px;text-transform:uppercase;letter-spacing:.03em}
   .dr-note{font-size:11px;color:var(--muted);padding:6px 20px 20px;line-height:1.5}
   .dr-empty{padding:50px 20px;text-align:center;color:var(--muted)}
 
@@ -264,7 +279,57 @@
   .cobox .rc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0;text-align:left;font-size:13.5px}
   .cobox .rc .rr{display:flex;justify-content:space-between;padding:3px 0}
   .cobox .rc .rr.e{color:var(--gold-deep);font-weight:800;border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
-  .cobox button{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:13px 24px;font-weight:800;margin-top:6px}
+  .cobox button{background:var(--accent);color:#101014;border:0;border-radius:999px;padding:13px 24px;font-weight:800;margin-top:6px}
+
+  /* partner membership perk */
+  .perk{position:fixed;inset:0;background:rgba(0,0,0,.74);z-index:95;display:none;align-items:center;justify-content:center;padding:20px}
+  .perk.on{display:flex;animation:fade .25s}
+  .perk-card{position:relative;background:#15151b;border:1px solid var(--line);border-radius:18px;max-width:460px;width:100%;padding:30px 28px 24px;text-align:center;overflow:hidden auto;max-height:94vh;animation:perkpop .38s cubic-bezier(.2,.9,.3,1.3)}
+  @keyframes perkpop{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+  .perk-card::before{content:"";position:absolute;top:-90px;left:50%;transform:translateX(-50%);width:340px;height:230px;background:radial-gradient(circle,rgba(204,255,46,.30),transparent 66%);pointer-events:none}
+  .perk-x{position:absolute;top:12px;right:15px;background:none;border:0;color:var(--muted);font-size:20px;cursor:pointer;z-index:2}
+  .perk-ey{position:relative;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .perk-badge{position:relative;width:70px;height:70px;margin:0 auto 16px;border-radius:50%;background:var(--accent);color:#101014;display:grid;place-items:center;font-family:var(--sans);font-weight:900;font-size:16px;letter-spacing:.03em;box-shadow:0 0 0 9px rgba(204,255,46,.14)}
+  .perk-stack{position:relative;display:grid;gap:8px;margin-bottom:16px}
+  .perk-stack .ps{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#101014;border:1px solid var(--line);border-radius:10px;padding:11px 14px;text-align:left}
+  .perk-stack .ps-a{font-size:12.5px;color:var(--muted);line-height:1.4}
+  .perk-stack .ps-a s{color:#6e6e78}
+  .perk-stack .ps-b{font-family:var(--sans);font-size:19px;font-weight:900;color:var(--ink);white-space:nowrap}
+  .perk-stack .ps-b small{font-size:12px;color:var(--muted);font-weight:700}
+  .perk-stack .ps-b.free{color:var(--accent)}
+  /* highlighted membership card in modal */
+  .perk-mem{position:relative;background:#101014;border:1.5px solid var(--accent);border-radius:14px;padding:16px 18px;margin-bottom:14px;text-align:left;box-shadow:0 0 0 6px rgba(204,255,46,.07)}
+  .perk-mem .pm-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .perk-mem .pm-tier{font-family:var(--sans);font-weight:900;text-transform:uppercase;font-size:14px;color:var(--accent);letter-spacing:.04em}
+  .perk-mem .pm-len{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:#1a1a20;border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+  .perk-mem .pm-price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .perk-mem .pm-now{font-family:var(--sans);font-size:30px;font-weight:900;color:var(--ink);line-height:1}
+  .perk-mem .pm-now small{font-size:14px;color:var(--muted);font-weight:700}
+  .perk-mem .pm-was{font-size:13px;color:#6e6e78;text-decoration:line-through}
+  .perk-mem .pm-save{font-size:12px;font-weight:800;color:var(--accent)}
+  .perk-mem .pm-inc{list-style:none;display:grid;gap:6px}
+  .perk-mem .pm-inc li{position:relative;font-size:12.5px;color:#c9c9cf;padding-left:22px;line-height:1.4}
+  .perk-mem .pm-inc li::before{content:"";position:absolute;left:0;top:1px;width:15px;height:15px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='%23CCFF2E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E") no-repeat center}
+  .perk-card h3{position:relative;font-size:27px;font-weight:900;text-transform:uppercase;line-height:1.05;margin-bottom:10px;letter-spacing:-.01em}
+  .perk-card h3 span{color:var(--accent)}
+  .perk-card .perk-lead{position:relative;color:#c9c9cf;font-size:14.5px;line-height:1.55;margin-bottom:18px}
+  .perk-val{position:relative;background:#101014;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left}
+  .perk-val .pv-a{font-size:12.5px;color:var(--muted);line-height:1.45}
+  .perk-val .pv-a s{color:#6e6e78}
+  .perk-val .pv-b{font-family:var(--sans);font-size:26px;font-weight:900;color:var(--accent);white-space:nowrap}
+  .perk-val .pv-b small{font-size:13px;color:var(--muted);font-weight:700}
+  .perk-code{position:relative;display:inline-flex;align-items:center;gap:9px;border:1.5px dashed var(--accent);border-radius:10px;padding:9px 14px;font-weight:800;font-size:13px;color:var(--accent);margin-bottom:16px}
+  .perk-code b{background:var(--accent);color:#101014;border-radius:6px;padding:3px 10px;letter-spacing:.06em}
+  .perk-cta{position:relative;width:100%;background:var(--accent);color:#101014;border:0;border-radius:10px;padding:15px;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.03em;cursor:pointer}
+  .perk-cta:hover{transform:translateY(-1px)}
+  .perk-later{position:relative;background:none;border:0;color:var(--muted);font-size:13px;text-decoration:underline;cursor:pointer;margin-top:12px}
+  .perk-fine{position:relative;font-size:11px;color:#6e6e78;margin-top:14px;line-height:1.5}
+  /* cart drawer perk banner */
+  .dr-perk{margin:12px 20px 0;background:#101014;border:1px solid var(--accent);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:11px}
+  .dr-perk .dp-b{width:34px;height:34px;flex:none;border-radius:8px;background:var(--accent);color:#101014;display:grid;place-items:center;font-weight:900;font-size:9px;letter-spacing:.02em}
+  .dr-perk .dp-t{flex:1;font-size:12.5px;line-height:1.4;color:var(--ink)}
+  .dr-perk .dp-t b{color:var(--accent)}
+  .dr-perk .dp-v{background:none;border:0;color:var(--accent);font-size:12px;font-weight:800;text-decoration:underline;cursor:pointer;flex:none}
 
   /* Nathan */
   .nwrap{position:fixed;left:18px;bottom:18px;z-index:70}
@@ -297,38 +362,39 @@
     .statbar .in{gap:22px}
     .pdp{grid-template-columns:1fr}
     .satc{display:flex}
+    .hero-grid{grid-template-columns:1fr;gap:26px}
   }
 </style>
 </head>
 <body>
 
-<div class="concept-bar">Creator-store concept by <strong>Nathan J. Song</strong> for the Pilates Addiction Marketing Director role. Not affiliated with or endorsed by Pilates Addiction. Ava is a fictional creator; reviews and pricing are illustrative.</div>
+<div class="concept-bar">Creator-store concept by <strong>Nathan J. Song</strong> for the Pilates Addiction Marketing Director role. Not affiliated with or endorsed by Pilates Addiction. Lex is a fictional creator; reviews and pricing are illustrative.</div>
 
 <div class="meganav"><div class="mn-in">
   <span class="mn-badge">Creator affiliate of <b>Pilates Addiction</b><span class="tag">concept</span></span>
   <span class="mn-note">Independent concept by Nathan J. Song</span>
-  <div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="../">Presale</a><a href="#" onclick="return false" class="on">Ava</a><a href="../lex/">Lex</a><a href="#" onclick="return false" title="Coming soon">Maya</a></div></div>
+  <div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="../">Presale</a><a href="../ava/">Ava</a><a href="#" onclick="return false" class="on">Lex</a><a href="#" onclick="return false" title="Coming soon">Maya</a></div></div>
 </div></div>
 
-<div class="announce">New drop &nbsp;&middot;&nbsp; Ava&rsquo;s Grip Socks &nbsp;&middot;&nbsp; Code <b>AVA10</b> for 10% off &nbsp;&middot;&nbsp; Free shipping over $50</div>
+<div class="announce">New drop &nbsp;&middot;&nbsp; Lex&rsquo;s Ankle Weights &nbsp;&middot;&nbsp; Code <b>LEX10</b> for 10% off &nbsp;&middot;&nbsp; Free shipping over $50</div>
 
 <header class="site">
   <div class="hd">
-    <div class="logo" onclick="go('home')">Aligned <span>with</span> Ava<small>Creator affiliate of Pilates Addiction</small></div>
+    <div class="logo" onclick="go('home')">Loaded <span>with</span> Lex<small>Creator affiliate of Pilates Addiction</small></div>
     <nav class="main">
       <button data-v="home" class="on" onclick="go('home')">Home</button>
       <button data-v="shop" onclick="go('shop')">Shop all</button>
-      <button class="nav-sock" onclick="go('pdp','socks')"><svg viewBox="0 0 100 100"><use href="#i-sock"/></svg> Grip Socks</button>
-      <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The studio bag</button>
-      <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About Ava</button>
+      <button class="nav-sock" onclick="go('pdp','ankle')"><svg viewBox="0 0 100 100"><use href="#i-ankle"/></svg> Ankle Weights</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The load-up</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About Lex</button>
     </nav>
     <button class="cartbtn" onclick="openCart()">Cart <span class="n" id="cartN">0</span></button>
   </div>
   <div class="mobile-nav">
     <button data-v="home" class="on" onclick="go('home')">Home</button>
     <button data-v="shop" onclick="go('shop')">Shop all</button>
-    <button class="nav-sock" onclick="go('pdp','socks')">Grip Socks</button>
-    <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The bag</button>
+    <button class="nav-sock" onclick="go('pdp','ankle')">Ankle Weights</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The load-up</button>
   </div>
 </header>
 
@@ -374,37 +440,53 @@
   <symbol id="i-massage" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="38" cy="56" r="18"/><circle cx="66" cy="42" r="13"/>
   </symbol>
+  <symbol id="i-member" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="18" y="28" width="64" height="44" rx="8"/><path d="M18 42h64"/><path d="M50 52l3.4 6.9 7.6 1.1-5.5 5.4 1.3 7.6-6.8-3.6-6.8 3.6 1.3-7.6-5.5-5.4 7.6-1.1z" stroke-width="2.6"/></symbol>
 </defs></svg>
 
 <!-- ================= HOME ================= -->
 <main class="view on" id="view-home">
-  <div class="hero"><div class="in">
-    <p class="kick">Ava &middot; pilates and kickboxing Educator</p>
-    <h1><span class="w" style="animation-delay:.05s">Grip</span> <span class="w" style="animation-delay:.15s">the</span> <span class="w" style="animation-delay:.25s">reformer.</span> <span class="w em" style="animation-delay:.35s">Own&nbsp;the&nbsp;mat.</span></h1>
-    <p>The gear I actually teach in, in one edit. It started with the grip socks I made because the studio pair kept slipping. Now it is the whole bag: the ring, the band, the ankle weights, the mat.</p>
-    <button class="cta" onclick="go('shop')">Shop the edit</button>
-    <span class="codechip">Code <b>AVA10</b> takes 10% off</span>
-  </div></div>
+  <div class="hero"><div class="in"><div class="hero-grid">
+    <div class="hero-left">
+      <p class="kick">Lex &middot; strength and conditioning coach</p>
+      <h1><span class="w" style="animation-delay:.05s">Load</span> <span class="w" style="animation-delay:.15s">it.</span> <span class="w em" style="animation-delay:.28s">Then&nbsp;own&nbsp;it.</span></h1>
+      <p>The gear I coach with, in one edit. And if you are ready to make it a habit, join the studio through me and your ankle weights come free.</p>
+      <button class="cta" onclick="go('shop')">Shop the edit</button>
+      <span class="codechip">Code <b>LEX10</b> takes 10% off</span>
+    </div>
+    <div class="hero-offer">
+      <span class="ho-tag">Member bundle &middot; Lex is a PA partner</span>
+      <h2>6 months of unlimited Pilates, <span>20% off.</span></h2>
+      <p class="ho-sub">Join through Lex and your ankle weights are free.</p>
+      <ul>
+        <li><b>Unlimited classes</b> on the Aurum Reformer: IGNITE, CORE+, MAX, MOBILITY RX</li>
+        <li><b>20% off Gold</b>, $207/mo instead of $259, you keep $311</li>
+        <li><b>Ankle weights free</b>, a $38 value, just $9.99 shipping</li>
+      </ul>
+      <button class="ho-cta" onclick="openBundle()">Become a member, claim free weights</button>
+      <p class="ho-fine">Illustrative partner bundle. Not a live Pilates Addiction offer.</p>
+    </div>
+  </div></div></div>
 
   <div class="marquee"><div class="mq-track" id="mqTrack"></div></div>
 
   <div class="statbar"><div class="in">
-    <div class="st"><b data-count="6">0</b><span>days a week I teach</span></div>
-    <div class="st"><b data-count="2400" data-suffix="+">0</b><span>classes taught</span></div>
-    <div class="st"><b data-count="18" data-suffix="k">0</b><span>moving with me</span></div>
-    <div class="st"><b data-count="1" data-suffix=" bag">0</b><span>everything I use</span></div>
+    <div class="st"><b data-count="6">0</b><span>days a week I coach</span></div>
+    <div class="st"><b data-count="2400" data-suffix="+">0</b><span>athletes coached</span></div>
+    <div class="st"><b data-count="18" data-suffix="k">0</b><span>training with me</span></div>
+    <div class="st"><b data-count="1" data-suffix=" kit">0</b><span>everything I load</span></div>
     <div class="note">Community figures are illustrative, for the concept.</div>
   </div></div>
 
   <div class="sockbar"><div class="in">
-    <span class="sk-art"><svg viewBox="0 0 100 100"><use href="#i-sock"/></svg></span>
-    <div class="sk-tx"><b>Ava Original: The Grip Socks</b><span>The studio pair kept slipping, so I made my own. Silicone grip, flat-seam toe, required on the reformer.</span></div>
-    <button class="sk-btn" onclick="go('pdp','socks')">Shop the socks</button>
+    <span class="sk-art"><svg viewBox="0 0 100 100"><use href="#i-ankle"/></svg></span>
+    <div class="sk-tx"><b>Lex Original: The Ankle Weights</b><span>Soft-shell, no-slip strap, 2 lb a side. The small load that turns a mat class into strength work.</span></div>
+    <button class="sk-btn" onclick="go('pdp','ankle')">Shop the weights</button>
   </div></div>
 
   <div class="trust"><div class="in">
-    <div class="t"><b>Studio-tested</b>the exact gear I teach in daily</div>
-    <div class="t"><b>Grips that hold</b>silicone soles for reformer and mat</div>
+    <div class="t"><b>Coach-tested</b>the exact gear I load in daily</div>
+    <div class="t"><b>Load that lasts</b>secure straps, sweat-friendly shells</div>
     <div class="t"><b>Honest economics</b>my 5% is printed on your receipt</div>
     <div class="t"><b>Free over $50</b>ships fast, no games</div>
   </div></div>
@@ -417,12 +499,12 @@
 
     <section class="block" id="about" style="padding-top:10px">
       <div class="story">
-        <div class="st-art"><svg viewBox="0 0 100 100"><use href="#i-sock"/></svg></div>
+        <div class="st-art"><svg viewBox="0 0 100 100"><use href="#i-ankle"/></svg></div>
         <div class="st-txt">
-          <p class="kick">Why the socks came first</p>
-          <h3>Pilates taught me control. The reformer taught me the studio pair slips.</h3>
-          <p>I teach six days a week, and grip socks are not optional on the reformer, they are required. The studio pairs slid at the exact moment I needed to hold. So I made a pair with a real silicone sole and a flat-seam toe, then built the rest of the bag around it.</p>
-          <p>This store is what survived my own teaching, nothing I would not hand a first-timer.</p>
+          <p class="kick">Why the weights came first</p>
+          <h3>Bodyweight builds control. Load builds change.</h3>
+          <p>I coach six days a week, and I kept telling members to add a little load. The ankle weights I could find either slid down mid-set or bruised the bone. So I made a pair that is soft, secure, and heavy enough to matter, then built the rest of the kit around it.</p>
+          <p>This store is what survived my own coaching, nothing I would not strap on a first-timer.</p>
         </div>
       </div>
       <div class="story flip">
@@ -430,8 +512,8 @@
         <div class="st-txt">
           <p class="kick">The honest part</p>
           <h3>I earn from this edit, and I would rather you know.</h3>
-          <p>As a Pilates Addiction creator affiliate I earn 5% of every order here, before tax and shipping. Your 10% with AVA10 comes off your side, never added to your price. My interest is you actually showing up, so I only sell what earns its place in the bag.</p>
-          <p>New to the studio? The socks and a mat are all you need for your first IGNITE class.</p>
+          <p>As a Pilates Addiction creator affiliate I earn 5% of every order here, before tax and shipping. Your 10% with LEX10 comes off your side, never added to your price. My interest is you actually showing up, so I only sell what earns its place in the kit.</p>
+          <p>New to the studio? The weights and a mat are all you need for your first IGNITE class.</p>
         </div>
       </div>
     </section>
@@ -439,11 +521,11 @@
 
   <div class="routine" id="routine">
     <div class="wrap">
-      <h2>The studio bag</h2>
-      <p class="sub">What I pack for a week between the reformer and the bag, and what each piece is for.</p>
+      <h2>The load-up</h2>
+      <p class="sub">What I pack for a week of pilates plus strength, and what each piece is for.</p>
       <div class="rsteps">
-        <div class="rstep"><span class="when">On the reformer</span><h4>Grip and hold</h4><p>Socks first, they are required, then the ring and band for the deep work the carriage cannot load on its own.</p><span class="rlink" onclick="go('pdp','socks')">Ava&rsquo;s Grip Socks</span><br><span class="rlink" onclick="go('pdp','ring')">The Pilates Ring</span></div>
-        <div class="rstep"><span class="when">On the mat</span><h4>Build and burn</h4><p>Ankle weights and the loop band turn a mat class into strength work. Small load, high control, real change.</p><span class="rlink" onclick="go('pdp','ankle')">Ankle Weights</span><br><span class="rlink" onclick="go('pdp','band')">Resistance Loop Set</span></div>
+        <div class="rstep"><span class="when">On the mat</span><h4>Add the load</h4><p>Ankle weights and the loop band turn a mat class into real strength work. Small load, high control, change you can feel.</p><span class="rlink" onclick="go('pdp','ankle')">Ankle Weights</span><br><span class="rlink" onclick="go('pdp','band')">Resistance Loop Set</span></div>
+        <div class="rstep"><span class="when">On the reformer</span><h4>Grip and hold</h4><p>Grip socks are required, and the ring loads the deep inner work the carriage cannot on its own.</p><span class="rlink" onclick="go('pdp','socks')">Lex&rsquo;s Grip Socks</span><br><span class="rlink" onclick="go('pdp','ring')">The Pilates Ring</span></div>
         <div class="rstep"><span class="when">After class</span><h4>Roll and recover</h4><p>The roller and the mat travel home with me. Recovery is the part people skip, which is why they plateau.</p><span class="rlink" onclick="go('pdp','roller')">Foam Roller</span><br><span class="rlink" onclick="go('pdp','mat')">The Studio Mat</span></div>
       </div>
     </div>
@@ -453,8 +535,8 @@
     <section class="tstrip">
       <div class="bhead"><h2>In their words</h2><span style="font-size:11px;color:var(--muted)">Illustrative reviews, for the concept</span></div>
       <div class="tgrid">
-        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Ava teaches my Saturday class and shows exactly what she uses, and what she earns. The only creator shop I actually trust.&rdquo;</p><b>Elise M.</b></div>
-        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Bought the grip socks and the ring in one order. The socks alone changed my reformer sessions, no more sliding on the footbar.&rdquo;</p><b>Nora P.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Lex coaches my Saturday class and shows exactly what she uses, and what she earns. The only creator shop I actually trust.&rdquo;</p><b>Elise M.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Bought the ankle weights and the ring in one order. The weights alone turned my mat class into real strength.&rdquo;</p><b>Nora P.</b></div>
         <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Finally a studio-gear store with a pulse. The picks make sense for someone who actually trains, not a generic bundle.&rdquo;</p><b>Grace L.</b></div>
       </div>
     </section>
@@ -462,16 +544,16 @@
     <section class="econ">
       <h2>How the edit works</h2>
       <div class="econ-grid">
-        <div class="etile"><span class="big">10%</span><b>You save on every order</b><p>Code AVA10 is applied quietly at checkout, on your whole order.</p></div>
-        <div class="etile"><span class="big">5%</span><b>Ava earns on every order</b><p>Measured on the order total before tax and shipping. Her edit, her earnings, printed on the receipt.</p></div>
-        <div class="etile"><span class="big">$0.80/mo</span><b>The sock club counts, monthly</b><p>Keep a $16 monthly sock-club subscription and Ava earns her share every month it renews, not just once.</p></div>
+        <div class="etile"><span class="big">10%</span><b>You save on every order</b><p>Code LEX10 is applied quietly at checkout, on your whole order.</p></div>
+        <div class="etile"><span class="big">5%</span><b>Lex earns on every order</b><p>Measured on the order total before tax and shipping. Her edit, her earnings, printed on the receipt.</p></div>
+        <div class="etile"><span class="big">$0.80/mo</span><b>The sock club counts, monthly</b><p>Keep a $16 monthly sock-club subscription and Lex earns her share every month it renews, not just once.</p></div>
       </div>
     </section>
   </div>
 
   <div class="newsletter">
     <h3>Move with me.</h3>
-    <p>One note a week: what I am teaching, what is new in the bag, and first dibs on the next sock drop. Demo form, nothing is stored.</p>
+    <p>One note a week: what I am coaching, what is new in the kit, and first dibs on the next weight drop. Demo form, nothing is stored.</p>
     <div class="nl-row"><input type="email" placeholder="you@email.com" aria-label="Email address"><button onclick="this.textContent='Joined';setTimeout(()=>this.textContent='Join',1600)">Join</button></div>
   </div>
 </main>
@@ -479,8 +561,8 @@
 <!-- ================= SHOP ================= -->
 <main class="view" id="view-shop">
   <div class="shophero"><div class="wrap">
-    <h1>Shop the bag</h1>
-    <p>The whole edit, in one place. AVA10 applies to all of it.</p>
+    <h1>Shop the kit</h1>
+    <p>The whole edit, in one place. LEX10 applies to all of it.</p>
     <div class="tabs" id="shopTabs"></div>
   </div></div>
   <div class="wrap"><div class="grid shopgrid" id="shopGrid"></div></div>
@@ -489,7 +571,7 @@
 <!-- ================= PDP ================= -->
 <main class="view" id="view-pdp">
   <div class="wrap">
-    <p class="crumb"><a onclick="go('home')">Home</a> &nbsp;/&nbsp; <a onclick="go('shop')">Shop the bag</a> &nbsp;/&nbsp; <span id="crumbName"></span></p>
+    <p class="crumb"><a onclick="go('home')">Home</a> &nbsp;/&nbsp; <a onclick="go('shop')">Shop the kit</a> &nbsp;/&nbsp; <span id="crumbName"></span></p>
     <div class="pdp">
       <div class="gal">
         <div class="gal-main" id="galMain"><svg><use href="#i-sock"/></svg></div>
@@ -511,7 +593,7 @@
           </div>
           <div class="qtyrow"><button onclick="pdQty(-1)" aria-label="Less">&#8722;</button><span id="pdQty">1</span><button onclick="pdQty(1)" aria-label="More">+</button></div>
           <button class="atc" id="pdAtc" onclick="pdAdd()"></button>
-          <p class="note" id="pdNote">AVA10 applies in the cart. Ava earns 5% of this order, before tax and shipping.</p>
+          <p class="note" id="pdNote">LEX10 applies in the cart. Lex earns 5% of this order, before tax and shipping.</p>
         </div>
         <div class="accs" id="pdAccs"></div>
       </div>
@@ -527,16 +609,43 @@
 
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
 <aside class="drawer" id="drawer" aria-label="Cart">
-  <div class="dr-head"><b>Your bag</b><button class="dr-x" onclick="closeCart()" aria-label="Close">&#10005;</button></div>
-  <div class="dr-code">Code <b>AVA10</b> applied: 10% off your whole order</div>
+  <div class="dr-head"><b>Your kit</b><button class="dr-x" onclick="closeCart()" aria-label="Close">&#10005;</button></div>
+  <div class="dr-code">Code <b>LEX10</b> applied: 10% off your whole order</div>
+  <div class="dr-perk" id="drPerk" hidden><span class="dp-b">20%</span><span class="dp-t"><b>Member bundle.</b> 6 months of unlimited Pilates, 20% off, and your ankle weights free.</span><button class="dp-v" onclick="openBundle()">View</button></div>
   <div class="ship-meter" id="shipMeter"></div>
   <div class="dr-items" id="drItems"></div>
   <div class="earnbox" id="earnBox"></div>
   <div class="dr-math" id="drMath"></div>
   <button class="dr-checkout" onclick="checkout()">Checkout</button>
-  <p class="dr-note">Demo checkout, no payment is taken. Pricing is illustrative for the concept. AVA10 and the 5% creator share model the affiliate economics, they are not a live Pilates Addiction offer.</p>
+  <p class="dr-note">Demo checkout, no payment is taken. Pricing is illustrative for the concept. LEX10 and the 5% creator share model the affiliate economics, they are not a live Pilates Addiction offer.</p>
 </aside>
 <div class="comodal" id="comodal" role="dialog" aria-modal="true"><div class="cobox" id="cobox"></div></div>
+
+<!-- member bundle (hero + fires when ankle weights are added) -->
+<div class="perk" id="perkModal" role="dialog" aria-modal="true">
+  <div class="perk-card">
+    <button class="perk-x" onclick="closePerk()" aria-label="Close">&times;</button>
+    <div class="perk-ey">Lex is a Pilates Addiction partner</div>
+    <h3>6 months of unlimited Pilates, <span>20% off.</span></h3>
+    <p class="perk-lead">Join Pilates Addiction through Lex and get her partner rate on the studio&rsquo;s top tier. Unlimited classes on the Aurum Reformer for six months, and her ankle weights come free.</p>
+    <div class="perk-mem">
+      <div class="pm-top"><span class="pm-tier">Gold membership</span><span class="pm-len">6 months</span></div>
+      <div class="pm-price"><span class="pm-now">$207<small>/mo</small></span><span class="pm-was">$259/mo</span><span class="pm-save">you keep $311</span></div>
+      <ul class="pm-inc">
+        <li>Unlimited classes, every week for six months</li>
+        <li>The Aurum Reformer, the studio&rsquo;s signature machine</li>
+        <li>Every format: IGNITE, CORE+, MAX, MOBILITY RX</li>
+      </ul>
+    </div>
+    <div class="perk-stack">
+      <div class="ps"><span class="ps-a">Lex&rsquo;s Ankle Weights, yours free<br><s>$38</s> &nbsp;on the house</span><span class="ps-b free">Free</span></div>
+      <div class="ps"><span class="ps-a">Shipping on your free weights</span><span class="ps-b">$9.99</span></div>
+    </div>
+    <button class="perk-cta" id="perkCta" onclick="claimBundle()">Start my membership, claim free weights</button>
+    <div><button class="perk-later" onclick="closePerk()">Maybe after class</button></div>
+    <p class="perk-fine">Illustrative partner bundle. The 20% reflects a 6-month Gold membership at the published $259 monthly rate ($1,554 to $1,243, you keep $311); the ankle weights, a $38 value, are included and you pay $9.99 shipping. Studio code LEXMOVES. Not a live Pilates Addiction offer.</p>
+  </div>
+</div>
 
 <div class="nwrap" id="nathan">
   <div class="nb" id="nb">
@@ -550,26 +659,26 @@
 
 <footer class="end">
   <div class="fgrid">
-    <div><h4>Aligned with Ava</h4><p style="max-width:38ch">A creator-store concept: one Educator, her own branded edit of Pilates gear, honest economics on the receipt. Built to show how a creator-affiliate program drives studio awareness, trial, and retention.</p></div>
-    <div><h4>Shop</h4><a onclick="go('shop','grip')">Grip</a><a onclick="go('shop','resistance')">Resistance</a><a onclick="go('shop','mat')">Mat and recovery</a><a onclick="go('shop','all')">The whole bag</a></div>
+    <div><h4>Loaded with Lex</h4><p style="max-width:38ch">A creator-store concept: one Educator, her own branded edit of Pilates gear, honest economics on the receipt. Built to show how a creator-affiliate program drives studio awareness, trial, and retention.</p></div>
+    <div><h4>Shop</h4><a onclick="go('shop','grip')">Grip</a><a onclick="go('shop','resistance')">Resistance</a><a onclick="go('shop','mat')">Mat and recovery</a><a onclick="go('shop','all')">The whole kit</a></div>
     <div><h4>The concept</h4><a onclick="nbToggle()">Nathan&rsquo;s commentary</a><a onclick="go('home')">About this store</a></div>
   </div>
-  <div class="legal"><b>Nathan J. Song</b> &middot; Creator-store concept for the Pilates Addiction Marketing Director role. Not affiliated with, sponsored by, or endorsed by Pilates Addiction. Ava is a fictional creator and reviews are illustrative. All pricing is illustrative for the concept. AVA10 and the 5% creator share illustrate the affiliate model and are not live offers.</div>
+  <div class="legal"><b>Nathan J. Song</b> &middot; Creator-store concept for the Pilates Addiction Marketing Director role. Not affiliated with, sponsored by, or endorsed by Pilates Addiction. Lex is a fictional creator and reviews are illustrative. All pricing is illustrative for the concept. LEX10 and the 5% creator share illustrate the affiliate model and are not live offers.</div>
 </footer>
 
 <script>
 /* ============ catalog: Pilates accessories (illustrative pricing) ============ */
 const PRODUCTS={
-  socks:{name:"Ava's Grip Socks",tag:"Ava Original",col:"grip",once:18,sub:16,icon:"i-sock",
-    note:"The studio pair kept slipping, so I made my own. Silicone grip, flat-seam toe, survives the wash.",
+  socks:{name:"Grip Socks",tag:"Grip",col:"grip",once:18,sub:16,icon:"i-sock",
+    note:"Required on the reformer, and the first thing I hand a new member. Silicone grip, flat-seam toe, survives the wash.",
     benefits:["Silicone grip sole for the reformer and the mat","A flat toe seam so nothing rubs through the pivots","Required on the reformer, so you will use them every class"],
-    inside:"Ava's own design for pilates and cross-training. Sock club sends a fresh pair each month.",rel:["ring","towel","gloves"]},
+    inside:"Grip socks for pilates and cross-training. Sock club sends a fresh pair each month.",rel:["ankle","towel","gloves"]},
   sockpro:{name:"Grip Socks, Toeless",tag:"Grip",col:"grip",once:20,icon:"i-sock",
     note:"For barre and the days you want to feel the footbar. Same grip, open toe.",
     benefits:["Open-toe for barre and balance work","Full silicone grip sole","Arch band that actually stays put"],
     inside:"A toeless cut of the grip sock for barre-forward classes.",rel:["socks","ring","band"]},
   gloves:{name:"Grip Gloves",tag:"Grip",col:"grip",once:24,icon:"i-gloves",
-    note:"For heavy-bag afternoons and the plank series that eats your palms.",
+    note:"For heavy carries and the plank series that eats your palms.",
     benefits:["Silicone palm grip, breathable back","Wrist support without the bulk","Machine washable"],
     inside:"Light training gloves for grip and wrist support across pilates and cross-training.",rel:["socks","band","roller"]},
   ring:{name:"The Pilates Ring",tag:"Resistance",col:"resistance",once:34,icon:"i-ring",
@@ -580,10 +689,10 @@ const PRODUCTS={
     note:"Three loops, light to heavy. The cheapest way to turn a mat class into strength work.",
     benefits:["Three resistance levels, light to heavy","Fabric loops that do not roll or snap","Fits in a jacket pocket"],
     inside:"A set of three fabric resistance loops for glute, leg, and shoulder work.",rel:["ankle","ring","ball"]},
-  ankle:{name:"Ankle Weights, 2 lb pair",tag:"Resistance",col:"resistance",once:38,icon:"i-ankle",
-    note:"Small load, high control. What I add when a mat class stops being hard enough.",
-    benefits:["2 lb per cuff, soft and secure","No-slip strap that stays through kicks","Sweat-friendly, wipe-clean shell"],
-    inside:"A pair of 2 lb ankle weights, soft-shell with a secure strap.",rel:["band","ring","roller"]},
+  ankle:{name:"Lex's Ankle Weights, 2 lb pair",tag:"Lex Original",col:"resistance",once:38,icon:"i-ankle",
+    note:"The pair I kept looking for and never found, so I made it. Soft, secure, 2 lb a side, heavy enough to matter.",
+    benefits:["2 lb per cuff, soft-shell and secure","No-slip strap that holds through kicks and bridges","Sweat-friendly, wipe-clean shell"],
+    inside:"Lex's own design. A pair of 2 lb ankle weights, soft-shell with a secure strap.",rel:["band","ring","roller"]},
   ball:{name:"Pilates Ball, 9 in",tag:"Resistance",col:"resistance",once:20,icon:"i-ball",
     note:"The small ball that finds the muscles you have been cheating. Bridges, planks, wall work.",
     benefits:["9 inch soft ball for core and stability","Inflate to your firmness","Doubles as a gentle back release"],
@@ -610,26 +719,31 @@ const PRODUCTS={
     inside:"A pair of massage balls in two firmness levels.",rel:["roller","mat","band"]},
   bottle:{name:"Studio Water Bottle",tag:"Carry",col:"carry",once:28,icon:"i-bottle",
     note:"Insulated, one-hand cap, fits the reformer cup slot. The small things you notice at 6am.",
-    benefits:["Stays cold through a double class","One-hand cap, no leaks in the bag","Fits standard studio cup holders"],
+    benefits:["Stays cold through a double class","One-hand cap, no leaks in the kit","Fits standard studio cup holders"],
     inside:"A 24 oz insulated stainless bottle with a one-hand cap.",rel:["tote","towel","socks"]},
   tote:{name:"The Studio Tote",tag:"Carry",col:"carry",once:44,icon:"i-tote",
     note:"Holds the mat, the socks, the bottle, and still looks like it belongs at brunch.",
-    benefits:["Fits a rolled mat plus the whole bag","Water-resistant, wipe-clean lining","Inside pocket for socks and keys"],
+    benefits:["Fits a rolled mat plus the whole kit","Water-resistant, wipe-clean lining","Inside pocket for socks and keys"],
     inside:"A water-resistant studio tote sized to carry a mat and the edit.",rel:["mat","bottle","matmini"]},
   kit:{name:"The First-Timer Kit",tag:"Save 15%",col:"kits",once:96,icon:"i-kit",
     note:"Everything you need for your first IGNITE class, in one box. Socks, ring, band, grip towel.",
-    benefits:["Ava's Grip Socks, the Pilates Ring, the Loop Set, and the Grip Towel","Everything a first-timer needs, nothing they do not","Bundled at about 15% off the pieces"],
-    inside:"The four pieces a first-timer actually needs, bundled below the sum of the parts.",rel:["socks","ring","mat"]}
+    benefits:["The Grip Socks, the Pilates Ring, the Loop Set, and the Grip Towel","Everything a first-timer needs, nothing they do not","Bundled at about 15% off the pieces"],
+    inside:"The four pieces a first-timer actually needs, bundled below the sum of the parts.",rel:["socks","ring","mat"]},
+  member6:{name:"6-Month Gold Membership",tag:"Pilates Addiction",col:"membership",once:1243.20,membership:true,icon:"i-member",
+    note:"Six months of Gold at Lex's partner rate, 20% off. Your ankle weights come free.",
+    benefits:["20% off your first 6 months of Gold, unlimited classes","Lex's ankle weights included free, just $9.99 shipping","On the Aurum Reformer at 4000 MacArthur Blvd"],
+    inside:"An illustrative 6-month Gold membership bundle at the partner rate.",rel:[]}
 };
-const COLS={all:"The whole bag",grip:"Grip",resistance:"Resistance",mat:"Mat",recovery:"Recovery",carry:"Carry",kits:"Kits"};
-const FEATURED=["socks","ring","ankle","mat"];
-const CODE="AVA10", CREATOR="Ava", DISC=0.10, COMMISSION=0.05, SHIP_FREE=50, SHIP_FEE=6;
+const COLS={all:"The whole kit",grip:"Grip",resistance:"Resistance",mat:"Mat",recovery:"Recovery",carry:"Carry",kits:"Kits"};
+const FEATURED=["ankle","band","ring","ball"];
+const CODE="LEX10", CREATOR="Lex", DISC=0.10, COMMISSION=0.05, SHIP_FREE=50, SHIP_FEE=6;
+const MEMBER_SHIP=9.99;
 
 const cart={}; /* key: id_mode -> {id,mode,qty} */
 let view="home", curTab="all", pdpId=null, pdpM="once", pdpQ=1;
 
-function money(n){return "$"+n.toFixed(2);}
-function track(ev,p){console.log("[ava-store]",ev,p||{});}
+function money(n){return "$"+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,",");}
+function track(ev,p){console.log("[lex-store]",ev,p||{});}
 function imgHTML(id){return '<svg><use href="#'+(PRODUCTS[id]?PRODUCTS[id].icon:'i-kit')+'"/></svg>';}
 function priceLabel(p){return p.sub?('<b>'+money(p.sub)+'</b>/mo &middot; '+money(p.once)+' once'):('<b>'+money(p.once)+'</b>');}
 
@@ -652,24 +766,24 @@ function card(id){
     '<div class="pimg"><span class="ptag">'+p.tag+'</span>'+imgHTML(id)+'</div>'+
     '<div class="pb"><h3>'+p.name+'</h3><p class="pn">'+p.note+'</p>'+
     '<p class="prices">'+priceLabel(p)+'</p>'+
-    '<button class="addmini" onclick="event.stopPropagation();quickAdd(\''+id+'\')">Add to bag</button></div></div>';
+    '<button class="addmini" onclick="event.stopPropagation();quickAdd(\''+id+'\')">Add to kit</button></div></div>';
 }
 function renderHome(){document.getElementById("home-featured").innerHTML=FEATURED.map(card).join("");}
 function renderShop(){
   document.getElementById("shopTabs").innerHTML=Object.keys(COLS).map(k=>'<button class="'+(k===curTab?"on":"")+'" onclick="curTab=\''+k+'\';renderShop()">'+COLS[k]+'</button>').join("");
-  const ids=Object.keys(PRODUCTS).filter(id=>curTab==="all"||PRODUCTS[id].col===curTab);
+  const ids=Object.keys(PRODUCTS).filter(id=>!PRODUCTS[id].membership&&(curTab==="all"||PRODUCTS[id].col===curTab));
   document.getElementById("shopGrid").innerHTML=ids.map(card).join("");
 }
 function renderPDP(){
   const p=PRODUCTS[pdpId];
   document.getElementById("crumbName").textContent=p.name;
   document.getElementById("galMain").innerHTML='<svg><use href="#'+p.icon+'"/></svg>';
-  document.getElementById("galBadges").innerHTML=['Studio-tested','Grips that hold','Ships free over $50'].map(b=>'<span class="gbadge">'+b+'</span>').join("");
+  document.getElementById("galBadges").innerHTML=['Coach-tested','Load that lasts','Ships free over $50'].map(b=>'<span class="gbadge">'+b+'</span>').join("");
   document.getElementById("pdTag").textContent=p.tag;
   document.getElementById("pdName").textContent=p.name;
-  document.getElementById("pdMaya").innerHTML='&ldquo;'+p.note+'&rdquo; &nbsp;Ava';
+  document.getElementById("pdMaya").innerHTML='&ldquo;'+p.note+'&rdquo; &nbsp;Lex';
   document.getElementById("pdBenefits").innerHTML=p.benefits.map(b=>'<li>'+b+'</li>').join("");
-  document.getElementById("pdAccs").innerHTML='<b>In the bag:</b> '+p.inside;
+  document.getElementById("pdAccs").innerHTML='<b>In the kit:</b> '+p.inside;
   // subscribe option only for products with a sub price (sock club)
   const hasSub=!!p.sub;
   document.getElementById("optSub").style.display=hasSub?"flex":"none";
@@ -693,7 +807,7 @@ function pdMode(m){
 function pdQty(d){pdpQ=Math.max(1,pdpQ+d);document.getElementById("pdQty").textContent=pdpQ;updateAtc();}
 function updateAtc(){
   const p=PRODUCTS[pdpId];const unit=pdpM==="sub"?p.sub:p.once;
-  const lbl=(pdpM==="sub"?"Add sock club":"Add to bag")+" &middot; "+money(unit*pdpQ);
+  const lbl=(pdpM==="sub"?"Add sock club":"Add to kit")+" &middot; "+money(unit*pdpQ);
   document.getElementById("pdAtc").innerHTML=lbl;
   document.getElementById("satcPrice").textContent=(pdpM==="sub"?money(p.sub)+"/mo":money(p.once));
 }
@@ -705,42 +819,82 @@ function addToCart(id,mode,qty){
   const k=id+"_"+mode;
   if(cart[k])cart[k].qty+=qty;else cart[k]={id,mode,qty};
   renderCart();updateCount();track("add_to_cart",{id,mode,qty});
+  if(id==="ankle") unlockPerk();
+}
+
+/* ===== member bundle: join 6 months, ankle weights free (Lex is a PA partner) ===== */
+let perkUnlocked=false;
+function hasMember(){return !!cart["member6_once"];}
+function unlockPerk(){
+  const banner=document.getElementById("drPerk");
+  if(banner&&!hasMember()) banner.hidden=false;
+  if(!perkUnlocked && !hasMember()){ perkUnlocked=true; setTimeout(openBundle,340); track("bundle_offer_shown"); }
+}
+function openBundle(){document.getElementById("perkModal").classList.add("on");track("bundle_open");}
+function openPerk(){openBundle();}
+function closePerk(){document.getElementById("perkModal").classList.remove("on");}
+function claimBundle(){
+  cart["member6_once"]={id:"member6",mode:"once",qty:1};
+  if(!cart["ankle_once"]) cart["ankle_once"]={id:"ankle",mode:"once",qty:1};
+  perkUnlocked=true;
+  const banner=document.getElementById("drPerk"); if(banner) banner.hidden=true; /* it is now in the cart */
+  const btn=document.getElementById("perkCta"); if(btn) btn.textContent="Added. See you in class.";
+  renderCart(); updateCount();
+  closePerk(); openCart();
+  track("bundle_claimed");
 }
 function cartQty(k,d){if(!cart[k])return;cart[k].qty+=d;if(cart[k].qty<=0)delete cart[k];renderCart();updateCount();}
 function updateCount(){const n=Object.values(cart).reduce((s,i)=>s+i.qty,0);document.getElementById("cartN").textContent=n;}
 function totals(){
-  let sub=0;
-  Object.values(cart).forEach(i=>{const p=PRODUCTS[i.id];sub+=(i.mode==="sub"?p.sub:p.once)*i.qty;});
-  const disc=sub*DISC, afterDisc=sub-disc;
-  const ship=afterDisc>=SHIP_FREE||afterDisc===0?0:SHIP_FEE;
-  const earn=afterDisc*COMMISSION;
-  return {sub,disc,afterDisc,ship,total:afterDisc+ship,earn};
+  const mem=hasMember();
+  let gearSub=0, memberSub=0;
+  Object.values(cart).forEach(i=>{
+    const p=PRODUCTS[i.id];
+    if(p.membership){memberSub+=p.once*i.qty;return;}
+    let unit=(i.mode==="sub"?p.sub:p.once);
+    if(i.id==="ankle"&&mem)unit=0;
+    gearSub+=unit*i.qty;
+  });
+  const disc=gearSub*DISC, afterGear=gearSub-disc;
+  const earn=afterGear*COMMISSION;
+  const ship = mem ? MEMBER_SHIP : (afterGear>=SHIP_FREE||afterGear===0?0:SHIP_FEE);
+  return {mem,gearSub,memberSub,disc,afterGear,ship,total:afterGear+memberSub+ship,earn};
 }
 function renderCart(){
   const items=Object.entries(cart);
   const box=document.getElementById("drItems");
   if(!items.length){
-    box.innerHTML='<div class="dr-empty">Your bag is empty.<br>Start with the <a style="text-decoration:underline" onclick="closeCart();go(\'pdp\',\'socks\')">grip socks</a>.</div>';
+    box.innerHTML='<div class="dr-empty">Your kit is empty.<br>Start with the <a style="text-decoration:underline" onclick="closeCart();go(\'pdp\',\'ankle\')">ankle weights</a>.</div>';
     document.getElementById("earnBox").innerHTML="";document.getElementById("drMath").innerHTML="";
     document.getElementById("shipMeter").innerHTML="";return;
   }
-  box.innerHTML=items.map(([k,i])=>{
-    const p=PRODUCTS[i.id];const unit=i.mode==="sub"?p.sub:p.once;
-    return '<div class="ci"><div class="ciimg">'+imgHTML(i.id)+'</div>'+
-      '<div class="cinfo"><b>'+p.name+'</b><span class="cm">'+(i.mode==="sub"?"Sock club, monthly":"One-time")+'</span>'+
-      '<div class="cq"><button onclick="cartQty(\''+k+'\',-1)">&#8722;</button><span>'+i.qty+'</span><button onclick="cartQty(\''+k+'\',1)">+</button></div></div>'+
-      '<span class="cp">'+money(unit*i.qty)+'</span></div>';
-  }).join("");
   const t=totals();
+  box.innerHTML=items.map(([k,i])=>{
+    const p=PRODUCTS[i.id];
+    if(p.membership){
+      return '<div class="ci"><div class="ciimg">'+imgHTML(i.id)+'</div>'+
+        '<div class="cinfo"><b>'+p.name+'</b><span class="cm">6 months, 20% off &middot; Pilates Addiction</span>'+
+        '<div class="cq"><button onclick="cartQty(\''+k+'\',-1)">Remove</button></div></div>'+
+        '<span class="cp">'+money(p.once)+'</span></div>';
+    }
+    const free=(i.id==="ankle"&&t.mem);
+    const unit=i.mode==="sub"?p.sub:p.once;
+    return '<div class="ci"><div class="ciimg">'+imgHTML(i.id)+'</div>'+
+      '<div class="cinfo"><b>'+p.name+'</b><span class="cm">'+(free?"Free with your membership":(i.mode==="sub"?"Sock club, monthly":"One-time"))+'</span>'+
+      '<div class="cq"><button onclick="cartQty(\''+k+'\',-1)">&#8722;</button><span>'+i.qty+'</span><button onclick="cartQty(\''+k+'\',1)">+</button></div></div>'+
+      '<span class="cp">'+(free?'<b style="color:var(--accent)">Free</b>':money(unit*i.qty))+'</span></div>';
+  }).join("");
   const meter=document.getElementById("shipMeter");
-  if(t.ship>0){const rem=(SHIP_FREE-t.afterDisc);const pct=Math.min(100,(t.afterDisc/SHIP_FREE)*100);
+  if(t.mem){meter.innerHTML='<b style="color:var(--accent)">Member bundle:</b> your ankle weights are free, $9.99 shipping.<div class="bar"><i style="width:100%"></i></div>';}
+  else if(t.ship>0){const rem=(SHIP_FREE-t.afterGear);const pct=Math.min(100,(t.afterGear/SHIP_FREE)*100);
     meter.innerHTML='Add <b style="color:var(--gold-deep)">'+money(rem)+'</b> for free shipping<div class="bar"><i style="width:'+pct+'%"></i></div>';}
   else{meter.innerHTML='<b style="color:var(--good)">Free shipping unlocked.</b><div class="bar"><i style="width:100%"></i></div>';}
-  document.getElementById("earnBox").innerHTML='This order supports <b>Ava</b>.<div class="er"><span>Her 5% creator share</span><span>'+money(t.earn)+'</span></div><div class="er"><span>Your AVA10 saving</span><span>&minus;'+money(t.disc)+'</span></div>';
+  document.getElementById("earnBox").innerHTML='This order supports <b>Lex</b>.<div class="er"><span>Her 5% creator share</span><span>'+money(t.earn)+'</span></div>'+(t.mem?'<div class="er"><span>Plus her cut when you join</span><span>partner referral</span></div>':'<div class="er"><span>Your LEX10 saving</span><span>&minus;'+money(t.disc)+'</span></div>');
   document.getElementById("drMath").innerHTML=
-    '<div class="mr"><span>Subtotal</span><span>'+money(t.sub)+'</span></div>'+
-    '<div class="mr"><span>AVA10 (10% off)</span><span>&minus;'+money(t.disc)+'</span></div>'+
-    '<div class="mr"><span>Shipping</span><span>'+(t.ship===0?"Free":money(t.ship))+'</span></div>'+
+    '<div class="mr"><span>Subtotal</span><span>'+money(t.gearSub)+'</span></div>'+
+    '<div class="mr"><span>LEX10 (10% off)</span><span>&minus;'+money(t.disc)+'</span></div>'+
+    (t.mem?'<div class="mr"><span>6-Month Gold Membership (20% off)</span><span>'+money(t.memberSub)+'</span></div>':'')+
+    '<div class="mr"><span>Shipping'+(t.mem?' (free weights)':'')+'</span><span>'+(t.ship===0?"Free":money(t.ship))+'</span></div>'+
     '<div class="mr tot"><span>Total</span><span>'+money(t.total)+'</span></div>';
 }
 function openCart(){document.getElementById("overlay").classList.add("on");document.getElementById("drawer").classList.add("on");renderCart();track("open_cart");}
@@ -750,12 +904,13 @@ function checkout(){
   const t=totals();
   document.getElementById("cobox").innerHTML=
     '<svg class="ok" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" stroke="var(--gold)" stroke-width="3"/><path d="M20 33l8 8 16-18" stroke="var(--gold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
-    '<h3>That is the bag.</h3><p>Demo checkout, no payment taken. Here is what a real order would look like, receipt and all.</p>'+
-    '<div class="rc"><div class="rr"><span>Subtotal</span><span>'+money(t.sub)+'</span></div>'+
-    '<div class="rr"><span>AVA10 (10% off)</span><span>&minus;'+money(t.disc)+'</span></div>'+
-    '<div class="rr"><span>Shipping</span><span>'+(t.ship===0?"Free":money(t.ship))+'</span></div>'+
+    '<h3>That is the kit.</h3><p>Demo checkout, no payment taken. Here is what a real order would look like, receipt and all.</p>'+
+    '<div class="rc"><div class="rr"><span>Subtotal</span><span>'+money(t.gearSub)+'</span></div>'+
+    '<div class="rr"><span>LEX10 (10% off)</span><span>&minus;'+money(t.disc)+'</span></div>'+
+    (t.mem?'<div class="rr"><span>6-Month Gold Membership (20% off)</span><span>'+money(t.memberSub)+'</span></div>':'')+
+    '<div class="rr"><span>Shipping'+(t.mem?' (free weights)':'')+'</span><span>'+(t.ship===0?"Free":money(t.ship))+'</span></div>'+
     '<div class="rr"><span>Total</span><span>'+money(t.total)+'</span></div>'+
-    '<div class="rr e"><span>Ava earns (5%)</span><span>'+money(t.earn)+'</span></div></div>'+
+    '<div class="rr e"><span>Lex earns (5% gear)</span><span>'+money(t.earn)+'</span></div></div>'+
     '<button onclick="closeCO()">Keep shopping</button>';
   document.getElementById("comodal").classList.add("on");track("checkout",t);
 }
@@ -764,7 +919,7 @@ function toastCart(){openCart();}
 
 /* ============ marquee + count-up ============ */
 (function(){
-  const items=["Grip socks, required on the reformer","The Pilates Ring","Ankle weights, 2 lb","The Studio Mat","Code AVA10 for 10% off","Free shipping over $50","The First-Timer Kit, save 15%"];
+  const items=["Grip socks, required on the reformer","The Pilates Ring","Ankle weights, 2 lb","The Studio Mat","Code LEX10 for 10% off","Free shipping over $50","The First-Timer Kit, save 15%"];
   const row=items.map(t=>"<span>"+t+" &nbsp;&middot;</span>").join("");
   document.getElementById("mqTrack").innerHTML=row+row;
 })();
@@ -778,12 +933,13 @@ function countUp(){
 /* ============ Nathan's notes (mapped to the Marketing Director JD) ============ */
 const NOTES=[
   {tag:"The concept",body:"A creator store is a marketing channel dressed as a shop. One Educator, her own edit of studio gear, becomes local reach, social proof, and a standing reason to walk into the studio. For this role that is acquisition and brand at once, run through the people members already trust."},
-  {tag:"The economics",body:"Every order prints Ava's 5% and the member's 10% right on the receipt. Transparent creator economics is what makes an Educator promote you for years instead of one paid post, because her income is now tied to member retention, not a single sale."},
-  {tag:"Grip socks as the wedge",body:"Socks are the perfect first product: required on the reformer, low price, high margin, bought again and again. The sock club turns an 18 dollar accessory into a recurring relationship and a monthly reason to reach the member. Small product, real lifecycle."},
+  {tag:"The economics",body:"Every order prints Lex's 5% and the member's 10% right on the receipt. Transparent creator economics is what makes an Educator promote you for years instead of one paid post, because her income is now tied to member retention, not a single sale."},
+  {tag:"Merch to membership",body:"This is the whole point, and it runs both directions. The hero leads with the membership: join for six months at 20% off and Lex's ankle weights are free, you just cover shipping. Add the weights on their own and the same bundle pops up. A free $38 accessory becomes the hook that lands a member worth over a thousand, and because giving her product away spreads it, the creator wins too and thanks you. Merch that sells membership, membership that gives away merch. That two-sided pull is the acquisition flywheel this role exists to build."},
+  {tag:"Ankle weights as the wedge",body:"A signature product is the hook. Lex's ankle weights are cheap, high margin, and tied to a real outcome members already want: add load, get stronger. A branded hero product gives the creator something that is hers to talk about, which is what turns a discount code into an actual reason to post."},
   {tag:"Local activation",body:"A franchisee hands this store to any local Educator, swaps the code and the face, and has a working affiliate storefront in a day. That is the franchisee playbook the role asks for: build the engine once, deploy it per market."},
-  {tag:"Retention",body:"Gear is a retention lever most studios ignore. A member who owns the socks, the ring, and the mat has money and identity invested in the studio. The bag is a quiet reason to keep showing up, and showing up is the whole business."},
-  {tag:"Data",body:"Every add to bag, code use, and checkout here fires a tracked event, open the console and watch. Wired to real analytics, a creator store tells you which Educators and which products actually drive trials and members, so budget follows evidence, not vibes."},
-  {tag:"Why one store at a time",body:"This is Ava, the grip-socks store. Lex gets the ankle weights next, Maya gets the ring and the mat. Same engine, different creator and hero product, so the program scales across a roster without rebuilding it every time."}
+  {tag:"Retention",body:"Gear is a retention lever most studios ignore. A member who owns the weights, the ring, and the mat has money and identity invested in the studio. The kit is a quiet reason to keep showing up, and showing up is the whole business."},
+  {tag:"Data",body:"Every add to kit, code use, and checkout here fires a tracked event, open the console and watch. Wired to real analytics, a creator store tells you which Educators and which products actually drive trials and members, so budget follows evidence, not vibes."},
+  {tag:"Why one store at a time",body:"This is Lex, the ankle-weights store, in her own Impact look. Ava runs the grip socks in her editorial theme, Maya gets the ring and the mat next. Same engine, different creator, hero product, and skin, so the program scales across a roster without rebuilding it every time."}
 ];
 let nbI=0;
 function nbToggle(){const nb=document.getElementById("nb");if(nb.classList.contains("on"))nbHide();else{nb.classList.add("on");nbShow();document.querySelector(".nchip").style.animation="none";}}

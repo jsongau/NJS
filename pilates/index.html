@@ -315,6 +315,19 @@
   .nchip .av{width:26px;height:26px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;flex:none}
   .nchip.pulse{animation:npulse 2s ease-in-out infinite}
   @keyframes npulse{0%,100%{box-shadow:0 12px 30px rgba(0,0,0,.28)}50%{box-shadow:0 12px 30px rgba(0,0,0,.28),0 0 0 8px rgba(232,80,58,.18)}}
+  /* Zelda-fairy attention: chip wiggles + a "Hey!" bubble pops when notes are on but closed */
+  .nchip.wiggle{animation:nwiggle .6s ease-in-out}
+  @keyframes nwiggle{0%,100%{transform:rotate(0)}15%{transform:rotate(-7deg) scale(1.04)}30%{transform:rotate(6deg) scale(1.04)}45%{transform:rotate(-5deg)}60%{transform:rotate(4deg)}75%{transform:rotate(-2deg)}}
+  .nchip .av.spark{box-shadow:0 0 0 0 rgba(232,80,58,.55);animation:nspark 1.4s ease-out infinite}
+  @keyframes nspark{0%{box-shadow:0 0 0 0 rgba(232,80,58,.5)}100%{box-shadow:0 0 0 12px rgba(232,80,58,0)}}
+  .nhey{position:fixed;left:20px;bottom:70px;z-index:68;background:var(--orange);color:#fff;font-weight:800;font-size:13px;padding:9px 14px;border-radius:12px 12px 12px 3px;box-shadow:0 12px 30px rgba(232,80,58,.4);display:none;max-width:200px;line-height:1.3}
+  .nhey.show{display:block;animation:heypop .4s cubic-bezier(.2,.9,.3,1.4)}
+  .nhey b{display:block;font-size:15px}
+  .nhey small{font-weight:700;opacity:.92;font-size:11.5px}
+  .nhey::after{content:"";position:absolute;left:14px;bottom:-6px;width:12px;height:12px;background:var(--orange);border-radius:0 0 0 3px;transform:rotate(45deg) skew(-6deg,-6deg)}
+  @keyframes heypop{from{opacity:0;transform:translateY(8px) scale(.9)}to{opacity:1;transform:none}}
+  /* notes off = no chip, no hey, no inline why buttons */
+  body:not(.commentary) .nchip,body:not(.commentary) .nhey,body:not(.commentary) .why-btn{display:none !important}
   .nbubble{position:fixed;left:18px;bottom:70px;z-index:67;width:min(360px,calc(100vw - 36px));background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.22);padding:18px;display:none}
   .nbubble.show{display:block;animation:fadein .25s}
   .nbubble .nhead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -764,6 +777,26 @@
 </section>
 </div><!-- /confirm -->
 
+<section class="wrap" data-note="creators" style="border-top:1px solid var(--line);padding:46px 20px 8px">
+  <div style="text-align:center;max-width:660px;margin:0 auto 26px">
+    <span class="eyebrow">The creator channel</span>
+    <h2 style="font-size:clamp(24px,3.4vw,33px);font-weight:800;line-height:1.14">Shop the studio through its creators.</h2>
+    <p style="color:var(--muted);font-size:16px;margin-top:12px">Two Pilates Addiction partner creators, each with a gear edit and a member bundle that turns a free accessory into a six-month membership. This is the creator-to-member acquisition channel, built and clickable.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:780px;margin:0 auto" class="creator-grid">
+    <a href="ava/" style="text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:block;box-shadow:var(--shadow)">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--flame-deep)">Grip socks &middot; editorial</div>
+      <div style="font-family:var(--serif);font-size:22px;font-weight:700;margin:7px 0 5px">Aligned with Ava</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.5;margin:0">A pilates and kickboxing Educator&rsquo;s gear edit, fronted by her grip socks. Visit the store.</p>
+    </a>
+    <a href="lex/" style="text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:block;box-shadow:var(--shadow)">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--flame-deep)">Ankle weights &middot; the bundle</div>
+      <div style="font-family:var(--serif);font-size:22px;font-weight:700;margin:7px 0 5px">Loaded with Lex</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.5;margin:0">A strength coach&rsquo;s edit, where a 6-month membership comes with her ankle weights free. Visit the store.</p>
+    </a>
+  </div>
+</section>
+
 <footer>
   <p><strong>Candidate growth concept</strong> by Nathan J. Song, built to demonstrate presale funnel strategy, lifecycle capture, conversion design, and experimentation for the Pilates Addiction Marketing Director role. Not affiliated with, sponsored by, or endorsed by Pilates Addiction. Studio name and location referenced for concept illustration. Prize, membership pricing, activity, and testimonials are illustrative.</p>
   <p style="margin-top:8px">The $777 prize value reflects three months of Gold unlimited membership at Pilates Addiction's published $259 monthly rate. See <a href="#" onclick="openModal('rules');return false">Official Rules</a> for full sweepstakes terms.</p>
@@ -783,7 +816,8 @@
 </div>
 
 <!-- Nathan commentary -->
-<button class="nchip pulse" id="nchip"><span class="av">NS</span> Nathan&rsquo;s notes</button>
+<div class="nhey" id="nhey" onclick="document.getElementById('nchip').click()"><b>Hey!</b><small>See why I built this</small></div>
+<button class="nchip" id="nchip"><span class="av">NS</span> Nathan&rsquo;s notes</button>
 <div class="nbubble" id="nbubble" role="dialog" aria-label="Nathan's notes">
   <div class="nhead">
     <span class="nav">NS</span>
@@ -836,25 +870,26 @@ function track(name,meta){events.push({name,meta:meta||null});/* wire to GA4 / M
 
 /* ---------------- NATHAN'S NOTES (mapped to the JD) ---------------- */
 const NOTES={
-  hero:{label:"the hero",text:"The job asks for presale momentum and a category-defining brand. A free-to-enter draw with a real membership prize turns cold local traffic into an owned email and SMS list before the doors ever open. That list is the presale engine every founding studio needs, and it is an asset a franchisee keeps."},
-  form:{label:"the entry form",text:"Three tiny steps beat one long form every time. Email first because that is the entry. Name second so every message can be personal. Phone last, opt-in, for a bonus entry, because class-drop texts are how you fill a 7am slot. The SMS opt-in is the single most valuable thing this form collects."},
-  proof:{label:"the proof strip",text:"These numbers do two jobs. They make the prize feel concrete, and they borrow the brand's real scale, 300-plus territories, so a studio that has not opened yet does not read as brand new. Presale trust is mostly borrowed trust, used honestly."},
-  why:{label:"the why section",text:"This is the on-brand copy the role asks for, written to convert. I am not selling Pilates, I am selling the outcome: move without pain, age stronger. A franchisee in any market can lift this section word for word, which is the point. Build it once as a playbook, deploy it everywhere."},
-  includes:{label:"unpacking the prize",text:"Unpacking what unlimited actually includes raises the perceived value of a free thing and answers the quiet doubt that free means low quality. I lead with the real product, the Aurum Reformer and the four class formats, so the prize sells the studio, not just the giveaway. Every tab is also a reason to stay past the free quarter."},
-  menu:{label:"the membership menu",text:"Real published pricing, on the page, on purpose. Gold at 259, Silver at 189, Bronze at 139, a 39 drop-in. Showing the true menu makes the 777 prize value concrete and it teaches the visitor the ladder before they ever talk to a front desk. The line that matters: memberships auto-renew and unused classes do not roll over, which is the honest reason unlimited is the tier that pays off."},
-  compare:{label:"the comparison",text:"The real competitor is not another studio, it is the ten-dollar gym they already pay for and skip. Naming that and reframing cost as attendance, a cheap membership you never use is the most expensive fitness there is, is how you win the switch. This is the local-market objection, handled."},
-  home:{label:"the home-equipment angle",text:"The other quiet objection is I will just buy my own reformer. So I kill it directly: a home machine becomes a clothes rack, because nobody booked a class and no Educator is watching your form. The product a studio actually sells is accountability, and that is exactly what protects retention. Naming the competitor honestly, then showing why it fails, converts better than pretending it does not exist."},
-  timeline:{label:"the 90-day map",text:"The prize is acquisition. This section is retention, designed in from day one. Winning three months is easy. The business is built on month four. Mapping the first 90 days gives lifecycle email and SMS a reason to fire on the right week instead of blasting everyone the same thing."},
-  quiz:{label:"the class quiz",text:"A 30-second quiz is a lead-quality signal and a personalization hook in one. Their answer sorts them into a segment, so the very first email is about their class, not a generic welcome. Relevance on message one is the cheapest retention lever there is."},
-  reviews:{label:"the reviews",text:"Marked illustrative on purpose. The role is explicit about not fabricating results, and I hold that line. Real member quotes replace these the moment the founding roster is teaching. Honesty here is the trust play, not a missed chance to embellish."},
-  faq:{label:"the FAQ",text:"Handling do-I-have-to-buy-anything and what-does-it-cost-after right here protects sweepstakes compliance and sets up the founding rate without a hard sell. Objections answered on the page are objections your front desk never has to field on the phone."},
-  finalcta:{label:"the final CTA",text:"Two doors, never one. The patient enter the free draw. The ready join the founding list now. You never let a warm visitor leave with a single option, because the reason people bounce is usually that the one path you offered was not theirs."},
-  confirm:{label:"the thank-you page",text:"This is the most valuable real estate in the whole funnel and most brands leave it blank. Entry is done, intent is at its peak, the visitor already said yes once. So this is exactly where the referral and the founding offers live, not buried in a follow-up email nobody opens."},
-  refer:{label:"the referral loop",text:"Referral turns one entrant into three at zero ad cost, and it grows the presale list faster than paid ever could. For a local studio a warm friend referral is the cheapest and highest-converting lead there is. The bonus-entry incentive is what makes sharing feel like winning, not spamming."},
-  bogo:{label:"the bring-a-friend offer",text:"The tripwire, for people who will not wait on a draw. One Gold month at 259 to start now, with a friend's first month free, does three things at once: it converts impatience into revenue, it puts two bodies in the room on opening day, and a friend pair retains far better than a solo. The team-to-unlock mechanic is borrowed from how Pinduoduo grew, pointed at a studio."},
-  squad:{label:"the prepaid crew deal",text:"Prepaid is cash up front and a retention lock in one move. Four people who prepaid six months show up for each other, and the crew that trains together does not churn. Twenty percent off is cheaper than the ad spend it would take to acquire four cold members, so the discount pays for itself. That is a marketing decision that is also a business decision."}
+  hero:{label:"the hero",text:"The objective isn't to create excitement for opening day. It's to leave opening day with an owned audience that keeps driving memberships long after launch. A sweepstakes gives people a reason to engage today, while email and SMS create a marketing asset the studio can keep nurturing through presale, grand opening, referrals, and future promotions."},
+  form:{label:"the entry form",text:"Every additional field has to earn its place. I collect the minimum needed to start the relationship, then ask for more as commitment grows. Email captures the lead, the first name personalizes future messages, and SMS becomes one of the fastest ways to fill classes when spots open."},
+  proof:{label:"social proof",text:"People naturally question whether a studio that has not opened yet is worth trusting. Instead of exaggerated claims, I use measurable facts that reduce uncertainty. Showing the franchise's national footprint and translating the giveaway into real membership value helps visitors feel they are joining something established, not taking a chance on the unknown."},
+  why:{label:"why Pilates Addiction",text:"Every location should feel locally connected while carrying the same core value proposition. The goal is a repeatable messaging framework that explains why Pilates Addiction is different, without every studio reinventing its marketing from scratch."},
+  includes:{label:"membership benefits",text:"The giveaway attracts attention, but the membership keeps it. Breaking down everything included helps visitors understand the long-term value of becoming a member, rather than focusing only on the chance to win something free."},
+  menu:{label:"the membership tiers",text:"Showing pricing early sets clear expectations and qualifies serious prospects before they ever speak with the studio. Visitors who understand the investment upfront convert more often, because there are fewer surprises later in the journey."},
+  compare:{label:"the gym comparison",text:"The biggest competitor is not another Pilates studio. It is the gym membership people already pay for but rarely use. Rather than compete on price, I reposition accountability, coaching, and community as the real product members are investing in."},
+  home:{label:"the home reformer",text:"Many prospective members eventually ask whether they should just buy a reformer themselves. That objection is worth meeting head on instead of pretending it does not exist. A reformer can live in someone's home, but accountability, coaching, and community cannot, and those are the reasons members keep showing up."},
+  timeline:{label:"the 90-day journey",text:"Most acquisition funnels end when someone becomes a customer. I think that is where the real marketing begins. Each stage of the first ninety days is a chance to reinforce habits, celebrate progress, encourage referrals, and improve long-term retention."},
+  quiz:{label:"the class quiz",text:"The quiz is not really about recommending a class. It is about understanding why someone came here in the first place. Whether they are driven by pain relief, strength, or longevity changes how I would talk to them across the rest of their journey."},
+  reviews:{label:"the reviews",text:"Because this studio has not opened yet, I labeled these illustrative on purpose. Building long-term trust matters more than manufacturing social proof. As members start sharing their experiences, these become authentic testimonials that grow stronger over time."},
+  faq:{label:"the FAQ",text:"Good FAQs do not just answer questions. They remove hesitation before someone ever contacts the studio. Every answer here reduces friction, shortens conversations with the front desk, and helps prospects feel confident moving forward."},
+  finalcta:{label:"the final CTA",text:"Not every visitor arrives ready to commit. Some just want to stay informed, others are ready to become founding members now. Giving both a path forward increases conversion because it respects where each person is in their decision."},
+  confirm:{label:"the thank-you page",text:"Most businesses stop communicating after someone submits a form. I see the confirmation page as one of the highest-intent moments in the whole journey. Rather than ending the conversation, this is where I introduce referrals and additional offers while excitement is still at its peak."},
+  refer:{label:"referrals",text:"Referral marketing does more than lower acquisition costs. Members who join with friends attend more consistently, encourage each other, and stay engaged longer. Growing through existing members builds stronger communities than leaning entirely on paid advertising."},
+  bogo:{label:"bring a friend",text:"Trying something new is easier with someone you already know. This offer nudges members to begin together, cutting hesitation while naturally raising accountability and long-term retention. It is designed to create better member experiences, not just generate another sale."},
+  squad:{label:"the group of four",text:"Communities grow faster when people invite their own communities. A prepaid group offer increases upfront cash flow while strengthening retention, because friends are far more likely to keep showing up together than alone."},
+  creators:{label:"the creator channel",text:"This is the point I would make loudest in an interview. The funnel builds the owned audience, and the creator stores turn trusted local instructors into an acquisition channel that sells memberships through people members already follow. One system feeds the other: presale captures the lead, the creators keep converting long after opening day."}
 };
-const NOTE_ORDER=["hero","form","proof","why","includes","menu","compare","home","timeline","quiz","reviews","faq","finalcta","confirm","refer","bogo","squad"];
+const NOTE_ORDER=["hero","form","proof","why","includes","menu","compare","home","timeline","quiz","reviews","faq","finalcta","confirm","refer","bogo","squad","creators"];
 
 /* ---------------- EXPLORER + TIMELINE + QUIZ DATA ---------------- */
 const EXP=[
@@ -1048,22 +1083,36 @@ function cycleNote(dir){
   showNote(NOTE_ORDER[i],true);
 }
 function hideBubble(){nbubble.classList.remove('show');clearSpotlight();}
+let currentKey='hero';
+/* ---- Zelda-fairy attention nudge (never auto-opens the note) ---- */
+let heyTimer=null, userEngaged=false;
+function stopFairy(){const c=document.getElementById('nchip');if(!c)return;c.classList.remove('wiggle');c.querySelector('.av').classList.remove('spark');document.getElementById('nhey').classList.remove('show');}
+function fairyPing(){
+  if(!document.body.classList.contains('commentary'))return;
+  if(nbubble.classList.contains('show')||userEngaged)return;
+  const c=document.getElementById('nchip');
+  c.classList.remove('wiggle');void c.offsetWidth;c.classList.add('wiggle');
+  c.querySelector('.av').classList.add('spark');
+  document.getElementById('nhey').classList.add('show');
+  setTimeout(()=>{document.getElementById('nhey').classList.remove('show');c.querySelector('.av').classList.remove('spark');},4200);
+}
+function scheduleFairy(){if(heyTimer)clearInterval(heyTimer);heyTimer=setInterval(fairyPing,14000);setTimeout(fairyPing,2600);}
 document.getElementById('nchip').addEventListener('click',()=>{
-  document.getElementById('nchip').classList.remove('pulse');
+  if(!document.body.classList.contains('commentary'))return; /* toggle off: do not open */
+  userEngaged=true; stopFairy();
   if(nbubble.classList.contains('show')){hideBubble();}
-  else{
-    if(!document.body.classList.contains('commentary')){document.getElementById('cmToggle').checked=true;document.body.classList.add('commentary');}
-    showNote(currentVisibleNote()||'hero',true);
-  }
+  else{showNote(currentKey||'hero',false);}
 });
 document.addEventListener('click',e=>{
   const w=e.target.closest('.why-btn');if(!w)return;
+  if(!document.body.classList.contains('commentary'))return;
   const key=w.dataset.why;
-  if(NOTES[key]){if(!document.body.classList.contains('commentary')){document.getElementById('cmToggle').checked=true;document.body.classList.add('commentary');}document.getElementById('nchip').classList.remove('pulse');showNote(key,true);}
+  if(NOTES[key]){userEngaged=true;stopFairy();showNote(key,true);}
 });
 document.getElementById('cmToggle').addEventListener('change',e=>{
   document.body.classList.toggle('commentary',e.target.checked);
-  if(!e.target.checked){hideBubble();}else{showNote(currentVisibleNote()||'hero');}
+  if(!e.target.checked){hideBubble();stopFairy();if(heyTimer)clearInterval(heyTimer);}
+  else{userEngaged=false;scheduleFairy();}
 });
 function currentVisibleNote(){
   const line=window.innerHeight*0.42;
@@ -1088,9 +1137,10 @@ window.addEventListener('scroll',()=>{
     scrollTick=false;
     const sc=document.getElementById('stickyCta');
     if(window.scrollY>560&&!document.getElementById('confirm').classList.contains('show'))sc.classList.add('show');else sc.classList.remove('show');
-    if(!document.body.classList.contains('commentary'))return;
     const k=currentVisibleNote();
-    if(k&&NOTES[k]&&k!==NOTE_ORDER[state.noteIdx])showNote(k);
+    if(k&&NOTES[k])currentKey=k; /* track the section, but never auto-open */
+    /* only follow along if the note is already open */
+    if(document.body.classList.contains('commentary')&&nbubble.classList.contains('show')&&k&&k!==NOTE_ORDER[state.noteIdx])showNote(k);
   });
 },{passive:true});
 
@@ -1208,7 +1258,7 @@ function fomoStop(){fomoOn=false;document.getElementById('fomo').classList.remov
 setTimeout(fomoShow,3500);
 
 /* ---------------- INIT ---------------- */
-setTimeout(()=>{if(document.body.classList.contains('commentary'))showNote('hero');},700);
+if(document.body.classList.contains('commentary'))scheduleFairy();
 </script>
 </body>
 </html>

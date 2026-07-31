@@ -98,6 +98,25 @@
   body[data-theme="night"] .tier-cap b{color:var(--gold-lite)}
 
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
+  /* Ritual-style sweepstakes card */
+  .card.sweeps{padding:0;overflow:hidden}
+  .sweeps-head{background:var(--grad-gold);color:#1a1405;padding:15px 22px}
+  .sh-tag{display:block;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;opacity:.82;margin-bottom:3px}
+  .sh-title{display:block;font-size:21px;font-weight:800;line-height:1.14;letter-spacing:-.01em}
+  .sweeps-body{padding:20px 22px 22px}
+  .sh-prize{font-size:14px;color:var(--ink);line-height:1.5;margin-bottom:14px}
+  .sh-prize b{font-weight:800}
+  .deadline{display:flex;align-items:center;gap:8px;background:var(--mist);border:1px solid var(--line);border-radius:11px;padding:10px 14px;font-size:13px;font-weight:700;color:var(--ink)}
+  .deadline .bolt,.deadline b{color:var(--flame-deep)}
+  body[data-theme="night"] .deadline .bolt,body[data-theme="night"] .deadline b{color:var(--gold-lite)}
+  .countdown{display:flex;align-items:center;justify-content:center;gap:6px;margin:16px 0 4px}
+  .cd-box{background:var(--ink);color:#fff;border-radius:10px;padding:8px 8px;min-width:54px;text-align:center;display:flex;flex-direction:column;gap:2px}
+  .cd-box.big{background:var(--grad-gold);color:#1a1405}
+  .cd-box b{font-size:25px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+  .cd-box span{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.82}
+  .cd-sep{font-size:19px;font-weight:800;color:var(--muted)}
+  .sh-line{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin:16px 0 14px}
+  .entry-badge{text-align:center;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:16px}
   .count{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted);margin-bottom:12px}
   .dot{width:9px;height:9px;border-radius:50%;background:#2ec26b;box-shadow:0 0 0 4px rgba(46,194,107,.18)}
   .progress{height:6px;background:var(--sand);border-radius:999px;overflow:hidden;margin:8px 0 20px}
@@ -471,46 +490,61 @@
       </div>
     </div>
 
-    <div class="card" data-note="form" id="formCard">
-      <div class="count"><span class="dot"></span> <span id="spotsLine">214 neighbors on the founding list</span></div>
-      <div class="progress"><i id="progFill"></i></div>
+    <div class="card sweeps" data-note="form" id="formCard">
+      <div class="sweeps-head">
+        <span class="sh-tag">&#9733; Free sweepstakes &middot; 3 winners</span>
+        <span class="sh-title">Win 3 months free at Pilates Addiction</span>
+      </div>
+      <div class="sweeps-body">
+        <p class="sh-prize"><b>Three winners, drawn before opening day.</b> Each wins three months of unlimited Gold, a $777 value, free.</p>
+        <div class="deadline"><span class="bolt">&#9889;</span> Enter by <b id="deadlineTxt">Sunday at 8:00 PM</b> for the founding drawing</div>
+        <div class="countdown" id="countdown" aria-label="Time left to enter">
+          <div class="cd-box big"><b id="cdD">00</b><span>days</span></div>
+          <span class="cd-sep">+</span>
+          <div class="cd-box"><b id="cdH">00</b><span>hrs</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-box"><b id="cdM">00</b><span>min</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-box"><b id="cdS">00</b><span>sec</span></div>
+        </div>
+        <p class="sh-line"><span class="dot"></span> <span id="spotsLine">214 neighbors on the founding list</span>. All it takes is your email.</p>
+        <div class="progress" style="margin:0 0 16px"><i id="progFill"></i></div>
 
-      <form id="entryForm" novalidate>
-        <!-- step 1: email -->
-        <div class="fstep on" id="fstep1">
-          <div class="field">
-            <label for="email">Enter free to win 3 months unlimited</label>
-            <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required>
-            <div class="err" id="emailErr">Please enter a valid email.</div>
+        <form id="entryForm" novalidate>
+          <!-- step 1: email -->
+          <div class="fstep on" id="fstep1">
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required>
+              <div class="err" id="emailErr">Please enter a valid email.</div>
+            </div>
+            <button type="button" class="fbtn" id="toStep2">Enter me to win 3 months free</button>
           </div>
-          <button type="button" class="fbtn" id="toStep2">Claim my free entry</button>
-          <div class="trust-row">
-            <span>&#9733; Drawn before opening day</span>
-            <span>&#9733; One quarter, on us</span>
+          <!-- step 2: name -->
+          <div class="fstep" id="fstep2">
+            <div class="field">
+              <label for="fname">Nice. What should the studio call you?</label>
+              <input type="text" id="fname" placeholder="First name" autocomplete="given-name">
+              <div class="err" id="nameErr">Add your first name to continue.</div>
+            </div>
+            <button type="button" class="fbtn" id="toStep3">Continue</button>
+            <button type="button" class="backlink" data-back="1">Back</button>
           </div>
-        </div>
-        <!-- step 2: name -->
-        <div class="fstep" id="fstep2">
-          <div class="field">
-            <label for="fname">Nice. What should the studio call you?</label>
-            <input type="text" id="fname" placeholder="First name" autocomplete="given-name">
-            <div class="err" id="nameErr">Add your first name to continue.</div>
+          <!-- step 3: phone/sms -->
+          <div class="fstep" id="fstep3">
+            <div class="field">
+              <label for="phone">Want class-drop texts and a bonus entry?</label>
+              <input type="tel" id="phone" placeholder="(optional) mobile number" autocomplete="tel">
+            </div>
+            <label class="consent"><input type="checkbox" id="smsConsent"> Text me founding-member offers, presale events, and my winner alert. Message and data rates may apply. Reply STOP to opt out. Adding a number is worth <b>+1 entry</b>.</label>
+            <button type="submit" class="fbtn">Lock in my entry</button>
+            <button type="button" class="backlink" data-back="2">Back</button>
           </div>
-          <button type="button" class="fbtn" id="toStep3">Continue</button>
-          <button type="button" class="backlink" data-back="1">Back</button>
-        </div>
-        <!-- step 3: phone/sms -->
-        <div class="fstep" id="fstep3">
-          <div class="field">
-            <label for="phone">Want class-drop texts and a bonus entry?</label>
-            <input type="tel" id="phone" placeholder="(optional) mobile number" autocomplete="tel">
-          </div>
-          <label class="consent"><input type="checkbox" id="smsConsent"> Text me founding-member offers, presale events, and my winner alert. Message and data rates may apply. Reply STOP to opt out. Adding a number is worth <b>+1 entry</b>.</label>
-          <button type="submit" class="fbtn">Lock in my entry</button>
-          <button type="button" class="backlink" data-back="2">Back</button>
-          <p class="fineprint" style="margin-top:14px">No purchase necessary. A purchase will not improve your chances. See <a href="#" onclick="openModal('rules');return false">Official Rules</a>.</p>
-        </div>
-      </form>
+        </form>
+
+        <div class="entry-badge">One entry per person &#10022; No purchase necessary</div>
+        <p class="fineprint" style="margin-top:10px">Entering is free and takes about 20 seconds. A purchase will not improve your chances of winning. <a href="#" onclick="openModal('rules');return false">Official Rules</a>.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -924,6 +958,26 @@ function renderTiers(){
   swapTier('gold');
 }
 renderTiers();
+
+/* ---------------- SWEEPSTAKES COUNTDOWN ---------------- */
+(function(){
+  function nextDrawing(){
+    const now=new Date(), d=new Date(now);
+    d.setDate(d.getDate()+((7-d.getDay())%7)); d.setHours(20,0,0,0); /* upcoming Sunday 8pm */
+    if(d-now < 12*3600*1000) d.setDate(d.getDate()+7); /* keep it a few days out */
+    return d;
+  }
+  const target=nextDrawing(), dl=document.getElementById('deadlineTxt');
+  if(dl){try{dl.textContent=target.toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'})+' at 8:00 PM';}catch(e){}}
+  const p=n=>String(n).padStart(2,'0');
+  function tick(){
+    let s=Math.max(0,Math.floor((target-new Date())/1000));
+    const d=Math.floor(s/86400);s-=d*86400;const h=Math.floor(s/3600);s-=h*3600;const m=Math.floor(s/60);s-=m*60;
+    const D=document.getElementById('cdD');if(!D)return;
+    D.textContent=p(d);document.getElementById('cdH').textContent=p(h);document.getElementById('cdM').textContent=p(m);document.getElementById('cdS').textContent=p(s);
+  }
+  tick();setInterval(tick,1000);
+})();
 
 /* ---------------- NATHAN'S NOTES (mapped to the JD) ---------------- */
 const NOTES={

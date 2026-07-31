@@ -80,8 +80,22 @@
   .prize-note{margin-top:16px;font-size:14px;font-weight:700}
   .prize-note span{color:var(--flame-deep)}
   body[data-theme="night"] .prize-note span{color:var(--flame)}
-  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
   .pill{font-size:11.5px;font-weight:700;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 11px;color:var(--muted)}
+
+  /* membership tier gallery (Ritual-style product shots, for the plan tiers) */
+  .tier-gallery{display:grid;grid-template-columns:84px 1fr;gap:13px;margin-top:22px;max-width:530px;align-items:start}
+  .tier-thumbs{display:flex;flex-direction:column;gap:10px}
+  .tier-thumb{padding:0;border:2px solid var(--line);background:none;border-radius:12px;cursor:pointer;overflow:hidden;line-height:0;transition:.16s}
+  .tier-thumb:hover{border-color:var(--gold-lite)}
+  .tier-thumb.on{border-color:var(--gold);box-shadow:0 6px 18px rgba(190,158,74,.28)}
+  .tier-thumb .tsvg{width:100%;height:auto;display:block}
+  .tier-featured{border-radius:16px;overflow:hidden;box-shadow:0 22px 50px rgba(20,16,8,.28);line-height:0;animation:tierpop .35s ease}
+  @keyframes tierpop{from{opacity:.4;transform:translateY(6px) scale(.99)}to{opacity:1;transform:none}}
+  .tier-featured .tsvg{width:100%;height:auto;display:block}
+  .tier-cap{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.45}
+  .tier-cap b{color:var(--gold-deep)}
+  body[data-theme="night"] .tier-cap b{color:var(--gold-lite)}
 
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
   .count{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted);margin-bottom:12px}
@@ -432,6 +446,12 @@
 <!-- ============ STEP 1 ============ -->
 <div class="step1" id="step1">
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7E7A8"/><stop offset=".4" stop-color="#C9A24A"/><stop offset=".62" stop-color="#8A6D1C"/><stop offset="1" stop-color="#EAD68C"/></linearGradient>
+  <linearGradient id="sf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3F4F7"/><stop offset=".42" stop-color="#C3C7CE"/><stop offset=".64" stop-color="#8C919B"/><stop offset="1" stop-color="#E4E7EC"/></linearGradient>
+  <linearGradient id="bf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EEC49A"/><stop offset=".42" stop-color="#C07E3E"/><stop offset=".66" stop-color="#7C4E22"/><stop offset="1" stop-color="#DDA76A"/></linearGradient>
+</defs></svg>
+
 <section class="wrap">
   <div class="hero">
     <div data-note="hero" id="heroText">
@@ -439,11 +459,15 @@
       <h1 id="headline">Win <span class="hl">3 months free</span> at Pilates Addiction.</h1>
       <p class="sub" id="heroSub">Three months of Gold, unlimited classes on the gold-plated Aurum Reformer, a $777 value, at the new studio on MacArthur Boulevard. Enter free while we build the founding roster.</p>
       <p class="prize-note"><span>The prize:</span> 3 months unlimited Gold membership &middot; a $777 value &middot; 3 winners drawn before opening day.</p>
+      <div class="tier-gallery">
+        <div class="tier-thumbs" id="tierThumbs"></div>
+        <div class="tier-featured" id="tierFeatured"></div>
+        <p class="tier-cap"><b>Gold is the prize</b> you enter to win. Silver and Bronze are the founding tiers you lock in. Tap a card to see each one.</p>
+      </div>
       <div class="badges">
         <span class="pill">No purchase necessary</span>
         <span class="pill">Founding members lock today&rsquo;s rates</span>
         <span class="pill">Newport Beach, 4000 MacArthur Blvd</span>
-        <span class="pill">The new gold standard in Pilates</span>
       </div>
     </div>
 
@@ -867,6 +891,39 @@
 const state={fstep:1,entries:1,referrals:0,noteIdx:0,quizIdx:0,quizScore:0,seats:[true,false,false,false]};
 const events=[];
 function track(name,meta){events.push({name,meta:meta||null});/* wire to GA4 / Meta CAPI / Klaviyo in production */}
+
+/* ---------------- MEMBERSHIP TIER CARDS (hero product shots) ---------------- */
+const TIER={
+  gold:{name:"GOLD",line:"Unlimited classes",price:"259",foil:"gf",prize:true},
+  silver:{name:"SILVER",line:"8 classes / month",price:"189",foil:"sf"},
+  bronze:{name:"BRONZE",line:"4 classes / month",price:"139",foil:"bf"}
+};
+function tierCardSVG(t){
+  const c=TIER[t],f="url(#"+c.foil+")";
+  return '<svg viewBox="0 0 360 226" class="tsvg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">'+
+    '<rect x="1.5" y="1.5" width="357" height="223" rx="20" fill="#17130C" stroke="rgba(255,255,255,.08)"/>'+
+    '<g opacity="0.14" stroke="'+f+'" fill="none" stroke-width="1.1"><circle cx="305" cy="176" r="78"/><circle cx="305" cy="176" r="58"/><circle cx="305" cy="176" r="38"/></g>'+
+    '<circle cx="54" cy="52" r="23" fill="'+f+'"/>'+
+    '<path d="M47 65V39h10a6.5 6.5 0 0 1 0 13h-10" fill="none" stroke="#17130C" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>'+
+    '<circle cx="63" cy="61.5" r="2.1" fill="#17130C"/>'+
+    '<text x="90" y="46" fill="#efe8d8" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="13" letter-spacing="1.6">PILATES ADDICTION</text>'+
+    '<text x="90" y="62" fill="#8a8272" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="9.5" letter-spacing="2.4">MEMBERSHIP</text>'+
+    '<text x="28" y="152" fill="'+f+'" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="49" letter-spacing="1">'+c.name+'</text>'+
+    '<text x="28" y="178" fill="#cfc6b3" font-family="Arial,Helvetica,sans-serif" font-weight="600" font-size="15">'+c.line+'</text>'+
+    '<text x="334" y="150" text-anchor="end" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="31">$'+c.price+'<tspan font-size="14" font-weight="700" fill="#9a927f">/mo</tspan></text>'+
+    (c.prize?'<g><rect x="28" y="190" width="214" height="26" rx="13" fill="'+f+'"/><text x="135" y="207.5" text-anchor="middle" fill="#17130C" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="11" letter-spacing=".8">THE PRIZE &#183; WIN 3 MONTHS FREE</text></g>':'<text x="334" y="205" text-anchor="end" fill="#6f6858" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="11" letter-spacing=".5">FOUNDING RATE</text>')+
+    '</svg>';
+}
+function swapTier(t){
+  document.getElementById('tierFeatured').innerHTML=tierCardSVG(t);
+  document.querySelectorAll('#tierThumbs .tier-thumb').forEach(b=>b.classList.toggle('on',b.dataset.tier===t));
+  track('tier_view',{tier:t});
+}
+function renderTiers(){
+  document.getElementById('tierThumbs').innerHTML=Object.keys(TIER).map(t=>'<button class="tier-thumb'+(t==='gold'?' on':'')+'" data-tier="'+t+'" onclick="swapTier(\''+t+'\')" aria-label="'+TIER[t].name+' tier">'+tierCardSVG(t)+'</button>').join('');
+  swapTier('gold');
+}
+renderTiers();
 
 /* ---------------- NATHAN'S NOTES (mapped to the JD) ---------------- */
 const NOTES={

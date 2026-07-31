@@ -216,22 +216,28 @@
   .calc-q{font-size:19px;font-weight:700;text-align:center;margin-bottom:14px}
   .calc-q b{font-size:26px;font-weight:900;color:var(--flame-deep);font-variant-numeric:tabular-nums}
   body[data-theme="night"] .calc-q b{color:var(--gold-lite)}
-  .calc-range{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:999px;outline:none;cursor:pointer;background:var(--sand)}
-  .calc-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--btn-gold);box-shadow:var(--btn-sheen),0 4px 12px rgba(190,158,74,.5);border:2px solid #fff;cursor:pointer}
+  .calc-range{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:999px;outline:none;cursor:pointer;background:var(--sand)}
+  .calc-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:var(--btn-gold);box-shadow:var(--btn-sheen),0 4px 12px rgba(190,158,74,.5);border:3px solid #fff;cursor:grab;transition:transform .1s}
+  .calc-range:active::-webkit-slider-thumb{transform:scale(1.12);cursor:grabbing}
+  .calc-range:focus-visible::-webkit-slider-thumb{box-shadow:var(--btn-sheen),0 0 0 4px rgba(190,158,74,.35)}
   body[data-theme="night"] .calc-range::-webkit-slider-thumb{border-color:#2b261d}
-  .calc-range::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#C9A544;border:2px solid #fff;box-shadow:0 4px 12px rgba(190,158,74,.5);cursor:pointer}
+  .calc-range::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#C9A544;border:3px solid #fff;box-shadow:0 4px 12px rgba(190,158,74,.5);cursor:grab}
   .calc-scale{display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--muted);margin-top:7px;letter-spacing:.04em}
-  .calc-tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
-  .ct{position:relative;border:1.5px solid var(--line);border-radius:13px;padding:14px 12px;text-align:center;background:var(--bone);transition:.2s}
+  .calc-tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:26px;padding-top:12px;align-items:stretch}
+  .ct{position:relative;display:flex;flex-direction:column;align-items:center;border:1.5px solid var(--line);border-radius:14px;padding:16px 12px;text-align:center;background:var(--bone);transition:.18s}
   .ct-name{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-  .ct-cost{font-size:22px;font-weight:900;margin-top:5px;line-height:1;font-variant-numeric:tabular-nums}
-  .ct-per{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
-  .ct-note{font-size:10.5px;color:var(--muted);margin-top:7px;line-height:1.3}
-  .ct.win{border-color:var(--gold);background:rgba(190,158,74,.08);box-shadow:0 10px 26px rgba(190,158,74,.2);transform:translateY(-3px)}
+  .ct-cost{font-size:23px;font-weight:900;margin-top:6px;line-height:1;font-variant-numeric:tabular-nums}
+  .ct-per{font-size:11.5px;font-weight:800;margin-top:8px;color:var(--flame-deep);background:var(--mist);padding:3px 9px;border-radius:999px}
+  body[data-theme="night"] .ct-per{color:var(--gold-lite);background:rgba(190,158,74,.1)}
+  .ct-note{font-size:10.5px;color:var(--muted);margin-top:auto;padding-top:8px;line-height:1.3}
+  .ct.win{border-color:var(--gold);border-width:2px;background:rgba(190,158,74,.09);box-shadow:0 12px 30px rgba(190,158,74,.22)}
   .ct.win .ct-cost{color:var(--flame-deep)}
   body[data-theme="night"] .ct.win .ct-cost{color:var(--gold-lite)}
+  .ct.win .ct-per{background:var(--btn-gold);color:#111}
   .ct.out{opacity:.5}
-  .ct-flag{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--btn-gold);color:#111;padding:2px 9px;border-radius:6px;box-shadow:var(--btn-sheen);white-space:nowrap;opacity:0;transition:.2s}
+  .ct.out .ct-per{color:var(--muted);background:transparent;padding:3px 0}
+  body[data-theme="night"] .ct.out .ct-per{color:var(--muted)}
+  .ct-flag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--btn-gold);color:#111;padding:3px 10px;border-radius:999px;box-shadow:var(--btn-sheen);white-space:nowrap;opacity:0;transition:.2s}
   .ct.win .ct-flag{opacity:1}
   .calc-verdict{margin-top:20px;background:var(--mist);border:1px solid var(--line);border-radius:13px;padding:15px 18px;font-size:15px;line-height:1.5;text-align:center}
   body[data-theme="night"] .calc-verdict{background:rgba(190,158,74,.06)}
@@ -843,8 +849,8 @@
   <div class="calc" id="calc">
     <div class="calc-head">
       <div class="calc-q">I would come <b id="calcN">8</b> <span id="calcUnit">times</span> a month</div>
-      <input id="calcRange" class="calc-range" type="range" min="1" max="20" value="8" aria-label="Classes per month">
-      <div class="calc-scale"><span>1</span><span>10</span><span>20+</span></div>
+      <input id="calcRange" class="calc-range" type="range" min="1" max="40" value="8" aria-label="Classes per month">
+      <div class="calc-scale"><span>1</span><span>10</span><span>20</span><span>30</span><span>40+</span></div>
     </div>
     <div class="calc-tiers" id="calcTiers"></div>
     <div class="calc-verdict" id="calcVerdict"></div>
@@ -1386,16 +1392,17 @@ function renderCalc(n){
       '<div class="ct-per">'+t.per+'</div>'+
       '<div class="ct-note">'+t.note+'</div></div>';
   }).join('');
-  var nTxt=n>=20?'20+':n;
+  var nTxt=n>=40?'40+':n;
+  var dropCost=39*n, saveVs=dropCost-winner.cost;
   var v;
   if(winner.k==='drop'){
-    v='At <b>'+nTxt+' a month</b>, single drop-ins ($'+(39*n)+') still beat locking in. Come a little more often and a membership takes over.';
+    v='At <b>'+nTxt+' a month</b>, single drop-ins ($'+dropCost.toLocaleString()+') still beat locking in. Come a little more often and a membership takes over.';
   }else if(winner.k==='bronze'){
-    v='At <b>'+nTxt+' a month</b>, <b>Bronze</b> wins at about $'+Math.round(139/n)+' a class. One more class a month and Silver pulls ahead.';
+    v='At <b>'+nTxt+' a month</b>, <b>Bronze</b> wins at about $'+Math.round(139/n)+' a class'+(saveVs>0?', saving <b>$'+saveVs.toLocaleString()+' a month</b> over drop-ins':'')+'. One more class a month and Silver pulls ahead.';
   }else if(winner.k==='silver'){
-    v='At <b>'+nTxt+' a month</b>, <b>Silver</b> is the sweet spot, about $'+Math.round(189/n)+' a class. Cross into 9 or more and Gold unlimited wins.';
+    v='At <b>'+nTxt+' a month</b>, <b>Silver</b> is the sweet spot at about $'+Math.round(189/n)+' a class'+(saveVs>0?', saving <b>$'+saveVs.toLocaleString()+' a month</b> over drop-ins':'')+'. Cross into 9 or more and Gold unlimited wins.';
   }else{
-    v='At <b>'+nTxt+' a month</b>, <b>Gold unlimited</b> is about $'+Math.round(259/n)+' a class and the only tier that keeps up. Drop-ins would run $'+(39*n)+'. That is why unlimited is the tier that pays off.';
+    v='At <b>'+nTxt+' a month</b>, <b>Gold unlimited</b> is about $'+Math.round(259/n)+' a class and the only tier that keeps up. Drop-ins would run $'+dropCost.toLocaleString()+', so unlimited saves you <b>$'+saveVs.toLocaleString()+' a month</b>. That is why unlimited pays off.';
   }
   document.getElementById('calcVerdict').innerHTML=v;
   document.getElementById('calcN').textContent=nTxt;

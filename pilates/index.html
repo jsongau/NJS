@@ -462,6 +462,119 @@
   .homecall h3{font-size:19px;font-weight:800;color:#fff;margin-bottom:6px}
   .homecall h3 span{color:var(--gold-lite)}
   .homecall p{font-size:14.5px;color:#cbc3b3;line-height:1.55}
+  /* ===== CONFIRMATION: conversion layout ===== */
+  .cf-wrap{max-width:1260px;margin:0 auto;padding:22px 20px 92px}
+  .cf-grid{display:grid;grid-template-columns:272px minmax(0,1fr) 338px;gap:20px;align-items:start}
+  .cf-rail{position:sticky;top:150px}
+  .cf-main{min-width:0}
+  .cf-hero{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 26px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .cf-glow{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% -10%,rgba(190,158,74,.20),transparent 60%);pointer-events:none}
+  .cf-hero h1{font-size:clamp(26px,3.4vw,34px);font-weight:800;position:relative}
+  .cf-status{display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px;position:relative}
+  .cf-chip{display:inline-flex;align-items:center;gap:7px;background:var(--mist);border-radius:999px;padding:8px 15px;font-weight:800;font-size:13px;color:var(--flame-deep)}
+  body[data-theme="night"] .cf-chip{color:var(--gold-lite)}
+  .cf-chip .d{width:7px;height:7px;border-radius:50%;background:#2ec26b;box-shadow:0 0 0 3px rgba(46,194,107,.18)}
+  /* left rail: join now */
+  .jn{background:linear-gradient(180deg,#151210,#0b0a08);color:#f4efe6;border-radius:18px;padding:22px;border:1px solid #2a251d}
+  .jn h3{font-size:18px;font-weight:800;color:#fff;line-height:1.22}
+  .jn-sub{font-size:13px;color:#c9c0b0;margin-top:8px;line-height:1.5}
+  .jn-price{display:flex;align-items:baseline;gap:8px;margin:16px 0 2px}
+  .jn-price b{font-size:34px;font-weight:900;background:var(--btn-gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .jn-price span{font-size:12.5px;color:#c9c0b0}
+  .jn-price s{color:#8c8474;font-size:13px;font-weight:700}
+  .jn-list{list-style:none;margin:14px 0 0;display:grid;gap:9px}
+  .jn-list li{font-size:12.5px;color:#e7e0d2;display:flex;gap:8px;align-items:flex-start;line-height:1.4}
+  .jn-list li svg{width:16px;height:16px;flex:none;margin-top:1px;stroke:var(--gold-lite);fill:none;stroke-width:2.6}
+  .jn-scar{margin-top:16px}
+  .jn-scarbar{height:8px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+  .jn-scarbar i{display:block;height:100%;width:64%;background:var(--btn-gold);box-shadow:var(--btn-sheen)}
+  .jn-scarlab{font-size:11.5px;color:#c9c0b0;margin-top:7px;font-weight:700}
+  .jn-scarlab b{color:var(--gold-lite)}
+  .jn-cta{width:100%;margin-top:16px;background:var(--btn-gold);color:#111;border:0;border-radius:6px;padding:14px;font:inherit;font-weight:900;font-size:13.5px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;box-shadow:var(--btn-sheen)}
+  .jn-fine{font-size:10px;color:#8c8474;margin-top:10px;text-align:center;line-height:1.4}
+  /* discount reveal */
+  .disc{margin-top:20px;background:radial-gradient(140% 120% at 100% 0,rgba(190,158,74,.16),transparent 55%),var(--card);border:1px solid var(--gold);border-radius:18px;padding:24px;position:relative;overflow:hidden}
+  .disc-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--flame-deep)}
+  body[data-theme="night"] .disc-tag{color:var(--gold-lite)}
+  .disc-main{display:flex;align-items:center;gap:18px;margin-top:10px;flex-wrap:wrap}
+  .disc-num{font-size:60px;font-weight:900;line-height:.9;background:var(--btn-gold);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+  .disc-txt h3{font-size:19px;font-weight:800}
+  .disc-txt p{font-size:13.5px;color:var(--muted);margin-top:5px;line-height:1.5;max-width:40ch}
+  .disc-row{display:flex;align-items:baseline;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .disc-row s{color:var(--muted);font-size:16px;font-weight:700}
+  .disc-row b{font-size:24px;font-weight:900;color:var(--ink)}
+  .disc-row .save{background:var(--good-soft);color:#1f7a44;font-size:12px;font-weight:800;padding:3px 9px;border-radius:6px}
+  .disc-cta{margin-top:16px;background:var(--btn-gold);color:#111;border:0;border-radius:6px;padding:13px 22px;font:inherit;font-weight:900;font-size:13.5px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;box-shadow:var(--btn-sheen)}
+  /* right rail: referral engine */
+  .rf{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+  .rf h3{font-size:17px;font-weight:800}
+  .rf-sub{font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.45}
+  .rf-avatars{display:flex;gap:8px;margin:16px 0 8px;justify-content:center}
+  .av-slot{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;position:relative;transition:.3s}
+  .av-slot.me{background:var(--btn-gold);color:#111;box-shadow:var(--btn-sheen);font-size:12px}
+  .av-slot.empty{background:var(--sand);color:var(--muted);border:2px dashed var(--line);font-size:18px}
+  .av-slot.filled{background:var(--ink);color:var(--bone);border:0;animation:pop .42s cubic-bezier(.2,.9,.3,1.4)}
+  @keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.16)}100%{transform:scale(1);opacity:1}}
+  .rf-prog{height:9px;border-radius:999px;background:var(--sand);overflow:hidden;margin-top:4px}
+  .rf-prog i{display:block;height:100%;width:0;background:var(--btn-gold);box-shadow:var(--btn-sheen);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .rf-count{font-size:12px;font-weight:800;color:var(--muted);text-align:center;margin-top:9px}
+  .rf-count b{color:var(--flame-deep)}
+  body[data-theme="night"] .rf-count b{color:var(--gold-lite)}
+  .ms{display:grid;gap:7px;margin-top:14px}
+  .ms-row{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--line);border-radius:12px;background:var(--bone);transition:.3s;opacity:.6}
+  .ms-row.hit{opacity:1;border-color:var(--gold);background:rgba(190,158,74,.08)}
+  .ms-ic{width:28px;height:28px;border-radius:8px;background:var(--mist);display:grid;place-items:center;flex:none;font-weight:900;font-size:12px;color:var(--muted)}
+  .ms-row.hit .ms-ic{background:var(--btn-gold);color:#111;box-shadow:var(--btn-sheen)}
+  .ms-tx{font-size:12px;line-height:1.25}
+  .ms-tx b{font-weight:800;display:block}
+  .ms-tx span{color:var(--muted);font-size:11px}
+  .ms-check{margin-left:auto;width:16px;height:16px;flex:none;stroke:var(--good);fill:none;stroke-width:2.6;opacity:0;transition:.3s}
+  .ms-row.hit .ms-check{opacity:1}
+  /* socks reward */
+  .socks{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;background:var(--bone);position:relative;overflow:hidden;transition:.4s}
+  .socks.unlocked{border-color:var(--gold);background:radial-gradient(120% 100% at 50% 0,rgba(190,158,74,.18),transparent 62%),var(--card)}
+  .socks-svg{width:76px;height:76px;margin:0 auto;display:block;filter:grayscale(1) opacity(.45);transition:.5s}
+  .socks.unlocked .socks-svg{filter:none;animation:sockpop .55s cubic-bezier(.2,.9,.3,1.4)}
+  @keyframes sockpop{0%{transform:scale(.6) rotate(-10deg)}62%{transform:scale(1.14) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+  .socks-lab{font-size:13px;font-weight:800;margin-top:8px}
+  .socks-lab .lk{color:var(--muted)}
+  .socks-lab .ul{color:var(--flame-deep);display:none}
+  body[data-theme="night"] .socks-lab .ul{color:var(--gold-lite)}
+  .socks.unlocked .socks-lab .lk{display:none}
+  .socks.unlocked .socks-lab .ul{display:inline}
+  .socks-sub{font-size:11px;color:var(--muted);margin-top:4px}
+  /* share row */
+  .rf-share{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:14px}
+  .sh-btn{aspect-ratio:1;border:1px solid var(--line);border-radius:11px;background:var(--bone);display:grid;place-items:center;cursor:pointer;transition:.12s}
+  .sh-btn:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .sh-btn svg{width:19px;height:19px}
+  .rf-link{display:flex;gap:6px;margin-top:10px}
+  .rf-link input{flex:1;min-width:0;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font:inherit;font-size:11.5px;background:var(--mist);color:var(--ink)}
+  .rf-link button{background:var(--ink);color:var(--bone);border:0;border-radius:9px;padding:9px 15px;font:inherit;font-weight:800;font-size:12.5px;cursor:pointer}
+  .rf-primary{width:100%;margin-top:10px;background:var(--btn-gold);color:#111;border:0;border-radius:6px;padding:13px;font:inherit;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;box-shadow:var(--btn-sheen)}
+  .rf-demo{font-size:11px;color:var(--muted);text-align:center;margin-top:9px}
+  .rf-demo button{background:none;border:0;color:var(--flame-deep);font:inherit;font-weight:800;font-size:11px;text-decoration:underline;cursor:pointer}
+  body[data-theme="night"] .rf-demo button{color:var(--gold-lite)}
+  /* sticky bottom bar */
+  .cf-bottom{position:fixed;left:0;right:0;bottom:0;z-index:64;background:var(--card);border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(20,16,8,.14);display:none;align-items:center;gap:12px;padding:11px 20px}
+  body.confirm-active .cf-bottom{display:flex}
+  .cfb-info{font-size:13px;font-weight:700;color:var(--ink);min-width:0}
+  .cfb-info b{color:var(--flame-deep)}
+  body[data-theme="night"] .cfb-info b{color:var(--gold-lite)}
+  .cfb-spacer{flex:1}
+  .cfb-share{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:12px 18px;font:inherit;font-weight:800;font-size:13px;cursor:pointer}
+  .cfb-join{background:var(--btn-gold);color:#111;border:0;border-radius:6px;padding:12px 22px;font:inherit;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;box-shadow:var(--btn-sheen)}
+  body.confirm-active .sticky-cta{display:none !important}
+  body.confirm-active .fomo{bottom:156px}
+  /* confetti */
+  .confetti{position:fixed;inset:0;pointer-events:none;z-index:95;overflow:hidden}
+  .confetti i{position:absolute;width:9px;height:14px;top:-24px;border-radius:2px;animation:cfall linear forwards}
+  @keyframes cfall{to{transform:translateY(108vh) rotate(560deg);opacity:.85}}
+  @media(max-width:980px){
+    .cf-grid{grid-template-columns:1fr}
+    .cf-rail{position:static}
+    .cf-order-m{order:1}.cf-order-l{order:2}.cf-order-r{order:3}
+  }
   @media(max-width:860px){
     .hero{grid-template-columns:1fr;gap:28px}
     #formCard{position:static}
@@ -847,33 +960,65 @@
 
 <!-- ============ STEP 2: CONFIRMATION ============ -->
 <div class="confirm" id="confirm">
-<section class="wrap">
-  <div class="win" data-note="confirm" id="winBlock">
-    <div class="successviz" aria-hidden="true">
-      <svg class="bigcheck" viewBox="0 0 64 64">
-        <circle class="bc-ring" cx="32" cy="32" r="28"/>
-        <path class="bc-tick" d="M20 33.5 28.5 42 44 24.5"/>
-      </svg>
-    </div>
-    <h1 style="font-size:34px">You&rsquo;re in, <span id="nameEcho">friend</span>.</h1>
-    <p class="sub" style="margin:10px auto 0">Your name is on the founding roster and in the draw. Good luck. We mean it.</p>
-    <div class="entrybox"><span id="entryCount">1 entry logged</span></div>
-    <div class="receipt">
-      <p>We sent a confirmation to <b id="emailEcho">your email</b><span id="phoneEcho"></span>. If it is not there in a few minutes, check spam or promotions so you do not miss the winner alert.</p>
-      <p>Three winners are drawn <b>before opening day</b>, each for three months of unlimited membership. Winners are notified by email.</p>
-    </div>
-  </div>
+<div class="cf-wrap">
+  <div class="cf-grid">
 
-  <!-- referral: more chances -->
-  <div class="refer" data-note="refer" id="refer">
-    <h3 style="font-size:22px;font-family:var(--serif)">Want more chances to win?</h3>
-    <p class="sub" style="margin:8px auto 0;max-width:46ch">Every friend who joins the founding list through your link is <b>+1 entry for both of you</b>. Bring 3 and earn a bonus.</p>
-    <div class="meter"><i id="meterFill"></i></div>
-    <div style="font-size:12.5px;color:var(--muted);font-weight:700" id="meterCount">0 of 3 friends invited</div>
-    <div style="font-size:12.5px;color:var(--muted);margin-top:2px" id="meterNote">3 more to earn 5 bonus entries.</div>
-    <button class="invite" onclick="openShare()" style="margin-top:14px">Invite friends for bonus entries</button>
-    <div><button class="why-btn" data-why="refer">Why bonus entries?</button></div>
-  </div>
+  <!-- LEFT RAIL: skip the wait, join now -->
+  <aside class="cf-rail cf-order-l" data-note="bogo">
+    <div class="jn">
+      <h3>Do not wait on a 1-in-many draw.</h3>
+      <p class="jn-sub">Three names win the draw. Every founding member wins the rate. Lock the founding price now and start before the doors open.</p>
+      <div class="jn-price"><b>$259</b><span>/mo, locked for life</span></div>
+      <div class="jn-price" style="margin-top:0"><s>Rates rise when the studio opens</s></div>
+      <ul class="jn-list">
+        <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Founding rate frozen for as long as you stay</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>First pick of class times before public booking</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>On the Aurum Reformer from day one</li>
+      </ul>
+      <div class="jn-scar">
+        <div class="jn-scarbar"><i id="jnBar"></i></div>
+        <div class="jn-scarlab"><b id="jnLeft">18</b> of 50 founding memberships left</div>
+      </div>
+      <button class="jn-cta" onclick="jumpTo('bogoCard')">Start my founding membership</button>
+      <p class="jn-fine">Illustrative founding offer. Not affiliated with Pilates Addiction.</p>
+    </div>
+  </aside>
+
+  <!-- CENTER -->
+  <div class="cf-main cf-order-m">
+    <div class="cf-hero win" data-note="confirm" id="winBlock">
+      <div class="cf-glow"></div>
+      <div class="successviz" aria-hidden="true">
+        <svg class="bigcheck" viewBox="0 0 64 64">
+          <circle class="bc-ring" cx="32" cy="32" r="28"/>
+          <path class="bc-tick" d="M20 33.5 28.5 42 44 24.5"/>
+        </svg>
+      </div>
+      <h1>You&rsquo;re in, <span id="nameEcho">friend</span>.</h1>
+      <p class="sub" style="margin:8px auto 0;max-width:48ch">Your spot on the founding roster is saved and you are in the draw. Now here are two ways to win before the draw even happens.</p>
+      <div class="cf-status">
+        <span class="cf-chip"><span class="d"></span><span id="entryCount">1 entry logged</span></span>
+        <span class="cf-chip" id="refChip">0 friends joined</span>
+      </div>
+      <div class="receipt" style="margin-top:18px">
+        <p>Confirmation sent to <b id="emailEcho">your email</b><span id="phoneEcho"></span>. If it is not there in a few minutes, check spam or promotions so you do not miss the winner alert.</p>
+        <p>Three winners are drawn <b>before opening day</b>, each for three months of unlimited membership.</p>
+      </div>
+    </div>
+
+    <!-- discount reveal -->
+    <div class="disc" data-note="squad">
+      <div class="disc-tag">Founding-member unlock</div>
+      <div class="disc-main">
+        <div class="disc-num" id="discNum">20% off</div>
+        <div class="disc-txt">
+          <h3>six months, everything included</h3>
+          <p>Prepay six months at the founding rate and take twenty percent off. Bring a crew of four and every one of you gets it.</p>
+        </div>
+      </div>
+      <div class="disc-row"><s>$1,554</s><b>$1,243</b><span class="save">save $311 each</span></div>
+      <button class="disc-cta" onclick="jumpTo('squadCard')">Build my crew and save 20%</button>
+    </div>
 
   <!-- BOGO tripwire: cant wait? $259 Gold month + a friend's month free -->
   <div class="offer" data-note="bogo" id="bogoCard">
@@ -933,11 +1078,68 @@
     <button class="why-btn" data-why="squad">Why a prepaid crew deal?</button>
   </div>
 
-  <div class="win" style="margin-top:28px">
-    <button class="btn-mini ghost" onclick="goHome()">Replay the funnel from the top</button>
-    <p class="fineprint" style="text-align:center;margin-top:12px">No purchase necessary. A purchase will not improve your chances of winning. <a href="#" onclick="openModal('rules');return false">Official Rules</a></p>
-  </div>
-</section>
+    <div class="win" style="margin-top:24px">
+      <button class="btn-mini ghost" onclick="goHome()">Replay the funnel from the top</button>
+      <p class="fineprint" style="text-align:center;margin-top:12px">No purchase necessary. A purchase will not improve your chances of winning. <a href="#" onclick="openModal('rules');return false">Official Rules</a></p>
+    </div>
+  </div><!-- /cf-main -->
+
+  <!-- RIGHT RAIL: referral engine -->
+  <aside class="cf-rail cf-order-r" data-note="refer">
+    <div class="rf" id="refer">
+      <h3>Bring friends. Unlock rewards.</h3>
+      <p class="rf-sub">Every friend who joins with your link is <b>+1 entry for both of you</b>. Get four and your whole crew gets free grip socks.</p>
+      <div class="rf-avatars" id="rfAvatars">
+        <span class="av-slot me">You</span>
+        <span class="av-slot empty" data-slot="0">+</span>
+        <span class="av-slot empty" data-slot="1">+</span>
+        <span class="av-slot empty" data-slot="2">+</span>
+        <span class="av-slot empty" data-slot="3">+</span>
+      </div>
+      <div class="rf-prog"><i id="rfBar"></i></div>
+      <div class="rf-count"><b id="rfNum">0</b> of 4 friends joined</div>
+      <div class="ms" id="msLadder">
+        <div class="ms-row" data-ms="1"><span class="ms-ic">1</span><span class="ms-tx"><b>+1 entry each</b><span>you and your friend</span></span><svg class="ms-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
+        <div class="ms-row" data-ms="2"><span class="ms-ic">2</span><span class="ms-tx"><b>Priority booking</b><span>skip the opening-week waitlist</span></span><svg class="ms-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
+        <div class="ms-row" data-ms="3"><span class="ms-ic">3</span><span class="ms-tx"><b>5 bonus entries</b><span>a real jump in your odds</span></span><svg class="ms-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
+        <div class="ms-row" data-ms="4"><span class="ms-ic">4</span><span class="ms-tx"><b>Free grip socks for all 4</b><span>on the house, at the studio</span></span><svg class="ms-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
+      </div>
+      <div class="socks" id="socksCard">
+        <svg class="socks-svg" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+          <g transform="rotate(9 40 40)" opacity=".55">
+            <path d="M40 13h11a2 2 0 0 1 2 2v17c0 2.2.9 3.6 2.5 5l3.6 3.1c4 3.4 3.5 9.6-.9 12.3-3.8 2.3-8.8 1.3-11.4-2.2l-3.3-4.4C41.7 40 40 38.2 40 35.6V13Z" fill="url(#gf)" stroke="#7C6320" stroke-width="1.4"/>
+          </g>
+          <g>
+            <path d="M17 13h11a2 2 0 0 1 2 2v17c0 2.2.9 3.6 2.5 5l3.6 3.1c4 3.4 3.5 9.6-.9 12.3-3.8 2.3-8.8 1.3-11.4-2.2l-3.3-4.4C18.7 40 17 38.2 17 35.6V13Z" fill="url(#gf)" stroke="#7C6320" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M17 19h13" stroke="#7C6320" stroke-width="1.7"/>
+            <g fill="#5c4a18"><circle cx="21.5" cy="47" r="1.1"/><circle cx="25" cy="49.5" r="1.1"/><circle cx="28.5" cy="51.5" r="1.1"/><circle cx="24" cy="44" r="1.1"/><circle cx="27.5" cy="46.5" r="1.1"/></g>
+          </g>
+        </svg>
+        <div class="socks-lab"><span class="lk">Free grip socks locked</span><span class="ul">Grip socks unlocked for your crew</span></div>
+        <div class="socks-sub" id="socksSub">Four friends unlocks a free pair for everyone</div>
+      </div>
+      <div class="rf-share">
+        <button class="sh-btn" onclick="shareVia('sms')" title="Text a friend" aria-label="Text a friend"><svg viewBox="0 0 24 24"><path fill="#34C759" d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H10l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><g fill="#fff"><circle cx="8" cy="10" r="1.3"/><circle cx="12" cy="10" r="1.3"/><circle cx="16" cy="10" r="1.3"/></g></svg></button>
+        <button class="sh-btn" onclick="shareVia('wa')" title="WhatsApp" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path fill="#25D366" d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Z"/><path fill="#fff" d="M9.2 7.4c-.2-.5-.4-.5-.6-.5h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.1s.9 2.5 1 2.6c.1.2 1.7 2.8 4.3 3.8 2.1.8 2.6.7 3 .6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a5.7 5.7 0 0 1-1.7-1c-.6-.6-1.1-1.3-1.2-1.5-.1-.2 0-.3.1-.4l.4-.5.3-.5v-.4l-.7-1.6Z"/></svg></button>
+        <button class="sh-btn" onclick="shareVia('fb')" title="Facebook" aria-label="Facebook"><svg viewBox="0 0 24 24"><path fill="#1877F2" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.8 3.7-3.8 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/></svg></button>
+        <button class="sh-btn" onclick="shareVia('email')" title="Email" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="#B8912E" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></button>
+        <button class="sh-btn" onclick="shareVia('copy')" title="Copy link" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg></button>
+      </div>
+      <div class="rf-link"><input readonly id="reflink2" value="https://[concept].fit/r/NATHAN-8F3K"><button onclick="shareVia('copy')">Copy</button></div>
+      <button class="rf-primary" onclick="shareVia('native')">Share my link</button>
+      <div class="rf-demo">Portfolio demo. <button onclick="bumpReferral()">Simulate a friend joining</button></div>
+    </div>
+  </aside>
+
+  </div><!-- /cf-grid -->
+</div><!-- /cf-wrap -->
+
+<div class="cf-bottom">
+  <div class="cfb-info"><b id="cfbEntries">1 entry</b> logged, founding rate available now</div>
+  <div class="cfb-spacer"></div>
+  <button class="cfb-share" onclick="shareVia('native')">Share link</button>
+  <button class="cfb-join" onclick="jumpTo('bogoCard')">Start membership</button>
+</div>
 </div><!-- /confirm -->
 
 <section class="wrap" data-note="creators" style="border-top:1px solid var(--line);padding:46px 20px 8px">
@@ -1029,7 +1231,8 @@
 
 <script>
 /* ---------------- STATE + TRACK ---------------- */
-const state={fstep:1,entries:1,referrals:0,noteIdx:0,quizIdx:0,quizScore:0,seats:[true,false,false,false]};
+const state={fstep:1,entries:1,baseEntries:1,referrals:0,noteIdx:0,quizIdx:0,quizScore:0,seats:[true,false,false,false]};
+const FRIEND_NAMES=['Maya','Jordan','Priya','Diego','Sana','Theo','Nina','Kai'];
 const events=[];
 function track(name,meta){events.push({name,meta:meta||null});/* wire to GA4 / Meta CAPI / Klaviyo in production */}
 
@@ -1292,28 +1495,37 @@ document.getElementById('toStep3').addEventListener('click',()=>{
 document.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>showFstep(+b.dataset.back)));
 document.getElementById('entryForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const nm=document.getElementById('fname').value.trim()||"friend";
+  let nm=document.getElementById('fname').value.trim()||"friend";
+  nm=nm.charAt(0).toUpperCase()+nm.slice(1);
   const phone=document.getElementById('phone').value.trim();
   const sms=document.getElementById('smsConsent').checked;
-  state.entries=1+(phone&&sms?1:0);
+  state.baseEntries=1+(phone&&sms?1:0);
+  state.referrals=0;
   document.getElementById('nameEcho').textContent=nm;
   document.getElementById('phoneEcho').textContent=(phone&&sms)?" and text":"";
-  document.getElementById('entryCount').textContent=state.entries+(state.entries>1?" entries logged (email + SMS bonus)":" entry logged");
   document.getElementById('emailEcho').textContent=document.getElementById('email').value.trim()||"your email";
+  renderReferral();
   track('entry_completed',{sms:sms&&!!phone});
   document.getElementById('step1').classList.add('hide');
   document.getElementById('confirm').classList.add('show');
+  document.body.classList.add('confirm-active');
   bogoStartClock();
   window.scrollTo({top:0,behavior:'smooth'});
   if(document.body.classList.contains('commentary')){setTimeout(()=>showNote('confirm'),450);}
 });
+function jumpTo(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+  el.animate?el.animate([{boxShadow:'0 0 0 0 rgba(190,158,74,.5)'},{boxShadow:'0 0 0 8px rgba(190,158,74,0)'}],{duration:900}):0;
+  track('cf_jump',{to:id});
+}
 function goHome(){
   document.getElementById('entryForm').reset();
   showFstep(1);
   document.getElementById('confirm').classList.remove('show');
+  document.body.classList.remove('confirm-active');
   document.getElementById('step1').classList.remove('hide');
-  state.referrals=0;document.getElementById('meterFill').style.width='0';
-  document.getElementById('meterCount').textContent='0 of 3 friends invited';
+  state.referrals=0;renderReferral();
   window.scrollTo({top:0,behavior:'smooth'});track('logo_home');
   if(document.body.classList.contains('commentary')){setTimeout(()=>showNote('hero'),400);}
 }
@@ -1415,19 +1627,59 @@ window.addEventListener('scroll',()=>{
   });
 },{passive:true});
 
-/* ---------------- REFERRAL + SHARE ---------------- */
-function bumpReferral(){
-  if(state.referrals>=3)return;
-  state.referrals++;
-  document.getElementById('meterFill').style.width=Math.min(100,(state.referrals/3)*100)+'%';
-  document.getElementById('meterCount').textContent=state.referrals+' of 3 friends invited';
-  if(state.referrals>=3){
-    state.entries+=5;
-    document.getElementById('meterNote').textContent='Milestone reached, 5 bonus entries added.';
-    document.getElementById('entryCount').textContent=state.entries+" entries logged (incl. referral bonus)";
-  }else{
-    document.getElementById('meterNote').textContent=(3-state.referrals)+" more to earn 5 bonus entries. Almost there.";
+/* ---------------- REFERRAL ENGINE ---------------- */
+function entriesFor(r){return state.baseEntries+r+(r>=3?5:0);}
+function renderReferral(){
+  const r=state.referrals;
+  // entries
+  state.entries=entriesFor(r);
+  const eLab=state.entries+(state.entries===1?' entry logged':' entries logged')+(r>=3?' (incl. referral bonus)':'');
+  const ec=document.getElementById('entryCount');if(ec)ec.textContent=eLab;
+  const cfb=document.getElementById('cfbEntries');if(cfb)cfb.textContent=state.entries+(state.entries===1?' entry':' entries');
+  const chip=document.getElementById('refChip');if(chip)chip.textContent=r+(r===1?' friend joined':' friends joined');
+  // avatars
+  document.querySelectorAll('#rfAvatars .av-slot.empty').forEach(s=>{
+    const i=+s.dataset.slot;
+    if(i<r){if(!s.classList.contains('filled')){s.classList.add('filled');s.textContent=(FRIEND_NAMES[i]||'F').charAt(0);}}
+    else{s.classList.remove('filled');s.textContent='+';}
+  });
+  // progress + count
+  const bar=document.getElementById('rfBar');if(bar)bar.style.width=Math.min(100,(r/4)*100)+'%';
+  const num=document.getElementById('rfNum');if(num)num.textContent=r;
+  // milestones
+  document.querySelectorAll('#msLadder .ms-row').forEach(row=>row.classList.toggle('hit',r>=+row.dataset.ms));
+  // socks
+  const socks=document.getElementById('socksCard');
+  if(socks){
+    const un=r>=4;socks.classList.toggle('unlocked',un);
+    document.getElementById('socksSub').textContent=un?'Redeem at the front desk on your first visit':(4-r)+' more '+((4-r)===1?'friend':'friends')+' unlocks a free pair for everyone';
   }
+}
+function bumpReferral(){
+  if(state.referrals>=4){toast('Crew full. Grip socks unlocked for everyone.');return;}
+  state.referrals++;
+  renderReferral();
+  const r=state.referrals;
+  if(r===3||r===4)fireConfetti();
+  if(r===4)toast('Four friends in. Free grip socks unlocked for your whole crew.');
+  else toast('A friend joined. You are both up an entry.');
+  track('referral_join',{count:r});
+}
+function fireConfetti(){
+  const box=document.createElement('div');box.className='confetti';
+  const cols=['#D8BE72','#B8912E','#E8503A','#F7E7B0','#7C6320'];
+  for(let i=0;i<44;i++){
+    const p=document.createElement('i');
+    const left=(i*2.3+ (i*37%13))%100;
+    p.style.left=left+'%';
+    p.style.background=cols[i%cols.length];
+    p.style.animationDuration=(1.6+ (i%7)*0.22)+'s';
+    p.style.animationDelay=((i%9)*0.04)+'s';
+    p.style.transform='rotate('+((i*47)%360)+'deg)';
+    box.appendChild(p);
+  }
+  document.body.appendChild(box);
+  setTimeout(()=>box.remove(),3200);
 }
 function openShare(){document.getElementById('shareModal').classList.add('show');track('share_open');}
 function closeShare(){document.getElementById('shareModal').classList.remove('show');}

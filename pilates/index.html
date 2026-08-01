@@ -187,11 +187,15 @@
   .backlink{display:block;width:100%;background:none;border:0;font:inherit;font-size:13px;color:var(--muted);cursor:pointer;margin-top:12px;text-decoration:underline;text-align:center}
   /* primary CTA + reviewer shortcut, side by side */
   .fbtn-row{display:flex;gap:9px;align-items:stretch;margin-top:16px}
-  .fbtn-row .fbtn{flex:1.7;margin-top:0;padding:15px 12px;font-size:13.5px;letter-spacing:.06em}
-  .wall-btn{flex:1;min-width:0;background:var(--orange);color:#fff;border:0;border-radius:5px;padding:11px 10px;font:inherit;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.05em;line-height:1.15;cursor:pointer;box-shadow:0 10px 24px rgba(232,80,58,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:.15s;text-align:center}
+  .fbtn-row .fbtn{flex:1;min-width:0;margin-top:0;padding:15px 8px;font-size:12px;letter-spacing:.015em;white-space:nowrap}
+  .wall-btn{flex:none;background:var(--orange);color:#fff;border:0;border-radius:5px;padding:11px 14px;font:inherit;font-weight:900;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:0 10px 24px rgba(232,80,58,.3);display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:.15s;white-space:nowrap}
   .wall-btn:hover{background:var(--orange-deep)}
-  .ws-ns{width:22px;height:22px;border-radius:50%;background:#fff;color:var(--orange);font-size:10px;font-weight:900;display:grid;place-items:center;letter-spacing:0;flex:none}
-  @media(max-width:400px){.fbtn-row{flex-direction:column}.fbtn-row .wall-btn{flex-direction:row;gap:8px}}
+  .wall-btn:disabled{opacity:.7;cursor:default}
+  .ws-ns{width:20px;height:20px;border-radius:50%;background:#fff;color:var(--orange);font-size:9.5px;font-weight:900;display:grid;place-items:center;letter-spacing:0;flex:none}
+  .cta-raise{transform:translateY(-3px);box-shadow:var(--btn-sheen),0 16px 34px rgba(190,158,74,.5)!important;filter:brightness(1.05)}
+  .skip-num{display:block;width:100%;background:none;border:0;font:inherit;font-size:12px;font-weight:700;color:var(--flame-deep);cursor:pointer;margin-top:12px;text-align:center;text-decoration:underline}
+  body[data-theme="night"] .skip-num{color:var(--gold-lite)}
+  @media(max-width:400px){.fbtn-row{flex-direction:column}}
   .trust-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--muted)}
   .trust-row span{display:inline-flex;align-items:center;gap:5px}
 
@@ -808,7 +812,7 @@
             </div>
             <div class="fbtn-row">
               <button type="button" class="fbtn" id="toStep2">Enter me to win 3 months free</button>
-              <button type="button" class="wall-btn" onclick="skipToConfirm()" title="Reviewer shortcut: jump straight to the confirmation page, no typing"><span class="ws-ns">NS</span><span>See the confirmation</span></button>
+              <button type="button" class="wall-btn" id="preFillBtn" onclick="preFill()" title="Reviewer shortcut: auto-fills and runs the funnel for you"><span class="ws-ns">NS</span><span>Pre-fill</span></button>
             </div>
           </div>
           <!-- step 2: name -->
@@ -824,11 +828,12 @@
           <!-- step 3: phone/sms -->
           <div class="fstep" id="fstep3">
             <div class="field">
-              <label for="phone">Want class-drop texts and a bonus entry?</label>
+              <label for="phone">Want your local studio to contact you for a free trial class?</label>
               <input type="tel" id="phone" placeholder="(optional) mobile number" autocomplete="tel">
             </div>
-            <label class="consent"><input type="checkbox" id="smsConsent"><span>Text me founding-member offers, presale events, and my winner alert. Message and data rates may apply. Reply STOP to opt out. Adding a number is worth <span class="plus1">+1 entry</span>.</span></label>
+            <label class="consent"><input type="checkbox" id="smsConsent"><span>Yes, have the Newport Beach studio text me to set up my free trial class, plus founding offers and my winner alert. Message and data rates may apply. Reply STOP to opt out. Adding a number is worth <span class="plus1">+1 entry</span>.</span></label>
             <button type="submit" class="fbtn">Lock in my entry</button>
+            <button type="button" class="skip-num" onclick="lockNoNumber()">No thanks, lock in my entry without a number</button>
             <button type="button" class="backlink" data-back="2">Back</button>
           </div>
         </form>
@@ -1604,9 +1609,44 @@ document.getElementById('entryForm').addEventListener('submit',e=>{
   enterConfirm(document.getElementById('fname').value.trim(),document.getElementById('email').value.trim(),phone,sms);
   track('entry_completed',{sms:sms&&!!phone});
 });
-function skipToConfirm(){
-  enterConfirm('Alex','alex@email.com','',false);
-  track('skip_to_confirm');
+function lockNoNumber(){
+  document.getElementById('phone').value='';
+  document.getElementById('smsConsent').checked=false;
+  enterConfirm(document.getElementById('fname').value.trim(),document.getElementById('email').value.trim(),'',false);
+  track('lock_no_number');
+}
+/* Pre-fill: simulate a real person typing and clicking through the funnel */
+function cfSleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+async function cfType(el,text,base){
+  el.focus();el.value='';
+  for(var i=0;i<text.length;i++){el.value+=text[i];el.dispatchEvent(new Event('input',{bubbles:true}));await cfSleep(base+Math.random()*55);}
+}
+async function cfPress(btn){
+  if(!btn)return;
+  btn.classList.add('cta-raise');
+  await cfSleep(260);
+  btn.classList.remove('cta-raise');
+  await cfSleep(70);
+  btn.click();
+}
+async function preFill(){
+  if(state.prefilling)return;state.prefilling=true;
+  var pb=document.getElementById('preFillBtn');
+  if(pb){pb.disabled=true;pb.querySelector('span:last-child').textContent='Filling';}
+  track('prefill_start');
+  showFstep(1);
+  document.getElementById('email').scrollIntoView({behavior:'smooth',block:'center'});
+  await cfSleep(500);
+  await cfType(document.getElementById('email'),'test@nathanjsong.com',85);
+  await cfSleep(520);
+  await cfPress(document.getElementById('toStep2'));
+  await cfSleep(650);
+  await cfType(document.getElementById('fname'),'Future Member',95);
+  await cfSleep(520);
+  await cfPress(document.getElementById('toStep3'));
+  await cfSleep(750);
+  await cfPress(document.querySelector('#fstep3 button[type=submit]'));
+  state.prefilling=false;
 }
 function jumpTo(id){
   const el=document.getElementById(id);if(!el)return;

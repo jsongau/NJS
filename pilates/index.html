@@ -368,6 +368,8 @@
   .tl-body p{font-size:15px;color:var(--muted);line-height:1.6}
   .tl-body .lc{display:inline-block;margin-top:12px;font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--flame-deep);background:var(--mist);padding:5px 10px;border-radius:7px}
   body[data-theme="night"] .tl-body .lc{color:var(--flame)}
+  .tl-cta{display:block;margin-top:16px;background:var(--grad-gold);color:#241a05;border:0;border-radius:9px;padding:12px 18px;font:inherit;font-weight:900;font-size:13.5px;letter-spacing:.01em;cursor:pointer;box-shadow:var(--btn-sheen),0 8px 20px rgba(190,158,74,.28)}
+  .tl-cta:hover{filter:brightness(1.05)}
 
   /* quiz */
   .quiz{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;max-width:640px}
@@ -498,9 +500,9 @@
   .sticky-cta a{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-weight:700;font-size:12.5px;text-decoration:none;box-shadow:var(--shadow)}
 
   /* FOMO */
-  .fomo{position:fixed;right:16px;bottom:82px;z-index:65;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px;box-shadow:0 14px 34px rgba(20,16,8,.26);display:none;align-items:center;gap:9px;max-width:232px}
-  .fomo.show{display:flex;animation:fomoin .42s cubic-bezier(.2,.9,.3,1.35)}
-  @keyframes fomoin{from{opacity:0;transform:translateY(12px) scale(.95)}to{opacity:1;transform:none}}
+  .fomo{position:fixed;right:16px;bottom:82px;z-index:65;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px;box-shadow:0 14px 34px rgba(20,16,8,.26);display:flex;align-items:center;gap:9px;max-width:232px;opacity:0;visibility:hidden;transform:translateY(18px) scale(.97);transition:opacity .85s cubic-bezier(.16,.84,.28,1),transform .85s cubic-bezier(.16,.84,.28,1),visibility .85s}
+  .fomo.show{opacity:1;visibility:visible;transform:none}
+  @media(prefers-reduced-motion:reduce){.fomo{transition:opacity .3s}.fomo:not(.show){transform:none}}
   .fomo-av{width:30px;height:30px;border-radius:50%;background:var(--grad-gold);color:#1a1405;display:grid;place-items:center;font-weight:900;font-size:13px;flex:none}
   .fomo-body{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
   .fomo-live{font-size:8.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--flame-deep)}
@@ -1183,9 +1185,9 @@
 
 <!-- MODULE: first 90 days timeline -->
 <section class="modsec wrap" id="timeline" data-note="timeline">
-  <div class="kick">Your winning quarter</div>
-  <h2>What actually happens in <span class="hl">90 days</span>.</h2>
-  <p class="lead">The free quarter gets people in the door. What happens in those ninety days decides whether they are still around next year. Here is the arc we design for, week by week.</p>
+  <div class="kick">If you win</div>
+  <h2>What your <span class="hl">three months</span> look like.</h2>
+  <p class="lead">Win, and Gold is yours for three months, unlimited, on the Aurum Reformer. Here is how those weeks tend to unfold, from your first class to the day you realize you are not ready to stop.</p>
   <div class="tl">
     <div class="tl-tabs" id="tlTabs">
       <button class="tl-tab on" data-tl="0">Week 1</button>
@@ -1498,29 +1500,8 @@
 </div>
 </div><!-- /confirm -->
 
-<section class="wrap" data-note="creators" style="border-top:1px solid var(--line);padding:46px 20px 8px">
-  <div style="text-align:center;max-width:660px;margin:0 auto 26px">
-    <span class="eyebrow">The creator channel</span>
-    <h2 style="font-size:clamp(24px,3.4vw,33px);font-weight:800;line-height:1.14">Shop the studio through its creators.</h2>
-    <p style="color:var(--muted);font-size:16px;margin-top:12px">Two Pilates Addiction partner creators, each with a gear edit and a member bundle that turns a free accessory into a six-month membership. This is the creator-to-member acquisition channel, built and clickable.</p>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:780px;margin:0 auto" class="creator-grid">
-    <a href="ava/" style="text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:block;box-shadow:var(--shadow)">
-      <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--flame-deep)">Grip socks &middot; editorial</div>
-      <div style="font-family:var(--serif);font-size:22px;font-weight:700;margin:7px 0 5px">Aligned with Ava</div>
-      <p style="color:var(--muted);font-size:14px;line-height:1.5;margin:0">A pilates and kickboxing Educator&rsquo;s gear edit, fronted by her grip socks. Visit the store.</p>
-    </a>
-    <a href="lex/" style="text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:block;box-shadow:var(--shadow)">
-      <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--flame-deep)">Ankle weights &middot; the bundle</div>
-      <div style="font-family:var(--serif);font-size:22px;font-weight:700;margin:7px 0 5px">Loaded with Lex</div>
-      <p style="color:var(--muted);font-size:14px;line-height:1.5;margin:0">A strength coach&rsquo;s edit, where a 6-month membership comes with her ankle weights free. Visit the store.</p>
-    </a>
-  </div>
-</section>
-
 <footer>
-  <p><strong>Candidate growth concept</strong> by Nathan J. Song, built to demonstrate presale funnel strategy, lifecycle capture, conversion design, and experimentation for the Pilates Addiction Marketing Director role. Not affiliated with, sponsored by, or endorsed by Pilates Addiction. Studio name and location referenced for concept illustration. Prize, membership pricing, activity, and testimonials are illustrative.</p>
-  <p style="margin-top:8px">The $777 prize value reflects three months of Gold unlimited membership at Pilates Addiction's published $259 monthly rate. See <a href="#" onclick="openModal('rules');return false">Official Rules</a> for full sweepstakes terms.</p>
+  <p>Independent candidate concept by Nathan J. Song, not affiliated with, sponsored by, or endorsed by Pilates Addiction. Prize, pricing, activity, and testimonials are illustrative. See <a href="#" onclick="openModal('rules');return false">Official Rules</a>.</p>
 </footer>
 
 <!-- sticky CTA -->
@@ -1663,10 +1644,9 @@ const NOTES={
   confirm:{label:"the thank-you page",text:"Most businesses stop communicating after someone submits a form. I see the confirmation page as one of the highest-intent moments in the whole journey. Rather than ending the conversation, this is where I introduce referrals and additional offers while excitement is still at its peak."},
   refer:{label:"referrals",text:"Referral marketing does more than lower acquisition costs. Members who join with friends attend more consistently, encourage each other, and stay engaged longer. Growing through existing members builds stronger communities than leaning entirely on paid advertising."},
   bogo:{label:"bring a friend",text:"Trying something new is easier with someone you already know. This offer nudges members to begin together, cutting hesitation while naturally raising accountability and long-term retention. It is designed to create better member experiences, not just generate another sale."},
-  squad:{label:"the crew of three",text:"Communities grow faster when people invite their own communities. I made the prepaid discount tiered, so two friends unlocks 10% and three unlocks 20%. Every added seat lifts upfront cash flow and retention, because friends are far more likely to keep showing up together than alone."},
-  creators:{label:"the creator channel",text:"This is the point I would make loudest in an interview. The funnel builds the owned audience, and the creator stores turn trusted local instructors into an acquisition channel that sells memberships through people members already follow. One system feeds the other: presale captures the lead, the creators keep converting long after opening day."}
+  squad:{label:"the crew of three",text:"Communities grow faster when people invite their own communities. I made the prepaid discount tiered, so two friends unlocks 10% and three unlocks 20%. Every added seat lifts upfront cash flow and retention, because friends are far more likely to keep showing up together than alone."}
 };
-const NOTE_ORDER=["hero","form","proof","why","includes","menu","compare","home","timeline","quiz","reviews","faq","finalcta","confirm","refer","bogo","squad","creators"];
+const NOTE_ORDER=["hero","form","proof","why","includes","menu","compare","home","timeline","quiz","reviews","faq","finalcta","confirm","refer","bogo","squad"];
 
 /* ---------------- EXPLORER + TIMELINE + QUIZ DATA ---------------- */
 const EXP=[
@@ -1676,10 +1656,10 @@ const EXP=[
   {tag:"Start with IGNITE, Educator-led",h:"Your first class, handled",p:"Day one is IGNITE, guided start to finish by a trained Pilates Addiction Educator in a small class setting, so you feel supported, not lost. No prior Pilates experience needed. You should leave your first class wanting the next one, not feeling like you're behind.",li:["Guided by a trained Educator, small setting","Everything scaled to where you are today","Leave knowing exactly what to book next"]}
 ];
 const TL=[
-  {n:"01",h:"Week 1: your first three classes",p:"You book a foundations class, meet an instructor who learns your name, and leave your first session stronger and less intimidated than you walked in. The goal of week one is simple: come back.",lc:"Lifecycle: welcome email + first-class text"},
-  {n:"02",h:"Weeks 2 to 4: the habit takes",p:"You settle into two or three classes a week. Class-drop texts nudge you toward open spots that fit your schedule, so booking never becomes a chore you skip. This is where a member is really made.",lc:"Lifecycle: class-drop SMS fills your week"},
-  {n:"03",h:"Month 2: you feel it",p:"Posture, core, the way you get off the floor. The results that keep people are the quiet ones. This is the right week to ask for a review and a referral, because the member is a believer now.",lc:"Lifecycle: progress check-in + refer a friend"},
-  {n:"04",h:"Month 3: decision month",p:"The free quarter is ending and the whole business turns on this moment. A well-timed founding-rate offer, sent before the panic of an expiring perk, is what converts a winner into a member who stays.",lc:"Lifecycle: founding-rate conversion offer"}
+  {n:"01",h:"Week 1: your first classes",p:"You walk in a little unsure and walk out standing taller. An Educator learns your name, sets you up on the Aurum Reformer, and scales every move to your body. By the end of the week the room already feels like yours, and your next few classes are on the calendar.",lc:"Your first week"},
+  {n:"02",h:"Weeks 2 to 4: it clicks",p:"Two or three classes a week, and the reformer stops feeling like a machine. Booking gets easy, the movements get familiar, and showing up stops being a decision you have to make. This is the stretch where a prize quietly turns into a routine.",lc:"Where the habit takes hold"},
+  {n:"03",h:"Month 2: you feel it",p:"Better posture, a stronger core, the easy way you get off the floor now. The changes that keep people are the quiet ones, and right about now the people around you start noticing them too. You are not trying Pilates anymore. You do Pilates.",lc:"The change starts to show"},
+  {n:"04",h:"Month 3: you are just getting started",p:"Three months of unlimited Gold behind you, and stopping is the last thing on your mind. Because you were one of our founding winners, you keep Gold at the founding rate, locked for as long as you stay, before opening-day prices go up. Same studio, same unlimited, at a price the public will not get.",lc:"Founding rate, locked in"}
 ];
 const QUIZ=[
   {q:"Where is your body right now?",o:["Desk-stiff and a little cautious","Fit, but new to reformers","Athletic and after a real challenge"]},
@@ -1711,7 +1691,7 @@ document.getElementById('expTabs').addEventListener('click',e=>{
 renderExp(0);
 
 document.getElementById('tlBody').innerHTML=TL.map((d,i)=>
-  '<div class="tl-card'+(i===0?' on':'')+'"><div class="tl-num">'+d.n+'</div><div><h3>'+d.h+'</h3><p>'+d.p+'</p><span class="lc">'+d.lc+'</span></div></div>'
+  '<div class="tl-card'+(i===0?' on':'')+'"><div class="tl-num">'+d.n+'</div><div><h3>'+d.h+'</h3><p>'+d.p+'</p><span class="lc">'+d.lc+'</span>'+(i===3?'<button class="tl-cta" onclick="scrollToForm()">Enter now to lock your founding rate</button>':'')+'</div></div>'
 ).join('');
 function renderTL(i){
   document.querySelectorAll('#tlBody .tl-card').forEach((c,ci)=>c.classList.toggle('on',ci===i));
@@ -2288,21 +2268,33 @@ const FOMO=[
   "<b>A crew of 3</b> just locked the prepaid deal",
   "<b>Dana</b> invited 3 friends to the founding list",
   "<b>Marcus</b> claimed a bring-a-friend month",
-  "<b>Leah</b> from Irvine just entered to win"
+  "<b>Leah</b> from Irvine just entered to win",
+  "<b>Sofia</b> from Newport Coast just entered",
+  "<b>Ethan</b> locked the founding rate",
+  "<b>Mia</b> from Costa Mesa added texts for a bonus entry",
+  "<b>Jordan</b> and two friends locked 20% off",
+  "<b>Chloe</b> from Balboa Island just entered to win",
+  "<b>Andre</b> claimed his bring-a-friend month",
+  "<b>Hannah</b> from Tustin joined the founding list",
+  "<b>Diego</b> referred a friend for a bonus entry",
+  "<b>Naomi</b> from Laguna Beach just entered",
+  "<b>Ben</b> from Huntington Beach locked the prepaid deal",
+  "<b>Camila</b> from Newport Beach just entered to win",
+  "<b>Owen</b> added a number for his bonus entry"
 ];
 let fomoI=0,fomoOn=true,fomoT=null;
 function fomoShow(){
   if(!fomoOn)return;
   const f=document.getElementById('fomo');
   const msg=FOMO[fomoI%FOMO.length];
-  document.getElementById('fomoTx').innerHTML=msg+" <span style='color:var(--muted)'>&middot; demo</span>";
+  document.getElementById('fomoTx').innerHTML=msg;
   const nm=(msg.match(/<b>([^<]+)<\/b>/)||[])[1]||'PA';
   document.getElementById('fomoAv').textContent=nm.trim().charAt(0).toUpperCase();
   f.classList.add('show');fomoI++;
-  fomoT=setTimeout(()=>{f.classList.remove('show');if(fomoOn)fomoT=setTimeout(fomoShow,4500);},5200);
+  fomoT=setTimeout(()=>{f.classList.remove('show');if(fomoOn)fomoT=setTimeout(fomoShow,5200);},6000);
 }
 function fomoStop(){fomoOn=false;document.getElementById('fomo').classList.remove('show');if(fomoT)clearTimeout(fomoT);}
-setTimeout(fomoShow,3500);
+setTimeout(fomoShow,4200);
 
 /* ---------------- INIT ---------------- */
 if(document.body.classList.contains('commentary'))scheduleFairy();else scheduleCmHey();

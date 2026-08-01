@@ -1619,14 +1619,14 @@ function lockNoNumber(){
 function cfSleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
 async function cfType(el,text,base){
   el.focus();el.value='';
-  for(var i=0;i<text.length;i++){el.value+=text[i];el.dispatchEvent(new Event('input',{bubbles:true}));await cfSleep(base+Math.random()*55);}
+  for(var i=0;i<text.length;i++){el.value+=text[i];el.dispatchEvent(new Event('input',{bubbles:true}));await cfSleep(base+Math.random()*18);}
 }
 async function cfPress(btn){
   if(!btn)return;
   btn.classList.add('cta-raise');
-  await cfSleep(260);
+  await cfSleep(120);
   btn.classList.remove('cta-raise');
-  await cfSleep(70);
+  await cfSleep(30);
   btn.click();
 }
 async function preFill(){
@@ -1635,16 +1635,15 @@ async function preFill(){
   if(pb){pb.disabled=true;pb.querySelector('span:last-child').textContent='Filling';}
   track('prefill_start');
   showFstep(1);
-  document.getElementById('email').scrollIntoView({behavior:'smooth',block:'center'});
-  await cfSleep(500);
-  await cfType(document.getElementById('email'),'test@nathanjsong.com',85);
-  await cfSleep(520);
+  await cfSleep(120);
+  await cfType(document.getElementById('email'),'test@nathanjsong.com',16);
+  await cfSleep(160);
   await cfPress(document.getElementById('toStep2'));
-  await cfSleep(650);
-  await cfType(document.getElementById('fname'),'Future Member',95);
-  await cfSleep(520);
+  await cfSleep(180);
+  await cfType(document.getElementById('fname'),'Future Member',18);
+  await cfSleep(160);
   await cfPress(document.getElementById('toStep3'));
-  await cfSleep(750);
+  await cfSleep(200);
   await cfPress(document.querySelector('#fstep3 button[type=submit]'));
   state.prefilling=false;
 }

@@ -89,26 +89,30 @@
   .mega-panel{position:absolute;top:calc(100% + 12px);left:0;width:min(560px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 30px 70px rgba(0,0,0,.34);padding:16px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:.2s;z-index:80}
   .mnav-drop.open .mega-panel{opacity:1;visibility:visible;transform:none}
   .mega-panel::before{content:"";position:absolute;top:-7px;left:26px;width:13px;height:13px;background:var(--card);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
-  .mega-lead{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px;padding:2px 4px;position:relative}
-  .mega-lead b{color:var(--flame-deep)}
-  body[data-theme="night"] .mega-lead b{color:var(--gold-lite)}
   .mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .mega-card{display:flex;flex-direction:column;padding:16px;border-radius:13px;text-decoration:none;border:1px solid var(--line);transition:.15s}
-  .mega-card:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(0,0,0,.16)}
-  .mega-tag{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;align-self:flex-start}
-  .mega-name{font-size:17px;font-weight:800;margin-top:9px;line-height:1.1}
-  .mega-desc{font-size:11.5px;line-height:1.45;margin-top:6px}
-  .mega-go{font-size:11.5px;font-weight:800;margin-top:11px;display:inline-flex;align-items:center;gap:5px}
-  .mega-go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4}
-  .mega-card.ava{background:#F5F4F0;border-color:#e7e2d6}
-  .mega-card.ava .mega-tag{background:#FBE7E4;color:#DA271B}
-  .mega-card.ava .mega-name{color:#181818;font-family:Georgia,'Times New Roman',serif}
-  .mega-card.ava .mega-desc{color:#6b645a}
-  .mega-card.ava .mega-go{color:#DA271B}
-  .mega-card.lex{background:#101014;border-color:#2a2a32}
-  .mega-card.lex .mega-tag{background:rgba(204,255,46,.16);color:#B4E61A}
-  .mega-card.lex .mega-name{color:#fff}
-  .mega-card.lex .mega-desc{color:#a3a3ad}
+  .mega-card{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:3px;padding:16px 15px 15px;border-radius:14px;text-decoration:none;border:1px solid var(--line);transition:transform .16s,box-shadow .16s}
+  .mc-emblem{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;margin-bottom:5px;font-weight:800;font-size:18px;line-height:1}
+  .mega-tag{font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:999px;align-self:flex-start}
+  .mega-name{font-size:17.5px;font-weight:800;margin-top:6px;line-height:1.08}
+  .mega-desc{font-size:11.5px;line-height:1.45;margin-top:5px}
+  .mega-go{font-size:11.5px;font-weight:800;margin-top:12px;display:inline-flex;align-items:center;gap:5px;letter-spacing:.02em}
+  .mega-go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.6;transition:transform .16s}
+  .mega-card:hover .mega-go svg{transform:translateX(3px)}
+  /* Ava: ivory editorial, red accent */
+  .mega-card.ava{background:radial-gradient(130% 100% at 100% 0,#ffffff,#f3efe3 72%);border-color:#e8dfce;box-shadow:inset 0 2.5px 0 #DA271B}
+  .mega-card.ava:hover{transform:translateY(-3px);box-shadow:inset 0 2.5px 0 #DA271B,0 16px 30px rgba(120,54,34,.18)}
+  .mega-card.ava .mc-emblem{background:#fff;color:#DA271B;box-shadow:0 2px 7px rgba(218,39,27,.18);font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:19px}
+  .mega-card.ava .mega-tag{background:#FBE3DE;color:#C41F14}
+  .mega-card.ava .mega-name{color:#1a1410;font-family:Georgia,'Times New Roman',serif;font-style:italic}
+  .mega-card.ava .mega-desc{color:#6f665a}
+  .mega-card.ava .mega-go{color:#C41F14}
+  /* Lex: near-black, volt accent */
+  .mega-card.lex{background:radial-gradient(130% 100% at 0 0,#17171e,#0b0b0f 74%);border-color:#26262f;box-shadow:inset 0 2.5px 0 #CCFF2E}
+  .mega-card.lex:hover{transform:translateY(-3px);box-shadow:inset 0 2.5px 0 #CCFF2E,0 16px 30px rgba(0,0,0,.55)}
+  .mega-card.lex .mc-emblem{background:#15151b;color:#CCFF2E;box-shadow:0 0 0 1px #2b2b34,0 0 14px rgba(204,255,46,.28);font-weight:900;font-size:17px}
+  .mega-card.lex .mega-tag{background:rgba(204,255,46,.15);color:#C1F31E}
+  .mega-card.lex .mega-name{color:#fff;letter-spacing:.01em}
+  .mega-card.lex .mega-desc{color:#a6a6b0}
   .mega-card.lex .mega-go{color:#CCFF2E}
 
   .topbar{position:sticky;top:0;z-index:60;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
@@ -367,7 +371,7 @@
   .quiz{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;max-width:640px}
   .quiz .q{font-size:19px;font-weight:800;margin-bottom:16px}
   .quiz-opts{display:grid;gap:10px}
-  .quiz-opt{text-align:left;background:var(--bone);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:.12s}
+  .quiz-opt{text-align:left;background:var(--sand);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:.12s}
   .quiz-opt:hover{border-color:var(--flame)}
   .quiz-prog{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
   .quiz-res{display:none}
@@ -397,14 +401,15 @@
   .faq-a p{font-size:15px;color:var(--muted);line-height:1.6;padding:0 0 18px}
 
   /* final CTA */
-  .finalcta{background:var(--ink);color:var(--bone);text-align:center;padding:56px 0}
+  .finalcta{background:var(--ink);color:#F7F3ED;text-align:center;padding:56px 0}
   body[data-theme="night"] .finalcta{background:#000}
   .finalcta h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;max-width:24ch;margin:0 auto;line-height:1.1}
   .finalcta .sub{color:#cfc6b8;margin:12px auto 0}
   .fc-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px}
   .fc-enter{background:var(--btn-gold);color:#111;border:0;border-radius:5px;padding:16px 28px;font:inherit;font-weight:900;font-size:15px;cursor:pointer;text-transform:uppercase;letter-spacing:.12em;box-shadow:var(--btn-sheen),0 10px 24px rgba(190,158,74,.3)}
   .fc-enter:hover{filter:brightness(1.06)}
-  .fc-book{background:transparent;color:var(--bone);border:1.5px solid rgba(247,243,237,.4);border-radius:12px;padding:15px 26px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none;display:inline-block}
+  .fc-book{background:transparent;color:#F7F3ED;border:1.5px solid rgba(247,243,237,.45);border-radius:12px;padding:15px 26px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none;display:inline-block}
+  .fc-book:hover{border-color:rgba(247,243,237,.8);background:rgba(247,243,237,.06)}
 
   /* thank-you */
   .confirm{display:none}.confirm.show{display:block}
@@ -823,18 +828,19 @@
     <div class="mnav-drop" id="megaDrop">
       <button class="mnav-item" id="megaBtn" aria-haspopup="true" aria-expanded="false" onclick="toggleMega(event)">Creator storefronts <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="mega-panel" id="megaPanel" role="menu">
-        <div class="mega-lead">Concept creator storefronts, built as part of this presale system to show the <b>creator-to-member channel</b>. Each keeps its own brand world. Illustrative, not affiliated with Pilates Addiction.</div>
         <div class="mega-grid">
           <a class="mega-card ava" href="ava/" role="menuitem">
-            <span class="mega-tag">Concept storefront</span>
+            <span class="mc-emblem">A</span>
+            <span class="mega-tag">Grip socks</span>
             <span class="mega-name">Aligned with Ava</span>
-            <span class="mega-desc">Grip-sock editorial and a sock-club subscription that routes buyers into membership.</span>
+            <span class="mega-desc">Grip socks, styled like an editorial.</span>
             <span class="mega-go">Visit store <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </a>
           <a class="mega-card lex" href="lex/" role="menuitem">
-            <span class="mega-tag">Concept storefront</span>
+            <span class="mc-emblem">L</span>
+            <span class="mega-tag">Ankle weights</span>
             <span class="mega-name">Loaded with Lex</span>
-            <span class="mega-desc">An ankle-weights drop where a six-month membership comes with the gear free.</span>
+            <span class="mega-desc">Ankle weights. Six months in, they&rsquo;re free.</span>
             <span class="mega-go">Visit store <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </a>
         </div>
@@ -1854,6 +1860,15 @@ document.addEventListener('click',function(e){
   if(d&&d.classList.contains('open')&&!d.contains(e.target))closeMega();
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMega();});
+/* open on hover (desktop pointers); small delay bridges the button-to-panel gap */
+(function(){
+  const d=document.getElementById('megaDrop');if(!d)return;
+  if(!window.matchMedia||!window.matchMedia('(hover:hover)').matches)return;
+  let t=null;
+  const openIt=function(){if(t){clearTimeout(t);t=null;}if(!d.classList.contains('open')){d.classList.add('open');document.getElementById('megaBtn').setAttribute('aria-expanded','true');}};
+  d.addEventListener('mouseenter',openIt);
+  d.addEventListener('mouseleave',function(){t=setTimeout(closeMega,180);});
+})();
 
 /* ---------------- NATHAN ENGINE ---------------- */
 const nbubble=document.getElementById('nbubble');

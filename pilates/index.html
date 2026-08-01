@@ -22,9 +22,9 @@
   }
   /* THEME 2: Night (charcoal canvas, same flame), an A/B surface for late-night bookers */
   body[data-theme="night"]{
-    --bone:#151210; --ink:#F6F1E9; --muted:#a79c8e; --line:#2c2723;
-    --card:#1f1b18; --sand:#221d19; --mist:#1c1815;
-    --shadow:0 20px 55px rgba(0,0,0,.5);
+    --bone:#141210; --ink:#F6F1E9; --muted:#b1a794; --line:#3b352c;
+    --card:#26221d; --sand:#342e26; --mist:#2e2820;
+    --shadow:0 20px 55px rgba(0,0,0,.6);
   }
   body{transition:background-color .45s ease,color .3s ease}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -672,7 +672,7 @@
   .im-tier span{font-size:11px;color:var(--muted)}
   .im-share{display:flex;gap:8px;margin-top:18px}
   .im-sh{flex:1;border:0;border-radius:8px;padding:12px 8px;font:inherit;font-weight:800;font-size:12.5px;cursor:pointer;color:#fff}
-  .im-sh.sms{background:#34C759}.im-sh.wa{background:#25D366}.im-sh.copy{background:var(--ink)}
+  .im-sh.sms{background:#34C759}.im-sh.wa{background:#25D366}.im-sh.copy{background:var(--ink);color:var(--bone)}
   .im-sim{width:100%;margin-top:12px;background:none;border:0;color:var(--flame-deep);font:inherit;font-weight:800;font-size:12px;text-decoration:underline;cursor:pointer}
   body[data-theme="night"] .im-sim{color:var(--gold-lite)}
   @media(max-width:640px){.rf-cell{width:74px;height:46px}.rf-anchor{display:none}.reformer{padding:8px}.rf-cells{gap:8px}}

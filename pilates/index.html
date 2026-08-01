@@ -149,7 +149,7 @@
   .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--flame-deep);margin-bottom:14px}
   .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--grad-gold)}
   body[data-theme="night"] .eyebrow{color:var(--flame)}
-  h1{font-size:clamp(30px,4.7vw,52px);line-height:1.04;letter-spacing:-.02em;font-weight:800}
+  h1{font-size:clamp(30px,4.7vw,52px);line-height:1.04;letter-spacing:-.02em;font-weight:800;text-wrap:balance}
   h1 .hl{background:linear-gradient(transparent 60%, rgba(190,158,74,.30) 60%);padding:0 2px}
   .sub{font-size:18px;color:var(--muted);margin-top:16px;max-width:42ch}
   .prize-note{margin-top:16px;font-size:14px;font-weight:700}
@@ -263,7 +263,7 @@
   .modsec{border-top:1px solid var(--line)}
   .modsec .kick{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--flame-deep);margin-bottom:10px}
   body[data-theme="night"] .modsec .kick{color:var(--flame)}
-  .modsec h2{font-size:clamp(24px,3.3vw,34px);line-height:1.1;letter-spacing:-.01em;font-weight:800;max-width:20ch}
+  .modsec h2{font-size:clamp(24px,3.3vw,34px);line-height:1.1;letter-spacing:-.01em;font-weight:800;max-width:20ch;text-wrap:balance}
   .modsec h2 .hl{background:linear-gradient(transparent 60%, rgba(190,158,74,.30) 60%)}
   .modsec .lead{font-size:17px;color:var(--muted);margin-top:14px;max-width:60ch}
 
@@ -333,7 +333,6 @@
   .ct.pick{border-color:var(--gold);border-width:2px;background:linear-gradient(180deg,rgba(190,158,74,.17),rgba(190,158,74,.04));box-shadow:0 16px 36px rgba(190,158,74,.26);animation:winglow 2.8s ease-in-out infinite}
   @keyframes winglow{0%,100%{box-shadow:0 14px 32px rgba(190,158,74,.22)}50%{box-shadow:0 16px 44px rgba(190,158,74,.42)}}
   @media(prefers-reduced-motion:reduce){.ct.pick{animation:none}}
-  .ct.pick::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--btn-gold);border-radius:11px 11px 0 0}
   .ct.pick .ct-name{color:var(--flame-deep)}
   body[data-theme="night"] .ct.pick .ct-name{color:var(--gold-lite)}
   .ct.pick .ct-cost{font-size:27px;color:var(--flame-deep)}
@@ -578,12 +577,13 @@
   .wb-row.won .wb-tag{background:linear-gradient(180deg,#e7cf88,#c3a14a);color:#3a2c08}
   .wb-row.won .rk::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.75) 50%,transparent 60%);transform:translateX(-120%);animation:wbsheen 5.5s ease-in-out infinite}
   @keyframes wbsheen{0%,72%{transform:translateX(-120%)}86%,100%{transform:translateX(120%)}}
-  /* unclaimed */
-  .wb-row.open2{border-left:3px solid var(--orange)}
-  .wb-row.open2 .rk{background:var(--mist);color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
-  .wb-row.open2 .wb-line{color:var(--orange-deep)}
-  body[data-theme="night"] .wb-row.open2 .wb-line{color:#ff9e8c}
-  .wb-row.open2 .wb-tag{background:rgba(232,80,58,.14);color:var(--orange-deep);border:1px solid rgba(232,80,58,.45);animation:wbbreathe 2.2s ease-in-out infinite}
+  /* unclaimed (quieter, single line) */
+  .wb-row.open2{padding:7px 11px;border-left:2px solid rgba(232,80,58,.55);background:var(--mist);opacity:0;animation:wbrowq .4s ease forwards}
+  @keyframes wbrowq{to{opacity:.9;transform:none}}
+  .wb-row.open2:hover{opacity:1}
+  .wb-row.open2 .rk{width:22px;height:22px;font-size:11px;background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+  .wb-row.open2 .wb-name{font-size:12px;font-weight:700;color:var(--muted)}
+  .wb-row.open2 .wb-tag{background:transparent;color:var(--orange-deep);border:1px solid rgba(232,80,58,.4);font-size:8.5px;padding:2px 7px}
   body[data-theme="night"] .wb-row.open2 .wb-tag{color:#ff9e8c}
   @keyframes wbbreathe{0%,100%{opacity:.68}50%{opacity:1}}
   @keyframes wbrow{to{opacity:1;transform:none}}
@@ -945,18 +945,12 @@
       </div>
       <div class="wb-row open2" style="animation-delay:.1s">
         <span class="rk">2</span>
-        <span class="wb-body">
-          <span class="wb-name">d&bull;&bull;&bull;&bull;&bull;@gmail.com</span>
-          <span class="wb-line">Unclaimed. This could be you.</span>
-        </span>
+        <span class="wb-name">d&bull;&bull;&bull;&bull;&bull;@gmail.com</span>
         <span class="wb-tag">Unclaimed</span>
       </div>
       <div class="wb-row open2" style="animation-delay:.18s">
         <span class="rk">3</span>
-        <span class="wb-body">
-          <span class="wb-name">m&bull;&bull;&bull;&bull;&bull;&bull;&bull;@icloud.com</span>
-          <span class="wb-line">Unclaimed. Still up for grabs.</span>
-        </span>
+        <span class="wb-name">m&bull;&bull;&bull;&bull;&bull;&bull;&bull;@icloud.com</span>
         <span class="wb-tag">Unclaimed</span>
       </div>
     </div>

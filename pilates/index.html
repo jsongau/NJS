@@ -146,32 +146,23 @@
   .sh-title{display:block;font-size:21px;font-weight:800;line-height:1.14;letter-spacing:-.01em}
   .sweeps-body{padding:20px 22px 22px}
   .sh-prize{font-size:14px;color:var(--ink);line-height:1.5;margin-bottom:14px}
-  /* ===== Lucky 777 A/B campaign widgets ===== */
+  /* ===== Gold Membership launch card (A/B) ===== */
   .lucky{position:relative}
   body[data-variant="b"] .lucky-a{display:none}
   body[data-variant="a"] .lucky-b,.lucky-b{display:none}
   body[data-variant="b"] .lucky-b{display:flex}
-  /* Version A: value + luck reward card */
-  .lucky-a{position:relative;overflow:hidden;background:radial-gradient(130% 130% at 50% -10%,#2b2114,#0c0a07 70%);color:#f4e9cf;padding:24px 22px 20px;text-align:center;border-bottom:1px solid #2c2417;min-height:210px;display:flex;flex-direction:column;justify-content:center}
-  .lucky-a::after{content:"";position:absolute;top:-60%;left:-30%;width:50%;height:220%;background:linear-gradient(90deg,transparent,rgba(255,240,200,.14),transparent);transform:rotate(18deg);animation:laShine 5.5s ease-in-out infinite}
-  @keyframes laShine{0%,72%{left:-40%}86%,100%{left:130%}}
-  @media(prefers-reduced-motion:reduce){.lucky-a::after{display:none}}
-  .la-tag{position:relative;font-size:10.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-lite)}
-  .la-777{position:relative;font-size:74px;font-weight:900;line-height:.92;letter-spacing:.06em;background:linear-gradient(180deg,#F7E7B0 0%,#E3C568 40%,#B8912E 62%,#F1E1A0 100%);-webkit-background-clip:text;background-clip:text;color:transparent;margin:8px 0 4px;filter:drop-shadow(0 5px 14px rgba(190,158,74,.4))}
-  .la-sub{position:relative;font-size:14.5px;font-weight:700;color:#ece1c7}
-  .la-chips{position:relative;display:flex;justify-content:center;gap:7px;margin-top:15px;flex-wrap:wrap}
-  .la-chip{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border:1px solid rgba(190,158,74,.42);border-radius:999px;padding:6px 12px;color:var(--gold-lite);background:rgba(190,158,74,.09)}
-  /* Version B: founding member credential */
-  .lucky-b{position:relative;overflow:hidden;background:linear-gradient(180deg,#171310,#0b0a07);color:#f1e8d6;padding:22px 22px 20px;border-bottom:1px solid #2c2417;min-height:210px;flex-direction:column;justify-content:center}
-  .lb-top{display:flex;align-items:center;gap:14px}
-  .lb-seal{width:56px;height:56px;border-radius:50%;flex:none;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#2a2013,#0d0b07);border:1.5px solid var(--gold);box-shadow:inset 0 0 0 3px rgba(190,158,74,.14),0 4px 14px rgba(0,0,0,.4)}
-  .lb-seal b{font-size:18px;font-weight:900;letter-spacing:.02em;background:linear-gradient(180deg,#F7E7B0,#C3A14A);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .lb-seal span{position:absolute;font-size:6.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);bottom:8px}
-  .lb-eyebrow{font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-lite)}
-  .lb-head h3{font-size:20px;font-weight:800;color:#fff;line-height:1.1;margin-top:4px;letter-spacing:-.01em}
-  .lb-meta{display:flex;align-items:center;gap:10px;margin-top:15px;flex-wrap:wrap;font-size:11.5px;color:#c9bfa8;font-weight:600}
-  .lb-meta .dotsep{width:3px;height:3px;border-radius:50%;background:var(--gold-deep)}
-  .lb-meta b{color:var(--gold-lite);font-weight:800}
+  .lucky-a,.lucky-b{position:relative;overflow:hidden;min-height:210px;display:flex;flex-direction:column;justify-content:center;padding:24px 24px 22px;background:radial-gradient(120% 130% at 12% 0,#241c11,#0b0907 74%);color:#efe4cc;border-bottom:1px solid #2c2417}
+  .lucky-a::after,.lucky-b::after{content:"";position:absolute;inset:0;background:radial-gradient(75% 120% at 100% -10%,rgba(190,158,74,.16),transparent 58%);pointer-events:none}
+  .mc-top{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .mc-brand{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#b9ac90}
+  .mc-brand svg{width:15px;height:15px}
+  .mc-badge{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:999px;border:1px solid rgba(190,158,74,.5);color:var(--gold-lite);background:rgba(190,158,74,.1);white-space:nowrap}
+  .mc-badge.campaign{border-style:solid;background:linear-gradient(180deg,rgba(216,190,114,.22),rgba(190,158,74,.1))}
+  .mc-title{position:relative;font-size:37px;font-weight:900;line-height:.98;letter-spacing:-.015em;margin-top:16px;background:linear-gradient(180deg,#F7E7B0,#E3C568 52%,#B8912E);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .mc-sub{position:relative;font-size:14.5px;font-weight:700;color:#efe4cc;margin-top:7px}
+  .mc-facts{position:relative;display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px;font-size:11.5px;font-weight:700;color:#c9bfa8}
+  .mc-facts .dotsep{width:3px;height:3px;border-radius:50%;background:var(--gold-deep);flex:none}
+  .mc-facts b{color:var(--gold-lite);font-weight:800}
   .sh-prize b{font-weight:800}
   .deadline{display:flex;align-items:center;gap:13px;background:var(--mist);border:1px solid var(--line);border-radius:13px;padding:11px 15px}
   .deadline .bolt{width:36px;height:36px;flex:none;border-radius:10px;background:#17130C;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(190,158,74,.32),0 4px 12px rgba(0,0,0,.18)}
@@ -856,20 +847,22 @@
     <div class="card sweeps" data-note="form" id="formCard">
       <div class="lucky">
         <div class="lucky-a">
-          <span class="la-tag">Lucky 777 &middot; Gold membership giveaway</span>
-          <div class="la-777">777</div>
-          <p class="la-sub">Win three months of Gold, on the house.</p>
-          <div class="la-chips"><span class="la-chip">$777 value</span><span class="la-chip">3 lucky winners</span><span class="la-chip">Unlimited classes</span></div>
+          <div class="mc-top">
+            <span class="mc-brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M14 34V7h8.5a7.5 7.5 0 0 1 0 15H14" stroke="#D8BE72" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="30.5" r="2.6" fill="#D8BE72"/></svg>Pilates Addiction</span>
+            <span class="mc-badge">$777 value</span>
+          </div>
+          <div class="mc-title">Gold Membership</div>
+          <p class="mc-sub">Three months, unlimited, free.</p>
+          <div class="mc-facts"><b>Unlimited classes</b><span class="dotsep"></span><span>Three founding winners</span><span class="dotsep"></span><span>Opening soon</span></div>
         </div>
         <div class="lucky-b">
-          <div class="lb-top">
-            <span class="lb-seal"><b>777</b><span>est. 2026</span></span>
-            <div class="lb-head">
-              <span class="lb-eyebrow">Founding member launch</span>
-              <h3>The Lucky 777, Newport Beach</h3>
-            </div>
+          <div class="mc-top">
+            <span class="mc-brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M14 34V7h8.5a7.5 7.5 0 0 1 0 15H14" stroke="#D8BE72" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="30.5" r="2.6" fill="#D8BE72"/></svg>Pilates Addiction</span>
+            <span class="mc-badge campaign">Lucky 777 Launch</span>
           </div>
-          <div class="lb-meta"><span><b>Limited entry</b></span><span class="dotsep"></span><span>Opening soon</span><span class="dotsep"></span><span>3 founding spots given</span></div>
+          <div class="mc-title">Gold Membership</div>
+          <p class="mc-sub">Three months, unlimited, free.</p>
+          <div class="mc-facts"><b>Unlimited classes</b><span class="dotsep"></span><span>Three founding winners</span><span class="dotsep"></span><span>Opening soon</span></div>
         </div>
       </div>
       <div class="sweeps-body">
@@ -1677,20 +1670,20 @@ document.getElementById('faqBox').addEventListener('click',e=>{
 /* ---------------- LUCKY 777 A/B CAMPAIGN ---------------- */
 const VARIANTS={
   a:{
-    eb:'The Lucky 777 launch &middot; Newport Beach',
-    head:'Feel lucky? Win a <span class="hl">$777 Gold membership</span>.',
-    sub:'Three lucky founders each win three months of unlimited Gold on the Aurum Reformer, a $777 value. Free to enter before the doors open.',
-    prize:'<span>The Lucky 777:</span> three winners &middot; three months of unlimited Gold &middot; a $777 value.',
-    shPrize:'<b>Three lucky winners, drawn before opening day.</b> Each takes home three months of unlimited Gold, a $777 value, free.',
-    cta:'Enter the Lucky 777'
+    eb:'Founding members &middot; Newport Beach',
+    head:'Win 3 months of unlimited <span class="hl">Gold Membership</span>.',
+    sub:'Unlimited classes on the Aurum Reformer, guided by expert Educators, at our new Newport Beach studio. Three founding members win the full experience, free, before we open the doors.',
+    prize:'<span>The prize:</span> three months of unlimited Gold Membership, won by three founding members before opening day.',
+    shPrize:'<b>Three founding members win the full Gold experience.</b> Unlimited classes for three months, on the house, drawn before we open.',
+    cta:'Enter for Gold Membership'
   },
   b:{
-    eb:'Founding members &middot; Newport Beach &middot; Opening soon',
-    head:'Be one of the <span class="hl">first founding members</span> in Newport Beach.',
-    sub:'The Lucky 777 launch is how our founding members get in first. Enter free for the chance to open with three months of unlimited Gold, and claim your place before the room fills.',
-    prize:'<span>Founding launch:</span> limited entry &middot; opening soon &middot; three founders win three months of Gold.',
-    shPrize:'<b>Founding members enter first.</b> Three are drawn before opening day to open with three months of unlimited Gold, a $777 value.',
-    cta:'Claim my founding entry'
+    eb:'The Lucky 777 launch &middot; Newport Beach',
+    head:'Win 3 months of unlimited <span class="hl">Gold Membership</span>.',
+    sub:'Our Lucky 777 launch opens the founding member list in Newport Beach. Win three months of unlimited Gold on the Aurum Reformer, guided by expert Educators, and be part of the room from day one.',
+    prize:'<span>Lucky 777 launch:</span> three founding members win three months of unlimited Gold Membership before opening day.',
+    shPrize:'<b>Three founding members win the full Gold experience.</b> Unlimited classes for three months, part of our Lucky 777 launch, drawn before we open.',
+    cta:'Enter the founding launch'
   }
 };
 function applyVariant(v){

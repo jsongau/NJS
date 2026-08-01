@@ -40,7 +40,11 @@
 
   /* Brand header (black + gold, matches pilatesaddiction.com) */
   .brandbar{background:#0B0B0B;border-bottom:1px solid #201d17}
-  .brandbar .inner{max-width:1180px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:12px}
+  .brandbar .inner{max-width:1180px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .bctl{margin-left:auto;display:inline-flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brandbar .switch{color:#e7e0d2}
+  .brandbar .switch .track{background:#4a4234}
+  .brandbar .theme-toggle{background:#161310;border-color:#2a241b;box-shadow:none}
   .logo{display:inline-flex;align-items:center;gap:11px;background:none;border:0;cursor:pointer;font:inherit;padding:4px 6px;border-radius:10px}
   .logo:hover{background:rgba(255,255,255,.06)}
   .logo .palogo{height:27px;width:auto;flex:none;display:block}
@@ -146,13 +150,14 @@
   .sh-title{display:block;font-size:21px;font-weight:800;line-height:1.14;letter-spacing:-.01em}
   .sweeps-body{padding:20px 22px 22px}
   .sh-prize{font-size:14px;color:var(--ink);line-height:1.5;margin-bottom:14px}
-  /* ===== Gold Membership launch card (A/B) ===== */
+  /* ===== A/B: original sweepstakes bar (A) vs Gold Membership card (B) ===== */
   .lucky{position:relative}
   body[data-variant="b"] .lucky-a{display:none}
   body[data-variant="a"] .lucky-b,.lucky-b{display:none}
   body[data-variant="b"] .lucky-b{display:flex}
-  .lucky-a,.lucky-b{position:relative;overflow:hidden;min-height:210px;display:flex;flex-direction:column;justify-content:center;padding:24px 24px 22px;background:radial-gradient(120% 130% at 12% 0,#241c11,#0b0907 74%);color:#efe4cc;border-bottom:1px solid #2c2417}
-  .lucky-a::after,.lucky-b::after{content:"";position:absolute;inset:0;background:radial-gradient(75% 120% at 100% -10%,rgba(190,158,74,.16),transparent 58%);pointer-events:none}
+  .lucky-a{background:var(--grad-gold);color:#1a1405;padding:15px 22px}
+  .lucky-b{position:relative;overflow:hidden;min-height:210px;flex-direction:column;justify-content:center;padding:24px 24px 22px;background:radial-gradient(120% 130% at 12% 0,#241c11,#0b0907 74%);color:#efe4cc;border-bottom:1px solid #2c2417}
+  .lucky-b::after{content:"";position:absolute;inset:0;background:radial-gradient(75% 120% at 100% -10%,rgba(190,158,74,.16),transparent 58%);pointer-events:none}
   .mc-top{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px}
   .mc-brand{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#b9ac90}
   .mc-brand svg{width:15px;height:15px}
@@ -745,7 +750,7 @@
 </head>
 <body class="commentary">
 
-<div class="concept-bar">Presale growth concept by <strong>Nathan J. Song</strong> for the Marketing Director role. Candidate work sample, not affiliated with or endorsed by Pilates Addiction. Membership prices are the studio&rsquo;s published rates; the sweepstakes and offers are illustrative.</div>
+<div class="concept-bar">Presale growth concept by <strong>Nathan J. Song</strong> for the Marketing Director role.</div>
 
 <div class="topbar">
 <div class="brandbar"><div class="inner">
@@ -802,22 +807,18 @@
       </div>
     </div>
   </nav>
-  <span class="home-hint">Newport Beach &middot; <b>Now in presale</b></span>
-</div></div>
-
-<div class="controls"><div class="inner">
-  <div class="theme-toggle" id="themeSeg" role="group" aria-label="Color theme">
-    <button class="on" data-theme="warm" aria-label="Warm, light" title="Warm">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-    </button>
-    <button data-theme="night" aria-label="Night, dark" title="Night">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-    </button>
+  <div class="bctl">
+    <div class="theme-toggle" id="themeSeg" role="group" aria-label="Color theme">
+      <button class="on" data-theme="warm" aria-label="Warm, light" title="Warm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button data-theme="night" aria-label="Night, dark" title="Night">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+    <label class="switch ab"><input type="checkbox" id="abToggle"><span class="track"></span> <span class="badge-ab">A/B</span> Lucky 777: Version B</label>
+    <label class="switch cm"><input type="checkbox" id="cmToggle" checked><span class="track"></span> Nathan&rsquo;s notes</label>
   </div>
-  <div class="divider"></div>
-  <label class="switch ab"><input type="checkbox" id="abToggle"><span class="track"></span> <span class="badge-ab">A/B</span> Lucky 777: Version B</label>
-  <div class="divider"></div>
-  <label class="switch cm"><input type="checkbox" id="cmToggle" checked><span class="track"></span> Nathan&rsquo;s notes</label>
 </div></div>
 </div>
 
@@ -847,18 +848,13 @@
     <div class="card sweeps" data-note="form" id="formCard">
       <div class="lucky">
         <div class="lucky-a">
-          <div class="mc-top">
-            <span class="mc-brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M14 34V7h8.5a7.5 7.5 0 0 1 0 15H14" stroke="#D8BE72" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="30.5" r="2.6" fill="#D8BE72"/></svg>Pilates Addiction</span>
-            <span class="mc-badge">$777 value</span>
-          </div>
-          <div class="mc-title">Gold Membership</div>
-          <p class="mc-sub">Three months, unlimited, free.</p>
-          <div class="mc-facts"><b>Unlimited classes</b><span class="dotsep"></span><span>Three founding winners</span><span class="dotsep"></span><span>Opening soon</span></div>
+          <span class="sh-tag">&#9733; Free sweepstakes &middot; 3 winners</span>
+          <span class="sh-title">Win 3 months free at Pilates Addiction</span>
         </div>
         <div class="lucky-b">
           <div class="mc-top">
             <span class="mc-brand"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M14 34V7h8.5a7.5 7.5 0 0 1 0 15H14" stroke="#D8BE72" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="30.5" r="2.6" fill="#D8BE72"/></svg>Pilates Addiction</span>
-            <span class="mc-badge campaign">Lucky 777 Launch</span>
+            <span class="mc-badge">$777 value</span>
           </div>
           <div class="mc-title">Gold Membership</div>
           <p class="mc-sub">Three months, unlimited, free.</p>
@@ -869,7 +865,7 @@
         <p class="sh-prize" id="shPrize"><b>Three lucky winners, drawn before opening day.</b> Each takes home three months of unlimited Gold, a $777 value, free.</p>
         <div class="deadline">
           <span class="bolt"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="blt" x1="8" y1="3" x2="22" y2="29" gradientUnits="userSpaceOnUse"><stop stop-color="#F7E7B0"/><stop offset=".5" stop-color="#E3C568"/><stop offset="1" stop-color="#C3A14A"/></linearGradient></defs><path d="M18.7 2.6 7.9 17.3c-.4.5 0 1.2.6 1.2h4.9l-1.7 10.1c-.1.8.9 1.2 1.4.6l10.9-14.8c.4-.5 0-1.2-.6-1.2h-5l1.6-9.6c.1-.8-.9-1.2-1.3-.6Z" fill="url(#blt)" stroke="#7C6320" stroke-width=".7" stroke-linejoin="round"/></svg></span>
-          <span class="dl-txt"><span class="dl-label">Lucky 777 drawing closes</span><b id="deadlineTxt">Sunday at 8:00 PM</b></span>
+          <span class="dl-txt"><span class="dl-label" id="dlLabel">Founding drawing closes</span><b id="deadlineTxt">Sunday at 8:00 PM</b></span>
         </div>
         <div class="countdown" id="countdown" aria-label="Time left to enter">
           <div class="cd-box big"><b id="cdD">00</b><span>days</span></div>
@@ -886,7 +882,7 @@
           <!-- step 1: email -->
           <div class="fstep on" id="fstep1">
             <div class="field">
-              <label for="email">Your email, and your entry is in</label>
+              <label for="email" id="emailLabel">Email address</label>
               <input type="email" id="email" placeholder="you@email.com" autocomplete="email" required>
               <div class="err" id="emailErr">Please enter a valid email.</div>
             </div>
@@ -918,8 +914,8 @@
           </div>
         </form>
 
-        <div class="entry-badge">Free to enter &#10022; No purchase necessary &#10022; Under 20 seconds</div>
-        <p class="fineprint" style="margin-top:10px">Free to enter, one entry per person, and a purchase never improves your odds. Three winners are announced before opening day. <a href="#" onclick="openModal('rules');return false">Official Rules</a>.</p>
+        <div class="entry-badge" id="entryBadge">One entry per person &#10022; No purchase necessary</div>
+        <p class="fineprint" style="margin-top:10px"><span id="fineLead">Entering is free and takes about 20 seconds. A purchase will not improve your chances of winning.</span> <a href="#" onclick="openModal('rules');return false">Official Rules</a>.</p>
       </div>
     </div>
   </div>
@@ -1670,20 +1666,28 @@ document.getElementById('faqBox').addEventListener('click',e=>{
 /* ---------------- LUCKY 777 A/B CAMPAIGN ---------------- */
 const VARIANTS={
   a:{
+    eb:'Founding-member presale &middot; Newport Beach',
+    head:'Win <span class="hl">3 months free</span> at Pilates Addiction.',
+    sub:'Three months of Gold, unlimited classes on the gold-plated Aurum Reformer, a $777 value, at the new studio on MacArthur Boulevard. Enter free while we build the founding roster.',
+    prize:'<span>The prize:</span> 3 months unlimited Gold membership &middot; a $777 value &middot; 3 winners drawn before opening day.',
+    shPrize:'<b>Three winners, drawn before opening day.</b> Each wins three months of unlimited Gold, a $777 value, free.',
+    cta:'Enter me to win 3 months free',
+    dlLabel:'Founding drawing closes',
+    badge:'One entry per person &#10022; No purchase necessary',
+    emailLabel:'Email address',
+    fine:'Entering is free and takes about 20 seconds. A purchase will not improve your chances of winning.'
+  },
+  b:{
     eb:'Founding members &middot; Newport Beach',
     head:'Win 3 months of unlimited <span class="hl">Gold Membership</span>.',
     sub:'Unlimited classes on the Aurum Reformer, guided by expert Educators, at our new Newport Beach studio. Three founding members win the full experience, free, before we open the doors.',
     prize:'<span>The prize:</span> three months of unlimited Gold Membership, won by three founding members before opening day.',
     shPrize:'<b>Three founding members win the full Gold experience.</b> Unlimited classes for three months, on the house, drawn before we open.',
-    cta:'Enter for Gold Membership'
-  },
-  b:{
-    eb:'The Lucky 777 launch &middot; Newport Beach',
-    head:'Win 3 months of unlimited <span class="hl">Gold Membership</span>.',
-    sub:'Our Lucky 777 launch opens the founding member list in Newport Beach. Win three months of unlimited Gold on the Aurum Reformer, guided by expert Educators, and be part of the room from day one.',
-    prize:'<span>Lucky 777 launch:</span> three founding members win three months of unlimited Gold Membership before opening day.',
-    shPrize:'<b>Three founding members win the full Gold experience.</b> Unlimited classes for three months, part of our Lucky 777 launch, drawn before we open.',
-    cta:'Enter the founding launch'
+    cta:'Enter for Gold Membership',
+    dlLabel:'Lucky 777 drawing closes',
+    badge:'Free to enter &#10022; No purchase necessary &#10022; Under 20 seconds',
+    emailLabel:'Your email, and your entry is in',
+    fine:'Free to enter, one entry per person, and a purchase never improves your odds. Three winners are announced before opening day.'
   }
 };
 function applyVariant(v){
@@ -1692,6 +1696,7 @@ function applyVariant(v){
   var set=function(id,html){var el=document.getElementById(id);if(el)el.innerHTML=html;};
   set('eyebrow',d.eb);set('headline',d.head);set('heroSub',d.sub);
   set('prizeNote',d.prize);set('shPrize',d.shPrize);set('toStep2',d.cta);
+  set('dlLabel',d.dlLabel);set('entryBadge',d.badge);set('emailLabel',d.emailLabel);set('fineLead',d.fine);
   track('lucky_variant',{variant:v});
 }
 document.getElementById('abToggle').addEventListener('change',e=>{applyVariant(e.target.checked?'b':'a');});

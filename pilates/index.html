@@ -544,6 +544,59 @@
   .spotlight::after{content:"";position:absolute;inset:-10px;border:2px solid var(--orange);border-radius:18px;pointer-events:none;animation:spot .4s ease;box-shadow:0 0 0 6px rgba(232,80,58,.13)}
   @keyframes spot{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
 
+  /* ===== last-month winners FOMO floater (top-left) ===== */
+  .winwrap{position:fixed;top:86px;left:16px;z-index:64}
+  .winchip{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(180deg,#1b1710,#120f0a);color:#f3ead2;border:1px solid #4a3d22;border-radius:999px;padding:8px 13px 8px 10px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(216,190,114,.18)}
+  .winchip:hover{border-color:#6b5528}
+  .winchip .wc-trophy{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(120% 120% at 32% 28%,#fff8e6,#e7cf88 44%,#b9902f 94%);color:#5a4410;flex:none}
+  .winchip .wc-trophy svg{width:13px;height:13px}
+  .winchip .wc-unclaimed{font-size:10px;font-weight:800;letter-spacing:.04em;color:#ffb9ac;background:rgba(232,80,58,.18);border:1px solid rgba(232,80,58,.4);padding:2px 6px;border-radius:999px}
+  .winchip .wc-dot{width:7px;height:7px;border-radius:50%;background:#E8503A;box-shadow:0 0 0 0 rgba(232,80,58,.6);animation:wcpulse 1.6s ease-out infinite}
+  @keyframes wcpulse{0%{box-shadow:0 0 0 0 rgba(232,80,58,.55)}100%{box-shadow:0 0 0 9px rgba(232,80,58,0)}}
+  .winboard{position:absolute;top:calc(100% + 10px);left:0;width:320px;max-width:calc(100vw - 32px);background:radial-gradient(130% 90% at 0 0,#1a160f,#0b0907 76%);border:1px solid #3a3020;border-radius:16px;box-shadow:0 30px 70px rgba(0,0,0,.55);padding:15px 15px 14px;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top left;transition:.22s cubic-bezier(.3,.9,.3,1.1)}
+  .winwrap.open .winboard,.winwrap:hover .winboard{opacity:1;visibility:visible;transform:none}
+  .winboard::before{content:"";position:absolute;top:-7px;left:24px;width:13px;height:13px;background:#181309;border-left:1px solid #3a3020;border-top:1px solid #3a3020;transform:rotate(45deg)}
+  .wb-eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#D8BE72}
+  .wb-title{font-family:Georgia,'Times New Roman',serif;font-size:18px;color:#f6efe0;margin-top:2px;line-height:1.15}
+  .wb-sub{font-size:11px;color:#b3a988;margin-top:3px}
+  .wb-rows{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  .wb-row{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:11px;background:#211a10;border:1px solid #322817;opacity:0;transform:translateY(6px);animation:wbrow .4s ease forwards}
+  .winwrap.open .wb-row,.winwrap:hover .wb-row{}
+  .wb-row .rk{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:12px;flex:none}
+  .wb-row .wb-body{min-width:0;flex:1}
+  .wb-row .wb-name{font-size:13px;font-weight:800;color:#f4ecda;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wb-row .wb-line{font-size:10.5px;line-height:1.35;margin-top:2px}
+  .wb-tag{font-size:9px;font-weight:800;letter-spacing:.05em;padding:2px 7px;border-radius:999px;flex:none}
+  /* winner (Sarah) */
+  .wb-row.won{background:linear-gradient(180deg,#2a2010,#1c1509);border-color:#6b5528;box-shadow:inset 0 1px 0 rgba(216,190,114,.25)}
+  .wb-row.won .rk{background:radial-gradient(120% 120% at 32% 28%,#fff8e6,#e7cf88 44%,#b9902f 94%);color:#5a4410;box-shadow:0 0 14px rgba(216,190,114,.4)}
+  .wb-row.won .wb-name{color:#fff}
+  .wb-row.won .wb-line{color:#e7cf88;font-style:italic;font-family:Georgia,serif;font-size:11.5px}
+  .wb-row.won .wb-tag{background:linear-gradient(180deg,#e7cf88,#c3a14a);color:#3a2c08}
+  .wb-row.won .rk{position:relative;overflow:hidden}
+  .wb-row.won .rk::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.7) 50%,transparent 60%);transform:translateX(-120%);animation:wbsheen 5.5s ease-in-out infinite}
+  @keyframes wbsheen{0%,72%{transform:translateX(-120%)}86%,100%{transform:translateX(120%)}}
+  /* unclaimed */
+  .wb-row.open2{border-left:3px solid #E8503A}
+  .wb-row.open2 .rk{background:#2e2618;color:#b9a883;box-shadow:inset 0 0 0 1px #46381f}
+  .wb-row.open2 .wb-line{color:#ffab9c}
+  .wb-row.open2 .wb-tag{background:rgba(232,80,58,.16);color:#ff9e8c;border:1px solid rgba(232,80,58,.45);animation:wbbreathe 2.2s ease-in-out infinite}
+  @keyframes wbbreathe{0%,100%{opacity:.68}50%{opacity:1}}
+  @keyframes wbrow{to{opacity:1;transform:none}}
+  .wb-deadline{font-size:11px;line-height:1.4;color:#ffb0a1;background:rgba(232,80,58,.1);border:1px solid rgba(232,80,58,.28);border-radius:10px;padding:9px 11px;margin-top:11px}
+  .wb-deadline b{color:#fff}
+  .wb-cta{display:block;width:100%;margin-top:11px;text-align:center;background:var(--grad-gold);color:#241a05;border:0;border-radius:9px;padding:12px;font:inherit;font-weight:900;font-size:13px;letter-spacing:.02em;cursor:pointer;position:relative;overflow:hidden;box-shadow:var(--btn-sheen),0 8px 20px rgba(190,158,74,.28)}
+  .wb-cta:hover{filter:brightness(1.05)}
+  .wb-cta::after{content:"";position:absolute;top:0;left:0;height:100%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-160%)}
+  .wb-cta:hover::after{transform:translateX(360%);transition:transform .6s ease}
+  .wb-foot{font-size:9.5px;color:#8a8069;text-align:center;margin-top:9px;letter-spacing:.02em}
+  @media (max-width:640px){
+    .winwrap{top:auto;bottom:16px;left:12px}
+    .winboard{top:auto;bottom:calc(100% + 10px);transform-origin:bottom left}
+    .winboard::before{top:auto;bottom:-7px;border-left:0;border-top:0;border-right:1px solid #3a3020;border-bottom:1px solid #3a3020}
+  }
+  @media (prefers-reduced-motion:reduce){.wc-dot,.wb-row.won .rk::after,.wb-row.open2 .wb-tag,.wb-row{animation:none}.wb-row{opacity:1;transform:none}}
+
   /* share modal + toast */
   .modal{position:fixed;inset:0;z-index:90;background:rgba(20,17,14,.55);display:none;align-items:center;justify-content:center;padding:20px}
   .modal.show{display:flex;animation:fadein .2s}
@@ -833,14 +886,12 @@
             <span class="mc-emblem">A</span>
             <span class="mega-tag">Grip socks</span>
             <span class="mega-name">Aligned with Ava</span>
-            <span class="mega-desc">Grip socks, styled like an editorial.</span>
             <span class="mega-go">Visit store <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </a>
           <a class="mega-card lex" href="lex/" role="menuitem">
             <span class="mc-emblem">L</span>
             <span class="mega-tag">Ankle weights</span>
             <span class="mega-name">Loaded with Lex</span>
-            <span class="mega-desc">Ankle weights. Six months in, they&rsquo;re free.</span>
             <span class="mega-go">Visit store <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </a>
         </div>
@@ -853,6 +904,50 @@
     <span class="cm-hey" id="cmHey"><b>Hey!</b> Flip this on for the designer&rsquo;s notes</span>
   </div>
 </div></div>
+</div>
+
+<!-- last-month winners FOMO floater -->
+<div class="winwrap" id="winWrap">
+  <button class="winchip" id="winChip" aria-expanded="false" aria-controls="winBoard">
+    <span class="wc-trophy" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v2h3v3a4 4 0 0 1-4 4h-.4A6 6 0 0 1 13 15.9V18h3v2H8v-2h3v-2.1A6 6 0 0 1 7.4 12H7a4 4 0 0 1-4-4V5h3V3zm0 4H5v1a2 2 0 0 0 1 1.7V7zm12 0v2.7A2 2 0 0 0 19 8V7h-1z"/></svg></span>
+    <span>July&rsquo;s winners</span>
+    <span class="wc-unclaimed">2 unclaimed</span>
+    <span class="wc-dot" aria-hidden="true"></span>
+  </button>
+  <div class="winboard" id="winBoard" role="dialog" aria-label="Last month's winners">
+    <div class="wb-eyebrow">July 2026 &middot; drawn before opening</div>
+    <div class="wb-title">Last month&rsquo;s winners</div>
+    <div class="wb-sub">Three founding members won 3 months of Gold, free. One has already claimed hers.</div>
+    <div class="wb-rows">
+      <div class="wb-row won" style="animation-delay:.02s">
+        <span class="rk">1</span>
+        <span class="wb-body">
+          <span class="wb-name">Sarah Lee</span>
+          <span class="wb-line">Congratulations Girlie! She showed up and claimed her 3 months.</span>
+        </span>
+        <span class="wb-tag">Claimed</span>
+      </div>
+      <div class="wb-row open2" style="animation-delay:.1s">
+        <span class="rk">2</span>
+        <span class="wb-body">
+          <span class="wb-name">d&bull;&bull;&bull;&bull;&bull;@gmail.com</span>
+          <span class="wb-line">Still unclaimed. This could have been you.</span>
+        </span>
+        <span class="wb-tag">Unclaimed</span>
+      </div>
+      <div class="wb-row open2" style="animation-delay:.18s">
+        <span class="rk">3</span>
+        <span class="wb-body">
+          <span class="wb-name">m&bull;&bull;&bull;&bull;&bull;&bull;&bull;@icloud.com</span>
+          <span class="wb-line">Nobody has come forward yet. Next name in line is waiting.</span>
+        </span>
+        <span class="wb-tag">Unclaimed</span>
+      </div>
+    </div>
+    <div class="wb-deadline">Winners 2 and 3: <b>contact us to claim by August 20, 2026</b> <span id="wbDays"></span>. After that, each prize passes to a runner-up.</div>
+    <button class="wb-cta" id="wbCta" type="button">Enter free &middot; this could be you</button>
+    <div class="wb-foot">Illustrative demo &middot; studio opens soon</div>
+  </div>
 </div>
 
 <!-- ============ STEP 1 ============ -->
@@ -1868,6 +1963,25 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMega();
   const openIt=function(){if(t){clearTimeout(t);t=null;}if(!d.classList.contains('open')){d.classList.add('open');document.getElementById('megaBtn').setAttribute('aria-expanded','true');}};
   d.addEventListener('mouseenter',openIt);
   d.addEventListener('mouseleave',function(){t=setTimeout(closeMega,180);});
+})();
+/* ---- last-month winners floater ---- */
+(function(){
+  const wrap=document.getElementById('winWrap'),chip=document.getElementById('winChip'),cta=document.getElementById('wbCta'),days=document.getElementById('wbDays');
+  if(!wrap)return;
+  if(days){
+    const now=new Date(),deadline=new Date(2026,7,20,23,59,59);
+    const d=Math.ceil((deadline-now)/86400000);
+    days.textContent=d>1?'('+d+' days left)':d===1?'(1 day left)':d===0?'(last day)':'(closing now)';
+  }
+  chip.addEventListener('click',function(e){
+    e.stopPropagation();
+    const open=wrap.classList.toggle('open');
+    chip.setAttribute('aria-expanded',open?'true':'false');
+    track('winners_board',{open:open});
+  });
+  document.addEventListener('click',function(e){if(wrap.classList.contains('open')&&!wrap.contains(e.target)){wrap.classList.remove('open');chip.setAttribute('aria-expanded','false');}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&wrap.classList.contains('open')){wrap.classList.remove('open');chip.setAttribute('aria-expanded','false');}});
+  if(cta)cta.addEventListener('click',function(){wrap.classList.remove('open');chip.setAttribute('aria-expanded','false');track('winners_cta',{});if(typeof scrollToForm==='function')scrollToForm();});
 })();
 
 /* ---------------- NATHAN ENGINE ---------------- */

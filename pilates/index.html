@@ -1465,7 +1465,7 @@
         <div class="jn-scarbar"><i id="jnBar"></i></div>
         <div class="jn-scarlab"><b id="jnLeft">18</b> of 50 founding memberships left</div>
       </div>
-      <button class="jn-cta" onclick="jumpTo('bogoCard')">Start my founding membership</button>
+      <button class="jn-cta" onclick="openBuy()">Start my founding membership</button>
     </div>
   </aside>
 
@@ -2380,11 +2380,8 @@ function copyLink(){
 }
 
 /* ---------------- BOGO TRIPWIRE ---------------- */
-document.getElementById('bogoStart').addEventListener('click',()=>{
-  toast("Founding rate locked at $220. Gift your two classes below.");
-  const g=document.getElementById('giftName1');if(g)g.focus();
-  track('bogo_start');
-});
+function openBuy(){window.open('https://pilatesaddiction.com/location/yorba-linda#:~:text=Buy%20Now','_blank','noopener');track('buy_click');}
+document.getElementById('bogoStart').addEventListener('click',()=>{openBuy();track('bogo_start');});
 let giftRow=null,giftName='';
 document.querySelectorAll('#bogoCard .fo-inv-send').forEach(b=>b.addEventListener('click',()=>{
   const row=b.closest('.fo-inv-row');if(!row||row.classList.contains('done'))return;

@@ -990,25 +990,6 @@
         </span>
       </span>
     </button>
-    <div class="mnav-drop" id="megaDrop">
-      <button class="mnav-item" id="megaBtn" aria-haspopup="true" aria-expanded="false" onclick="toggleMega(event)">Creator storefronts <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="mega-panel" id="megaPanel" role="menu">
-        <div class="mega-grid">
-          <a class="mega-card ava" href="https://nathanjsong.com/pilates/ava" role="menuitem">
-            <span class="mc-emblem">A</span>
-            <span class="mega-tag">Grip socks</span>
-            <span class="mega-name">Aligned with Ava</span>
-            <span class="mega-go">Visit store <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-          <a class="mega-card lex" href="https://nathanjsong.com/pilates/lex" role="menuitem">
-            <span class="mc-emblem">L</span>
-            <span class="mega-tag">Ankle weights</span>
-            <span class="mega-name">Loaded with Lex</span>
-            <span class="mega-go">Visit store <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-        </div>
-      </div>
-    </div>
   </nav>
   <div class="bctl">
     <label class="switch ab"><input type="checkbox" id="abToggle"><span class="track"></span> <span class="badge-ab">A/B</span> <span id="abLabel">Original &middot; Version A</span></label>
@@ -2165,31 +2146,6 @@ function scrollToForm(){
 showFstep(1);
 
 /* ---------------- MEGA NAV ---------------- */
-function toggleMega(e){
-  if(e)e.stopPropagation();
-  const d=document.getElementById('megaDrop');
-  const open=d.classList.toggle('open');
-  document.getElementById('megaBtn').setAttribute('aria-expanded',open?'true':'false');
-  track('mega_toggle',{open:open});
-}
-function closeMega(){
-  const d=document.getElementById('megaDrop');if(!d||!d.classList.contains('open'))return;
-  d.classList.remove('open');document.getElementById('megaBtn').setAttribute('aria-expanded','false');
-}
-document.addEventListener('click',function(e){
-  const d=document.getElementById('megaDrop');
-  if(d&&d.classList.contains('open')&&!d.contains(e.target))closeMega();
-});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMega();});
-/* open on hover (desktop pointers); small delay bridges the button-to-panel gap */
-(function(){
-  const d=document.getElementById('megaDrop');if(!d)return;
-  if(!window.matchMedia||!window.matchMedia('(hover:hover)').matches)return;
-  let t=null;
-  const openIt=function(){if(t){clearTimeout(t);t=null;}if(!d.classList.contains('open')){d.classList.add('open');document.getElementById('megaBtn').setAttribute('aria-expanded','true');}};
-  d.addEventListener('mouseenter',openIt);
-  d.addEventListener('mouseleave',function(){t=setTimeout(closeMega,180);});
-})();
 /* ---- last-month winners floater ---- */
 (function(){
   const wrap=document.getElementById('winWrap'),chip=document.getElementById('winChip'),cta=document.getElementById('wbCta'),days=document.getElementById('wbDays');

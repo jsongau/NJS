@@ -1593,8 +1593,8 @@
         <button class="sh-btn" onclick="shareVia('email')" title="Email" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="#B8912E" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></button>
         <button class="sh-btn" onclick="shareVia('copy')" title="Copy link" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg></button>
       </div>
-      <div class="rf-link"><input readonly id="reflink2" value="https://[concept].fit/r/NATHAN-8F3K"><button onclick="shareVia('copy')">Copy</button></div>
-      <button class="rf-primary" onclick="shareVia('native')">Share my link</button>
+      <div class="rf-link"><input readonly id="reflink2" value="https://nathanjsong.com/pilates"><button onclick="shareVia('copy')">Copy</button></div>
+      <button class="rf-primary" onclick="openShare()">Share my link</button>
       <div class="rf-demo"><button onclick="bumpReferral()">Preview a friend joining</button></div>
     </div>
   </aside>
@@ -1704,16 +1704,16 @@
 <div class="modal" id="shareModal">
   <div class="modal-card">
     <button class="mx" onclick="closeShare()" aria-label="Close">&times;</button>
-    <h3>Invite friends, win together</h3>
-    <p class="sub" style="font-size:14px;margin-top:4px">Each friend who joins the founding list is +1 entry for both of you.</p>
+    <h3>Invite friends. Win 3 months free together.</h3>
+    <p class="sub" style="font-size:14px;margin-top:4px">Each friend who joins the founding list is +1 entry for both of you, and a bonus chance to win 3 months of Pilates Addiction, free.</p>
     <div class="share-grid">
-      <button class="share-btn" onclick="shareVia('sms')">Text</button>
-      <button class="share-btn" onclick="shareVia('email')">Email</button>
-      <button class="share-btn" onclick="shareVia('fb')">Facebook</button>
-      <button class="share-btn" onclick="shareVia('copy')">Copy link</button>
-      <button class="share-btn" onclick="shareVia('native')">More</button>
+      <button class="share-btn" onclick="shareVia('sms')">💬 Text</button>
+      <button class="share-btn" onclick="shareVia('email')">📧 Email</button>
+      <button class="share-btn" onclick="shareVia('fb')">📘 Facebook</button>
+      <button class="share-btn" onclick="shareVia('copy')">🔗 Copy link</button>
+      <button class="share-btn" onclick="shareVia('native')">📤 More</button>
     </div>
-    <div class="gb-link" style="margin-top:14px"><input readonly id="reflink2" value="https://[concept].fit/r/NATHAN-8F3K"><button onclick="copyLink()">Copy</button></div>
+    <div class="gb-link" style="margin-top:14px"><input readonly id="reflink3" value="https://nathanjsong.com/pilates"><button onclick="copyLink()">Copy</button></div>
   </div>
 </div>
 
@@ -2362,7 +2362,7 @@ function openShare(){document.getElementById('shareModal').classList.add('show')
 function closeShare(){document.getElementById('shareModal').classList.remove('show');}
 document.getElementById('shareModal').addEventListener('click',e=>{if(e.target.id==='shareModal')closeShare();});
 /* shareMsg is set by updateLocText() (location-aware) */
-const shareLink="https://[concept].fit/r/NATHAN-8F3K";
+const shareLink="https://nathanjsong.com/pilates";
 function shareVia(ch){
   const E=encodeURIComponent,full=shareMsg+" "+shareLink;let url=null;
   if(ch==='sms')url='sms:?&body='+E(full);

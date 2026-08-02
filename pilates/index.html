@@ -152,6 +152,33 @@
   .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--flame-deep);margin-bottom:14px}
   .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--grad-gold)}
   body[data-theme="night"] .eyebrow{color:var(--flame)}
+  /* ---- studio location switcher ---- */
+  #heroText{transition:opacity .34s cubic-bezier(.4,0,.2,1), transform .42s cubic-bezier(.34,1.04,.42,1)}
+  #heroText.loc-fade{opacity:0;transform:translateY(14px)}
+  .locpick{position:relative;display:block;margin-bottom:16px}
+  .locpick>.locpick-btn{margin:0}
+  .locpick-btn{display:inline-flex;align-items:center;gap:10px;padding:8px 13px 8px 12px;border-radius:100px;border:1px solid var(--line);background:var(--card);cursor:pointer;font:inherit;color:var(--ink);box-shadow:0 1px 2px rgba(20,14,4,.04);transition:border-color .2s,box-shadow .25s,transform .18s,background .25s}
+  .locpick-btn:hover{border-color:var(--gold-lite);box-shadow:0 6px 20px -8px rgba(190,158,74,.4);transform:translateY(-1px)}
+  .locpick-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .lp-pin{width:16px;height:16px;stroke:var(--flame-deep);stroke-width:1.7;flex:none}
+  .lp-lab{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .locpick-btn b{font-size:13.5px;font-weight:800;letter-spacing:-.01em}
+  .lp-chev{width:15px;height:15px;stroke:var(--muted);stroke-width:2;flex:none;transition:transform .28s cubic-bezier(.34,1.2,.5,1)}
+  .locpick.open .lp-chev{transform:rotate(180deg)}
+  .locpick-menu{position:absolute;top:calc(100% + 8px);left:0;z-index:60;width:min(340px,86vw);max-height:min(62vh,460px);overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px -18px rgba(20,14,4,.34),0 4px 14px -8px rgba(20,14,4,.2);padding:8px;opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transform-origin:top left;transition:opacity .24s ease,transform .28s cubic-bezier(.34,1.1,.44,1),visibility .24s}
+  .locpick.open .locpick-menu{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+  .lp-group{padding:9px 10px 4px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .lp-opt{display:flex;align-items:flex-start;gap:11px;width:100%;text-align:left;padding:9px 10px;border:0;background:none;border-radius:11px;cursor:pointer;font:inherit;color:var(--ink);transition:background .16s}
+  .lp-opt:hover,.lp-opt:focus-visible{background:var(--mist);outline:none}
+  .lp-opt.sel{background:linear-gradient(100deg,rgba(190,158,74,.14),rgba(190,158,74,.05))}
+  .lp-opt-dot{margin-top:4px;width:8px;height:8px;border-radius:50%;flex:none;background:var(--line);transition:background .2s,box-shadow .2s}
+  .lp-opt.sel .lp-opt-dot{background:var(--grad-gold);box-shadow:0 0 0 3px rgba(190,158,74,.18)}
+  .lp-opt-body{min-width:0;flex:1}
+  .lp-opt-nm{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:800;letter-spacing:-.01em}
+  .lp-opt-ad{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
+  .lp-soon{font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--gold-deep);background:rgba(190,158,74,.14);padding:2px 7px;border-radius:100px;flex:none}
+  body[data-theme="night"] .lp-opt.sel{background:linear-gradient(100deg,rgba(214,181,94,.2),rgba(214,181,94,.06))}
+  body[data-theme="night"] .lp-pin{stroke:var(--flame)}
   h1{font-size:clamp(30px,4.7vw,52px);line-height:1.04;letter-spacing:-.02em;font-weight:800;text-wrap:balance}
   h1 .hl{background:linear-gradient(transparent 60%, rgba(190,158,74,.30) 60%);padding:0 2px}
   .sub{font-size:18px;color:var(--muted);margin-top:16px;max-width:42ch}
@@ -1048,7 +1075,16 @@
 <section class="wrap">
   <div class="hero">
     <div data-note="hero" id="heroText">
-      <span class="eyebrow" id="eyebrow">Founding-member presale &middot; Yorba Linda</span>
+      <div class="locpick" id="locPick">
+        <button class="locpick-btn" id="locBtn" type="button" aria-haspopup="listbox" aria-expanded="false" onclick="toggleLoc(event)">
+          <svg class="lp-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z" fill="none" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" fill="none"/></svg>
+          <span class="lp-lab">Presale studio</span>
+          <b id="locBtnName">Yorba Linda</b>
+          <svg class="lp-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="locpick-menu" id="locMenu" role="listbox" aria-label="Choose a studio"></div>
+      </div>
+      <span class="eyebrow" id="eyebrow">Founding member presale promotion &middot; Yorba Linda</span>
       <h1 id="headline">Win <span class="hl">3 months free</span> at Pilates Addiction.</h1>
       <p class="sub" id="heroSub">Three months of Gold, unlimited classes on the gold-plated Aurum Reformer, a $777 value, at the new studio on Yorba Linda Blvd. Enter free while we build the founding roster.</p>
       <p class="prize-note" id="prizeNote"><span>The Lucky 777:</span> three winners &middot; three months of unlimited Gold &middot; a $777 value.</p>
@@ -1123,7 +1159,7 @@
               <label for="phone">Want your local studio to contact you for a free trial class?</label>
               <input type="tel" id="phone" placeholder="(optional) mobile number" autocomplete="tel">
             </div>
-            <label class="consent"><input type="checkbox" id="smsConsent"><span>Yes, have the Yorba Linda studio text me to set up my free trial class, plus founding offers and my winner alert. Message and data rates may apply. Reply STOP to opt out. Adding a number is worth <span class="plus1">+1 entry</span>.</span></label>
+            <label class="consent"><input type="checkbox" id="smsConsent"><span>Yes, have the <span id="smsCity">Yorba Linda</span> studio text me to set up my free trial class, plus founding offers and my winner alert. Message and data rates may apply. Reply STOP to opt out. Adding a number is worth <span class="plus1">+1 entry</span>.</span></label>
             <button type="submit" class="fbtn">Lock in my entry</button>
             <button type="button" class="skip-num" onclick="lockNoNumber()">No thanks, lock in my entry without a number</button>
             <button type="button" class="backlink" data-back="2">Back</button>
@@ -1359,7 +1395,7 @@
     <div class="rev">
       <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p>&ldquo;I have paid for gyms for years and gone maybe twice a month. Here I have a class booked and a coach who knows my back. I actually go.&rdquo;</p>
-      <div class="who">Rachel M. <span>&middot; Yorba Linda</span></div>
+      <div class="who">Rachel M. <span>&middot; <span id="rev1City">Yorba Linda</span></span></div>
     </div>
     <div class="rev">
       <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -1382,7 +1418,7 @@
     <div class="faq-item"><button class="faq-q">Do I have to buy anything to enter or win?</button><div class="faq-a"><p>No. Entry is free and a purchase will never improve your odds. Three winners are drawn before opening day and each receives three months of unlimited Gold membership, a $777 value at the published $259 monthly rate. Everything on the confirmation page after you enter is optional.</p></div></div>
     <div class="faq-item"><button class="faq-q">I have never done Pilates. Am I going to be lost?</button><div class="faq-a"><p>That is exactly who IGNITE is built for. Your first class is guided start to finish by a trained Educator in a small setting, so you are supported, not lost, and no prior experience is needed. Grip socks are required and available at the studio. The find-your-start quiz above points you at the right first class.</p></div></div>
     <div class="faq-item"><button class="faq-q">What does the membership cost after the free quarter?</button><div class="faq-a"><p>Pilates Addiction's published rates are Gold at $259 a month for unlimited classes, Silver at $189 for 8 classes, and Bronze at $139 for 4 classes, plus a $39 single drop-in. Memberships auto-renew monthly and unused classes do not roll over. Winners keep the Gold tier and simply start paying the founding rate after their three free months, only if they choose to stay.</p></div></div>
-    <div class="faq-item"><button class="faq-q">When does the Yorba Linda studio open?</button><div class="faq-a"><p>The studio at 20517 Yorba Linda Blvd, Yorba Linda, CA 92886 (714-253-3888), is in founding-member presale now, with opening ahead. Presale entrants hear first about the opening date, founding events, and their winner status by email and, if they opt in, text.</p></div></div>
+    <div class="faq-item"><button class="faq-q">When does the <span id="faqCity">Yorba Linda</span> studio open?</button><div class="faq-a"><p>The studio at <span id="faqAddr">20517 Yorba Linda Blvd, Yorba Linda, CA 92886 (714-253-3888)</span>, is in founding-member presale now, with opening ahead. Presale entrants hear first about the opening date, founding events, and their winner status by email and, if they opt in, text.</p></div></div>
     <div class="faq-item"><button class="faq-q">What if I do not win?</button><div class="faq-a"><p>You keep founding-member pricing and first access to the schedule. If you would rather not wait on the draw, the confirmation page has a founding offer that lets you start now and bring a friend.</p></div></div>
   </div>
 </section>
@@ -1684,7 +1720,7 @@
 
 <script>
 /* ---------------- STATE + TRACK ---------------- */
-const state={fstep:1,entries:1,baseEntries:1,referrals:0,noteIdx:0,quizIdx:0,quizScore:0,seats:[true,false,false]};
+const state={fstep:1,entries:1,baseEntries:1,referrals:0,noteIdx:0,quizIdx:0,quizScore:0,seats:[true,false,false],loc:0,variant:'a'};
 const FRIEND_NAMES=['Maya','Jordan','Priya','Diego','Sana','Theo','Nina','Kai'];
 const events=[];
 function track(name,meta){events.push({name,meta:meta||null});/* wire to GA4 / Meta CAPI / Klaviyo in production */}
@@ -1924,9 +1960,9 @@ document.getElementById('faqBox').addEventListener('click',e=>{
 /* ---------------- LUCKY 777 A/B CAMPAIGN ---------------- */
 const VARIANTS={
   a:{
-    eb:'Founding-member presale &middot; Yorba Linda',
+    eb:'Founding member presale promotion &middot; {city}',
     head:'Win <span class="hl">3 months free</span> at Pilates Addiction.',
-    sub:'Three months of Gold, unlimited classes on the gold-plated Aurum Reformer, a $777 value, at the new studio on Yorba Linda Blvd. Enter free while we build the founding roster.',
+    sub:'Three months of Gold, unlimited classes on the gold-plated Aurum Reformer, a $777 value, at the new studio on {addr}. Enter free while we build the founding roster.',
     prize:'<span>The prize:</span> 3 months unlimited Gold membership &middot; a $777 value &middot; 3 winners drawn before opening day.',
     shPrize:'<b>Three winners, drawn before opening day.</b> Each wins three months of unlimited Gold, a $777 value, free.',
     cta:'Enter me to win 3 months free',
@@ -1936,9 +1972,9 @@ const VARIANTS={
     fine:'Entering is free and takes about 20 seconds. A purchase will not improve your chances of winning.'
   },
   b:{
-    eb:'Founding members &middot; Yorba Linda',
+    eb:'Founding member presale promotion &middot; {city}',
     head:'Win 3 months of unlimited <span class="hl">Gold Membership</span>.',
-    sub:'Unlimited classes on the Aurum Reformer, guided by expert Educators, at our new Yorba Linda studio. Three founding members win the full experience, free, before we open the doors.',
+    sub:'Unlimited classes on the Aurum Reformer, guided by expert Educators, at our new {city} studio. Three founding members win the full experience, free, before we open the doors.',
     prize:'<span>The prize:</span> three months of unlimited Gold Membership, won by three founding members before opening day.',
     shPrize:'<b>Three founding members win the full Gold experience.</b> Unlimited classes for three months, on the house, drawn before we open.',
     cta:'Enter for Gold Membership',
@@ -1950,14 +1986,74 @@ const VARIANTS={
 };
 function applyVariant(v){
   const d=VARIANTS[v]||VARIANTS.a;
+  state.variant=v;
   document.body.setAttribute('data-variant',v);
+  var L=LOCATIONS[state.loc||0];
+  var fill=function(s){return s.replace(/\{city\}/g,L.city).replace(/\{addr\}/g,L.addr);};
   var set=function(id,html){var el=document.getElementById(id);if(el)el.innerHTML=html;};
-  set('eyebrow',d.eb);set('headline',d.head);set('heroSub',d.sub);
+  set('eyebrow',fill(d.eb));set('headline',d.head);set('heroSub',fill(d.sub));
   set('prizeNote',d.prize);set('shPrize',d.shPrize);set('toStep2',d.cta);
   set('dlLabel',d.dlLabel);set('entryBadge',d.badge);set('emailLabel',d.emailLabel);set('fineLead',d.fine);
   set('abLabel',v==='b'?'Lucky 777 &middot; Version B':'Original &middot; Version A');
   track('lucky_variant',{variant:v});
 }
+/* ---------------- STUDIO / LOCATION SWITCHER ---------------- */
+const LOCATIONS=[
+ {name:"Yorba Linda",city:"Yorba Linda",addr:"20517 Yorba Linda Blvd",region:"Yorba Linda, CA 92886",phone:"714-253-3888",st:"CA",soon:false},
+ {name:"Castle Rock",city:"Castle Rock",addr:"333 Perry Street",region:"Castle Rock, CO 80104",phone:"303-376-4969",st:"CO",soon:false},
+ {name:"Denver - Pearl Street",city:"Denver",addr:"373 S Pearl St.",region:"Denver, CO 80209",phone:"303-984-8000",st:"CO",soon:true},
+ {name:"Golden",city:"Golden",addr:"17121 S. Golden Road, Unit C130",region:"Denver, CO 80401",phone:"720-414-2353",st:"CO",soon:false},
+ {name:"Greenwood Village",city:"Greenwood Village",addr:"5900-6000 S. Holly Street",region:"Greenwood Village, CO 80111",phone:"303-376-3351",st:"CO",soon:false},
+ {name:"Davie",city:"Davie",addr:"8956 State Road 84",region:"Davie, FL 33324",phone:"754-701-2050",st:"FL",soon:false},
+ {name:"Largo",city:"Largo",addr:"4th St. SW and W. Bay Drive",region:"Largo, FL 33770",phone:"727-478-1131",st:"FL",soon:true},
+ {name:"Midtown Miami",city:"Miami",addr:"85 NE 29th St",region:"Miami, FL 33137",phone:"",st:"FL",soon:false},
+ {name:"Tampa - Brandon",city:"Tampa",addr:"10413 Palm River Rd",region:"Tampa, FL 33619",phone:"",st:"FL",soon:false},
+ {name:"Weston",city:"Weston",addr:"4523 Weston Road",region:"Weston, FL 33331",phone:"954-719-6859",st:"FL",soon:false},
+ {name:"East Cobb - Marietta",city:"Marietta",addr:"1401 Johnson Ferry Rd. Suite 156",region:"Marietta, GA 30062",phone:"678-905-0063",st:"GA",soon:false},
+ {name:"Roswell",city:"Roswell",addr:"1425 Market Blvd #1375A",region:"Roswell, GA 30076",phone:"770-251-6777",st:"GA",soon:true},
+ {name:"Greenwood",city:"Greenwood",addr:"1458 W Stones Crossing Road",region:"Greenwood, IN 46143",phone:"317-884-7322",st:"IN",soon:true},
+ {name:"Leawood",city:"Leawood",addr:"11560 Ash Street, Suite A02",region:"Leawood, KS 66211",phone:"913-348-0073",st:"KS",soon:true}
+];
+let shareMsg="";
+function renderLocMenu(){
+  var order=["CA","CO","FL","GA","IN","KS"],names={CA:"California",CO:"Colorado",FL:"Florida",GA:"Georgia",IN:"Indiana",KS:"Kansas"};
+  var html="";
+  order.forEach(function(st){
+    var any=false;
+    LOCATIONS.forEach(function(l,i){
+      if(l.st!==st)return;
+      if(!any){html+='<div class="lp-group">'+names[st]+'</div>';any=true;}
+      html+='<button class="lp-opt'+(i===state.loc?' sel':'')+'" type="button" role="option" aria-selected="'+(i===state.loc?'true':'false')+'" onclick="setLocation('+i+')"><span class="lp-opt-dot"></span><span class="lp-opt-body"><span class="lp-opt-nm">'+l.name+(l.soon?' <span class="lp-soon">Coming soon</span>':'')+'</span><span class="lp-opt-ad">'+l.region+'</span></span></button>';
+    });
+  });
+  var m=document.getElementById('locMenu');if(m)m.innerHTML=html;
+}
+function toggleLoc(e){if(e)e.stopPropagation();var w=document.getElementById('locPick');if(!w)return;var open=w.classList.toggle('open');document.getElementById('locBtn').setAttribute('aria-expanded',open?'true':'false');}
+function closeLoc(){var w=document.getElementById('locPick');if(w)w.classList.remove('open');var b=document.getElementById('locBtn');if(b)b.setAttribute('aria-expanded','false');}
+function updateLocText(){
+  var L=LOCATIONS[state.loc]||LOCATIONS[0];
+  var s=function(id,t){var el=document.getElementById(id);if(el)el.textContent=t;};
+  s('locBtnName',L.name);s('faqCity',L.city);s('smsCity',L.city);s('rev1City',L.name);
+  var fa=document.getElementById('faqAddr');if(fa)fa.textContent=L.addr+', '+L.region+(L.phone?' ('+L.phone+')':'');
+  shareMsg='I just entered to win 3 months free at the new Pilates Addiction in '+L.name+'. Join the founding list with my link and we both get a bonus chance to win:';
+  document.title='Win 3 Months Free at Pilates Addiction '+L.name+' (Presale Growth Concept by Nathan J. Song)';
+}
+function setLocation(i){
+  if(i===state.loc){closeLoc();return;}
+  state.loc=i;closeLoc();
+  var ht=document.getElementById('heroText');
+  if(ht)ht.classList.add('loc-fade');
+  setTimeout(function(){
+    applyVariant(state.variant||'a');
+    updateLocText();renderLocMenu();
+    if(ht)ht.classList.remove('loc-fade');
+  },300);
+  track('location',{i:i,name:LOCATIONS[i].name});
+}
+document.addEventListener('click',function(e){var w=document.getElementById('locPick');if(w&&w.classList.contains('open')&&!w.contains(e.target))closeLoc();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLoc();});
+renderLocMenu();updateLocText();
+
 document.getElementById('abToggle').addEventListener('change',e=>{applyVariant(e.target.checked?'b':'a');});
 applyVariant('a');
 document.getElementById('themeToggle').addEventListener('click',function(){
@@ -2280,7 +2376,7 @@ function fireConfetti(){
 function openShare(){document.getElementById('shareModal').classList.add('show');track('share_open');}
 function closeShare(){document.getElementById('shareModal').classList.remove('show');}
 document.getElementById('shareModal').addEventListener('click',e=>{if(e.target.id==='shareModal')closeShare();});
-const shareMsg="I just entered to win 3 months free at the new Pilates Addiction in Yorba Linda. Join the founding list with my link and we both get a bonus chance to win:";
+/* shareMsg is set by updateLocText() (location-aware) */
 const shareLink="https://[concept].fit/r/NATHAN-8F3K";
 function shareVia(ch){
   const E=encodeURIComponent,full=shareMsg+" "+shareLink;let url=null;

@@ -913,6 +913,13 @@
   .im-share{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
   .im-sh{border:0;border-radius:8px;padding:12px 8px;font:inherit;font-weight:800;font-size:12.5px;cursor:pointer;color:#fff}
   .im-sh.sms{background:#34C759}.im-sh.wa{background:#25D366}.im-sh.email{background:#C0872F}.im-sh.fb{background:#1877F2}.im-sh.more{background:#5b4f2e}.im-sh.copy{background:var(--ink);color:var(--bone);grid-column:1/-1}
+  /* custom emoticon icons on share controls */
+  .im-sh,.share-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+  .sh-ic{width:16px;height:16px;flex:none}
+  .im-eyebrow{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  .im-eyebrow .sh-ic{width:14px;height:14px}
+  .squad-lock{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+  .squad-lock .sh-ic{width:17px;height:17px}
   .gm-val{white-space:nowrap}
   .im-sim{width:100%;margin-top:12px;background:none;border:0;color:var(--flame-deep);font:inherit;font-weight:800;font-size:12px;text-decoration:underline;cursor:pointer}
   body[data-theme="night"] .im-sim{color:var(--gold-lite)}
@@ -1506,8 +1513,8 @@
     <div class="offer-top"><span>If you cannot wait for the draw</span><span class="hot">Founding-friend offer</span></div>
     <div class="offer-body">
       <span class="strike">$337 value</span>
-      <h3>Lock the founding rate at $220, and gift two classes to friends.</h3>
-      <p class="lead">Claim Gold at the founding rate of $220 a month, down from the $259 standard, and get two free classes worth $39 each to gift to friends. Invite them below and we will hold their spots. A $337 value, locked before opening day.</p>
+      <h3>Lock the founding rate at $220,<br>and gift two classes to friends.</h3>
+      <p class="lead">Claim Gold at the founding rate of $220 a month, down from the $259 standard.<br>Get two free classes worth $39 each to gift to friends, invite them below and we will hold their spots.<br>A $337 value, locked before opening day.</p>
 
       <div class="fo-price">
         <div class="fo-cell fo-lock"><span class="fo-was">$259/mo</span><b>$220</b><span class="fo-per">/mo founding rate</span></div>
@@ -1545,7 +1552,7 @@
       <div class="big"><s id="squadWas">$259/mo</s><span id="squadNow">$220/mo</span> <span style="font-size:15px;font-weight:700;color:var(--muted)">each</span></div>
       <div class="lab" id="squadLab">On your own it is $220/mo, 15% off. Each friend who joins drops it: $212/mo, then $207/mo.</div>
     </div>
-    <button class="squad-lock" id="squadLock">🎉 Invite friends and save, from $220/mo</button>
+    <button class="squad-lock" id="squadLock"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.3-10.5 6.2 6.2L4 20zM11.5 9l.7-3M15 11.5l3-.7M13.8 5.7 15.3 4M18 8.5l1.7-1.7M18.8 13.2l2 .5"/></svg><span id="squadLockTxt">Invite friends and save, from $220/mo</span></button>
     <p class="fineprint" style="margin-top:12px">Prices are per person at the published $259 monthly Gold rate, prepaid six months. The crew discount is separate from the sweepstakes and grants no entries.</p>
     <button class="why-btn" data-why="squad">Why a prepaid crew deal?</button>
   </div>
@@ -1648,11 +1655,11 @@
       <div class="im-tier" data-t="2"><b>2 friends</b><span>20% off, plus grip socks</span></div>
     </div>
     <div class="im-share">
-      <button class="im-sh sms" onclick="shareVia('sms')">💬 Text</button>
-      <button class="im-sh email" onclick="shareVia('email')">📧 Email</button>
-      <button class="im-sh fb" onclick="shareVia('fb')">📘 Facebook</button>
-      <button class="im-sh more" onclick="shareVia('native')">📤 More</button>
-      <button class="im-sh copy" onclick="shareVia('copy')">🔗 Copy link</button>
+      <button class="im-sh sms" onclick="shareVia('sms')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg>Text</button>
+      <button class="im-sh email" onclick="shareVia('email')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.2 12 13l8.5-5.8"/></svg>Email</button>
+      <button class="im-sh fb" onclick="shareVia('fb')"><svg class="sh-ic" viewBox="0 0 24 24" fill="currentColor"><path d="M13.8 21v-8h2.2l.4-3h-2.6V8c0-.8.3-1.3 1.5-1.3H17V4.1C16.4 4 15.4 4 14.6 4 12.5 4 11 5.3 11 7.6V10H8.7v3H11v8h2.8Z"/></svg>Facebook</button>
+      <button class="im-sh more" onclick="shareVia('native')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7.5 12 4l3.5 3.5M5 13v4.5A1.5 1.5 0 0 0 6.5 19h11a1.5 1.5 0 0 0 1.5-1.5V13"/></svg>More</button>
+      <button class="im-sh copy" onclick="shareVia('copy')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg>Copy link</button>
     </div>
     <button class="im-sim" onclick="bumpReferral()">Preview a friend joining</button>
   </div>
@@ -1663,14 +1670,14 @@
   <div class="imodal-card">
     <button class="vmodal-x" onclick="closeGift()" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
     <div class="im-head">
-      <span class="im-eyebrow">🎁 Gift a free class</span>
+      <span class="im-eyebrow"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 8.5h20V12H2zM12 8.5v11.5M12 8.5C10.5 8.5 8 7.7 8.4 5.6 8.7 4.2 10.4 4.4 11.2 5.4c.6.8.8 2 .8 3.1Zm0 0c1.5 0 4-.8 3.6-2.9C15.3 4.2 13.6 4.4 12.8 5.4c-.6.8-.8 2-.8 3.1Z"/></svg>Gift a free class</span>
       <h3>Give <span id="giftWho">your friend</span> a free class. <span class="gm-val">$39 value</span></h3>
       <p>Send a class on the Aurum Reformer, on you. Share the link below and we will hold their spot.</p>
     </div>
     <div class="im-share">
-      <button class="im-sh sms" onclick="shareGift('sms')">💬 Text</button>
-      <button class="im-sh email" onclick="shareGift('email')">📧 Email</button>
-      <button class="im-sh copy" onclick="shareGift('copy')">🔗 Copy link</button>
+      <button class="im-sh sms" onclick="shareGift('sms')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg>Text</button>
+      <button class="im-sh email" onclick="shareGift('email')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.2 12 13l8.5-5.8"/></svg>Email</button>
+      <button class="im-sh copy" onclick="shareGift('copy')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg>Copy link</button>
     </div>
   </div>
 </div>
@@ -1707,11 +1714,11 @@
     <h3>Invite friends. Win 3 months free together.</h3>
     <p class="sub" style="font-size:14px;margin-top:4px">Each friend who joins the founding list is +1 entry for both of you, and a bonus chance to win 3 months of Pilates Addiction, free.</p>
     <div class="share-grid">
-      <button class="share-btn" onclick="shareVia('sms')">💬 Text</button>
-      <button class="share-btn" onclick="shareVia('email')">📧 Email</button>
-      <button class="share-btn" onclick="shareVia('fb')">📘 Facebook</button>
-      <button class="share-btn" onclick="shareVia('copy')">🔗 Copy link</button>
-      <button class="share-btn" onclick="shareVia('native')">📤 More</button>
+      <button class="share-btn" onclick="shareVia('sms')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg>Text</button>
+      <button class="share-btn" onclick="shareVia('email')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.2 12 13l8.5-5.8"/></svg>Email</button>
+      <button class="share-btn" onclick="shareVia('fb')"><svg class="sh-ic" viewBox="0 0 24 24" fill="currentColor"><path d="M13.8 21v-8h2.2l.4-3h-2.6V8c0-.8.3-1.3 1.5-1.3H17V4.1C16.4 4 15.4 4 14.6 4 12.5 4 11 5.3 11 7.6V10H8.7v3H11v8h2.8Z"/></svg>Facebook</button>
+      <button class="share-btn" onclick="shareVia('copy')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg>Copy link</button>
+      <button class="share-btn" onclick="shareVia('native')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7.5 12 4l3.5 3.5M5 13v4.5A1.5 1.5 0 0 0 6.5 19h11a1.5 1.5 0 0 0 1.5-1.5V13"/></svg>More</button>
     </div>
     <div class="gb-link" style="margin-top:14px"><input readonly id="reflink3" value="https://nathanjsong.com/pilates"><button onclick="copyLink()">Copy</button></div>
   </div>
@@ -2425,10 +2432,10 @@ function renderSquad(){
   if(pct===20)lab.textContent='Two friends in. Everyone trains at $'+M20+'/mo, 20% off, plus free grip socks. That is $'+saveM+' off every month, each.';
   else if(pct===18)lab.textContent='One friend in. You are both at $'+M18+'/mo, 18% off. Invite one more and everyone drops to $'+M20+'/mo.';
   else lab.textContent='On your own it is $'+M15+'/mo, 15% off. Each friend who joins drops it: $'+M18+'/mo, then $'+M20+'/mo.';
-  const lock=document.getElementById('squadLock');
-  lock.textContent = pct===20 ? '🎉 Share and lock 20% off, $'+M20+'/mo each'
-    : pct===18 ? '🎉 Invite one more, drop to $'+M20+'/mo'
-    : '🎉 Invite friends and save, from $'+M15+'/mo';
+  const lockTxt=document.getElementById('squadLockTxt');
+  if(lockTxt)lockTxt.textContent = pct===20 ? 'Share and lock 20% off, $'+M20+'/mo each'
+    : pct===18 ? 'Invite one more, drop to $'+M20+'/mo'
+    : 'Invite friends and save, from $'+M15+'/mo';
 }
 document.getElementById('squadSeats').addEventListener('click',e=>{
   const s=e.target.closest('.seat');if(!s)return;

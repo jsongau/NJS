@@ -732,6 +732,18 @@
   .modal-card .mx{position:absolute;top:14px;right:16px;background:none;border:0;font-size:20px;color:var(--muted);cursor:pointer}
   .share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
   .share-btn{background:var(--bone);border:1px solid var(--line);border-radius:12px;padding:14px 8px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink)}
+  /* tasteful 3x3 share tiles */
+  .share-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+  .sh-tile{display:flex;flex-direction:column;align-items:center;gap:9px;padding:15px 6px;border:1px solid var(--line);border-radius:14px;background:var(--card);cursor:pointer;font:inherit;font-size:12px;font-weight:700;color:var(--ink);transition:transform .15s,border-color .2s,box-shadow .25s}
+  .sh-tile:hover{border-color:var(--gold-lite);transform:translateY(-2px);box-shadow:0 10px 22px -12px rgba(190,158,74,.5)}
+  .sh-tico{width:42px;height:42px;border-radius:50%;display:grid;place-items:center}
+  .sh-tico svg{width:21px;height:21px}
+  .sh-code{margin-top:14px;text-align:center;font-size:12.5px;color:var(--muted)}
+  .sh-code b{color:var(--flame-deep);letter-spacing:.06em;font-weight:800}
+  body[data-theme="night"] .sh-code b{color:var(--gold-lite)}
+  .squad-term{display:inline-flex;align-items:center;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--flame-deep);background:rgba(190,158,74,.14);padding:5px 11px;border-radius:100px}
+  body[data-theme="night"] .squad-term{color:var(--gold-lite)}
+  .lead,.disc-txt p,.jn-sub,.rf-sub{text-wrap:pretty}
   .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:var(--bone);padding:12px 20px;border-radius:999px;font-size:13.5px;font-weight:700;z-index:99;opacity:0;pointer-events:none;transition:.25s}
   .toast.show{opacity:1}
 
@@ -1464,7 +1476,7 @@
       <div class="jn-price"><b>$220</b><span>/mo Gold, founding rate</span></div>
       <div class="jn-note"><s>$259 Gold Standard</s> &middot; 15% off, locked before public pricing rises</div>
       <ul class="jn-list">
-        <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Founding rate frozen for as long as you stay</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Your founding rate never goes up, for as long as you stay</li>
         <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>First pick of class times before public booking</li>
         <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>On the Aurum Reformer from day one</li>
       </ul>
@@ -1501,7 +1513,7 @@
         <div class="disc-num" id="discNum">20% off</div>
         <div class="disc-txt">
           <h3>six months, everything included</h3>
-          <p>Prepay six months at the founding rate with a crew. On your own it is the 15% founding rate; one friend takes it to 18%, two friends to the full 20%, everyone in.</p>
+          <p>Prepay six months at the founding rate with a crew. On your own it is the 15% founding rate; one friend takes it to 18%, two friends to the full 20%, everyone&nbsp;in.</p>
         </div>
       </div>
       <div class="disc-row"><s>$1,554</s><b>$1,243</b><span class="save">save $311 each at 20%</span></div>
@@ -1514,7 +1526,7 @@
     <div class="offer-body">
       <span class="strike">$337 value</span>
       <h3>Lock the founding rate at $220,<br>and gift two classes to friends.</h3>
-      <p class="lead">Claim Gold at the founding rate of $220 a month, down from the $259 standard.<br>Get two free classes worth $39 each to gift to friends, invite them below and we will hold their spots.<br>A $337 value, locked before opening day.</p>
+      <p class="lead">Claim Gold at the founding rate of $220 a month, down from the $259 standard, and get two free classes worth $39 each to gift to friends. Invite them below and we will hold their spots. A $337 value, locked before opening day.</p>
 
       <div class="fo-price">
         <div class="fo-cell fo-lock"><span class="fo-was">$259/mo</span><b>$220</b><span class="fo-per">/mo founding rate</span></div>
@@ -1541,16 +1553,17 @@
   <div class="squad" data-note="squad" id="squadCard">
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <h3>Build a crew of 3, save up to 20%</h3>
+      <span class="squad-term">6 months prepaid</span>
     </div>
-    <p class="lead">Train together, save together. Your monthly rate drops for everyone as friends join with you. On your own it is 15% off; one friend takes it to 18%, two friends to the full 20%, everything included. Tap a seat to watch your rate fall.</p>
+    <p class="lead">Train together, save together. Prepay six months as a crew and your monthly rate drops for everyone as friends join with you. On your own it is 15% off; one friend takes it to 18%, two friends to the full 20%, everything included. Tap a seat to watch your rate fall.</p>
     <div class="squad-seats" id="squadSeats">
       <button class="seat on" data-seat="0"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6" stroke-linecap="round"/></svg></button>
       <button class="seat" data-seat="1"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
       <button class="seat" data-seat="2"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
     </div>
     <div class="squad-calc">
-      <div class="big"><s id="squadWas">$259/mo</s><span id="squadNow">$220/mo</span> <span style="font-size:15px;font-weight:700;color:var(--muted)">each</span></div>
-      <div class="lab" id="squadLab">On your own it is $220/mo, 15% off. Each friend who joins drops it: $212/mo, then $207/mo.</div>
+      <div class="big"><s id="squadWas">$259/mo</s><span id="squadNow">$220/mo</span> <span style="font-size:15px;font-weight:700;color:var(--muted)">each &middot; <span id="squadTotal">$1,320</span> for 6 months</span></div>
+      <div class="lab" id="squadLab">On your own it is $220/mo, 15% off. Each friend who joins drops it for everyone: $212/mo, then $207/mo, prepaid six months.</div>
     </div>
     <button class="squad-lock" id="squadLock"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.3-10.5 6.2 6.2L4 20zM11.5 9l.7-3M15 11.5l3-.7M13.8 5.7 15.3 4M18 8.5l1.7-1.7M18.8 13.2l2 .5"/></svg><span id="squadLockTxt">Invite friends and save, from $220/mo</span></button>
     <p class="fineprint" style="margin-top:12px">Prices are per person at the published $259 monthly Gold rate, prepaid six months. The crew discount is separate from the sweepstakes and grants no entries.</p>
@@ -1713,14 +1726,19 @@
     <button class="mx" onclick="closeShare()" aria-label="Close">&times;</button>
     <h3>Invite friends. Win 3 months free together.</h3>
     <p class="sub" style="font-size:14px;margin-top:4px">Each friend who joins the founding list is +1 entry for both of you, and a bonus chance to win 3 months of Pilates Addiction, free.</p>
-    <div class="share-grid">
-      <button class="share-btn" onclick="shareVia('sms')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg>Text</button>
-      <button class="share-btn" onclick="shareVia('email')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.2 12 13l8.5-5.8"/></svg>Email</button>
-      <button class="share-btn" onclick="shareVia('fb')"><svg class="sh-ic" viewBox="0 0 24 24" fill="currentColor"><path d="M13.8 21v-8h2.2l.4-3h-2.6V8c0-.8.3-1.3 1.5-1.3H17V4.1C16.4 4 15.4 4 14.6 4 12.5 4 11 5.3 11 7.6V10H8.7v3H11v8h2.8Z"/></svg>Facebook</button>
-      <button class="share-btn" onclick="shareVia('copy')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg>Copy link</button>
-      <button class="share-btn" onclick="shareVia('native')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7.5 12 4l3.5 3.5M5 13v4.5A1.5 1.5 0 0 0 6.5 19h11a1.5 1.5 0 0 0 1.5-1.5V13"/></svg>More</button>
+    <div class="share-grid3">
+      <button class="sh-tile" onclick="shareVia('sms')"><span class="sh-tico" style="background:#34C759"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg></span>Text</button>
+      <button class="sh-tile" onclick="shareVia('email')"><span class="sh-tico" style="background:#C0872F"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.2 12 13l8.5-5.8"/></svg></span>Email</button>
+      <button class="sh-tile" onclick="shareVia('fb')"><span class="sh-tico" style="background:#1877F2"><svg viewBox="0 0 24 24" fill="#fff"><path d="M13.8 21v-8h2.2l.4-3h-2.6V8c0-.8.3-1.3 1.5-1.3H17V4.1C16.4 4 15.4 4 14.6 4 12.5 4 11 5.3 11 7.6V10H8.7v3H11v8h2.8Z"/></svg></span>Facebook</button>
+      <button class="sh-tile" onclick="shareVia('x')"><span class="sh-tico" style="background:#111"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17.5 3h3l-6.6 7.5L21.8 21h-6l-4.7-6.1L5.7 21H2.7l7-8L2.5 3h6.1l4.2 5.6L17.5 3Zm-1 16h1.7L7.6 4.8H5.8L16.5 19Z"/></svg></span>X</button>
+      <button class="sh-tile" onclick="shareVia('li')"><span class="sh-tico" style="background:#0A66C2"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6.9 8.5H3.9V21h3V8.5Zm.2-3.8A1.75 1.75 0 1 0 5.4 6.4a1.75 1.75 0 0 0 1.7-1.7ZM21 21v-6.9c0-3.3-1.8-4.9-4.1-4.9-1.9 0-2.8 1-3.2 1.8V8.5h-3V21h3v-6.6c0-.4 0-.8.1-1 .3-.7.9-1.4 1.9-1.4 1.4 0 1.9 1 1.9 2.6V21h3.4Z"/></svg></span>LinkedIn</button>
+      <button class="sh-tile" onclick="shareVia('reddit')"><span class="sh-tico" style="background:#FF4500"><svg viewBox="0 0 24 24" fill="#fff"><path d="M22 12a2 2 0 0 0-3.4-1.4 9.8 9.8 0 0 0-4.9-1.5l.9-3.9 2.7.6a1.5 1.5 0 1 0 .2-1l-3.2-.7a.5.5 0 0 0-.6.4l-1 4.6a9.8 9.8 0 0 0-5 1.5A2 2 0 1 0 4 13.6a4 4 0 0 0 0 .6c0 2.9 3.6 5.3 8 5.3s8-2.4 8-5.3a4 4 0 0 0 0-.6A2 2 0 0 0 22 12ZM8 13.5a1.2 1.2 0 1 1 1.2 1.2A1.2 1.2 0 0 1 8 13.5Zm7.4 3.4a4.7 4.7 0 0 1-3.4 1.1 4.7 4.7 0 0 1-3.4-1.1.4.4 0 0 1 .5-.6 4 4 0 0 0 2.9.9 4 4 0 0 0 2.9-.9.4.4 0 1 1 .5.6Zm-.6-2.2a1.2 1.2 0 1 1 1.2-1.2 1.2 1.2 0 0 1-1.2 1.2Z"/></svg></span>Reddit</button>
+      <button class="sh-tile" onclick="shareVia('pin')"><span class="sh-tico" style="background:#E60023"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1a4.3 4.3 0 0 0-4.5 4.3c0 .9.3 1.4.8 2 .1.2.2.3.1.5l-.3.9c0 .3-.2.4-.5.2-1.2-.5-1.8-1.9-1.8-3.5 0-2.6 2.2-5.7 6.5-5.7 3.5 0 5.8 2.5 5.8 5.2 0 3.6-2 6.2-4.9 6.2-1 0-1.9-.5-2.2-1.1l-.6 2.3c-.2.8-.7 1.7-1.1 2.3A10 10 0 1 0 12 2Z"/></svg></span>Pinterest</button>
+      <button class="sh-tile" onclick="shareVia('copy')"><span class="sh-tico" style="background:var(--ink)"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg></span>Copy link</button>
+      <button class="sh-tile" onclick="shareVia('native')"><span class="sh-tico" style="background:#5b4f2e"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8.5 7.5 12 4l3.5 3.5M5 13v4.5A1.5 1.5 0 0 0 6.5 19h11a1.5 1.5 0 0 0 1.5-1.5V13"/></svg></span>More</button>
     </div>
-    <div class="gb-link" style="margin-top:14px"><input readonly id="reflink3" value="https://nathanjsong.com/pilates"><button onclick="copyLink()">Copy</button></div>
+    <div class="sh-code">Your referral code: <b id="refCodeLabel">PA-XXXXX</b></div>
+    <div class="gb-link" style="margin-top:10px"><input readonly id="reflink3" value="https://nathanjsong.com/pilates"><button onclick="copyLink()">Copy</button></div>
   </div>
 </div>
 
@@ -2369,12 +2387,19 @@ function openShare(){document.getElementById('shareModal').classList.add('show')
 function closeShare(){document.getElementById('shareModal').classList.remove('show');}
 document.getElementById('shareModal').addEventListener('click',e=>{if(e.target.id==='shareModal')closeShare();});
 /* shareMsg is set by updateLocText() (location-aware) */
-const shareLink="https://nathanjsong.com/pilates";
+function genRef(){var c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',s='';for(var i=0;i<5;i++)s+=c.charAt(Math.floor(Math.random()*c.length));return 'PA-'+s;}
+const refCode=genRef();
+const shareLink="https://nathanjsong.com/pilates?ref="+refCode;
+(function(){var rc=document.getElementById('refCodeLabel');if(rc)rc.textContent=refCode;document.querySelectorAll('#reflink2,#reflink3').forEach(function(i){i.value=shareLink;});})();
 function shareVia(ch){
   const E=encodeURIComponent,full=shareMsg+" "+shareLink;let url=null;
   if(ch==='sms')url='sms:?&body='+E(full);
   else if(ch==='wa')url='https://wa.me/?text='+E(full);
   else if(ch==='fb')url='https://www.facebook.com/sharer/sharer.php?u='+E(shareLink);
+  else if(ch==='x')url='https://twitter.com/intent/tweet?text='+E(shareMsg)+'&url='+E(shareLink);
+  else if(ch==='li')url='https://www.linkedin.com/sharing/share-offsite/?url='+E(shareLink);
+  else if(ch==='reddit')url='https://www.reddit.com/submit?url='+E(shareLink)+'&title='+E("Win 3 months free at Pilates Addiction");
+  else if(ch==='pin')url='https://pinterest.com/pin/create/button/?url='+E(shareLink)+'&description='+E(shareMsg);
   else if(ch==='email')url='mailto:?subject='+E("Win 3 months of Pilates with me")+'&body='+E(shareMsg+"\n\n"+shareLink);
   else if(ch==='copy'){copyLink();bumpReferral();track('referral_share',{ch});return;}
   else if(ch==='native'){if(navigator.share){navigator.share({title:"Pilates Addiction founding list",text:shareMsg,url:shareLink}).then(bumpReferral).catch(()=>{});}else{toast("Use the buttons above to share");}track('referral_share',{ch});return;}
@@ -2424,14 +2449,15 @@ const M15=Math.round(MONTHLY*0.85), M18=Math.round(MONTHLY*0.82), M20=Math.round
 function renderSquad(){
   const filled=state.seats.filter(Boolean).length; // seat 0 (you) is always on
   const pct=filled>=3?20:filled>=2?18:15;
-  const nowM=pct===20?M20:pct===18?M18:M15, saveM=MONTHLY-nowM;
+  const nowM=pct===20?M20:pct===18?M18:M15, saveM=MONTHLY-nowM, totM=nowM*6;
   document.getElementById('squadWas').textContent='$'+MONTHLY+'/mo';
   document.getElementById('squadNow').textContent='$'+nowM+'/mo';
   document.getElementById('squadWas').style.display='inline';
+  const tot=document.getElementById('squadTotal');if(tot)tot.textContent='$'+totM.toLocaleString();
   const lab=document.getElementById('squadLab');
-  if(pct===20)lab.textContent='Two friends in. Everyone trains at $'+M20+'/mo, 20% off, plus free grip socks. That is $'+saveM+' off every month, each.';
-  else if(pct===18)lab.textContent='One friend in. You are both at $'+M18+'/mo, 18% off. Invite one more and everyone drops to $'+M20+'/mo.';
-  else lab.textContent='On your own it is $'+M15+'/mo, 15% off. Each friend who joins drops it: $'+M18+'/mo, then $'+M20+'/mo.';
+  if(pct===20)lab.textContent='Two friends in. Everyone trains at $'+M20+'/mo for six months, prepaid ($'+totM.toLocaleString()+' each), 20% off plus free grip socks.';
+  else if(pct===18)lab.textContent='One friend in. You are both at $'+M18+'/mo for six months, prepaid. Invite one more and everyone drops to $'+M20+'/mo.';
+  else lab.textContent='On your own it is $'+M15+'/mo for six months, prepaid, 15% off. Each friend who joins drops it for everyone: $'+M18+'/mo, then $'+M20+'/mo.';
   const lockTxt=document.getElementById('squadLockTxt');
   if(lockTxt)lockTxt.textContent = pct===20 ? 'Share and lock 20% off, $'+M20+'/mo each'
     : pct===18 ? 'Invite one more, drop to $'+M20+'/mo'

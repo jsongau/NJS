@@ -1648,9 +1648,9 @@
       <div class="im-tier" data-t="2"><b>2 friends</b><span>20% off, plus grip socks</span></div>
     </div>
     <div class="im-share">
-      <button class="im-sh sms" onclick="shareVia('sms')">Text</button>
-      <button class="im-sh email" onclick="shareVia('email')">Email</button>
-      <button class="im-sh copy" onclick="shareVia('copy')">Copy link</button>
+      <button class="im-sh sms" onclick="shareVia('sms')">💬 Text</button>
+      <button class="im-sh email" onclick="shareVia('email')">📧 Email</button>
+      <button class="im-sh copy" onclick="shareVia('copy')">🔗 Copy link</button>
     </div>
     <button class="im-sim" onclick="bumpReferral()">Preview a friend joining</button>
   </div>
@@ -1661,14 +1661,14 @@
   <div class="imodal-card">
     <button class="vmodal-x" onclick="closeGift()" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
     <div class="im-head">
-      <span class="im-eyebrow">Gift a free class</span>
+      <span class="im-eyebrow">🎁 Gift a free class</span>
       <h3>Give <span id="giftWho">your friend</span> a free class. <span class="gm-val">$39 value</span></h3>
       <p>Send a class on the Aurum Reformer, on you. Share the link below and we will hold their spot.</p>
     </div>
     <div class="im-share">
-      <button class="im-sh sms" onclick="shareGift('sms')">Text</button>
-      <button class="im-sh email" onclick="shareGift('email')">Email</button>
-      <button class="im-sh copy" onclick="shareGift('copy')">Copy link</button>
+      <button class="im-sh sms" onclick="shareGift('sms')">💬 Text</button>
+      <button class="im-sh email" onclick="shareGift('email')">📧 Email</button>
+      <button class="im-sh copy" onclick="shareGift('copy')">🔗 Copy link</button>
     </div>
   </div>
 </div>
@@ -2043,7 +2043,7 @@ function updateLocText(){
   var s=function(id,t){var el=document.getElementById(id);if(el)el.textContent=t;};
   s('locBtnName',L.name);s('faqCity',L.city);s('smsCity',L.city);s('rev1City',L.name);
   var fa=document.getElementById('faqAddr');if(fa)fa.textContent=L.addr+', '+L.region+(L.phone?' ('+L.phone+')':'');
-  shareMsg='I just entered to win 3 months free at the new Pilates Addiction in '+L.name+'. Join the founding list with my link and we both get a bonus chance to win:';
+  shareMsg='🎉 I just entered to win 3 months free at the new Pilates Addiction in '+L.name+'. 🧘 Join the founding list with my link and we both get a bonus chance to win:';
   document.title='Win 3 Months Free at Pilates Addiction '+L.name+' (Presale Growth Concept by Nathan J. Song)';
 }
 function setLocation(i){
@@ -2139,11 +2139,11 @@ async function preFill(){
   track('prefill_start');
   showFstep(1);
   await cfSleep(120);
-  await cfType(document.getElementById('email'),'test@nathanjsong.com',16);
+  await cfType(document.getElementById('email'),'foundingmember@gmail.com',16);
   await cfSleep(160);
   await cfPress(document.getElementById('toStep2'));
   await cfSleep(180);
-  await cfType(document.getElementById('fname'),'Future Member',18);
+  await cfType(document.getElementById('fname'),'Founding Member',18);
   await cfSleep(160);
   await cfPress(document.getElementById('toStep3'));
   await cfSleep(200);
@@ -2393,10 +2393,10 @@ document.querySelectorAll('#bogoCard .fo-inv-send').forEach(b=>b.addEventListene
 function openGift(nm){var w=document.getElementById('giftWho');if(w)w.textContent=nm;document.getElementById('giftModal').classList.add('show');track('gift_modal_open');}
 function closeGift(){document.getElementById('giftModal').classList.remove('show');}
 function shareGift(ch){
-  var msg="I am gifting you a free Pilates class on the Aurum Reformer at Pilates Addiction, a $39 value. Claim your spot:";
+  var msg="🎁 I'm gifting you a free Pilates class on the Aurum Reformer at Pilates Addiction, a $39 value. 🧘 Claim your spot:";
   var E=encodeURIComponent,full=msg+" "+shareLink,url=null;
   if(ch==='sms')url='sms:?&body='+E(full);
-  else if(ch==='email')url='mailto:?subject='+E("A free Pilates class, on me")+'&body='+E(msg+"\n\n"+shareLink);
+  else if(ch==='email')url='mailto:?subject='+E("🎁 A free Pilates class, on me")+'&body='+E(msg+"\n\n"+shareLink);
   else if(ch==='copy'){copyLink();markGiftSent();track('gift_share',{ch:ch});return;}
   if(url)window.open(url,'_blank');
   markGiftSent();track('gift_share',{ch:ch});

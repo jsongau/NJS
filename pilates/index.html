@@ -529,6 +529,30 @@
   .offer-body h3{font-size:22px;font-weight:800}
   .offer-body .strike{text-decoration:line-through;color:var(--muted);font-size:13px;font-weight:700}
   .offer-body .lead{font-size:15px;color:var(--muted);margin-top:8px;line-height:1.6}
+  /* founding-rate + gift-classes offer */
+  .fo-price{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+  .fo-cell{border:1px solid var(--line);border-radius:13px;padding:15px 16px;background:var(--bone);display:flex;align-items:center}
+  .fo-lock{flex-wrap:wrap;gap:2px 8px}
+  .fo-lock .fo-was{font-size:13px;color:var(--muted);text-decoration:line-through;font-weight:700}
+  .fo-lock b{font-size:26px;font-weight:900;color:var(--flame-deep);letter-spacing:-.02em;line-height:1}
+  body[data-theme="night"] .fo-lock b{color:var(--flame)}
+  .fo-lock .fo-per{font-size:12.5px;color:var(--muted);font-weight:700}
+  .fo-gift{gap:12px}
+  .fo-plus{width:30px;height:30px;border-radius:9px;background:var(--grad-gold);color:#241a05;display:grid;place-items:center;font-size:20px;font-weight:900;flex:none;line-height:1}
+  .fo-gtxt b{display:block;font-size:14.5px;font-weight:800}
+  .fo-gtxt span{font-size:12.5px;color:var(--muted)}
+  .fo-invite{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--mist);margin-bottom:2px}
+  .fo-inv-lab{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+  .fo-inv-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .fo-inv-n{width:26px;height:26px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:12.5px;font-weight:800;color:var(--muted);flex:none}
+  .fo-inv-in{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;font-size:14.5px;background:var(--card);color:var(--ink)}
+  .fo-inv-in:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+  .fo-inv-send{background:var(--ink);color:var(--bone);border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:800;font-size:13.5px;cursor:pointer;flex:none;transition:opacity .2s,transform .15s}
+  .fo-inv-send:hover{transform:translateY(-1px)}
+  .fo-inv-send.sent{background:var(--good);cursor:default}
+  .fo-inv-row.done .fo-inv-n{background:var(--good);border-color:var(--good);color:#fff}
+  .fo-inv-row.done .fo-inv-in{color:var(--muted)}
+  .fo-inv-note{font-size:12px;color:var(--muted);line-height:1.45;margin-top:2px}
   .tiers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
   .tier{border:1px solid var(--line);border-radius:13px;padding:16px;background:var(--bone);cursor:pointer;text-align:center;transition:.12s;position:relative}
   .tier.on{border-color:var(--flame);background:rgba(190,158,74,.06);box-shadow:0 8px 20px rgba(190,158,74,.12)}
@@ -1426,9 +1450,9 @@
   <!-- LEFT RAIL: skip the wait, join now -->
   <aside class="cf-rail cf-order-l" data-note="bogo">
     <div class="jn">
-      <svg class="mklabel" viewBox="0 0 100 52" fill="none" aria-hidden="true"><path d="M16 4 H90 a6 6 0 0 1 6 6 V42 a6 6 0 0 1 -6 6 H16 L2 26 Z" fill="url(#gf)" stroke="#8a6d1c" stroke-width="1.4"/><circle cx="15" cy="26" r="4" fill="#241a05"/><text x="55" y="32" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-size="16.5" font-weight="900" fill="#241a05">15% OFF</text></svg>
-      <h3>Do not wait on a 1-in-many draw.</h3>
-      <p class="jn-sub">Three names win the draw. Every founding member wins the rate. Lock yours now and start before the doors open.</p>
+      <svg class="mklabel" viewBox="0 0 100 52" fill="none" aria-hidden="true"><path d="M16 4 H90 a6 6 0 0 1 6 6 V42 a6 6 0 0 1 -6 6 H16 L2 26 Z" fill="#d92d20" stroke="#9e1c14" stroke-width="1.4"/><circle cx="15" cy="26" r="4" fill="#7a1a12"/><text x="55" y="32" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-size="16.5" font-weight="900" fill="#fff">15% OFF</text></svg>
+      <h3>Skip the draw. Lock in your founding rate today.</h3>
+      <p class="jn-sub">Three names win the draw. Founding members skip the wait and secure the same exclusive rate before opening day.</p>
       <div class="jn-price"><b>$220</b><span>/mo Gold, founding rate</span></div>
       <div class="jn-note"><s>$259 Gold Standard</s> &middot; 15% off, locked before public pricing rises</div>
       <ul class="jn-list">
@@ -1441,7 +1465,6 @@
         <div class="jn-scarlab"><b id="jnLeft">18</b> of 50 founding memberships left</div>
       </div>
       <button class="jn-cta" onclick="jumpTo('bogoCard')">Start my founding membership</button>
-      <p class="jn-fine">Illustrative founding offer. Not affiliated with Pilates Addiction.</p>
     </div>
   </aside>
 
@@ -1457,10 +1480,6 @@
       </div>
       <h1>You&rsquo;re in, <span id="nameEcho">friend</span>.</h1>
       <p class="sub" style="margin:8px auto 0;max-width:48ch">Your founding spot is saved and you are in the draw. Here are two ways to win more before opening day.</p>
-      <div class="cf-status">
-        <span class="cf-chip"><span class="d"></span><span id="entryCount">1 entry logged</span></span>
-        <span class="cf-chip" id="refChip">0 friends joined</span>
-      </div>
       <div class="receipt" style="margin-top:18px">
         <p>Confirmation sent to <b id="emailEcho">your email</b><span id="phoneEcho"></span>. Not there in a few minutes? Check spam or promotions so you do not miss the winner alert.</p>
         <p>Three founding members each win three months of unlimited membership, drawn <b>before opening day</b>.</p>
@@ -1485,35 +1504,27 @@
   <div class="offer" data-note="bogo" id="bogoCard">
     <div class="offer-top"><span>If you cannot wait for the draw</span><span class="hot">Founding-friend offer</span></div>
     <div class="offer-body">
-      <span class="strike">$518 value</span>
-      <h3>Start your first Gold month. Gift a friend theirs. $259.</h3>
-      <p class="lead">Skip the wait. For $259 you get your first month of Gold unlimited on the Aurum Reformer, and a friend trains free. Two memberships on day one for the price of one, a $518 value. Prefer to come alone? The solo Gold month is always there on its own.</p>
+      <span class="strike">$337 value</span>
+      <h3>Lock the founding rate at $220, and gift two classes to friends.</h3>
+      <p class="lead">Claim Gold at the founding rate of $220 a month, down from the $259 standard, and get two free classes worth $39 each to gift to friends. Invite them below and we will hold their spots. A $337 value, locked before opening day.</p>
 
-      <div class="tiers" role="group" aria-label="Pick how you start">
-        <button class="tier" data-bogo="solo" data-price="259"><b>$259</b><span>Solo Gold month</span></button>
-        <button class="tier on" data-bogo="pair" data-price="259"><b>$259</b><span>You + a friend, their month free</span><em>Most picked</em></button>
+      <div class="fo-price">
+        <div class="fo-cell fo-lock"><span class="fo-was">$259/mo</span><b>$220</b><span class="fo-per">/mo founding rate</span></div>
+        <div class="fo-cell fo-gift"><span class="fo-plus">+</span><div class="fo-gtxt"><b>2 classes to gift</b><span>$39 value each, yours to share</span></div></div>
       </div>
 
-      <div class="gb-count" id="bogoCount">Your friend has <b id="bogoTimer">24:00:00</b> to claim their free month. If they do not, we refund you to the solo Gold price, no questions.</div>
-
-      <div class="gb-open">
-        <div class="gb-openlab">Founders bringing a friend <span class="gb-demo">Demo activity</span></div>
-        <div class="gb-team"><span class="gb-av" style="background:var(--flame)">M</span><div class="gb-tinfo"><b>Maya reserved a pair</b><span>Her friend&rsquo;s free month is unclaimed, 1 seat open</span></div><button class="gb-join" data-price="259" data-team="Maya">Take the free month</button></div>
-        <div class="gb-team"><span class="gb-av" style="background:var(--gold)">J</span><div class="gb-tinfo"><b>Jordan reserved a pair</b><span>Friend seat open until tonight</span></div><button class="gb-join" data-price="259" data-team="Jordan">Take the free month</button></div>
+      <div class="fo-invite">
+        <div class="fo-inv-lab">Gift your two free classes</div>
+        <div class="fo-inv-row"><span class="fo-inv-n">1</span><input type="text" class="fo-inv-in" id="giftName1" placeholder="Friend&rsquo;s name" autocomplete="off"><button class="fo-inv-send" data-gift="1" type="button">Send</button></div>
+        <div class="fo-inv-row"><span class="fo-inv-n">2</span><input type="text" class="fo-inv-in" id="giftName2" placeholder="Friend&rsquo;s name" autocomplete="off"><button class="fo-inv-send" data-gift="2" type="button">Send</button></div>
+        <div class="fo-inv-note" id="giftNote">Each friend gets one free class on the Aurum Reformer, a $39 value.</div>
       </div>
 
       <div class="offer-actions">
-        <button class="btn-mini primary" id="bogoStart">Start my Gold month and gift one free</button>
-        <button class="btn-mini ghost" id="bogoSolo">Just my Gold month, $259</button>
+        <button class="btn-mini primary" id="bogoStart">Lock my founding rate and gift two classes</button>
       </div>
 
-      <div class="gb-lead" id="bogoLead" hidden>
-        <div class="gb-pips" id="bogoPips"><span class="gb-pip fill">You</span><span class="gb-pip">+1</span></div>
-        <p class="sub" style="font-size:14px;margin-top:6px;max-width:none" id="bogoLeadTxt">Your founding month is started. Share your link so your friend claims their free month.</p>
-        <div class="gb-link"><input readonly id="bogoLink" value="https://[concept].fit/founder/NATHAN-BOGO"><button onclick="copyBogo()">Copy</button></div>
-      </div>
-
-      <p class="fineprint" style="margin-top:14px">This offer does not affect your sweepstakes entry or your odds of winning. No purchase necessary to enter or win. Based on the published $259 Gold rate; the free-month promotion is an illustrative concept.</p>
+      <p class="fineprint" style="margin-top:14px">This offer does not affect your sweepstakes entry or your odds of winning. No purchase necessary to enter or win. Founding rate and gift classes are based on the published $259 Gold rate and $39 class rate.</p>
       <button class="why-btn" data-why="bogo">Why a bring-a-friend offer?</button>
     </div>
   </div>
@@ -1534,7 +1545,7 @@
       <div class="lab" id="squadLab">6 months of Gold prepaid at your 15% founding rate &middot; add a friend for 18%, two for 20%</div>
     </div>
     <button class="squad-lock" id="squadLock">Lock in 15% off, or add a friend for 18%</button>
-    <p class="fineprint" style="margin-top:12px">Based on the published $259 monthly Gold rate ($1,554 for six months). The prepaid crew discount is separate from the sweepstakes and grants no entries. Demo seats.</p>
+    <p class="fineprint" style="margin-top:12px">Based on the published $259 monthly Gold rate ($1,554 for six months). The prepaid crew discount is separate from the sweepstakes and grants no entries.</p>
     <button class="why-btn" data-why="squad">Why a prepaid crew deal?</button>
   </div>
 
@@ -1584,7 +1595,7 @@
       </div>
       <div class="rf-link"><input readonly id="reflink2" value="https://[concept].fit/r/NATHAN-8F3K"><button onclick="shareVia('copy')">Copy</button></div>
       <button class="rf-primary" onclick="shareVia('native')">Share my link</button>
-      <div class="rf-demo">Portfolio demo. <button onclick="bumpReferral()">Simulate a friend joining</button></div>
+      <div class="rf-demo"><button onclick="bumpReferral()">Preview a friend joining</button></div>
     </div>
   </aside>
 
@@ -2351,30 +2362,20 @@ function copyLink(){
 }
 
 /* ---------------- BOGO TRIPWIRE ---------------- */
-document.querySelectorAll('#bogoCard .tier').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('#bogoCard .tier').forEach(x=>x.classList.remove('on'));t.classList.add('on');track('bogo_tier',{t:t.dataset.bogo});
-}));
 document.getElementById('bogoStart').addEventListener('click',()=>{
-  document.getElementById('bogoLead').hidden=false;
-  document.getElementById('bogoLead').scrollIntoView({behavior:'smooth',block:'center'});track('bogo_start');
+  toast("Founding rate locked at $220. Gift your two classes below.");
+  const g=document.getElementById('giftName1');if(g)g.focus();
+  track('bogo_start');
 });
-document.getElementById('bogoSolo').addEventListener('click',()=>{toast("Solo Gold month, $259. Demo only.");track('bogo_solo');});
-document.querySelectorAll('#bogoCard .gb-join').forEach(b=>b.addEventListener('click',()=>{toast("You claimed a free founding month. Demo only.");track('bogo_join',{team:b.dataset.team});}));
-function copyBogo(){
-  const t=document.getElementById('bogoLink').value;
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>toast("Link copied, send it to your friend")).catch(()=>toast("Copied"));}
-  else{document.getElementById('bogoLink').select();try{document.execCommand('copy');}catch(e){}toast("Link copied");}
-}
-let bogoT=null;
-function bogoStartClock(){
-  let s=24*3600;const el=document.getElementById('bogoTimer');
-  if(bogoT)clearInterval(bogoT);
-  bogoT=setInterval(()=>{
-    s--;if(s<0){clearInterval(bogoT);return;}
-    const h=String(Math.floor(s/3600)).padStart(2,'0'),m=String(Math.floor(s%3600/60)).padStart(2,'0'),ss=String(s%60).padStart(2,'0');
-    el.textContent=h+':'+m+':'+ss;
-  },1000);
-}
+document.querySelectorAll('#bogoCard .fo-inv-send').forEach(b=>b.addEventListener('click',()=>{
+  const row=b.closest('.fo-inv-row');if(!row||row.classList.contains('done'))return;
+  const input=row.querySelector('.fo-inv-in');const nm=(input.value||'').trim();
+  if(!nm){input.focus();toast("Add your friend's name first");return;}
+  row.classList.add('done');b.classList.add('sent');b.textContent='Sent';input.readOnly=true;
+  const note=document.getElementById('giftNote');if(note)note.textContent='Class sent to '+nm+'. They will get a text to book their free class on the Aurum Reformer.';
+  track('gift_send',{gift:b.dataset.gift});
+}));
+function bogoStartClock(){/* countdown retired with the founding-rate offer */}
 
 /* ---------------- SQUAD (group of 4, 20% off 6mo prepaid) ---------------- */
 const MONTHLY=259,MONTHS=6,BASE=MONTHLY*MONTHS; // 1554 (published Gold rate)
@@ -2401,7 +2402,7 @@ document.getElementById('squadSeats').addEventListener('click',e=>{
   state.seats[i]=!state.seats[i];s.classList.toggle('on',state.seats[i]);
   renderSquad();track('squad_seat',{filled:state.seats.filter(Boolean).length});
 });
-document.getElementById('squadLock').addEventListener('click',()=>{const f=state.seats.filter(Boolean).length;const p=f>=3?20:f>=2?18:15;toast('Crew locked at '+p+'% off. Demo only.');track('squad_lock');});
+document.getElementById('squadLock').addEventListener('click',()=>{const f=state.seats.filter(Boolean).length;const p=f>=3?20:f>=2?18:15;toast('Crew locked at '+p+'% off.');track('squad_lock');});
 renderSquad();
 
 /* ---------------- VIDEO REFORMER + INVITE MODAL ---------------- */

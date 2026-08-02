@@ -910,9 +910,9 @@
   .im-tier.on{border-color:var(--gold);background:rgba(190,158,74,.09);box-shadow:0 10px 24px rgba(190,158,74,.18)}
   .im-tier b{display:block;font-size:14px;font-weight:800}
   .im-tier span{font-size:11px;color:var(--muted)}
-  .im-share{display:flex;gap:8px;margin-top:18px}
-  .im-sh{flex:1;border:0;border-radius:8px;padding:12px 8px;font:inherit;font-weight:800;font-size:12.5px;cursor:pointer;color:#fff}
-  .im-sh.sms{background:#34C759}.im-sh.wa{background:#25D366}.im-sh.email{background:#C0872F}.im-sh.copy{background:var(--ink);color:var(--bone)}
+  .im-share{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+  .im-sh{border:0;border-radius:8px;padding:12px 8px;font:inherit;font-weight:800;font-size:12.5px;cursor:pointer;color:#fff}
+  .im-sh.sms{background:#34C759}.im-sh.wa{background:#25D366}.im-sh.email{background:#C0872F}.im-sh.fb{background:#1877F2}.im-sh.more{background:#5b4f2e}.im-sh.copy{background:var(--ink);color:var(--bone);grid-column:1/-1}
   .gm-val{white-space:nowrap}
   .im-sim{width:100%;margin-top:12px;background:none;border:0;color:var(--flame-deep);font:inherit;font-weight:800;font-size:12px;text-decoration:underline;cursor:pointer}
   body[data-theme="night"] .im-sim{color:var(--gold-lite)}
@@ -1535,18 +1535,18 @@
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <h3>Build a crew of 3, save up to 20%</h3>
     </div>
-    <p class="lead">Train together, save together. Prepay six months as a group and unlock bigger savings as more friends join. Two members unlock 10%, three unlock 20%, everything included. Tap an empty seat to build your crew.</p>
+    <p class="lead">Train together, save together. Your monthly rate drops for everyone as friends join with you. On your own it is 15% off; one friend takes it to 18%, two friends to the full 20%, everything included. Tap a seat to watch your rate fall.</p>
     <div class="squad-seats" id="squadSeats">
       <button class="seat on" data-seat="0"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6" stroke-linecap="round"/></svg></button>
       <button class="seat" data-seat="1"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
       <button class="seat" data-seat="2"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
     </div>
     <div class="squad-calc">
-      <div class="big"><s id="squadWas">$1,554</s><span id="squadNow">$1,554</span> <span style="font-size:15px;font-weight:700;color:var(--muted)">each</span></div>
-      <div class="lab" id="squadLab">6 months of Gold prepaid at your 15% founding rate &middot; add a friend for 18%, two for 20%</div>
+      <div class="big"><s id="squadWas">$259/mo</s><span id="squadNow">$220/mo</span> <span style="font-size:15px;font-weight:700;color:var(--muted)">each</span></div>
+      <div class="lab" id="squadLab">On your own it is $220/mo, 15% off. Each friend who joins drops it: $212/mo, then $207/mo.</div>
     </div>
-    <button class="squad-lock" id="squadLock">Lock in 15% off, or add a friend for 18%</button>
-    <p class="fineprint" style="margin-top:12px">Based on the published $259 monthly Gold rate ($1,554 for six months). The prepaid crew discount is separate from the sweepstakes and grants no entries.</p>
+    <button class="squad-lock" id="squadLock">🎉 Invite friends and save, from $220/mo</button>
+    <p class="fineprint" style="margin-top:12px">Prices are per person at the published $259 monthly Gold rate, prepaid six months. The crew discount is separate from the sweepstakes and grants no entries.</p>
     <button class="why-btn" data-why="squad">Why a prepaid crew deal?</button>
   </div>
 
@@ -1650,6 +1650,8 @@
     <div class="im-share">
       <button class="im-sh sms" onclick="shareVia('sms')">💬 Text</button>
       <button class="im-sh email" onclick="shareVia('email')">📧 Email</button>
+      <button class="im-sh fb" onclick="shareVia('fb')">📘 Facebook</button>
+      <button class="im-sh more" onclick="shareVia('native')">📤 More</button>
       <button class="im-sh copy" onclick="shareVia('copy')">🔗 Copy link</button>
     </div>
     <button class="im-sim" onclick="bumpReferral()">Preview a friend joining</button>
@@ -2413,23 +2415,23 @@ function markGiftSent(){
 function bogoStartClock(){/* countdown retired with the founding-rate offer */}
 
 /* ---------------- SQUAD (group of 4, 20% off 6mo prepaid) ---------------- */
-const MONTHLY=259,MONTHS=6,BASE=MONTHLY*MONTHS; // 1554 (published Gold rate)
-const DEAL15=Math.round(BASE*0.85), DEAL18=Math.round(BASE*0.82), DEAL20=Math.round(BASE*0.8); // 1321, 1274, 1243
+const MONTHLY=259; // published Gold rate per month
+const M15=Math.round(MONTHLY*0.85), M18=Math.round(MONTHLY*0.82), M20=Math.round(MONTHLY*0.8); // 220, 212, 207
 function renderSquad(){
-  const filled=state.seats.filter(Boolean).length;
+  const filled=state.seats.filter(Boolean).length; // seat 0 (you) is always on
   const pct=filled>=3?20:filled>=2?18:15;
-  const now=pct===20?DEAL20:pct===18?DEAL18:DEAL15, save=BASE-now;
-  document.getElementById('squadWas').textContent='$'+BASE.toLocaleString();
-  document.getElementById('squadNow').textContent='$'+now.toLocaleString();
+  const nowM=pct===20?M20:pct===18?M18:M15, saveM=MONTHLY-nowM;
+  document.getElementById('squadWas').textContent='$'+MONTHLY+'/mo';
+  document.getElementById('squadNow').textContent='$'+nowM+'/mo';
   document.getElementById('squadWas').style.display='inline';
   const lab=document.getElementById('squadLab');
-  if(pct===20)lab.textContent='6 months of Gold prepaid at 20% off, everyone saves $'+save.toLocaleString()+'. Crew locked.';
-  else if(pct===18)lab.textContent='18% off unlocked, everyone saves $'+save.toLocaleString()+'. Add one more seat for 20%.';
-  else lab.textContent='6 months of Gold prepaid at your 15% founding rate. Add a friend for 18%, two for 20%.';
+  if(pct===20)lab.textContent='Two friends in. Everyone trains at $'+M20+'/mo, 20% off, plus free grip socks. That is $'+saveM+' off every month, each.';
+  else if(pct===18)lab.textContent='One friend in. You are both at $'+M18+'/mo, 18% off. Invite one more and everyone drops to $'+M20+'/mo.';
+  else lab.textContent='On your own it is $'+M15+'/mo, 15% off. Each friend who joins drops it: $'+M18+'/mo, then $'+M20+'/mo.';
   const lock=document.getElementById('squadLock');
-  lock.textContent = pct===20 ? 'Lock in 20% off, $'+DEAL20.toLocaleString()+' each'
-    : pct===18 ? 'Lock in 18% off, or add 1 more for 20%'
-    : 'Lock in 15% off, or add a friend for 18%';
+  lock.textContent = pct===20 ? '🎉 Share and lock 20% off, $'+M20+'/mo each'
+    : pct===18 ? '🎉 Invite one more, drop to $'+M20+'/mo'
+    : '🎉 Invite friends and save, from $'+M15+'/mo';
 }
 document.getElementById('squadSeats').addEventListener('click',e=>{
   const s=e.target.closest('.seat');if(!s)return;
@@ -2437,7 +2439,7 @@ document.getElementById('squadSeats').addEventListener('click',e=>{
   state.seats[i]=!state.seats[i];s.classList.toggle('on',state.seats[i]);
   renderSquad();track('squad_seat',{filled:state.seats.filter(Boolean).length});
 });
-document.getElementById('squadLock').addEventListener('click',()=>{const f=state.seats.filter(Boolean).length;const p=f>=3?20:f>=2?18:15;toast('Crew locked at '+p+'% off.');track('squad_lock');});
+document.getElementById('squadLock').addEventListener('click',()=>{openInvite();track('squad_lock');});
 renderSquad();
 
 /* ---------------- VIDEO REFORMER + INVITE MODAL ---------------- */
@@ -2470,7 +2472,7 @@ function renderInvite(){
   dots.forEach(function(d,i){d.classList.toggle('on',i<r);d.textContent=i<r?(FRIEND_NAMES[i]||'F').charAt(0):'';});
   document.querySelectorAll('#inviteModal .im-tier').forEach(function(t){t.classList.toggle('on',r>=+t.dataset.t);});
   var pct=crewPct(r);
-  var p=document.getElementById('imPct');if(p)p.textContent=(pct||20)+'%';
+  var p=document.getElementById('imPct');if(p)p.textContent='20%';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeVideo();closeInvite();closeGift();}});
 

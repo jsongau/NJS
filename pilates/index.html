@@ -162,17 +162,16 @@
   .pill{font-size:11.5px;font-weight:700;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 11px;color:var(--muted)}
 
   /* membership tier gallery (Ritual-style product shots, for the plan tiers) */
-  .tier-gallery{display:flex;flex-direction:column;align-items:center;gap:13px;margin-top:22px;max-width:400px}
-  .tier-thumbs{display:flex;flex-direction:row;justify-content:center;gap:10px;width:100%}
+  .tier-gallery{display:grid;grid-template-columns:84px 1fr;gap:13px;margin-top:22px;max-width:530px;align-items:start}
+  .tier-thumbs{display:flex;flex-direction:column;gap:10px}
   .tier-thumb{padding:0;border:2px solid var(--line);background:none;border-radius:12px;cursor:pointer;overflow:hidden;line-height:0;transition:.16s}
   .tier-thumb:hover{border-color:var(--gold-lite)}
   .tier-thumb.on{border-color:var(--gold);box-shadow:0 6px 18px rgba(190,158,74,.28)}
   .tier-thumb .tsvg{width:100%;height:auto;display:block}
-  .tier-featured{width:100%;border-radius:16px;overflow:hidden;box-shadow:0 22px 50px rgba(20,16,8,.28);line-height:0;animation:tierpop .35s ease}
-  .tier-thumb{width:78px}
+  .tier-featured{border-radius:16px;overflow:hidden;box-shadow:0 22px 50px rgba(20,16,8,.28);line-height:0;animation:tierpop .35s ease}
   @keyframes tierpop{from{opacity:.4;transform:translateY(6px) scale(.99)}to{opacity:1;transform:none}}
   .tier-featured .tsvg{width:100%;height:auto;display:block}
-  .tier-cap{text-align:center;font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.45}
+  .tier-cap{text-align:center;font-size:12.5px;color:var(--muted);margin-top:11px;line-height:1.45}
   .tier-cap b{color:var(--gold-deep)}
   body[data-theme="night"] .tier-cap b{color:var(--gold-lite)}
 
@@ -1053,9 +1052,11 @@
       <p class="sub" id="heroSub">Three months of Gold, unlimited classes on the gold-plated Aurum Reformer, a $777 value, at the new studio on Yorba Linda Blvd. Enter free while we build the founding roster.</p>
       <p class="prize-note" id="prizeNote"><span>The Lucky 777:</span> three winners &middot; three months of unlimited Gold &middot; a $777 value.</p>
       <div class="tier-gallery">
-        <div class="tier-featured" id="tierFeatured"></div>
         <div class="tier-thumbs" id="tierThumbs"></div>
-        <p class="tier-cap"><b>Win, and you get Gold:</b> unlimited classes for three months, so you can come in every day. Silver, Bronze, and drop-ins are the other tiers Pilates Addiction offers. Tap a card to see each one.</p>
+        <div class="tier-right">
+          <div class="tier-featured" id="tierFeatured"></div>
+          <p class="tier-cap"><b>Win, and you get Gold:</b> unlimited classes for three months, so you can come in every day. Silver, Bronze, and drop-ins are the other tiers Pilates Addiction offers. Tap a card to see each one.</p>
+        </div>
       </div>
     </div>
 

@@ -30,6 +30,9 @@ Built the Ono Hawaiian BBQ Marketing Manager work sample end to end (v1 through 
 - Share CTA rebuilt with animated friends-and-entries SVG art and balanced text.
 - Site-wide spatula cursor as real CSS cursors, two rendered 32px PNGs, tilted variant on interactive elements, fried-egg flip on real clicks.
 - Fixed live: dashboard money formatter was shadowing the group calculator, collapsing $11.30 and $10.85 both to $11.
+- Customer journey reframe, v21: section retitled Winning isn't the campaign. What happens next is. Five lifecycle stages: Welcome and bonus offer, Best seller spotlight, Limited time reminder, Personalized next offer, Win them back.
+- Group calculator pays from the gift card, v21: $200 card plus $30 bonus equals a $230 stack, teal and gold balance bar splits tonight vs left on card, caption counts plate lunches remaining.
+- Gift-card pay became an opt-in toggle, v22: off shows a one-line tease with the extra saving; on shows the balance bar, effective cash cost, $9.43 a plate at 12 people, stacked $84.78 total saved, and a Buy the $200 gift card CTA. Offer-card buy button shortened to one line.
 
 ## Next
 - `scenarios` table (Supabase): persist dashboard assumption sets to shareable URLs (`/ono?s=id`) and log recruiter slider interaction; same schema doubles as A/B assignment store. Schema + API first, then UI.

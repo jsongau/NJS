@@ -520,6 +520,34 @@
   .grp-big s{font-size:19px;color:var(--muted);font-weight:800}
   .grp-big b{font-size:38px;font-weight:900;letter-spacing:-.02em}
   .grp-big em{font-style:normal;font-size:14px;font-weight:800;color:var(--muted)}
+  .gcpay{max-width:520px;margin:16px auto 4px;background:var(--teal-soft);border:1.5px solid var(--teal);border-radius:14px;padding:13px 15px 12px;text-align:left}
+  body[data-theme="night"] .gcpay{background:rgba(0,165,181,.12)}
+  .gcp-head{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:var(--teal-deep)}
+  body[data-theme="night"] .gcp-head{color:var(--gold-lite)}
+  .gcp-ic{width:22px;height:22px;flex:none;display:grid;place-items:center}
+  .gcp-bar{display:flex;height:26px;border-radius:9px;overflow:hidden;margin-top:9px;border:1px solid var(--line);font-size:9.5px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+  .gcp-bar i,.gcp-bar em{display:flex;align-items:center;justify-content:center;font-style:normal;transition:width .3s ease;min-width:0;overflow:hidden;white-space:nowrap}
+  .gcp-bar i{background:linear-gradient(135deg,var(--teal),var(--teal-deep));color:#fff}
+  .gcp-bar em{background:linear-gradient(135deg,var(--gold-lite),var(--gold));color:#063B44}
+  .gcp-ttl{flex:1;min-width:0}
+  .gcp-extra{background:var(--gold);color:#063B44;font-size:10px;font-weight:900;padding:2px 8px;border-radius:99px;letter-spacing:.03em;white-space:nowrap}
+  .gcp-tgl{flex:none;width:42px;height:23px;border-radius:999px;border:0;background:rgba(6,51,59,.24);cursor:pointer;position:relative;transition:background .2s;padding:0}
+  .gcp-tgl i{position:absolute;top:2.5px;left:2.5px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transition:transform .22s cubic-bezier(.3,1.4,.4,1)}
+  .gcp-tgl[aria-checked="true"]{background:linear-gradient(135deg,var(--gold-lite),var(--gold))}
+  .gcp-tgl[aria-checked="true"] i{transform:translateX(19px)}
+  .gcp-tgl:focus-visible{outline:2.5px solid var(--teal);outline-offset:2px}
+  .gcp-tease{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:8px}
+  .gcp-body{animation:gcpIn .3s ease}
+  @keyframes gcpIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+  .gcp-eff{margin-top:10px;background:var(--paper);border:1px dashed var(--teal);border-radius:11px;padding:10px 12px;font-size:12.5px;font-weight:800;line-height:1.5;color:var(--ink)}
+  body[data-theme="night"] .gcp-eff{color:var(--cream)}
+  .gcp-eff b{color:var(--teal-deep);font-weight:900}
+  body[data-theme="night"] .gcp-eff b{color:var(--gold-lite)}
+  .gcp-cta{width:100%;margin-top:11px;padding:12px 16px;font-size:14.5px;white-space:nowrap}
+  .gcp-fine{font-size:10.5px;color:var(--muted);text-align:center;margin-top:7px;line-height:1.45}
+  .gcp-cap{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:9px}
+  .gcp-cap b{color:var(--ink)}
+  body[data-theme="night"] .gcp-cap b{color:var(--cream)}
   .grp-lab{font-size:13.5px;color:var(--muted);margin-top:9px;line-height:1.55;max-width:48ch;margin-left:auto;margin-right:auto}
   .grp-cta{margin-top:16px;width:100%;max-width:420px}
   .grp-fine{font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.5;text-align:center}
@@ -1484,7 +1512,7 @@
     <div class="qstep on" data-q="1">
       <div class="qnum">Question 1 of 5</div>
       <h3>What would you order first?</h3>
-      <p class="qsub">This is the whole point of the quiz. Your answer decides the recommendation you get, the follow-up you receive, and which segment you land in.</p>
+      <p class="qsub">This is the whole point of the quiz. Your answer decides the recommendation you get, the journey you enter, and which segment you land in.</p>
       <div class="opts" id="opts1"></div>
       <div class="qerr hide" id="err1">Pick the one you would actually order.</div>
       <p class="qauto">Tap one and we move you straight on. No extra button.</p>
@@ -1577,7 +1605,7 @@
         <li>Cannot be combined with other offers, while supplies last</li>
         <li>Your home store on file: <b id="offerStore">Diamond Bar</b></li>
       </ul>
-      <button class="btn btn-g" style="width:100%;margin-top:18px" id="buyGift">Buy the gift card and add my $30</button>
+      <button class="btn btn-g" style="width:100%;margin-top:18px;white-space:nowrap;font-size:15.5px;padding-left:12px;padding-right:12px" id="buyGift">Buy the card, add my $30</button>
       <p class="grp-fine">Opens Ono's official gift card shop. Coded redemption is how this campaign proves it drove the purchase, instead of guessing.</p>
     </aside>
 
@@ -1715,6 +1743,22 @@
     <div class="gsave"><i id="gSaveBar"></i><em id="gSavePct" hidden></em></div>
     <div class="grp-calc">
       <div class="grp-big"><s id="grpWas">$16.50</s><b id="grpNow">$16.50</b><em>per plate &middot; <span id="grpTotal">$16.50</span> total <span class="grp-off" id="grpOff" hidden></span></em></div>
+      <div class="gcpay">
+        <div class="gcp-head">
+          <span class="gcp-ic"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1.5" y="4.5" width="19" height="13" rx="2.6" fill="#00A5B5" stroke="#00727E" stroke-width="1.2"/><rect x="1.5" y="7.6" width="19" height="2.8" fill="#06333B"/><rect x="4" y="12.6" width="7" height="2" rx="1" fill="#FFF46D"/></svg></span>
+          <span class="gcp-ttl">Pay for it with the gift card</span>
+          <span class="gcp-extra" id="gcpExtra" hidden></span>
+          <button class="gcp-tgl" id="gcpTgl" type="button" role="switch" aria-checked="false" aria-label="Pay with the $200 gift card"><i></i></button>
+        </div>
+        <p class="gcp-tease" id="gcpTease">Buy the $200 card, Ono adds the $30 bonus, and this order gets cheaper again. Flip it on.</p>
+        <div class="gcp-body" id="gcpBody" hidden>
+          <div class="gcp-bar"><i id="gcpUsed"><span>tonight</span></i><em id="gcpLeft"><span>left on the card</span></em></div>
+          <p class="gcp-cap" id="gcpCap"></p>
+          <div class="gcp-eff" id="gcpEff"></div>
+          <a class="btn btn-g gcp-cta" href="https://shop.onohawaiianbbq.com/collections/frontpage/products/ono-hawaiian-bbq-gift-cards-1" target="_blank" rel="noopener" onclick="track('gcard_buy_cta',{n:state.gsize})">Buy the $200 gift card</a>
+          <p class="gcp-fine">Opens Ono's gift card shop. Your $30 code from entering applies at checkout.</p>
+        </div>
+      </div>
       <p class="grp-lab" id="grpLab">On your own, a plate lunch runs about $16.50. Add two people and the group rate drops to $14.75 each.</p>
       <a class="btn btn-g grp-cta" href="https://onohawaiianbbq.com/catering/" target="_blank" rel="noopener" onclick="track('order_cta_clicked',{src:'group'})">Start our group order</a>
       <p class="grp-fine">Opens Ono's catering page. Catering orders need at least 48 hours notice, so plan the trays when you plan the night. Illustrative pricing for this concept; group and catering rates would require finance and operations approval before launch.</p>
@@ -1732,17 +1776,17 @@
     <p class="ev-fine">Dates from each venue's published schedule as of August 2026 and subject to change. Ono Hawaiian BBQ has no affiliation with these teams or promotions; this concept points the catering calendar at nights when groups already gather.</p>
   </div>
 
-  <!-- LIFECYCLE -->
+  <!-- CUSTOMER JOURNEY -->
   <div style="margin-top:34px">
-    <div class="kick">What happens after the entry</div>
-    <h2>The follow-up is the campaign.</h2>
-    <p class="lead" style="margin-top:9px">A drawing that ends at the winner announcement produces one happy customer and a list nobody uses. This is the sequence each entrant enters, branched on the plate they picked.</p>
+    <div class="kick">What happens after they enter</div>
+    <h2>Winning isn't the campaign. What happens next is.</h2>
+    <p class="lead" style="margin-top:9px">The sweepstakes creates the first interaction. The customer journey creates the relationship. Every entrant follows an automated lifecycle, branched on the plate they picked, built to turn one entry into repeat visits, gift card purchases, referrals, and future catering orders.</p>
     <div class="lc">
-      <div class="lc-c"><div class="lc-d">Day 0</div><b>Match and offer</b><p>Personalized plate match, the coded offer, and the ordering link.</p></div>
-      <div class="lc-c"><div class="lc-d">Day 2</div><b>Proof it is good</b><p>Best-seller imagery and social proof built around the item they chose.</p></div>
-      <div class="lc-c"><div class="lc-d">Day 5</div><b>Offer reminder</b><p>The redemption window is closing. One clear nudge, one clear link.</p></div>
-      <div class="lc-c"><div class="lc-d">Day 9</div><b>Branch</b><p>Family Meal or catering path depending on the household signal in the quiz.</p></div>
-      <div class="lc-c"><div class="lc-d">Day 14</div><b>Last call</b><p>Final reminder before expiry, then move to the win-back cohort.</p></div>
+      <div class="lc-c"><div class="lc-d">Day 0</div><b>Welcome and bonus offer</b><p>The plate match, the $30 code, and the ordering link arrive while interest is at its highest.</p></div>
+      <div class="lc-c"><div class="lc-d">Day 2</div><b>Best seller spotlight</b><p>Their menu pick, reinforced with best-seller imagery and social proof that builds the confidence to visit.</p></div>
+      <div class="lc-c"><div class="lc-d">Day 5</div><b>Limited time reminder</b><p>A friendly nudge before the $30 code expires. One simple call to action, one clear link.</p></div>
+      <div class="lc-c"><div class="lc-d">Day 9</div><b>Personalized next offer</b><p>Family Meals, catering, or the next right offer, chosen from the household signal in their quiz answers.</p></div>
+      <div class="lc-c"><div class="lc-d">Day 14</div><b>Win them back</b><p>One final reminder before the code expires, then the entrant moves into re-engagement for seasonal promotions and limited-time offers.</p></div>
     </div>
   </div>
 </section>
@@ -2146,7 +2190,7 @@
 </footer>
 <script>
 /* ================= STATE ================= */
-var state={step:1,pick:null,loc:null,name:'',email:'',sms:false,refs:0,gsize:1,view:'enter'};
+var state={step:1,pick:null,loc:null,name:'',email:'',sms:false,refs:0,gsize:1,gcard:false,view:'enter'};
 var REF_CAP=3;
 function track(ev,d){ (window.__events=window.__events||[]).push({ev:ev,d:d||{},t:Date.now()}); }
 
@@ -2720,11 +2764,20 @@ document.getElementById('copyCode').addEventListener('click',function(){
     renderGroup();
     track('group_size',{n:state.gsize});
   });
+  var tg=document.getElementById('gcpTgl');
+  if(tg) tg.addEventListener('click',function(){
+    state.gcard=!state.gcard;
+    renderGroup();
+    track('gcard_toggle',{on:state.gcard,n:state.gsize});
+  });
 })();
 function gmoney(n){return '$'+(Math.round(n*100)%100===0? n.toFixed(0) : n.toFixed(2));}
 function renderGroup(){
   var n=state.gsize||1;
   var per=PRICES[n-1],total=per*n,saved=(PRICES[0]-per)*n,off=Math.round((1-per/PRICES[0])*100);
+  var CARD=230, CARD_COST=200;
+  var effTotal=total*CARD_COST/CARD, effPer=per*CARD_COST/CARD;
+  var extra=total-effTotal, totalSaved=saved+extra;
   var r=document.getElementById('gRange');
   if(r){ r.value=n; r.style.setProperty('--fill', ((n-1)/11*100)+'%'); }
   var pips=document.querySelectorAll('#gPips .gpip');
@@ -2742,14 +2795,36 @@ function renderGroup(){
   var offEl=document.getElementById('grpOff');
   if(offEl){ offEl.hidden=n<2; offEl.textContent=off+'% off'; }
   var bar=document.getElementById('gSaveBar'), pct=document.getElementById('gSavePct');
-  if(bar) bar.style.width=(off/34*100)+'%';
-  if(pct){ pct.hidden=n<2; pct.textContent=gmoney(saved)+' saved vs ordering solo'; }
+  if(bar){ var offEff=state.gcard? Math.round((1-effPer/PRICES[0])*100) : off; bar.style.width=Math.min(100,(offEff/43*100))+'%'; }
+  if(pct){ pct.hidden=n<2&&!state.gcard; pct.textContent=state.gcard? gmoney(totalSaved)+' saved with the gift card' : gmoney(state.gcard?totalSaved:saved)+' saved vs ordering solo'; }
+  var used=Math.min(total,CARD), left=Math.max(0,CARD-total);
+  var body=document.getElementById('gcpBody'), tease=document.getElementById('gcpTease'),
+      xtra=document.getElementById('gcpExtra'), tgl=document.getElementById('gcpTgl');
+  if(tgl){
+    tgl.setAttribute('aria-checked', state.gcard?'true':'false');
+    body.hidden=!state.gcard; tease.hidden=state.gcard;
+    xtra.hidden=!state.gcard;
+    xtra.textContent='+'+gmoney(extra)+' more off';
+    tease.textContent='Buy the $200 card, Ono adds the $30 bonus, and tonight would cost '+gmoney(extra)+' less again. Flip it on.';
+  }
+  var up=document.getElementById('gcpUsed'), lf=document.getElementById('gcpLeft'), cap=document.getElementById('gcpCap');
+  if(state.gcard&&up&&lf&&cap){
+    var pctUsed=Math.max(14,Math.round(used/CARD*100));
+    up.style.width=pctUsed+'%'; lf.style.width=(100-pctUsed)+'%';
+    up.firstElementChild.textContent=gmoney(used)+' tonight';
+    lf.firstElementChild.textContent=left>0? gmoney(left)+' left' : 'card used up';
+    var morePlates=Math.floor(left/PRICES[0]);
+    cap.innerHTML='$230 of Ono for $200. This order takes '+gmoney(total)+' off the card'+
+      (left>0? ', leaving <b>'+gmoney(left)+'</b>, about '+morePlates+' more plate lunch'+(morePlates===1?'':'es')+' after tonight.' : '.');
+    document.getElementById('gcpEff').innerHTML='In cash terms tonight costs <b>'+gmoney(effTotal)+'</b>, so a plate is really <b>'+gmoney(effPer)+'</b>. '+
+      'That is '+gmoney(extra)+' more saved on top of the group rate: <b>'+gmoney(totalSaved)+' total saved</b> vs everyone ordering solo.';
+  }
   var lab=document.getElementById('grpLab');
   if(n===1) lab.textContent='On your own, a plate lunch runs about '+gmoney(PRICES[0])+'. Drag the slider and every plate on the order gets cheaper.';
   else if(n<=4) lab.textContent=n+' plates at '+gmoney(per)+' each, '+gmoney(total)+' total. Keep going: at 10 people a plate drops to '+gmoney(PRICES[9])+'.';
-  else if(n<=7) lab.textContent=n+' plates at '+gmoney(per)+' each. That is '+gmoney(saved)+' saved against everyone ordering on their own.';
-  else if(n<=9) lab.textContent='Family Meal territory: '+n+' plates at '+gmoney(per)+' each, '+gmoney(total)+' for the table, '+gmoney(saved)+' saved.';
-  else lab.textContent='This is catering-tray maths: '+n+' plates at just '+gmoney(per)+' each. '+gmoney(saved)+' saved, and trays need 48 hours notice, so lock the order when the plans are made.';
+  else if(n<=7) lab.textContent=n+' plates at '+gmoney(per)+' each. That is '+gmoney(state.gcard?totalSaved:saved)+' saved against everyone ordering on their own.';
+  else if(n<=9) lab.textContent='Family Meal territory: '+n+' plates at '+gmoney(per)+' each, '+gmoney(total)+' for the table, '+gmoney(state.gcard?totalSaved:saved)+' saved.';
+  else lab.textContent='This is catering-tray maths: '+n+' plates at just '+gmoney(per)+' each. '+gmoney(state.gcard?totalSaved:saved)+' saved, and trays need 48 hours notice, so lock the order when the plans are made.';
 }
 
 /* ================= DASHBOARD ================= */

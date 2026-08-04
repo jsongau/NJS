@@ -987,6 +987,63 @@
     .mega-panel::before{display:none}
     .mega-grid{grid-template-columns:1fr}
   }
+
+  /* ===== v8 referral multiplier ===== */
+  .rf-mult{display:flex;align-items:stretch;gap:8px;margin:14px 0 8px}
+  .rfm-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:12px 8px;border:1px solid var(--line);border-radius:14px;background:var(--mist);transition:.35s}
+  .rfm-cell.friend{border-style:dashed}
+  .rf-mult.on .rfm-cell{border-color:var(--gold);border-style:solid;background:linear-gradient(180deg,rgba(255,199,44,.16),rgba(255,199,44,.04))}
+  .rfm-who{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+  .rf-mult.on .rfm-who{color:var(--ink)}
+  .rfm-x{font-size:26px;font-weight:900;line-height:1;color:var(--ink);transition:.35s}
+  .rf-mult.on .rfm-x{color:var(--gold)}
+  .rfm-cap{font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+  .rfm-join{display:flex;align-items:center;color:var(--line);width:26px;flex:none;transition:.35s}
+  .rf-mult.on .rfm-join{color:var(--gold)}
+  .rfm-join svg{width:26px;height:20px}
+  .rf-status{text-align:center;font-size:12.5px;font-weight:800;color:var(--muted);margin-bottom:12px;transition:.3s}
+  .rf-mult.on ~ .rf-status{color:var(--good)}
+  body[data-theme="night"] .rf-mult.on ~ .rf-status{color:#57d08a}
+  .rf-sharelab{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:2px 0 8px}
+  .rf-link button.copied{background:var(--gold);color:#0a1b34}
+
+  /* ===== v8 gift verification modal ===== */
+  .gv-card{max-width:452px}
+  .gv-step{position:relative;text-align:center}
+  .gv-art{display:flex;justify-content:center;margin:2px 0 12px}
+  .gv-ticket{width:220px;max-width:80%;height:auto;filter:drop-shadow(0 12px 26px rgba(0,0,0,.42))}
+  .gv-ticket .gv-ball{transform-box:fill-box;transform-origin:center;animation:gvspin 9s linear infinite}
+  .gv-ticket .gv-sheen{transform-box:fill-box;animation:gvsheen 3.8s ease-in-out infinite}
+  @keyframes gvspin{to{transform:rotate(360deg)}}
+  @keyframes gvsheen{0%{transform:translateX(0);opacity:0}22%{opacity:1}55%{transform:translateX(150px);opacity:.65}80%,100%{transform:translateX(150px);opacity:0}}
+  .gv-eye{margin-bottom:8px}
+  .gv-eye svg{width:15px;height:15px}
+  .gv-card h3{font-size:19px;font-weight:800;line-height:1.25;margin-bottom:8px;color:var(--ink)}
+  .gv-lead{font-size:13.5px;color:var(--muted);line-height:1.55;max-width:37ch;margin:0 auto 16px}
+  .gv-form{display:grid;gap:11px;text-align:left;margin-bottom:12px}
+  .gv-field{display:grid;gap:5px}
+  .gv-field span{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .gv-field input{border:1px solid var(--line);border-radius:11px;padding:12px 13px;font:inherit;font-size:14.5px;background:var(--sand);color:var(--ink);transition:.15s}
+  .gv-field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,199,44,.22)}
+  .gv-field input::placeholder{color:var(--muted);opacity:.7}
+  .gv-err{font-size:12px;font-weight:700;color:#E8503A}
+  .gv-submit{width:100%;border:0;border-radius:12px;padding:14px 16px;font:inherit;font-size:15px;font-weight:900;color:#0a1b34;background:linear-gradient(180deg,#FFD75A,#FFC72C);cursor:pointer;box-shadow:0 12px 26px rgba(255,199,44,.28);transition:.15s}
+  .gv-submit:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(255,199,44,.36)}
+  .gv-fine{font-size:11px;color:var(--muted);opacity:.85;line-height:1.5;max-width:40ch;margin:0 auto}
+  .gv-badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;letter-spacing:.03em;color:var(--gold);background:rgba(255,199,44,.12);border:1px solid rgba(255,199,44,.35);padding:6px 13px;border-radius:999px;margin-bottom:12px}
+  .gv-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:gvpulse 1.1s ease-in-out infinite}
+  @keyframes gvpulse{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+  .gv-art-sent .gv-stamp{transform-box:fill-box;transform-origin:center;animation:gvstamp .6s cubic-bezier(.2,1.4,.35,1) both}
+  @keyframes gvstamp{0%{opacity:0;transform:scale(1.7) rotate(-20deg)}55%{opacity:1;transform:scale(.9) rotate(5deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+  .gv-done{margin-top:16px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:11px;padding:11px 26px;font:inherit;font-weight:800;font-size:14px;cursor:pointer}
+  .gv-done:hover{background:var(--mist)}
+  .gv-burst{position:absolute;left:50%;top:64px;width:0;height:0;z-index:6;pointer-events:none}
+  .gv-glit{position:absolute;left:0;top:0;width:9px;height:9px;background:#FFC72C;transform:translate(-50%,-50%);opacity:0;animation:gvglit 1.05s cubic-bezier(.12,.7,.3,1) forwards}
+  @keyframes gvglit{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0)}12%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1) rotate(var(--rot))}}
+
+  /* ===== v8 high-contrast toast ===== */
+  .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(10px);background:linear-gradient(180deg,#FFD75A,#FFC72C);color:#0a1b34;padding:13px 22px;border-radius:999px;font-size:14px;font-weight:800;z-index:220;opacity:0;pointer-events:none;box-shadow:0 16px 38px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.35);transition:opacity .28s ease,transform .28s cubic-bezier(.2,.8,.3,1)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body data-theme="night">
@@ -1047,7 +1104,7 @@
         <span class="wb-tag">Won 2 seats</span>
       </div>
     </div>
-    <div class="wb-deadline">The next winner is drawn <b>Aug 20, 2026</b> <span id="wbDays"></span>. Enter free before then to be in it.</div>
+    <div class="wb-deadline">The next winner is drawn <b id="wbDate">Aug 9, 2026</b> <span id="wbDays"></span>. Enter free before then to be in it.</div>
     <button class="wb-cta" id="wbCta" type="button">
       <span class="rf-panel" aria-hidden="true"><svg class="rf-svg" viewBox="0 0 96 44" fill="none"><rect x="12" y="10" width="72" height="24" rx="5" fill="#00245D" stroke="#FFC72C" stroke-width="1.7"/><line x1="48" y1="11" x2="48" y2="33" stroke="#FFC72C" stroke-width="1.4" stroke-dasharray="3 3"/><circle cx="48" cy="10" r="2.6" fill="#F6F8FC"/><circle cx="48" cy="34" r="2.6" fill="#F6F8FC"/><path d="M22 22h9M22 26h6" stroke="#FFDE86" stroke-width="2" stroke-linecap="round"/></svg></span>
       <span class="wb-cta-txt"><b>Enter free</b><small>this could be you</small></span>
@@ -1438,12 +1495,12 @@
   <aside class="cf-rail cf-order-l" data-note="bogo">
     <div class="jn">
       <svg class="mklabel" viewBox="0 0 100 52" fill="none" aria-hidden="true"><path d="M16 4 H90 a6 6 0 0 1 6 6 V42 a6 6 0 0 1 -6 6 H16 L2 26 Z" fill="#d92d20" stroke="#9e1c14" stroke-width="1.4"/><text x="55" y="32" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-size="16.5" font-weight="900" fill="#fff">2 FREE</text></svg>
-      <h3>Skip the drawing. Lock your seats today.</h3>
-      <p class="jn-sub">One name wins the pair. Everyone else can skip the wait and buy season tickets as low as $833 while supply lasts, then bring two friends free to the opener.</p>
+      <h3>Skip the drawing. Lock your seat today.</h3>
+      <p class="jn-sub">One name wins the pair. Everyone else can skip the wait and buy a single season seat from $833 while supply lasts, then bring two friends free to the opener.</p>
       <div class="jn-price"><b>$833</b><span>+/season, while supply lasts</span></div>
       <div class="jn-note"><s>$2,258 top sideline</s> &middot; Standard sections $833 to $2,258, 17-month zero-interest plan</div>
       <ul class="jn-list">
-        <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Your two seats reserved for all 25 home matches</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Your seat reserved for all 25 home matches</li>
         <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Two free single-match tickets to bring friends to the opener</li>
         <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>20% team store, Gold Lot parking, and early entry</li>
       </ul>
@@ -1451,7 +1508,7 @@
         <div class="jn-scarbar"><i id="jnBar"></i></div>
         <div class="jn-scarlab"><b id="jnLeft">18</b> of 50 seats left in this section</div>
       </div>
-      <button class="jn-cta" onclick="openBuy()">Buy my season tickets</button>
+      <button class="jn-cta" onclick="openBuy()">Buy my season ticket</button>
     </div>
   </aside>
 
@@ -1480,7 +1537,7 @@
         <div class="disc-num" id="discNum">2 free</div>
         <div class="disc-txt">
           <h3>single-match tickets to bring friends</h3>
-          <p>Lock your Dual Season Membership and get two free single-match tickets to a 2027 home match. Bring your crew to the opener on the club, on top of member pricing all season.</p>
+          <p>Lock your season seat and get two free single-match tickets to a 2027 home match. Bring your crew to the opener on the club, on top of member pricing all season.</p>
         </div>
       </div>
       <div class="disc-row"><s>$120</s><b>$0</b><span class="save">two free tickets, about $120 value</span></div>
@@ -1492,11 +1549,11 @@
     <div class="offer-top"><span>If you cannot wait for the draw</span><span class="hot">Member offer</span></div>
     <div class="offer-body">
       <span class="strike">$120 value</span>
-      <h3>Lock your two season seats from $833,<br>and bring two friends free.</h3>
-      <p class="lead">Claim your 2027-28 Dual Season Membership for two, from $833 a seat while supply lasts, on a 17-month zero-interest plan, and get two free single-match tickets worth about $60 each to bring friends to the home opener. Invite them below and we will hold their spots.</p>
+      <h3>Lock your season seat from $833,<br>and bring two friends free.</h3>
+      <p class="lead">Claim your 2027-28 season seat from $833 while supply lasts, on a 17-month zero-interest plan, and get two free single-match tickets worth about $60 each to bring friends to the home opener. Invite them below and we will hold their spots.</p>
 
       <div class="fo-price">
-        <div class="fo-cell fo-lock"><span class="fo-was">$2,258/season</span><b>$833</b><span class="fo-per">/season, per seat</span></div>
+        <div class="fo-cell fo-lock"><span class="fo-was">$2,258/season</span><b>$833</b><span class="fo-per">/season</span></div>
         <div class="fo-cell fo-gift"><span class="fo-plus">+</span><div class="fo-gtxt"><b>2 free tickets</b><span>about $60 value each, to bring friends</span></div></div>
       </div>
 
@@ -1508,7 +1565,7 @@
       </div>
 
       <div class="offer-actions">
-        <button class="btn-mini primary" id="bogoStart">Lock my seats and claim two free tickets</button>
+        <button class="btn-mini primary" id="bogoStart">Lock my seat and claim two free tickets</button>
       </div>
 
       <p class="fineprint" style="margin-top:14px">This offer does not affect your sweepstakes entry or your odds of winning. No purchase necessary to enter or win. Prices and value are based on published 2027-28 pricing and an estimated $60 single-match average.</p>
@@ -1546,32 +1603,22 @@
   <!-- RIGHT RAIL: referral engine -->
   <aside class="cf-rail cf-order-r" data-note="refer">
     <div class="rf" id="refer">
-      <h3>Bring friends. Get free tickets.</h3>
-      <p class="rf-sub">You already have <b>member presale access</b>. Every friend who joins with your link is +1 entry for both of you. One friend gets you both a free single-match ticket, two friends gets a free pair, plus a Galaxy scarf.</p>
-      <div class="rf-avatars" id="rfAvatars">
-        <span class="av-slot me">You</span>
-        <span class="av-slot empty" data-slot="0">+</span>
-        <span class="av-slot empty" data-slot="1">+</span>
+      <h3>Bring one friend. You both double up.</h3>
+      <p class="rf-sub">Share your link. The moment one friend enters the drawing, your entries and theirs both double. Same free entry, twice the odds, for both of you.</p>
+      <div class="rf-mult" id="rfMult">
+        <div class="rfm-cell"><span class="rfm-who">You</span><span class="rfm-x" id="rfmYou">1&times;</span><span class="rfm-cap">entries</span></div>
+        <div class="rfm-join" aria-hidden="true"><svg viewBox="0 0 44 24"><path d="M4 12h28M30 6l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="rfm-cell friend"><span class="rfm-who" id="rfmWho">Your friend</span><span class="rfm-x" id="rfmFriend">1&times;</span><span class="rfm-cap">entries</span></div>
       </div>
-      <div class="rf-prog"><i id="rfBar"></i></div>
-      <div class="rf-count"><b id="rfNum">0</b> of 2 friends joined</div>
-      <div class="ms" id="msLadder">
-        <div class="ms-row" data-ms="0"><span class="ms-ic">%</span><span class="ms-tx"><b>Member presale access</b><span>yours the moment you enter</span></span><svg class="ms-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
-        <div class="ms-row" data-ms="1"><span class="ms-ic">1</span><span class="ms-tx"><b>A free single-match ticket</b><span>one friend joins, for both of you</span></span><svg class="ms-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
-        <div class="ms-row" data-ms="2"><span class="ms-ic">2</span><span class="ms-tx"><b>A free pair, plus a Galaxy scarf</b><span>two friends, everyone in</span></span><svg class="ms-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></div>
-      </div>
-      <div class="socks" id="socksCard">
-        <svg class="socks-svg" viewBox="0 0 72 72" fill="none" aria-hidden="true"><path d="M14 20h44a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H50v14a5 5 0 0 1-5 5h-2v-6h1a2 2 0 0 0 2-2V32H14a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3z" fill="url(#gf)" stroke="#8A6A00" stroke-width="1.2"/><path d="M18 32v18a4 4 0 0 0 4 4h4v6" stroke="#8A6A00" stroke-width="1.4" fill="none"/><g fill="#00245D" opacity=".5"><rect x="16" y="24" width="4" height="4"/><rect x="24" y="24" width="4" height="4"/><rect x="32" y="24" width="4" height="4"/></g></svg>
-        <div class="socks-lab"><span class="lk">Free scarf locked</span><span class="ul">Galaxy scarf unlocked for your crew</span></div>
-        <div class="socks-sub" id="socksSub">Two friends unlocks a free scarf for everyone</div>
-      </div>
+      <div class="rf-status" id="rfStatus">Share your link to double both of your entries.</div>
+      <div class="rf-sharelab">Send it to one friend</div>
       <div class="rf-share">
         <button class="sh-btn" onclick="shareVia('sms')" title="Text a friend" aria-label="Text a friend"><svg viewBox="0 0 24 24"><path fill="#34C759" d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H10l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><g fill="#fff"><circle cx="8" cy="10" r="1.3"/><circle cx="12" cy="10" r="1.3"/><circle cx="16" cy="10" r="1.3"/></g></svg></button>
         <button class="sh-btn" onclick="shareVia('fb')" title="Facebook" aria-label="Facebook"><svg viewBox="0 0 24 24"><path fill="#1877F2" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.8 3.7-3.8 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/></svg></button>
         <button class="sh-btn" onclick="shareVia('email')" title="Email" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="#D9A017" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg></button>
         <button class="sh-btn" onclick="shareVia('copy')" title="Copy link" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg></button>
       </div>
-      <div class="rf-link"><input readonly id="reflink2" value="https://nathanjsong.com/galaxy"><button onclick="shareVia('copy')">Copy</button></div>
+      <div class="rf-link"><input readonly id="reflink2" value="https://nathanjsong.com/galaxy"><button id="rfCopyBtn" onclick="shareVia('copy')">Copy</button></div>
       <button class="rf-primary" onclick="openShare()">Share my link</button>
       <div class="rf-demo"><button onclick="bumpReferral()">Preview a friend joining</button></div>
     </div>
@@ -1584,7 +1631,7 @@
 <div class="reformer" id="reformerNav" aria-label="Matchday moments">
   <div class="rf-anchor left" aria-hidden="true"><svg class="rf-spring" viewBox="0 0 40 16"><path d="M2 8h4M34 8h4M6 8q3-6 5 0t5 0 5 0 5 0" fill="none"/></svg></div>
   <div class="rf-deck">
-    <div class="rf-cap"><span class="rf-caplabel">A night at Dignity Health Sports Park</span> &middot; the atmosphere your two seats sit in. Tap to watch.</div>
+    <div class="rf-cap"><span class="rf-caplabel">A night at Dignity Health Sports Park</span> &middot; the atmosphere your seat sits in. Tap to watch.</div>
     <div class="rf-cells" id="rfCells"><button class="rf-cell" data-vid="AhYWw_brsS8" onmouseenter="rfPreview(this)" onmouseleave="rfUnpreview(this)" onclick="openVideo('AhYWw_brsS8')" aria-label="Watch: Under the lights"><img src="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27320%27%20height=%27200%27%3E%3Cdefs%3E%3ClinearGradient%20id=%27g%27%20x1=%270%27%20y1=%270%27%20x2=%271%27%20y2=%271%27%3E%3Cstop%20offset=%270%27%20stop-color=%27%2300245D%27/%3E%3Cstop%20offset=%271%27%20stop-color=%27%230065A4%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%27320%27%20height=%27200%27%20fill=%27url(%23g)%27/%3E%3Cg%20stroke=%27%23FFC72C%27%20stroke-width=%273%27%3E%3Cline%20x1=%2764%27%20y1=%2736%27%20x2=%2764%27%20y2=%2792%27/%3E%3Cline%20x1=%27256%27%20y1=%2736%27%20x2=%27256%27%20y2=%2792%27/%3E%3C/g%3E%3Cg%20fill=%27%23FFDE86%27%3E%3Ccircle%20cx=%2764%27%20cy=%2734%27%20r=%277%27/%3E%3Ccircle%20cx=%27256%27%20cy=%2734%27%20r=%277%27/%3E%3C/g%3E%3Ctext%20x=%27160%27%20y=%27176%27%20fill=%27%23ffffff%27%20font-family=%27Arial,sans-serif%27%20font-size=%2718%27%20font-weight=%27800%27%20text-anchor=%27middle%27%3EUnder%20the%20lights%3C/text%3E%3C/svg%3E" alt="Under the lights" loading="lazy"><span class="rf-scrim"></span><span class="rf-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button><button class="rf-cell" data-vid="UJNrOh5hu_A" onmouseenter="rfPreview(this)" onmouseleave="rfUnpreview(this)" onclick="openVideo('UJNrOh5hu_A')" aria-label="Watch: El Trafico night"><img src="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27320%27%20height=%27200%27%3E%3Cdefs%3E%3ClinearGradient%20id=%27g%27%20x1=%270%27%20y1=%270%27%20x2=%271%27%20y2=%271%27%3E%3Cstop%20offset=%270%27%20stop-color=%27%23001A44%27/%3E%3Cstop%20offset=%271%27%20stop-color=%27%2300245D%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%27320%27%20height=%27200%27%20fill=%27url(%23g)%27/%3E%3Ccircle%20cx=%27160%27%20cy=%2780%27%20r=%2728%27%20fill=%27none%27%20stroke=%27%23FFC72C%27%20stroke-width=%274%27/%3E%3Cpath%20d=%27M160%2062%20172%2073%20167%2089%20153%2089%20148%2073%20Z%27%20fill=%27%23FFC72C%27/%3E%3Ctext%20x=%27160%27%20y=%27176%27%20fill=%27%23ffffff%27%20font-family=%27Arial,sans-serif%27%20font-size=%2718%27%20font-weight=%27800%27%20text-anchor=%27middle%27%3EEl%20Tr%C3%A1fico%20night%3C/text%3E%3C/svg%3E" alt="El Trafico night" loading="lazy"><span class="rf-scrim"></span><span class="rf-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button><button class="rf-cell" data-vid="UEPksMYfDF0" onmouseenter="rfPreview(this)" onmouseleave="rfUnpreview(this)" onclick="openVideo('UEPksMYfDF0')" aria-label="Watch: The Supporters end"><img src="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27320%27%20height=%27200%27%3E%3Cdefs%3E%3ClinearGradient%20id=%27g%27%20x1=%270%27%20y1=%270%27%20x2=%271%27%20y2=%271%27%3E%3Cstop%20offset=%270%27%20stop-color=%27%230065A4%27/%3E%3Cstop%20offset=%271%27%20stop-color=%27%2300245D%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%27320%27%20height=%27200%27%20fill=%27url(%23g)%27/%3E%3Crect%20x=%27120%27%20y=%2756%27%20width=%2780%27%20height=%2720%27%20rx=%274%27%20fill=%27%23FFC72C%27/%3E%3Crect%20x=%27150%27%20y=%2774%27%20width=%2720%27%20height=%2740%27%20fill=%27%23FFC72C%27/%3E%3Ctext%20x=%27160%27%20y=%27176%27%20fill=%27%23ffffff%27%20font-family=%27Arial,sans-serif%27%20font-size=%2718%27%20font-weight=%27800%27%20text-anchor=%27middle%27%3EThe%20Supporters%20end%3C/text%3E%3C/svg%3E" alt="The Supporters end" loading="lazy"><span class="rf-scrim"></span><span class="rf-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button><button class="rf-cell" data-vid="ZH0rpB714js" onmouseenter="rfPreview(this)" onmouseleave="rfUnpreview(this)" onclick="openVideo('ZH0rpB714js')" aria-label="Watch: Your two seats"><img src="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%27320%27%20height=%27200%27%3E%3Cdefs%3E%3ClinearGradient%20id=%27g%27%20x1=%270%27%20y1=%270%27%20x2=%271%27%20y2=%271%27%3E%3Cstop%20offset=%270%27%20stop-color=%27%2300245D%27/%3E%3Cstop%20offset=%271%27%20stop-color=%27%23001A44%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%27320%27%20height=%27200%27%20fill=%27url(%23g)%27/%3E%3Cg%20fill=%27%23FFC72C%27%3E%3Crect%20x=%27140%27%20y=%2766%27%20width=%2716%27%20height=%2716%27%20rx=%273%27/%3E%3Crect%20x=%27164%27%20y=%2766%27%20width=%2716%27%20height=%2716%27%20rx=%273%27/%3E%3C/g%3E%3Ctext%20x=%27160%27%20y=%27176%27%20fill=%27%23ffffff%27%20font-family=%27Arial,sans-serif%27%20font-size=%2718%27%20font-weight=%27800%27%20text-anchor=%27middle%27%3EYour%20two%20seats%3C/text%3E%3C/svg%3E" alt="Your two seats" loading="lazy"><span class="rf-scrim"></span><span class="rf-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button></div>
   </div>
   <div class="rf-anchor right" aria-hidden="true"><svg class="rf-spring" viewBox="0 0 40 16"><path d="M2 8h4M34 8h4M6 8q3-6 5 0t5 0 5 0 5 0" fill="none"/></svg></div>
@@ -1597,10 +1644,10 @@
     <div class="vmodal-video"><iframe id="videoFrame" title="LA Galaxy matchday video"></iframe></div>
     <div class="vmodal-body">
       <h3>Feel the atmosphere. Your seats are waiting.</h3>
-      <p>That is a night at Dignity Health Sports Park. Lock your two seats and bring two friends free to the home opener.</p>
+      <p>That is a night at Dignity Health Sports Park. Lock your season seat and bring two friends free to the home opener.</p>
       <div class="vmodal-cta">
-        <button class="vm-book" onclick="closeVideo();jumpTo('bogoCard')">Lock my two seats</button>
-        <button class="vm-share" onclick="closeVideo();openInvite()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.4"/><circle cx="17" cy="6" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M8.1 10.9l6.8-3.8M8.1 13.1l6.8 3.8" fill="none" stroke-linecap="round"/></svg> Share and get free tickets</button>
+        <button class="vm-book" onclick="closeVideo();jumpTo('bogoCard')">Lock my seat</button>
+        <button class="vm-share" onclick="closeVideo();openInvite()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.4"/><circle cx="17" cy="6" r="2.4"/><circle cx="17" cy="18" r="2.4"/><path d="M8.1 10.9l6.8-3.8M8.1 13.1l6.8 3.8" fill="none" stroke-linecap="round"/></svg> Share and double your entries</button>
       </div>
     </div>
   </div>
@@ -1611,14 +1658,14 @@
   <div class="imodal-card">
     <button class="vmodal-x" onclick="closeInvite()" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
     <div class="im-head">
-      <span class="im-eyebrow">Bring your crew</span>
-      <h3>Two friends. <span id="imPct">A free pair</span> for both of you.</h3>
-      <p>Each friend who joins on your link is a bonus entry for both of you. Then the free tickets kick in, tiered.</p>
+      <span class="im-eyebrow">Bring a friend</span>
+      <h3>One friend in, and you both double your entries.</h3>
+      <p>Share your link. The moment your friend enters the drawing, your entries and theirs both double.</p>
     </div>
-    <div class="im-dots" id="imDots"><span class="im-dot me">You</span><span class="im-dot"></span><span class="im-dot"></span><span class="im-dot"></span></div>
+    <div class="im-dots" id="imDots"><span class="im-dot me">You</span><span class="im-dot"></span></div>
     <div class="im-tiers">
-      <div class="im-tier" data-t="1"><b>1 friend</b><span>a free single-match ticket</span></div>
-      <div class="im-tier" data-t="2"><b>2 friends</b><span>a free pair, plus a scarf</span></div>
+      <div class="im-tier" data-t="1"><b>You</b><span>entries doubled</span></div>
+      <div class="im-tier" data-t="1"><b>Your friend</b><span>entries doubled</span></div>
     </div>
     <div class="im-share">
       <button class="im-sh sms" onclick="shareVia('sms')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg>Text</button>
@@ -1633,17 +1680,67 @@
 
 <!-- gift-a-ticket modal -->
 <div class="modal imodal" id="giftModal" onclick="if(event.target.id==='giftModal')closeGift()">
-  <div class="imodal-card">
+  <div class="imodal-card gv-card">
     <button class="vmodal-x" onclick="closeGift()" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
-    <div class="im-head">
-      <span class="im-eyebrow"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 8.5h20V12H2zM12 8.5v11.5M12 8.5C10.5 8.5 8 7.7 8.4 5.6 8.7 4.2 10.4 4.4 11.2 5.4c.6.8.8 2 .8 3.1Zm0 0c1.5 0 4-.8 3.6-2.9C15.3 4.2 13.6 4.4 12.8 5.4c-.6.8-.8 2-.8 3.1Z"/></svg>Gift a free ticket</span>
-      <h3>Give <span id="giftWho">your friend</span> a free match ticket. <span class="gm-val">about $60 value</span></h3>
-      <p>Send a free single-match ticket to a 2027 home match, on you. Share the link below and we will hold their spot.</p>
+
+    <!-- STEP 1: verify the purchase -->
+    <div class="gv-step" id="giftStep1">
+      <div class="gv-art">
+        <svg class="gv-ticket" viewBox="0 0 220 132" role="img" aria-label="LA Galaxy free single-match ticket">
+          <defs>
+            <linearGradient id="gvNavy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b2c67"/><stop offset="1" stop-color="#00164a"/></linearGradient>
+            <linearGradient id="gvGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE488"/><stop offset=".5" stop-color="#FFC72C"/><stop offset="1" stop-color="#DFA015"/></linearGradient>
+          </defs>
+          <rect x="10" y="22" width="200" height="88" rx="13" fill="url(#gvNavy)" stroke="#FFC72C" stroke-opacity=".45" stroke-width="1.4"/>
+          <circle cx="78" cy="22" r="7" fill="#0b1730"/><circle cx="78" cy="110" r="7" fill="#0b1730"/>
+          <line x1="78" y1="33" x2="78" y2="99" stroke="#FFC72C" stroke-width="1.5" stroke-dasharray="2.5 4" stroke-opacity=".7"/>
+          <g class="gv-ball">
+            <circle cx="44" cy="66" r="19" fill="#fff"/>
+            <circle cx="44" cy="66" r="19" fill="none" stroke="#0b2c67" stroke-width="1.4"/>
+            <path d="M44 53l7.5 5.4-2.9 8.9h-9.2L35.5 58.4z" fill="#0b2c67"/>
+            <path d="M44 47v6M30.5 60l5 3.6M57.5 60l-5 3.6M36 82.5l2.8-6.8M52 82.5l-2.8-6.8" stroke="#0b2c67" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          </g>
+          <text x="94" y="52" fill="#FFC72C" font-family="system-ui,Arial,sans-serif" font-size="14.5" font-weight="900" letter-spacing=".3">LA GALAXY</text>
+          <text x="94" y="68" fill="#fff" font-family="system-ui,Arial,sans-serif" font-size="7.5" font-weight="700" letter-spacing=".4" opacity=".85">SINGLE-MATCH TICKET</text>
+          <text x="94" y="84" fill="#fff" font-family="system-ui,Arial,sans-serif" font-size="6.6" font-weight="600" letter-spacing=".2" opacity=".55">Any 2027 match &middot; no expiry</text>
+          <g class="gv-sheen"><rect x="12" y="24" width="30" height="84" rx="11" fill="#fff" opacity=".13"/></g>
+        </svg>
+      </div>
+      <span class="im-eyebrow gv-eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 8.5h20V12H2zM12 8.5v11.5M12 8.5C10.5 8.5 8 7.7 8.4 5.6 8.7 4.2 10.4 4.4 11.2 5.4c.6.8.8 2 .8 3.1Zm0 0c1.5 0 4-.8 3.6-2.9C15.3 4.2 13.6 4.4 12.8 5.4c-.6.8-.8 2-.8 3.1Z"/></svg>Send your friend a free ticket</span>
+      <h3>Verify your season ticket, we send <span id="giftWho">your friend</span> a free one.</h3>
+      <p class="gv-lead">Confirm the season ticket you bought. Once it checks out, your friend gets a single-match ticket good for any 2027 home match, no expiration.</p>
+      <form class="gv-form" id="giftForm" onsubmit="return submitGift(event)" novalidate>
+        <label class="gv-field"><span>Your name</span><input id="gvName" type="text" autocomplete="name" placeholder="Name on your season ticket"></label>
+        <label class="gv-field"><span>Season ticket number</span><input id="gvTix" type="text" autocomplete="off" placeholder="e.g. LA-2027-014823"></label>
+        <div class="gv-err" id="gvErr" hidden>Add your name and season ticket number to verify.</div>
+        <button class="gv-submit" type="submit">Verify and send the free ticket</button>
+      </form>
+      <div class="gv-fine">We match it to your season-ticket purchase. Nothing is charged here. Illustrative flow for this concept.</div>
     </div>
-    <div class="im-share">
-      <button class="im-sh sms" onclick="shareGift('sms')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg>Text</button>
-      <button class="im-sh email" onclick="shareGift('email')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.2 12 13l8.5-5.8"/></svg>Email</button>
-      <button class="im-sh copy" onclick="shareGift('copy')"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg>Copy link</button>
+
+    <!-- STEP 2: sent -->
+    <div class="gv-step" id="giftStep2" hidden>
+      <div class="gv-burst" id="gvBurst" aria-hidden="true"></div>
+      <div class="gv-art gv-art-sent">
+        <svg class="gv-ticket sent" viewBox="0 0 220 132" role="img" aria-label="Ticket verified and on its way">
+          <rect x="10" y="22" width="200" height="88" rx="13" fill="url(#gvNavy)" stroke="#FFC72C" stroke-opacity=".45" stroke-width="1.4"/>
+          <circle cx="78" cy="22" r="7" fill="#0b1730"/><circle cx="78" cy="110" r="7" fill="#0b1730"/>
+          <line x1="78" y1="33" x2="78" y2="99" stroke="#FFC72C" stroke-width="1.5" stroke-dasharray="2.5 4" stroke-opacity=".7"/>
+          <g class="gv-ball">
+            <circle cx="44" cy="66" r="19" fill="#fff"/>
+            <circle cx="44" cy="66" r="19" fill="none" stroke="#0b2c67" stroke-width="1.4"/>
+            <path d="M44 53l7.5 5.4-2.9 8.9h-9.2L35.5 58.4z" fill="#0b2c67"/>
+            <path d="M44 47v6M30.5 60l5 3.6M57.5 60l-5 3.6M36 82.5l2.8-6.8M52 82.5l-2.8-6.8" stroke="#0b2c67" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          </g>
+          <text x="94" y="54" fill="#FFC72C" font-family="system-ui,Arial,sans-serif" font-size="14.5" font-weight="900" letter-spacing=".3">LA GALAXY</text>
+          <text x="94" y="70" fill="#fff" font-family="system-ui,Arial,sans-serif" font-size="7" font-weight="700" letter-spacing=".3" opacity=".85">FREE SINGLE-MATCH TICKET</text>
+          <text x="94" y="84" fill="#fff" font-family="system-ui,Arial,sans-serif" font-size="6.6" font-weight="600" letter-spacing=".2" opacity=".55">Any 2027 match &middot; no expiry</text>
+        </svg>
+      </div>
+      <div class="gv-badge"><span class="gv-dot"></span>Verifying your purchase</div>
+      <h3>On its way to <span id="giftWho2">your friend</span>.</h3>
+      <p class="gv-lead">Once we confirm your season-ticket purchase, we send <b id="giftWho3">your friend</b> the ticket and let you know it is on the way. They can redeem it for any home match this season, no expiration.</p>
+      <button class="gv-done" onclick="closeGift()">Done</button>
     </div>
   </div>
 </div>
@@ -1677,8 +1774,8 @@
 <div class="modal" id="shareModal">
   <div class="modal-card">
     <button class="mx" onclick="closeShare()" aria-label="Close">&times;</button>
-    <h3>Invite friends. Win two season tickets together.</h3>
-    <p class="sub" style="font-size:14px;margin-top:4px">Each friend who joins with your link is +1 entry for both of you, and a bonus chance to win two LA Galaxy season memberships, free.</p>
+    <h3>Share with a friend. Double your entries.</h3>
+    <p class="sub" style="font-size:14px;margin-top:4px">When one friend enters the drawing on your link, your entries and theirs both double. Same free entry, twice the odds, for both of you.</p>
     <div class="share-grid3">
       <button class="sh-tile" onclick="shareVia('sms')"><span class="sh-tico" style="background:#34C759"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.2A8 8 0 1 1 21 11.5Z"/></svg></span>Text</button>
       <button class="sh-tile" onclick="shareVia('email')"><span class="sh-tico" style="background:#C0872F"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.2 12 13l8.5-5.8"/></svg></span>Email</button>
@@ -2137,7 +2234,10 @@ showFstep(1);
   const wrap=document.getElementById('winWrap'),chip=document.getElementById('winChip'),cta=document.getElementById('wbCta'),days=document.getElementById('wbDays');
   if(!wrap)return;
   if(days){
-    const now=new Date(),deadline=new Date(2026,7,20,23,59,59);
+    const now=new Date(),deadline=new Date(now);
+    deadline.setDate(deadline.getDate()+((7-deadline.getDay())%7));deadline.setHours(20,0,0,0);
+    if(deadline-now<12*3600*1000)deadline.setDate(deadline.getDate()+7);
+    const dd=document.getElementById('wbDate');if(dd){try{dd.textContent=deadline.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});}catch(e){}}
     const d=Math.ceil((deadline-now)/86400000);
     days.textContent=d>1?'('+d+' days left)':d===1?'(1 day left)':d===0?'(last day)':'(closing now)';
   }
@@ -2261,43 +2361,30 @@ window.addEventListener('scroll',()=>{
 
 /* ---------------- REFERRAL ENGINE ---------------- */
 function crewPct(r){return r>=2?20:r>=1?18:15;} /* referral entry tiers */
-function entriesFor(r){return state.baseEntries+r;}
+function entriesFor(r){return r>=1?state.baseEntries*2:state.baseEntries;}
 function renderReferral(){
-  const r=state.referrals;
-  // entries
+  const r=state.referrals, doubled=r>=1;
   state.entries=entriesFor(r);
   const eLab=state.entries+(state.entries===1?' entry logged':' entries logged');
   const ec=document.getElementById('entryCount');if(ec)ec.textContent=eLab;
   const cfb=document.getElementById('cfbEntries');if(cfb)cfb.textContent=state.entries+(state.entries===1?' entry':' entries');
   const chip=document.getElementById('refChip');if(chip)chip.textContent=r+(r===1?' friend joined':' friends joined');
-  // avatars
-  document.querySelectorAll('#rfAvatars .av-slot.empty').forEach(s=>{
-    const i=+s.dataset.slot;
-    if(i<r){if(!s.classList.contains('filled')){s.classList.add('filled');s.textContent=(FRIEND_NAMES[i]||'F').charAt(0);}}
-    else{s.classList.remove('filled');s.textContent='+';}
-  });
-  // progress + count
-  const bar=document.getElementById('rfBar');if(bar)bar.style.width=Math.min(100,(r/2)*100)+'%';
-  const num=document.getElementById('rfNum');if(num)num.textContent=r;
-  // milestones
-  document.querySelectorAll('#msLadder .ms-row').forEach(row=>row.classList.toggle('hit',r>=+row.dataset.ms));
-  // socks
-  const socks=document.getElementById('socksCard');
-  if(socks){
-    const un=r>=2;socks.classList.toggle('unlocked',un);
-    document.getElementById('socksSub').textContent=un?'Show this at the LA Galaxy Team Store on matchday':(2-r)+' more '+((2-r)===1?'friend':'friends')+' unlocks a free scarf for everyone';
-  }
+  // entry multiplier
+  const you=document.getElementById('rfmYou'),fr=document.getElementById('rfmFriend'),who=document.getElementById('rfmWho'),mult=document.getElementById('rfMult'),st=document.getElementById('rfStatus');
+  if(you)you.innerHTML=doubled?'2&times;':'1&times;';
+  if(fr)fr.innerHTML=doubled?'2&times;':'1&times;';
+  if(mult)mult.classList.toggle('on',doubled);
+  if(who)who.textContent=doubled?(FRIEND_NAMES[0]||'Your friend'):'Your friend';
+  if(st)st.textContent=doubled?'Double entries unlocked for both of you.':'Share your link to double both of your entries.';
   if(typeof renderInvite==='function')renderInvite();
 }
 function bumpReferral(){
-  if(state.referrals>=2){toast('Crew full. Two free tickets and a Galaxy scarf unlocked.');return;}
-  state.referrals++;
+  if(state.referrals>=1){toast('Your entries are already doubled.');return;}
+  state.referrals=1;
   renderReferral();
-  const r=state.referrals;
-  if(r>=2)fireConfetti();
-  if(r===2)toast('Two friends in. A free pair of tickets and a Galaxy scarf for your crew.');
-  else toast('One friend in. You are both up an entry and a free single-match ticket.');
-  track('referral_join',{count:r});
+  fireConfetti();
+  toast('One friend in. Both of your entries just doubled.');
+  track('referral_join',{count:1});
 }
 function fireConfetti(){
   const box=document.createElement('div');box.className='confetti';
@@ -2337,8 +2424,13 @@ function shareVia(ch){
 }
 function copyLink(){
   const t=shareLink;
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>toast("Link copied, paste it in your group chat")).catch(()=>toast("Copied"));}
-  else{const i=document.getElementById('reflink2');i.select();try{document.execCommand('copy');}catch(e){}toast("Link copied");}
+  const done=()=>{toast("Link copied, paste it in your group chat");flashCopied();};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(()=>{toast("Copied");flashCopied();});}
+  else{const i=document.getElementById('reflink2');if(i){i.select();try{document.execCommand('copy');}catch(e){}}toast("Link copied");flashCopied();}
+}
+function flashCopied(){
+  const b=document.getElementById('rfCopyBtn');
+  if(b&&!b.dataset.o){b.dataset.o=b.textContent;b.textContent='Copied ✓';b.classList.add('copied');setTimeout(()=>{b.textContent=b.dataset.o||'Copy';b.removeAttribute('data-o');b.classList.remove('copied');},1700);}
 }
 
 /* ---------------- BOGO TRIPWIRE ---------------- */
@@ -2351,16 +2443,47 @@ document.querySelectorAll('#bogoCard .fo-inv-send').forEach(b=>b.addEventListene
   if(!nm){input.focus();toast("Add your friend's name first");return;}
   giftRow=row;giftName=nm;openGift(nm);track('gift_send',{gift:b.dataset.gift});
 }));
-function openGift(nm){var w=document.getElementById('giftWho');if(w)w.textContent=nm;document.getElementById('giftModal').classList.add('show');track('gift_modal_open');}
+function openGift(nm){
+  giftName=nm||'';
+  ['giftWho','giftWho2','giftWho3'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=nm||'your friend';});
+  var s1=document.getElementById('giftStep1'),s2=document.getElementById('giftStep2');
+  if(s1)s1.hidden=false;if(s2)s2.hidden=true;
+  var err=document.getElementById('gvErr');if(err)err.hidden=true;
+  ['gvName','gvTix'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('giftModal').classList.add('show');track('gift_modal_open');
+}
 function closeGift(){document.getElementById('giftModal').classList.remove('show');}
-function shareGift(ch){
-  var msg="I'm sending you a free single-match ticket to an LA Galaxy home match, about $60 value. Claim your spot:";
-  var E=encodeURIComponent,full=msg+" "+shareLink,url=null;
-  if(ch==='sms')url='sms:?&body='+E(full);
-  else if(ch==='email')url='mailto:?subject='+E("A free LA Galaxy ticket, on me")+'&body='+E(msg+"\n\n"+shareLink);
-  else if(ch==='copy'){copyLink();markGiftSent();track('gift_share',{ch:ch});return;}
-  if(url)window.open(url,'_blank');
-  markGiftSent();track('gift_share',{ch:ch});
+function submitGift(e){
+  if(e&&e.preventDefault)e.preventDefault();
+  var name=(document.getElementById('gvName').value||'').trim();
+  var tix=(document.getElementById('gvTix').value||'').trim();
+  var err=document.getElementById('gvErr');
+  if(!name||!tix){if(err)err.hidden=false;(name?document.getElementById('gvTix'):document.getElementById('gvName')).focus();return false;}
+  if(err)err.hidden=true;
+  var who=giftName||'your friend';
+  ['giftWho2','giftWho3'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=who;});
+  document.getElementById('giftStep1').hidden=true;
+  document.getElementById('giftStep2').hidden=false;
+  giftGlitter();
+  markGiftSent();
+  track('gift_verify_submit',{});
+  return false;
+}
+function giftGlitter(){
+  var box=document.getElementById('gvBurst');if(!box)return;box.innerHTML='';
+  var cols=['#FFC72C','#FFD200','#FFE9A6','#0065A4','#7FB2E5','#ffffff'];
+  for(var i=0;i<40;i++){
+    var p=document.createElement('i');p.className='gv-glit';
+    var ang=(i/40)*6.2832+(i%5)*0.13, dist=52+(i%6)*15;
+    p.style.setProperty('--tx',(Math.cos(ang)*dist).toFixed(1)+'px');
+    p.style.setProperty('--ty',(Math.sin(ang)*dist).toFixed(1)+'px');
+    p.style.setProperty('--rot',((i*57)%360)+'deg');
+    p.style.background=cols[i%cols.length];
+    p.style.animationDelay=((i%8)*0.011)+'s';
+    if(i%3===0)p.style.borderRadius='50%';
+    box.appendChild(p);
+  }
+  setTimeout(function(){if(box)box.innerHTML='';},1500);
 }
 function markGiftSent(){
   if(giftRow){
@@ -2368,8 +2491,7 @@ function markGiftSent(){
     var btn=giftRow.querySelector('.fo-inv-send');if(btn){btn.classList.add('sent');btn.textContent='Sent';}
     var inp=giftRow.querySelector('.fo-inv-in');if(inp)inp.readOnly=true;
   }
-  var note=document.getElementById('giftNote');if(note&&giftName)note.textContent='Ticket sent to '+giftName+'. They will get a link to claim their free single-match ticket.';
-  closeGift();
+  var note=document.getElementById('giftNote');if(note&&giftName)note.textContent='Verifying your purchase. Once confirmed, '+giftName+' gets their free single-match ticket, redeemable any home match this season.';
 }
 function bogoStartClock(){/* countdown retired with the member offer */}
 

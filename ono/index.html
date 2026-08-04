@@ -893,6 +893,32 @@
   .dpre.on{background:var(--teal);border-color:var(--teal);color:#fff}
   .dbtn.primary{background:var(--ink);border-color:var(--ink);color:var(--cream);display:inline-flex;align-items:center;gap:7px}
   .dbtn.primary .ns{width:20px;height:20px;border-radius:50%;background:var(--gold);color:#063B44;display:grid;place-items:center;font-size:9px;font-weight:900}
+  /* campaign manager bar */
+  .cmgr{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:15px 16px 13px;box-shadow:var(--shadow-sm);margin-bottom:12px}
+  .cmgr-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+  .cmgr-eyebrow{font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .cmgr-status{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:900;color:#8A6D00;background:#FFF7DA;border:1px solid #EBD98F;border-radius:99px;padding:4px 11px}
+  body[data-theme="night"] .cmgr-status{background:#3A320D;border-color:#6E5F20;color:#FFE775}
+  .cmgr-status i{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:cdBeat 1.6s ease-in-out infinite}
+  .cmgr-views{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .dpre{position:relative;font:inherit;text-align:left;background:var(--mist);border:1.5px solid var(--line);border-radius:13px;padding:10px 13px 10px 30px;cursor:pointer;transition:.16s}
+  .dpre:hover{border-color:var(--teal)}
+  .dpre b{display:block;font-size:13px;font-weight:900;letter-spacing:-.01em}
+  .dpre .dp-sub{display:block;font-size:10.5px;font-weight:800;color:var(--muted);margin-top:2px;line-height:1.3}
+  .dpre .dp-dot{position:absolute;left:12px;top:14px;width:9px;height:9px;border-radius:50%;background:var(--line);transition:.16s}
+  .dpre.on{background:var(--teal-soft);border-color:var(--teal)}
+  .dpre.on .dp-dot{background:var(--palm);box-shadow:0 0 0 3px rgba(15,138,107,.18)}
+  .dpre.on b{color:var(--teal-deep)}
+  body[data-theme="night"] .dpre.on b{color:var(--gold-lite)}
+  .cmgr-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
+  .chip{display:inline-flex;align-items:baseline;gap:5px;font-size:11px;font-weight:800;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:5px 9px;cursor:pointer;transition:.15s;font-family:inherit}
+  .chip:hover{border-color:var(--teal);background:var(--teal-soft)}
+  .chip small{font-size:9px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .chip b{font-weight:900;color:var(--teal-deep)}
+  body[data-theme="night"] .chip b{color:var(--gold-lite)}
+  .chip.add{color:var(--muted);border-style:dashed}
+  @media(max-width:760px){.cmgr-views{grid-template-columns:1fr}}
+
   .dnote{margin-top:10px;background:#FDECEA;border:1px solid #F0B4AE;color:#8E251C;border-radius:12px;padding:11px 14px;font-size:12.5px;font-weight:800;line-height:1.5}
   body[data-theme="night"] .dnote{background:#33100D;border-color:#6E2620;color:#FFB4AC}
 
@@ -925,6 +951,28 @@
   .flash{animation:sflash 1.15s ease 2;border-color:var(--teal)!important}
   @media(max-width:980px){.spend-g{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:560px){.spend-g{grid-template-columns:1fr}}
+
+  /* sticky mini metrics nav */
+  .mstick{position:sticky;top:59px;z-index:55;margin:2px 0 14px;padding:6px 0 8px;background:linear-gradient(var(--cream) 78%,transparent)}
+  .ms-in{display:grid;grid-template-columns:repeat(6,1fr);gap:0;background:linear-gradient(160deg,#06333B,#00505B 70%,#00727E);border:1px solid rgba(255,255,255,.14);border-radius:15px;box-shadow:0 10px 28px rgba(4,38,44,.35);overflow:hidden}
+  .msc{position:relative;padding:9px 12px 8px;border-right:1px solid rgba(255,255,255,.09)}
+  .msc:last-child{border-right:0}
+  .ms-l{font-size:8.5px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.62);display:flex;align-items:center;gap:4px;white-space:nowrap}
+  .ms-v{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums;line-height:1.1;transition:transform .15s ease}
+  .ms-v.neg{color:#FF9C93}
+  .ms-v.tick{transform:scale(1.09)}
+  .ms-d{position:absolute;right:8px;top:7px;font-size:9px;font-weight:900;padding:1.5px 6px;border-radius:99px;opacity:0;transform:translateY(-3px);transition:opacity .2s,transform .2s;font-variant-numeric:tabular-nums}
+  .ms-d.show{opacity:1;transform:none}
+  .ms-d.up{background:rgba(58,190,130,.22);color:#7BF0BE}
+  .ms-d.dn{background:rgba(224,69,59,.24);color:#FFB0A8}
+  .gl{border-bottom:1px dotted rgba(255,255,255,.45);cursor:help}
+  .glx{border-bottom:1px dotted var(--muted);cursor:help}
+  #glTip{position:fixed;z-index:300;max-width:270px;background:#06333B;color:#F3FAFB;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:11px 13px;font-size:12px;font-weight:600;line-height:1.55;box-shadow:0 14px 34px rgba(4,38,44,.45);opacity:0;pointer-events:none;transition:opacity .15s}
+  #glTip.on{opacity:1}
+  #glTip b{display:block;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+  @media(max-width:900px){.ms-in{grid-template-columns:repeat(3,1fr)}.msc:nth-child(3){border-right:0}.msc:nth-child(-n+3){border-bottom:1px solid rgba(255,255,255,.09)}}
+  @media(max-width:480px){.ms-in{grid-template-columns:repeat(2,1fr)}.msc{border-right:1px solid rgba(255,255,255,.09)}.msc:nth-child(2n){border-right:0}.msc:nth-child(-n+4){border-bottom:1px solid rgba(255,255,255,.09)}}
+  @media(prefers-reduced-motion:reduce){.ms-v,.ms-d{transition:none}}
 
   /* metric cards */
   .mcards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
@@ -1807,13 +1855,19 @@
       <span class="dash-live"><span class="dash-dot"></span>Modeled forecast</span>
     </div>
 
-    <div class="dbar">
-      <div class="dbar-g" role="group" aria-label="Scenario presets">
-        <span class="dbar-lab">Scenario</span>
-        <button class="dpre" data-pre="cons">Conservative</button>
-        <button class="dpre on" data-pre="exp">Expected</button>
-        <button class="dpre" data-pre="agg">Aggressive</button>
+    <div class="cmgr">
+      <div class="cmgr-head">
+        <span class="cmgr-eyebrow">Campaign manager</span>
+        <span class="cmgr-status"><i></i>Forecast draft, nothing is spending</span>
       </div>
+      <div class="cmgr-views" role="group" aria-label="Saved campaign presets">
+        <button class="dpre" data-pre="cons"><span class="dp-dot"></span><b>Conservative floor</b><span class="dp-sub">12 stores &middot; low conversion</span></button>
+        <button class="dpre on" data-pre="exp"><span class="dp-dot"></span><b>12-Store Test</b><span class="dp-sub">$1k per store per month &middot; recommended</span></button>
+        <button class="dpre" data-pre="agg"><span class="dp-dot"></span><b>Regional scale-up</b><span class="dp-sub">36 stores &middot; proven creative</span></button>
+      </div>
+      <div class="cmgr-chips" id="cmgrChips" aria-label="Applied campaign settings"></div>
+    </div>
+    <div class="dbar">
       <div class="dbar-g">
         <button class="dbtn" id="dReset">Reset assumptions</button>
         <button class="dbtn" id="dCompare">Compare scenarios</button>
@@ -1823,6 +1877,10 @@
       </div>
     </div>
     <div class="dnote" id="dCohere" hidden></div>
+
+    <div class="mstick" id="mStick" aria-label="Key metrics, live">
+      <div class="ms-in" id="msIn"></div>
+    </div>
 
     <!-- ============ 1 · EXECUTIVE OUTCOME ============ -->
     <div class="dsec">
@@ -3118,14 +3176,14 @@ var DEFAULTS={
   /* B. acquisition */
   adPerStoreMonth:1000, campaignMonths:3, ctaLift:0,
   winnersPerMonth:3, prizeValue:200, prizeAdminMonth:200,
-  mediaBudget:12400, cplv:1.20, entryConv:38, entrantToCard:4.3, organicMult:1.18, newShare:65, payFee:3,
+  mediaBudget:12400, cpm:14, cplv:1.30, entryConv:30, entrantToCard:3.2, organicMult:1.18, newShare:65, payFee:3,
   /* C. redemption behaviour */
   cardRedeem:92, breakage:8, monthsToFull:6, monthOne:18, overspend:18, restVarCost:32,
   dormantAfter:12, subFifteenShare:12,
   /* D. retention */
-  repeat90:34, repeatValue:24, repeatOrders:2.2, cateringLead:1.5, cateringConv:12, cateringValue:425,
+  repeat90:30, repeatValue:24, repeatOrders:2.0, cateringLead:1.5, cateringConv:10, cateringValue:425,
   /* structural */
-  scaleIdx:2, horizon:12,
+  scaleIdx:1, horizon:12,
   curve:defaultCurve(18,6),
   alloc:{paid:40, creator:20, lsm:15, retention:15, reserve:10}
 };
@@ -3160,6 +3218,8 @@ function calculateModel(a){
 
   /* ---- acquisition funnel ---- */
   R.paidVisits    = a.cplv>0 ? R.mediaBudget/a.cplv : 0;
+  R.impressions   = a.cpm>0 ? R.mediaBudget/a.cpm*1000 : 0;
+  R.ctr           = R.impressions>0 ? R.paidVisits/R.impressions*100 : 0;
   R.totalVisits   = R.paidVisits * a.organicMult;
   R.organicVisits = R.totalVisits - R.paidVisits;
   R.entries       = R.totalVisits * R.effEntryConv/100;
@@ -3267,6 +3327,8 @@ function calculateModel(a){
       R.cashCollected - R.payFees - R.futureRedeemCostReserve - R.bonusReserve - R.escheatReserve - R.safetyReserve - R.prizeCostTotal);
 
   /* ---- acquisition economics ---- */
+  R.cpl        = R.entries>0 ? R.mediaBudget/R.entries : 0;
+  R.cashRoas   = R.mediaBudget>0 ? R.cashCollected/R.mediaBudget : 0;
   R.blendedCac = R.cardBuyers>0 ? R.mediaBudget/R.cardBuyers : 0;
   R.newCac     = R.newCustomers>0 ? R.mediaBudget/R.newCustomers : 0;
   R.contribPerBuyer = R.cardBuyers>0 ? R.totalContribution/R.cardBuyers : 0;
@@ -3409,7 +3471,7 @@ var SENS_KEYS=[
   {k:'breakage',      label:'Expected breakage'},
   {k:'overspend',     label:'Spend above stored value'},
   {k:'repeat90',      label:'90-day repeat rate'},
-  {k:'cplv',          label:'Cost per landing-page visit'},
+  {k:'cplv',          label:'Cost per click (CPC)'},
   {k:'bonusFace',     label:'Bonus-card face value'},
   {k:'payFee',        label:'Payment and distribution fee'},
   {k:'prizeValue',    label:'Prize card value'}
@@ -3484,7 +3546,8 @@ var CONTROLS=[
   {k:'winnersPerMonth',l:'Winners per month',          min:1,max:10,step:1,   f:function(v){return v+(v===1?' winner':' winners');}, x:'How many names are drawn each month. Three is the proposed cadence.', b:'prop'},
   {k:'prizeValue',    l:'Prize card value',            min:50,max:1000,step:25,f:function(v){return '$'+num(v);}, x:'Face value of each prize card. Its economic cost is the food it buys when redeemed, not the face value.', b:'prop'},
   {k:'prizeAdminMonth',l:'Prize fulfilment and admin',  min:0,max:1000,step:25,f:function(v){return '$'+num(v)+'/mo';}, x:'Winner verification, tax reporting, shipping and alternate-winner administration. Real cost that a prize budget usually forgets.', b:'prop'},
-  {k:'cplv',          l:'Cost per landing-page visit', min:0.4,max:4,step:0.05, f:function(v){return '$'+v.toFixed(2);}, x:'Blended paid cost to get one visit to the entry page.', b:'ind'},
+  {k:'cpm',           l:'CPM, cost per 1,000 impressions', min:6,max:30,step:0.5, f:function(v){return '$'+v.toFixed(2);}, x:'What a thousand ad impressions cost on the platform. With CPC this derives impressions and CTR for the Meta view.', b:'ind'},
+  {k:'cplv',          l:'Cost per click (CPC)', min:0.4,max:4,step:0.05, f:function(v){return '$'+v.toFixed(2);}, x:'Blended paid cost per click through to the entry page across the geo-radius ad sets.', b:'ind'},
   {k:'entryConv',     l:'Entry conversion rate',       min:10,max:70,step:0.5,  f:function(v){return v+'%';}, x:'Visits that complete the quiz and submit an entry.', b:'prop'},
   {k:'entrantToCard', l:'Entrant to gift-card conversion', min:0.5,max:20,step:0.1, f:function(v){return v.toFixed(1)+'%';}, x:'Entrants who go on to buy a gift card. Usually the single biggest lever in the model.', b:'prop'},
   {k:'organicMult',   l:'Organic and referral multiplier', min:1,max:2.5,step:0.01, f:function(v){return v.toFixed(2)+'×';}, x:'Unpaid visits earned on top of paid, from referral and social.', b:'prop'},
@@ -3565,6 +3628,93 @@ function jumpToCtl(k){
   el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
   setTimeout(function(){ el.classList.remove('flash'); he.style.scrollBehavior=prev||''; },2400);
   var s=document.getElementById('s_'+k); if(s) setTimeout(function(){ s.focus({preventScroll:true}); },420);
+}
+var GLOSS={
+ cash:{t:'Cash collected',d:'Money customers paid for gift cards up front. It is not revenue yet. It becomes revenue as the cards are redeemed for food.'},
+ contrib:{t:'Contribution',d:'Modeled 12-month profit after food costs, fees, prize cards, fulfilment, and the full media budget.'},
+ roas:{t:'Cash ROAS',d:'Gift-card cash collected divided by ad spend. This is the Meta-style read. The stricter number is the contribution return below it.'},
+ cac:{t:'CAC',d:'Cost to acquire one new customer: media spend divided by new-to-file gift-card buyers.'},
+ cpl:{t:'Cost per lead',d:'Media spend divided by entries. Every entry is a permissioned contact with a stated favorite plate.'},
+ ctr:{t:'CTR',d:'Clicks divided by impressions. Derived here from your CPM and CPC settings, the way a Meta ads manager reports it.'},
+ cpm:{t:'CPM',d:'What 1,000 ad impressions cost on the platform.'},
+ cpc:{t:'CPC',d:'Cost per click through to the entry page.'},
+ imp:{t:'Impressions',d:'Ad views bought by the budget at the set CPM.'},
+ cpp:{t:'Cost per purchase',d:'Media spend divided by gift-card buyers. Meta calls this cost per purchase or cost per result.'}
+};
+(function(){
+  var tip=document.createElement('div'); tip.id='glTip'; document.body.appendChild(tip);
+  function show(el){
+    var k=el.getAttribute('data-gl'), g=GLOSS[k]; if(!g)return;
+    tip.innerHTML='<b>'+g.t+'</b>'+g.d;
+    var r=el.getBoundingClientRect();
+    tip.style.left=Math.max(10,Math.min(innerWidth-280,r.left))+'px';
+    tip.style.top=(r.bottom+9)+'px';
+    tip.classList.add('on');
+  }
+  function hide(){ tip.classList.remove('on'); }
+  document.addEventListener('mouseover',function(e){ var el=e.target.closest&&e.target.closest('[data-gl]'); if(el)show(el); else hide(); });
+  document.addEventListener('focusin',function(e){ var el=e.target.closest&&e.target.closest('[data-gl]'); if(el)show(el); });
+  document.addEventListener('focusout',hide);
+  document.addEventListener('scroll',hide,true);
+})();
+var __msPrev=null;
+function renderStick(R){
+  var host=document.getElementById('msIn'); if(!host)return;
+  var items=[
+    {k:'cash',   l:'Cash', v:money(R.cashCollected), raw:R.cashCollected, f:money},
+    {k:'contrib',l:'Contribution', v:money(R.totalContribution), raw:R.totalContribution, f:money, neg:R.totalContribution<0},
+    {k:'roas',   l:'Cash ROAS', v:xmul(R.cashRoas), raw:R.cashRoas, f:xmul},
+    {k:'cac',    l:'CAC', v:moneyFull(R.newCac), raw:R.newCac, f:moneyFull, invert:true},
+    {k:'cpl',    l:'Cost/lead', v:'$'+R.cpl.toFixed(2), raw:R.cpl, f:function(v){return '$'+v.toFixed(2);}, invert:true},
+    {k:'ctr',    l:'CTR', v:R.ctr.toFixed(2)+'%', raw:R.ctr, f:function(v){return v.toFixed(2)+'%';}}
+  ];
+  if(!host.dataset.built){
+    host.innerHTML=items.map(function(it,i){
+      return '<div class="msc"><span class="ms-l"><span class="gl" data-gl="'+it.k+'" tabindex="0">'+it.l+'</span></span>'+
+        '<div class="ms-v" id="msv'+i+'"></div><span class="ms-d" id="msd'+i+'"></span></div>';
+    }).join('');
+    host.dataset.built='1';
+  }
+  items.forEach(function(it,i){
+    var v=document.getElementById('msv'+i), d=document.getElementById('msd'+i);
+    if(v.textContent!==it.v){
+      v.textContent=it.v;
+      v.classList.toggle('neg',!!it.neg);
+      v.classList.remove('tick'); void v.offsetWidth; v.classList.add('tick');
+      if(__msPrev){
+        var delta=it.raw-__msPrev[i];
+        if(Math.abs(delta)>1e-6){
+          var good=it.invert? delta<0 : delta>0;
+          d.textContent=(delta>0?'+':'-')+it.f(Math.abs(delta)).replace('$-','$');
+          d.className='ms-d show '+(good?'up':'dn');
+          clearTimeout(d.__t); d.__t=setTimeout(function(){d.classList.remove('show');},1900);
+        }
+      }
+    }
+  });
+  __msPrev=items.map(function(it){return it.raw;});
+}
+function renderChips(R){
+  var el=document.getElementById('cmgrChips'); if(!el)return;
+  var chips=[
+    ['scale','Stores', R.stores+''],
+    ['adPerStoreMonth','Ad spend', moneyFull(assumptions.adPerStoreMonth)+'/store/mo'],
+    ['campaignMonths','Flight', assumptions.campaignMonths+' mo'],
+    ['cplv','CPC', '$'+assumptions.cplv.toFixed(2)],
+    ['entryConv','Entry conv', assumptions.entryConv+'%'],
+    ['entrantToCard','Card conv', assumptions.entrantToCard.toFixed(1)+'%'],
+    ['cardRedeem','Redemption', assumptions.cardRedeem+'%']
+  ];
+  el.innerHTML=chips.map(function(c){
+    return '<button type="button" class="chip" data-chip="'+c[0]+'" title="Adjust '+c[1].toLowerCase()+'"><small>'+c[1]+'</small><b>'+c[2]+'</b></button>';
+  }).join('')+'<span class="chip add">Tap a chip to adjust it</span>';
+  Array.prototype.forEach.call(el.querySelectorAll('[data-chip]'),function(b){
+    b.addEventListener('click',function(){
+      var k=b.getAttribute('data-chip');
+      if(k==='scale'){ var sr=document.getElementById('scaleRange'); if(sr){ sr.scrollIntoView({block:'center',behavior:'smooth'}); sr.focus({preventScroll:true}); } return; }
+      jumpToCtl(k);
+    });
+  });
 }
 function renderSpend(R){
   var g=document.getElementById('spendGrid'); if(!g)return;
@@ -4004,11 +4154,15 @@ function drawDecision(R){
 function drawMedia(R){
   var el=document.getElementById('mediaGrid'); if(!el)return;
   el.innerHTML=
+   '<div><b>'+num(Math.round(R.impressions))+'</b><span><span class="glx" data-gl="imp" tabindex="0">Impressions</span> at $'+assumptions.cpm.toFixed(2)+' <span class="glx" data-gl="cpm" tabindex="0">CPM</span></span></div>'+
+   '<div><b>'+R.ctr.toFixed(2)+'%</b><span><span class="glx" data-gl="ctr" tabindex="0">CTR</span> at $'+assumptions.cplv.toFixed(2)+' <span class="glx" data-gl="cpc" tabindex="0">CPC</span></span></div>'+
+   '<div><b>$'+R.cpl.toFixed(2)+'</b><span><span class="glx" data-gl="cpl" tabindex="0">Cost per lead</span>, '+num(Math.round(R.entries))+' entries</span></div>'+
+   '<div><b>'+xmul(R.cashRoas)+'</b><span><span class="glx" data-gl="roas" tabindex="0">Cash ROAS</span>, the Meta-style read</span></div>'+
    '<div><b>'+moneyFull(R.adPerStoreMonth)+'</b><span>Per store, per month</span></div>'+
    '<div><b>'+R.stores+' stores</b><span>'+R.scaleLabel+'</span></div>'+
    '<div><b>'+money(R.mediaPerMonth)+'</b><span>Total media per month</span></div>'+
    '<div><b>'+money(R.mediaBudget)+'</b><span>Campaign media over '+assumptions.campaignMonths+' month'+(assumptions.campaignMonths===1?'':'s')+'</span></div>'+
-   '<div><b>'+moneyFull(R.blendedCac)+'</b><span>Cost per gift-card buyer</span></div>'+
+   '<div><b>'+moneyFull(R.blendedCac)+'</b><span><span class="glx" data-gl="cpp" tabindex="0">Cost per purchase</span>, one gift-card buyer</span></div>'+
    '<div><b>'+moneyFull(R.newCac)+'</b><span>Cost per new customer</span></div>'+
    '<div><b>'+moneyFull(R.prizeCostMonth)+'/mo</b><span>Prize programme, variant '+VARIANT.toUpperCase()+': '+
      (VARIANT==='b'? '$400 plus $150 plus $50' : assumptions.winnersPerMonth+' &times; '+moneyFull(assumptions.prizeValue))+
@@ -4097,7 +4251,7 @@ function refresh(fast){
   requestAnimationFrame(function(){
     rafPending=false;
     var R=calculateModel(assumptions); lastR=R;
-    renderSpend(R); renderCards(R); drawScale(R); drawAlloc(R); drawChart(R); drawWaterfall(R);
+    renderStick(R); renderChips(R); renderSpend(R); renderCards(R); drawScale(R); drawAlloc(R); drawChart(R); drawWaterfall(R);
     drawFunnel(R); drawCohorts(R); drawFunding(R); drawMedia(R); drawDormancy(R); drawMeals(R); drawQuarter(R); drawDecision(R);
     if(!fast) drawCurve(R); else {
       document.getElementById('curveSum').textContent='Curve total '+pct(R.curveSum,0)+(R.curveSum<99.5?' · '+pct(100-R.curveSum,0)+' still outstanding at month 12':'');
@@ -4114,16 +4268,17 @@ function refresh(fast){
 
 /* ================= PRESETS ================= */
 var PRESETS={
- cons:{entrantToCard:2.4, cplv:1.85, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
+ cons:{scaleIdx:1, entrantToCard:2.4, cplv:1.85, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
        repeat90:18, repeatOrders:1.6, organicMult:1.05, payFee:5, bonusRedeem:94, newShare:55, cateringConv:7},
- exp:{},
- agg:{entrantToCard:7.2, cplv:0.85, entryConv:47, cardRedeem:88, breakage:12, overspend:26,
-      repeat90:48, repeatOrders:3.1, organicMult:1.45, payFee:2, bonusRedeem:80, newShare:74, cateringConv:18}
+ exp:{scaleIdx:1},
+ agg:{scaleIdx:2, entrantToCard:5.8, cplv:0.95, entryConv:40, cardRedeem:88, breakage:12, overspend:24,
+      repeat90:42, repeatOrders:2.8, organicMult:1.4, payFee:2, bonusRedeem:80, newShare:72, cateringConv:16}
 };
 function applyPreset(k){
   var base=cloneA(DEFAULTS), p=PRESETS[k]||{};
   Object.keys(p).forEach(function(x){ base[x]=p[x]; });
-  base.scaleIdx=assumptions.scaleIdx; base.horizon=assumptions.horizon;
+  if(p.scaleIdx===undefined) base.scaleIdx=assumptions.scaleIdx;
+  base.horizon=assumptions.horizon;
   base.adPerStoreMonth=assumptions.adPerStoreMonth; base.campaignMonths=assumptions.campaignMonths;
   base.curve=defaultCurve(base.monthOne,base.monthsToFull);
   assumptions=base;

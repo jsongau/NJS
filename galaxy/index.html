@@ -1586,8 +1586,8 @@
       <button class="seat" data-seat="2"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
     </div>
     <div class="squad-calc">
-      <div class="big"><s id="squadWas">$833/seat</s><span id="squadNow">$795/seat</span> <span style="font-size:15px;font-weight:700;color:var(--muted)">each &middot; <span id="squadTotal">$1,590</span> for the group</span></div>
-      <div class="lab" id="squadLab">On your own it is $833 a seat. One friend takes the group to $795 each, two friends to $760 each, all in the same row.</div>
+      <div class="big"><s id="squadWas">$833/seat</s><span id="squadNow">$820/seat</span> <span style="font-size:15px;font-weight:700;color:var(--muted)">each &middot; <span id="squadTotal">$1,640</span> for the group</span></div>
+      <div class="lab" id="squadLab">On your own it is $833 a seat. One friend takes the group to $820 each, two friends to $799 each, all in the same row.</div>
     </div>
     <button class="squad-lock" id="squadLock"><svg class="sh-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.3-10.5 6.2 6.2L4 20zM11.5 9l.7-3M15 11.5l3-.7M13.8 5.7 15.3 4M18 8.5l1.7-1.7M18.8 13.2l2 .5"/></svg><span id="squadLockTxt">Invite friends and save, from $833 a seat</span></button>
     <p class="fineprint" style="margin-top:12px">Per-seat season prices from the published 2027-28 Standard range ($833 to $2,258). The group rate is separate from the sweepstakes and grants no entries.</p>
@@ -2497,7 +2497,7 @@ function bogoStartClock(){/* countdown retired with the member offer */}
 
 /* ---------------- SQUAD (group of 4, 20% off 6mo prepaid) ---------------- */
 const SEAT=833; // published Standard season, per seat (from, while supply lasts)
-const S1=833, S2=795, S3=760; // solo, +1 friend, +2 friends, per-seat season
+const S1=833, S2=820, S3=799; // solo, +1 friend, +2 friends, per-seat season
 function renderSquad(){
   const filled=state.seats.filter(Boolean).length; // seat 0 (you) is always on
   const seat=filled>=3?S3:filled>=2?S2:S1;

@@ -901,6 +901,14 @@
   body[data-theme="night"] .cmgr-status{background:#3A320D;border-color:#6E5F20;color:#FFE775}
   .cmgr-status i{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:cdBeat 1.6s ease-in-out infinite}
   .cmgr-views{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .dp-why{display:grid;gap:3px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .dp-r{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;font-weight:800;color:var(--muted);line-height:1.3}
+  .dp-r em{font-style:normal;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums}
+  body[data-theme="night"] .dp-r em{color:var(--cream)}
+  .dp-out{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .dp-out b{font-size:15px;font-weight:900;letter-spacing:-.02em}
+  .dp-out b.pos{color:var(--palm)} .dp-out b.neg{color:#E0453B}
+  .dp-out span{font-size:9.5px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
   .dpre{position:relative;font:inherit;text-align:left;background:var(--mist);border:1.5px solid var(--line);border-radius:13px;padding:10px 13px 10px 30px;cursor:pointer;transition:.16s}
   .dpre:hover{border-color:var(--teal)}
   .dpre b{display:block;font-size:13px;font-weight:900;letter-spacing:-.01em}
@@ -954,13 +962,23 @@
 
   /* sticky mini metrics nav */
   .mstick{position:sticky;top:59px;z-index:55;margin:2px 0 14px;padding:6px 0 8px;background:linear-gradient(var(--cream) 78%,transparent)}
-  .ms-in{display:grid;grid-template-columns:repeat(6,1fr);gap:0;background:linear-gradient(160deg,#06333B,#00505B 70%,#00727E);border:1px solid rgba(255,255,255,.14);border-radius:15px;box-shadow:0 10px 28px rgba(4,38,44,.35);overflow:hidden}
-  .msc{position:relative;padding:9px 12px 8px;border-right:1px solid rgba(255,255,255,.09)}
+  .ms-in{display:flex;align-items:stretch;background:linear-gradient(160deg,#06333B,#00505B 70%,#00727E);border:1px solid rgba(255,255,255,.14);border-radius:16px;box-shadow:0 10px 28px rgba(4,38,44,.35);overflow:hidden}
+  .ms-zone{display:flex;align-items:stretch}
+  .ms-arrow{display:grid;place-items:center;padding:0 12px;flex:none}
+  .ms-arrow span{font-size:8.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);white-space:nowrap;text-align:center;line-height:1.3}
+  .ms-arrow svg{width:20px;height:10px;display:block;margin:3px auto 0}
+  .ms-hd{position:absolute;top:6px;left:12px;font-size:7.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+  .msc.lead{background:rgba(255,255,255,.07)}
+  .msc.big .ms-v{font-size:20px}
+  .msc.gold .ms-v{color:var(--gold-lite)}
+  @media(max-width:1040px){.ms-arrow{padding:0 7px}.ms-arrow span{font-size:7.5px}}
+  .msc{position:relative;padding:10px 14px 9px;border-right:1px solid rgba(255,255,255,.09);min-width:0}
   .msc:last-child{border-right:0}
   .ms-l{font-size:8.5px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.62);display:flex;align-items:center;gap:4px;white-space:nowrap}
   .ms-v{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums;line-height:1.1;transition:transform .15s ease}
   .ms-v.neg{color:#FF9C93}
   .ms-v.tick{transform:scale(1.09)}
+  .ms-s{font-size:9px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;line-height:1.3}
   .ms-d{position:absolute;right:8px;top:7px;font-size:9px;font-weight:900;padding:1.5px 6px;border-radius:99px;opacity:0;transform:translateY(-3px);transition:opacity .2s,transform .2s;font-variant-numeric:tabular-nums}
   .ms-d.show{opacity:1;transform:none}
   .ms-d.up{background:rgba(58,190,130,.22);color:#7BF0BE}
@@ -970,9 +988,30 @@
   #glTip{position:fixed;z-index:300;max-width:270px;background:#06333B;color:#F3FAFB;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:11px 13px;font-size:12px;font-weight:600;line-height:1.55;box-shadow:0 14px 34px rgba(4,38,44,.45);opacity:0;pointer-events:none;transition:opacity .15s}
   #glTip.on{opacity:1}
   #glTip b{display:block;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
-  @media(max-width:900px){.ms-in{grid-template-columns:repeat(3,1fr)}.msc:nth-child(3){border-right:0}.msc:nth-child(-n+3){border-bottom:1px solid rgba(255,255,255,.09)}}
-  @media(max-width:480px){.ms-in{grid-template-columns:repeat(2,1fr)}.msc{border-right:1px solid rgba(255,255,255,.09)}.msc:nth-child(2n){border-right:0}.msc:nth-child(-n+4){border-bottom:1px solid rgba(255,255,255,.09)}}
+  @media(max-width:900px){.ms-in{flex-wrap:wrap}.ms-zone{flex:1 1 100%}.ms-arrow{flex:1 1 100%;padding:6px 0;border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09)}.ms-arrow svg{transform:rotate(90deg);margin:2px auto 0}.msc{flex:1}}
   @media(prefers-reduced-motion:reduce){.ms-v,.ms-d{transition:none}}
+
+  /* programme economics */
+  .pgstats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:14px 0 4px}
+  .pgstats div{background:var(--mist);border:1px solid var(--line);border-radius:13px;padding:12px 13px}
+  .pgstats b{display:block;font-size:21px;font-weight:900;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .pgstats b.neg{color:#E0453B}
+  .pgstats b.pos{color:var(--palm)}
+  .pgstats span{display:block;font-size:10.5px;font-weight:800;color:var(--muted);margin-top:3px;line-height:1.35}
+  .pgchart{width:100%;height:auto;margin:14px 0 18px;display:block}
+  .pg-bar{transition:height .3s ease,y .3s ease}
+  .pg-line{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .pg-dot{fill:var(--gold);stroke:var(--paper);stroke-width:2}
+  .pg-ax{stroke:var(--line);stroke-width:1}
+  .pg-zero{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 4;opacity:.6}
+  .pg-lab{font-size:11px;font-weight:800;fill:var(--muted)}
+  .pg-val{font-size:11px;font-weight:900;fill:var(--ink)}
+  body[data-theme="night"] .pg-val{fill:var(--cream)}
+  .pg-cross{font-size:10px;font-weight:900;fill:var(--palm)}
+  .pg-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;font-weight:800;color:var(--muted)}
+  .pg-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  tr.crossrow{background:var(--palm-soft)}
+  @media(max-width:760px){.pgstats{grid-template-columns:repeat(2,1fr)}}
 
   /* metric cards */
   .mcards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
@@ -1860,11 +1899,7 @@
         <span class="cmgr-eyebrow">Campaign manager</span>
         <span class="cmgr-status"><i></i>Forecast draft, nothing is spending</span>
       </div>
-      <div class="cmgr-views" role="group" aria-label="Saved campaign presets">
-        <button class="dpre" data-pre="cons"><span class="dp-dot"></span><b>Conservative floor</b><span class="dp-sub">12 stores &middot; low conversion</span></button>
-        <button class="dpre on" data-pre="exp"><span class="dp-dot"></span><b>12-Store Test</b><span class="dp-sub">$1k per store per month &middot; recommended</span></button>
-        <button class="dpre" data-pre="agg"><span class="dp-dot"></span><b>Regional scale-up</b><span class="dp-sub">36 stores &middot; proven creative</span></button>
-      </div>
+      <div class="cmgr-views" id="cmgrViews" role="group" aria-label="Saved campaign presets"></div>
       <div class="cmgr-chips" id="cmgrChips" aria-label="Applied campaign settings"></div>
     </div>
     <div class="dbar">
@@ -2039,9 +2074,25 @@
       </div>
     </div>
 
-    <!-- ============ 5 · DECISION INTELLIGENCE ============ -->
+    <!-- ============ 5 · PROGRAMME ECONOMICS ============ -->
     <div class="dsec">
-      <div class="dsec-h"><span class="dsec-n">5</span><h3>Decision intelligence</h3><span class="dsec-sub">What the model says to do next</span></div>
+      <div class="dsec-h"><span class="dsec-n">5</span><h3>Programme economics</h3><span class="dsec-sub">One flight versus a campaign that repeats</span></div>
+      <div class="panel">
+        <div class="panel-h"><h3>Launch cadence</h3><span class="panel-tag" id="pgTag">Cumulative</span></div>
+        <p class="panel-sub">A single flight charges the entire media budget against one cohort and stops. A real programme relaunches to the list it already built, at no additional media cost. Launch one buys the audience. Every launch after it markets to that audience for free, which is where a conservative case turns positive.</p>
+        <div class="pgstats" id="pgStats"></div>
+        <svg class="pgchart" id="pgChart" viewBox="0 0 900 280" role="img" aria-label="Net contribution per launch and cumulative programme contribution"></svg>
+        <div class="tblwrap"><table class="cohort"><thead><tr>
+          <th>Launch</th><th class="num">Month</th><th class="num">Impressions</th><th class="num">Paid entries</th>
+          <th class="num">Owned entries</th><th class="num">Media</th><th class="num">Net</th><th class="num">Cumulative</th>
+        </tr></thead><tbody id="pgRows"></tbody></table></div>
+        <div class="assump" id="pgNote"></div>
+      </div>
+    </div>
+
+    <!-- ============ 6 · DECISION INTELLIGENCE ============ -->
+    <div class="dsec">
+      <div class="dsec-h"><span class="dsec-n">6</span><h3>Decision intelligence</h3><span class="dsec-sub">What the model says to do next</span></div>
       <div class="verdict" id="verdict"></div>
       <div class="dgrid2" style="margin-top:16px">
         <div class="panel">
@@ -3183,6 +3234,7 @@ var DEFAULTS={
   /* D. retention */
   repeat90:30, repeatValue:24, repeatOrders:2.0, cateringLead:1.5, cateringConv:10, cateringValue:425,
   /* structural */
+  launches:4, launchGap:3, listReach:58, listLift:1.9, listRetain:90,
   scaleIdx:1, horizon:12,
   curve:defaultCurve(18,6),
   alloc:{paid:40, creator:20, lsm:15, retention:15, reserve:10}
@@ -3312,6 +3364,58 @@ function calculateModel(a){
   R.totalContribution= R.months[Math.min(23,11)].cumContribution;   /* 12-month contribution */
   R.contributionAtHorizon = R.atHorizon.cumContribution;
   R.romsRatio        = a.mediaBudget>0 ? R.totalContribution/a.mediaBudget : 0;
+
+  /* ---- program economics across repeated launches ----
+     One flight charges the whole media budget against one cohort. A real programme
+     relaunches to the list it already built, at no media cost. */
+  R.launchCost      = R.mediaBudget + R.prizeEconomicCost;
+  R.grossContribution = R.totalContribution + R.launchCost;      /* value created before campaign cost */
+  R.grossPerEntry   = R.entries>0 ? R.grossContribution/R.entries : 0;
+  /* a returning list member already had their repeat and catering value counted at first entry.
+     Only the incremental card purchase is credited again, so nothing is double counted. */
+  R.grossPerEntryOwned = R.entries>0 ? (R.grossContribution - R.repeatContribution - R.cateringContribution)/R.entries : 0;
+  R.optedPerLaunch  = R.entries * EMAIL_OPTIN;
+  R.launchList=[];
+  var listSize=0, cum=0, cross=0;
+  for(var L=0; L<a.launches; L++){
+    /* list fatigue: nobody buys a $200 card every single launch */
+    var reach        = a.listReach/100 * Math.pow(0.82, L);
+    var ownedEntries = Math.min(listSize*reach, listSize*0.7);
+    var gross        = R.entries*R.grossPerEntry + ownedEntries*a.listLift*R.grossPerEntryOwned;
+    var net          = gross - R.launchCost;
+    cum += net;
+    if(!cross && cum>0) cross = L+1;
+    R.launchList.push({
+      n:L+1,
+      month:L*a.launchGap,
+      paidEntries:R.entries,
+      ownedEntries:ownedEntries,
+      ownedValue:ownedEntries*a.listLift*R.grossPerEntryOwned,
+      ownedList:listSize,
+      impressions:R.impressions,
+      media:R.mediaBudget,
+      gross:gross,
+      net:net,
+      cum:cum,
+      cpl: (R.entries+ownedEntries)>0 ? R.mediaBudget/(R.entries+ownedEntries) : 0
+    });
+    listSize = listSize*(a.listRetain/100) + R.optedPerLaunch;
+  }
+  /* top-line revenue the campaign generates: card cash, overspend, repeat orders, catering */
+  R.revenuePerEntry      = R.entries>0 ? (R.cashCollected + R.expectedRedeemed*a.overspend/100 + R.repeatRevenue + R.cateringRevenue)/R.entries : 0;
+  R.revenuePerEntryOwned = R.entries>0 ? (R.cashCollected + R.expectedRedeemed*a.overspend/100)/R.entries : 0;
+  R.programRevenue = 0;
+  R.launchList.forEach(function(l){
+    l.revenue = R.entries*R.revenuePerEntry + l.ownedEntries*a.listLift*R.revenuePerEntryOwned;
+    R.programRevenue += l.revenue;
+  });
+  R.programNet     = cum;
+  R.programMedia   = R.mediaBudget * a.launches;
+  R.programImpressions = R.impressions * a.launches;
+  R.programList    = listSize;
+  R.programRoms    = R.programMedia>0 ? R.programNet/R.programMedia : 0;
+  R.crossLaunch    = cross;
+  R.programMonths  = (a.launches-1)*a.launchGap + 12;
 
   R.paybackMonth = null;
   for(i=0;i<R.months.length;i++){ if(R.months[i].cumContribution>=0){ R.paybackMonth=i+1; break; } }
@@ -3541,6 +3645,11 @@ var CONTROLS=[
  ]},
  {g:'B. Acquisition', ic:'\u{1F4E3}', items:[
   {k:'adPerStoreMonth',l:'Ad spend per store per month', min:0,max:10000,step:50, f:function(v){return '$'+num(v);}, x:'Geo-radius buy around each restaurant. Total media is this figure times the store count times the campaign length, so the budget scales with the rollout instead of being a lump sum.', b:'prop'},
+  {k:'launches',      l:'Launches in the programme', min:1,max:8,step:1, f:function(v){return v+(v===1?' launch':' launches');}, x:'How many times this campaign runs. Launch one buys the list. Every launch after it also markets to the list already built, at no extra media cost.', b:'prop'},
+  {k:'launchGap',     l:'Months between launches', min:1,max:6,step:1, f:function(v){return v+' mo'}, x:'Cadence between campaign launches.', b:'prop'},
+  {k:'listReach',     l:'Owned list that re-engages', min:15,max:85,step:1, f:function(v){return v+'%'}, x:'Share of the accumulated opted-in list that enters again on a later launch. Costs no media.', b:'ind'},
+  {k:'listLift',      l:'Owned list value multiplier', min:1,max:3.5,step:.1, f:function(v){return v.toFixed(1)+'\u00d7'}, x:'A returning entrant already knows the brand, has redeemed a code before, and converts to a gift card at a higher rate than cold traffic.', b:'ind'},
+  {k:'listRetain',    l:'List retained between launches', min:60,max:98,step:1, f:function(v){return v+'%'}, x:'Contacts still subscribed and deliverable at the next launch, after unsubscribes and bounces.', b:'ind'},
   {k:'campaignMonths',l:'Campaign length',            min:1,max:12,step:1, f:function(v){return v+(v===1?' month':' months');}, x:'How many months the radius buy runs. Drives total media and the quarter you are closing.', b:'prop'},
   {k:'ctaLift',       l:'Call-to-action performance',  min:-30,max:60,step:1, f:function(v){return (v>0?'+':'')+v+'% vs control';}, x:'Models a stronger or weaker entry CTA as a lift on entry conversion. Zero is the current control.', b:'prop'},
   {k:'winnersPerMonth',l:'Winners per month',          min:1,max:10,step:1,   f:function(v){return v+(v===1?' winner':' winners');}, x:'How many names are drawn each month. Three is the proposed cadence.', b:'prop'},
@@ -3630,8 +3739,11 @@ function jumpToCtl(k){
   var s=document.getElementById('s_'+k); if(s) setTimeout(function(){ s.focus({preventScroll:true}); },420);
 }
 var GLOSS={
+ spend:{t:'Ad spend',d:'Total paid media across every launch in the programme. Each launch buys the same geo-radius reach around each store.'},
+ window:{t:'Programme window',d:'From the first launch to twelve months after the last one, so every cohort is followed for a full year of redemption and repeat.'},
+ rev:{t:'New revenue',d:'Top-line the campaign generates: gift-card purchases, the spend customers add above the card value, repeat orders, and catering. Card cash is collected up front and recognised as the card is redeemed.'},
  cash:{t:'Cash collected',d:'Money customers paid for gift cards up front. It is not revenue yet. It becomes revenue as the cards are redeemed for food.'},
- contrib:{t:'Contribution',d:'Modeled 12-month profit after food costs, fees, prize cards, fulfilment, and the full media budget.'},
+ contrib:{t:'Contribution',d:'What is left after food cost, payment fees, prize cards, bonus fulfilment, and the whole media budget across the programme. This is the number that decides whether it is worth running.'},
  roas:{t:'Cash ROAS',d:'Gift-card cash collected divided by ad spend. This is the Meta-style read. The stricter number is the contribution return below it.'},
  cac:{t:'CAC',d:'Cost to acquire one new customer: media spend divided by new-to-file gift-card buyers.'},
  cpl:{t:'Cost per lead',d:'Media spend divided by entries. Every entry is a permissioned contact with a stated favorite plate.'},
@@ -3658,30 +3770,96 @@ var GLOSS={
   document.addEventListener('scroll',hide,true);
 })();
 var __msPrev=null;
+function drawProgramme(R){
+  var stats=document.getElementById('pgStats'); if(!stats)return;
+  var L=R.launchList, n=L.length;
+  var pos=R.programNet>=0;
+  stats.innerHTML=
+   '<div><b class="'+(pos?'pos':'neg')+'">'+money(R.programNet)+'</b><span>Programme contribution across '+n+' launch'+(n===1?'':'es')+'</span></div>'+
+   '<div><b>'+(R.crossLaunch? 'Launch '+R.crossLaunch : 'Not inside '+n)+'</b><span>Where cumulative contribution turns positive</span></div>'+
+   '<div><b>'+xmul(R.programRoms)+'</b><span>Return on '+money(R.programMedia)+' of total media</span></div>'+
+   '<div><b>'+num(Math.round(R.programList))+'</b><span>Opted-in contacts owned at the end, '+num(Math.round(R.programImpressions))+' impressions bought</span></div>';
+
+  var W=900,H=280,pad={l:64,r:20,t:18,b:40}, iw=W-pad.l-pad.r, ih=H-pad.t-pad.b;
+  var vals=[]; L.forEach(function(l){vals.push(l.net,l.cum);}); vals.push(0);
+  var mx=Math.max.apply(null,vals), mn=Math.min.apply(null,vals);
+  if(mx===mn){mx=mx+1;mn=mn-1;}
+  var padr=(mx-mn)*0.12; mx+=padr; mn-=padr;
+  var y=function(v){ return pad.t+ih-((v-mn)/(mx-mn))*ih; };
+  var bw=iw/n, g='';
+  for(var i=0;i<=3;i++){ var yy=pad.t+ih*i/3; g+='<line class="pg-ax" x1="'+pad.l+'" y1="'+yy+'" x2="'+(W-pad.r)+'" y2="'+yy+'"/>'+
+    '<text class="pg-lab" x="'+(pad.l-8)+'" y="'+(yy+4)+'" text-anchor="end">'+money(mx-(mx-mn)*i/3)+'</text>'; }
+  g+='<line class="pg-zero" x1="'+pad.l+'" y1="'+y(0)+'" x2="'+(W-pad.r)+'" y2="'+y(0)+'"/>';
+  var pts=[];
+  L.forEach(function(l,i){
+    var cx=pad.l+bw*i+bw/2, top=y(Math.max(0,l.net)), bot=y(Math.min(0,l.net));
+    g+='<rect class="pg-bar" x="'+(cx-bw*0.3)+'" y="'+top+'" width="'+(bw*0.6)+'" height="'+Math.max(1,bot-top)+'" rx="4" fill="'+(l.net>=0?'#0F8A6B':'#E0453B')+'" opacity=".85"/>';
+    g+='<text class="pg-lab" x="'+cx+'" y="'+(H-16)+'" text-anchor="middle">Launch '+l.n+'</text>';
+    g+='<text class="pg-lab" x="'+cx+'" y="'+(H-4)+'" text-anchor="middle" opacity=".7">month '+l.month+'</text>';
+    pts.push([cx,y(l.cum)]);
+    if(R.crossLaunch===l.n) g+='<line class="pg-zero" x1="'+cx+'" y1="'+pad.t+'" x2="'+cx+'" y2="'+(pad.t+ih)+'" opacity=".35"/>'+
+      '<text class="pg-cross" x="'+cx+'" y="'+(pad.t+11)+'" text-anchor="middle">turns positive here</text>';
+  });
+  g+='<polyline class="pg-line" points="'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1);}).join(' ')+'"/>';
+  pts.forEach(function(p,i){
+    var barTop=y(Math.max(0,L[i].net));
+    /* keep the cumulative label clear of the bar it would otherwise sit inside */
+    var ly = (p[1]-14 < barTop+4 && L[i].net>0) ? p[1]+20 : p[1]-13;
+    g+='<circle class="pg-dot" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="5"/>'+
+      '<text class="pg-val" x="'+p[0].toFixed(1)+'" y="'+ly.toFixed(1)+'" text-anchor="middle">'+money(L[i].cum)+'</text>';
+  });
+  document.getElementById('pgChart').innerHTML=g;
+
+  document.getElementById('pgRows').innerHTML=L.map(function(l){
+    return '<tr'+(R.crossLaunch===l.n?' class="crossrow"':'')+'><td><b>Launch '+l.n+'</b></td><td class="num">'+l.month+'</td>'+
+      '<td class="num">'+num(Math.round(l.impressions))+'</td>'+
+      '<td class="num">'+num(Math.round(l.paidEntries))+'</td>'+
+      '<td class="num">'+(l.ownedEntries>0? num(Math.round(l.ownedEntries)) : '&mdash;')+'</td>'+
+      '<td class="num">'+money(l.media)+'</td>'+
+      '<td class="num" style="color:'+(l.net>=0?'var(--palm)':'#E0453B')+'"><b>'+money(l.net)+'</b></td>'+
+      '<td class="num"><b>'+money(l.cum)+'</b></td></tr>';
+  }).join('');
+
+  document.getElementById('pgTag').textContent=n+' launches, '+assumptions.launchGap+' months apart';
+  document.getElementById('pgNote').innerHTML='<b>How the repeat launches are counted</b><p>Every launch buys the same '+
+   money(R.mediaBudget)+' of paid reach, so media cost never falls. What changes is that each launch also reaches '+
+   pct(assumptions.listReach,0)+' of the opted-in list built so far, at no media cost, and those returning entrants convert to a gift card at '+
+   assumptions.listLift.toFixed(1)+' times the cold rate because they already know the offer. Returning contacts are credited only with the incremental card purchase, not with repeat and catering value that was already counted the first time they entered, so no customer is counted twice. Re-engagement decays 18% per launch to reflect fatigue, and no contact is assumed to re-enter more than once in a launch.</p>';
+}
 function renderStick(R){
   var host=document.getElementById('msIn'); if(!host)return;
+  var months=R.programMonths;
   var items=[
-    {k:'cash',   l:'Cash', v:money(R.cashCollected), raw:R.cashCollected, f:money},
-    {k:'contrib',l:'Contribution', v:money(R.totalContribution), raw:R.totalContribution, f:money, neg:R.totalContribution<0},
-    {k:'roas',   l:'Cash ROAS', v:xmul(R.cashRoas), raw:R.cashRoas, f:xmul},
-    {k:'cac',    l:'CAC', v:moneyFull(R.newCac), raw:R.newCac, f:moneyFull, invert:true},
-    {k:'cpl',    l:'Cost/lead', v:'$'+R.cpl.toFixed(2), raw:R.cpl, f:function(v){return '$'+v.toFixed(2);}, invert:true},
-    {k:'ctr',    l:'CTR', v:R.ctr.toFixed(2)+'%', raw:R.ctr, f:function(v){return v.toFixed(2)+'%';}}
+    {zone:'spend', k:'spend', l:'Ad spend', v:money(R.programMedia), raw:R.programMedia,
+     f:money, sub:R.stores+' stores &middot; '+assumptions.launches+' launch'+(assumptions.launches===1?'':'es'), cls:'lead big', invert:true},
+    {zone:'spend', k:'window', l:'Over', v:months+' months', raw:months,
+     f:function(v){return v+' mo';}, sub:'launches '+assumptions.launchGap+' months apart', cls:'lead'},
+    {zone:'out', k:'rev', l:'New revenue', v:money(R.programRevenue), raw:R.programRevenue, f:money, sub:'cards, overspend, repeat, catering', cls:'big gold'},
+    {zone:'out', k:'contrib', l:'Contribution', v:money(R.programNet), raw:R.programNet, f:money,
+     sub:R.crossLaunch? 'positive from launch '+R.crossLaunch : 'negative across the programme', cls:'big', neg:R.programNet<0},
+    {zone:'out', k:'roas', l:'Return', v:xmul(R.programRoms), raw:R.programRoms, f:xmul, sub:'contribution per $1 of media'},
+    {zone:'out', k:'cac', l:'Cost to acquire', v:moneyFull(R.newCac), raw:R.newCac, f:moneyFull, sub:'per new customer', invert:true}
   ];
-  if(!host.dataset.built){
-    host.innerHTML=items.map(function(it,i){
-      return '<div class="msc"><span class="ms-l"><span class="gl" data-gl="'+it.k+'" tabindex="0">'+it.l+'</span></span>'+
-        '<div class="ms-v" id="msv'+i+'"></div><span class="ms-d" id="msd'+i+'"></span></div>';
-    }).join('');
-    host.dataset.built='1';
+  if(!host.dataset.built2){
+    var sp='', ou='';
+    items.forEach(function(it,i){
+      var cell='<div class="msc '+(it.cls||'')+'"><span class="ms-l"><span class="gl" data-gl="'+it.k+'" tabindex="0">'+it.l+'</span></span>'+
+        '<div class="ms-v" id="msv'+i+'"></div><div class="ms-s" id="mss'+i+'"></div><span class="ms-d" id="msd'+i+'"></span></div>';
+      if(it.zone==='spend') sp+=cell; else ou+=cell;
+    });
+    host.innerHTML='<div class="ms-zone">'+sp+'</div>'+
+      '<div class="ms-arrow"><span>generates</span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M0 5h15M11 1l5 4-5 4" fill="none" stroke="#FFD400" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'+
+      '<div class="ms-zone">'+ou+'</div>';
+    host.dataset.built2='1';
   }
   items.forEach(function(it,i){
-    var v=document.getElementById('msv'+i), d=document.getElementById('msd'+i);
+    var v=document.getElementById('msv'+i), d=document.getElementById('msd'+i), sb=document.getElementById('mss'+i);
+    if(sb) sb.innerHTML=it.sub||'';
     if(v.textContent!==it.v){
       v.textContent=it.v;
       v.classList.toggle('neg',!!it.neg);
       v.classList.remove('tick'); void v.offsetWidth; v.classList.add('tick');
-      if(__msPrev){
+      if(__msPrev && __msPrev[i]!==undefined){
         var delta=it.raw-__msPrev[i];
         if(Math.abs(delta)>1e-6){
           var good=it.invert? delta<0 : delta>0;
@@ -3694,6 +3872,39 @@ function renderStick(R){
   });
   __msPrev=items.map(function(it){return it.raw;});
 }
+var VIEWS=[
+ {k:'cons', n:'Conservative floor',  d:'If everything lands at the low end'},
+ {k:'exp',  n:'12-Store Test',       d:'The flight I would actually launch'},
+ {k:'agg',  n:'Regional scale-up',   d:'After the test proves the creative'}
+];
+function presetAssumptions(k){
+  var base=cloneA(DEFAULTS), pr=PRESETS[k]||{};
+  Object.keys(pr).forEach(function(x){ base[x]=pr[x]; });
+  base.curve=defaultCurve(base.monthOne,base.monthsToFull);
+  return base;
+}
+function renderViews(){
+  var host=document.getElementById('cmgrViews'); if(!host)return;
+  host.innerHTML=VIEWS.map(function(v){
+    var a=presetAssumptions(v.k), M=calculateModel(a);
+    var pos=M.programNet>=0;
+    return '<button class="dpre'+(VIEW_ACTIVE===v.k?' on':'')+'" data-pre="'+v.k+'" type="button">'+
+      '<span class="dp-dot"></span><b>'+v.n+'</b><span class="dp-sub">'+v.d+'</span>'+
+      '<span class="dp-why">'+
+        '<span class="dp-r">Stores<em>'+M.stores+'</em></span>'+
+        '<span class="dp-r">Cost per click<em>$'+a.cplv.toFixed(2)+'</em></span>'+
+        '<span class="dp-r">Entry conversion<em>'+a.entryConv+'%</em></span>'+
+        '<span class="dp-r">Entrant to card<em>'+a.entrantToCard.toFixed(1)+'%</em></span>'+
+      '</span>'+
+      '<span class="dp-out"><b class="'+(pos?'pos':'neg')+'">'+money(M.programNet)+'</b><span>'+
+        (M.crossLaunch? 'positive at launch '+M.crossLaunch : 'never turns positive')+'</span></span>'+
+    '</button>';
+  }).join('');
+  Array.prototype.forEach.call(host.querySelectorAll('.dpre'),function(b){
+    b.addEventListener('click',function(){ applyPreset(b.getAttribute('data-pre')); });
+  });
+}
+var VIEW_ACTIVE='exp';
 function renderChips(R){
   var el=document.getElementById('cmgrChips'); if(!el)return;
   var chips=[
@@ -3762,7 +3973,9 @@ function renderCards(R){
     info:'Cash received at the point of sale. It is offset by a stored-value liability and is not recognised revenue until the card is redeemed.'},
    {l:'Outstanding stored value', v:money(R.outstandingValue), s:'at month '+assumptions.horizon+' of '+money(R.storedValueIssued)+' issued', tag:'Liability',
     info:'Unredeemed customer stored value still owed as food. It stays a liability until redeemed or recognised through a supportable breakage method.'},
-   {l:'Incremental contribution', v:money(R.totalContribution), s:'12-month, after media and fulfilment', tag:R.totalContribution>=0?'Positive':'Negative',
+   {l:'Incremental contribution', v:money(R.totalContribution),
+    s:'one flight, 12-month'+(R.programNet>R.totalContribution? ' &middot; '+money(R.programNet)+' across '+assumptions.launches+' launches':''),
+    tag:R.totalContribution>=0?'Positive':(R.programNet>0?'Positive by launch '+R.crossLaunch:'Negative'),
     info:'Recognised revenue on redemption and overspend, plus repeat and catering, plus supportable breakage, less variable cost, bonus fulfilment, fees and media.'},
    {l:'Customers acquired', v:num(R.newCustomers), s:num(R.cardBuyers)+' buyers at '+moneyFull(R.newCac)+' each, '+(assumptions.ctaLift===0?'at the control call-to-action':'on a '+(assumptions.ctaLift>0?'+':'')+assumptions.ctaLift+'% call-to-action'), tag:'Identified',
     info:'Newly identified customers who purchase a card, at the media spend and call-to-action performance set in the investment band above. Existing customers who buy are counted separately.'},
@@ -4083,8 +4296,10 @@ function drawFunding(R){
 function drawDecision(R){
   var sens=sensitivity(assumptions), bev=breakEven(assumptions);
   var roms=R.romsRatio, decision, cls, why;
-  if(R.totalContribution<0){ decision='Pause and revise'; cls='pause';
-    why='Modeled twelve-month contribution is negative at these assumptions. The offer or the acquisition cost has to change before any spend is committed.'; }
+  if(R.totalContribution<0 && R.programNet>0 && R.crossLaunch){ decision='Commit to the programme, not one flight'; cls='keep';
+    why='A single flight is '+money(R.totalContribution)+' at these assumptions, because one launch pays for the whole audience and stops. Run it as a repeating campaign and the cumulative position turns positive at launch '+R.crossLaunch+', reaching '+money(R.programNet)+' across '+assumptions.launches+' launches. The list built in launch one is the asset that makes launch two cheap.'; }
+  else if(R.totalContribution<0 && R.programNet<=0){ decision='Pause and revise'; cls='pause';
+    why='Contribution stays negative even across '+assumptions.launches+' launches. The offer or the acquisition cost has to change before any spend is committed.'; }
   else if(roms>=2.5 && R.paybackMonth && R.paybackMonth<=6){ decision='Scale'; cls='scale';
     why='Contribution clears media by '+xmul(roms)+' and the program pays back in month '+R.paybackMonth+'. The structure holds well enough to widen the rollout.'; }
   else if(roms>=1.2){ decision='Continue testing'; cls='';
@@ -4251,7 +4466,7 @@ function refresh(fast){
   requestAnimationFrame(function(){
     rafPending=false;
     var R=calculateModel(assumptions); lastR=R;
-    renderStick(R); renderChips(R); renderSpend(R); renderCards(R); drawScale(R); drawAlloc(R); drawChart(R); drawWaterfall(R);
+    renderViews(); renderStick(R); renderChips(R); renderSpend(R); renderCards(R); drawProgramme(R); drawScale(R); drawAlloc(R); drawChart(R); drawWaterfall(R);
     drawFunnel(R); drawCohorts(R); drawFunding(R); drawMedia(R); drawDormancy(R); drawMeals(R); drawQuarter(R); drawDecision(R);
     if(!fast) drawCurve(R); else {
       document.getElementById('curveSum').textContent='Curve total '+pct(R.curveSum,0)+(R.curveSum<99.5?' · '+pct(100-R.curveSum,0)+' still outstanding at month 12':'');
@@ -4268,7 +4483,7 @@ function refresh(fast){
 
 /* ================= PRESETS ================= */
 var PRESETS={
- cons:{scaleIdx:1, entrantToCard:2.4, cplv:1.85, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
+ cons:{scaleIdx:1, entrantToCard:2.9, cplv:1.55, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
        repeat90:18, repeatOrders:1.6, organicMult:1.05, payFee:5, bonusRedeem:94, newShare:55, cateringConv:7},
  exp:{scaleIdx:1},
  agg:{scaleIdx:2, entrantToCard:5.8, cplv:0.95, entryConv:40, cardRedeem:88, breakage:12, overspend:24,
@@ -4282,6 +4497,7 @@ function applyPreset(k){
   base.adPerStoreMonth=assumptions.adPerStoreMonth; base.campaignMonths=assumptions.campaignMonths;
   base.curve=defaultCurve(base.monthOne,base.monthsToFull);
   assumptions=base;
+  VIEW_ACTIVE=k;
   document.querySelectorAll('.dpre').forEach(function(b){ b.classList.toggle('on',b.dataset.pre===k); });
   document.querySelectorAll('.cpre').forEach(function(b){ b.classList.toggle('on',b.dataset.curve==='balanced'); });
   syncControls(); document.getElementById('scaleRange').value=assumptions.scaleIdx; refresh();

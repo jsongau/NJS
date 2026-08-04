@@ -34,6 +34,15 @@ Built the Ono Hawaiian BBQ Marketing Manager work sample end to end (v1 through 
 - Group calculator pays from the gift card, v21: $200 card plus $30 bonus equals a $230 stack, teal and gold balance bar splits tonight vs left on card, caption counts plate lunches remaining.
 - Gift-card pay became an opt-in toggle, v22: off shows a one-line tease with the extra saving; on shows the balance bar, effective cash cost, $9.43 a plate at 12 people, stacked $84.78 total saved, and a Buy the $200 gift card CTA. Offer-card buy button shortened to one line.
 
+## Programme economics, v25 to v26
+- Root cause of the negative conservative case: a single flight charged the entire media budget against one cohort and stopped. Real programmes relaunch to the list they built.
+- Added launch cadence: N launches, configurable gap, owned-list re-engagement rate, owned value multiplier, list retention. Each launch buys the same paid reach; the owned list is incremental and free.
+- Anti-double-count: returning list members are credited only the incremental card purchase and overspend, never repeat or catering value already counted at first entry. Re-engagement decays 18% per launch; owned entries capped at 70% of list.
+- Conservative recalibrated to defensible local-restaurant Meta rates ($1.55 CPC, 2.9% entrant-to-card, was $1.85 and 2.4%). Turns positive at launch 2, $50k across 4 launches.
+- Verdict now reads "Commit to the programme, not one flight" when a single flight is negative but the programme is positive; the contribution card shows both reads.
+- Preset cards render each views own model run: stores, CPC, entry conversion, entrant-to-card, and programme outcome with crossover launch.
+- Sticky bar rebuilt as spend -> generates -> returns, all programme-wide, with new-revenue top line (cards, overspend, repeat, catering).
+
 ## Next
 - `scenarios` table (Supabase): persist dashboard assumption sets to shareable URLs (`/ono?s=id`) and log recruiter slider interaction; same schema doubles as A/B assignment store. Schema + API first, then UI.
 - Saturation curve so CAC rises with spend density in a fixed radius (base funnel is linear in media today).

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-08-03
+- Added **LA Galaxy** as a Paid Media work sample at `/galaxy`: a season-ticket sweepstakes funnel plus two creator stores (`/galaxy/ava` "Ava's Matchday Edit", code AVA10; `/galaxy/lex` "The Section with Lex", code LEX10). Reskin of the pilates funnel with LA Galaxy navy/gold and the real crest, dark theme default, four matchday videos wired. Prize is the prime West Sideline pair: two 2027-28 memberships, $4,516 value, the $2,258 seats, one for you and one for a friend; dropped the "One winner, two seats" line. Buy path is "skip the drawing, from $833", reconciled to live AXS Standard pricing $833 to $2,258. Value calculator rebuilt to compare only single West Sideline tickets vs the West Sideline season using a researched approx $120/match single estimate, with Best value flipping to the season at the approx 19-match crossover. Explorer tab-number contrast fixed to navy on gold; lock-in block now leads with seat certainty.
+
 ## 2026-07-20
 - Added **Boba Night** as project No. III with a "Midnight Pour" dessert reveal: the cup fills with brown-sugar tea, colorful tapioca pearls stack into a pile, a tinted lid drops on, then a candy-striped straw punches in. Synthesized open sequence (swell, pour, pearl plops, lid thunk, straw pop, sparkle). Copy points to finding good boba in a city you're in.
 - Gave **CoverCapy** its own "coverage concierge" reveal (`theme:'cc'`): a clean cyan high-tech slate with a tech grid, the shield mark drawing itself, a scan line sweep, and a verified badge with a pulse ring. Rewrote the copy to the verification angle — verify your insurance with a dentist so you find the right one without guesswork. "Clearer coverage is better care."

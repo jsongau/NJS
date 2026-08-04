@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ava’s Matchday Edit — an LA Galaxy supporter-creator store (concept by Nathan J. Song)</title>
+<meta name="description" content="Ava's edit of LA Galaxy matchday gear: the scarf, the home kit, flags, tickets for the crew and more. Code AVA10 for 10% off. A creator-store concept, not affiliated with the LA Galaxy.">
+<style>
+  :root{
+    /* Ava's store: ivory + navy + gold, serif editorial. Nathan's notes stay orange. */
+    --accent:#00245D; --accent-deep:#001A44;
+    --gold:#C99A00; --gold-lite:#E0A82A; --gold-deep:#8A6A00;
+    --grad-gold:linear-gradient(180deg,#013A7A,#00245D);
+    --orange:#E8503A; --orange-deep:#B8371F;
+    --ink:#0A1B34; --bone:#F6F4EC; --card:#ffffff; --line:#e4e1d6; --muted:#5a6576;
+    --sand:#ECE8DC; --mist:#F0EDE2; --good:#2f7d54;
+    --radius:6px; --shadow:0 18px 50px rgba(40,20,5,.10);
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bone);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+  img{max-width:100%;display:block}
+  button{font:inherit;cursor:pointer}
+  a{color:inherit;cursor:pointer}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:700;letter-spacing:-.01em}
+
+  .concept-bar{background:#141414;color:#e9e3d5;font-size:12px;letter-spacing:.02em;padding:8px 16px;text-align:center;line-height:1.5}
+  .concept-bar strong{color:var(--gold-lite)}
+
+  /* concept switch */
+  .meganav{background:var(--mist);color:var(--muted);border-bottom:1px solid var(--line)}
+  .mn-in{max-width:1060px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:11.5px}
+  .mn-badge{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:var(--ink)}
+  .mn-badge b{color:var(--accent-deep)}
+  .mn-badge .tag{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:2px 6px;border-radius:5px}
+  .mn-note{color:var(--muted)}
+  .mn-switch{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .mn-lab{font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .mn-seg{display:inline-flex;gap:4px}
+  .mn-seg a{font-size:11px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .mn-seg a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* announce */
+  .announce{background:var(--accent);color:#fff;text-align:center;font-size:12.5px;font-weight:700;letter-spacing:.02em;padding:9px 16px}
+  .announce b{background:#fff;color:var(--accent);border-radius:6px;padding:1px 7px}
+
+  /* header */
+  header.site{position:sticky;top:0;z-index:50;background:rgba(250,243,231,.95);backdrop-filter:blur(8px);color:var(--ink);border-bottom:1px solid var(--line)}
+  .hd{max-width:1060px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}
+  .logo{font-family:var(--serif);font-size:21px;font-weight:700;cursor:pointer;line-height:1;color:var(--ink);display:flex;flex-direction:column}
+  .logo span{color:var(--accent);font-style:italic}
+  .logo small{font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+  nav.main{margin-left:14px;display:flex;gap:4px}
+  nav.main button{background:none;border:0;color:var(--muted);font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:8px}
+  nav.main button:hover,nav.main button.on{color:#fff;background:var(--ink)}
+  nav.main .nav-sock{color:var(--accent-deep);display:inline-flex;align-items:center;gap:6px}
+  nav.main .nav-sock svg{width:16px;height:16px}
+  nav.main .nav-sock svg *{stroke:var(--accent)}
+  nav.main .nav-sock.on svg *{stroke:#fff}
+  .cartbtn{margin-left:auto;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 18px;font-weight:800;font-size:13.5px;display:inline-flex;align-items:center;gap:8px}
+  .cartbtn .n{background:var(--accent);color:#fff;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;font-size:11.5px}
+  .mobile-nav{display:none;gap:4px;padding:8px 14px;background:var(--card);overflow-x:auto;border-bottom:1px solid var(--line)}
+  .mobile-nav button{flex:0 0 auto;background:#fff;border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;padding:7px 12px;border-radius:999px}
+  .mobile-nav button.on{color:#fff;background:var(--ink);border-color:var(--ink)}
+  .mobile-nav .nav-sock{color:var(--accent-deep)}
+
+  /* views */
+  .view{display:none}.view.on{display:block;animation:fade .35s}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  /* hero */
+  .hero{background:linear-gradient(180deg,#FBFAF6,#EDEBE2);color:var(--ink);padding:78px 20px 66px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero::after{content:"";position:absolute;right:-120px;top:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,59,47,.08),transparent 68%)}
+  .hero .in{max-width:1060px;margin:0 auto;position:relative;z-index:1}
+  .hero .kick{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:16px}
+  .hero h1{font-size:clamp(36px,6vw,62px);line-height:1.06;max-width:16ch;font-weight:600}
+  .hero h1 .w{display:inline-block;opacity:0;transform:translateY(14px);animation:rise .5s forwards}
+  .hero h1 .em{color:var(--accent);font-style:italic}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .hero p{max-width:50ch;margin:20px 0 24px;font-size:17px;color:var(--muted)}
+  .cta{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:14px 28px;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.03em}
+  .cta:hover{background:var(--accent-deep)}
+  .codechip{display:inline-flex;align-items:center;gap:8px;margin-left:14px;border:1.5px dashed var(--accent);border-radius:999px;padding:9px 16px;font-weight:700;font-size:13.5px;color:var(--accent-deep)}
+  .codechip b{background:var(--accent);color:#fff;border-radius:6px;padding:2px 8px}
+
+  /* marquee */
+  .marquee{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:9px 0;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;border-top:3px solid var(--accent);border-bottom:3px solid var(--accent)}
+  .mq-track{display:inline-block;animation:mq 26s linear infinite}
+  .mq-track span{margin:0 26px}
+  @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* statbar */
+  .statbar{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:34px 20px}
+  .statbar .in{max-width:1060px;margin:0 auto;display:flex;gap:34px;flex-wrap:wrap;align-items:flex-end}
+  .statbar .st b{display:block;font-family:var(--serif);font-size:38px;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+  .statbar .st span{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .statbar .note{width:100%;font-size:11px;color:var(--muted);margin-top:6px}
+
+  /* sock/hero-product bar */
+  .sockbar{background:var(--accent);color:#fff}
+  .sockbar .in{max-width:1060px;margin:0 auto;padding:22px 20px;display:flex;align-items:center;gap:20px}
+  .sk-art{width:78px;height:78px;border-radius:14px;background:rgba(255,255,255,.14);display:grid;place-items:center;flex:none}
+  .sk-art svg{width:46px;height:46px}.sk-art svg *{stroke:#fff}
+  .sk-tx{flex:1}.sk-tx b{font-family:var(--serif);font-size:19px;display:block}.sk-tx span{font-size:14px;opacity:.94}
+  .sk-btn{background:#fff;color:var(--accent);border:0;border-radius:999px;padding:12px 22px;font-weight:800;font-size:14px;flex:none}
+
+  /* trust */
+  .trust{border-bottom:1px solid var(--line)}
+  .trust .in{max-width:1060px;margin:0 auto;padding:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .trust .t{font-size:13px;color:var(--muted);line-height:1.4}
+  .trust .t b{display:block;font-family:var(--serif);font-size:15px;color:var(--ink)}
+
+  /* blocks + product grid */
+  .block{padding:44px 0}
+  .bhead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:12px}
+  .bhead h2{font-size:26px}
+  .bhead a{font-size:13px;font-weight:700;color:var(--gold-deep);text-decoration:underline}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:.15s;cursor:pointer}
+  .pcard:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+  .pcard .pimg{aspect-ratio:1;background:var(--sand);display:grid;place-items:center;position:relative}
+  .pcard .pimg svg{width:52%;height:52%}.pcard .pimg svg *{stroke:var(--accent)}
+  .pcard .ptag{position:absolute;top:10px;left:10px;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--gold);color:#fff;padding:3px 8px;border-radius:5px}
+  .pcard .pb{padding:14px 15px 16px;display:flex;flex-direction:column;flex:1}
+  .pcard h3{font-size:16px;line-height:1.2;margin-bottom:5px}
+  .pcard .pn{font-size:12.5px;color:var(--muted);line-height:1.45;flex:1}
+  .pcard .prices{font-size:13px;margin-top:12px;color:var(--ink)}
+  .pcard .prices b{font-size:16px;color:var(--gold-deep)}
+  .pcard .addmini{margin-top:12px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px;font-weight:800;font-size:13px;width:100%}
+  .pcard .addmini:hover{background:var(--accent)}
+
+  /* story */
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;padding:26px 0}
+  .story.flip .st-art{order:2}
+  .st-art{aspect-ratio:4/3;background:var(--sand);border-radius:14px;display:grid;place-items:center}
+  .st-art svg{width:40%;height:40%}.st-art svg *{stroke:var(--accent)}
+  .st-txt .kick{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:8px}
+  .st-txt h3{font-size:25px;margin-bottom:12px;line-height:1.15}
+  .st-txt p{color:var(--muted);margin-bottom:10px;font-size:15.5px}
+
+  /* routine */
+  .routine{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:50px 0;margin-top:20px}
+  .routine h2{font-size:30px;color:var(--ink)}
+  .routine .sub{color:var(--muted);margin:8px 0 26px;font-size:15px}
+  .rsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .rstep{background:var(--bone);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .rstep .when{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep)}
+  .rstep h4{font-size:19px;color:var(--ink);margin:6px 0 8px}
+  .rstep p{font-size:14px;color:var(--muted);line-height:1.5}
+  .rstep .rlink{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;color:var(--accent-deep);text-decoration:underline}
+
+  /* reviews + econ */
+  .tstrip{padding:44px 0}
+  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .tcard .stars{color:var(--gold);letter-spacing:3px;margin-bottom:10px}
+  .tcard p{font-size:14.5px;line-height:1.55;margin-bottom:12px}
+  .tcard b{font-size:13px;color:var(--muted)}
+  .econ{padding:20px 0 48px}
+  .econ h2{font-size:26px;margin-bottom:20px}
+  .econ-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .etile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px}
+  .etile .big{font-family:var(--serif);font-size:40px;color:var(--accent);display:block;line-height:1}
+  .etile b{display:block;margin:10px 0 6px;font-size:16px;color:var(--ink)}
+  .etile p{font-size:13.5px;color:var(--muted);line-height:1.5}
+
+  /* newsletter */
+  .newsletter{background:var(--mist);text-align:center;padding:50px 20px;border-top:1px solid var(--line)}
+  .newsletter h3{font-size:28px}
+  .newsletter p{color:var(--muted);max-width:46ch;margin:10px auto 18px;font-size:15px}
+  .nl-row{display:flex;gap:8px;max-width:420px;margin:0 auto}
+  .nl-row input{flex:1;font:inherit;font-size:15px;padding:13px 15px;border:1px solid var(--line);border-radius:10px;background:#fff}
+  .nl-row button{background:var(--grad-gold);color:#fff;border:0;border-radius:10px;padding:13px 22px;font-weight:800}
+
+  /* shop */
+  .shophero{background:var(--card);border-bottom:1px solid var(--line);padding:40px 0 22px}
+  .shophero h1{font-size:38px;color:var(--ink)}
+  .shophero p{color:var(--muted);margin:8px 0 20px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:6px}
+  .tabs button{background:#fff;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700}
+  .tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .shopgrid{padding:34px 0 60px}
+
+  /* pdp */
+  .crumb{font-size:12.5px;color:var(--muted);padding:22px 0 0}
+  .crumb a{text-decoration:underline}
+  .pdp{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:20px 0 30px}
+  .gal-main{aspect-ratio:1;background:var(--sand);border-radius:16px;display:grid;place-items:center}
+  .gal-main svg{width:46%;height:46%}.gal-main svg *{stroke:var(--accent)}
+  .gal-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .gbadge{font-size:11px;font-weight:700;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted)}
+  .pd-tag{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep)}
+  .pd h1{font-size:32px;margin:8px 0 10px}
+  .pd .maya{font-style:italic;color:var(--muted);font-family:var(--serif);font-size:16px;border-left:2px solid var(--gold);padding-left:14px;margin-bottom:16px}
+  .benefits{list-style:none;margin-bottom:20px;display:grid;gap:9px}
+  .benefits li{font-size:14.5px;display:flex;gap:9px;align-items:flex-start}
+  .benefits li::before{content:"";width:18px;height:18px;flex:none;margin-top:1px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23DA271B' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12l5 5L20 6'/%3E%3C/svg%3E") no-repeat center}
+  .buybox{border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--card)}
+  .opt{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer}
+  .opt.on{border-color:var(--accent);background:rgba(255,59,47,.06)}
+  .opt .ol{display:flex;flex-direction:column;gap:3px}
+  .opt .ol b{font-size:15px}
+  .opt .ol span{font-size:12px;color:var(--muted)}
+  .opt .chip{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:5px;width:fit-content}
+  .opt .chip.pop{background:var(--gold);color:#fff}
+  .opt .chip.gift{background:var(--good);color:#fff}
+  .opt .op{font-family:var(--serif);font-size:20px;font-weight:700;white-space:nowrap}
+  .qtyrow{display:flex;align-items:center;gap:14px;margin:14px 0}
+  .qtyrow button{width:36px;height:36px;border:1px solid var(--line);background:var(--bone);border-radius:8px;font-size:18px}
+  .atc{width:100%;background:var(--grad-gold);color:#fff;border:0;border-radius:12px;padding:15px;font-weight:800;font-size:15.5px;text-transform:uppercase;letter-spacing:.03em}
+  .buybox .note{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.5}
+  .accs{margin-top:18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+  .accs b{color:var(--ink)}
+  .related{padding:20px 0 60px}
+  .related h3{font-size:22px;margin-bottom:16px}
+
+  /* sticky mobile atc */
+  .satc{display:none;position:fixed;bottom:0;left:0;right:0;z-index:45;background:#fff;color:var(--ink);padding:12px 16px;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(60,30,5,.1)}
+  .satc .sn b{display:block;font-size:14px}.satc .sn span{font-size:12px;color:var(--accent-deep)}
+  .satc button{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800}
+
+  /* cart drawer */
+  .overlay{position:fixed;inset:0;background:rgba(11,9,6,.5);z-index:80;display:none}
+  .overlay.on{display:block}
+  .drawer{position:fixed;top:0;right:-460px;width:min(430px,100%);height:100%;background:var(--bone);z-index:81;transition:right .3s;display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.2)}
+  .drawer.on{right:0}
+  .dr-head{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid var(--line)}
+  .dr-head b{font-family:var(--serif);font-size:20px}
+  .dr-x{background:none;border:0;font-size:18px;color:var(--muted)}
+  .dr-code{background:var(--mist);color:var(--gold-deep);font-size:12.5px;font-weight:700;padding:10px 20px;text-align:center}
+  .dr-code b{color:var(--ink)}
+  .ship-meter{padding:14px 20px 0;font-size:12.5px;color:var(--muted)}
+  .ship-meter .bar{height:6px;background:var(--sand);border-radius:999px;margin-top:6px;overflow:hidden}
+  .ship-meter .bar i{display:block;height:100%;background:var(--gold);transition:width .3s}
+  .dr-items{flex:1;overflow-y:auto;padding:14px 20px}
+  .ci{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .ci .ciimg{width:56px;height:56px;border-radius:10px;background:var(--sand);display:grid;place-items:center;flex:none}
+  .ci .ciimg svg{width:56%;height:56%}.ci .ciimg svg *{stroke:var(--accent)}
+  .ci .cinfo{flex:1}.ci .cinfo b{font-size:14px;display:block;line-height:1.25}
+  .ci .cinfo .cm{font-size:11.5px;color:var(--muted)}
+  .ci .cq{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .ci .cq button{width:24px;height:24px;border:1px solid var(--line);background:var(--bone);border-radius:6px;font-size:14px}
+  .ci .cp{font-weight:700;white-space:nowrap}
+  .earnbox{margin:14px 20px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:16px;font-size:13.5px;color:var(--ink)}
+  .earnbox b{color:var(--accent-deep)}
+  .earnbox .er{display:flex;justify-content:space-between;font-size:13px;margin-top:4px;color:var(--muted)}
+  .dr-math{padding:0 20px 8px;font-size:13.5px}
+  .dr-math .mr{display:flex;justify-content:space-between;padding:4px 0;color:var(--muted)}
+  .dr-math .mr.tot{color:var(--ink);font-weight:800;font-size:16px;border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
+  .dr-checkout{margin:8px 20px;background:var(--grad-gold);color:#fff;border:0;border-radius:12px;padding:15px;font-weight:800;font-size:15.5px;text-transform:uppercase;letter-spacing:.03em}
+  .dr-note{font-size:11px;color:var(--muted);padding:6px 20px 20px;line-height:1.5}
+  .dr-empty{padding:50px 20px;text-align:center;color:var(--muted)}
+
+  /* checkout modal */
+  .comodal{position:fixed;inset:0;background:rgba(11,9,6,.6);z-index:90;display:none;align-items:center;justify-content:center;padding:20px}
+  .comodal.on{display:flex}
+  .cobox{background:var(--bone);border-radius:18px;max-width:440px;width:100%;padding:30px;text-align:center}
+  .cobox .ok{width:64px;height:64px;margin:0 auto 14px}
+  .cobox h3{font-size:24px;margin-bottom:8px}
+  .cobox p{color:var(--muted);font-size:14.5px;margin-bottom:8px}
+  .cobox .rc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0;text-align:left;font-size:13.5px}
+  .cobox .rc .rr{display:flex;justify-content:space-between;padding:3px 0}
+  .cobox .rc .rr.e{color:var(--gold-deep);font-weight:800;border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
+  .cobox button{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:13px 24px;font-weight:800;margin-top:6px}
+
+  /* Nathan */
+  .nwrap{position:fixed;left:18px;bottom:18px;z-index:70}
+  .nchip{width:52px;height:52px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:22px;box-shadow:0 12px 30px rgba(232,80,58,.4);animation:npulse 2.4s ease-in-out infinite}
+  @keyframes npulse{0%,100%{box-shadow:0 12px 30px rgba(232,80,58,.35)}50%{box-shadow:0 12px 30px rgba(232,80,58,.35),0 0 0 8px rgba(232,80,58,.16)}}
+  .nb{position:absolute;left:0;bottom:64px;width:min(340px,calc(100vw - 36px));background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.22);padding:18px;display:none}
+  .nb.on{display:block;animation:fade .25s}
+  .nb .who{display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:var(--orange-deep);margin-bottom:8px}
+  .nb .who span:last-child{cursor:pointer;color:var(--muted)}
+  .nb .tag{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+  .nb #nbBody{font-size:14px;line-height:1.55}
+  .nb .nav{display:flex;gap:8px;margin-top:14px}
+  .nb .nav button{flex:1;background:var(--bone);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:12.5px;font-weight:700}
+
+  /* footer */
+  footer.end{background:#141414;color:#8f8b80;padding:44px 20px 40px;margin-top:20px}
+  .fgrid{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+  .fgrid h4{font-family:var(--serif);color:#fff;font-size:17px;margin-bottom:12px}
+  .fgrid a{display:block;font-size:13.5px;color:#a79c8a;padding:3px 0}
+  .fgrid p{font-size:13.5px;color:#a79c8a}
+  .legal{max-width:1060px;margin:26px auto 0;padding-top:18px;border-top:1px solid #201d17;font-size:11.5px;color:#7a7263;line-height:1.6}
+  .legal b{color:#cfc6b3}
+
+  @media(max-width:820px){
+    nav.main{display:none}.mobile-nav{display:flex}
+    .grid{grid-template-columns:1fr 1fr}
+    .trust .in{grid-template-columns:1fr 1fr}
+    .story,.story.flip{grid-template-columns:1fr}.story.flip .st-art{order:0}
+    .rsteps,.tgrid,.econ-grid{grid-template-columns:1fr}
+    .statbar .in{gap:22px}
+    .pdp{grid-template-columns:1fr}
+    .satc{display:flex}
+  }
+</style>
+</head>
+<body>
+
+<div class="concept-bar">Creator-store concept by <strong>Nathan J. Song</strong> for the LA Galaxy Senior Manager, Paid Media role. Not affiliated with or endorsed by the LA Galaxy or AEG. Ava is a fictional supporter; reviews and pricing are illustrative.</div>
+
+<div class="meganav"><div class="mn-in">
+  <span class="mn-badge">Creator affiliate of <b>LA Galaxy</b><span class="tag">concept</span></span>
+  <span class="mn-note">Independent concept by Nathan J. Song</span>
+  <div class="mn-switch"><span class="mn-lab">Concept pages</span><div class="mn-seg"><a href="../">Funnel</a><a href="#" onclick="return false" class="on">Ava</a><a href="../lex/">Lex</a></div></div>
+</div></div>
+
+<div class="announce">New drop &nbsp;&middot;&nbsp; The Galaxy Scarf &nbsp;&middot;&nbsp; Code <b>AVA10</b> for 10% off &nbsp;&middot;&nbsp; Free shipping over $50</div>
+
+<header class="site">
+  <div class="hd">
+    <div class="logo" onclick="go('home')">Ava&rsquo;s <span>Matchday</span> Edit<small>LA Galaxy supporter &amp; creator</small></div>
+    <nav class="main">
+      <button data-v="home" class="on" onclick="go('home')">Home</button>
+      <button data-v="shop" onclick="go('shop')">Shop all</button>
+      <button class="nav-sock" onclick="go('pdp','scarf')"><svg viewBox="0 0 100 100"><use href="#i-sock"/></svg> The Scarf</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The matchday bag</button>
+      <button onclick="go('home');setTimeout(function(){document.getElementById('about').scrollIntoView({behavior:'smooth'})},80)">About Ava</button>
+    </nav>
+    <button class="cartbtn" onclick="openCart()">Cart <span class="n" id="cartN">0</span></button>
+  </div>
+  <div class="mobile-nav">
+    <button data-v="home" class="on" onclick="go('home')">Home</button>
+    <button data-v="shop" onclick="go('shop')">Shop all</button>
+    <button class="nav-sock" onclick="go('pdp','scarf')">The Scarf</button>
+    <button onclick="go('home');setTimeout(function(){document.getElementById('routine').scrollIntoView({behavior:'smooth'})},80)">The bag</button>
+  </div>
+</header>
+
+<!-- ===== SVG product icons (stroke inherits gold via CSS) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-sock" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 34c16-9 36-9 52 0"/><path d="M32 39l-5 34 9-5 4 11"/><path d="M68 39l5 34-9-5-4 11"/></symbol>
+  <symbol id="i-ring" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="34" width="64" height="32" rx="5"/><path d="M50 34v32" stroke-dasharray="4 5"/><path d="M28 44h10M28 52h14" stroke-width="3"/></symbol>
+  <symbol id="i-band" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 26l-16 9 6 13 8-4v30h24V44l8 4 6-13-16-9-6 6h-8z"/></symbol>
+  <symbol id="i-ankle" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="40" width="52" height="32" rx="5"/><path d="M24 50h52"/><path d="M40 40v-6h20v6"/></symbol>
+  <symbol id="i-ball" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="28"/><path d="M50 36l10 8-4 12H44l-4-12z"/><path d="M40 44l-11 3M60 44l11 3M45 58l-6 12M55 58l6 12"/></symbol>
+  <symbol id="i-mat" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 22v58"/><path d="M32 28h36l-9 11 9 11H32"/></symbol>
+  <symbol id="i-towel" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 60a26 20 0 0 1 52 0z"/><path d="M50 40v20"/><path d="M76 60h6"/></symbol>
+  <symbol id="i-roller" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M28 26v50M72 26v50"/><rect x="28" y="34" width="44" height="30" rx="3"/></symbol>
+  <symbol id="i-bottle" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 26h20v8l4 8v40a6 6 0 0 1-6 6H42a6 6 0 0 1-6-6V42l4-8z"/><path d="M36 56h28"/><path d="M44 20h12v6H44z"/></symbol>
+  <symbol id="i-tote" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M28 38h44l4 42H24z"/><path d="M40 38v-6a10 10 0 0 1 20 0v6"/></symbol>
+  <symbol id="i-gloves" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M28 56a22 22 0 0 1 44 0z"/><rect x="26" y="56" width="48" height="12" rx="4"/></symbol>
+  <symbol id="i-kit" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 40l28-14 28 14-28 14z"/><path d="M22 40v24l28 14 28-14V40"/><path d="M50 54v24"/></symbol>
+  <symbol id="i-massage" viewBox="0 0 100 100" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 26h36v30L50 68 32 56z"/><path d="M50 26v42"/></symbol>
+</defs></svg>
+
+<!-- ================= HOME ================= -->
+<main class="view on" id="view-home">
+  <div class="hero"><div class="in">
+    <p class="kick">Ava &middot; LA Galaxy supporter &amp; creator</p>
+    <h1><span class="w" style="animation-delay:.05s">Wear</span> <span class="w" style="animation-delay:.15s">the</span> <span class="w" style="animation-delay:.25s">badge.</span> <span class="w em" style="animation-delay:.35s">Own&nbsp;the&nbsp;section.</span></h1>
+    <p>The gear I actually bring to matches, in one edit. It started with the scarf I never leave home without. Now it is the whole bag: the kit, the flag, the cap, and tickets for the crew.</p>
+    <button class="cta" onclick="go('shop')">Shop the edit</button>
+    <span class="codechip">Code <b>AVA10</b> takes 10% off</span>
+  </div></div>
+
+  <div class="marquee"><div class="mq-track" id="mqTrack"></div></div>
+
+  <div class="statbar"><div class="in">
+    <div class="st"><b data-count="9">0</b><span>seasons in the section</span></div>
+    <div class="st"><b data-count="200" data-suffix="+">0</b><span>matches in person</span></div>
+    <div class="st"><b data-count="18" data-suffix="k">0</b><span>following along</span></div>
+    <div class="st"><b data-count="1" data-suffix=" bag">0</b><span>everything I bring</span></div>
+    <div class="note">Community figures are illustrative, for the concept.</div>
+  </div></div>
+
+  <div class="sockbar"><div class="in">
+    <span class="sk-art"><svg viewBox="0 0 100 100"><use href="#i-sock"/></svg></span>
+    <div class="sk-tx"><b>Ava Original: The Galaxy Scarf</b><span>The first thing I hand a new fan. Woven navy and gold, held overhead when we score, worn all the way home.</span></div>
+    <button class="sk-btn" onclick="go('pdp','scarf')">Shop the scarf</button>
+  </div></div>
+
+  <div class="trust"><div class="in">
+    <div class="t"><b>Member-tested</b>the exact gear I bring to matches</div>
+    <div class="t"><b>Made for the section</b>navy and gold, built to be waved</div>
+    <div class="t"><b>Honest economics</b>my 5% is printed on your receipt</div>
+    <div class="t"><b>Free over $50</b>ships fast, no games</div>
+  </div></div>
+
+  <div class="wrap">
+    <section class="block">
+      <div class="bhead"><h2>The edit</h2><a onclick="go('shop','all')">See everything</a></div>
+      <div class="grid" id="home-featured"></div>
+    </section>
+
+    <section class="block" id="about" style="padding-top:10px">
+      <div class="story">
+        <div class="st-art"><svg viewBox="0 0 100 100"><use href="#i-sock"/></svg></div>
+        <div class="st-txt">
+          <p class="kick">Why the scarf comes first</p>
+          <h3>You are not really in until you have a scarf over your head.</h3>
+          <p>My first match I stood there not knowing the songs. Someone handed me a scarf, and by halftime I was singing. So I made a scarf worth handing to a first-timer, then built the rest of the bag around it.</p>
+          <p>This store is what actually rides in my matchday bag, nothing I would not hand a first-timer.</p>
+        </div>
+      </div>
+      <div class="story flip">
+        <div class="st-art"><svg viewBox="0 0 100 100"><use href="#i-kit"/></svg></div>
+        <div class="st-txt">
+          <p class="kick">The honest part</p>
+          <h3>I earn from this edit, and I would rather you know.</h3>
+          <p>As an LA Galaxy creator affiliate I earn 5% of every order here, before tax and shipping. Your 10% with AVA10 comes off your side, never added to your price. My interest is you actually coming to matches, so I only sell what earns its place in the bag.</p>
+          <p>New to the club? The scarf and a single ticket are all you need for your first match.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="routine" id="routine">
+    <div class="wrap">
+      <h2>The matchday bag</h2>
+      <p class="sub">What I pack for a home match, and what each piece is for.</p>
+      <div class="rsteps">
+        <div class="rstep"><span class="when">In the section</span><h4>Fly the colors</h4><p>Scarf first, then the flag. It is how you go from watching a match to being part of one.</p><span class="rlink" onclick="go('pdp','scarf')">The Galaxy Scarf</span><br><span class="rlink" onclick="go('pdp','flag')">Supporter Flag</span></div>
+        <div class="rstep"><span class="when">Bring the crew</span><h4>Fill the row</h4><p>The four-pack is how people come to their first match. Grab the row, hand out scarves, and watch who is hooked by halftime.</p><span class="rlink" onclick="go('pdp','fourpack')">Matchday Four-Pack</span><br><span class="rlink" onclick="go('pdp','kit')">The First-Match Kit</span></div>
+        <div class="rstep"><span class="when">Before and after</span><h4>Tailgate and travel</h4><p>The cooler and the bag make the whole day easier, from the lot to the last whistle. The small things you learn after a few seasons.</p><span class="rlink" onclick="go('pdp','cooler')">Tailgate Cooler</span><br><span class="rlink" onclick="go('pdp','bag')">Matchday Bag</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="tstrip">
+      <div class="bhead"><h2>In their words</h2><span style="font-size:11px;color:var(--muted)">Illustrative reviews, for the concept</span></div>
+      <div class="tgrid">
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Ava sits two rows down and shows exactly what she brings, and what she earns. The only creator shop I actually trust.&rdquo;</p><b>Elise M.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Bought the scarf and a four-pack in one order. Brought three friends to their first match, two of them renewed as members.&rdquo;</p><b>Nora P.</b></div>
+        <div class="tcard"><div class="stars">&#10029;&#10029;&#10029;&#10029;&#10029;</div><p>&ldquo;Finally a fan shop with a pulse. The picks make sense for someone who actually goes, not a generic bundle.&rdquo;</p><b>Grace L.</b></div>
+      </div>
+    </section>
+
+    <section class="econ">
+      <h2>How the edit works</h2>
+      <div class="econ-grid">
+        <div class="etile"><span class="big">10%</span><b>You save on every order</b><p>Code AVA10 is applied quietly at checkout, on your whole order.</p></div>
+        <div class="etile"><span class="big">5%</span><b>Ava earns on every order</b><p>Measured on the order total before tax and shipping. Her edit, her earnings, printed on the receipt.</p></div>
+        <div class="etile"><span class="big">$0.60/mo</span><b>The Supporters Club counts, monthly</b><p>Keep a $12 monthly Supporters Club drop and Ava earns her share every month it renews, not just once.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="newsletter">
+    <h3>Matchday with me.</h3>
+    <p>One note a week: which match I am at, what is new in the bag, and first dibs on the next drop. Demo form, nothing is stored.</p>
+    <div class="nl-row"><input type="email" placeholder="you@email.com" aria-label="Email address"><button onclick="this.textContent='Joined';setTimeout(()=>this.textContent='Join',1600)">Join</button></div>
+  </div>
+</main>
+
+<!-- ================= SHOP ================= -->
+<main class="view" id="view-shop">
+  <div class="shophero"><div class="wrap">
+    <h1>Shop the bag</h1>
+    <p>The whole edit, in one place. AVA10 applies to all of it.</p>
+    <div class="tabs" id="shopTabs"></div>
+  </div></div>
+  <div class="wrap"><div class="grid shopgrid" id="shopGrid"></div></div>
+</main>
+
+<!-- ================= PDP ================= -->
+<main class="view" id="view-pdp">
+  <div class="wrap">
+    <p class="crumb"><a onclick="go('home')">Home</a> &nbsp;/&nbsp; <a onclick="go('shop')">Shop the bag</a> &nbsp;/&nbsp; <span id="crumbName"></span></p>
+    <div class="pdp">
+      <div class="gal">
+        <div class="gal-main" id="galMain"><svg><use href="#i-sock"/></svg></div>
+        <div class="gal-badges" id="galBadges"></div>
+      </div>
+      <div class="pd">
+        <span class="pd-tag" id="pdTag"></span>
+        <h1 id="pdName"></h1>
+        <div class="maya" id="pdMaya"></div>
+        <ul class="benefits" id="pdBenefits"></ul>
+        <div class="buybox">
+          <div class="opt" id="optSub" onclick="pdMode('sub')">
+            <span class="ol"><b>Supporters Club, monthly</b><span class="chip pop">Best value</span><span>a new pin or patch each month, cancel anytime</span></span>
+            <span class="op" id="pdSubPrice"></span>
+          </div>
+          <div class="opt on" id="optOnce" onclick="pdMode('once')">
+            <span class="ol"><b>One-time purchase</b><span>no commitment</span></span>
+            <span class="op" id="pdOncePrice"></span>
+          </div>
+          <div class="qtyrow"><button onclick="pdQty(-1)" aria-label="Less">&#8722;</button><span id="pdQty">1</span><button onclick="pdQty(1)" aria-label="More">+</button></div>
+          <button class="atc" id="pdAtc" onclick="pdAdd()"></button>
+          <p class="note" id="pdNote">AVA10 applies in the cart. Ava earns 5% of this order, before tax and shipping.</p>
+        </div>
+        <div class="accs" id="pdAccs"></div>
+      </div>
+    </div>
+    <div class="related"><h3>Goes well with</h3><div class="grid" id="pdRelated"></div></div>
+  </div>
+</main>
+
+<div class="satc" id="satc">
+  <span class="sn"><b id="satcName"></b><span id="satcPrice"></span></span>
+  <button onclick="pdAdd()">Add to cart</button>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dr-head"><b>Your bag</b><button class="dr-x" onclick="closeCart()" aria-label="Close">&#10005;</button></div>
+  <div class="dr-code">Code <b>AVA10</b> applied: 10% off your whole order</div>
+  <div class="ship-meter" id="shipMeter"></div>
+  <div class="dr-items" id="drItems"></div>
+  <div class="earnbox" id="earnBox"></div>
+  <div class="dr-math" id="drMath"></div>
+  <button class="dr-checkout" onclick="checkout()">Checkout</button>
+  <p class="dr-note">Demo checkout, no payment is taken. Pricing is illustrative for the concept. AVA10 and the 5% creator share model the affiliate economics, they are not a live LA Galaxy offer.</p>
+</aside>
+<div class="comodal" id="comodal" role="dialog" aria-modal="true"><div class="cobox" id="cobox"></div></div>
+
+<div class="nwrap" id="nathan">
+  <div class="nb" id="nb">
+    <div class="who"><span>Nathan &middot; why this works</span><span onclick="nbHide()">&#10005;</span></div>
+    <span class="tag" id="nbTag"></span>
+    <div id="nbBody"></div>
+    <div class="nav"><button onclick="nbStep(-1)">Prev</button><button onclick="nbStep(1)">Next</button></div>
+  </div>
+  <div class="nchip" onclick="nbToggle()" title="Nathan's commentary">N</div>
+</div>
+
+<footer class="end">
+  <div class="fgrid">
+    <div><h4>Ava&rsquo;s Matchday Edit</h4><p style="max-width:38ch">A creator-store concept: one trusted supporter, her own branded edit of matchday gear, honest economics on the receipt. Built to show how a creator-affiliate program drives fan acquisition, ticket trial, and retention.</p></div>
+    <div><h4>Shop</h4><a onclick="go('shop','grip')">Grip</a><a onclick="go('shop','resistance')">Resistance</a><a onclick="go('shop','mat')">Mat and recovery</a><a onclick="go('shop','all')">The whole bag</a></div>
+    <div><h4>The concept</h4><a onclick="nbToggle()">Nathan&rsquo;s commentary</a><a onclick="go('home')">About this store</a></div>
+  </div>
+  <div class="legal"><b>Nathan J. Song</b> &middot; Creator-store concept for the LA Galaxy Senior Manager, Paid Media role. Not affiliated with, sponsored by, or endorsed by the LA Galaxy, AEG, or Major League Soccer. Ava is a fictional supporter and reviews are illustrative. All pricing is illustrative for the concept. AVA10 and the 5% creator share illustrate the affiliate model and are not live offers.</div>
+</footer>
+
+<script>
+/* ============ catalog: LA Galaxy supporter gear (illustrative pricing) ============ */
+const PRODUCTS={
+  scarf:{name:"The Galaxy Scarf",tag:"Ava Original",col:"wear",once:30,sub:12,icon:"i-sock",
+    note:"The first thing I hand a new fan. Navy and gold, held overhead when we score.",
+    benefits:["Woven navy and gold, fringed both ends","Warm enough for a night match in Carson","Held up on every goal, worn all the way home"],
+    inside:"A jacquard supporter scarf. The Supporters Club sends a new pin or patch each month.",rel:["cap","flag","kit"]},
+  jersey:{name:"2027 Home Kit",tag:"On the pitch",col:"wear",once:120,icon:"i-band",
+    note:"The kit the team wears. Wear yours to the section and you are part of it.",
+    benefits:["Home-shirt style, navy with gold trim","Breathable, holds up match after match","Add a name and number at the Team Store"],
+    inside:"A home-kit style jersey for matchday and everyday.",rel:["cap","scarf","fourpack"]},
+  cap:{name:"The Galaxy Cap",tag:"Wear",col:"wear",once:30,icon:"i-towel",
+    note:"For a 1pm kickoff in the California sun. Structured front, gold star on navy.",
+    benefits:["Navy six-panel with a gold star","Adjustable strap, holds its shape","Shades a bright afternoon in the stands"],
+    inside:"A structured cap for sunny kickoffs.",rel:["scarf","beanie","bottle"]},
+  beanie:{name:"Matchday Beanie",tag:"Wear",col:"wear",once:32,icon:"i-gloves",
+    note:"For the December matches when Carson gets cold under the lights.",
+    benefits:["Ribbed knit, navy with a gold cuff","Warm without the bulk","Packs into a jacket pocket"],
+    inside:"A cuffed knit beanie for cold night matches.",rel:["scarf","cap","cooler"]},
+  fourpack:{name:"Matchday Four-Pack",tag:"Bring the crew",col:"tickets",once:180,icon:"i-ring",
+    note:"Four seats together for a home match. The easiest way to bring people to their first one.",
+    benefits:["Four seats side by side, one home match","Priced under buying four singles","The way most people fall for the club"],
+    inside:"Four single-match tickets in the same row, illustrative pricing.",rel:["single","scarf","kit"]},
+  single:{name:"Single-Match Ticket",tag:"Tickets",col:"tickets",once:60,icon:"i-ring",
+    note:"One match, one seat. A low bar to try a night at Dignity Health Sports Park.",
+    benefits:["One reserved seat for a home match","Mobile entry through the club app","The first step toward a season"],
+    inside:"A single-match ticket, illustrative pricing.",rel:["fourpack","bag","scarf"]},
+  flag:{name:"Supporter Flag",tag:"Gameday",col:"gameday",once:35,icon:"i-mat",
+    note:"Navy and gold on a light pole, waved from the first whistle to the last.",
+    benefits:["Double-sided navy and gold","Light pole that packs down","Cleared for the supporters sections"],
+    inside:"A hand flag for the stands.",rel:["banner","scarf","pennant"]},
+  banner:{name:"Two-Stick Banner",tag:"Gameday",col:"gameday",once:45,icon:"i-roller",
+    note:"The scarf you hold up wide between two sticks. Built for the songs.",
+    benefits:["Wide printed banner on two poles","Held overhead across a whole row","Rolls up into the bag after"],
+    inside:"A two-stick supporter banner.",rel:["flag","scarf","pennant"]},
+  ball:{name:"Match Ball, size 5",tag:"Gameday",col:"gameday",once:40,icon:"i-ball",
+    note:"For the parking-lot kickabout before the gates open. Full size, real weight.",
+    benefits:["Size 5, match weight","Holds up on asphalt and grass","A display box is optional"],
+    inside:"A size 5 ball for the pregame kickabout.",rel:["flag","cooler","bag"]},
+  pennant:{name:"Galaxy Pennant",tag:"Gameday",col:"gameday",once:20,icon:"i-massage",
+    note:"The small felt pennant for the wall, the desk, the rear-view mirror.",
+    benefits:["Felt pennant, navy and gold","Hangs anywhere you want the badge","The cheapest way to fly the colors"],
+    inside:"A felt pennant for home or car.",rel:["scarf","flag","cap"]},
+  cooler:{name:"Tailgate Cooler",tag:"Tailgate",col:"tailgate",once:55,icon:"i-ankle",
+    note:"Keeps the lot cold through a long afternoon. Fits under the seat once you are in.",
+    benefits:["Holds a full tailgate for four","Insulated for a California afternoon","Folds flat when it is empty"],
+    inside:"A soft cooler for the tailgate lots.",rel:["bag","bottle","ball"]},
+  bottle:{name:"Galaxy Water Bottle",tag:"Carry",col:"carry",once:28,icon:"i-bottle",
+    note:"Cashless stadium, long day. Fill it before you park and stay ahead of the sun.",
+    benefits:["Insulated stainless, stays cold all match","One-hand cap, no leaks in the bag","Navy with a gold star"],
+    inside:"A 24 oz insulated bottle.",rel:["cap","bag","cooler"]},
+  bag:{name:"Matchday Bag",tag:"Carry",col:"carry",once:44,icon:"i-tote",
+    note:"Clear-bag friendly, holds the scarf, the flag, the bottle, and still looks right.",
+    benefits:["Meets clear-bag stadium policy","Holds the whole matchday kit","Water-resistant, wipes clean"],
+    inside:"A stadium-policy matchday bag.",rel:["bottle","cooler","scarf"]},
+  kit:{name:"The First-Match Kit",tag:"Save 15%",col:"kits",once:99,icon:"i-kit",
+    note:"Everything a first-timer needs for their first match, in one box. Scarf, cap, flag, and a single ticket.",
+    benefits:["The Galaxy Scarf, the Cap, a Supporter Flag, and a Single-Match Ticket","Everything for a first match, nothing they do not need","Bundled at about 15% off the pieces"],
+    inside:"The four things a first-timer needs, under the sum of the parts.",rel:["scarf","fourpack","cap"]}
+};
+const COLS={all:"The whole bag",wear:"Wear",tickets:"Tickets",gameday:"Gameday",tailgate:"Tailgate",carry:"Carry",kits:"Bundles"};
+const FEATURED=["scarf","fourpack","jersey","flag"];
+const CODE="AVA10", CREATOR="Ava", DISC=0.10, COMMISSION=0.05, SHIP_FREE=50, SHIP_FEE=6;
+
+const cart={}; /* key: id_mode -> {id,mode,qty} */
+let view="home", curTab="all", pdpId=null, pdpM="once", pdpQ=1;
+
+function money(n){return "$"+n.toFixed(2);}
+function track(ev,p){console.log("[ava-store]",ev,p||{});}
+function imgHTML(id){return '<svg><use href="#'+(PRODUCTS[id]?PRODUCTS[id].icon:'i-kit')+'"/></svg>';}
+function priceLabel(p){return p.sub?('<b>'+money(p.sub)+'</b>/mo &middot; '+money(p.once)+' once'):('<b>'+money(p.once)+'</b>');}
+
+/* ============ routing ============ */
+function go(v,arg){
+  view=v;
+  document.querySelectorAll(".view").forEach(el=>el.classList.remove("on"));
+  document.getElementById("view-"+v).classList.add("on");
+  document.querySelectorAll("nav.main button, .mobile-nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+  document.getElementById("satc").style.display="none";
+  if(v==="shop"){curTab=arg||"all";renderShop();}
+  if(v==="pdp"){pdpId=arg;renderPDP();}
+  window.scrollTo({top:0,behavior:"auto"});
+  track("view",{v,arg});
+}
+
+function card(id){
+  const p=PRODUCTS[id];
+  return '<div class="pcard" onclick="go(\'pdp\',\''+id+'\')">'+
+    '<div class="pimg"><span class="ptag">'+p.tag+'</span>'+imgHTML(id)+'</div>'+
+    '<div class="pb"><h3>'+p.name+'</h3><p class="pn">'+p.note+'</p>'+
+    '<p class="prices">'+priceLabel(p)+'</p>'+
+    '<button class="addmini" onclick="event.stopPropagation();quickAdd(\''+id+'\')">Add to bag</button></div></div>';
+}
+function renderHome(){document.getElementById("home-featured").innerHTML=FEATURED.map(card).join("");}
+function renderShop(){
+  document.getElementById("shopTabs").innerHTML=Object.keys(COLS).map(k=>'<button class="'+(k===curTab?"on":"")+'" onclick="curTab=\''+k+'\';renderShop()">'+COLS[k]+'</button>').join("");
+  const ids=Object.keys(PRODUCTS).filter(id=>curTab==="all"||PRODUCTS[id].col===curTab);
+  document.getElementById("shopGrid").innerHTML=ids.map(card).join("");
+}
+function renderPDP(){
+  const p=PRODUCTS[pdpId];
+  document.getElementById("crumbName").textContent=p.name;
+  document.getElementById("galMain").innerHTML='<svg><use href="#'+p.icon+'"/></svg>';
+  document.getElementById("galBadges").innerHTML=['Studio-tested','Grips that hold','Ships free over $50'].map(b=>'<span class="gbadge">'+b+'</span>').join("");
+  document.getElementById("pdTag").textContent=p.tag;
+  document.getElementById("pdName").textContent=p.name;
+  document.getElementById("pdMaya").innerHTML='&ldquo;'+p.note+'&rdquo; &nbsp;Ava';
+  document.getElementById("pdBenefits").innerHTML=p.benefits.map(b=>'<li>'+b+'</li>').join("");
+  document.getElementById("pdAccs").innerHTML='<b>In the bag:</b> '+p.inside;
+  // subscribe option only for products with a sub price (Supporters Club)
+  const hasSub=!!p.sub;
+  document.getElementById("optSub").style.display=hasSub?"flex":"none";
+  pdpM=hasSub?"sub":"once";pdpQ=1;document.getElementById("pdQty").textContent="1";
+  if(hasSub)document.getElementById("pdSubPrice").innerHTML=money(p.sub)+'<span style="font-size:12px;color:var(--muted)">/mo</span>';
+  document.getElementById("pdOncePrice").textContent=money(p.once);
+  document.getElementById("optSub").classList.toggle("on",hasSub);
+  document.getElementById("optOnce").classList.toggle("on",!hasSub);
+  updateAtc();
+  document.getElementById("pdRelated").innerHTML=p.rel.map(card).join("");
+  const satc=document.getElementById("satc");satc.style.display="flex";
+  document.getElementById("satcName").textContent=p.name;
+}
+function pdMode(m){
+  const p=PRODUCTS[pdpId];if(m==="sub"&&!p.sub)return;
+  pdpM=m;
+  document.getElementById("optSub").classList.toggle("on",m==="sub");
+  document.getElementById("optOnce").classList.toggle("on",m==="once");
+  updateAtc();
+}
+function pdQty(d){pdpQ=Math.max(1,pdpQ+d);document.getElementById("pdQty").textContent=pdpQ;updateAtc();}
+function updateAtc(){
+  const p=PRODUCTS[pdpId];const unit=pdpM==="sub"?p.sub:p.once;
+  const lbl=(pdpM==="sub"?"Add Supporters Club":"Add to bag")+" &middot; "+money(unit*pdpQ);
+  document.getElementById("pdAtc").innerHTML=lbl;
+  document.getElementById("satcPrice").textContent=(pdpM==="sub"?money(p.sub)+"/mo":money(p.once));
+}
+function pdAdd(){addToCart(pdpId,pdpM,pdpQ);openCart();}
+function quickAdd(id){const p=PRODUCTS[id];addToCart(id,p.sub?"sub":"once",1);openCart();}
+
+/* ============ cart ============ */
+function addToCart(id,mode,qty){
+  const k=id+"_"+mode;
+  if(cart[k])cart[k].qty+=qty;else cart[k]={id,mode,qty};
+  renderCart();updateCount();track("add_to_cart",{id,mode,qty});
+}
+function cartQty(k,d){if(!cart[k])return;cart[k].qty+=d;if(cart[k].qty<=0)delete cart[k];renderCart();updateCount();}
+function updateCount(){const n=Object.values(cart).reduce((s,i)=>s+i.qty,0);document.getElementById("cartN").textContent=n;}
+function totals(){
+  let sub=0;
+  Object.values(cart).forEach(i=>{const p=PRODUCTS[i.id];sub+=(i.mode==="sub"?p.sub:p.once)*i.qty;});
+  const disc=sub*DISC, afterDisc=sub-disc;
+  const ship=afterDisc>=SHIP_FREE||afterDisc===0?0:SHIP_FEE;
+  const earn=afterDisc*COMMISSION;
+  return {sub,disc,afterDisc,ship,total:afterDisc+ship,earn};
+}
+function renderCart(){
+  const items=Object.entries(cart);
+  const box=document.getElementById("drItems");
+  if(!items.length){
+    box.innerHTML='<div class="dr-empty">Your bag is empty.<br>Start with the <a style="text-decoration:underline" onclick="closeCart();go(\'pdp\',\'scarf\')">the scarf</a>.</div>';
+    document.getElementById("earnBox").innerHTML="";document.getElementById("drMath").innerHTML="";
+    document.getElementById("shipMeter").innerHTML="";return;
+  }
+  box.innerHTML=items.map(([k,i])=>{
+    const p=PRODUCTS[i.id];const unit=i.mode==="sub"?p.sub:p.once;
+    return '<div class="ci"><div class="ciimg">'+imgHTML(i.id)+'</div>'+
+      '<div class="cinfo"><b>'+p.name+'</b><span class="cm">'+(i.mode==="sub"?"Sock club, monthly":"One-time")+'</span>'+
+      '<div class="cq"><button onclick="cartQty(\''+k+'\',-1)">&#8722;</button><span>'+i.qty+'</span><button onclick="cartQty(\''+k+'\',1)">+</button></div></div>'+
+      '<span class="cp">'+money(unit*i.qty)+'</span></div>';
+  }).join("");
+  const t=totals();
+  const meter=document.getElementById("shipMeter");
+  if(t.ship>0){const rem=(SHIP_FREE-t.afterDisc);const pct=Math.min(100,(t.afterDisc/SHIP_FREE)*100);
+    meter.innerHTML='Add <b style="color:var(--gold-deep)">'+money(rem)+'</b> for free shipping<div class="bar"><i style="width:'+pct+'%"></i></div>';}
+  else{meter.innerHTML='<b style="color:var(--good)">Free shipping unlocked.</b><div class="bar"><i style="width:100%"></i></div>';}
+  document.getElementById("earnBox").innerHTML='This order supports <b>Ava</b>.<div class="er"><span>Her 5% creator share</span><span>'+money(t.earn)+'</span></div><div class="er"><span>Your AVA10 saving</span><span>&minus;'+money(t.disc)+'</span></div>';
+  document.getElementById("drMath").innerHTML=
+    '<div class="mr"><span>Subtotal</span><span>'+money(t.sub)+'</span></div>'+
+    '<div class="mr"><span>AVA10 (10% off)</span><span>&minus;'+money(t.disc)+'</span></div>'+
+    '<div class="mr"><span>Shipping</span><span>'+(t.ship===0?"Free":money(t.ship))+'</span></div>'+
+    '<div class="mr tot"><span>Total</span><span>'+money(t.total)+'</span></div>';
+}
+function openCart(){document.getElementById("overlay").classList.add("on");document.getElementById("drawer").classList.add("on");renderCart();track("open_cart");}
+function closeCart(){document.getElementById("overlay").classList.remove("on");document.getElementById("drawer").classList.remove("on");}
+function checkout(){
+  if(!Object.keys(cart).length){toastCart();return;}
+  const t=totals();
+  document.getElementById("cobox").innerHTML=
+    '<svg class="ok" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" stroke="var(--gold)" stroke-width="3"/><path d="M20 33l8 8 16-18" stroke="var(--gold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+    '<h3>That is the bag.</h3><p>Demo checkout, no payment taken. Here is what a real order would look like, receipt and all.</p>'+
+    '<div class="rc"><div class="rr"><span>Subtotal</span><span>'+money(t.sub)+'</span></div>'+
+    '<div class="rr"><span>AVA10 (10% off)</span><span>&minus;'+money(t.disc)+'</span></div>'+
+    '<div class="rr"><span>Shipping</span><span>'+(t.ship===0?"Free":money(t.ship))+'</span></div>'+
+    '<div class="rr"><span>Total</span><span>'+money(t.total)+'</span></div>'+
+    '<div class="rr e"><span>Ava earns (5%)</span><span>'+money(t.earn)+'</span></div></div>'+
+    '<button onclick="closeCO()">Keep shopping</button>';
+  document.getElementById("comodal").classList.add("on");track("checkout",t);
+}
+function closeCO(){document.getElementById("comodal").classList.remove("on");}
+function toastCart(){openCart();}
+
+/* ============ marquee + count-up ============ */
+(function(){
+  const items=["The Galaxy Scarf","2027 Home Kit","Supporter Flag","Matchday Four-Pack","Code AVA10 for 10% off","Free shipping over $50","The First-Match Kit, save 15%"];
+  const row=items.map(t=>"<span>"+t+" &nbsp;&middot;</span>").join("");
+  document.getElementById("mqTrack").innerHTML=row+row;
+})();
+function countUp(){
+  document.querySelectorAll("[data-count]").forEach(el=>{
+    const target=+el.dataset.count, suffix=el.dataset.suffix||"";let n=0;const step=Math.max(1,target/40);
+    const t=setInterval(()=>{n+=step;if(n>=target){n=target;clearInterval(t);}el.textContent=Math.round(n)+suffix;},24);
+  });
+}
+
+/* ============ Nathan's notes (mapped to the Marketing Director JD) ============ */
+const NOTES=[
+  {tag:"The concept",body:"A creator store is a marketing channel dressed as a shop. One trusted supporter, her own edit of matchday gear, becomes local reach, social proof, and a standing reason to come to a match. For this role that is fan acquisition and brand at once, run through people fans already follow."},
+  {tag:"The economics",body:"Every order prints Ava's 5% and the fan's 10% right on the receipt. Transparent creator economics is what makes a supporter promote the club for years instead of one paid post, because her income is tied to fans who keep coming back, not a single sale."},
+  {tag:"The scarf as the wedge",body:"The scarf is the perfect first product: low price, high identity, worn everywhere. The Supporters Club turns a $12 accessory into a recurring relationship and a monthly reason to reach the fan. Small product, real lifecycle."},
+  {tag:"Local activation",body:"The club hands this store to any local supporter or creator, swaps the code and the face, and has a working affiliate storefront in a day. Build the engine once, deploy it per creator and per market."},
+  {tag:"Retention",body:"Merch is a retention lever most clubs underuse. A fan who owns the scarf, the kit, and the flag has money and identity invested in the club. The bag is a quiet reason to renew, and renewals are the business."},
+  {tag:"Data",body:"Every add to bag, code use, and checkout here fires a tracked event, open the console and watch. Wired to real analytics, a creator store shows which creators and which products actually drive tickets and members, so budget follows evidence."},
+  {tag:"Why one store at a time",body:"This is Ava, the scarf-first store. Lex runs the supporters' end next. Same engine, different creator and hero product, so the program scales across a roster of supporters without rebuilding it each time."}
+];
+let nbI=0;
+function nbToggle(){const nb=document.getElementById("nb");if(nb.classList.contains("on"))nbHide();else{nb.classList.add("on");nbShow();document.querySelector(".nchip").style.animation="none";}}
+function nbHide(){document.getElementById("nb").classList.remove("on");}
+function nbShow(){document.getElementById("nbTag").textContent=NOTES[nbI].tag;document.getElementById("nbBody").textContent=NOTES[nbI].body;}
+function nbStep(d){nbI=(nbI+d+NOTES.length)%NOTES.length;nbShow();}
+
+/* ============ init ============ */
+renderHome();updateCount();
+window.addEventListener("load",countUp);
+</script>
+</body>
+</html>

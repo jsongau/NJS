@@ -23,6 +23,14 @@ Built the Ono Hawaiian BBQ Marketing Manager work sample end to end (v1 through 
 - Pareidolia at small sizes: three separate icons read as faces until symmetry was broken. Lay proteins flat, one rice scoop not two, delete texture dashes.
 - Cloud push is read-only on this repo; deploy runs as native git on the Mac.
 
+## Follow-up shipped same day, v19 to v20
+- A/B toggle moved beside the wordmark as a sliding two-letter control; variant B card designs now read $400/$150/$50 with place tags, and the hero badge follows the selected design.
+- Group order rebuilt as a 1 to 12 slider: per-plate price falls $16.50 to $10.85 with savings chip and meter; CTA opens Ono's catering page.
+- Sticky game-day floater on Convert cycling the five verified events, hidden while the events band is on screen.
+- Share CTA rebuilt with animated friends-and-entries SVG art and balanced text.
+- Site-wide spatula cursor as real CSS cursors, two rendered 32px PNGs, tilted variant on interactive elements, fried-egg flip on real clicks.
+- Fixed live: dashboard money formatter was shadowing the group calculator, collapsing $11.30 and $10.85 both to $11.
+
 ## Next
 - `scenarios` table (Supabase): persist dashboard assumption sets to shareable URLs (`/ono?s=id`) and log recruiter slider interaction; same schema doubles as A/B assignment store. Schema + API first, then UI.
 - Saturation curve so CAC rises with spend density in a fixed radius (base funnel is linear in media today).

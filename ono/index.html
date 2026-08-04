@@ -51,11 +51,8 @@
   .onomark{height:26px;width:auto;flex:none;display:block}
   .ono-w{fill:#FFF46D}
   .ono-e{fill-rule:evenodd;clip-rule:evenodd}
-  .logo-sub{font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;opacity:.82;padding-left:11px;border-left:1px solid rgba(255,255,255,.32);line-height:1.1}
-  @media(max-width:640px){.onomark{height:22px}.logo-sub{display:none}}
-  .vsw{display:flex;gap:3px;background:rgba(0,0,0,.22);padding:3px;border-radius:999px}
-  @media(max-width:1040px){.abx-k{display:none}.abx-b span{display:none}.abx-b{padding:6px 12px}}
-  @media(max-width:760px){.abx{margin-left:0}}
+  @media(max-width:640px){.onomark{height:22px}}
+  .vsw{display:flex;gap:3px;background:rgba(0,0,0,.22);padding:3px;border-radius:999px;margin-left:auto}
   .vsw button{background:transparent;border:0;color:rgba(255,255,255,.82);font-size:12.5px;font-weight:800;padding:7px 14px;border-radius:999px;cursor:pointer;transition:.16s;white-space:nowrap}
   .vsw button:hover{color:#fff}
   .vsw button.on{background:var(--gold);color:#063B44;box-shadow:0 2px 8px rgba(0,0,0,.2)}
@@ -183,15 +180,12 @@
   }
   @media(max-width:520px){.rf-step{font-size:8.2px;padding:3px 7px}}
 
-  .abx{display:flex;align-items:center;gap:8px;margin-left:auto;position:relative}
-  .abx-k{font-size:8.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.7);flex:none;line-height:1.1;max-width:44px}
-  .abx-g{display:flex;gap:3px;background:rgba(0,0,0,.22);border-radius:999px;padding:3px}
-  .abx-b{font:inherit;display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.8);background:transparent;border:0;border-radius:999px;padding:6px 11px;cursor:pointer;transition:.16s;white-space:nowrap;line-height:1}
-  .abx-b b{font-size:11px;font-weight:900;letter-spacing:.02em}
-  .abx-b span{font-size:11.5px;font-weight:800;opacity:.9}
+  .abx{display:flex;align-items:center;position:relative}
+  .abx-g{position:relative;display:flex;background:rgba(0,0,0,.28);border-radius:999px;padding:3px;box-shadow:inset 0 2px 5px rgba(0,0,0,.28)}
+  .abx-th{position:absolute;top:3px;left:3px;width:32px;height:26px;border-radius:999px;background:linear-gradient(135deg,var(--gold-lite),var(--gold));box-shadow:0 2px 9px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.18) inset;transition:transform .3s cubic-bezier(.3,1.5,.4,1)}
+  .abx-b{position:relative;width:32px;height:26px;display:grid;place-items:center;font:inherit;font-size:12.5px;font-weight:900;color:rgba(255,255,255,.72);background:transparent;border:0;border-radius:999px;cursor:pointer;transition:color .18s;line-height:1;padding:0}
   .abx-b:hover{color:#fff}
-  .abx-b.on{background:var(--gold);color:#063B44;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-  .abx-b.on span{opacity:1}
+  .abx-b.on{color:#063B44}
   .abx-b:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   .rf-amt{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:900;font-size:11px;fill:#FFE775;letter-spacing:-.02em}
   .rf-amt.top{font-size:13.5px;fill:#FFD400}
@@ -372,6 +366,27 @@
   /* group order */
 
   /* ---------- game-day events band ---------- */
+  /* ---------- sticky game-day floater ---------- */
+  .evfloat{position:fixed;left:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:11px;
+    background:linear-gradient(150deg,#06333B,#00505B 60%,#00727E);color:#fff;border:1px solid rgba(255,255,255,.16);
+    border-radius:17px;padding:11px 14px;cursor:pointer;font:inherit;text-align:left;max-width:330px;
+    box-shadow:0 14px 38px rgba(4,38,44,.5),0 2px 8px rgba(4,38,44,.3);
+    animation:evfIn .5s cubic-bezier(.2,.9,.3,1.3) both}
+  @keyframes evfIn{from{opacity:0;transform:translateY(26px) scale(.94)}to{opacity:1;transform:none}}
+  .evfloat:hover{transform:translateY(-3px);transition:transform .18s ease}
+  .evfloat[hidden]{display:none}
+  .evf-ic{width:40px;height:40px;flex:none;border-radius:12px;background:rgba(255,212,0,.14);border:1px solid rgba(255,212,0,.3);display:grid;place-items:center;overflow:hidden}
+  .evf-ic svg{width:30px;height:30px;display:block}
+  .evf-tx{min-width:0}
+  .evf-tx small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+  .evf-tx b{display:block;font-size:12px;font-weight:900;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:206px;animation:evfSwap .45s ease}
+  @keyframes evfSwap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .evf-cta{flex:none;background:var(--gold);color:#063B44;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:6px 10px;border-radius:99px}
+  .evf-x{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:#063B44;border:1px solid rgba(255,255,255,.3);color:#fff;font-size:13px;line-height:1;display:grid;place-items:center;cursor:pointer}
+  .evf-x:hover{background:#E0453B}
+  @media(max-width:560px){.evfloat{left:10px;right:10px;bottom:12px;max-width:none}.evf-tx b{max-width:none}}
+  @media(prefers-reduced-motion:reduce){.evfloat,.evf-tx b{animation:none}}
+
   .evband{margin-top:34px;background:linear-gradient(150deg,#06333B,#00505B 55%,#00727E);border-radius:24px;padding:30px 26px 22px;position:relative;overflow:hidden;color:#fff}
   .evband::before{content:"";position:absolute;right:-70px;top:-70px;width:230px;height:230px;border-radius:50%;background:rgba(255,212,0,.09)}
   .evband .kick{color:var(--gold)}
@@ -455,12 +470,51 @@
   .grp{margin-top:20px}
   .grp-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
   .grp-tag{background:var(--gold);color:#063B44;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
-  .seats{display:flex;gap:9px;justify-content:center;margin:20px 0 16px;flex-wrap:wrap}
-  .seat{width:56px;height:56px;border-radius:15px;border:2px dashed var(--line);background:var(--mist);display:grid;place-items:center;cursor:pointer;transition:.18s}
-  .seat:hover{border-color:var(--gold)}
-  .seat.on{border-style:solid;border-color:var(--teal);background:var(--teal-soft)}
-  .seat svg{width:26px;height:26px;stroke:var(--muted);fill:none;stroke-width:2}
-  .seat.on svg{stroke:var(--teal)}
+  /* ---------- mega share CTA ---------- */
+  .share-mega{width:100%;margin-top:12px;display:flex;align-items:center;gap:13px;justify-content:center;
+    background:linear-gradient(135deg,var(--gold-lite),var(--gold));border:0;border-radius:16px;padding:11px 18px;
+    cursor:pointer;position:relative;overflow:hidden;font:inherit;text-align:left;
+    box-shadow:0 8px 22px rgba(255,212,0,.34);animation:smGlow 2.6s ease-in-out infinite;transition:transform .18s ease}
+  .share-mega:hover{transform:translateY(-2px) scale(1.012)}
+  .share-mega:active{transform:translateY(0) scale(.995)}
+  @keyframes smGlow{0%,100%{box-shadow:0 8px 22px rgba(255,212,0,.3)}50%{box-shadow:0 10px 30px rgba(255,212,0,.55)}}
+  .share-mega::after{content:"";position:absolute;top:0;left:-70%;width:34%;height:100%;
+    background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));animation:smShine 3.4s ease-in-out infinite}
+  @keyframes smShine{0%,55%{left:-70%}85%,100%{left:126%}}
+  .sm-art{width:52px;height:52px;flex:none;position:relative}
+  .sm-art svg{width:52px;height:52px;display:block;overflow:visible}
+  .shw{opacity:0;animation:shWave 2.2s ease-out infinite;animation-delay:var(--d,0s);transform-origin:19px 26px}
+  @keyframes shWave{0%{opacity:0;transform:scale(.55)}18%{opacity:1}55%{opacity:1;transform:scale(1)}78%,100%{opacity:0;transform:scale(1.04)}}
+  .shp{animation:shPop 2.2s cubic-bezier(.2,1.5,.4,1) infinite;animation-delay:calc(var(--d,0s) + .32s);transform-origin:center;transform-box:fill-box;opacity:0}
+  @keyframes shPop{0%,14%{opacity:0;transform:scale(.3)}26%{opacity:1;transform:scale(1.18)}34%,72%{opacity:1;transform:scale(1)}86%,100%{opacity:0;transform:scale(.6)}}
+  .sh-star{animation:shTw 2.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes shTw{0%,100%{opacity:.2;transform:scale(.7) rotate(0)}45%{opacity:.75;transform:scale(1.1) rotate(40deg)}}
+  .sm-tx{min-width:0;flex:0 1 auto}
+  .sm-tx b{display:block;font-size:15.5px;font-weight:900;color:#063B44;letter-spacing:-.01em;line-height:1.28;text-wrap:balance;max-width:21ch}
+  .sm-tx small{display:block;font-size:10.5px;font-weight:900;color:#6B5300;letter-spacing:.05em;text-transform:uppercase;margin-top:3px;text-wrap:balance;max-width:26ch}
+  @media(prefers-reduced-motion:reduce){.share-mega,.share-mega::after,.shw,.shp,.sh-star{animation:none}.shw,.shp{opacity:1}}
+  @media(max-width:420px){.sm-tx b{font-size:14.5px}.sm-art{width:44px;height:44px}.sm-art svg{width:44px;height:44px}}
+
+  .gslide{max-width:460px;margin:20px auto 6px}
+  .gpips{display:flex;justify-content:space-between;margin-bottom:9px;padding:0 2px}
+  .gpip{width:24px;height:24px;display:grid;place-items:center}
+  .gpip svg{width:22px;height:22px;display:block;opacity:.28;transform:scale(.82);transition:opacity .2s,transform .25s cubic-bezier(.2,1.5,.4,1)}
+  .gpip.on svg{opacity:1;transform:scale(1)}
+  .gpip.on.newest svg{animation:gpipPop .4s cubic-bezier(.2,1.6,.4,1)}
+  @keyframes gpipPop{0%{transform:scale(.4)}60%{transform:scale(1.22)}100%{transform:scale(1)}}
+  #gRange{width:100%;appearance:none;-webkit-appearance:none;height:10px;border-radius:99px;outline:none;cursor:pointer;
+    background:linear-gradient(90deg,var(--teal) 0%,var(--teal) var(--fill,0%),var(--line) var(--fill,0%))}
+  #gRange::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold-lite),var(--gold));border:3px solid #fff;box-shadow:0 3px 10px rgba(6,51,59,.35);cursor:grab}
+  #gRange::-webkit-slider-thumb:active{cursor:grabbing}
+  #gRange::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--gold-lite),var(--gold));border:3px solid #fff;box-shadow:0 3px 10px rgba(6,51,59,.35);cursor:grab}
+  #gRange:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+  .gmarks{display:flex;justify-content:space-between;margin-top:7px;font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .gsave{max-width:460px;margin:14px auto 34px;height:9px;border-radius:99px;background:var(--mist);border:1px solid var(--line);position:relative;overflow:visible}
+  .gsave i{display:block;height:100%;border-radius:99px;width:0;background:linear-gradient(90deg,var(--teal),var(--palm) 60%,var(--gold));transition:width .3s ease}
+  .gsave em{position:absolute;right:0;top:14px;font-style:normal;font-size:11px;font-weight:900;color:var(--palm);background:var(--palm-soft);border:1px solid var(--line);padding:2px 8px;border-radius:99px;white-space:nowrap}
+  .grp-off{display:inline-block;background:var(--gold);color:#063B44;font-size:11px;font-weight:900;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}
+  .grp-big b{transition:transform .15s ease}
+  .grp-big b.tick{transform:scale(1.12)}
   .grp-calc{background:var(--mist);border:1px solid var(--line);border-radius:15px;padding:20px;text-align:center}
   .grp-big{display:flex;align-items:baseline;gap:10px;justify-content:center;flex-wrap:wrap}
   .grp-big s{font-size:19px;color:var(--muted);font-weight:800}
@@ -586,6 +640,12 @@
   .food-art::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 50%,transparent 62%);transform:translateX(-120%);transition:transform .75s ease}
   .food:hover .food-art::before{transform:translateX(120%)}
 
+  /* ---------- spatula cursor, everywhere ---------- */
+  html,body{cursor:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAE0klEQVR4nMyXe0xbVRzHf/fRe29LoRUojxYILApxMGbCiBsB9tBtDMp8JWZG538KyQzL9s90sGQo02hilEdc6osYNMZ/jAkMtixxhHZ05TVpUNDJoKOI0ELLpLDS3ns8t6xAGa9BJ36a5rTnnp7zPd/f7zxKwxZDwxbz/xNwRqdThBHMN4KADnq8PCtlWatrerq44mTxZXgEUIu/nP+kVkkDMj+mUGTsSnuS3ZHyBElSpNI27jiWna/16JsaDBBkAgTsO6r9Uh0VlfmK9jATHRkJyjA5JGrUsC1eQ/52q39vVp6WNzQ16CGIkAFqSCp/V/p2DiEAAQngL5VhYSAPkUloknj3bKXuPASRAAEeng+VMuz84AiXgEuCIOClQ89CCCelKALOna3+/H0IEgECJBLq1vDY6PzMTd09YJuYwN8RsCwDLx7aD1KOI0mE3i6t1H0AQSBAgNs9W6bv6J61O52+mYuD/nS1GcbGHT4RHMfB8wf3g4xjCSDgTGnlxQ9hkwQkYUtTQ2/OkQKqr39gd5JGTSeoY4EgCbh2ow000dHiwEBTNCTFx0H/nSHCK6Cs7MMFSsPlhiuwQailFbn5BQTPC6/2/WkRkhLmRIjo2zshVqUCmZQDmqYgXh0Dty1D2AmUmZOnVeEl2gQb4AEBLY0Nlr2mrjScA8m9AxaElyGVqIkFLy9Aa+dNEJenTCoFhqYhNflxiImMJAeswxnZGxTxgAAoL8ehqP8xt60jmedRyh+DFkjQxFBJcWpwe7xg+sUMMaoInwgxUaXYEVV4ODk4/FfGRpwgVnyCEFFWrdPh3DtGURR39Jl9EmVYKHT19ALDSCBlW6KYpyAIgq/5qH0cmk0dPBL4rytKit+ETQu4T2mVrho3eo0kyRDtgVyJIjR0YZPCgyOfVuR7j9knoKW9k8f1tRdKit6AdUCt1UC0NDevMFoAYTtOOjpWFUVxeDX4Z75QIl84wpUK0jry986cI4USfVP9tbX6J2EdVJwsOg2IOOX1CO9cNbR67A7H3KCiDfcH971wKVpKU6QX1smaIVhKac0XJTQBHx/Ys5tWKkLnwyCW4w4nGNq7kNtuuf5R+YWc9fS3ZgiWom+sN+FsH7NYh/OiI1UkyzG+mU84J8HQ0YXu/m4k7Nd/SEiPk6ema0Kc5mHX7dX6e2gH/JRVXSyiKLomOzODFjMSb1TIaf6ZcPYshB35spN4ru7GaH3QBYicq9K9RZDkp+KSnewzmh03G59a/DyEo2FqxuPFKgq/NdqWvVGtKwlX4r2Sohp8Vp/AvZzu/rU2Ewtp8z9TyllIilGCOkKOT3Ci/vjTqvzl+tiUA0s5nhVRRiCqPFTGkAlRYb57hIjjnxlktU/xyznx0Em4GuahmZY0jSzai1C6QsbiM2vOYCkrIViGgqlpz8vp8fJW85BrwP+bTYVgOb4z2U4IPPqsf2TSPTO7sB0oQzgyTiVnsCnfwyLng+qAH7PVdWVHnDTC6bqXge94lISeG4ZjaAKHg09Vc0azdXpQrAu6A37qjLZTeG/6qn/E6XXd8/jq8CGB751Ihqc94m/3SBzwg524hGOumnS502c9Xto2OWMXvPylOqNd528T1FWwEq/viXoBj7QTf7x7hxmram4G738qYDW2/M/pvwAAAP//6mWTkwAAAAZJREFUAwBGbwjwPvKYhgAAAABJRU5ErkJggg==") 4 4, auto}
+  a,button,summary,select,label,[role="button"],[role="tab"],input[type="range"]{cursor:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEgUlEQVR4nOyWbUxbVRzG/+fce1taWuigtBRE5K28bmxZFHEzMWaGaOIHPywxgRg/OEjcSGTJdE5YGtlmnJolNAQZWfDTjDEajXPo4pwSdRVFNgxUKt0AGe0olJaXtrf33nM9t1D2lmXshfGFJ7m37em59/87z3nOuZeFNRYLa6x1gHWAawCyjA60tD+LALbQY3BBCp07tndvGFZZSDk1trTncSx7Vs2pTHp9IjcTDEoRPooB449lQB8d3vPaKKySYgAH7R3ny6y5W3Y8VaEmskzNABj3eODLH34CmTYgwN8DIm8219f9DQ9Y6J2WticwYn/bXb2T4TiWFpeBEDn26Z+dA0dfP1z6bxyUJgaji0SUmw69UXsKHpBYJKPKTLMRVBwHMiwWVqQ4kaxLhOe2VcB8aBP8OeBELvfIZsTIXzfZj18lBN7iZiY+tdlsItyHMALZsxAJx6ZCKa6U90xOAc3AMoxWkwDbt26Gl1+sgjKrFVNZGBZ1EmOmt9He3mBrbdXBPQrZ7CcyCCJjVdsrmcLcbJAkAj/39MLAsBsKcx6D0oJ8MCTr6bSQWDYkIoEgSODz+4EXBOh3usLBuTlEs9JGu3xwpKHOc1cAyqm57YSNF8SDFeVlUF5kRUoW/IFZuOAcAtfIGFjSjFCSnwsZ6aYbMkJiB4FJnx+cw+6IZ2qao5aeJAJ671DDLueKARQ1tXQ8zTD4fVmWHldsLi+2Yk2CGkLhMDjdIzBIHWEZBkoK8iAv+1FlvmKZkeIwdPiz8wvwj/uyOHZlAiOEjzbX73r7TgBM/Et31zdj23Y8/x0BeH1y2u/tH3Lp5kNhyZyawmRZ0qE4LxfUKg6GLo3CI9QJhmVjTsRAlrLCsRykm9Kwd8oXikT4091dp87fCQDd3NBkb99IXT1Ab/sSRnhCRnJWTmYm2VRsVRmS9LGMKOUWM7E4cuW3tJQRz+QkOHr7xNFv26qk0GjfyV+CM3cFEFejvSNHJmQ/HeIrCCEPrZKVYTaKG4sKE1I3GJaLk6UsxLPR7egRRhynucDFM8oUzdNVFiSiuC+/Z+YzG+VeMUBcdImlCyLbQEF2I0AuxKCiFEMylFoLNBZj6uLIFUeoM3Q1wI+/OmD8q6NA+IXFG9A/MQMRyhagnY/4pnzHu4aBXzHAMsixToMIokXQkgkVj+oRhn2J2kSutCBXYzGZYhC//3VBcP9xlptyfLF8XYpODZZUHQQXePAFQqGoSARqw4d0n7F/3jsTXDHALUCdnQnCXLSWbkqNGk6ly8nO0gy4/pW9Z9rPRafHnwG6DJThF2RsoOG99tCdC0UVkHCIFxk6RYfvGWAZxGZjoynmGhVmbTQLg+/W175QU5m2h27xLSoWy1nmJKxVc7dcF+EFcF8Nzt83wO1Us9VoQRzajzCu06pYkmbQavRa1Q19LnsDqwcQV3VFShLCbC3dcBo5jlGbDNqE5EQ1iCKBoSt+YdUB4tpZAip1sulVjJGNw1gtSERPHyCtDw3gelVXmJ/kEO/9xBEYWROA67X+Wr4OsOYA/wMAAP//BiR8kgAAAAZJREFUAwBhfyccpJE6TwAAAABJRU5ErkJggg==") 4 4, pointer !important}
+  input[type="range"]::-webkit-slider-thumb{cursor:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEgUlEQVR4nOyWbUxbVRzG/+fce1taWuigtBRE5K28bmxZFHEzMWaGaOIHPywxgRg/OEjcSGTJdE5YGtlmnJolNAQZWfDTjDEajXPo4pwSdRVFNgxUKt0AGe0olJaXtrf33nM9t1D2lmXshfGFJ7m37em59/87z3nOuZeFNRYLa6x1gHWAawCyjA60tD+LALbQY3BBCp07tndvGFZZSDk1trTncSx7Vs2pTHp9IjcTDEoRPooB449lQB8d3vPaKKySYgAH7R3ny6y5W3Y8VaEmskzNABj3eODLH34CmTYgwN8DIm8219f9DQ9Y6J2WticwYn/bXb2T4TiWFpeBEDn26Z+dA0dfP1z6bxyUJgaji0SUmw69UXsKHpBYJKPKTLMRVBwHMiwWVqQ4kaxLhOe2VcB8aBP8OeBELvfIZsTIXzfZj18lBN7iZiY+tdlsItyHMALZsxAJx6ZCKa6U90xOAc3AMoxWkwDbt26Gl1+sgjKrFVNZGBZ1EmOmt9He3mBrbdXBPQrZ7CcyCCJjVdsrmcLcbJAkAj/39MLAsBsKcx6D0oJ8MCTr6bSQWDYkIoEgSODz+4EXBOh3usLBuTlEs9JGu3xwpKHOc1cAyqm57YSNF8SDFeVlUF5kRUoW/IFZuOAcAtfIGFjSjFCSnwsZ6aYbMkJiB4FJnx+cw+6IZ2qao5aeJAJ671DDLueKARQ1tXQ8zTD4fVmWHldsLi+2Yk2CGkLhMDjdIzBIHWEZBkoK8iAv+1FlvmKZkeIwdPiz8wvwj/uyOHZlAiOEjzbX73r7TgBM/Et31zdj23Y8/x0BeH1y2u/tH3Lp5kNhyZyawmRZ0qE4LxfUKg6GLo3CI9QJhmVjTsRAlrLCsRykm9Kwd8oXikT4091dp87fCQDd3NBkb99IXT1Ab/sSRnhCRnJWTmYm2VRsVRmS9LGMKOUWM7E4cuW3tJQRz+QkOHr7xNFv26qk0GjfyV+CM3cFEFejvSNHJmQ/HeIrCCEPrZKVYTaKG4sKE1I3GJaLk6UsxLPR7egRRhynucDFM8oUzdNVFiSiuC+/Z+YzG+VeMUBcdImlCyLbQEF2I0AuxKCiFEMylFoLNBZj6uLIFUeoM3Q1wI+/OmD8q6NA+IXFG9A/MQMRyhagnY/4pnzHu4aBXzHAMsixToMIokXQkgkVj+oRhn2J2kSutCBXYzGZYhC//3VBcP9xlptyfLF8XYpODZZUHQQXePAFQqGoSARqw4d0n7F/3jsTXDHALUCdnQnCXLSWbkqNGk6ly8nO0gy4/pW9Z9rPRafHnwG6DJThF2RsoOG99tCdC0UVkHCIFxk6RYfvGWAZxGZjoynmGhVmbTQLg+/W175QU5m2h27xLSoWy1nmJKxVc7dcF+EFcF8Nzt83wO1Us9VoQRzajzCu06pYkmbQavRa1Q19LnsDqwcQV3VFShLCbC3dcBo5jlGbDNqE5EQ1iCKBoSt+YdUB4tpZAip1sulVjJGNw1gtSERPHyCtDw3gelVXmJ/kEO/9xBEYWROA67X+Wr4OsOYA/wMAAP//BiR8kgAAAAZJREFUAwBhfyccpJE6TwAAAABJRU5ErkJggg==") 4 4, pointer}
+  input[type="text"],input[type="email"],input[type="tel"],textarea{cursor:text !important}
+
   /* ---------- demo walkthrough ---------- */
   .dcur{position:fixed;z-index:400;width:42px;height:42px;pointer-events:none;opacity:0;transition:opacity .25s,left .34s cubic-bezier(.4,.1,.2,1),top .34s cubic-bezier(.4,.1,.2,1);transform:translate(-8px,-6px)}
   .dcur.on{opacity:1}
@@ -618,6 +678,8 @@
   .gth:hover{transform:translateY(-2px);border-color:var(--gold)}
   .gth.on{border-color:var(--gold);box-shadow:0 6px 18px rgba(255,212,0,.4)}
   .gth-val{position:absolute;left:4px;bottom:4px;background:rgba(6,51,59,.86);color:var(--gold-lite);font-size:9px;font-weight:900;padding:2px 5px;border-radius:5px;line-height:1.2}
+  .gth-pl{position:absolute;left:4px;top:4px;background:var(--gold);color:#063B44;font-size:7.5px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:1.5px 4px;border-radius:4px;line-height:1.2}
+  .gth-pl:empty{display:none}
   .ghero-main{position:relative}
   .ghero-card{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(6,51,59,.26);aspect-ratio:560/372;background:var(--sand)}
   .ghero-card img{width:100%;height:100%;object-fit:cover;display:block;animation:ghIn .55s cubic-bezier(.2,.9,.3,1.2)}
@@ -770,7 +832,6 @@
   @media(max-width:680px){
     .sec{padding-top:40px;padding-bottom:40px}
     .hd-in{flex-wrap:wrap;gap:10px}
-    .abx{order:2}
     .vsw{width:100%;margin-left:0;order:3}
     .vsw button{flex:1;padding:8px 6px;font-size:11.5px}
     .opts{grid-template-columns:1fr}
@@ -1075,13 +1136,12 @@
   <div class="hd-in">
     <div class="logo">
       <svg class="onomark" role="img" aria-label="Ono Hawaiian BBQ" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232.01 43.48"><path class="ono-w" d="M5.51 1.37h-4.1V4.3h3.97v1.25H1.4v3.01h4.23V9.8H.01V.12h5.5v1.25zm6.21-.7v1.57c-.34-.34-.75-.6-1.2-.78-.34-.13-.71-.21-1.08-.21-.39-.02-.78.1-1.1.32-.28.18-.44.49-.44.83 0 .34.14.66.39.89.29.26.61.5.96.69.12.06.24.13.36.21s.26.14.39.21c.53.3 1.01.68 1.44 1.11.45.49.69 1.14.65 1.8.02.71-.26 1.39-.77 1.88-.52.5-1.23.76-1.95.74-.49 0-.98-.07-1.44-.22-.45-.15-.88-.37-1.26-.67V7.27c.32.43.72.79 1.19 1.06.42.24.89.36 1.37.36.37.02.73-.08 1.04-.29.23-.16.4-.38.49-.64.01-.05.02-.1.03-.14.01-.05.01-.1.02-.14.01-.41-.17-.8-.48-1.07-.36-.32-.74-.6-1.13-.85-.09-.05-.17-.1-.25-.15l-.24-.15c-.52-.31-1-.68-1.45-1.09a2.1 2.1 0 01-.66-1.6c-.02-.7.27-1.39.81-1.87.6-.49 1.36-.75 2.14-.71.37 0 .74.06 1.1.17.37.12.73.29 1.06.51h.01zm9.17.7h-3.35V9.8h-1.39V1.37H12.8V.12h8.09v1.25zm.62 7.12c.16.16.25.37.25.6.01.23-.08.44-.25.6-.16.16-.38.24-.61.24-.22 0-.44-.09-.6-.24a.84.84 0 01-.25-.6c0-.23.09-.44.25-.6.16-.16.37-.26.6-.26.23.01.45.1.61.26zM31.62 9.8h-6.13v-.1c.21-.24.43-.5.66-.78l.71-.86c.1-.15.21-.29.33-.43s.22-.29.33-.43c.26-.33.5-.66.73-.99s.43-.65.62-.95c.1-.19.2-.36.29-.52.08-.15.15-.3.21-.46.06-.17.1-.34.14-.52.04-.19.05-.38.05-.58.02-.48-.15-.94-.47-1.3-.3-.34-.74-.52-1.19-.51-.37.01-.74.1-1.07.27a3.8 3.8 0 00-1.12 1.03V.91c.19-.14.38-.28.58-.4.18-.11.37-.2.57-.28.18-.08.36-.13.55-.17.19-.04.39-.06.58-.06.8-.03 1.57.27 2.13.84.56.59.86 1.38.82 2.19a5.355 5.355 0 01-.07.8c-.17.72-.47 1.4-.89 2-.63.92-1.32 1.81-2.05 2.66h3.71l-.02 1.31zm7.16-4.84c.06 1.26-.24 2.51-.85 3.61a2.562 2.562 0 01-3.46 1.07c-.47-.25-.84-.62-1.08-1.07a7.944 7.944 0 010-7.2 2.562 2.562 0 014.53 0c.62 1.1.91 2.35.85 3.61v-.02zm-1.39 0a6.36 6.36 0 00-.46-2.66 1.316 1.316 0 00-2.54 0 7.956 7.956 0 000 5.36c.19.7.92 1.11 1.62.92.45-.12.8-.47.92-.92.34-.85.5-1.76.46-2.68v-.02zm8.49 0c.06 1.26-.24 2.51-.86 3.61a2.561 2.561 0 01-3.47 1.06c-.45-.24-.82-.61-1.06-1.06a8.006 8.006 0 010-7.2 2.562 2.562 0 014.53 0c.62 1.1.92 2.35.86 3.61v-.02zm-1.39 0a6.36 6.36 0 00-.46-2.66 1.316 1.316 0 00-2.54 0 8.078 8.078 0 000 5.36c.19.7.92 1.11 1.62.92.45-.12.8-.47.92-.92.35-.85.5-1.76.46-2.68v-.02zm8.43 4.84h-6.14v-.1c.21-.24.43-.5.67-.78s.47-.57.7-.86c.1-.15.22-.29.33-.43s.22-.29.33-.43c.25-.33.5-.66.73-.99s.44-.65.62-.95c.11-.19.2-.36.28-.52.08-.15.15-.3.21-.46.06-.17.1-.34.14-.52.03-.19.05-.38.05-.58.02-.48-.16-.95-.48-1.3-.3-.34-.73-.52-1.19-.51-.37.01-.73.1-1.06.27-.44.26-.82.61-1.12 1.03V.91c.19-.14.38-.28.58-.4.18-.11.37-.2.57-.28.18-.08.37-.13.56-.17.19-.04.39-.06.58-.06.8-.03 1.57.28 2.13.84.56.59.86 1.38.83 2.19 0 .13-.01.27-.03.4-.01.13-.03.27-.05.4-.17.72-.48 1.4-.9 2-.63.92-1.31 1.81-2.05 2.66h3.71V9.8z" transform="translate(90 33.551)"/><path class="ono-w" d="M2.58 0a2.484 2.484 0 012.53 2.45 2.484 2.484 0 01-2.45 2.53h-.1a2.492 2.492 0 01-2.58-2.4A2.509 2.509 0 012.4 0h.18zm-.03.5C1.46.54.6 1.46.65 2.56a1.99 1.99 0 001.94 1.91 1.9 1.9 0 001.9-1.9v-.06c.04-1.07-.8-1.96-1.86-2h-.08zm-.37 3.27H1.6V1.29c.32-.05.64-.07.96-.08.3-.03.59.04.85.2.17.12.27.32.26.53-.03.29-.24.54-.53.59v.03c.24.08.36.27.44.61.03.21.09.41.18.61h-.6c-.1-.19-.17-.4-.2-.61-.05-.26-.2-.38-.52-.38h-.27l.01.98zm.01-1.4h.27c.32 0 .58-.11.58-.36 0-.23-.17-.38-.53-.38-.11 0-.21.01-.32.03v.71z" transform="translate(226.897 28.57)"/><path class="ono-w" d="M24.41 24.69c.3-1.44.47-2.9.51-4.37.14-3.46-.3-6.92-1.29-10.24l-.1-.32 2.72-2.85.4.58c.57.9 1.02 1.87 1.34 2.88 1.7-1 3.61-1.6 5.58-1.74a4.18 4.18 0 014.24 3.13c.81 2.46.54 5.46-.8 8.92a25.22 25.22 0 01-2.24 4.43l-.26.39-3.6-1.47.26-.55c.64-1.38 1.21-2.8 1.68-4.25.91-2.81 1.1-4.85.54-5.75a1.18 1.18 0 00-1.14-.53c-1.19.12-2.34.5-3.36 1.12.47 3.19.45 6.44-.06 9.63l-.05.34-4.64 1.69.27-1.04zm-13.98 1.15c-.22 0-.45-.01-.68-.02a9.335 9.335 0 01-7.2-3.77 14.575 14.575 0 01-2.54-8.89c-.01-1.93.4-3.83 1.2-5.58C1.94 6 2.99 4.59 4.3 3.44 6.8 1.24 10.02.01 13.36 0c1.7-.01 3.39.35 4.93 1.05 1.91.95 3.36 2.61 4.05 4.62.88 2.62.89 5.46.02 8.08-1.26 4.23-2.87 7.27-4.92 9.27a9.572 9.572 0 01-7.01 2.82zm4.32-19.85c-2.9 0-7.37 2.7-7.72 8.48-.3 4.91 1.04 6.57 3.54 6.85.13.01.26.02.39.02 3.71.04 5.86-4.26 6.46-6.87.56-1.98.67-4.06.31-6.08a2.824 2.824 0 00-2.06-2.3c-.31-.08-.62-.11-.92-.1m31 19.85c-.15 0-.3 0-.45-.01-1.9-.06-3.66-.98-4.79-2.51a9.722 9.722 0 01-1.69-5.91c0-1.28.27-2.55.8-3.71a8.436 8.436 0 012.05-2.76 9.156 9.156 0 016.02-2.29 7.74 7.74 0 013.28.7c1.27.63 2.24 1.73 2.69 3.07.59 1.74.59 3.63.01 5.37-.55 2.3-1.68 4.42-3.27 6.16a6.283 6.283 0 01-4.65 1.89zm2.87-13.2a5.653 5.653 0 00-5.13 5.64c-.2 3.26.69 4.37 2.35 4.56.08.01.17.01.26.01 2.47.02 3.9-2.83 4.29-4.57.38-1.31.45-2.7.2-4.04-.11-.74-.65-1.34-1.37-1.53-.19-.05-.4-.07-.6-.07" transform="translate(0 1.633)"/><path class="ono-w" d="M.01 25.89l.32-.82c2.03-5.1 3-10.56 2.85-16.05-.03-2.12-.34-4.23-.9-6.27l-.16-.49L6.65 0l.45 1.8C9.25.75 11.6.14 14 .02c1.72-.1 3.4.56 4.6 1.8a6.656 6.656 0 011.99 4.97c-.13 2.25-1.53 4.42-4.16 6.47 1.35.9 2.23 2.34 2.41 3.96.06 2-1.41 3.96-4.39 5.84l-.03.02-.03.01a25.75 25.75 0 01-3.82 1.42c-3.15.92-6.41 1.39-9.69 1.4l-.87-.02zm7.74-10.96c-.2 2.54-.59 5.05-1.17 7.53 1.63-.78 4.43-2.41 5.1-4.67l.01-.02.01-.02a2.08 2.08 0 00-.91-2.81c-.48-.25-1.03-.3-1.55-.14-.5.01-1 .05-1.49.13m-.11-9.6c.35 2.06.48 4.15.39 6.24 1.43-.3 4.48-1.21 4.81-3.46v-.02l.01-.02c.17-.81.02-1.65-.42-2.35a2.66 2.66 0 00-2.18-.8c-.89.02-1.77.16-2.61.41" transform="translate(169.355 1.572)"/><path class="ono-w" d="M18.65 25.89l.32-.82a40.742 40.742 0 002.86-16 25.59 25.59 0 00-.9-6.33l-.16-.49.46-.23L25.29 0l.45 1.8A17.85 17.85 0 0132.65.02c1.72-.1 3.4.56 4.6 1.8a6.656 6.656 0 011.99 4.97c-.14 2.25-1.53 4.42-4.16 6.47 1.35.9 2.24 2.34 2.41 3.96.06 2-1.41 3.96-4.39 5.84l-.03.02-.03.01c-1.23.58-2.51 1.05-3.82 1.42-3.15.92-6.41 1.39-9.69 1.4h-.88zm7.73-10.96c-.2 2.54-.59 5.05-1.17 7.53 1.63-.78 4.43-2.41 5.1-4.67v-.02l.01-.02a2.08 2.08 0 00-.91-2.81c-.48-.25-1.03-.3-1.55-.14-.49.01-.99.05-1.48.13m-.12-9.6c.35 2.06.48 4.15.39 6.24 1.42-.3 4.48-1.21 4.81-3.46v-.02l.01-.02c.17-.81.02-1.65-.42-2.35a2.66 2.66 0 00-2.18-.8c-.89.02-1.77.16-2.61.41m27.84 19.4a9.93 9.93 0 01-4.66 1.1c-.22 0-.45-.01-.68-.02a9.335 9.335 0 01-7.2-3.77 14.575 14.575 0 01-2.54-8.89c-.01-1.93.4-3.83 1.2-5.58a12.52 12.52 0 013.09-4.13c2.5-2.2 5.72-3.43 9.05-3.44 1.7-.01 3.38.35 4.93 1.05 1.91.94 3.36 2.6 4.05 4.62.88 2.62.89 5.46.02 8.08-1.2 4.03-2.72 6.97-4.63 8.97l1.76 1.49-2.16 2.91s-1.93-2.03-2.23-2.39zm-.35-18.74c-2.9 0-7.36 2.69-7.7 8.47-.3 4.9.82 7.52 3.31 7.8.13.01.26.02.39.02.51-.01 1.01-.1 1.49-.28-.32-.25-.66-.48-1.02-.69l-.8-.44.72-.56 1.97-1.53 1.63 1.39c1.34-1.66 2.25-3.62 2.66-5.72.56-1.97.67-4.05.31-6.07-.17-1.1-.98-2-2.06-2.29-.29-.07-.59-.1-.9-.1" transform="translate(169.355 1.572)"/><path class="ono-w" d="M85.26 27.48a5.71 5.71 0 01-4.92-2.1 6.447 6.447 0 01-1.08-3.76c.01-1.38.56-2.7 1.52-3.69a6.574 6.574 0 014.91-1.83c1.14.01 2.28.18 3.38.48.21-.84.14-1.72-.21-2.51-.19-.28-.51-.46-.85-.48-.1-.01-.19-.02-.29-.02-1.52 0-3.02 1.45-3.47 2.01l-.32.4-1.97-1.1.36-.55c.11-.17 2.74-4.09 6.41-4.09.75 0 1.49.16 2.17.47 1.41.67 2.38 2 2.59 3.54.27 1.62.25 3.28-.07 4.9-.42 2.34-1.08 4.63-1.96 6.84l-.11.26-.26.09c-1.86.69-3.83 1.07-5.83 1.14zm2.66-7.82c-1.03-.09-2.06.23-2.85.89-.41.51-.57 1.17-.45 1.81.15 1.41 2.21 1.34 3.41 1.44.45-1.32.73-2.7.84-4.09-.32-.03-.64-.05-.95-.05m6.54 6.66c.31-1.43.49-2.88.53-4.34.15-3.45-.27-6.9-1.26-10.21l-.1-.32 2.72-2.85.4.58c.57.9 1.02 1.87 1.34 2.88 1.7-1.01 3.61-1.6 5.58-1.74a4.18 4.18 0 014.24 3.13c.81 2.46.54 5.46-.8 8.91a25.88 25.88 0 01-2.23 4.43l-.26.39-3.6-1.47.26-.55c.64-1.38 1.2-2.8 1.68-4.25.91-2.81 1.1-4.85.53-5.75a1.18 1.18 0 00-1.14-.53c-1.19.12-2.34.5-3.36 1.12.47 3.19.45 6.44-.06 9.63l-.05.35-4.7 1.61.28-1.02zm-75.51-.94c-1.12-1.02-1.08-2.72-1.08-3.77.01-1.38.56-2.71 1.52-3.7a6.62 6.62 0 014.92-1.84c1.15.01 2.29.18 3.39.48.21-.84.14-1.72-.21-2.51a1.06 1.06 0 00-.85-.48c-.1-.01-.19-.02-.29-.02-1.52 0-3.02 1.45-3.47 2.02l-.33.4-1.97-1.1.36-.55c.11-.16 2.74-4.09 6.42-4.09.75 0 1.49.16 2.17.47 1.41.67 2.39 2 2.6 3.55.27 1.63.25 3.29-.07 4.91-.42 2.31-1.12 4.55-2.1 6.68-2.24.75-6.93 3.28-11.01-.45zm7.59-5.74a3.96 3.96 0 00-2.86.89c-.41.51-.57 1.17-.45 1.81.15 1.42 2.22 1.34 3.42 1.45.45-1.33.74-2.7.84-4.1-.31-.04-.63-.05-.95-.05m25.03 5.74c-1.12-1.02-1.08-2.72-1.08-3.77.01-1.38.56-2.71 1.52-3.7a6.62 6.62 0 014.92-1.84c1.15.01 2.29.18 3.39.48.21-.84.14-1.72-.21-2.51a1.06 1.06 0 00-.85-.48c-.1-.01-.19-.02-.29-.02-1.52 0-3.02 1.45-3.47 2.02l-.32.4-1.98-1.1.36-.55c.11-.16 2.74-4.09 6.43-4.09.75 0 1.49.16 2.17.47 1.41.67 2.39 2 2.6 3.55.27 1.63.25 3.29-.07 4.91-.42 2.31-1.12 4.55-2.1 6.68-2.25.75-6.94 3.28-11.02-.45zm7.59-5.74a3.96 3.96 0 00-2.86.89c-.41.51-.57 1.17-.45 1.81.15 1.42 2.22 1.34 3.42 1.45.45-1.33.74-2.7.84-4.1-.31-.04-.63-.05-.95-.05" transform="translate(57.305)"/><path class="ono-w" d="M41.93 25.7c.43-1.97.44-4.01.03-5.99-.66 1.78-2.88 6.16-2.88 6.16l-5 1.49.13-.83c0-.03.16-2.63.15-6.02C34.32 12.3 30.05 9 30.05 9l4.72-1.5.25.28c.8 1.02 1.43 2.17 1.86 3.4.92 2.49 1.39 5.11 1.41 7.76 1-2 1.63-4.16 1.85-6.38l.02-.41 2.74-.8.24.31c.07.09 1.5 1.95 2.2 6.65 1.33-3 3.93-8.48 6.1-10.55l.16-.16 9.74-.55-2.35 1.24c-.03.01-8.99 4.09-12.63 18.62l-.14.58-4.29-1.79zM12.97 15.24c.07-.43-1.14-.51-2.19-.51-.96.02-1.9.23-2.77.63-.42 4.29-.3 4.08-2.52 12.06L.98 25.67c1.3-2.84 2.18-5.86 2.61-8.96.48-4.14.1-10.07-2.88-13.52l-.7-.81 6.39-.82.14.46c.95 3.02 1.48 6.16 1.56 9.33.94-.23 1.91-.35 2.89-.35.85-.01 1.69.08 2.51.28.18-1.77 1.7-5.98 3.52-9.72l5.92.86s-8.74 7.8-5.6 23.14l-4.66 1.92c-.27-4.08-.17-8.18.29-12.24z" transform="translate(57.305)"/><path class="ono-w ono-e" d="M66.49 25.7c2.68-4.3 4.79-20.43 2.85-25.23l.83-.37c4.24 4.78 1.97 25.77 2.19 27.3l-5.87-1.7zm11.79-.41c-1.68-4.7-2.16-12.16-.7-16.19l-1.04-.33c-4.47 9.89-2.43 17.49-2.56 18.57l4.3-2.05z" transform="translate(57.305)"/><path class="ono-w ono-e" d="M77.43 7.34s-3.46-.08-7.02 3.76c0 0 2.32-1.64 4.06-1.57 0 0-3.69 1.44-3.97 4.28a8.616 8.616 0 014.67-3.17s-2.73 2.35-2.84 4.45c0 0 2.64-3.29 4.28-3.65 0 0 2.43 2.35 1.71 4.45a6.1 6.1 0 00-.22-4.88 5.32 5.32 0 014.18 3.09s-.57-3.44-2.3-4.37c0 0 2.54.58 3.19 1.52.01.01-.59-2.69-5.74-3.91z" transform="translate(57.305)"/><path class="ono-w" d="M77.72 6.96c.03-3.05-3.17-3.75-3.17-3.75 1.81-.49 5.36 1.45 5.36 1.45-.32-.73-.81-1.37-1.43-1.87C75.23 0 69.97 0 69.97 0 68.06.15 66 2.29 64.38 4.46c-1.33 1.6-2.42 3.38-3.24 5.28 1.51-2.6 6.38-5.38 6.38-5.38a11.876 11.876 0 00-2.82 6.87c1.03-1.95 2.4-3.69 4.04-5.16-.81 1.94-1.23 4.02-1.23 6.12a19.26 19.26 0 013.52-6.22c2.01-.02 4.82 1.85 4.82 1.85a3.477 3.477 0 00-3.41-2.92c2.46-.56 5.28 2.06 5.28 2.06z" transform="translate(57.305)"/></svg>
-      <span class="logo-sub">Campaign concept</span>
     </div>
-    <div class="abx" role="group" aria-label="Prize structure A B test">
-      <span class="abx-k">A/B test</span>
+    <div class="abx" role="group" aria-label="Prize structure test">
       <div class="abx-g">
-        <button class="abx-b on" data-v="a" type="button" title="Variant A: three equal $200 gift cards"><b>A</b><span>Equal split</span></button>
-        <button class="abx-b" data-v="b" type="button" title="Variant B: $400 first place, $150 second, $50 third"><b>B</b><span>Tiered</span></button>
+        <span class="abx-th" id="abxTh" aria-hidden="true"></span>
+        <button class="abx-b on" data-v="a" type="button" title="Variant A. Three equal $200 gift cards" aria-label="Variant A, equal split">A</button>
+        <button class="abx-b" data-v="b" type="button" title="Variant B. Tiered prizes: $400 first, $150 second, $50 third" aria-label="Variant B, tiered">B</button>
       </div>
     </div>
     <div class="vsw" role="tablist" aria-label="Campaign views">
@@ -1584,7 +1644,7 @@
                 <path d="M20 13c2.4 2.8 3.8 4.6 3.8 6.8A3.8 3.8 0 0 1 20 23.6a3.8 3.8 0 0 1-3.8-3.8c0-2.2 1.4-4 3.8-6.8z" fill="#FFD400"/></g>
               <g class="fl-spark" fill="#FFD400"><circle cx="29" cy="14" r="1.5"/><circle cx="12" cy="12" r="1.2"/></g>
             </svg>
-            <b>Grilled to order</b><span>0 MIN</span>
+            <b>Grilled to order</b><span>Starts now</span>
           </div>
           <div class="dlv-s">
             <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -1632,7 +1692,10 @@
         <button onclick="share('copy')" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13.5 14 9.5M8.5 11 6.5 13a3.2 3.2 0 0 0 4.5 4.5l2-2M15.5 13l2-2A3.2 3.2 0 0 0 13 6.5l-2 2"/></svg></button>
       </div>
       <div class="lnk"><input readonly id="refLink" value="nathanjsong.com/ono"><button id="copyLinkBtn">Copy</button></div>
-      <button class="btn btn-g" style="width:100%;margin-top:12px" id="openShare">Share and multiply my entries</button>
+      <button class="share-mega" id="openShare" type="button">
+        <span class="sm-art"><svg viewBox="0 0 52 52" aria-hidden="true"><circle cx="19" cy="26" r="7.2" fill="#063B44"/><circle cx="19" cy="23.4" r="2.7" fill="#FFD400"/><path d="M13.6 30.4c1.2-2.6 3.1-3.9 5.4-3.9s4.2 1.3 5.4 3.9" fill="#FFD400"/><g class="shw" style="--d:0s"><path d="M27 20.6 Q33 14 39.4 11.8" fill="none" stroke="#063B44" stroke-width="1.9" stroke-dasharray="2.5 3" stroke-linecap="round"/><circle cx="41.6" cy="10.6" r="4.9" fill="#063B44"/><circle cx="41.6" cy="8.9" r="1.9" fill="#FFF"/><path d="M38 13.6c.8-1.8 2.1-2.7 3.6-2.7s2.8.9 3.6 2.7" fill="#FFF"/><g class="shp"><rect x="45.4" y="4" width="12" height="7" rx="3.5" fill="#063B44"/><text x="51.4" y="9.3" text-anchor="middle" font-size="5.6" font-weight="900" fill="#FFE775">+1</text></g></g><g class="shw" style="--d:.55s"><path d="M28.6 26 Q36 26 43 26" fill="none" stroke="#063B44" stroke-width="1.9" stroke-dasharray="2.5 3" stroke-linecap="round"/><circle cx="45.2" cy="26" r="4.9" fill="#063B44"/><circle cx="45.2" cy="24.3" r="1.9" fill="#FFF"/><path d="M41.6 29c.8-1.8 2.1-2.7 3.6-2.7s2.8.9 3.6 2.7" fill="#FFF"/><g class="shp"><rect x="34.4" y="29.4" width="12" height="7" rx="3.5" fill="#063B44"/><text x="40.4" y="34.7" text-anchor="middle" font-size="5.6" font-weight="900" fill="#FFE775">+1</text></g></g><g class="shw" style="--d:1.1s"><path d="M27 31.4 Q33 38 39.4 40.2" fill="none" stroke="#063B44" stroke-width="1.9" stroke-dasharray="2.5 3" stroke-linecap="round"/><circle cx="41.6" cy="41.4" r="4.9" fill="#063B44"/><circle cx="41.6" cy="39.7" r="1.9" fill="#FFF"/><path d="M38 44.4c.8-1.8 2.1-2.7 3.6-2.7s2.8.9 3.6 2.7" fill="#FFF"/><g class="shp"><rect x="45.4" y="43" width="12" height="7" rx="3.5" fill="#063B44"/><text x="51.4" y="48.3" text-anchor="middle" font-size="5.6" font-weight="900" fill="#FFE775">+1</text></g></g><path class="sh-star" d="M10 9l1.3 2.9 2.9 1.3-2.9 1.3L10 17.4l-1.3-2.9L5.8 13.2l2.9-1.3z" fill="#063B44" opacity=".55"/></svg></span>
+        <span class="sm-tx"><b>Share and multiply my entries</b><small>3 friends is 4 times the odds</small></span>
+      </button>
       <button class="btn btn-o" style="width:100%;margin-top:9px;padding:12px" id="simFriend">Preview a friend joining</button>
     </aside>
   </div>
@@ -1643,10 +1706,15 @@
       <h2>Feeding the whole Ohana?</h2>
       <span class="grp-tag">Group order &middot; 3+ people</span>
     </div>
-    <p class="lead">Ono's Family Meals and catering are built for groups, and groups are where the average check gets interesting. Add people to the order and the per-person price comes down. Tap a seat.</p>
-    <div class="seats" id="seats"></div>
+    <p class="lead">Ono's Family Meals and catering are built for groups, and groups are where the average check gets interesting. Drag the group bigger and watch the price of every plate fall.</p>
+    <div class="gslide">
+      <div class="gpips" id="gPips" aria-hidden="true"></div>
+      <input type="range" id="gRange" min="1" max="12" step="1" value="1" aria-label="People in the group order" aria-describedby="grpLab">
+      <div class="gmarks"><span>Just you</span><span>Ohana table</span><span>Catering trays</span></div>
+    </div>
+    <div class="gsave"><i id="gSaveBar"></i><em id="gSavePct" hidden></em></div>
     <div class="grp-calc">
-      <div class="grp-big"><s id="grpWas">$16.50</s><b id="grpNow">$16.50</b><em>per person &middot; <span id="grpTotal">$16.50</span> total</em></div>
+      <div class="grp-big"><s id="grpWas">$16.50</s><b id="grpNow">$16.50</b><em>per plate &middot; <span id="grpTotal">$16.50</span> total <span class="grp-off" id="grpOff" hidden></span></em></div>
       <p class="grp-lab" id="grpLab">On your own, a plate lunch runs about $16.50. Add two people and the group rate drops to $14.75 each.</p>
       <a class="btn btn-g grp-cta" href="https://onohawaiianbbq.com/catering/" target="_blank" rel="noopener" onclick="track('order_cta_clicked',{src:'group'})">Start our group order</a>
       <p class="grp-fine">Opens Ono's catering page. Catering orders need at least 48 hours notice, so plan the trays when you plan the night. Illustrative pricing for this concept; group and catering rates would require finance and operations approval before launch.</p>
@@ -1911,6 +1979,16 @@
 </main>
 
 <!-- RULES MODAL -->
+<button class="evfloat" id="evFloat" type="button" aria-label="See the game-day catering calendar" hidden>
+  <span class="evf-x" id="evFloatX" role="button" aria-label="Dismiss">&times;</span>
+  <span class="evf-ic" id="evfIc"></span>
+  <span class="evf-tx">
+    <small>Plan the big nights</small>
+    <b id="evfLine">Game day is a group order</b>
+  </span>
+  <span class="evf-cta">See dates</span>
+</button>
+
 <div class="modal" id="evModal">
   <div class="modal-card ev-mcard">
     <button class="mx" onclick="closeModal('ev')" aria-label="Close" style="z-index:3">&times;</button>
@@ -2068,7 +2146,7 @@
 </footer>
 <script>
 /* ================= STATE ================= */
-var state={step:1,pick:null,loc:null,name:'',email:'',sms:false,refs:0,seats:[true,false,false,false],view:'enter'};
+var state={step:1,pick:null,loc:null,name:'',email:'',sms:false,refs:0,gsize:1,view:'enter'};
 var REF_CAP=3;
 function track(ev,d){ (window.__events=window.__events||[]).push({ev:ev,d:d||{},t:Date.now()}); }
 
@@ -2135,7 +2213,7 @@ var MENU=[
   svg:'<svg viewBox="0 0 64 64"><rect x="7" y="34" width="50" height="15" rx="4" fill="#FFFDF8" stroke="#DCCFBC" stroke-width="2"/><path d="M12 34c0-11 9-19 20-19s20 8 20 19z" fill="#17607A" stroke="#0C4457" stroke-width="2"/><circle cx="32" cy="11" r="3.4" fill="#FFD400" stroke="#B87A22" stroke-width="1.6"/><path d="M17 41h30" stroke="#E0D2C0" stroke-width="2" stroke-linecap="round"/><path d="M22 27c2.6-3.4 7-5 11-4.6" stroke="#8FD3E2" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>'}
 ];
 var LOCS=[{n:'Diamond Bar',c:'CA'},{n:'Cerritos',c:'CA'},{n:'Long Beach',c:'CA'},{n:'Chino Hills',c:'CA'},{n:'Irvine',c:'CA'},{n:'Chandler',c:'AZ'}];
-var PRICES=[16.50,15.60,14.75,13.95];
+var PRICES=[16.50,15.60,14.75,13.95,13.35,12.80,12.35,11.95,11.60,11.30,11.05,10.85];
 
 /* ================= THEME ================= */
 document.getElementById('themeBtn').addEventListener('click',function(){
@@ -2163,6 +2241,7 @@ function setView(v){
     document.getElementById('view-'+k).classList.toggle('hide',k!==v);
   });
   document.querySelectorAll('.vsw button').forEach(function(b){b.classList.toggle('on',b.dataset.view===v);});
+  if(window.__evfSync)window.__evfSync();
   window.scrollTo(0,0);
   requestAnimationFrame(function(){
     window.scrollTo(0,0);
@@ -2332,6 +2411,24 @@ function moveTo(el){
     },210);
   });
 }
+function flipEggAt(x,y){
+  var e=document.createElement('div');
+  e.className='flipegg';
+  e.style.left=(x-6)+'px';
+  e.style.top=(y-10)+'px';
+  e.innerHTML='<svg viewBox="0 0 30 30"><path d="M9.5 4.2c4.6-2.4 10.4-1 12.6 3 1.5 2.8 4.6 3.4 5.4 6.4.9 3.4-1.7 6.8-5.2 8.2-3.9 1.6-7.4 1.2-11.2 2.4-3.6 1.1-7.5.2-8.9-3-1.5-3.4.7-6.2.8-9.4.1-3.4 2.4-5.4 6.5-7.6z" fill="#FFFDF6" stroke="#E3D9C4" stroke-width="1.3"/><circle cx="15.5" cy="13.5" r="5.4" fill="#FFC12B"/><circle cx="13.8" cy="11.8" r="1.9" fill="#FFE07A" opacity=".85"/></svg>';
+  document.body.appendChild(e);
+  setTimeout(function(){e.remove();},900);
+}
+var lastEgg=0;
+document.addEventListener('click',function(e){
+  if(!e.isTrusted)return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var t=e.target.closest&&e.target.closest('a,button,[role="button"],.opt,.gth,.ev-card,.sh-tile,input[type="range"]');
+  if(!t)return;
+  var now=Date.now(); if(now-lastEgg<260)return; lastEgg=now;
+  flipEggAt(e.clientX,e.clientY);
+});
 function flipEgg(){
   var r=cur.getBoundingClientRect();
   var e=document.createElement('div');
@@ -2507,7 +2604,7 @@ var PRIZE={
     h1:'Your next plate could be <span class="hl">on us</span>.',
     lead:'Enter for a chance to win a <b>$200 Ono Hawaiian BBQ gift card</b>.',
     cap:'a $200 Ono Hawaiian BBQ gift card in the design you pick',
-    card:'$200',
+    card:'$200', cards:['$200','$200','$200'], places:['','',''],
     rules:'Three $200 Ono Hawaiian BBQ gift cards are awarded each monthly drawing period. Approximate retail value $200 each, $600 per period. Winners are responsible for any applicable taxes.',
     share:'Ono Hawaiian BBQ draws three $200 gift cards every month, and everyone who enters gets a $30 code toward buying one. Takes 30 seconds:'},
  b:{amt:'$400', line:'top prize &middot; 3 winners every month',
@@ -2516,7 +2613,7 @@ var PRIZE={
     h1:'$400 of plate lunch could be <span class="hl">on us</span>.',
     lead:'Enter for a chance to win the <b>$400 top prize</b>, one of three Ono Hawaiian BBQ gift cards drawn every month.',
     cap:'an Ono Hawaiian BBQ gift card in the design you pick, worth up to $400',
-    card:'$400',
+    card:'$400', cards:['$400','$150','$50'], places:['1st place','2nd place','3rd place'],
     rules:'Three Ono Hawaiian BBQ gift cards are awarded each monthly drawing period: $400 for first place, $150 for second, $50 for third. Approximate retail value $600 per period. Winners are responsible for any applicable taxes.',
     share:'Ono Hawaiian BBQ draws a $400 top prize every month, plus $150 and $50 runner-up cards, and everyone who enters gets a $30 code toward buying one. Takes 30 seconds:'}
 };
@@ -2534,9 +2631,15 @@ function setVariant(v){
     t.textContent=P.t[i];
     t.setAttribute('class', 'rf-amt'+(P.top===i?' top':''));
   });
-  Array.prototype.forEach.call(document.querySelectorAll('.gth-val'),function(e){e.textContent=P.card;});
+  Array.prototype.forEach.call(document.querySelectorAll('#gheroThumbs .gth'),function(b,i){
+    var v=b.querySelector('.gth-val'); if(v)v.textContent=P.cards[i];
+    var pl=b.querySelector('.gth-pl');
+    if(P.places[i]){ if(!pl){pl=document.createElement('span');pl.className='gth-pl';b.appendChild(pl);} pl.textContent=P.places[i]; }
+    else if(pl) pl.textContent='';
+  });
   if(typeof ghIdx!=='undefined' && typeof showGHero==='function'){ var k=ghIdx; ghIdx=-1; showGHero(k,false); }
   Array.prototype.forEach.call(document.querySelectorAll('.abx-b'),function(b){ b.classList.toggle('on', b.getAttribute('data-v')===v); });
+  var th=document.getElementById('abxTh'); if(th)th.style.transform = v==='b' ? 'translateX(32px)' : 'translateX(0)';
   if(window.lastR!==undefined && typeof refresh==='function') refresh(true);
   track('variant_set',{v:v});
 }
@@ -2606,35 +2709,47 @@ document.getElementById('copyCode').addEventListener('click',function(){
 
 /* ================= GROUP ORDER ================= */
 (function(){
-  var s=document.getElementById('seats');
-  for(var i=0;i<4;i++){
-    var b=document.createElement('button');
-    b.className='seat'+(i===0?' on':'');b.type='button';b.dataset.i=i;
-    b.innerHTML= i===0
-      ? '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 4-6.6 8-6.6s8 2.2 8 6.6" stroke-linecap="round"/></svg>'
-      : '<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>';
-    b.addEventListener('click',function(){
-      var i=+this.dataset.i;if(i===0)return;
-      state.seats[i]=!state.seats[i];
-      this.classList.toggle('on',state.seats[i]);
-      renderGroup();
-      track('group_seat',{n:state.seats.filter(Boolean).length});
-    });
-    s.appendChild(b);
-  }
+  var pips=document.getElementById('gPips'), r=document.getElementById('gRange');
+  if(!pips||!r)return;
+  var PERSON='<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="var(--teal)"/><path d="M4 21c0-4.4 4-6.6 8-6.6s8 2.2 8 6.6" fill="var(--teal)"/></svg>';
+  var html='';
+  for(var i=0;i<12;i++) html+='<span class="gpip'+(i===0?' on':'')+'">'+PERSON+'</span>';
+  pips.innerHTML=html;
+  r.addEventListener('input',function(){
+    state.gsize=+r.value;
+    renderGroup();
+    track('group_size',{n:state.gsize});
+  });
 })();
-function money(n){return '$'+n.toFixed(2);}
+function gmoney(n){return '$'+(Math.round(n*100)%100===0? n.toFixed(0) : n.toFixed(2));}
 function renderGroup(){
-  var n=state.seats.filter(Boolean).length;
-  var per=PRICES[n-1],total=per*n;
-  document.getElementById('grpNow').textContent=money(per);
-  document.getElementById('grpWas').textContent=money(PRICES[0]);
+  var n=state.gsize||1;
+  var per=PRICES[n-1],total=per*n,saved=(PRICES[0]-per)*n,off=Math.round((1-per/PRICES[0])*100);
+  var r=document.getElementById('gRange');
+  if(r){ r.value=n; r.style.setProperty('--fill', ((n-1)/11*100)+'%'); }
+  var pips=document.querySelectorAll('#gPips .gpip');
+  Array.prototype.forEach.call(pips,function(p,i){
+    var was=p.classList.contains('on');
+    p.classList.toggle('on',i<n);
+    p.classList.toggle('newest', i===n-1 && !was);
+  });
+  var now=document.getElementById('grpNow');
+  now.textContent=gmoney(per);
+  now.classList.remove('tick'); void now.offsetWidth; now.classList.add('tick');
+  document.getElementById('grpWas').textContent=gmoney(PRICES[0]);
   document.getElementById('grpWas').style.display=n>1?'inline':'none';
-  document.getElementById('grpTotal').textContent=money(total);
+  document.getElementById('grpTotal').textContent=gmoney(total);
+  var offEl=document.getElementById('grpOff');
+  if(offEl){ offEl.hidden=n<2; offEl.textContent=off+'% off'; }
+  var bar=document.getElementById('gSaveBar'), pct=document.getElementById('gSavePct');
+  if(bar) bar.style.width=(off/34*100)+'%';
+  if(pct){ pct.hidden=n<2; pct.textContent=gmoney(saved)+' saved vs ordering solo'; }
   var lab=document.getElementById('grpLab');
-  if(n===1)lab.textContent='On your own, a plate lunch runs about '+money(PRICES[0])+'. Add two people and the group rate drops to '+money(PRICES[2])+' each.';
-  else if(n>=4)lab.textContent='Four plates in one order at '+money(per)+' each, '+money(total)+' for the table. That is '+money((PRICES[0]-per)*n)+' saved against ordering separately.';
-  else lab.textContent=n+' plates at '+money(per)+' each, '+money(total)+' total. Add '+(4-n)+' more and it drops to '+money(PRICES[3])+' a plate.';
+  if(n===1) lab.textContent='On your own, a plate lunch runs about '+gmoney(PRICES[0])+'. Drag the slider and every plate on the order gets cheaper.';
+  else if(n<=4) lab.textContent=n+' plates at '+gmoney(per)+' each, '+gmoney(total)+' total. Keep going: at 10 people a plate drops to '+gmoney(PRICES[9])+'.';
+  else if(n<=7) lab.textContent=n+' plates at '+gmoney(per)+' each. That is '+gmoney(saved)+' saved against everyone ordering on their own.';
+  else if(n<=9) lab.textContent='Family Meal territory: '+n+' plates at '+gmoney(per)+' each, '+gmoney(total)+' for the table, '+gmoney(saved)+' saved.';
+  else lab.textContent='This is catering-tray maths: '+n+' plates at just '+gmoney(per)+' each. '+gmoney(saved)+' saved, and trays need 48 hours notice, so lock the order when the plans are made.';
 }
 
 /* ================= DASHBOARD ================= */
@@ -2683,7 +2798,8 @@ function buildGHero(){
   var t=document.getElementById('gheroThumbs'), c=document.getElementById('gheroCard');
   if(!t||!c)return;
   t.innerHTML=GCARDS.map(function(g,i){
-    return '<button class="gth'+(i===0?' on':'')+'" data-i="'+i+'" type="button" aria-label="'+g.n+' gift card design"><img src="'+g.u+'" alt="'+g.n+'"><span class="gth-val">'+(window.PRIZE&&PRIZE[VARIANT]?PRIZE[VARIANT].card:'$200')+'</span></button>';
+    var PC=(window.PRIZE&&PRIZE[VARIANT])?PRIZE[VARIANT]:null;
+    return '<button class="gth'+(i===0?' on':'')+'" data-i="'+i+'" type="button" aria-label="'+g.n+' gift card design'+(PC&&PC.places[i]?', '+PC.places[i]+' prize':'')+'"><img src="'+g.u+'" alt="'+g.n+'"><span class="gth-val">'+(PC?PC.cards[i]:'$200')+'</span>'+(PC&&PC.places[i]?'<span class="gth-pl">'+PC.places[i]+'</span>':'')+'</button>';
   }).join('');
   t.querySelectorAll('.gth').forEach(function(b){
     b.addEventListener('click',function(){showGHero(+b.dataset.i,true);});
@@ -2696,9 +2812,10 @@ function showGHero(i,manual){
   var c=document.getElementById('gheroCard');if(!c)return;
   if(i===ghIdx && c.querySelector('img'))return;
   ghIdx=i;
-  var PV=(window.PRIZE&&PRIZE[VARIANT]?PRIZE[VARIANT].card:'$200');
+  var PV=(window.PRIZE&&PRIZE[VARIANT]?PRIZE[VARIANT].cards[i]:'$200');
+  var PL=(window.PRIZE&&PRIZE[VARIANT]&&PRIZE[VARIANT].places[i])?PRIZE[VARIANT].places[i].toUpperCase():'USD';
   var PB=(VARIANT==='b'?'&#9733; The prize &middot; up to $400':'&#9733; The prize &middot; $200 gift card');
-  c.innerHTML='<img src="'+GCARDS[i].u+'" alt="Ono Hawaiian BBQ gift card: '+GCARDS[i].n+'"><div class="gh-val"><b>'+PV+'</b><small>USD</small></div><div class="ghero-badge">'+PB+'</div>';
+  c.innerHTML='<img src="'+GCARDS[i].u+'" alt="Ono Hawaiian BBQ gift card: '+GCARDS[i].n+'"><div class="gh-val"><b>'+PV+'</b><small>'+PL+'</small></div><div class="ghero-badge">'+PB+'</div>';
   document.querySelectorAll('#gheroThumbs .gth').forEach(function(b,j){b.classList.toggle('on',j===i);});
   if(manual){
     if(ghTimer)clearInterval(ghTimer);
@@ -2826,6 +2943,44 @@ function evOpen(k){
 }
 buildEvents();
 document.getElementById('evModal').addEventListener('click',function(e){if(e.target.id==='evModal')closeModal('ev');});
+
+/* ---------- sticky game-day floater ---------- */
+var EVF_ICONS={
+ kings:'<svg viewBox="0 0 30 30"><ellipse cx="15" cy="17" rx="9" ry="4" fill="#0E1B2A"/><ellipse cx="15" cy="15" rx="9" ry="4" fill="#22364E"/><ellipse cx="15" cy="14.4" rx="6.4" ry="2.6" fill="#31486A" opacity=".8"/></svg>',
+ galaxy:'<svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="8.4" fill="#fff"/><path d="M15 9.4l2.6 1.9-1 3.1h-3.2l-1-3.1z" fill="#06333B"/><path d="M15 9.4V6.6M17.6 11.3l2.7-.9M16.6 14.4l1.7 2.3M13.4 14.4l-1.7 2.3M12.4 11.3l-2.7-.9" stroke="#06333B" stroke-width="1.1"/></svg>',
+ wwe:'<svg viewBox="0 0 30 30"><rect x="4" y="8" width="22" height="2.4" rx="1.2" fill="#E0453B"/><rect x="4" y="14" width="22" height="2.4" rx="1.2" fill="#fff" opacity=".85"/><rect x="4" y="20" width="22" height="2.4" rx="1.2" fill="#E0453B"/><rect x="5" y="7" width="2.2" height="17" rx="1.1" fill="#8FB6BD"/><rect x="22.8" y="7" width="2.2" height="17" rx="1.1" fill="#8FB6BD"/></svg>',
+ ufc:'<svg viewBox="0 0 30 30"><path d="M15 4l9.5 5.5v11L15 26l-9.5-5.5v-11z" fill="none" stroke="#FFD400" stroke-width="1.6"/><path d="M15 8.2l6 3.4v6.8l-6 3.4-6-3.4v-6.8z" fill="rgba(255,212,0,.16)"/></svg>'
+};
+(function(){
+  var f=document.getElementById('evFloat'), line=document.getElementById('evfLine'), ic=document.getElementById('evfIc');
+  if(!f)return;
+  var idx=0, timer=null, dismissed=false, bandVisible=false;
+  function feed(){
+    var e=EVENTS[idx%EVENTS.length];
+    ic.innerHTML=EVF_ICONS[e.k]||EVF_ICONS.galaxy||'';
+    if(e.k==='lafc')ic.innerHTML=EVF_ICONS.galaxy;
+    line.textContent=e.date+' \u00b7 '+e.n;
+    line.style.animation='none'; void line.offsetWidth; line.style.animation='';
+    idx++;
+  }
+  function sync(){
+    var show = state.view==='confirm' && !dismissed && !bandVisible;
+    f.hidden=!show;
+    if(show && !timer){ feed(); timer=setInterval(feed,3200); }
+    if(!show && timer){ clearInterval(timer); timer=null; }
+  }
+  if('IntersectionObserver' in window){
+    var band=document.getElementById('evBand');
+    if(band) new IntersectionObserver(function(en){ bandVisible=en[0].isIntersecting; sync(); },{threshold:.12}).observe(band);
+  }
+  f.addEventListener('click',function(e){
+    if(e.target.id==='evFloatX'){ dismissed=true; sync(); track('evfloat_dismiss',{}); return; }
+    var band=document.getElementById('evBand');
+    if(band){ band.scrollIntoView({behavior:'smooth',block:'start'}); }
+    track('evfloat_click',{});
+  });
+  window.__evfSync=sync;
+})();
 
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal('rules');closeModal('share');closeModal('ev');}});
 var tT=null;

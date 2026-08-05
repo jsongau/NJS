@@ -415,7 +415,7 @@
   .ev-stage{position:relative;background:#04262C}
   .ev-stage svg{width:100%;height:auto;display:block}
   .ev-live{position:absolute;left:14px;top:12px;display:flex;align-items:center;gap:6px;background:rgba(6,51,59,.8);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:99px;z-index:2}
-  .ev-live i{width:7px;height:7px;border-radius:50%;background:#E0453B;animation:cdBeat 1s ease-in-out infinite}
+
   .ev-prog{height:4px;background:rgba(255,255,255,.16);position:relative;overflow:hidden}
   .ev-prog i{position:absolute;inset:0;transform-origin:left;background:linear-gradient(90deg,#E0453B,var(--gold));animation:evProg 9s linear infinite}
   @keyframes evProg{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
@@ -565,6 +565,21 @@
   .dash{background:var(--sand);border-top:1px solid var(--line)}
   .dash-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:8px}
   .dash-live{display:inline-flex;align-items:center;gap:7px;background:var(--palm-soft);border:1px solid var(--palm);color:var(--palm);font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:6px 13px;border-radius:999px}
+  /* Ono glow markers, in place of generic pulsing dots */
+  .oflame,.oplume{display:inline-block;flex:none;line-height:0;vertical-align:middle}
+  .oflame svg{width:13px;height:16px;display:block;filter:drop-shadow(0 0 4px rgba(255,138,43,.85))}
+  .oplume svg{width:15px;height:15px;display:block;filter:drop-shadow(0 0 4px rgba(255,212,0,.7))}
+  .ofl-o{animation:oflBody 1.15s ease-in-out infinite;transform-origin:50% 92%;transform-box:fill-box}
+  .ofl-i{animation:oflCore .78s ease-in-out infinite;transform-origin:50% 92%;transform-box:fill-box}
+  .ofl-s{animation:oflSpark 1.9s ease-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes oflBody{0%,100%{transform:scaleY(1) scaleX(1)}35%{transform:scaleY(1.13) scaleX(.94)}65%{transform:scaleY(.95) scaleX(1.05)}}
+  @keyframes oflCore{0%,100%{transform:scaleY(.94);opacity:.85}45%{transform:scaleY(1.16);opacity:1}}
+  @keyframes oflSpark{0%{opacity:0;transform:translateY(0) scale(.5)}25%{opacity:.95}100%{opacity:0;transform:translateY(-7px) scale(1)}}
+  .opl-p{animation:oplBreathe 2.6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  .opl-c{animation:oplCore 2.6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes oplBreathe{0%,100%{transform:scale(.92) rotate(0deg);opacity:.9}50%{transform:scale(1.06) rotate(14deg);opacity:1}}
+  @keyframes oplCore{0%,100%{opacity:.7;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+  @media(prefers-reduced-motion:reduce){.ofl-o,.ofl-i,.ofl-s,.opl-p,.opl-c{animation:none}.ofl-s{opacity:0}}
   .dash-dot{width:7px;height:7px;border-radius:50%;background:var(--palm);animation:pulse 1.4s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
   .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:22px}
@@ -722,7 +737,9 @@
   @media(max-width:520px){.ghero{grid-template-columns:64px 1fr;gap:10px}.gh-val b{font-size:21px}}
 
   /* ---------- urgent countdown ---------- */
-  .cd-lab .cd-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#E0453B;margin-right:7px;vertical-align:middle;animation:cdBeat 1s ease-in-out infinite}
+  .cd-lab .oflame{margin-right:7px}
+  .dash-live .oplume,.cmgr-status .oplume{margin-right:2px}
+  .ev-live .oflame svg{width:11px;height:13px}
   @keyframes cdBeat{0%,100%{opacity:.35;transform:scale(.8)}18%{opacity:1;transform:scale(1.35)}36%{opacity:.7;transform:scale(1)}54%{opacity:1;transform:scale(1.22)}}
   .cd{display:flex;gap:7px;transform-origin:center}
   .cd.thump{animation:cdThump .48s cubic-bezier(.25,1.5,.4,1)}
@@ -899,7 +916,7 @@
   .cmgr-eyebrow{font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
   .cmgr-status{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:900;color:#8A6D00;background:#FFF7DA;border:1px solid #EBD98F;border-radius:99px;padding:4px 11px}
   body[data-theme="night"] .cmgr-status{background:#3A320D;border-color:#6E5F20;color:#FFE775}
-  .cmgr-status i{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:cdBeat 1.6s ease-in-out infinite}
+
   .cmgr-views{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
   .dp-why{display:grid;gap:3px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
   .dp-r{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;font-weight:800;color:var(--muted);line-height:1.3}
@@ -978,8 +995,10 @@
   .ms-v{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums;line-height:1.1;transition:transform .15s ease}
   .ms-v.neg{color:#FF9C93}
   .ms-v.tick{transform:scale(1.09)}
-  .ms-s{font-size:9px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;line-height:1.3}
-  .ms-d{position:absolute;right:8px;top:7px;font-size:9px;font-weight:900;padding:1.5px 6px;border-radius:99px;opacity:0;transform:translateY(-3px);transition:opacity .2s,transform .2s;font-variant-numeric:tabular-nums}
+  .ms-s{font-size:9px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;line-height:1.35}
+  .ms-s b{color:rgba(255,255,255,.82);font-weight:900}
+  .ms-row{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+  .ms-d{font-size:9px;font-weight:900;padding:1.5px 6px;border-radius:99px;opacity:0;transform:translateY(-2px);transition:opacity .2s,transform .2s;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
   .ms-d.show{opacity:1;transform:none}
   .ms-d.up{background:rgba(58,190,130,.22);color:#7BF0BE}
   .ms-d.dn{background:rgba(224,69,59,.24);color:#FFB0A8}
@@ -1012,6 +1031,18 @@
   .pg-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
   tr.crossrow{background:var(--palm-soft)}
   @media(max-width:760px){.pgstats{grid-template-columns:repeat(2,1fr)}}
+
+  /* channel breakdown */
+  .chgrid{display:grid;gap:10px;margin-top:14px}
+  .ch{display:grid;grid-template-columns:196px 1fr 96px;gap:14px;align-items:center}
+  .ch-n{font-size:12.5px;font-weight:900;display:flex;align-items:center;gap:7px;min-width:0}
+  .ch-n i{width:10px;height:10px;border-radius:3px;flex:none}
+  .ch-t{background:var(--mist);border-radius:99px;height:15px;overflow:hidden;position:relative}
+  .ch-t b{display:block;height:100%;border-radius:99px;transition:width .35s ease}
+  .ch-v{text-align:right;font-size:13px;font-weight:900;font-variant-numeric:tabular-nums}
+  .ch-v small{display:block;font-size:10px;font-weight:800;color:var(--muted);margin-top:1px}
+  .ch-sub{font-size:10.5px;font-weight:800;color:var(--muted);margin-top:2px;line-height:1.3}
+  @media(max-width:860px){.ch{grid-template-columns:1fr 88px}.ch-t{grid-column:1/-1;order:3;margin-top:2px}}
 
   /* metric cards */
   .mcards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
@@ -1561,7 +1592,7 @@
         </div>
       </div>
       <div class="prize-body">
-        <div class="cd-lab"><span class="cd-dot"></span>Drawing closes in</div>
+        <div class="cd-lab"><span class="oflame" aria-hidden="true"><svg viewBox="0 0 13 16"><path class="ofl-o" d="M6.5.8c2.5 3 5 4.9 5 8.4a5 5 0 0 1-10 0C1.5 5.7 4 3.8 6.5.8z" fill="#FF8A2B"/><path class="ofl-o" d="M6.5 3.4c1.7 2.1 3.4 3.3 3.4 5.7a3.4 3.4 0 0 1-6.8 0c0-2.4 1.7-3.6 3.4-5.7z" fill="#FFB03A" opacity=".9"/><path class="ofl-i" d="M6.5 7.2c1 1.3 2 2 2 3.5a2 2 0 0 1-4 0c0-1.5 1-2.2 2-3.5z" fill="#FFE775"/><circle class="ofl-s" cx="10.4" cy="4.2" r="1" fill="#FFD400"/></svg></span>Drawing closes in</div>
         <div class="cd" id="cdWrap">
           <div class="cd-c"><b id="cdD">00</b><span>Days</span></div>
           <div class="cd-c"><b id="cdH">00</b><span>Hrs</span></div>
@@ -1891,13 +1922,13 @@
         <h2>What a $200 gift-card program does to <span class="hl">cash, liability and profit</span>.</h2>
         <p class="lead" style="margin-top:8px">Drag any assumption. Every number, chart, warning and recommendation below recalculates immediately. This is a forecasting tool built on proposed assumptions, not a report of Ono Hawaiian BBQ's actual financial performance.</p>
       </div>
-      <span class="dash-live"><span class="dash-dot"></span>Modeled forecast</span>
+      <span class="dash-live"><span class="oplume" aria-hidden="true"><svg viewBox="0 0 16 16"><g class="opl-p" fill="#FFD400"><ellipse cx="8" cy="4.1" rx="2.5" ry="3.5"/><ellipse cx="11.5" cy="6.7" rx="2.5" ry="3.5" transform="rotate(72 11.5 6.7)"/><ellipse cx="10.1" cy="10.9" rx="2.5" ry="3.5" transform="rotate(144 10.1 10.9)"/><ellipse cx="5.9" cy="10.9" rx="2.5" ry="3.5" transform="rotate(216 5.9 10.9)"/><ellipse cx="4.5" cy="6.7" rx="2.5" ry="3.5" transform="rotate(288 4.5 6.7)"/></g><circle class="opl-c" cx="8" cy="7.4" r="2.1" fill="#FF7BA8"/></svg></span>Modeled forecast</span>
     </div>
 
     <div class="cmgr">
       <div class="cmgr-head">
         <span class="cmgr-eyebrow">Campaign manager</span>
-        <span class="cmgr-status"><i></i>Forecast draft, nothing is spending</span>
+        <span class="cmgr-status"><span class="oplume" aria-hidden="true"><svg viewBox="0 0 16 16"><g class="opl-p" fill="#FFD400"><ellipse cx="8" cy="4.1" rx="2.5" ry="3.5"/><ellipse cx="11.5" cy="6.7" rx="2.5" ry="3.5" transform="rotate(72 11.5 6.7)"/><ellipse cx="10.1" cy="10.9" rx="2.5" ry="3.5" transform="rotate(144 10.1 10.9)"/><ellipse cx="5.9" cy="10.9" rx="2.5" ry="3.5" transform="rotate(216 5.9 10.9)"/><ellipse cx="4.5" cy="6.7" rx="2.5" ry="3.5" transform="rotate(288 4.5 6.7)"/></g><circle class="opl-c" cx="8" cy="7.4" r="2.1" fill="#FF7BA8"/></svg></span>Forecast draft, nothing is spending</span>
       </div>
       <div class="cmgr-views" id="cmgrViews" role="group" aria-label="Saved campaign presets"></div>
       <div class="cmgr-chips" id="cmgrChips" aria-label="Applied campaign settings"></div>
@@ -2079,7 +2110,7 @@
       <div class="dsec-h"><span class="dsec-n">5</span><h3>Programme economics</h3><span class="dsec-sub">One flight versus a campaign that repeats</span></div>
       <div class="panel">
         <div class="panel-h"><h3>Launch cadence</h3><span class="panel-tag" id="pgTag">Cumulative</span></div>
-        <p class="panel-sub">A single flight charges the entire media budget against one cohort and stops. A real programme relaunches to the list it already built, at no additional media cost. Launch one buys the audience. Every launch after it markets to that audience for free, which is where a conservative case turns positive.</p>
+        <p class="panel-sub">The ads run once, for a short flight. That one flight buys an audience, and every relaunch after it markets to the audience already owned, at no media cost at all. This is why a conservative case still wins: the media bill stops after the flight, and the asset it bought keeps working.</p>
         <div class="pgstats" id="pgStats"></div>
         <svg class="pgchart" id="pgChart" viewBox="0 0 900 280" role="img" aria-label="Net contribution per launch and cumulative programme contribution"></svg>
         <div class="tblwrap"><table class="cohort"><thead><tr>
@@ -2087,6 +2118,13 @@
           <th class="num">Owned entries</th><th class="num">Media</th><th class="num">Net</th><th class="num">Cumulative</th>
         </tr></thead><tbody id="pgRows"></tbody></table></div>
         <div class="assump" id="pgNote"></div>
+      </div>
+
+      <div class="panel" style="margin-top:16px">
+        <div class="panel-h"><h3>Where the money comes from</h3><span class="panel-tag" id="chTag">Per flight</span></div>
+        <p class="panel-sub">One entry feeds five channels. Gift cards are the headline, but the match page pushes delivery, the group calculator and game-day calendar push catering, and the referral modal brings friends in at no media cost. Each line is contribution after food cost, so they can be argued with separately.</p>
+        <div class="chgrid" id="chGrid"></div>
+        <div class="assump" id="chNote"></div>
       </div>
     </div>
 
@@ -3115,7 +3153,7 @@ function buildEvents(){
 function evOpen(k){
   var e=null; EVENTS.forEach(function(x){if(x.k===k)e=x;}); if(!e)return;
   document.getElementById('evStage').innerHTML=EV_SCENES[k]+
-    '<div class="ev-live"><i></i>'+e.date+' &middot; '+e.lg+'</div>';
+    '<div class="ev-live"><span class="oflame" aria-hidden="true"><svg viewBox="0 0 13 16"><path class="ofl-o" d="M6.5.8c2.5 3 5 4.9 5 8.4a5 5 0 0 1-10 0C1.5 5.7 4 3.8 6.5.8z" fill="#FF8A2B"/><path class="ofl-o" d="M6.5 3.4c1.7 2.1 3.4 3.3 3.4 5.7a3.4 3.4 0 0 1-6.8 0c0-2.4 1.7-3.6 3.4-5.7z" fill="#FFB03A" opacity=".9"/><path class="ofl-i" d="M6.5 7.2c1 1.3 2 2 2 3.5a2 2 0 0 1-4 0c0-1.5 1-2.2 2-3.5z" fill="#FFE775"/><circle class="ofl-s" cx="10.4" cy="4.2" r="1" fill="#FFD400"/></svg></span>'+e.date+' &middot; '+e.lg+'</div>';
   document.getElementById('evTitle').textContent=e.n;
   document.getElementById('evVen').textContent=e.ven;
   document.getElementById('evList').innerHTML=e.rows.map(function(r){
@@ -3225,7 +3263,7 @@ var DEFAULTS={
   /* A. offer design */
   faceValue:200, purchasePricePct:100, bonusFace:30, bonusRedeem:88, bonusVarCost:30, bonusExpiry:90,
   /* B. acquisition */
-  adPerStoreMonth:1000, campaignMonths:3, ctaLift:0,
+  adPerStoreMonth:1000, campaignMonths:2, ctaLift:0,
   winnersPerMonth:3, prizeValue:200, prizeAdminMonth:200,
   mediaBudget:12400, cpm:14, cplv:1.30, entryConv:30, entrantToCard:3.2, organicMult:1.18, newShare:65, payFee:3,
   /* C. redemption behaviour */
@@ -3233,8 +3271,12 @@ var DEFAULTS={
   dormantAfter:12, subFifteenShare:12,
   /* D. retention */
   repeat90:30, repeatValue:24, repeatOrders:2.0, cateringLead:1.5, cateringConv:10, cateringValue:425,
+  /* E. channels the funnel actually pushes */
+  shareRate:18, refPerSharer:1.1,
+  deliveryConv:9, deliveryOrders:1.6, deliveryValue:34, deliveryFee:28,
+  eventCateringLift:12,
   /* structural */
-  launches:4, launchGap:3, listReach:58, listLift:1.9, listRetain:90,
+  launches:4, launchGap:3, mediaLaunches:1, listReach:58, listLift:1.9, listRetain:90,
   scaleIdx:1, horizon:12,
   curve:defaultCurve(18,6),
   alloc:{paid:40, creator:20, lsm:15, retention:15, reserve:10}
@@ -3275,6 +3317,12 @@ function calculateModel(a){
   R.totalVisits   = R.paidVisits * a.organicMult;
   R.organicVisits = R.totalVisits - R.paidVisits;
   R.entries       = R.totalVisits * R.effEntryConv/100;
+  /* referrals: entrants who share bring friends who enter at no media cost */
+  R.paidOnlyEntries = R.entries;
+  R.sharers         = R.entries * a.shareRate/100;
+  R.referredEntries = Math.min(R.sharers * a.refPerSharer, R.entries * 2);   /* cap: three referrals each, most share none */
+  R.kFactor         = R.paidOnlyEntries>0 ? R.referredEntries/R.paidOnlyEntries : 0;
+  R.entries         = R.paidOnlyEntries + R.referredEntries;
   R.emailContacts = R.entries * EMAIL_OPTIN;
   R.smsContacts   = R.entries * SMS_OPTIN;
   R.cardBuyers    = R.entries * a.entrantToCard/100;
@@ -3317,6 +3365,18 @@ function calculateModel(a){
   R.cateringRevenue   = R.cateringCustomers * a.cateringValue;
   R.cateringContribution = R.cateringRevenue * (1-a.restVarCost/100);
 
+  /* delivery: the match page pushes an Uber Eats order. marketplace commission is a real cost. */
+  R.deliveryCustomers    = R.entries * a.deliveryConv/100;
+  R.deliveryOrderCount   = R.deliveryCustomers * a.deliveryOrders;
+  R.deliveryRevenue      = R.deliveryOrderCount * a.deliveryValue;
+  R.deliveryFeeCost      = R.deliveryRevenue * a.deliveryFee/100;
+  R.deliveryContribution = R.deliveryRevenue*(1-a.restVarCost/100) - R.deliveryFeeCost;
+
+  /* game-day calendar lifts catering on nights groups already gather */
+  R.cateringEventUplift  = R.cateringContribution * a.eventCateringLift/100;
+  R.cateringContribution += R.cateringEventUplift;
+  R.cateringRevenue      += R.cateringRevenue * a.eventCateringLift/100;
+
   /* ---- month by month ---- */
   R.months=[];
   var cumRedeem=0, cumBonusRedeem=0, cumRev=0, cumContrib=0, cumCash=0;
@@ -3335,7 +3395,7 @@ function calculateModel(a){
     var contrib = rev - cost - bCost;
 
     if(m===0){ contrib -= R.mediaBudget; contrib -= R.payFees; contrib -= R.prizeEconomicCost; cumCash += R.cashCollected - R.payFees - R.prizeCostTotal; }
-    if(m===2){ contrib += R.repeatContribution + R.cateringContribution; }
+    if(m===2){ contrib += R.repeatContribution + R.cateringContribution + R.deliveryContribution; }
     var recognisedBreak = 0;
     if(m===breakMonth-1){ recognisedBreak = R.breakageValue*R.revenueRatio; contrib += recognisedBreak; }
 
@@ -3378,42 +3438,61 @@ function calculateModel(a){
   R.launchList=[];
   var listSize=0, cum=0, cross=0;
   for(var L=0; L<a.launches; L++){
+    /* only the first launches carry a paid flight. after that the campaign relaunches
+       to the list it already owns, which costs nothing in media. */
+    var paid         = L < a.mediaLaunches;
+    var lMedia       = paid ? R.mediaBudget : 0;
+    var lPaidEntries = paid ? R.entries : 0;
     /* list fatigue: nobody buys a $200 card every single launch */
     var reach        = a.listReach/100 * Math.pow(0.82, L);
     var ownedEntries = Math.min(listSize*reach, listSize*0.7);
-    var gross        = R.entries*R.grossPerEntry + ownedEntries*a.listLift*R.grossPerEntryOwned;
-    var net          = gross - R.launchCost;
+    var gross        = lPaidEntries*R.grossPerEntry + ownedEntries*a.listLift*R.grossPerEntryOwned;
+    var net          = gross - lMedia - R.prizeEconomicCost;
     cum += net;
     if(!cross && cum>0) cross = L+1;
     R.launchList.push({
       n:L+1,
       month:L*a.launchGap,
-      paidEntries:R.entries,
+      paidEntries:lPaidEntries,
+      paid:paid,
       ownedEntries:ownedEntries,
       ownedValue:ownedEntries*a.listLift*R.grossPerEntryOwned,
       ownedList:listSize,
-      impressions:R.impressions,
-      media:R.mediaBudget,
+      impressions:paid? R.impressions : 0,
+      media:lMedia,
       gross:gross,
       net:net,
       cum:cum,
-      cpl: (R.entries+ownedEntries)>0 ? R.mediaBudget/(R.entries+ownedEntries) : 0
+      cpl: (lPaidEntries+ownedEntries)>0 ? lMedia/(lPaidEntries+ownedEntries) : 0
     });
-    listSize = listSize*(a.listRetain/100) + R.optedPerLaunch;
+    listSize = listSize*(a.listRetain/100) + lPaidEntries*EMAIL_OPTIN;
   }
   /* top-line revenue the campaign generates: card cash, overspend, repeat orders, catering */
-  R.revenuePerEntry      = R.entries>0 ? (R.cashCollected + R.expectedRedeemed*a.overspend/100 + R.repeatRevenue + R.cateringRevenue)/R.entries : 0;
+  R.revenuePerEntry      = R.entries>0 ? (R.cashCollected + R.expectedRedeemed*a.overspend/100 + R.repeatRevenue + R.cateringRevenue + R.deliveryRevenue)/R.entries : 0;
   R.revenuePerEntryOwned = R.entries>0 ? (R.cashCollected + R.expectedRedeemed*a.overspend/100)/R.entries : 0;
   R.programRevenue = 0;
   R.launchList.forEach(function(l){
-    l.revenue = R.entries*R.revenuePerEntry + l.ownedEntries*a.listLift*R.revenuePerEntryOwned;
+    l.revenue = l.paidEntries*R.revenuePerEntry + l.ownedEntries*a.listLift*R.revenuePerEntryOwned;
     R.programRevenue += l.revenue;
   });
+  R.programBuyers = 0; R.programEntries = 0;
+  R.launchList.forEach(function(l){
+    R.programEntries += l.paidEntries + l.ownedEntries;
+    R.programBuyers  += l.paidEntries*a.entrantToCard/100 + l.ownedEntries*a.listLift*a.entrantToCard/100;
+  });
   R.programNet     = cum;
-  R.programMedia   = R.mediaBudget * a.launches;
-  R.programImpressions = R.impressions * a.launches;
+  R.paidFlights    = Math.min(a.mediaLaunches, a.launches);
+  R.programMedia   = R.mediaBudget * R.paidFlights;
+  R.flightMonths   = a.campaignMonths * R.paidFlights;           /* months with ads actually running */
+  R.calendarMonths = (a.launches-1)*a.launchGap + a.campaignMonths;
+  R.burnPerMonth   = R.mediaPerMonth;                            /* stores x per-store spend */
+  R.programCac      = R.programBuyers>0 ? R.programMedia/R.programBuyers : 0;
+  R.costPerContact  = R.programEntries>0 ? R.programMedia/R.programEntries : 0;
+  R.programLtvToCac = R.programCac>0 ? R.ltvPerBuyer/R.programCac : 0;
+  R.programImpressions = R.impressions * R.paidFlights;
   R.programList    = listSize;
   R.programRoms    = R.programMedia>0 ? R.programNet/R.programMedia : 0;
+  R.revPerStoreMonth = (R.stores*R.programMonths)>0 ? R.programRevenue/(R.stores*R.programMonths) : 0;
   R.crossLaunch    = cross;
   R.programMonths  = (a.launches-1)*a.launchGap + 12;
 
@@ -3646,6 +3725,7 @@ var CONTROLS=[
  {g:'B. Acquisition', ic:'\u{1F4E3}', items:[
   {k:'adPerStoreMonth',l:'Ad spend per store per month', min:0,max:10000,step:50, f:function(v){return '$'+num(v);}, x:'Geo-radius buy around each restaurant. Total media is this figure times the store count times the campaign length, so the budget scales with the rollout instead of being a lump sum.', b:'prop'},
   {k:'launches',      l:'Launches in the programme', min:1,max:8,step:1, f:function(v){return v+(v===1?' launch':' launches');}, x:'How many times this campaign runs. Launch one buys the list. Every launch after it also markets to the list already built, at no extra media cost.', b:'prop'},
+  {k:'mediaLaunches', l:'Launches that buy paid media', min:1,max:8,step:1, f:function(v){return v+(v===1?' launch':' launches');}, x:'How many launches carry a paid flight. Everything after that markets only to the list already built, which is where the media budget stops growing.', b:'prop'},
   {k:'launchGap',     l:'Months between launches', min:1,max:6,step:1, f:function(v){return v+' mo'}, x:'Cadence between campaign launches.', b:'prop'},
   {k:'listReach',     l:'Owned list that re-engages', min:15,max:85,step:1, f:function(v){return v+'%'}, x:'Share of the accumulated opted-in list that enters again on a later launch. Costs no media.', b:'ind'},
   {k:'listLift',      l:'Owned list value multiplier', min:1,max:3.5,step:.1, f:function(v){return v.toFixed(1)+'\u00d7'}, x:'A returning entrant already knows the brand, has redeemed a code before, and converts to a gift card at a higher rate than cold traffic.', b:'ind'},
@@ -3677,6 +3757,13 @@ var CONTROLS=[
   {k:'repeat90',     l:'90-day repeat-purchase rate', min:5,max:70,step:1,   f:function(v){return v+'%';}, x:'Buyers who return and pay beyond the card within 90 days.', b:'prop'},
   {k:'repeatValue',  l:'Average repeat-order value',  min:10,max:75,step:1,  f:function(v){return '$'+v;}, x:'Average check on a repeat visit.', b:'ind'},
   {k:'repeatOrders', l:'Repeat orders per retained customer', min:1,max:8,step:0.1, f:function(v){return v.toFixed(1);}, x:'How many repeat visits a retained customer makes in the window.', b:'prop'},
+  {k:'shareRate',     l:'Entrants who share their link', min:0,max:60,step:1, f:function(v){return v+'%'}, x:'Share of entrants who send their referral link to at least one friend.', b:'prop'},
+  {k:'refPerSharer',  l:'Friends who enter per sharer', min:0,max:3,step:.1, f:function(v){return v.toFixed(1)}, x:'Friends who actually complete an entry for each person who shares. Capped at three referral entries each in the funnel.', b:'prop'},
+  {k:'deliveryConv',  l:'Entrants who order delivery', min:0,max:45,step:1, f:function(v){return v+'%'}, x:'Entrants who take the Uber Eats call to action after their menu match.', b:'prop'},
+  {k:'deliveryOrders',l:'Delivery orders per customer', min:1,max:8,step:.1, f:function(v){return v.toFixed(1)}, x:'Delivery orders per converting customer over twelve months.', b:'ind'},
+  {k:'deliveryValue', l:'Average delivery order', min:15,max:80,step:1, f:function(v){return '$'+v}, x:'Average Uber Eats basket, higher than a walk-in plate because delivery orders skew to households.', b:'ind'},
+  {k:'deliveryFee',   l:'Marketplace commission', min:0,max:35,step:1, f:function(v){return v+'%'}, x:'What the delivery marketplace takes per order. This is deducted, so delivery revenue is worth materially less per dollar than a walk-in.', b:'ind'},
+  {k:'eventCateringLift', l:'Game-day catering lift', min:0,max:60,step:1, f:function(v){return '+'+v+'%'}, x:'Extra catering the game-day calendar produces by pointing group orders at nights when people already gather.', b:'prop'},
   {k:'cateringLead', l:'Catering lead rate',          min:0,max:10,step:0.1, f:function(v){return v.toFixed(1)+'%';}, x:'Entrants who signal catering or group intent in the quiz.', b:'prop'},
   {k:'cateringConv', l:'Catering lead conversion',    min:0,max:50,step:1,   f:function(v){return v+'%';}, x:'Leads that become a booked catering order.', b:'prop'},
   {k:'cateringValue',l:'Average catering order',      min:100,max:2500,step:25,f:function(v){return '$'+num(v);}, x:'Ono publicly runs catering promotions; order size is proposed.', b:'prop'}
@@ -3740,12 +3827,12 @@ function jumpToCtl(k){
 }
 var GLOSS={
  spend:{t:'Ad spend',d:'Total paid media across every launch in the programme. Each launch buys the same geo-radius reach around each store.'},
- window:{t:'Programme window',d:'From the first launch to twelve months after the last one, so every cohort is followed for a full year of redemption and repeat.'},
+ window:{t:'How long ads run',d:'Paid media runs only for the flight shown here, then stops. Revenue keeps being tracked afterwards because a gift card sold in month two is still being redeemed a year later, and that redemption is when it becomes revenue. The tracking window is the last launch plus twelve months.'},
  rev:{t:'New revenue',d:'Top-line the campaign generates: gift-card purchases, the spend customers add above the card value, repeat orders, and catering. Card cash is collected up front and recognised as the card is redeemed.'},
  cash:{t:'Cash collected',d:'Money customers paid for gift cards up front. It is not revenue yet. It becomes revenue as the cards are redeemed for food.'},
  contrib:{t:'Contribution',d:'What is left after food cost, payment fees, prize cards, bonus fulfilment, and the whole media budget across the programme. This is the number that decides whether it is worth running.'},
  roas:{t:'Cash ROAS',d:'Gift-card cash collected divided by ad spend. This is the Meta-style read. The stricter number is the contribution return below it.'},
- cac:{t:'CAC',d:'Cost to acquire one new customer: media spend divided by new-to-file gift-card buyers.'},
+ cac:{t:'Cost to acquire',d:'Programme media divided by every gift-card buyer it produced, including the buyers from the free relaunches. The second figure is what one permissioned contact costs, which is the cheaper and arguably more useful number since the contact list is what makes the relaunches free.'},
  cpl:{t:'Cost per lead',d:'Media spend divided by entries. Every entry is a permissioned contact with a stated favorite plate.'},
  ctr:{t:'CTR',d:'Clicks divided by impressions. Derived here from your CPM and CPC settings, the way a Meta ads manager reports it.'},
  cpm:{t:'CPM',d:'What 1,000 ad impressions cost on the platform.'},
@@ -3777,8 +3864,8 @@ function drawProgramme(R){
   stats.innerHTML=
    '<div><b class="'+(pos?'pos':'neg')+'">'+money(R.programNet)+'</b><span>Programme contribution across '+n+' launch'+(n===1?'':'es')+'</span></div>'+
    '<div><b>'+(R.crossLaunch? 'Launch '+R.crossLaunch : 'Not inside '+n)+'</b><span>Where cumulative contribution turns positive</span></div>'+
-   '<div><b>'+xmul(R.programRoms)+'</b><span>Return on '+money(R.programMedia)+' of total media</span></div>'+
-   '<div><b>'+num(Math.round(R.programList))+'</b><span>Opted-in contacts owned at the end, '+num(Math.round(R.programImpressions))+' impressions bought</span></div>';
+   '<div><b>'+xmul(R.programRoms)+'</b><span>Return on '+money(R.programMedia)+' of media, spent once over '+R.flightMonths+' month'+(R.flightMonths===1?'':'s')+'</span></div>'+
+   '<div><b>'+moneyFull(R.revPerStoreMonth)+'</b><span>Incremental revenue per store per month, so the multiple stays grounded</span></div>';
 
   var W=900,H=280,pad={l:64,r:20,t:18,b:40}, iw=W-pad.l-pad.r, ih=H-pad.t-pad.b;
   var vals=[]; L.forEach(function(l){vals.push(l.net,l.cum);}); vals.push(0);
@@ -3812,39 +3899,73 @@ function drawProgramme(R){
 
   document.getElementById('pgRows').innerHTML=L.map(function(l){
     return '<tr'+(R.crossLaunch===l.n?' class="crossrow"':'')+'><td><b>Launch '+l.n+'</b></td><td class="num">'+l.month+'</td>'+
-      '<td class="num">'+num(Math.round(l.impressions))+'</td>'+
-      '<td class="num">'+num(Math.round(l.paidEntries))+'</td>'+
+      '<td class="num">'+(l.impressions>0? num(Math.round(l.impressions)) : '&mdash;')+'</td>'+
+      '<td class="num">'+(l.paidEntries>0? num(Math.round(l.paidEntries)) : '&mdash;')+'</td>'+
       '<td class="num">'+(l.ownedEntries>0? num(Math.round(l.ownedEntries)) : '&mdash;')+'</td>'+
-      '<td class="num">'+money(l.media)+'</td>'+
+      '<td class="num">'+(l.media>0? money(l.media) : '<span style="color:var(--palm);font-weight:900">no media</span>')+'</td>'+
       '<td class="num" style="color:'+(l.net>=0?'var(--palm)':'#E0453B')+'"><b>'+money(l.net)+'</b></td>'+
       '<td class="num"><b>'+money(l.cum)+'</b></td></tr>';
   }).join('');
 
-  document.getElementById('pgTag').textContent=n+' launches, '+assumptions.launchGap+' months apart';
-  document.getElementById('pgNote').innerHTML='<b>How the repeat launches are counted</b><p>Every launch buys the same '+
-   money(R.mediaBudget)+' of paid reach, so media cost never falls. What changes is that each launch also reaches '+
-   pct(assumptions.listReach,0)+' of the opted-in list built so far, at no media cost, and those returning entrants convert to a gift card at '+
-   assumptions.listLift.toFixed(1)+' times the cold rate because they already know the offer. Returning contacts are credited only with the incremental card purchase, not with repeat and catering value that was already counted the first time they entered, so no customer is counted twice. Re-engagement decays 18% per launch to reflect fatigue, and no contact is assumed to re-enter more than once in a launch.</p>';
+  document.getElementById('pgTag').textContent=R.paidFlights+' paid flight'+(R.paidFlights===1?'':'s')+' then '+(n-R.paidFlights)+' free relaunch'+((n-R.paidFlights)===1?'':'es');
+  var pf=R.paidFlights;
+  document.getElementById('pgNote').innerHTML='<b>How the repeat launches are counted</b><p>Paid media runs for '+
+   pf+' flight'+(pf===1?'':'s')+' only, '+money(R.programMedia)+' in total across '+R.flightMonths+' month'+(R.flightMonths===1?'':'s')+
+   '. Every launch after that spends nothing on media and reaches '+pct(assumptions.listReach,0)+
+   ' of the opted-in list built during the flight, where returning entrants convert to a gift card at '+
+   assumptions.listLift.toFixed(1)+' times the cold rate because they already know the offer. Returning contacts are credited only with the incremental card purchase, not with repeat and catering value already counted the first time they entered, so no customer is counted twice. Re-engagement decays 18% per launch to reflect fatigue, the list loses '+
+   (100-assumptions.listRetain)+'% of contacts between launches, and no contact is assumed to re-enter more than once in a launch.</p>';
+}
+function drawChannels(R){
+  var el=document.getElementById('chGrid'); if(!el)return;
+  var rows=[
+    {n:'Gift cards',  c:'#00A5B5', v:R.cashCollected*R.revenueRatio - R.expectedRedeemed*assumptions.restVarCost/100,
+     s:num(Math.round(R.cardBuyers))+' buyers at '+moneyFull(R.purchasePrice)},
+    {n:'Spend above the card', c:'#0F8A6B', v:R.expectedRedeemed*assumptions.overspend/100*(1-assumptions.restVarCost/100),
+     s:assumptions.overspend+'% added to the average check on redemption'},
+    {n:'Repeat orders', c:'#FFD400', v:R.repeatContribution,
+     s:num(Math.round(R.retained))+' retained at '+assumptions.repeatOrders.toFixed(1)+' orders'},
+    {n:'Uber Eats delivery', c:'#FF8A2B', v:R.deliveryContribution,
+     s:num(Math.round(R.deliveryOrderCount))+' orders at $'+assumptions.deliveryValue+', after '+assumptions.deliveryFee+'% marketplace fee'},
+    {n:'Catering', c:'#FF7BA8', v:R.cateringContribution,
+     s:num(Math.round(R.cateringCustomers))+' bookings at '+moneyFull(assumptions.cateringValue)+', including +'+assumptions.eventCateringLift+'% from the game-day calendar'}
+  ];
+  var mx=Math.max.apply(null,rows.map(function(r){return Math.abs(r.v);}))||1;
+  var tot=rows.reduce(function(a,r){return a+r.v;},0);
+  el.innerHTML=rows.map(function(r){
+    return '<div class="ch"><div class="ch-n"><i style="background:'+r.c+'"></i><span>'+r.n+'<div class="ch-sub">'+r.s+'</div></span></div>'+
+      '<div class="ch-t"><b style="width:'+Math.max(2,Math.abs(r.v)/mx*100)+'%;background:'+r.c+'"></b></div>'+
+      '<div class="ch-v">'+money(r.v)+'<small>'+(tot?Math.round(r.v/tot*100):0)+'% of value</small></div></div>';
+  }).join('');
+  document.getElementById('chTag').textContent='One flight, '+num(Math.round(R.entries))+' entries';
+  document.getElementById('chNote').innerHTML='<b>Referrals and what they are worth</b><p>'+
+   pct(assumptions.shareRate,0)+' of entrants share their link and each sharer brings '+assumptions.refPerSharer.toFixed(1)+
+   ' friends who complete an entry, so '+num(Math.round(R.referredEntries))+' of the '+num(Math.round(R.entries))+
+   ' entries in this flight arrived with no media behind them. That is a viral coefficient of '+R.kFactor.toFixed(2)+
+   ', which lowers blended cost per entry from $'+(R.mediaBudget/Math.max(1,R.paidOnlyEntries)).toFixed(2)+' to $'+R.cpl.toFixed(2)+
+   '. Referred entrants run through the same funnel as paid ones and are capped at three per sharer, matching the cap enforced on the entry page. Delivery is deducted for the marketplace commission, so a dollar of Uber Eats revenue is worth materially less than a dollar taken in store, and repeat, delivery and catering are modeled as campaign-influenced rather than fully incremental.</p>';
 }
 function renderStick(R){
   var host=document.getElementById('msIn'); if(!host)return;
   var months=R.programMonths;
   var items=[
     {zone:'spend', k:'spend', l:'Ad spend', v:money(R.programMedia), raw:R.programMedia,
-     f:money, sub:R.stores+' stores &middot; '+assumptions.launches+' launch'+(assumptions.launches===1?'':'es'), cls:'lead big', invert:true},
-    {zone:'spend', k:'window', l:'Over', v:months+' months', raw:months,
-     f:function(v){return v+' mo';}, sub:'launches '+assumptions.launchGap+' months apart', cls:'lead'},
+     f:money, sub:R.stores+' stores &times; '+moneyFull(assumptions.adPerStoreMonth)+' = <b>'+money(R.burnPerMonth)+' a month</b>', cls:'lead big', invert:true},
+    {zone:'spend', k:'window', l:'Ads run for', v:R.flightMonths+(R.flightMonths===1?' month':' months'), raw:R.flightMonths,
+     f:function(v){return v+' mo';}, sub:'then stop. revenue tracked <b>'+months+' months</b> as cards get redeemed', cls:'lead'},
     {zone:'out', k:'rev', l:'New revenue', v:money(R.programRevenue), raw:R.programRevenue, f:money, sub:'cards, overspend, repeat, catering', cls:'big gold'},
     {zone:'out', k:'contrib', l:'Contribution', v:money(R.programNet), raw:R.programNet, f:money,
      sub:R.crossLaunch? 'positive from launch '+R.crossLaunch : 'negative across the programme', cls:'big', neg:R.programNet<0},
     {zone:'out', k:'roas', l:'Return', v:xmul(R.programRoms), raw:R.programRoms, f:xmul, sub:'contribution per $1 of media'},
-    {zone:'out', k:'cac', l:'Cost to acquire', v:moneyFull(R.newCac), raw:R.newCac, f:moneyFull, sub:'per new customer', invert:true}
+    {zone:'out', k:'cac', l:'Cost to acquire', v:moneyFull(R.programCac), raw:R.programCac, f:moneyFull,
+     sub:'per gift-card buyer &middot; <b>'+moneyFull(R.costPerContact)+'</b> per contact', invert:true}
   ];
   if(!host.dataset.built2){
     var sp='', ou='';
     items.forEach(function(it,i){
       var cell='<div class="msc '+(it.cls||'')+'"><span class="ms-l"><span class="gl" data-gl="'+it.k+'" tabindex="0">'+it.l+'</span></span>'+
-        '<div class="ms-v" id="msv'+i+'"></div><div class="ms-s" id="mss'+i+'"></div><span class="ms-d" id="msd'+i+'"></span></div>';
+        '<div class="ms-row"><div class="ms-v" id="msv'+i+'"></div><span class="ms-d" id="msd'+i+'"></span></div>'+
+        '<div class="ms-s" id="mss'+i+'"></div></div>';
       if(it.zone==='spend') sp+=cell; else ou+=cell;
     });
     host.innerHTML='<div class="ms-zone">'+sp+'</div>'+
@@ -4466,7 +4587,7 @@ function refresh(fast){
   requestAnimationFrame(function(){
     rafPending=false;
     var R=calculateModel(assumptions); lastR=R;
-    renderViews(); renderStick(R); renderChips(R); renderSpend(R); renderCards(R); drawProgramme(R); drawScale(R); drawAlloc(R); drawChart(R); drawWaterfall(R);
+    renderViews(); renderStick(R); renderChips(R); renderSpend(R); renderCards(R); drawProgramme(R); drawChannels(R); drawScale(R); drawAlloc(R); drawChart(R); drawWaterfall(R);
     drawFunnel(R); drawCohorts(R); drawFunding(R); drawMedia(R); drawDormancy(R); drawMeals(R); drawQuarter(R); drawDecision(R);
     if(!fast) drawCurve(R); else {
       document.getElementById('curveSum').textContent='Curve total '+pct(R.curveSum,0)+(R.curveSum<99.5?' · '+pct(100-R.curveSum,0)+' still outstanding at month 12':'');
@@ -4483,10 +4604,10 @@ function refresh(fast){
 
 /* ================= PRESETS ================= */
 var PRESETS={
- cons:{scaleIdx:1, entrantToCard:2.9, cplv:1.55, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
+ cons:{scaleIdx:1, shareRate:11, refPerSharer:.7, deliveryConv:5, deliveryOrders:1.2, deliveryFee:30, eventCateringLift:6, entrantToCard:2.9, cplv:1.55, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
        repeat90:18, repeatOrders:1.6, organicMult:1.05, payFee:5, bonusRedeem:94, newShare:55, cateringConv:7},
  exp:{scaleIdx:1},
- agg:{scaleIdx:2, entrantToCard:5.8, cplv:0.95, entryConv:40, cardRedeem:88, breakage:12, overspend:24,
+ agg:{scaleIdx:2, shareRate:26, refPerSharer:1.5, deliveryConv:14, deliveryOrders:2.2, eventCateringLift:22, entrantToCard:5.8, cplv:0.95, entryConv:40, cardRedeem:88, breakage:12, overspend:24,
       repeat90:42, repeatOrders:2.8, organicMult:1.4, payFee:2, bonusRedeem:80, newShare:72, cateringConv:16}
 };
 function applyPreset(k){

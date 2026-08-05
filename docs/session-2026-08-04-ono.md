@@ -42,6 +42,17 @@ Built the Ono Hawaiian BBQ Marketing Manager work sample end to end (v1 through 
 - Verdict now reads "Commit to the programme, not one flight" when a single flight is negative but the programme is positive; the contribution card shows both reads.
 - Preset cards render each views own model run: stores, CPC, entry conversion, entrant-to-card, and programme outcome with crossover launch.
 - Sticky bar rebuilt as spend -> generates -> returns, all programme-wide, with new-revenue top line (cards, overspend, repeat, catering).
+- v27: ads run one flight only. campaignMonths default 2, new mediaLaunches lever (default 1) controls how many launches buy media; later launches have zero media, zero paid entries, zero impressions and market only to the owned list. Conservative: $24k media over 2 months, positive at launch 2, $22.1k programme contribution.
+- Sticky bar shows stores x per-store = monthly burn so total spend is verifiable on screen. Delta pills moved into a flex row beside the value (they were absolutely positioned over the labels).
+
+## Channels, referrals and Ono markers, v28
+- Delivery channel added: entrants who take the Uber Eats CTA, orders per customer, average basket, and a marketplace commission that is deducted. A dollar of delivery revenue is worth materially less than a dollar in store and the model says so.
+- Catering carries a game-day calendar lift tied to the events rail.
+- Referrals modelled as real virality: share rate x friends per sharer gives a viral coefficient (0.20 default). Referred entries run the same funnel at zero media and pull blended cost per entry from $3.67 to $3.07. Capped at three per sharer to match the entry page.
+- New Where the money comes from panel breaks one flight into five contribution bars so each channel can be challenged separately.
+- Programme CAC fixed: it divided whole-programme media by launch-one buyers only, reading $177 with LTV:CAC 0.94. Now counts buyers from the free relaunches: $40 per buyer, $2 per contact, about 4:1 against $166 LTV.
+- revPerStoreMonth added so a 9x ROAS reads as $860 per store per month, roughly a sub-1% lift, instead of looking like fantasy.
+- Status dots replaced with animated SVG Ono markers: three-layer grill flame with flickering core and rising spark for live/urgent, breathing plumeria for status. Both glow via drop-shadow and freeze under reduced motion.
 
 ## Next
 - `scenarios` table (Supabase): persist dashboard assumption sets to shareable URLs (`/ono?s=id`) and log recruiter slider interaction; same schema doubles as A/B assignment store. Schema + API first, then UI.

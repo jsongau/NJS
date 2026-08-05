@@ -62,6 +62,12 @@ Built the Ono Hawaiian BBQ Marketing Manager work sample end to end (v1 through 
 - revPerStoreMonth referenced R.programMonths before assignment and read $0. Moved after.
 - Four-lens exec panel (CEO/COO/CFO/CMO) run as a subagent review. Built their unanimous number one (incrementality). Not yet built: Monte Carlo P10/P50/P90 downside band, a real holdout test design with MDE and weeks to significance, redemption load expressed as tickets at peak daypart rather than dollars, and the POS work three card types require.
 
+## Ad fatigue cap and scale saturation, v30
+- Flight hard-capped at 3 months. campaignMonths slider max lowered to 3; FATIGUE_STEP 0.16 raises effective CPC 16% per extra month and dulls entry conversion (0.35 coupling). effCplv and lastMonthCplv drive the media panel, which turns amber at the cap. Justifies the cap with math instead of asserting it: past 3 months you pay more for a worse audience, which is why the programme relaunches to the owned list.
+- Scale saturation: SCALE_CPC [0.94,1.00,1.13,1.24,1.34] and SCALE_CONV [1.03,1.00,0.94,0.90,0.86] indexed to scaleIdx. Wider rollouts buy worse inventory. Directly answers the CEO-lens gap about linear scaling.
+- Regional return was 10x purely from linear scaling. With saturation plus rebased assumptions it lands at 6.03x. The real tell is incremental revenue per store per month: 367 / 774 / 925, so Regional is only modestly better per location than the test, which is what scaling a proven campaign looks like.
+- Three leading-comma artifacts fixed in the media panel copy.
+
 ## Next
 - `scenarios` table (Supabase): persist dashboard assumption sets to shareable URLs (`/ono?s=id`) and log recruiter slider interaction; same schema doubles as A/B assignment store. Schema + API first, then UI.
 - Saturation curve so CAC rises with spend density in a fixed radius (base funnel is linear in media today).

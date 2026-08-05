@@ -1233,6 +1233,10 @@
 
   .mediagrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
   .mediagrid div{background:var(--mist);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .mediagrid div.fatigue-hot{background:#FFF4E8;border-color:#F0C9A0}
+  .mediagrid div.fatigue-hot b{color:#B4560F}
+  body[data-theme="night"] .mediagrid div.fatigue-hot{background:#3A2410;border-color:#7A4A1E}
+  body[data-theme="night"] .mediagrid div.fatigue-hot b{color:#FFB870}
   .mediagrid b{display:block;font-size:18px;font-weight:900;font-variant-numeric:tabular-nums}
   .mediagrid span{font-size:10.5px;color:var(--muted);font-weight:800;line-height:1.35;display:block;margin-top:2px}
   .aging{display:grid;gap:7px;margin-top:4px}
@@ -3247,6 +3251,12 @@ var MEDIA_PER_STORE = 12400/36;           /* anchors the scale control to the de
 var ESCHEAT_RESERVE_PCT = 2;              /* modeled reserve on issued stored value */
 var SAFETY_RESERVE_PCT  = 15;             /* operating safety reserve on net cash */
 var EMAIL_OPTIN = 0.92, SMS_OPTIN = 0.41; /* proposed opt-in assumptions */
+/* wider rollouts are less efficient, not more: more markets, thinner optimisation per market,
+   and the best radii get bought first. Indexed to the store levels. */
+var SCALE_CPC  = [0.94, 1.00, 1.13, 1.24, 1.34];
+var SCALE_CONV = [1.03, 1.00, 0.94, 0.90, 0.86];
+var FLIGHT_CAP = 3;      /* hard cap on flight length: past three months the same radius audience is exhausted */
+var FATIGUE_STEP = 0.16; /* each additional month of the same flight raises effective cost per click 16% */
 
 function defaultCurve(monthOne, monthsToFull){
   var c=[],i,n=Math.max(1,Math.min(11,Math.round(monthsToFull)-1));
@@ -3310,10 +3320,21 @@ function calculateModel(a){
   R.prizeEconomicCost = R.prizeFoodCost + a.prizeAdminMonth*a.campaignMonths;
 
   /* a better call to action lifts entry conversion */
-  R.effEntryConv = Math.max(1, Math.min(85, a.entryConv * (1 + a.ctaLift/100)));
+  /* ad fatigue: a geo-radius buy hits the same people repeatedly. Each extra month of the
+     same flight raises cost per click and dulls response, which is why the flight is capped. */
+  var fsum=0, fi;
+  for(fi=0; fi<a.campaignMonths; fi++) fsum += 1 + FATIGUE_STEP*fi;
+  R.fatigueMult   = a.campaignMonths>0 ? fsum/a.campaignMonths : 1;
+  R.fatiguePct    = (R.fatigueMult-1)*100;
+  R.scaleCpc      = SCALE_CPC[a.scaleIdx]  || 1;
+  R.scaleConv     = SCALE_CONV[a.scaleIdx] || 1;
+  R.effCplv       = a.cplv * R.fatigueMult * R.scaleCpc;
+  R.lastMonthCplv = a.cplv * (1 + FATIGUE_STEP*(a.campaignMonths-1)) * R.scaleCpc;
+  R.fatigueCapped = a.campaignMonths >= FLIGHT_CAP;
+  R.effEntryConv = Math.max(1, Math.min(85, a.entryConv * (1 + a.ctaLift/100) * (1 - R.fatiguePct/100*0.35) * R.scaleConv));
 
   /* ---- acquisition funnel ---- */
-  R.paidVisits    = a.cplv>0 ? R.mediaBudget/a.cplv : 0;
+  R.paidVisits    = R.effCplv>0 ? R.mediaBudget/R.effCplv : 0;
   R.impressions   = a.cpm>0 ? R.mediaBudget/a.cpm*1000 : 0;
   R.ctr           = R.impressions>0 ? R.paidVisits/R.impressions*100 : 0;
   R.totalVisits   = R.paidVisits * a.organicMult;
@@ -3753,7 +3774,7 @@ var CONTROLS=[
   {k:'listReach',     l:'Owned list that re-engages', min:15,max:85,step:1, f:function(v){return v+'%'}, x:'Share of the accumulated opted-in list that enters again on a later launch. Costs no media.', b:'ind'},
   {k:'listLift',      l:'Owned list value multiplier', min:1,max:3.5,step:.1, f:function(v){return v.toFixed(1)+'\u00d7'}, x:'A returning entrant already knows the brand, has redeemed a code before, and converts to a gift card at a higher rate than cold traffic.', b:'ind'},
   {k:'listRetain',    l:'List retained between launches', min:60,max:98,step:1, f:function(v){return v+'%'}, x:'Contacts still subscribed and deliverable at the next launch, after unsubscribes and bounces.', b:'ind'},
-  {k:'campaignMonths',l:'Campaign length',            min:1,max:12,step:1, f:function(v){return v+(v===1?' month':' months');}, x:'How many months the radius buy runs. Drives total media and the quarter you are closing.', b:'prop'},
+  {k:'campaignMonths',l:'Flight length',               min:1,max:3,step:1, f:function(v){return v+(v===1?' month':' months')+(v>=3?' \u00b7 capped':'');}, x:'How long the paid flight runs, hard capped at three months. A geo-radius buy reaches the same people over and over, so effective cost per click rises about 16% each additional month and response dulls with it. Past three months you are paying more for a worse audience, which is why the campaign relaunches to the owned list instead of extending the ads.', b:'prop'},
   {k:'ctaLift',       l:'Call-to-action performance',  min:-30,max:60,step:1, f:function(v){return (v>0?'+':'')+v+'% vs control';}, x:'Models a stronger or weaker entry CTA as a lift on entry conversion. Zero is the current control.', b:'prop'},
   {k:'winnersPerMonth',l:'Winners per month',          min:1,max:10,step:1,   f:function(v){return v+(v===1?' winner':' winners');}, x:'How many names are drawn each month. Three is the proposed cadence.', b:'prop'},
   {k:'prizeValue',    l:'Prize card value',            min:50,max:1000,step:25,f:function(v){return '$'+num(v);}, x:'Face value of each prize card. Its economic cost is the food it buys when redeemed, not the face value.', b:'prop'},
@@ -3863,7 +3884,8 @@ var GLOSS={
  cpl:{t:'Cost per lead',d:'Media spend divided by entries. Every entry is a permissioned contact with a stated favorite plate.'},
  ctr:{t:'CTR',d:'Clicks divided by impressions. Derived here from your CPM and CPC settings, the way a Meta ads manager reports it.'},
  cpm:{t:'CPM',d:'What 1,000 ad impressions cost on the platform.'},
- cpc:{t:'CPC',d:'Cost per click through to the entry page.'},
+ cpc:{t:'CPC',d:'Cost per click through to the entry page. The figure shown is blended across the flight, because fatigue raises it every month the same creative runs.'},
+ fatigue:{t:'Ad fatigue',d:'A geo-radius buy around each restaurant reaches a fixed local audience. Run the same flight longer and you show the same creative to the same people, so cost per click climbs about 16% a month and response softens with it. The flight is capped at three months for that reason. Extending ads past the cap buys a worse audience at a higher price, which is exactly why the programme relaunches to the owned list instead.'},
  imp:{t:'Impressions',d:'Ad views bought by the budget at the set CPM.'},
  cpp:{t:'Cost per purchase',d:'Media spend divided by gift-card buyers. Meta calls this cost per purchase or cost per result.'}
 };
@@ -4523,14 +4545,15 @@ function drawMedia(R){
   var el=document.getElementById('mediaGrid'); if(!el)return;
   el.innerHTML=
    '<div><b>'+num(Math.round(R.impressions))+'</b><span><span class="glx" data-gl="imp" tabindex="0">Impressions</span> at $'+assumptions.cpm.toFixed(2)+' <span class="glx" data-gl="cpm" tabindex="0">CPM</span></span></div>'+
-   '<div><b>'+R.ctr.toFixed(2)+'%</b><span><span class="glx" data-gl="ctr" tabindex="0">CTR</span> at $'+assumptions.cplv.toFixed(2)+' <span class="glx" data-gl="cpc" tabindex="0">CPC</span></span></div>'+
-   '<div><b>$'+R.cpl.toFixed(2)+'</b><span><span class="glx" data-gl="cpl" tabindex="0">Cost per lead</span>, '+num(Math.round(R.entries))+' entries</span></div>'+
-   '<div><b>'+xmul(R.cashRoas)+'</b><span><span class="glx" data-gl="roas" tabindex="0">Cash ROAS</span>, the Meta-style read</span></div>'+
+   '<div><b>'+R.ctr.toFixed(2)+'%</b><span><span class="glx" data-gl="ctr" tabindex="0">CTR</span> at $'+R.effCplv.toFixed(2)+' blended <span class="glx" data-gl="cpc" tabindex="0">CPC</span></span></div>'+
+   '<div class="'+(R.fatigueCapped?'fatigue-hot':'')+'"><b>+'+R.fatiguePct.toFixed(0)+'%</b><span><span class="glx" data-gl="fatigue" tabindex="0">Ad fatigue</span> over a '+assumptions.campaignMonths+'-month flight. Month '+assumptions.campaignMonths+' clicks cost $'+R.lastMonthCplv.toFixed(2)+' against $'+assumptions.cplv.toFixed(2)+' in month one'+(R.fatigueCapped?'. Flight is at the three-month cap':'')+'</span></div>'+
+   '<div><b>$'+R.cpl.toFixed(2)+'</b><span><span class="glx" data-gl="cpl" tabindex="0">Cost per lead</span> across '+num(Math.round(R.entries))+' entries</span></div>'+
+   '<div><b>'+xmul(R.cashRoas)+'</b><span><span class="glx" data-gl="roas" tabindex="0">Cash ROAS</span> on the Meta-style read</span></div>'+
    '<div><b>'+moneyFull(R.adPerStoreMonth)+'</b><span>Per store, per month</span></div>'+
-   '<div><b>'+R.stores+' stores</b><span>'+R.scaleLabel+'</span></div>'+
+   '<div><b>'+R.stores+' stores</b><span>'+R.scaleLabel+(R.scaleCpc!==1? '. clicks run '+(R.scaleCpc>1?'+':'')+((R.scaleCpc-1)*100).toFixed(0)+'% and entry conversion '+((R.scaleConv-1)*100).toFixed(0)+'% against a 12-store buy':'')+'</span></div>'+
    '<div><b>'+money(R.mediaPerMonth)+'</b><span>Total media per month</span></div>'+
    '<div><b>'+money(R.mediaBudget)+'</b><span>Campaign media over '+assumptions.campaignMonths+' month'+(assumptions.campaignMonths===1?'':'s')+'</span></div>'+
-   '<div><b>'+moneyFull(R.blendedCac)+'</b><span><span class="glx" data-gl="cpp" tabindex="0">Cost per purchase</span>, one gift-card buyer</span></div>'+
+   '<div><b>'+moneyFull(R.blendedCac)+'</b><span><span class="glx" data-gl="cpp" tabindex="0">Cost per purchase</span> for one gift-card buyer</span></div>'+
    '<div><b>'+moneyFull(R.newCac)+'</b><span>Cost per new customer</span></div>'+
    '<div><b>'+moneyFull(R.prizeCostMonth)+'/mo</b><span>Prize programme, variant '+VARIANT.toUpperCase()+': '+
      (VARIANT==='b'? '$400 plus $150 plus $50' : assumptions.winnersPerMonth+' &times; '+moneyFull(assumptions.prizeValue))+
@@ -4641,9 +4664,9 @@ var PRESETS={
  exp:{scaleIdx:1},
  /* scale-up widens the footprint at conversion the test already proved, with a modest
      creative gain. it does not assume every lever lands at its ceiling at once. */
- agg:{scaleIdx:2, shareRate:21, refPerSharer:1.2, deliveryConv:11, deliveryOrders:1.8, eventCateringLift:16,
-      entrantToCard:3.8, cplv:1.15, entryConv:33, cardRedeem:90, breakage:10, overspend:20,
-      repeat90:34, repeatOrders:2.2, organicMult:1.25, payFee:2.5, bonusRedeem:86, newShare:68, cateringConv:12}
+ agg:{scaleIdx:2, shareRate:20, refPerSharer:1.2, deliveryConv:11, deliveryOrders:1.8, eventCateringLift:15,
+      entrantToCard:3.6, cplv:1.22, entryConv:32, cardRedeem:91, breakage:9, overspend:19,
+      repeat90:33, repeatOrders:2.15, organicMult:1.22, payFee:2.5, bonusRedeem:87, newShare:67, cateringConv:12}
 };
 function applyPreset(k){
   var base=cloneA(DEFAULTS), p=PRESETS[k]||{};

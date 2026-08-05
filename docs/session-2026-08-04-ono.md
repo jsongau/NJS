@@ -54,6 +54,14 @@ Built the Ono Hawaiian BBQ Marketing Manager work sample end to end (v1 through 
 - revPerStoreMonth added so a 9x ROAS reads as $860 per store per month, roughly a sub-1% lift, instead of looking like fantasy.
 - Status dots replaced with animated SVG Ono markers: three-layer grill flame with flickering core and rising spark for live/urgent, breathing plumeria for status. Both glow via drop-shadow and freeze under reduced motion.
 
+## Incrementality and honest defaults, v29
+- Conservative floor is the default preset on load and the reset target. It is the case worth defending in an interview.
+- Regional scale-up was compounding six independent optimistic assumptions (3x stores x 1.63 clicks x 1.43 entry x 2.0 card x 1.33 organic x 5x referral k) into 24x buyers and 31x revenue. Rebased so scaling means wider footprint at conversion the test already proved plus a modest creative gain: now 10.8x.
+- Incrementality added: incrCard 65, incrRepeat 50, incrDelivery 60, incrCatering 70 as sliders. New True incremental contribution card reports the honest number and what would have happened anyway. Programme incremental computed per launch, not scaled by a near-zero single-flight ratio.
+- Two stale single-flight metrics were contradicting the programme model on the same screen. Risk register divided programme media by launch-one buyers only. Break-even said contribution never turns positive while the programme crossed at launch 2, now split into One flight pays back and Programme turns positive.
+- revPerStoreMonth referenced R.programMonths before assignment and read $0. Moved after.
+- Four-lens exec panel (CEO/COO/CFO/CMO) run as a subagent review. Built their unanimous number one (incrementality). Not yet built: Monte Carlo P10/P50/P90 downside band, a real holdout test design with MDE and weeks to significance, redemption load expressed as tickets at peak daypart rather than dollars, and the POS work three card types require.
+
 ## Next
 - `scenarios` table (Supabase): persist dashboard assumption sets to shareable URLs (`/ono?s=id`) and log recruiter slider interaction; same schema doubles as A/B assignment store. Schema + API first, then UI.
 - Saturation curve so CAC rises with spend density in a fixed radius (base funnel is linear in media today).

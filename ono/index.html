@@ -3275,6 +3275,8 @@ var DEFAULTS={
   shareRate:18, refPerSharer:1.1,
   deliveryConv:9, deliveryOrders:1.6, deliveryValue:34, deliveryFee:28,
   eventCateringLift:12,
+  /* F. incrementality: how much of this would have happened anyway */
+  incrCard:65, incrRepeat:50, incrDelivery:60, incrCatering:70,
   /* structural */
   launches:4, launchGap:3, mediaLaunches:1, listReach:58, listLift:1.9, listRetain:90,
   scaleIdx:1, horizon:12,
@@ -3422,6 +3424,22 @@ function calculateModel(a){
   R.outstandingValue = R.atHorizon.cardLiability;
   R.bonusOutstanding = R.atHorizon.bonusLiability;
   R.totalContribution= R.months[Math.min(23,11)].cumContribution;   /* 12-month contribution */
+
+  /* ---- incrementality: strip out the business that would have walked in anyway ----
+     Redeeming a gift card is not automatically new revenue. Some of it replaces a purchase
+     the guest was going to make regardless, so only a share of each channel is truly new. */
+  R.cardGross      = R.cashCollected*R.revenueRatio - R.expectedRedeemed*a.restVarCost/100
+                     + R.expectedRedeemed*a.overspend/100*(1-a.restVarCost/100);
+  R.incrementalContribution =
+      R.cardGross*a.incrCard/100
+    + R.repeatContribution*a.incrRepeat/100
+    + R.deliveryContribution*a.incrDelivery/100
+    + R.cateringContribution*a.incrCatering/100
+    - R.mediaBudget - R.prizeEconomicCost - R.payFees - R.bonusFulfillCost;
+  R.cannibalised   = (R.cardGross*(100-a.incrCard)/100) + (R.repeatContribution*(100-a.incrRepeat)/100)
+                   + (R.deliveryContribution*(100-a.incrDelivery)/100) + (R.cateringContribution*(100-a.incrCatering)/100);
+  R.incrShare      = (R.cardGross+R.repeatContribution+R.deliveryContribution+R.cateringContribution)>0 ?
+      1 - R.cannibalised/(R.cardGross+R.repeatContribution+R.deliveryContribution+R.cateringContribution) : 0;
   R.contributionAtHorizon = R.atHorizon.cumContribution;
   R.romsRatio        = a.mediaBudget>0 ? R.totalContribution/a.mediaBudget : 0;
 
@@ -3436,7 +3454,7 @@ function calculateModel(a){
   R.grossPerEntryOwned = R.entries>0 ? (R.grossContribution - R.repeatContribution - R.cateringContribution)/R.entries : 0;
   R.optedPerLaunch  = R.entries * EMAIL_OPTIN;
   R.launchList=[];
-  var listSize=0, cum=0, cross=0;
+  var listSize=0, cum=0, cumIncr=0, cross=0;
   for(var L=0; L<a.launches; L++){
     /* only the first launches carry a paid flight. after that the campaign relaunches
        to the list it already owns, which costs nothing in media. */
@@ -3448,7 +3466,8 @@ function calculateModel(a){
     var ownedEntries = Math.min(listSize*reach, listSize*0.7);
     var gross        = lPaidEntries*R.grossPerEntry + ownedEntries*a.listLift*R.grossPerEntryOwned;
     var net          = gross - lMedia - R.prizeEconomicCost;
-    cum += net;
+    var netIncr = gross*R.incrShare - lMedia - R.prizeEconomicCost;
+    cum += net; cumIncr += netIncr;
     if(!cross && cum>0) cross = L+1;
     R.launchList.push({
       n:L+1,
@@ -3462,6 +3481,8 @@ function calculateModel(a){
       media:lMedia,
       gross:gross,
       net:net,
+      netIncr:netIncr,
+      cumIncr:cumIncr,
       cum:cum,
       cpl: (lPaidEntries+ownedEntries)>0 ? lMedia/(lPaidEntries+ownedEntries) : 0
     });
@@ -3481,6 +3502,7 @@ function calculateModel(a){
     R.programBuyers  += l.paidEntries*a.entrantToCard/100 + l.ownedEntries*a.listLift*a.entrantToCard/100;
   });
   R.programNet     = cum;
+  R.programIncremental = cumIncr;
   R.paidFlights    = Math.min(a.mediaLaunches, a.launches);
   R.programMedia   = R.mediaBudget * R.paidFlights;
   R.flightMonths   = a.campaignMonths * R.paidFlights;           /* months with ads actually running */
@@ -3492,9 +3514,10 @@ function calculateModel(a){
   R.programImpressions = R.impressions * R.paidFlights;
   R.programList    = listSize;
   R.programRoms    = R.programMedia>0 ? R.programNet/R.programMedia : 0;
-  R.revPerStoreMonth = (R.stores*R.programMonths)>0 ? R.programRevenue/(R.stores*R.programMonths) : 0;
   R.crossLaunch    = cross;
   R.programMonths  = (a.launches-1)*a.launchGap + 12;
+  R.revPerStoreMonth = (R.stores*R.programMonths)>0 ? R.programRevenue/(R.stores*R.programMonths) : 0;
+
 
   R.paybackMonth = null;
   for(i=0;i<R.months.length;i++){ if(R.months[i].cumContribution>=0){ R.paybackMonth=i+1; break; } }
@@ -3757,6 +3780,10 @@ var CONTROLS=[
   {k:'repeat90',     l:'90-day repeat-purchase rate', min:5,max:70,step:1,   f:function(v){return v+'%';}, x:'Buyers who return and pay beyond the card within 90 days.', b:'prop'},
   {k:'repeatValue',  l:'Average repeat-order value',  min:10,max:75,step:1,  f:function(v){return '$'+v;}, x:'Average check on a repeat visit.', b:'ind'},
   {k:'repeatOrders', l:'Repeat orders per retained customer', min:1,max:8,step:0.1, f:function(v){return v.toFixed(1);}, x:'How many repeat visits a retained customer makes in the window.', b:'prop'},
+  {k:'incrCard',      l:'Gift-card spend that is incremental', min:20,max:100,step:1, f:function(v){return v+'%'}, x:'Share of redeemed stored value that is genuinely new business. The rest replaces a purchase the guest would have made anyway, which is the first objection any operator raises about a gift-card promotion.', b:'ind'},
+  {k:'incrRepeat',    l:'Repeat orders that are incremental', min:10,max:100,step:1, f:function(v){return v+'%'}, x:'Repeat visits caused by the campaign rather than by habits the guest already had.', b:'ind'},
+  {k:'incrDelivery',  l:'Delivery that is incremental', min:10,max:100,step:1, f:function(v){return v+'%'}, x:'Uber Eats orders the campaign created, net of orders that would have been placed anyway.', b:'ind'},
+  {k:'incrCatering',  l:'Catering that is incremental', min:10,max:100,step:1, f:function(v){return v+'%'}, x:'Catering bookings the campaign created. Usually the most incremental channel, because a group order is a planned decision the calendar prompt actually triggers.', b:'ind'},
   {k:'shareRate',     l:'Entrants who share their link', min:0,max:60,step:1, f:function(v){return v+'%'}, x:'Share of entrants who send their referral link to at least one friend.', b:'prop'},
   {k:'refPerSharer',  l:'Friends who enter per sharer', min:0,max:3,step:.1, f:function(v){return v.toFixed(1)}, x:'Friends who actually complete an entry for each person who shares. Capped at three referral entries each in the funnel.', b:'prop'},
   {k:'deliveryConv',  l:'Entrants who order delivery', min:0,max:45,step:1, f:function(v){return v+'%'}, x:'Entrants who take the Uber Eats call to action after their menu match.', b:'prop'},
@@ -3996,7 +4023,7 @@ function renderStick(R){
 var VIEWS=[
  {k:'cons', n:'Conservative floor',  d:'If everything lands at the low end'},
  {k:'exp',  n:'12-Store Test',       d:'The flight I would actually launch'},
- {k:'agg',  n:'Regional scale-up',   d:'After the test proves the creative'}
+ {k:'agg',  n:'Regional scale-up',   d:'Same proven conversion, three times the footprint'}
 ];
 function presetAssumptions(k){
   var base=cloneA(DEFAULTS), pr=PRESETS[k]||{};
@@ -4008,7 +4035,7 @@ function renderViews(){
   var host=document.getElementById('cmgrViews'); if(!host)return;
   host.innerHTML=VIEWS.map(function(v){
     var a=presetAssumptions(v.k), M=calculateModel(a);
-    var pos=M.programNet>=0;
+    var pos=M.programIncremental>=0;
     return '<button class="dpre'+(VIEW_ACTIVE===v.k?' on':'')+'" data-pre="'+v.k+'" type="button">'+
       '<span class="dp-dot"></span><b>'+v.n+'</b><span class="dp-sub">'+v.d+'</span>'+
       '<span class="dp-why">'+
@@ -4017,15 +4044,15 @@ function renderViews(){
         '<span class="dp-r">Entry conversion<em>'+a.entryConv+'%</em></span>'+
         '<span class="dp-r">Entrant to card<em>'+a.entrantToCard.toFixed(1)+'%</em></span>'+
       '</span>'+
-      '<span class="dp-out"><b class="'+(pos?'pos':'neg')+'">'+money(M.programNet)+'</b><span>'+
-        (M.crossLaunch? 'positive at launch '+M.crossLaunch : 'never turns positive')+'</span></span>'+
+      '<span class="dp-out"><b class="'+(pos?'pos':'neg')+'">'+money(M.programIncremental)+'</b><span>incremental &middot; '+
+        (M.crossLaunch? 'launch '+M.crossLaunch : 'never positive')+'</span></span>'+
     '</button>';
   }).join('');
   Array.prototype.forEach.call(host.querySelectorAll('.dpre'),function(b){
     b.addEventListener('click',function(){ applyPreset(b.getAttribute('data-pre')); });
   });
 }
-var VIEW_ACTIVE='exp';
+var VIEW_ACTIVE='cons';
 function renderChips(R){
   var el=document.getElementById('cmgrChips'); if(!el)return;
   var chips=[
@@ -4098,6 +4125,10 @@ function renderCards(R){
     s:'one flight, 12-month'+(R.programNet>R.totalContribution? ' &middot; '+money(R.programNet)+' across '+assumptions.launches+' launches':''),
     tag:R.totalContribution>=0?'Positive':(R.programNet>0?'Positive by launch '+R.crossLaunch:'Negative'),
     info:'Recognised revenue on redemption and overspend, plus repeat and catering, plus supportable breakage, less variable cost, bonus fulfilment, fees and media.'},
+   {l:'True incremental contribution', v:money(R.incrementalContribution),
+    s:pct(R.incrShare*100,0)+' of modeled value is genuinely new &middot; '+money(R.cannibalised)+' would have happened anyway',
+    tag:R.incrementalContribution>=0?'After cannibalisation':'Negative after cannibalisation',
+    info:'Gift-card redemption is not automatically new revenue. Each channel is discounted to the share that would not have happened without the campaign, then media, prize and fulfilment are deducted in full. This is the number an operator will argue with, so it is stated before they have to ask.'},
    {l:'Customers acquired', v:num(R.newCustomers), s:num(R.cardBuyers)+' buyers at '+moneyFull(R.newCac)+' each, '+(assumptions.ctaLift===0?'at the control call-to-action':'on a '+(assumptions.ctaLift>0?'+':'')+assumptions.ctaLift+'% call-to-action'), tag:'Identified',
     info:'Newly identified customers who purchase a card, at the media spend and call-to-action performance set in the investment band above. Existing customers who buy are counted separately.'},
    {l:'Modeled discretionary reinvestment capacity', v:money(R.reinvestCapacity), s:'after redemption, bonus, escheat and safety reserves', tag:'Conservative',
@@ -4449,7 +4480,8 @@ function drawDecision(R){
    '<div class="bevn-r"><span class="bevn-l">Maximum affordable cost per visit</span><span class="bevn-v'+(bev.maxCplv<assumptions.cplv?' bad':'')+'">$'+bev.maxCplv.toFixed(2)+'</span></div>'+
    '<div class="bevn-r"><span class="bevn-l">Maximum bonus-card value</span><span class="bevn-v'+(bev.maxBonusFace<assumptions.bonusFace?' bad':'')+'">'+moneyFull(bev.maxBonusFace)+'</span></div>'+
    '<div class="bevn-r"><span class="bevn-l">Minimum overspend required</span><span class="bevn-v'+(bev.minOverspend>assumptions.overspend?' bad':'')+'">'+pct(bev.minOverspend,1)+'</span></div>'+
-   '<div class="bevn-r"><span class="bevn-l">Contribution turns positive</span><span class="bevn-v'+(!bev.paybackMonth?' bad':'')+'">'+(bev.paybackMonth?('Month '+bev.paybackMonth):'Not within 24 months')+'</span></div>';
+   '<div class="bevn-r"><span class="bevn-l">One flight pays back</span><span class="bevn-v'+(!bev.paybackMonth?' bad':'')+'">'+(bev.paybackMonth?('Month '+bev.paybackMonth):'not inside 24 months')+'</span></div>'+
+   '<div class="bevn-r"><span class="bevn-l">Programme turns positive</span><span class="bevn-v'+(R.crossLaunch?'':' bad')+'">'+(R.crossLaunch?('Launch '+R.crossLaunch):'not inside '+assumptions.launches+' launches')+'</span></div>';
 
   /* risk register */
   var risks=[];
@@ -4462,7 +4494,7 @@ function drawDecision(R){
   if(loadPerStorePerDay>900) risks.push(['md','Redemption volume of about '+moneyFull(loadPerStorePerDay)+' per store per day could outrun kitchen throughput at peak.']);
   var cac = R.newCustomers>0? assumptions.mediaBudget/R.newCustomers : 0;
   var contribPer = R.newCustomers>0? R.totalContribution/R.newCustomers : 0;
-  if(cac>contribPer) risks.push(['hi','Acquisition cost of '+moneyFull(cac)+' per new customer exceeds modeled contribution of '+moneyFull(contribPer)+' per customer.']);
+  if(R.programCac>R.ltvPerBuyer) risks.push(['hi','Programme acquisition cost of '+moneyFull(R.programCac)+' per gift-card buyer exceeds modeled lifetime contribution of '+moneyFull(R.ltvPerBuyer)+' per buyer. The offer or the conversion rate has to move before widening the rollout.']);
   var breakShare = R.totalContribution>0? (R.breakageValue*R.revenueRatio)/R.totalContribution : 0;
   if(breakShare>0.35) risks.push(['hi','Breakage supplies '+pct(breakShare*100,0)+' of modeled contribution. Recognition needs a supportable method and is restricted in several states.']);
   var repeatShare = R.totalContribution>0? R.repeatContribution/R.totalContribution : 0;
@@ -4607,8 +4639,11 @@ var PRESETS={
  cons:{scaleIdx:1, shareRate:11, refPerSharer:.7, deliveryConv:5, deliveryOrders:1.2, deliveryFee:30, eventCateringLift:6, entrantToCard:2.9, cplv:1.55, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
        repeat90:18, repeatOrders:1.6, organicMult:1.05, payFee:5, bonusRedeem:94, newShare:55, cateringConv:7},
  exp:{scaleIdx:1},
- agg:{scaleIdx:2, shareRate:26, refPerSharer:1.5, deliveryConv:14, deliveryOrders:2.2, eventCateringLift:22, entrantToCard:5.8, cplv:0.95, entryConv:40, cardRedeem:88, breakage:12, overspend:24,
-      repeat90:42, repeatOrders:2.8, organicMult:1.4, payFee:2, bonusRedeem:80, newShare:72, cateringConv:16}
+ /* scale-up widens the footprint at conversion the test already proved, with a modest
+     creative gain. it does not assume every lever lands at its ceiling at once. */
+ agg:{scaleIdx:2, shareRate:21, refPerSharer:1.2, deliveryConv:11, deliveryOrders:1.8, eventCateringLift:16,
+      entrantToCard:3.8, cplv:1.15, entryConv:33, cardRedeem:90, breakage:10, overspend:20,
+      repeat90:34, repeatOrders:2.2, organicMult:1.25, payFee:2.5, bonusRedeem:86, newShare:68, cateringConv:12}
 };
 function applyPreset(k){
   var base=cloneA(DEFAULTS), p=PRESETS[k]||{};
@@ -4783,7 +4818,7 @@ async function dashDemo(){
 function initDash(){
   buildControls();
   document.querySelectorAll('.dpre').forEach(function(b){ b.addEventListener('click',function(){applyPreset(b.dataset.pre);}); });
-  document.getElementById('dReset').addEventListener('click',function(){ applyPreset('exp'); toast('Assumptions reset to the expected case.'); });
+  document.getElementById('dReset').addEventListener('click',function(){ applyPreset('cons'); toast('Assumptions reset to the conservative floor.'); });
   document.getElementById('dCompare').addEventListener('click',openCompare);
   document.getElementById('dCopy').addEventListener('click',copySummary);
   document.getElementById('dCsv').addEventListener('click',exportCsv);
@@ -4809,7 +4844,7 @@ function initDash(){
       refresh(); track('dash_curve_preset',{preset:k});
     });
   });
-  refresh();
+  applyPreset('cons');   /* open on the conservative floor: the case worth defending */
 }
 
 try{ initDash(); window.__dashReady=true; }catch(e){ console.error('dash init', e); }

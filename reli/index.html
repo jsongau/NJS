@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Rely on Reli. &middot; Win a Year of Rel.ai &middot; Sales Work Sample by Nathan J. Song</title>
-<meta name="description" content="A dual-track acquisition engine for Reli.: a drawing that gives away a year of Rel.ai, captures which packaging line a buyer actually reorders, converts the first case order through DoorDash, and reports pipeline for both the software and the physical catalog. Built by Nathan J. Song as a Head of Sales work sample.">
+<meta name="description" content="A dual-track acquisition engine for Reli.: a drawing that gives away a year of Rel.ai, captures which packaging line a buyer actually reorders, converts the first case order through Amazon Prime, and reports pipeline for both the software and the physical catalog. Built by Nathan J. Song as a Head of Sales work sample.">
 <meta name="robots" content="noindex">
 <meta property="og:title" content="Rely on Reli. &middot; Win a year of Rel.ai">
 <meta property="og:description" content="A drawing that gives away $1,200 of Rel.ai to three Amazon sellers every month, and reports pipeline for the software and the packaging together. Head of Sales work sample by Nathan J. Song.">
@@ -582,6 +582,28 @@
   .n90-c li b{color:var(--ink);font-weight:900}
   body[data-theme="night"] .n90-c li b{color:var(--cream)}
   @media(max-width:900px){.n90{grid-template-columns:1fr}}
+  .hubwrap{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+  .hubwrap h5{font-size:14.5px;font-weight:900;letter-spacing:-.01em}
+  .hub-sub{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:5px;max-width:78ch}
+  .hubgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:13px}
+  .hub{background:var(--mist);border:1px solid var(--line);border-radius:12px;padding:11px 12px;position:relative}
+  .hub.near{border-color:var(--teal);background:var(--teal-soft)}
+  body[data-theme="night"] .hub{background:rgba(255,255,255,.04)}
+  body[data-theme="night"] .hub.near{background:rgba(0,129,255,.14)}
+  .hub-s{position:absolute;top:9px;right:10px;font-size:9px;font-weight:900;letter-spacing:.08em;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+  .hub b{display:block;font-size:13px;font-weight:900;letter-spacing:-.01em;padding-right:26px;line-height:1.25}
+  .hub em{display:block;font-style:normal;font-size:10px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--teal-deep);margin-top:3px}
+  body[data-theme="night"] .hub em{color:var(--gold-lite)}
+  .hub-d{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:6px}
+  .hub-n{font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px;max-width:88ch}
+  @media(max-width:1100px){.hubgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.hubgrid{grid-template-columns:1fr}}
+  .rwhy{margin-top:12px;border-left:3px solid var(--teal);background:var(--teal-soft);border-radius:0 12px 12px 0;padding:11px 15px}
+  body[data-theme="night"] .rwhy{background:rgba(0,129,255,.13)}
+  .rwhy b{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:5px}
+  body[data-theme="night"] .rwhy b{color:var(--gold-lite)}
+  .rwhy p{font-size:12.5px;line-height:1.6;color:var(--ink)}
+  body[data-theme="night"] .rwhy p{color:var(--cream)}
   .rcode{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 10px;margin-top:12px;background:var(--gold-soft);border:1.5px solid var(--gold);border-radius:12px;padding:10px 13px}
   .rcode-l{grid-column:1/-1}
   body[data-theme="night"] .rcode{background:rgba(255,184,0,.13)}
@@ -1833,7 +1855,7 @@
           <div class="cd-c csec" id="cdSecCell"><b id="cdS">00</b><span>Sec</span></div>
         </div>
         <div class="cd-drain"><i id="cdDrain"></i></div>
-        <div class="cd-urg" id="cdUrg">Every second is one less chance to be in the draw</div>
+        <div class="cd-urg" id="cdUrg">A baseline tool needs history before Q4. August beats November.</div>
         <ul class="prize-list">
           <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="pzBullet">Three winners a month, $1,200 of Rel.ai each</span></li>
           <li><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>Your packing list and volume pricing, before you place a first order</li>
@@ -1872,7 +1894,7 @@
     <div class="qstep" data-q="2">
       <div class="qnum">Question 2 of 5</div>
       <h3>Which Reli. is closest to you?</h3>
-      <p class="qsub">Reli. has more than 130 locations across California and Arizona. Store preference is what makes this campaign measurable at the warehouse level instead of just brand-wide.</p>
+      <p class="qsub">Reli. ships from three distribution centers: Cerritos, Carrollton and Edison. Your shipping origin is what makes this campaign measurable at the warehouse level instead of just brand-wide.</p>
       <div class="locs" id="locs"></div>
       <div class="qerr hide" id="err2">Choose a location so we can route your offer.</div>
       <div class="qnav"><button class="qback" data-back="1">Back</button><span class="qauto">Tap a store to keep going</span></div>
@@ -1935,8 +1957,8 @@
     <!-- LEFT: guaranteed offer -->
     <aside class="card offer">
       <div class="offer-head"><span class="offer-pill">Do not want to wait on the draw</span></div>
-      <h3>Buy the Starter year. Get a <span style="color:var(--teal)">13th month on Growth, free</span>.</h3>
-      <p>The drawing picks three names a month. If you would rather not wait on it, buy the Starter year today and Reli. adds a thirteenth month on top, run at <b>Growth</b> rather than Starter. Growth is <b>$300 a month</b>, so the bonus month is <b>$300 of software you did not pay for</b>, with automated Copy Opt, unlimited ASINs and unlimited competitors switched on. It is yours either way, whether or not your name comes out of the drum.</p>
+      <h3>Buy the Starter year. <span style="color:var(--teal)">Month one runs on Growth, free</span>.</h3>
+      <p>The drawing picks three names a month. If you would rather not wait on it, buy the Starter year today and Reli. runs your <b>first</b> month at <b>Growth</b> rather than Starter, on top of the twelve you paid for. Growth is <b>$300 a month</b>, so month one is <b>$300 of software you did not pay for</b>, with automated Copy Opt, unlimited ASINs and unlimited competitors switched on from day one. It is yours either way, whether or not your name comes out of the drum.</p>
 
       <div class="gcard" id="gcard">
         <div class="gcard-stage" id="gcardStage"></div>
@@ -1945,14 +1967,18 @@
 
       <div class="rvs">
         <div class="rvs-r"><span>Rel.ai Starter, 12 months</span><b>$1,200</b></div>
-        <div class="rvs-r rvs-free"><span>Month 13, run on Growth</span><b>+$300<em>bonus</em></b></div>
+        <div class="rvs-r rvs-free"><span>Month 1, run on Growth</span><b>+$300<em>bonus</em></b></div>
         <div class="rvs-r rvs-tot"><span>What you pay today</span><b>$1,200</b></div>
       </div>
-      <p class="rvs-note">Twelve months of Starter, then a thirteenth on Growth. If the bonus month earns its keep, staying on Growth is one click. That is the whole point of putting it at the end rather than the beginning.</p>
-      <div class="expire"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg><span id="expireTxt">Upgrade holds for 14 days</span></div>
+      <p class="rvs-note">One month on Growth, then the twelve Starter months you paid for. You find out what Growth actually does in week one, not next year, and staying on it is one click.</p>
+      <div class="rwhy">
+        <b>Why starting now is not the same as starting later</b>
+        <p>Rel.ai is a baseline tool. It flags what changed, which means it has to watch you for a while before it can tell you anything. A seller who starts in August has four months of their own history behind them by Black Friday. A seller who starts in November has a tool that is still learning during the only quarter that matters. That is the real cost of waiting, and it has nothing to do with a countdown.</p>
+      </div>
+      <div class="expire"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg><span id="expireTxt">The drawing and the upgrade close on the same date.</span></div>
       <ul class="terms">
-        <li>The bonus thirteenth month applies to a new annual Starter plan, one per company</li>
-        <li>Growth features end when the bonus month does, unless you choose to stay on Growth</li>
+        <li>The upgraded first month applies to a new annual Starter plan, one per company</li>
+        <li>Growth features step down to Starter after month one, unless you choose to stay on Growth</li>
         <li>Not combinable with the drawing. Winners already receive $1,200 in Rel.ai credit</li>
         <li>Illustrative offer built for this work sample, not a live Reli. promotion</li>
         <li>Your shipping origin on file: <b id="offerStore">Diamond Bar</b></li>
@@ -1999,22 +2025,22 @@
           <!-- road -->
           <path d="M0 96h380" stroke="#CFE6EA" stroke-width="9" stroke-linecap="round"/>
           <path class="road-d" d="M6 96h368" stroke="#FFFFFF" stroke-width="2.4" stroke-dasharray="12 9" stroke-linecap="round"/>
-          <!-- scooter -->
+          <!-- delivery van -->
           <g class="ride">
-            <g transform="translate(96,72)"><g class="s-bob">
-              <g class="s-line" stroke="#8FC8D2" stroke-width="2" stroke-linecap="round"><path d="M-14 8h-10"/><path d="M-12 14h-14"/></g>
-              <rect x="-2" y="-12" width="17" height="14" rx="2.6" fill="#FFB800" stroke="#C79E00" stroke-width="1.4"/>
-              <path d="M-2 -6h17" stroke="#C79E00" stroke-width="1.2"/>
-              <path d="M16 4h10l5-8h-7z" fill="#0081FF"/>
-              <path d="M14 2h12v6H14z" fill="#0059B8"/>
-              <circle cx="30" cy="-6" r="4.6" fill="#0B1B2B"/>
-              <path d="M26 -8l6-4" stroke="#0B1B2B" stroke-width="2" stroke-linecap="round"/>
-              <g class="w-spin"><circle cx="4" cy="15" r="7" fill="none" stroke="#0B1B2B" stroke-width="2.6"/><path d="M4 9v12M-2 15h12" stroke="#0B1B2B" stroke-width="1.5"/></g>
-              <g class="w-spin" style="animation-delay:-.2s"><circle cx="28" cy="15" r="7" fill="none" stroke="#0B1B2B" stroke-width="2.6"/><path d="M28 9v12M22 15h12" stroke="#0B1B2B" stroke-width="1.5"/></g>
+            <g transform="translate(90,70)"><g class="s-bob">
+              <g class="s-line" stroke="#8FC8D2" stroke-width="2" stroke-linecap="round"><path d="M-12 6h-12"/><path d="M-10 13h-16"/></g>
+              <path d="M-2 -12h24v20H-2z" fill="#F7FAFD" stroke="#B9C9DA" stroke-width="1.3"/>
+              <path d="M22 -4h9l7 8v4h-16z" fill="#F7FAFD" stroke="#B9C9DA" stroke-width="1.3"/>
+              <path d="M23.5 -2.5h6.4l4.6 5.4h-11z" fill="#BFDCFF"/>
+              <rect x="1" y="-8" width="17" height="9" rx="1.4" fill="#0081FF" opacity=".9"/>
+              <path d="M4 -6.2h11M4 -3.6h11M4 -1h7" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity=".85"/>
+              <rect x="-2" y="6" width="40" height="3" fill="#0B1B2B" opacity=".18"/>
+              <g class="w-spin"><circle cx="5" cy="9" r="5.4" fill="none" stroke="#0B1B2B" stroke-width="2.6"/><path d="M5 4.4v9.2M.4 9h9.2" stroke="#0B1B2B" stroke-width="1.4"/></g>
+              <g class="w-spin" style="animation-delay:-.2s"><circle cx="29" cy="9" r="5.4" fill="none" stroke="#0B1B2B" stroke-width="2.6"/><path d="M29 4.4v9.2M24.4 9h9.2" stroke="#0B1B2B" stroke-width="1.4"/></g>
             </g></g>
           </g>
         </svg>
-        <div class="dlv-eta"><span class="dlv-pulse"></span>At your door as early as <b>10 minutes</b></div>
+        <div class="dlv-eta"><span class="dlv-pulse"></span>At your door as early as <b>today</b></div>
         <div class="dlv-steps">
           <div class="dlv-s">
             <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -2025,19 +2051,20 @@
               <g class="fl-core"><rect x="14.6" y="10.4" width="10.8" height="6.4" rx="1" fill="#FFB800" stroke="#C79E00" stroke-width="1.3"/></g>
               <g class="fl-spark" fill="#FFB800"><circle cx="31" cy="10" r="1.5"/><circle cx="10" cy="9" r="1.2"/></g>
             </svg>
-            <b>Picked and packed</b><span>Starts now</span>
+            <b>Picked and packed</b><span>Within the hour</span>
           </div>
           <div class="dlv-s">
             <svg viewBox="0 0 40 40" aria-hidden="true">
               <g class="s-line" stroke="#8FC8D2" stroke-width="2.2" stroke-linecap="round"><path d="M6 16h-4"/><path d="M8 22H2"/></g>
-              <rect x="12" y="9" width="12" height="10" rx="2" fill="#FFB800" stroke="#C79E00" stroke-width="1.4"/>
-              <path d="M24 22h7l4-6h-5z" fill="#0081FF"/>
-              <path d="M22 20h9v5h-9z" fill="#0059B8"/>
-              <circle cx="34" cy="14" r="3.4" fill="#0B1B2B"/>
+              <path d="M9 11h15v14H9z" fill="#F7FAFD" stroke="#B9C9DA" stroke-width="1.5"/>
+              <path d="M24 16h6l5 5v4H24z" fill="#F7FAFD" stroke="#B9C9DA" stroke-width="1.5"/>
+              <path d="M25.2 17.4h4.2l3.2 3.6h-7.4z" fill="#BFDCFF"/>
+              <rect x="11.5" y="14" width="10" height="6" rx="1.2" fill="#0081FF" opacity=".9"/>
+              <path d="M13.5 15.8h6.4M13.5 18h4.4" stroke="#fff" stroke-width="1.1" stroke-linecap="round" opacity=".9"/>
               <g class="w-spin"><circle cx="15" cy="29" r="5.4" fill="none" stroke="#0B1B2B" stroke-width="2.4"/><path d="M15 24v10M10 29h10" stroke="#0B1B2B" stroke-width="1.4"/></g>
               <g class="w-spin" style="animation-delay:-.25s"><circle cx="31" cy="29" r="5.4" fill="none" stroke="#0B1B2B" stroke-width="2.4"/><path d="M31 24v10M26 29h10" stroke="#0B1B2B" stroke-width="1.4"/></g>
             </svg>
-            <b>Dasher on the way</b><span>~6 MIN</span>
+            <b>Delivery driver assigned</b><span>Same day</span>
           </div>
           <div class="dlv-s">
             <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -2047,10 +2074,10 @@
               <g class="bag-in"><rect x="25" y="24" width="10" height="10" rx="1.6" fill="#FFB800" stroke="#C79E00" stroke-width="1.3"/>
                 <path d="M27.5 24v-2.4a2.5 2.5 0 0 1 5 0V24" fill="none" stroke="#C79E00" stroke-width="1.3"/></g>
             </svg>
-            <b>At your door</b><span>10 MIN</span>
+            <b>At your door</b><span>Today or tomorrow</span>
           </div>
         </div>
-        <p class="dlv-note">Same day delivery would run on DoorDash Drive, the white label courier service DoorDash sells to merchants, so the order never touches the DoorDash marketplace or its commission. Times depend on the distance from the fulfillment center.</p>
+        <p class="dlv-note">Reli. already sells on Amazon, so same day and next day delivery come with Prime at no extra build. Speed depends on which of the three distribution centers is closest, Cerritos, Carrollton or Edison. That is the whole argument for pointing a first order at Amazon rather than standing up a courier network.</p>
       </div>
       <button class="btn btn-g match-cta" id="orderMatch">Order a first case</button>
       <button class="match-sec" onclick="track('order_cta_clicked',{src:'pricing'});window.open(RELI_PRICING,'_blank','noopener');">Compare volume pricing</button>
@@ -2166,7 +2193,7 @@
     <div class="lc">
       <div class="lc-c"><div class="lc-d">Day 0</div><b>The offer lands</b><p>The packaging match, the entry confirmation and the Rel.ai plan link, sent while the entry is still fresh.</p></div>
       <div class="lc-c"><div class="lc-d">Day 2</div><b>What that SKU costs at volume</b><p>Their pick priced at one case, six cases and a pallet, so the discount ladder is visible before they place a first order.</p></div>
-      <div class="lc-c"><div class="lc-d">Day 5</div><b>One nudge on the bonus month</b><p>The thirteenth month on Growth holds for fourteen days. One message, one link, one action.</p></div>
+      <div class="lc-c"><div class="lc-d">Day 5</div><b>One nudge on the upgrade</b><p>The Growth first month holds for fourteen days. One message, one link, one action.</p></div>
       <div class="lc-c"><div class="lc-d">Day 9</div><b>What Rel.ai actually watches</b><p>Reorder timing, competitor pricing and listing copy. New sellers get the launch version. Sellers already on Amazon get the audit version.</p></div>
       <div class="lc-c"><div class="lc-d">Day 14</div><b>Last note before the draw</b><p>A final reminder that their entry is live, then they move onto the monthly drawing list and seasonal restock offers.</p></div>
     </div>
@@ -2251,10 +2278,17 @@
           <div class="rl-fn" id="rlFunnel"></div>
 
           <h4 style="font-size:13px;margin:18px 0 2px">Cohort tracking, where each month&rsquo;s entrants stand today</h4>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:8px">The same people, followed forward. This is the table I would bring to a pipeline review.</p>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:8px">The same people, followed forward from the August launch. Row one has had the longest to mature; the last two rows are still projection.</p>
           <table class="rl-tbl"><thead><tr>
             <th>Cohort</th><th class="r">Entrants</th><th class="r">On Rel.ai</th><th class="r">Stores live</th><th class="r">Buying</th><th class="r">Reordering</th><th class="r">Revenue to date</th>
           </tr></thead><tbody id="rlRows"></tbody></table>
+
+          <div class="hubwrap">
+            <h5>Where the media actually runs</h5>
+            <p class="hub-sub">Warehouse buyers cluster. These are the twelve industrial submarkets on the West Coast worth a separate line of budget, each bought as its own geo ring against operations and procurement titles.</p>
+            <div class="hubgrid" id="hubGrid"></div>
+            <p class="hub-n" id="hubNote"></p>
+          </div>
 
           <div class="rl-two">
             <div class="rl-box">
@@ -2313,7 +2347,7 @@
 
         <div class="panel">
           <div class="panel-h"><h3>Rollout scale</h3><span class="panel-tag">Drag the timeline</span></div>
-          <p class="panel-sub">Moving the rollout scales the monthly media budget, and with it entries, deferred revenue and the onboarding load.</p>
+          <p class="panel-sub">Moving the rollout adds warehouse hubs, and with them entries, deferred revenue and the onboarding load.</p>
           <div class="scale" id="scaleCtl">
             <input type="range" id="scaleRange" min="0" max="4" step="1" value="2" aria-label="Rollout scale">
             <div class="scale-ticks" id="scaleTicks"></div>
@@ -2362,7 +2396,7 @@
       <div class="dgrid2">
         <div class="panel">
           <div class="panel-h"><h3>Paid media and cost to acquire</h3><span class="panel-tag">Per unit</span></div>
-          <p class="panel-sub">Paid media to Amazon sellers and DTC operators. The budget is the monthly spend times the store count times the campaign length, so it scales with the rollout rather than sitting as a lump sum.</p>
+          <p class="panel-sub">Paid media aimed at warehouse and procurement titles inside each hub. The budget is the monthly spend times the store count times the campaign length, so it scales with the rollout rather than sitting as a lump sum.</p>
           <div class="mediagrid" id="mediaGrid"></div>
           <div class="assump" id="cacNote"></div>
         </div>
@@ -2503,7 +2537,7 @@
       <dt>Eligibility</dt><dd>Legal residents of California and Arizona, 18 years or older. Employees of the sponsor and their immediate households are excluded.</dd>
       <dt>No purchase necessary</dt><dd>A purchase does not improve the chance of winning. A free mail-in entry method would be published here.</dd>
       <dt>Entry period</dt><dd>Fixed start and end date and time, stated in a single time zone.</dd>
-      <dt>Prize</dt><dd id="pzRules">Three year of Rel.ais are awarded each monthly drawing period. Approximate retail value $200 each, $600 per period. Winners are responsible for any applicable taxes.</dd>
+      <dt>Prize</dt><dd id="pzRules">Three Rel.ai account credits are awarded each monthly drawing period. Approximate retail value $1,200 each, $3,600 per period. Winners are responsible for any applicable taxes.</dd>
       <dt>Odds</dt><dd>Depend on the number of eligible entries received.</dd>
       <dt>Winner selection</dt><dd>Three winners drawn at random from all eligible entries each period using an auditable process, with an alternate-winner procedure.</dd>
       <dt>Notification</dt><dd>By email within a stated number of days, with a claim deadline and publicity release.</dd>
@@ -3002,8 +3036,7 @@ function enterConfirm(){
   document.getElementById('refLink').value='nathanjsong.com/reli?ref='+refTok;
   try{
     document.getElementById('drawEcho').textContent='on '+CLOSE.toLocaleDateString(undefined,{month:'long',day:'numeric'});
-    var exp=new Date();exp.setDate(exp.getDate()+14);
-    document.getElementById('expireTxt').textContent='The bonus month holds until '+exp.toLocaleDateString(undefined,{month:'short',day:'numeric'})+', 14 days from today';
+    document.getElementById('expireTxt').innerHTML='Both close together on <b>'+CLOSE.toLocaleDateString(undefined,{month:'long',day:'numeric'})+'</b>. One period, one date.';
   }catch(e){}
   buildGCards();restartGCard();
   renderRefs();renderGroup();
@@ -3014,7 +3047,7 @@ function enterConfirm(){
 document.getElementById('buyGift').addEventListener('click',function(){
   window.open(GIFT_SHOP,'_blank','noopener');
   track('starter_year_click',{code:OFFER,upgrade:'growth_month_one'});
-  toast('Opening the Rel.ai plan page. Thirteen months, the last one on Growth.');
+  toast('Opening the Rel.ai plan page. Month one runs on Growth.');
 });
 document.getElementById('orderMatch').addEventListener('click',function(){
   window.open(RELI_STORE,'_blank','noopener');
@@ -3427,12 +3460,29 @@ track('landing_view',{});
    DOM handlers. Cash, liability, and contribution stay separate.
    ================================================================== */
 
+/* One unit is one warehouse hub at $1,000 a month. Reli. ships the West out of
+   Cerritos, so the pilot is the four hubs inside a day's drive of it. */
+var HUB_RADIUS = 25;   /* miles: covers an industrial submarket without bleeding into residential */
+var HUBS=[
+ {n:'Inland Empire',  s:'CA', d:'Ontario, Fontana, Moreno Valley. The largest industrial market in the country.'},
+ {n:'Vernon and Commerce', s:'CA', d:'Dense LA county packing and apparel. Closest to the Cerritos DC.'},
+ {n:'Otay Mesa',      s:'CA', d:'San Diego border logistics and cross-dock operations.'},
+ {n:'Stockton and Tracy', s:'CA', d:'Central Valley distribution serving both halves of the state.'},
+ {n:'Reno and Sparks',s:'NV', d:'No inventory tax, one day to most of the West. Heavy 3PL concentration.'},
+ {n:'North Las Vegas',s:'NV', d:'Fast growing fulfilment corridor off the I-15.'},
+ {n:'Kent Valley',    s:'WA', d:'The Seattle and Tacoma warehouse belt.'},
+ {n:'Spokane',        s:'WA', d:'Inland Northwest distribution, lower cost per square foot.'},
+ {n:'Portland',       s:'OR', d:'Rivergate and Gresham. No sales tax draws fulfilment operations.'},
+ {n:'Salem and Eugene',s:'OR', d:'Willamette Valley, smaller operators and food producers.'},
+ {n:'West Phoenix',   s:'AZ', d:'Goodyear and Tolleson. One of the fastest growing industrial markets.'},
+ {n:'Tucson',         s:'AZ', d:'Southern Arizona distribution and border trade.'}
+];
 var STORE_LEVELS=[
-  {label:'$6k a month, one segment',   short:'Pilot',     stores:6},
-  {label:'$12k a month, US sellers',   short:'Test',      stores:12},
-  {label:'$36k a month, + DTC brands', short:'Regional',  stores:36},
-  {label:'$75k a month, + trade',      short:'Expansion', stores:75},
-  {label:'$130k a month, full mix',    short:'Full',      stores:130, note:'Amazon Ads, paid social to sellers, and trade placements'}
+  {label:'SoCal only, 4 hubs',       short:'Pilot',    stores:4},
+  {label:'West Coast, 12 hubs',      short:'West',     stores:12, note:'CA, NV, WA, OR and AZ'},
+  {label:'West and Mountain, 24',    short:'Regional', stores:24},
+  {label:'National top 40 hubs',     short:'National', stores:40},
+  {label:'Full coverage, 75 hubs',   short:'Full',     stores:75, note:'Every industrial market above 20 million square feet'}
 ];
 var MEDIA_PER_STORE = 12400/36;           /* one unit is $1,000 of monthly media */
 var SUPPORT_RESERVE_PCT = 2;              /* modeled onboarding and support reserve on the deferred term */
@@ -3469,7 +3519,7 @@ var DEFAULTS={
   /* D. retention */
   repeat90:30, repeatValue:340, repeatOrders:2.0, cateringLead:1.5, cateringConv:10, cateringValue:850,
   /* E. channels the funnel actually pushes */
-  shareRate:18, refPerSharer:1.1,
+  shareRate:18, refPerSharer:0.55,
   deliveryConv:9, deliveryOrders:1.6, deliveryValue:52, deliveryFee:9,
   eventCateringLift:12,
   /* F. incrementality: how much of this would have happened anyway */
@@ -3532,7 +3582,7 @@ function calculateModel(a){
   /* referrals: entrants who share bring friends who enter at no media cost */
   R.paidOnlyEntries = R.entries;
   R.sharers         = R.entries * a.shareRate/100;
-  R.referredEntries = Math.min(R.sharers * a.refPerSharer, R.entries * 2);   /* cap: three referrals each, most share none */
+  R.referredEntries = Math.min(R.sharers * a.refPerSharer, R.entries * 2);   /* cap: one referral each, most share none */
   R.kFactor         = R.paidOnlyEntries>0 ? R.referredEntries/R.paidOnlyEntries : 0;
   R.entries         = R.paidOnlyEntries + R.referredEntries;
   R.emailContacts = R.entries * EMAIL_OPTIN;
@@ -3584,7 +3634,7 @@ function calculateModel(a){
   R.cateringRevenue   = R.cateringCustomers * a.cateringValue;
   R.cateringContribution = R.cateringRevenue * (1-a.restVarCost/100);
 
-  /* delivery: the match page pushes an DoorDash order. marketplace commission is a real cost. */
+  /* delivery: the match page pushes an Amazon order. the referral fee is a real cost. */
   R.deliveryCustomers    = R.entries * a.deliveryConv/100;
   R.deliveryOrderCount   = R.deliveryCustomers * a.deliveryOrders;
   R.deliveryRevenue      = R.deliveryOrderCount * a.deliveryValue;
@@ -3881,7 +3931,7 @@ function mealEconomics(a,R){
     var rep      = buyers*(a.repeat90*m.repeat)/100*a.repeatValue*m.check*a.repeatOrders*(1-a.restVarCost/100);
     var bonus    = buyers*a.bonusFace*a.bonusRedeem/100*a.bonusVarCost/100;
     var contrib  = (redeemed*R.revenueRatio + over) - foodCost + rep - bonus
-                   + (buyers*a.faceValue*a.breakage/100*R.revenueRatio);
+                   ;   /* no non-activation credit: the term is recognised either way */
     return {n:m.n, why:m.why, share:m.share, contacts:contacts, cardRate:cardRate, buyers:buyers,
             cash:cash, avgCheck:a.repeatValue*m.check, repeat:a.repeat90*m.repeat,
             contribution:contrib, perContact: contacts>0? contrib/contacts : 0};
@@ -3960,13 +4010,13 @@ var CONTROLS=[
  {g:'A. Offer design', ic:'\u{1F381}', open:true, items:[
   {k:'faceValue',      l:'Annual plan price',           min:600,max:9600,step:100, f:function(v){return '$'+num(v);}, x:'Twelve months of Rel.ai billed up front. Starter list is $1,200. Cash lands on day one, revenue is receives.', b:'prop'},
   {k:'purchasePricePct',l:'Price actually paid',        min:70,max:100,step:1,  f:function(v){return v+'% of list';}, x:'100% is list. Anything below that models a Costco-style discounted stored-value sale, which lowers recognized revenue per dollar of list.', b:'prop'},
-  {k:'bonusFace',      l:'Bonus month face value',      min:0,max:400,step:25,  f:function(v){return '$'+num(v);},    x:'A thirteenth month run on Growth, added on top of the twelve paid months. Growth is $300, so that is the face issued. This is an obligation, not an immediate expense equal to face.', b:'ind'},
+  {k:'bonusFace',      l:'Bonus month face value',      min:0,max:400,step:25,  f:function(v){return '$'+num(v);},    x:'Month one run on Growth instead of Starter, on top of the twelve paid months. Growth is $300, so that is the face issued. This is an obligation, not an immediate expense equal to face.', b:'ind'},
   {k:'bonusRedeem',    l:'Bonus month usage rate',      min:40,max:100,step:1,  f:function(v){return v+'%';},         x:'Buyers who actually use the upgraded month. Unused bonus costs nothing, and also converts nobody. Share of the issued bonus month buyers actually use before it lapses.', b:'ind'},
   {k:'bonusVarCost',   l:'Cost to serve the bonus month',min:5,max:40,step:1,  f:function(v){return v+'% of used';},   x:'Infrastructure and support on an upgraded seat. Infrastructure and support on an upgraded seat. Unused bonus months cost nothing to serve and convert nobody.', b:'prop'},
   {k:'bonusExpiry',    l:'Bonus month window',          min:14,max:180,step:1,  f:function(v){return v+' days';},     x:'How long the upgrade runs. Shorter windows pull usage forward and concentrate onboarding load.', b:'prop'}
  ]},
  {g:'B. Acquisition', ic:'\u{1F4E3}', items:[
-  {k:'adPerStoreMonth',l:'Media per unit, per month',   min:0,max:10000,step:50, f:function(v){return '$'+num(v);}, x:'Monthly spend per unit of media. Total media is this figure times the unit count times the campaign length, so the budget scales with the rollout instead of being a lump sum.', b:'prop'},
+  {k:'adPerStoreMonth',l:'Media per hub, per month',    min:0,max:10000,step:50, f:function(v){return '$'+num(v);}, x:'Monthly spend against one warehouse hub. Total media is this figure times the hub count times the campaign length, so the budget scales with the rollout instead of being a lump sum.', b:'prop'},
   {k:'launches',      l:'Launches in the programme', min:1,max:8,step:1, f:function(v){return v+(v===1?' launch':' launches');}, x:'How many times this campaign runs. Launch one buys the list. Every launch after it also markets to the list already built, at no extra media cost.', b:'prop'},
   {k:'mediaLaunches', l:'Launches that buy paid media', min:1,max:8,step:1, f:function(v){return v+(v===1?' launch':' launches');}, x:'How many launches carry a paid flight. Everything after that markets only to the list already built, which is where the media budget stops growing.', b:'prop'},
   {k:'launchGap',     l:'Months between launches', min:1,max:6,step:1, f:function(v){return v+' mo'}, x:'Cadence between campaign launches.', b:'prop'},
@@ -4001,14 +4051,14 @@ var CONTROLS=[
   {k:'repeatOrders', l:'Case orders per retained customer',   min:1,max:8,step:0.1, f:function(v){return v.toFixed(1);}, x:'Packaging reorders a retained customer places in the window.', b:'prop'},
   {k:'incrCard',      l:'Rel.ai revenue that is incremental',  min:20,max:100,step:1, f:function(v){return v+'%'}, x:'Share of subscription revenue that is genuinely new. The rest would have been bought without the campaign, by a seller already evaluating the guest would have made anyway, which is the first objection any operator raises about a gift-card promotion.', b:'ind'},
   {k:'incrRepeat',    l:'Repeat orders that are incremental', min:10,max:100,step:1, f:function(v){return v+'%'}, x:'Case orders the campaign caused rather than reorders that were already scheduled.', b:'ind'},
-  {k:'incrDelivery',  l:'Delivery that is incremental', min:10,max:100,step:1, f:function(v){return v+'%'}, x:'DoorDash orders the campaign created, net of orders that would have been placed anyway.', b:'ind'},
+  {k:'incrDelivery',  l:'Delivery that is incremental', min:10,max:100,step:1, f:function(v){return v+'%'}, x:'Amazon orders the campaign created, net of orders that would have been placed anyway.', b:'ind'},
   {k:'incrCatering',  l:'Bulk orders that are incremental', min:10,max:100,step:1, f:function(v){return v+'%'}, x:'Pallet and multi case orders the campaign created. Usually the most incremental channel, because a volume order is a planned decision the calendar prompt actually triggers.', b:'ind'},
   {k:'shareRate',     l:'Entrants who share their link', min:0,max:60,step:1, f:function(v){return v+'%'}, x:'Share of entrants who send their referral link to at least one friend.', b:'prop'},
-  {k:'refPerSharer',  l:'Friends who enter per sharer', min:0,max:3,step:.1, f:function(v){return v.toFixed(1)}, x:'Friends who actually complete an entry for each person who shares. Capped at three referral entries each in the funnel.', b:'prop'},
+  {k:'refPerSharer',  l:'Referrals who enter per sharer', min:0,max:1,step:.05, f:function(v){return v.toFixed(2)}, x:'Referrals who actually complete an entry for each person who shares. Capped at three referral entries each in the funnel.', b:'prop'},
   {k:'deliveryConv',  l:'Entrants who order delivery', min:0,max:45,step:1, f:function(v){return v+'%'}, x:'Entrants who take the same day delivery call to action after their packaging match.', b:'prop'},
   {k:'deliveryOrders',l:'Delivery orders per customer', min:1,max:8,step:.1, f:function(v){return v.toFixed(1)}, x:'Delivery orders per converting customer over twelve months.', b:'ind'},
   {k:'deliveryValue', l:'Average delivery order', min:15,max:80,step:1, f:function(v){return '$'+v}, x:'Average same day basket. Higher than a single case because urgent orders skew to multiple SKUs.', b:'ind'},
-  {k:'deliveryFee',   l:'Courier cost per drop', min:0,max:35,step:1, f:function(v){return v+'%'}, x:'What DoorDash Drive charges per delivery. This is a flat courier fee, not marketplace commission, so it costs far less per dollar than a walk-in.', b:'ind'},
+  {k:'deliveryFee',   l:'Amazon referral fee',   min:0,max:35,step:1, f:function(v){return v+'%'}, x:'What Amazon takes on a marketplace order. Real, but far smaller than the cost of standing up delivery, so a Prime order is worth more per dollar than a walk-in.', b:'ind'},
   {k:'eventCateringLift', l:'Volume calculator lift', min:0,max:60,step:1, f:function(v){return '+'+v+'%'}, x:'Extra bulk revenue the volume calculator produces by showing the case and pallet breaks before the first order.', b:'prop'},
   {k:'cateringLead', l:'Bulk lead rate',              min:0,max:10,step:0.1, f:function(v){return v.toFixed(1)+'%';}, x:'Entrants who signal pallet or multi case volume in the quiz.', b:'prop'},
   {k:'cateringConv', l:'Bulk lead conversion',        min:0,max:50,step:1,   f:function(v){return v+'%';}, x:'Bulk leads that place a pallet or multi case order.', b:'prop'},
@@ -4083,7 +4133,7 @@ var GLOSS={
  ctr:{t:'CTR',d:'Clicks divided by impressions. Derived here from your CPM and CPC settings, the way a Meta ads manager reports it.'},
  cpm:{t:'CPM',d:'What 1,000 ad impressions cost on the platform.'},
  cpc:{t:'CPC',d:'Cost per click through to the entry page. The figure shown is blended across the flight, because fatigue raises it every month the same creative runs.'},
- fatigue:{t:'Ad fatigue',d:'A finite seller audience gets exhausted by repetition. Run the same flight longer and you show the same creative to the same people, so cost per click climbs about 16% a month and response softens with it. The flight is capped at three months for that reason. Extending ads past the cap buys a worse audience at a higher price, which is exactly why the programme relaunches to the owned list instead.'},
+ fatigue:{t:'Ad fatigue',d:'A hub holds a finite number of warehouse buyers. Run the same flight longer and you show the same creative to the same people, so cost per click climbs about 16% a month and response softens with it. The flight is capped at three months for that reason. Extending ads past the cap buys a worse audience at a higher price, which is exactly why the programme relaunches to the owned list instead.'},
  imp:{t:'Impressions',d:'Ad views bought by the budget at the set CPM.'},
  cpp:{t:'Cost per paying seat',d:'Media spend divided by annual plans. Meta calls this cost per purchase or cost per result.'}
 };
@@ -4112,7 +4162,7 @@ function drawProgramme(R){
    '<div><b class="'+(pos?'pos':'neg')+'">'+money(R.programNet)+'</b><span>Programme contribution across '+n+' launch'+(n===1?'':'es')+'</span></div>'+
    '<div><b>'+(R.crossLaunch? 'Launch '+R.crossLaunch : 'Not inside '+n)+'</b><span>Where cumulative contribution turns positive</span></div>'+
    '<div><b>'+xmul(R.programRoms)+'</b><span>Return on '+money(R.programMedia)+' of media, spent once over '+R.flightMonths+' month'+(R.flightMonths===1?'':'s')+'</span></div>'+
-   '<div><b>'+moneyFull(R.revPerStoreMonth)+'</b><span>Incremental revenue per $1k of monthly media, so the multiple stays grounded</span></div>';
+   '<div><b>'+moneyFull(R.revPerStoreMonth)+'</b><span>Incremental revenue per hub per month, so the multiple stays grounded</span></div>';
 
   var W=900,H=280,pad={l:64,r:20,t:18,b:40}, iw=W-pad.l-pad.r, ih=H-pad.t-pad.b;
   var vals=[]; L.forEach(function(l){vals.push(l.net,l.cum);}); vals.push(0);
@@ -4172,7 +4222,7 @@ function drawChannels(R){
      s:assumptions.overspend+'% added to the average plan by mid-term upgrades'},
     {n:'Repeat orders', c:'#FFB800', v:R.repeatContribution,
      s:num(Math.round(R.retained))+' retained at '+assumptions.repeatOrders.toFixed(1)+' orders'},
-    {n:'DoorDash delivery', c:'#FF8A2B', v:R.deliveryContribution,
+    {n:'Amazon Prime delivery', c:'#FF8A2B', v:R.deliveryContribution,
      s:num(Math.round(R.deliveryOrderCount))+' orders at $'+assumptions.deliveryValue+', after '+assumptions.deliveryFee+'% marketplace fee'},
     {n:'Bulk orders', c:'#FF7BA8', v:R.cateringContribution,
      s:num(Math.round(R.cateringCustomers))+' orders at '+moneyFull(assumptions.cateringValue)+', including +'+assumptions.eventCateringLift+'% from the volume calculator'}
@@ -4190,7 +4240,7 @@ function drawChannels(R){
    ' friends who complete an entry, so '+num(Math.round(R.referredEntries))+' of the '+num(Math.round(R.entries))+
    ' entries in this flight arrived with no media behind them. That is a viral coefficient of '+R.kFactor.toFixed(2)+
    ', which lowers blended cost per entry from $'+(R.mediaBudget/Math.max(1,R.paidOnlyEntries)).toFixed(2)+' to $'+R.cpl.toFixed(2)+
-   '. Referred entrants run through the same funnel as paid ones and are capped at three per sharer, matching the cap enforced on the entry page. Delivery is deducted for the marketplace commission, so a dollar of DoorDash revenue is worth materially less than a dollar taken in store, and repeat, delivery and bulk orders are modeled as campaign influenced rather than fully incremental.</p>';
+   '. Referred entrants run through the same funnel as paid ones and are capped at one per sharer, matching the cap enforced on the entry page. Delivery revenue is deducted for the Amazon referral fee, so a dollar taken on the marketplace is worth less than a dollar taken on Reli.&rsquo;s own shop, and repeat, delivery and bulk orders are modeled as campaign influenced rather than fully incremental.</p>';
 }
 function renderStick(R){
   var host=document.getElementById('msIn'); if(!host)return;
@@ -4277,7 +4327,7 @@ function renderChips(R){
   var el=document.getElementById('cmgrChips'); if(!el)return;
   var chips=[
     ['scale','Media / mo', money(R.mediaPerMonth)],
-    ['adPerStoreMonth','Per unit', moneyFull(assumptions.adPerStoreMonth)+' a month'],
+    ['adPerStoreMonth','Per hub', moneyFull(assumptions.adPerStoreMonth)+' a month'],
     ['campaignMonths','Flight', assumptions.campaignMonths+' mo'],
     ['cplv','CPC', '$'+assumptions.cplv.toFixed(2)],
     ['entryConv','Entry conv', assumptions.entryConv+'%'],
@@ -4466,11 +4516,14 @@ function drawScale(R){
 /* ================= ALLOCATION DIAL ================= */
 var ALLOC_KEYS=[
  {k:'paid',     n:'Paid acquisition', c:'#0081FF'},
- {k:'creator',  n:'Creator and social', c:'#FFB800'},
- {k:'lsm',      n:'Local store marketing', c:'#0F8A6B'},
- {k:'retention',n:'Retention', c:'#17607A'},
+ {k:'creator',  n:'Sample program', c:'#FFB800'},
+ {k:'lsm',      n:'Trade and events', c:'#0F8A6B'},
+ {k:'retention',n:'Account retention', c:'#17607A'},
  {k:'reserve',  n:'Reserve', c:'#93B4BA'}
 ];
+var SAMPLE_COST = 18;      /* modeled cost to assemble and ship one sample box */
+var SAMPLE_CONV = 22;      /* % of sample recipients who place a first case order */
+var EVENT_COST  = 2400;    /* modeled cost of one regional logistics event */
 function drawAlloc(R){
   var bar=document.getElementById('allocBar'); if(!bar)return;
   bar.innerHTML=ALLOC_KEYS.map(function(a,i){
@@ -4495,17 +4548,15 @@ function drawAlloc(R){
   var addEntries=addVisits*assumptions.organicMult*assumptions.entryConv/100;
   var addBuyers=addEntries*assumptions.entrantToCard/100;
   var addContribution=addBuyers*(R.cardBuyers>0? R.totalContribution/R.cardBuyers : 0);
-  var creators=Math.floor(dim(cre$,40000)/650);
-  var videos=creators*4;
-  var views=videos*7800;
-  var costPerAsset=videos>0? cre$/videos : 0;
-  var activations=Math.floor(dim(lsm$,30000)/1800);
+  var samples=Math.floor(dim(cre$,40000)/SAMPLE_COST);
+  var sampleOrders=Math.round(samples*SAMPLE_CONV/100);
+  var events=Math.floor(dim(lsm$,30000)/EVENT_COST);
   document.getElementById('allocOut').innerHTML=
     '<div><b>'+num(addVisits)+'</b><span>Additional qualified visits from the paid lane, after diminishing returns</span></div>'+
     '<div><b>'+num(addBuyers)+'</b><span>Additional modeled annual plans</span></div>'+
     '<div><b>'+money(addContribution)+'</b><span>Additional modeled contribution</span></div>'+
-    '<div><b>'+creators+' creators · '+videos+' videos</b><span>Creator engine at '+moneyFull(costPerAsset)+' per usable asset</span></div>'+
-    '<div><b>'+activations+' activations</b><span>Local store marketing events funded</span></div>'+
+    '<div><b>'+num(samples)+' sample boxes</b><span>At '+moneyFull(SAMPLE_COST)+' each, a modeled '+num(sampleOrders)+' first case orders</span></div>'+
+    '<div><b>'+events+' trade events</b><span>Regional logistics and warehouse operator events funded</span></div>'+
     '<div><b>'+money(cap*assumptions.alloc.reserve/100)+'</b><span>Held in reserve, unallocated</span></div>';
 
   /* drag handles */
@@ -4648,18 +4699,19 @@ function drawFunding(R){
   var cap=R.reinvestCapacity, A=assumptions.alloc;
   var paid$=cap*A.paid/100, cre$=cap*A.creator/100, lsm$=cap*A.lsm/100, ret$=cap*A.retention/100;
   var visits=assumptions.cplv>0? paid$/assumptions.cplv:0;
-  var creators=Math.floor(cre$/650), videos=creators*4;
+  var samples=Math.floor(cre$/SAMPLE_COST), sampleOrders=Math.round(samples*SAMPLE_CONV/100);
   document.getElementById('fundGrid').innerHTML=
   '<div class="fund"><h4><i>\u{1F4E3}</i>Paid acquisition</h4><div class="amt">'+money(paid$)+'</div><ul>'+
     '<li>About '+num(visits)+' additional qualified visits</li><li>About '+num(visits*assumptions.organicMult*assumptions.entryConv/100)+' additional entries</li>'+
     '<li>About '+num(visits*assumptions.organicMult*assumptions.entryConv/100*assumptions.entrantToCard/100)+' additional card buyers</li></ul></div>'+
-  '<div class="fund"><h4><i>\u{1F3AC}</i>Creator engine</h4><div class="amt">'+money(cre$)+'</div><ul>'+
-    '<li>'+creators+' local creators at a modeled $650 each</li><li>'+videos+' short-form videos</li>'+
-    '<li>About '+num(videos*7800)+' modeled views</li><li>'+moneyFull(videos>0?cre$/videos:0)+' per usable asset</li></ul></div>'+
+  '<div class="fund"><h4><i>\u{1F4E6}</i>Sample program</h4><div class="amt">'+money(cre$)+'</div><ul>'+
+    '<li>'+num(samples)+' sample boxes at a modeled '+moneyFull(SAMPLE_COST)+' each</li>'+
+    '<li>A modeled '+num(sampleOrders)+' first case orders at '+SAMPLE_CONV+'% conversion</li>'+
+    '<li>The one asset a warehouse buyer will actually open</li></ul></div>'+
   '<div class="fund"><h4><i>\u{1F4F1}</i>Social-first product storytelling</h4><div class="amt">Formats</div><ul>'+
     '<li>Seal and toss durability tests</li><li>Pallet wrap time lapses</li><li>Pack an order with me</li>'+
-    '<li>Cost per unit teardowns</li><li>Warehouse setup tours</li><li>Rel.ai reorder alert reaction videos</li></ul></div>'+
-  '<div class="fund"><h4><i>\u{1F4CD}</i>Local store marketing</h4><div class="amt">'+money(lsm$)+'</div><ul>'+
+    '<li>Cost per unit teardowns</li><li>Warehouse setup tours</li><li>Rel.ai reorder alert walkthroughs</li></ul></div>'+
+  '<div class="fund"><h4><i>\u{1F4CD}</i>Trade and events</h4><div class="amt">'+money(lsm$)+'</div><ul>'+
     '<li>'+Math.floor(lsm$/2400)+' seller meetup sponsorships</li><li>'+Math.floor(lsm$/1800)+' 3PL and warehouse visits</li>'+
     '<li>'+Math.floor(lsm$/5200)+' new warehouse starter packages</li><li>'+Math.floor(lsm$/900)+' sample box drops</li>'+
     '<li>'+Math.floor(lsm$/1200)+' bulk outreach pushes</li></ul></div>';
@@ -4748,7 +4800,7 @@ function drawMedia(R){
    '<div class="'+(R.fatigueCapped?'fatigue-hot':'')+'"><b>+'+R.fatiguePct.toFixed(0)+'%</b><span><span class="glx" data-gl="fatigue" tabindex="0">Ad fatigue</span> over a '+assumptions.campaignMonths+'-month flight. Month '+assumptions.campaignMonths+' clicks cost $'+R.lastMonthCplv.toFixed(2)+' against $'+assumptions.cplv.toFixed(2)+' in month one'+(R.fatigueCapped?'. Flight is at the three-month cap':'')+'</span></div>'+
    '<div><b>$'+R.cpl.toFixed(2)+'</b><span><span class="glx" data-gl="cpl" tabindex="0">Cost per lead</span> across '+num(Math.round(R.entries))+' entries</span></div>'+
    '<div><b>'+xmul(R.cashRoas)+'</b><span><span class="glx" data-gl="roas" tabindex="0">Cash ROAS</span> on the Meta-style read</span></div>'+
-   '<div><b>'+moneyFull(R.adPerStoreMonth)+'</b><span>Per unit, per month</span></div>'+
+   '<div><b>'+moneyFull(R.adPerStoreMonth)+'</b><span>Per hub, per month</span></div>'+
    '<div><b>'+money(R.mediaPerMonth)+'</b><span>'+R.scaleLabel+(R.scaleCpc!==1? '. clicks run '+(R.scaleCpc>1?'+':'')+((R.scaleCpc-1)*100).toFixed(0)+'% and entry conversion '+((R.scaleConv-1)*100).toFixed(0)+'% against a 12-store buy':'')+'</span></div>'+
    '<div><b>'+money(R.mediaPerMonth)+'</b><span>Total media per month</span></div>'+
    '<div><b>'+money(R.mediaBudget)+'</b><span>Campaign media over '+assumptions.campaignMonths+' month'+(assumptions.campaignMonths===1?'':'s')+'</span></div>'+
@@ -4859,12 +4911,12 @@ function refresh(fast){
 
 /* ================= PRESETS ================= */
 var PRESETS={
- cons:{scaleIdx:1, shareRate:11, refPerSharer:.7, deliveryConv:5, deliveryOrders:1.2, deliveryFee:30, eventCateringLift:6, entrantToCard:2.9, cplv:1.55, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
+ cons:{scaleIdx:1, shareRate:11, refPerSharer:0.38, deliveryConv:5, deliveryOrders:1.2, deliveryFee:30, eventCateringLift:6, entrantToCard:2.9, cplv:1.55, entryConv:28, cardRedeem:96, breakage:4, overspend:9,
        repeat90:18, repeatOrders:1.6, organicMult:1.05, payFee:5, bonusRedeem:94, newShare:55, cateringConv:7},
  exp:{scaleIdx:1},
  /* scale-up widens the footprint at conversion the test already proved, with a modest
      creative gain. it does not assume every lever lands at its ceiling at once. */
- agg:{scaleIdx:2, shareRate:20, refPerSharer:1.2, deliveryConv:11, deliveryOrders:1.8, eventCateringLift:15,
+ agg:{scaleIdx:2, shareRate:20, refPerSharer:0.72, deliveryConv:11, deliveryOrders:1.8, eventCateringLift:15,
       entrantToCard:3.6, cplv:1.22, entryConv:32, cardRedeem:91, breakage:9, overspend:19,
       repeat90:33, repeatOrders:2.15, organicMult:1.22, payFee:2.5, bonusRedeem:87, newShare:67, cateringConv:12}
 };
@@ -5128,15 +5180,18 @@ try{ initDash(); window.__dashReady=true; }catch(e){ console.error('dash init', 
         '<div class="rl-bar '+s.c+'"><i style="width:'+w.toFixed(1)+'%"></i></div>'+
         '<div class="rl-r-v">'+n(s.v)+(rate!==null?'<u>'+rate.toFixed(0)+'% of prior</u>':'<u>cohort</u>')+'</div></div>';
     }).join('');
-    var MO=['Mar','Apr','May','Jun','Jul','Aug'];
+    /* the flight opens in August, so month one is the first cohort that exists.
+       Each row is projected forward: the August cohort has had the longest to
+       activate, launch, order and reorder. January has barely started. */
+    var MO=['Aug','Sep','Oct','Nov','Dec','Jan'];
     $('rlRows').innerHTML=MO.map(function(mo,i){
-      var age=MO.length-i;                        /* months of maturity */
-      var mat=Math.min(1,age/5);                  /* older cohorts are further along */
+      var age=MO.length-i;                        /* months this cohort has been running */
+      var mat=Math.min(1,age/5);                  /* the oldest cohort is furthest along */
       var e=R.ent*(0.72+i*0.06);
       var a=e*A.act/100*mat, l=a*A.lau/100*mat, o=l*A.ord/100, r=o*A.re/100*mat;
       var revv=o*FIRST+r*A.aov*(A.frq*age/12);
-      return '<tr'+(i===MO.length-1?' class="now"':'')+'>'+
-        '<td data-l="Cohort"><b>'+mo+'</b>'+(i===MO.length-1?' &middot; current':'')+'</td>'+
+      return '<tr'+(i===0?' class="now"':'')+'>'+
+        '<td data-l="Cohort"><b>'+mo+'</b>'+(i===0?' &middot; launch':(i>=4?' &middot; projected':''))+'</td>'+
         '<td class="r" data-l="Entrants">'+n(e)+'</td>'+
         '<td class="r" data-l="On Rel.ai">'+n(a)+'</td>'+
         '<td class="r" data-l="Stores live">'+n(l)+'</td>'+
@@ -5144,6 +5199,21 @@ try{ initDash(); window.__dashReady=true; }catch(e){ console.error('dash init', 
         '<td class="r" data-l="Reordering">'+n(r)+'</td>'+
         '<td class="r" data-l="Revenue"><b>'+m(revv)+'</b></td></tr>';
     }).join('');
+    var hubHTML=HUBS.map(function(h,i){
+      return '<div class="hub'+(i<4?' near':'')+'">'+
+        '<span class="hub-s">'+h.s+'</span>'+
+        '<b>'+h.n+'</b>'+
+        '<em>'+HUB_RADIUS+' mile radius</em>'+
+        '<span class="hub-d">'+h.d+'</span></div>';
+    }).join('');
+    var hubEl=document.getElementById('hubGrid'); if(hubEl) hubEl.innerHTML=hubHTML;
+    var hubNote=document.getElementById('hubNote');
+    if(hubNote) hubNote.innerHTML='Twelve hubs at '+moneyFull(assumptions.adPerStoreMonth)+
+      ' a month each is '+money(assumptions.adPerStoreMonth*12)+' a month, the default on this page. '+
+      'The first four sit inside a day&rsquo;s freight of the Cerritos DC, which is why the pilot is SoCal only: '+
+      'a sample box arrives next morning and a first pallet ships without a line haul. '+
+      'A '+HUB_RADIUS+' mile ring is wide enough to cover a whole industrial submarket and tight enough that '+
+      'the ads are not paying to reach an office park forty minutes from any dock.';
     var newShare=R.ord?R.ordNew/R.ord*100:0;
     $('rlKphysF').innerHTML='Year one &middot; '+GM+'% margin = '+m(R.phys*GM/100)+' GP';
     $('rlWhy').innerHTML='Entry volume and order rate scale everything linearly. Double either and revenue doubles. <b>Launch rate only moves the new-seller slice</b>, which is <b>'+newShare.toFixed(0)+'%</b> of buyers right now. If the mix is mostly people who already sell, chasing launches is the wrong lever and the volume ladder is the right one. Drag <i>Already selling</i> and watch that share move.';

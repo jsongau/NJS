@@ -1,0 +1,195 @@
+.wrap { position: relative; margin-left: auto; }
+
+.links { display: flex; align-items: center; gap: var(--space-1); }
+
+.item { position: relative; }
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  font-weight: 550;
+  color: var(--text-1);
+  text-decoration: none;
+}
+
+.link:hover { background: var(--surface-3); color: var(--text-0); text-decoration: none; }
+
+/* The stage number is the whole idea. Five tabs read as five pages; five
+   NUMBERED tabs read as one motion with an order to it. */
+.stage {
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  background: var(--surface-3);
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.linkActive,
+.linkActive:hover {
+  position: relative;
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-weight: 600;
+}
+
+.linkActive .stage { background: var(--brand-gold); color: var(--surface-inverse); }
+
+.linkActive::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 4px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brand-gold);
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.linkActive .badge { background: var(--surface-1); color: var(--text-0); }
+
+/* --- panel --------------------------------------------------------- */
+.panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: var(--z-nav);
+  width: min(640px, calc(100vw - var(--space-6)));
+  border: 1px solid var(--line-2);
+  border-top: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-3);
+  animation: drop var(--dur-2) var(--ease-out);
+}
+
+@keyframes drop {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: none; }
+}
+
+.panelInner { display: grid; grid-template-columns: 1fr 232px; }
+
+.panelMain { padding: var(--space-4); }
+
+.panelStage {
+  margin: 0 0 6px;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--brand-gold-600);
+}
+
+.panelQuestion {
+  margin: 0 0 7px;
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+}
+
+.panelPurpose {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.panelGo {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--2);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.panelGo:hover { background: var(--accent-600); }
+
+.panelSide {
+  padding: var(--space-4);
+  border-left: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.bigStat { display: flex; flex-direction: column; gap: 1px; margin-bottom: var(--space-3); }
+
+.bigValue {
+  font-size: var(--step-4);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.bigUnit { font-size: var(--step--2); color: var(--text-2); }
+
+.sideNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-3);
+}
+
+.famList { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+.famList li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.famDot { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.famCount { margin-left: auto; font-weight: 700; color: var(--text-0); }
+
+@media (max-width: 1180px) {
+  .panel { width: min(520px, calc(100vw - var(--space-5))); }
+  .panelInner { grid-template-columns: 1fr; }
+  .panelSide { border-left: none; border-top: 1px solid var(--line); }
+}
+
+@media (max-width: 900px) {
+  .stage { display: none; }
+  .panel { display: none; }
+}
+
+.panelActions { display: flex; align-items: center; gap: var(--space-3); }
+
+.panelMethod {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.panelMethod:hover { color: var(--text-0); text-decoration: underline; }

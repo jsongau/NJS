@@ -1,0 +1,391 @@
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5) var(--space-7);
+}
+
+.head { margin-bottom: var(--space-5); }
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.head h1 {
+  margin: 0 0 10px;
+  font-size: var(--step-5);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.lede {
+  margin: 0;
+  max-width: 62ch;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* --- the leverage math -------------------------------------------- */
+.leverage {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  margin: var(--space-5) 0;
+  padding: var(--space-5);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.lev { display: flex; flex-direction: column; gap: 1px; }
+
+.levNum {
+  font-size: var(--step-5);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text-3);
+}
+
+/* The big number is inked. The contrast between the two IS the argument. */
+.levBig .levNum { color: var(--accent); }
+
+.levLabel {
+  margin-top: 4px;
+  font-size: var(--step--1);
+  font-weight: 650;
+}
+
+.levNote { font-size: var(--step--2); color: var(--text-3); }
+
+.levVs {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.levSay {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  max-width: 78ch;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+/* --- sections ------------------------------------------------------ */
+.section { margin-top: var(--space-6); }
+
+.sectionHead { margin-bottom: var(--space-4); }
+
+.sectionHead h2 {
+  margin: 0 0 6px;
+  font-size: var(--step-3);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sectionHead p {
+  margin: 0;
+  max-width: 72ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* --- session plan -------------------------------------------------- */
+.plan { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+.block {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.mins {
+  flex: none;
+  width: 38px;
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-3);
+  padding-top: 1px;
+}
+
+.blockBody { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+
+.blockTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: var(--step--1);
+  font-weight: 650;
+}
+
+/* Where it happens carries a mark AND a word, never colour alone. */
+.place {
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.place-room { color: var(--text-3); }
+.place-store { color: var(--accent); }
+.place-truck { color: var(--brand-gold-600); }
+
+.blockDetail {
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 76ch;
+}
+
+.planNote {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* --- competencies -------------------------------------------------- */
+.comps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+
+.comp {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.compNum {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.compBody { min-width: 0; }
+
+.compName {
+  margin: 0 0 8px;
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.compDl { margin: 0; display: grid; gap: 7px; }
+
+.compDl > div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.compDl dt {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.compDl dd {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+  max-width: 74ch;
+}
+
+/* The measure is the part most training decks never have, so it is the
+   part that gets the ink. */
+.compEvidence dt { color: var(--accent); }
+.compEvidence dd { color: var(--text-0); font-weight: 550; }
+
+/* --- brand briefs -------------------------------------------------- */
+.briefs { display: grid; gap: 6px; }
+
+.brief {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  overflow: hidden;
+}
+
+.briefOn { border-color: var(--line-2); box-shadow: var(--shadow-1); }
+
+.briefHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.briefHead:hover { background: var(--surface-2); }
+
+.briefName { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+
+.briefName strong { font-size: var(--step-0); font-weight: 650; }
+
+.briefHook {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.briefBody {
+  padding: var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.briefDl { margin: 0; display: grid; gap: 10px; }
+
+.briefDl > div {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.briefDl dt {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.briefDl dd {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 74ch;
+}
+
+/* The objection is set as speech, because it is speech. */
+.objection dd {
+  padding-left: 12px;
+  border-left: 3px solid var(--warn);
+  font-style: italic;
+  color: var(--text-2);
+}
+
+.askRow dt { color: var(--accent); }
+
+.source {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.omitted {
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  max-width: 82ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* --- closing ------------------------------------------------------- */
+.closing {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--text-0);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.closing h2 {
+  margin: 0 0 8px;
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.closing p {
+  margin: 0;
+  max-width: 76ch;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.closingLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+.primary {
+  padding: 10px 20px;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.primary:hover { background: var(--accent-600); color: #fff; text-decoration: none; }
+
+.ghost {
+  padding: 10px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  text-decoration: none;
+}
+
+.ghost:hover { background: var(--surface-3); text-decoration: none; }
+
+@media (max-width: 760px) {
+  .leverage { grid-template-columns: minmax(0, 1fr); }
+  .levVs { justify-self: start; }
+  .compDl > div,
+  .briefDl > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}

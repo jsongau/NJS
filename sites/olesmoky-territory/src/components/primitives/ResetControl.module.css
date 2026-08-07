@@ -1,0 +1,103 @@
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  padding: 6px 13px 6px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.trigger:hover {
+  border-color: var(--brand-gold);
+  color: var(--text-0);
+}
+
+/* The ring completes itself on hover. A reset control that turns is the
+   one piece of motion in this app that means something: it is showing
+   you the action, not decorating the button. */
+.glyph { flex: none; transition: transform var(--dur-3) var(--ease-out); }
+.trigger:hover .glyph { transform: rotate(-140deg); }
+
+.ring { opacity: 0.95; }
+.head { opacity: 0.95; }
+.core { opacity: 0.22; }
+.trigger:hover .core { opacity: 0.4; }
+
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  color: var(--text-2);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.armed {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  padding: 4px 6px 4px 11px;
+  border: 1px solid var(--risk);
+  border-radius: var(--radius-s);
+  background: var(--risk-tint);
+}
+
+.armedText {
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--risk);
+  white-space: nowrap;
+}
+
+.confirm {
+  padding: 4px 12px;
+  border: none;
+  border-radius: 4px;
+  background: var(--risk);
+  color: #fff;
+  font-size: var(--step--2);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel {
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.cancel:hover { color: var(--text-0); text-decoration: underline; }
+
+.done {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  padding: 6px 13px 6px 10px;
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--ok);
+  white-space: nowrap;
+}
+
+.done .glyph { transform: rotate(-360deg); }

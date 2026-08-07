@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+/* ============================================================
+   Design tokens — Ole Smoky, Known Consumer Programme.
+
+   The register is enterprise software with an Appalachian
+   accent: a pale oat ground rather than cold white, near-black
+   ink, hairline rules, and an antique gold doing the editorial
+   work.
+
+   ON THE GOLD. Ole Smoky publishes no brand guideline with hex
+   codes. The only first-party colour I could verify is #000000,
+   from the site's own theme-color meta tag. The gold below is
+   derived from a third-party extraction of olesmoky.com and then
+   darkened until it clears 4.5:1 on white, because a token that
+   cannot carry text is a decoration rather than a colour. It is
+   in the neighbourhood of the real thing, not a match, and this
+   comment exists so nobody later mistakes it for one.
+
+   NO LOGO, NO WORDMARK, NO TRADE DRESS. This is an unaffiliated
+   work sample. A hue is not a mark; a lockup is. The disclaimer
+   sits in the footer of every screen.
+
+   Accessibility contract, carried over: Nathan is colourblind,
+   so NOTHING in this system may signal state by colour alone.
+   Every status token below has a matching glyph and word in the
+   component that uses it. Colour reinforces a distinction that is
+   already carried by shape and text — it never carries one alone.
+   ============================================================ */
+
+:root {
+  /* --- Surfaces ---------------------------------------------
+     0 is the page, 1 is a card, 2 is a raised or hovered card,
+     3 is an inset well (table headers, code, empty states).
+
+     Warmed by a couple of points of yellow against the old
+     blue-grey. Cold near-white is the default every framework
+     ships and it reads as unfinished; a trace of warmth reads as
+     paper. The hue shift is small enough that nothing about the
+     contrast contract changes. */
+  --surface-0: #f3efe6;
+  --surface-1: #ffffff;
+  --surface-2: #faf7f0;
+  --surface-3: #e8e2d5;
+  --surface-inverse: #14120f;
+
+  /* --- Text -------------------------------------------------
+     0 is primary, 1 is secondary, 2 is tertiary/meta, 3 is the
+     lightest legible grey. All four clear 4.5:1 on surface-0
+     except --text-3, which is reserved for large text only. */
+  --text-0: #14120f;
+  --text-1: #4c4740;
+  --text-2: #6d675d;
+  --text-3: #948d81;
+  --text-inverse: #f6f4ef;
+
+  /* --- Accent -----------------------------------------------
+     Not a framework blue. Ole Smoky's chrome is black, so the
+     interactive colour is a deep charcoal-green pulled toward the
+     copper still and the Smoky Mountain treeline rather than
+     toward Bootstrap.
+
+     Interactive affordances only. Never used to encode data. */
+  --accent: #2c4a3c;
+  --accent-600: #223a2f;
+  --accent-700: #1a2d24;
+  --accent-tint: #eaf0ec;
+  --accent-line: #bdd0c5;
+
+  /* --- Brand gold -------------------------------------------
+     The one distinctive colour Ole Smoky owns, so gold does the
+     editorial work here: rules, eyebrows, the active nav mark,
+     the figure that matters on a panel. Darkened from the site
+     gold to clear 4.5:1 on white.
+
+     What gold is NOT: a status. It never means anything. The
+     moment a colour means something it has to earn a glyph. */
+  --brand-gold: #96731c;
+  --brand-gold-600: #6f5516;
+  --brand-gold-tint: #f9f0d9;
+  --brand-gold-line: #d9c085;
+
+  /* --- Status -----------------------------------------------
+     Always paired with a glyph and a word. See the contract above. */
+  --ok: #0f7a52;
+  --ok-tint: #e8f5ef;
+  --warn: #8a5a00;
+  --warn-tint: #fdf3e0;
+  --risk: #a8261b;
+  --risk-tint: #fceceb;
+  --info: #1f5fd0;
+  --info-tint: #eef3fc;
+  --neutral: #6b7684;
+  --neutral-tint: #f0f2f5;
+
+  /* --- Provenance -------------------------------------------
+     Every commercial number in this app carries a provenance
+     badge. These are intentionally low-chroma: provenance is
+     meant to be legible, not loud. */
+  --prov-public: #2c6e8f;
+  --prov-illustrative: #7a5ea8;
+  --prov-modeled: #8a5a00;
+  --prov-observed: #0f7a52;
+  --prov-user: #4a5461;
+
+  /* --- Channel accents --------------------------------------
+     Used on wordmark cards and map legend entries. Muted on
+     purpose; channel is also always spelled out in text.
+
+     THE TWO HALVES OF THE TERRITORY ARE TWO HALVES OF THE WHEEL.
+     Off-premise runs warm — the oak, amber and copper end, which is
+     where the bottle and the barrel live. On-premise runs cool — slate,
+     teal and plum, the low light behind a bar. That is not decoration:
+     the retail and on-premise tabs are the app's biggest single
+     distinction, and a reader flicking between them should feel the
+     temperature change before they read a single label.
+
+     It is still never the only signal. Every card carries the channel
+     glyph, the channel is spelled out beside it, and on-premise marks
+     carry a filled corner, so the split survives greyscale and survives
+     a colourblind reader. Colour is the accelerant here, not the
+     message. */
+
+  /* Off-premise — warm */
+  --ch-liquor-store: #8a5a2b;
+  --ch-neighborhood-market: #2f6f4f;
+  --ch-convenience: #8a6a1f;
+  --ch-fuel-convenience: #a8542b;
+  --ch-beverage-specialty: #6b4a8f;
+
+  /* On-premise — cool */
+  --ch-casual-dining: #3c5a86;
+  --ch-sports-bar: #1f6a7a;
+  --ch-steakhouse: #7a3f52;
+  --ch-bowling-entertainment: #4a5a92;
+  --ch-pub: #2c6e8f;
+
+  /* --- Product families -------------------------------------
+     THE PALETTE IS OKABE-ITO, not a hand-picked rainbow.
+
+     Okabe and Ito published a qualitative palette in 2008 chosen
+     so that every pair stays distinguishable under deuteranopia,
+     protanopia and tritanopia. It is the standard palette in
+     scientific publishing for exactly this reason. Picking hues
+     by eye is how you end up with a green and an orange that are
+     the same colour to eight percent of men, which in this app
+     would be the owner.
+
+     Values are Okabe-Ito darkened to clear 4.5:1 on --surface-1
+     so they can carry text, then nudged toward the real product
+     within each Okabe-Ito slot. Separation is the constraint,
+     brand accuracy the preference.
+
+     Family is ALSO always spelled out in words wherever these
+     appear. Colour is the second signal, never the first. */
+  --fam-core: #00548f;      /* blue */
+  --fam-core-tint: #e7f0f6;
+  --fam-above-premium: #8a5a1f;        /* orange, pulled to barrel */
+  --fam-above-premium-tint: #f8f0e5;
+  --fam-economy: #7a4e96;          /* reddish purple */
+  --fam-economy-tint: #f3edf7;
+  --fam-rtd: #00755a;            /* bluish green */
+  --fam-rtd-tint: #e6f4f0;
+  --fam-flavor: #b33a1a;         /* vermillion, the flavoured range */
+  --fam-flavor-tint: #fbeae4;
+
+  /* --- Lane identity ----------------------------------------
+     The two sides of the three-tier structure read as different
+     places. Supplier-to-wholesaler carries money and gets the ink
+     treatment; supplier-to-retail carries none and gets a lighter
+     one. Reinforcement only: the lane is named in the toggle, in
+     the heading, and in the summary. */
+  --lane-distributor: #1f3d2f;
+  --lane-distributor-tint: #eaf0ec;
+  --lane-store: #5c4a1f;
+  --lane-store-tint: #f7f3e9;
+
+  /* --- Lines ------------------------------------------------ */
+  --line: #e0d9ca;
+  --line-2: #cdc4b1;
+  --line-strong: #ada291;
+
+  /* --- Radius / elevation -----------------------------------
+     Shadows are soft and shallow. Enterprise software earns
+     depth from hairlines, not from drop shadows. */
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
+  --radius-pill: 999px;
+  --shadow-1: 0 1px 2px rgba(20, 24, 31, 0.05);
+  --shadow-2: 0 2px 8px rgba(20, 24, 31, 0.07), 0 1px 2px rgba(20, 24, 31, 0.05);
+  --shadow-3: 0 12px 32px rgba(20, 24, 31, 0.12), 0 2px 8px rgba(20, 24, 31, 0.06);
+
+  /* --- Type -------------------------------------------------
+     One UI face. A mono face for every number that has to be
+     compared down a column, which in this app is most of them.
+     A serif face for the Operator Notes fourth wall only. */
+  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-operator: "Spectral", Georgia, "Times New Roman", serif;
+
+  /*
+     The display face. Serif for voice, sans for work — see the note on
+     the heading rule in base.css. Spectral was already loaded for the
+     operator notes, so this costs nothing at the network layer.
+  */
+  --font-display: "Spectral", Georgia, "Times New Roman", serif;
+
+  --step--2: 0.694rem;
+  --step--1: 0.833rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.44rem;
+  --step-3: 1.728rem;
+  --step-4: 2.074rem;
+  --step-5: 2.488rem;
+
+  /* --- Space (8px base) ------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* --- Motion ----------------------------------------------- */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+
+  /* --- Operator note fourth wall ----------------------------
+     Cool and serif against a warm-neutral product UI, so a
+     surface where Nathan steps out of the product to explain a
+     decision never reads as product chrome. */
+  --op-surface: #ecefe9;
+  --op-surface-2: #e1e6dc;
+  --op-line: #c6d0c2;
+  --op-accent: #2c4a3c;
+  --op-text-0: #1a2119;
+  --op-text-1: #4b5748;
+  --op-dur-slide: 480ms;
+  --op-dur-settle: 520ms;
+  --op-stagger: 70ms;
+  --op-ease-awaken: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- Z-index ---------------------------------------------- */
+  --z-map-overlay: 10;
+  --z-rail: 20;
+  --z-nav: 30;
+  --z-drawer: 40;
+  --z-tray: 45;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+
+  /* --- Layout ----------------------------------------------- */
+  --nav-h: 56px;
+  --subnav-h: 0px;
+  --sticky-h: calc(var(--nav-h) + var(--subnav-h));
+  --shell-max: 1440px;
+  --shell-pad: var(--space-5);
+
+  /* The three-column board. These are the single source of truth;
+     the grid template reads them and nothing else sets a width. */
+  --col-list: 328px;
+  --col-drawer: 432px;
+  --tray-h: 56px;
+}
+
+/* Leaflet paints its own panes at z-index 400+, which would sit over
+   our drawer and nav. Contain it to our map layer. */
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom { z-index: var(--z-map-overlay) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --op-dur-slide: 0ms;
+    --op-dur-settle: 0ms;
+    --op-stagger: 0ms;
+  }
+}

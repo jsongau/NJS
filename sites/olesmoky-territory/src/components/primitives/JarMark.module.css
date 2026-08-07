@@ -1,0 +1,82 @@
+/*
+  Motion for the jar mark.
+
+  Kept out of the component because there is exactly one rule that
+  matters here — prefers-reduced-motion turns all of it off — and that
+  rule belongs somewhere a person can find it in one search rather than
+  buried in three inline style objects.
+*/
+
+.mark {
+  display: block;
+  overflow: visible;
+}
+
+/* --- The pour rises once, on mount ---------------------------------- */
+
+.pour {
+  transform-origin: 24px 58px;
+  animation: fillUp 760ms var(--ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) both;
+}
+
+@keyframes fillUp {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* --- The surface sways, forever, barely ------------------------------ */
+
+.surface {
+  transform-origin: 24px 40px;
+  animation: sway 7s ease-in-out 900ms infinite;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-0.9deg);
+  }
+  50% {
+    transform: rotate(0.9deg);
+  }
+}
+
+/* --- The glint sweeps on mount, and again on hover ------------------- */
+
+.glint {
+  animation: sweep 1400ms var(--ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) 260ms both;
+}
+
+.mark:hover .glint {
+  animation: sweep 1100ms var(--ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) both;
+}
+
+@keyframes sweep {
+  from {
+    transform: skewX(-12deg) translateX(0);
+  }
+  to {
+    transform: skewX(-12deg) translateX(78px);
+  }
+}
+
+/*
+  One switch for the whole file. Somebody who has asked their operating
+  system to stop things moving has asked once, and should not have to
+  ask a second time per component.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .pour,
+  .surface,
+  .glint,
+  .mark:hover .glint {
+    animation: none;
+  }
+  .glint {
+    opacity: 0;
+  }
+}

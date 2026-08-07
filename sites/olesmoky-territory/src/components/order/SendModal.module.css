@@ -1,0 +1,594 @@
+/* The compose window.
+   Register is a modern mail client: a dimmed, blurred field, one raised
+   surface, hairline dividers, and a footer bar that owns the commitment.
+   The dialog is the only lit thing on screen while it is open. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  background: rgba(20, 24, 31, 0.42);
+  backdrop-filter: blur(3px);
+  animation: fade var(--dur-2) var(--ease-out);
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(1140px, 100%);
+  max-height: min(760px, calc(100dvh - var(--space-6)));
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+  animation: rise var(--dur-3) var(--ease-out);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- head --------------------------------------------------------- */
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.headLeft { display: flex; align-items: baseline; gap: var(--space-3); min-width: 0; }
+
+.head h2 {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.laneTag {
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.demoTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--warn);
+  background: var(--warn-tint);
+  color: var(--warn);
+  font-size: var(--step--2);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.close {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: transparent;
+  font-size: 21px;
+  line-height: 1;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.close:hover { background: var(--surface-3); color: var(--text-0); }
+
+/* --- body --------------------------------------------------------- */
+/* The preview column is sized to hold a 600px email at its true width
+   plus its gutters. An email preview that clips the right-hand column is
+   not a preview, it is a rumour. */
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  /* minmax(0, 1fr) rather than the implicit auto row. A grid row sized
+     auto grows to its tallest item, so the compose column set its own
+     height from its content and the send bar went with it. This is the
+     same class of bug as the sticky order panel: a track that has no
+     bound cannot constrain the thing inside it. */
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.compose {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--line);
+}
+
+.composeScroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+
+/* The send bar. Anchored to the bottom of the pane you type in, which is
+   where a mail client puts it and where the cursor already is. flex: none
+   inside a min-height: 0 column, so it cannot be pushed out by a long
+   draft the way the old full-width footer could. */
+.composeFoot {
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.composeActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.field { display: block; margin-bottom: var(--space-4); }
+
+.fieldLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+.optional {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+  color: var(--text-3);
+  opacity: 0.8;
+}
+
+/* The recipient is furniture, not a field. That is the whole safety
+   guarantee made visible. */
+.recipient {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 9px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.recipientText { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+.recipientAddr {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  word-break: break-all;
+}
+
+.recipientRole { font-size: var(--step--2); color: var(--text-2); }
+
+.locked {
+  margin-left: auto;
+  flex: none;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+}
+
+.subject,
+.note {
+  width: 100%;
+  padding: 10px 11px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-family: inherit;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+.subject { font-weight: 600; }
+.note { resize: vertical; min-height: 96px; }
+
+.subject:focus,
+.note:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-tint);
+  outline: none;
+}
+
+.note::placeholder { color: var(--text-3); }
+
+/* A file, and a control. Clicking it swaps the preview to the sheet, so
+   the answer to "which of these is going out" is one click away and not
+   a matter of reading two panes and guessing. */
+.attachment {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out);
+}
+
+.attachment:hover { border-color: var(--text-3); background: var(--surface-3); }
+
+.attachmentOn {
+  border-color: var(--text-0);
+  box-shadow: 0 0 0 1px var(--text-0);
+  background: var(--surface-1);
+}
+
+.attachIcon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  color: var(--text-2);
+  font-size: 14px;
+}
+
+.attachText { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.attachText strong {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.attachText span { font-size: var(--step--2); color: var(--text-2); }
+
+.attachLink {
+  margin-left: auto;
+  flex: none;
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* --- preview ------------------------------------------------------ */
+.previewPane {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-0);
+}
+
+.previewHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+.previewHead .fieldLabel { margin-bottom: 0; }
+
+.toggle {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+}
+
+.tBtn {
+  padding: 4px 11px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tOn,
+.tOn:hover {
+  background: var(--surface-1);
+  color: var(--text-0);
+  box-shadow: var(--shadow-1);
+}
+
+.previewFrame {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-3);
+}
+
+/* The email is authored at 600px because that is what mail clients
+   expect. Shown at full width in a scrolling pane rather than scaled
+   down, so what is on screen is pixel-for-pixel what arrives. */
+.previewHtml {
+  width: 624px;
+  max-width: 100%;
+  flex: none;
+  min-height: 1150px;
+  border: none;
+  background: transparent;
+}
+
+.previewText {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--text-1);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* --- foot --------------------------------------------------------- */
+.hint {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.hint kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  margin: 0 1px;
+  border: 1px solid var(--line-2);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--surface-1);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-2);
+}
+
+.copied {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--ok);
+}
+
+.primary {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  padding: 11px 26px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.primary:hover:not(:disabled) { background: var(--accent-600); color: #fff; text-decoration: none; }
+.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ghost {
+  padding: 10px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.ghost:hover { background: var(--surface-3); color: var(--text-0); }
+
+/* --- sent --------------------------------------------------------- */
+.sentPane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-8) var(--space-5);
+  text-align: center;
+}
+
+.sentCheck {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: var(--space-2);
+  border-radius: 50%;
+  background: var(--ok-tint);
+  border: 1px solid var(--ok);
+  color: var(--ok);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.sentPane h3 { margin: 0; font-size: var(--step-2); letter-spacing: -0.01em; }
+
+.sentLead {
+  margin: 0;
+  font-size: var(--step-0);
+  color: var(--text-0);
+}
+
+.sentBody {
+  margin: 0 0 var(--space-4);
+  max-width: 56ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.sentActions { display: flex; align-items: center; gap: var(--space-2); }
+
+@media (max-width: 900px) {
+  .backdrop { padding: 0; place-items: stretch; }
+  .dialog { max-height: 100dvh; border-radius: 0; border: none; width: 100%; }
+  .body { grid-template-columns: 1fr; }
+  .previewHtml { width: 100%; min-height: 900px; }
+  .compose { border-right: none; border-bottom: 1px solid var(--line); }
+  .previewHtml { min-height: 460px; }
+  .demoTag span:not([aria-hidden]) { display: none; }
+  .foot { flex-wrap: wrap; }
+  .footActions { width: 100%; }
+  .footActions .primary { flex: 1; }
+}
+
+/* --- draft picker -------------------------------------------------- */
+.templates { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.tplBtn {
+  padding: 5px 11px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tplBtn:hover { background: var(--surface-3); color: var(--text-0); }
+
+.tplOn,
+.tplOn:hover {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.tplBlurb {
+  margin: 7px 0 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.editedTag {
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--accent-line);
+  background: var(--accent-tint);
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.commitNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: none;
+  margin: 0 0 var(--space-3);
+  padding: 8px 10px;
+  border-radius: var(--radius-s);
+  background: var(--brand-gold-tint);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.commitNote > span { color: var(--brand-gold-600); flex: none; }
+
+/* --- Compliance guardrail -------------------------------------------
+   Deliberately not styled as an error. It is not a warning that
+   something has gone wrong; it is a standing condition on this draft,
+   and styling it red would train a reader to dismiss it the way they
+   dismiss every other red box. A ruled note in the margin voice, with a
+   section mark, reads as a citation — which is what it is. */
+.guardrail {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: var(--space-2) 0 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--line-strong);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.guardrailMark {
+  flex: none;
+  font-family: var(--font-display, serif);
+  font-size: 1.25em;
+  line-height: 1.1;
+  color: var(--text-3);
+}

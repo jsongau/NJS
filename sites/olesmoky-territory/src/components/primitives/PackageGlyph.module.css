@@ -1,0 +1,33 @@
+/* Flat fills, no gradients. Gradients under 30px turn to mud, and these
+   are drawn at 28. The Moonshine Cherries illustrations these come from use
+   gradients because they run at 400px. */
+.glyph { flex: none; display: block; }
+
+.body { fill: var(--fam, var(--text-1)); }
+
+/* The label band. Paper white against the body, which is the single
+   detail that makes a shape read as beer rather than as a container. */
+.label { fill: var(--surface-1); }
+
+.cap { fill: var(--fam, var(--text-1)); opacity: 0.72; }
+
+.mark { color: var(--fam, var(--text-1)); }
+
+.handle {
+  stroke: var(--fam, var(--text-1));
+  stroke-width: 1.6;
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* Lid seam on a closed carton. */
+.seam {
+  stroke: var(--surface-1);
+  stroke-width: 1.1;
+  opacity: 0.55;
+  fill: none;
+}
+
+/* A hole, not a shape. Filled with the card ground so it reads as punched
+   through the board rather than printed on it. */
+.cut { fill: var(--surface-1); }

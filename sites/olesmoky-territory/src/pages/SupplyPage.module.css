@@ -1,0 +1,102 @@
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5) var(--space-7);
+}
+
+.head { margin-bottom: var(--space-5); }
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.head h1 {
+  margin: 0 0 10px;
+  font-size: var(--step-5);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.lede {
+  margin: 0;
+  max-width: 68ch;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* The wholesaler's portal, kept reachable after the Southern Glazer's lane on this
+   page was deleted. Removing the lane without replacing this link would
+   have orphaned the surface entirely. */
+.harbor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.harbor h2 {
+  margin: 0 0 4px;
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.harbor p {
+  margin: 0;
+  max-width: 62ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.harborLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  flex: none;
+}
+
+.primary {
+  padding: 10px 18px;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.primary:hover { background: var(--accent-600); color: #fff; text-decoration: none; }
+
+.ghost {
+  padding: 10px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ghost:hover { background: var(--surface-3); text-decoration: none; }
+
+.footnote {
+  margin: var(--space-5) 0 0;
+  font-size: var(--step--1);
+  color: var(--text-3);
+}

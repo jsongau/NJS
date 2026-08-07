@@ -1,0 +1,61 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-3);
+}
+
+/* Marks sit on a shared baseline so height reads as a quantity. The
+   container is the shelf; each mark is a door. */
+.strip {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+  padding: 0 2px 2px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.mark {
+  display: block;
+  width: 6px;
+  border-radius: 1px;
+  transition: height var(--dur-1) var(--ease-out);
+}
+
+/* Full and solid. The shelf is doing its job. */
+.in {
+  height: 14px;
+  background: var(--text-1);
+}
+
+/* Half height. Visible as a quantity, not only as a hue. */
+.low {
+  height: 7px;
+  background: var(--warn);
+}
+
+/* Hollow and short. A gap you can see from across the room. */
+.out {
+  height: 14px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--risk);
+}
+
+/* Dotted. Approved, never stocked. Present in the record, absent on the
+   shelf, which is exactly what a void is. */
+.void {
+  height: 14px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--line-strong) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+.caption {
+  font-size: var(--step--2);
+  color: var(--text-3);
+  white-space: nowrap;
+}

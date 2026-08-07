@@ -1,0 +1,87 @@
+/* ============================================================
+   Print layer.
+
+   PDF export in this app is the browser's own Print to PDF driven by
+   this stylesheet, not a JS PDF library. For a document this
+   table-dense that is a quality decision rather than a shortcut:
+   native print keeps real typography and handles pagination, while
+   jsPDF would reimplement the layout and produce something visibly
+   worse than the screen. It also costs zero dependencies.
+   ============================================================ */
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.5in;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000;
+    font-size: 10.5pt;
+  }
+
+  /* Interactive chrome never prints. */
+  .no-print,
+  nav,
+  header button,
+  .leaflet-control-container {
+    display: none !important;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  /* A URL after every link is noise in a leave-behind document. */
+  a[href]::after {
+    content: "";
+  }
+
+  /* Repeat the table head on every page. Without this, page two of an
+     order table is a wall of unlabelled numbers. */
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+
+  tr,
+  .avoid-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .page-break {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  /* The disclaimer is a running element so it appears on every printed
+     page, not only the first. */
+  .print-disclaimer {
+    display: block !important;
+    font-size: 7.5pt;
+    color: #444;
+    border-top: 0.5pt solid #999;
+    padding-top: 4pt;
+    margin-top: 8pt;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}

@@ -1,0 +1,369 @@
+/* The card fills the height its sticky column gives it and scrolls in the
+   middle, so the heading and the send button never leave the screen no
+   matter how many lines the order runs to. Sticky itself lives on .side
+   in OrderDeskPage.module.css: a sticky element can only travel inside
+   its own containing block, and a grid item sized to its content has no
+   travel to give. */
+.summary {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  min-height: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+}
+
+.pinnedTop {
+  box-shadow: inset 0 3px 0 -1px var(--brand-gold);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex: none;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.summary h2 {
+  margin: 0;
+  font-size: var(--step-1);
+  letter-spacing: -0.01em;
+}
+
+.headCount { font-size: var(--step--2); color: var(--text-3); }
+.headCount strong { color: var(--text-0); font-size: var(--step--1); }
+
+/* Scroll shadows, pure CSS.
+   Two `local` gradients painted in the content layer are covered by the
+   content as it scrolls; two `scroll` gradients pinned to the frame show
+   through when they are not. The result is a shadow that appears only
+   when there is something above or below to scroll to, with no JS and no
+   scroll listener. Without it a clipped line looks like a layout bug
+   rather than an invitation to scroll. */
+.scrollArea {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-3) var(--space-4) var(--space-3);
+
+  background:
+    linear-gradient(var(--surface-1) 34%, rgba(255, 255, 255, 0)) top / 100% 24px no-repeat local,
+    linear-gradient(rgba(255, 255, 255, 0), var(--surface-1) 66%) bottom / 100% 24px no-repeat local,
+    radial-gradient(farthest-side at 50% 0, rgba(20, 24, 31, 0.14), rgba(20, 24, 31, 0)) top / 100% 10px no-repeat scroll,
+    radial-gradient(farthest-side at 50% 100%, rgba(20, 24, 31, 0.14), rgba(20, 24, 31, 0)) bottom / 100% 10px no-repeat scroll;
+  background-color: var(--surface-1);
+}
+
+.scrollArea::-webkit-scrollbar { width: 9px; }
+.scrollArea::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border-radius: 99px;
+  border: 2px solid var(--surface-1);
+}
+.scrollArea::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+.pinnedBottom {
+  flex: none;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+.empty {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-4);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* No inner max-height any more. The whole scroll area handles it, so a
+   long order does not end up with two nested scrollbars. */
+.lines {
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.line {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.line:last-child { border-bottom: none; }
+
+/* The vessel leads the row. Baseline alignment is wrong once an SVG is in
+   the flow, because a drawing has no baseline to sit on. */
+.lineTop {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.lineName {
+  font-size: var(--step--1);
+  font-weight: 600;
+  min-width: 0;
+}
+
+.lineTotal {
+  margin-left: auto;
+  font-size: var(--step--1);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.lineBottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: 1px;
+  /* Indented to the glyph gutter so the detail hangs under the name. */
+  padding-left: 20px;
+}
+
+.lineDetail { font-size: var(--step--2); color: var(--text-3); }
+
+.remove {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-3);
+  cursor: pointer;
+}
+.remove:hover { color: var(--risk); text-decoration: underline; }
+
+.totals {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.totals > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+
+.totals dt { font-size: var(--step--1); color: var(--text-2); }
+.totals dd { margin: 0; font-size: var(--step--1); font-weight: 700; }
+
+.lt-stock { color: var(--ok); }
+.lt-short { color: var(--accent); }
+.lt-standard { color: var(--warn); }
+
+/* --- family mix --------------------------------------------------- */
+.mix { margin: 0 0 var(--space-3); }
+
+.mixLabel {
+  display: block;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+.mixBar {
+  display: flex;
+  height: 9px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--surface-3);
+}
+
+.mixSeg { display: block; height: 100%; }
+.mixSeg + .mixSeg { box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.75); }
+
+.mixKey {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--space-3);
+  margin: 7px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mixKey li {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.mixDot { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.mixPct { font-weight: 700; color: var(--text-0); }
+
+.money { margin-bottom: var(--space-3); }
+
+.moneyRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* The one figure on the panel that a person is actually deciding
+   about, so it gets the gold rule and the size. Everything else on
+   this card is a supporting number. */
+.moneyTotal {
+  margin-top: 6px;
+  padding-top: 9px;
+  border-top: 2px solid var(--brand-gold);
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-0);
+}
+
+.nudge {
+  margin: var(--space-2) 0 0;
+  padding: 7px 10px;
+  border-radius: var(--radius-s);
+  background: var(--accent-tint, var(--surface-2));
+  border: 1px solid var(--line-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* The absence of money on the retail lane is explained, not hidden. */
+.tierNote {
+  margin: 0 0 var(--space-3);
+  padding: 10px 12px;
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--text-0);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.toRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 9px 10px;
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.toLabel {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.toAddress {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  word-break: break-all;
+}
+
+.toRole { font-size: var(--step--2); color: var(--text-2); }
+
+.send {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.send:hover:not(:disabled) { background: var(--accent-600); }
+.send:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.clear {
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: 8px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.clear:hover { background: var(--surface-3); color: var(--text-0); }
+
+.smallprint {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* Stacked above the builder on narrow screens, where pinning a tall panel
+   over the content would hide the thing you are trying to order from. */
+@media (max-width: 1120px) {
+  .summary { max-height: none; }
+  .scrollArea { overflow-y: visible; }
+}
+
+.previewLink {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: 8px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--text-1);
+  text-align: center;
+  text-decoration: none;
+}
+
+.previewLink:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+  border-color: var(--line-strong);
+  text-decoration: none;
+}
+
+.mixNote {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-s);
+  background: var(--warn-tint);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.mixNote > span { color: var(--warn); flex: none; }

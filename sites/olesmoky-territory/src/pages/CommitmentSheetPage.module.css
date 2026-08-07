@@ -1,0 +1,262 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-rail);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--line);
+}
+
+.back { font-size: var(--step--1); font-weight: 550; }
+.toolbarActions { display: flex; gap: var(--space-2); }
+
+/* The sheet is sized as a document on screen too, so what you see is
+   what prints. 8.5in minus half-inch margins each side. */
+.sheet {
+  width: 7.5in;
+  max-width: 100%;
+  margin: var(--space-5) auto var(--space-8);
+  padding: var(--space-6);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+  font-size: 11px;
+}
+
+.sheetHead {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--text-0);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.docTitle {
+  margin: 3px 0 0;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2px var(--space-3);
+  margin: 0;
+  font-size: 10px;
+  align-content: start;
+}
+
+.meta > div { display: contents; }
+.meta dt { color: var(--text-3); font-weight: 600; white-space: nowrap; }
+.meta dd { margin: 0; font-weight: 550; text-align: right; }
+
+.disclaimerTop {
+  margin: var(--space-3) 0 var(--space-5);
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.block { margin-bottom: var(--space-5); }
+
+.blockTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-2);
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--line-2);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.blockTitle span {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-3);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.table { width: 100%; font-size: 10px; }
+
+.table th,
+.table td {
+  padding: 4px 6px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.table thead th {
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  font-weight: 700;
+  border-bottom: 1px solid var(--line-strong);
+  white-space: nowrap;
+}
+
+.table tfoot th {
+  border-top: 1.5px solid var(--text-0);
+  border-bottom: none;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.r { text-align: right; }
+.small { font-size: 9px; color: var(--text-2); }
+.pkg { color: var(--text-3); }
+
+.tiedHouse {
+  margin: var(--space-2) 0 0;
+  padding: 6px 9px;
+  border-left: 2px solid var(--warn);
+  background: var(--warn-tint);
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.summary > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-bottom: 2px;
+  border-bottom: 1px dotted var(--line-2);
+}
+
+.summary dt { font-size: 9px; color: var(--text-2); }
+.summary dd { margin: 0; font-size: 10px; font-weight: 650; }
+
+.commitments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 10px;
+}
+
+.commitments span {
+  font-size: 14px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.followList {
+  margin: var(--space-2) 0 0;
+  font-size: 9px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.stages {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px var(--space-4);
+}
+
+.stages li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: 10px;
+}
+
+.stageNum {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.stages strong { display: block; }
+.stageGate { display: block; font-size: 9px; color: var(--text-3); }
+
+.submitRow {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.confirmed {
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-s);
+  border: 1px solid var(--ok);
+  background: var(--ok-tint);
+  font-size: 10px;
+  color: var(--text-0);
+}
+
+.disclaimerBottom {
+  margin: var(--space-5) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-size: 8px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+@media print {
+  .page { overflow: visible; background: #fff; }
+  .sheet {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .toolbar, .submitRow { display: none !important; }
+}

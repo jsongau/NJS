@@ -1,0 +1,138 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-7) var(--space-5) var(--space-8);
+  max-width: 74ch;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.head { margin-bottom: var(--space-6); }
+
+.eyebrow {
+  margin: 0;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.head h1 {
+  margin: 4px 0 var(--space-3);
+  font-size: var(--step-4);
+  letter-spacing: -0.025em;
+}
+
+.lede {
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.section {
+  margin-bottom: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.section h2 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-1);
+}
+
+.section h3 {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--step-0);
+  font-weight: 650;
+}
+
+.section p {
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-1);
+  margin: 0 0 var(--space-3);
+}
+
+.section code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--surface-3);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.terms,
+.sources {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.terms > div,
+.sources > div {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px dotted var(--line-2);
+}
+
+.terms dt,
+.sources dt {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.terms dd,
+.sources dd {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.limits {
+  margin: 0;
+  padding-left: 1.3em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.limits li {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.foot {
+  margin: var(--space-7) 0 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  color: var(--text-3);
+}
+
+@media (max-width: 700px) {
+  .terms > div,
+  .sources > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .page { padding: var(--space-5) var(--space-4) var(--space-7); }
+}
+
+/* A corrected assumption, marked as one. Admitting a figure was wrong and
+   saying by how much is a stronger credibility signal than never having
+   published one. */
+.correction {
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--warn-tint);
+}

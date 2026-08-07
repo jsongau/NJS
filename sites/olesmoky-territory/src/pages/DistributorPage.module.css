@@ -1,0 +1,336 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-5);
+  max-width: var(--shell-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: var(--space-8);
+  text-align: center;
+}
+.empty h1 { font-size: var(--step-2); margin-bottom: var(--space-2); }
+.empty p { max-width: 46ch; color: var(--text-2); }
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.head h1 { margin: 4px 0 3px; font-size: var(--step-3); letter-spacing: -0.02em; }
+.sub { margin: 0; font-size: var(--step--1); color: var(--text-2); }
+.headActions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+/* The framing note explains why this view exists at all. Without it a
+   reader assumes the supplier controls the order, which is the exact
+   misunderstanding the whole two-ledger model exists to correct. */
+.framing {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3);
+  max-width: 96ch;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-tint);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--line);
+}
+
+.statEmphasis { border-left-color: var(--text-0); }
+.statEmphasis .statValue { font-weight: 700; }
+.statWarn { border-left-color: var(--risk); }
+.statWarn .statValue { color: var(--risk); }
+
+.statLabel {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.statValue { font-size: var(--step-1); font-weight: 600; }
+
+.table {
+  width: 100%;
+  font-size: var(--step--1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  background: var(--surface-1);
+}
+
+.table th,
+.table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.table thead th {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  font-weight: 700;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line-2);
+  white-space: nowrap;
+}
+
+.r { text-align: right; }
+.muted { color: var(--text-2); }
+
+/* Declined lines fade and strike; short lines carry a heavy left bar.
+   Both survive greyscale, and the Decision column says it in words. */
+.rowDeclined { opacity: 0.55; }
+.rowDeclined .skuName { text-decoration: line-through; }
+.rowShort { box-shadow: inset 4px 0 0 var(--risk); }
+
+.skuCell { display: flex; align-items: center; gap: var(--space-2); }
+.skuName { display: block; font-weight: 600; }
+
+.who {
+  display: block;
+  margin-top: 2px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: var(--step--2);
+  color: var(--accent);
+  font-weight: 550;
+  cursor: pointer;
+  text-align: left;
+}
+.who:hover { text-decoration: underline; }
+
+.qty {
+  width: 74px;
+  padding: 5px 7px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  text-align: right;
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+.qty:disabled { background: var(--surface-3); color: var(--text-3); }
+
+.select {
+  padding: 4px 7px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  max-width: 190px;
+}
+
+.decision { display: flex; gap: 3px; }
+
+.dBtn {
+  padding: 4px 9px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dBtn:hover { background: var(--surface-3); }
+
+.dOn,
+.dOn:hover {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.detailRow td { background: var(--surface-2); padding: 0; }
+
+.detail { padding: var(--space-3) var(--space-4); }
+
+.detailTitle {
+  display: block;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+
+.detail ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+.detail li {
+  display: grid;
+  grid-template-columns: 180px 130px 70px 1fr;
+  gap: var(--space-3);
+  font-size: var(--step--2);
+  padding: 3px 0;
+  border-bottom: 1px dotted var(--line-2);
+}
+
+/* --- the coherence check ---------------------------------------- */
+.breakage {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--risk);
+  border-radius: var(--radius-m);
+  background: var(--risk-tint);
+}
+
+.breakage h2 { margin: 0 0 var(--space-2); font-size: var(--step-1); color: var(--risk); }
+
+.breakage p {
+  margin: 0 0 var(--space-3);
+  max-width: 82ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.breakList { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+
+.breakList li {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+}
+
+.breakSku { font-weight: 600; min-width: 0; }
+.breakNum { color: var(--text-2); white-space: nowrap; }
+.breakShort { font-weight: 700; color: var(--risk); white-space: nowrap; }
+.breakWho { color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.breakFoot { margin: var(--space-3) 0 0 !important; font-weight: 600; }
+
+.clean {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-m);
+  background: var(--ok-tint);
+}
+.clean h2 { margin: 0 0 var(--space-2); font-size: var(--step-1); color: var(--ok); }
+.clean p { margin: 0; max-width: 74ch; font-size: var(--step--1); line-height: 1.6; }
+
+.submitRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.confirmed {
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-s);
+  border: 1px solid var(--ok);
+  background: var(--ok-tint);
+  font-size: var(--step--1);
+}
+
+.backLink { font-size: var(--step--1); font-weight: 550; }
+
+@media (max-width: 900px) {
+  .page { padding: var(--space-4) var(--space-3); }
+  .table { display: block; overflow-x: auto; }
+  .breakList li { grid-template-columns: auto 1fr; }
+  .breakWho { grid-column: 1 / -1; white-space: normal; }
+}
+
+/* Shape and words on a short row, so the red left bar is reinforcement
+   rather than the only signal. */
+.shortFlag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 7px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--risk);
+  color: var(--risk);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* A link out to the training page from the head actions. Quieter than the
+   buttons beside it, because reviewing the order is what this screen is
+   for and training is the thing worth knowing exists. */
+.trainLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.trainLink:hover { background: var(--surface-3); text-decoration: none; }
+
+.emptyLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}

@@ -1,0 +1,465 @@
+.drawer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-1);
+  border-left: 1px solid var(--line);
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+}
+
+.placeholderTitle {
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: var(--space-2);
+}
+
+.placeholder p {
+  max-width: 34ch;
+  font-size: var(--step--1);
+  color: var(--text-3);
+  margin: 0;
+}
+
+.header {
+  position: relative;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: 17px;
+  line-height: 1;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+}
+
+.identity {
+  display: flex;
+  gap: var(--space-3);
+  padding-right: var(--space-6);
+}
+
+.identityText { min-width: 0; }
+
+.name {
+  margin: 0;
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.address {
+  margin: 2px 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+/* Only the priority word needs case-fixing. Applying capitalize to the
+   whole chip turned the unit on "10.3 mi" into "Mi". */
+.chipPriority::first-letter {
+  text-transform: uppercase;
+}
+
+.headStats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+}
+
+.headStats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-left: 8px;
+  border-left: 2px solid var(--line);
+}
+
+.statGap {
+  border-left-color: var(--text-0) !important;
+}
+
+.statGap dd { font-weight: 700 !important; }
+
+.headStats dt {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.headStats dd {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.lastVisit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.headActions {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.orderBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  text-decoration: none;
+  text-align: center;
+}
+
+.orderBtn:hover { background: var(--accent-600); text-decoration: none; }
+
+.orderCount {
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.24);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.orderTabBtn {
+  flex: none;
+  padding: 9px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.orderTabBtn:hover { background: var(--surface-3); color: var(--text-0); }
+
+.section {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  font-weight: 650;
+}
+
+/* Back shelf: a filled bar for what we hold, a hard marker for fair share.
+   The gap is the distance between them, readable without color. */
+.coldBar {
+  position: relative;
+  height: 20px;
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.coldOurs {
+  height: 100%;
+  background: var(--text-0);
+}
+
+.coldFair {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--risk);
+}
+
+.coldFair::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  border: 4px solid transparent;
+  border-top-color: var(--risk);
+}
+
+.coldLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.explain {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-3);
+}
+
+.promo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.promo dt {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.promo dd {
+  margin: 2px 0 0;
+  font-size: var(--step--1);
+  font-weight: 550;
+}
+
+/* The tied-house note is the most important sentence in the drawer, so it
+   is set apart rather than buried in body copy. */
+.tiedHouse {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--warn);
+  background: var(--warn-tint);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.requirement {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.planList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.planList li {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+}
+
+.planSku {
+  font-weight: 550;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.planCases { font-weight: 700; }
+
+.planPlacement {
+  color: var(--text-3);
+  max-width: 15ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--risk);
+  cursor: pointer;
+}
+
+.remove:hover { text-decoration: underline; }
+
+/* --- tabs -------------------------------------------------------
+   The drawer is 432px wide and previously stacked every section, which
+   forced a seven-column table to scroll sideways and buried the section a
+   rep actually opens the account for. Tabs give each section the full
+   width, and Distribution is first and default. */
+
+/* Six tabs do not fit across a 432px drawer, and the old rule hid the
+   overflow scrollbar, so Plan simply was not there as far as anyone
+   could tell. Tabs wrap now. Two short rows cost about thirty pixels of
+   a very tall panel and make every section reachable without a gesture
+   nobody knew to make. */
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: var(--space-2) var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 8px 6px 9px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+  background: none;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab:hover { color: var(--text-0); background: var(--surface-2); }
+
+/* Selected tab carries weight, an underline, and full-contrast text.
+   None of those three is a color cue on its own. */
+/* Active tab: a ground, full-contrast text, weight, AND the gold rule
+   that the top nav uses. Same mark in both places, so the two read as
+   one system rather than two components that happen to be nearby. */
+.tabOn,
+.tabOn:hover {
+  color: var(--text-0);
+  background: var(--surface-3);
+  border-bottom-color: var(--brand-gold);
+  font-weight: 700;
+}
+
+.tabBadge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 650;
+  color: var(--text-1);
+}
+
+.tabOn .tabBadge {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.panel { min-height: 0; }
+
+.tabEmpty {
+  margin: 0;
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* The locator provenance line. Set quietly — it is a citation, not a
+   claim — but it sits above every modelled figure on the panel because
+   it is the only line here a reader can independently verify. */
+.sourceLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 4px 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.sourceLine a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sourceLine a:hover {
+  color: var(--text-1);
+}

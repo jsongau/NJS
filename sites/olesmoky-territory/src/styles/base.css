@@ -1,0 +1,254 @@
+/* Base layer — light enterprise */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--sticky-h) + var(--space-4));
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-0);
+  background: var(--surface-0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+  HEADINGS ARE SERIF, AND THAT IS THE SINGLE BIGGEST VISUAL DECISION HERE.
+
+  A screen set entirely in Inter reads as software, whatever colour you
+  paint it. Ole Smoky's identity is a hundred-year-old jar with a hand-set
+  label on it, and the fastest honest way to carry that into an interface
+  is the display face — a warm serif on the headings, the neutral UI face
+  everywhere a person has to scan or compare.
+
+  The split is deliberate and it is a rule, not a mood: SERIF FOR VOICE,
+  SANS FOR WORK. Anything the reader is meant to hear in a brand's voice
+  gets Spectral. Anything they are meant to operate — labels, buttons,
+  table headers, figures — stays in Inter, because a serif column of
+  numbers is harder to compare and this is a working tool before it is a
+  brand expression.
+*/
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  line-height: 1.2;
+  color: var(--text-0);
+  margin: 0 0 var(--space-3);
+}
+
+/* Small headings are doing labelling work, not voice work. */
+h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+h1 { font-size: var(--step-3); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+h4 { font-size: var(--step-0); }
+
+p { margin: 0 0 var(--space-3); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+a:hover { color: var(--accent-600); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Every figure that gets compared down a column is mono and tabular.
+   Without tabular-nums, a column of case counts wobbles as digits change,
+   which makes a plan table read as sloppy for reasons a viewer can't name. */
+.num,
+td.num,
+.tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Focus rings must survive on the map, where Leaflet resets outlines. */
+.leaflet-container :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--surface-1);
+  color: var(--text-0);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  z-index: var(--z-toast);
+}
+.skip-link:focus { left: var(--space-3); top: var(--space-3); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+table { border-collapse: collapse; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* Touch targets stay at 44px on coarse pointers even where the desktop
+   design is denser. */
+@media (pointer: coarse) {
+  button, [role="button"], a.tap, input[type="checkbox"], select {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Map attribution.
+   Required by the OpenStreetMap ODbL licence and by CARTO's basemap
+   terms, so it stays. It does not have to shout: smallest legible size,
+   quietest grey, and the "Leaflet" courtesy plug removed since only the
+   data and tile credits are actually obligatory. */
+.leaflet-control-attribution {
+  padding: 1px 6px !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-radius: var(--radius-s) 0 0 0;
+  font-size: 9px !important;
+  line-height: 1.5 !important;
+  color: var(--text-3) !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--text-3) !important;
+  text-decoration: none;
+}
+
+.leaflet-control-attribution a:hover { color: var(--text-1) !important; }
+
+
+/* ============================================================
+   Selects, styled once, globally.
+
+   WHY GLOBAL AND NOT PER-COMPONENT. There are six <select> elements in
+   this app across four pages, and every one of them was rendering as
+   the operating system's default control — a grey chrome box with a
+   system chevron that changes shape between macOS, Windows and Android.
+   One unstyled native control is the single fastest way to make an
+   otherwise considered interface look unfinished, because it is the one
+   element a reader has seen ten thousand times somewhere else.
+
+   Styling them in six component files would have meant six copies of
+   the same rule drifting apart. This is the one place a select's
+   appearance is decided.
+
+   THE CHEVRON IS AN INLINE SVG IN A DATA URI rather than a pseudo
+   element. A <select> cannot host ::after — the browser owns its inside
+   — so the arrow has to be a background image, and inlining it means no
+   second network request and no icon font.
+
+   WHAT IS DELIBERATELY NOT DONE: this is still a native <select>. A
+   custom listbox would let me style the OPEN menu too, and it would
+   also mean reimplementing keyboard navigation, type-ahead, screen
+   reader semantics and the mobile wheel picker — all of which the
+   native control already does correctly. Styling the closed state and
+   leaving the open state to the platform is the right trade here.
+   ============================================================ */
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: var(--space-2) var(--space-7) var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background-color: var(--surface-1);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%2396731c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  background-size: 12px 8px;
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--text-0);
+  cursor: pointer;
+  line-height: 1.4;
+  box-shadow: var(--shadow-1);
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
+}
+
+select:hover {
+  border-color: var(--brand-gold-line);
+  background-color: var(--surface-2);
+}
+
+select:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+select:disabled {
+  opacity: 0.55;
+  cursor: default;
+  background-image: none;
+}
+
+/* The dark chrome in the top bar needs the inverse treatment. */
+.onInk select,
+select.onInk {
+  background-color: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: var(--text-inverse);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%23d9c085' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.onInk select:hover,
+select.onInk:hover {
+  background-color: rgba(255, 255, 255, 0.13);
+  border-color: var(--brand-gold);
+}
+
+/*
+  The open menu is the platform's, but Chromium and Firefox both honour
+  these two on the option list, so the popup at least inherits the app's
+  paper rather than a system grey.
+*/
+select option {
+  background: var(--surface-1);
+  color: var(--text-0);
+}

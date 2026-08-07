@@ -1,0 +1,224 @@
+.wrap { padding: var(--space-3); }
+
+.empty {
+  margin: 0;
+  padding: var(--space-4) var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-3);
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: 5px;
+}
+
+/* The address is shown, never typed. That is what makes Send safe. */
+.toRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 10px;
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.toAddress {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  word-break: break-all;
+}
+
+.toRole { font-size: var(--step--2); color: var(--text-2); }
+
+.pickList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+}
+
+.pickRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: var(--space-2);
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.pickRow:last-child { border-bottom: none; }
+.pickRow:hover { background: var(--surface-2); }
+
+.pickOn {
+  background: var(--surface-2);
+  box-shadow: inset 3px 0 0 var(--text-0);
+}
+.pickOn:hover { background: var(--surface-3); }
+
+.pickRow input { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--accent); }
+
+.pickBody { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.pickName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kOut { color: var(--risk); }
+.kLow { color: var(--warn); }
+.kNew { color: var(--accent); }
+
+.pickWhy { font-size: var(--step--2); line-height: 1.5; color: var(--text-2); }
+
+.pickCases {
+  font-size: var(--step-0);
+  font-weight: 700;
+  min-width: 26px;
+  text-align: right;
+}
+
+.field { margin-bottom: var(--space-3); }
+
+.link {
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--text-1);
+  word-break: break-all;
+}
+
+.actions { display: flex; align-items: center; gap: var(--space-2); }
+
+/* An anchor styled as the primary action, because it navigates. A button
+   that navigates breaks middle-click, copy-link, and open-in-new-tab, and
+   this is a link a rep will want to open in a tab. */
+.openBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 9px 14px;
+  border-radius: var(--radius-s);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-size: var(--step--1);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.openBtn:hover { background: var(--text-1); text-decoration: none; }
+
+.itemised {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.itemised strong { color: var(--text-0); }
+
+.sendRow { display: flex; align-items: center; gap: var(--space-2); }
+
+.sendBtn {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.sendBtn:hover:not(:disabled) { background: var(--accent-600); }
+.sendBtn:disabled { opacity: .5; cursor: not-allowed; }
+
+.sentCard {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3);
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+}
+
+.sentTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 4px;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.sentBody {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.sentAgain {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+.sentAgain:hover { text-decoration: underline; }
+
+.toast {
+  margin: var(--space-2) 0 0;
+  padding: 6px 10px;
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+  border: 1px solid var(--ok);
+  color: var(--ok);
+  font-size: var(--step--2);
+  font-weight: 600;
+}
+
+.note {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-3);
+}

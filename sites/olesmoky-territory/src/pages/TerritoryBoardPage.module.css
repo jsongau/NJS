@@ -1,0 +1,153 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* The three-column board. Widths come from tokens so the grid is the only
+   place layout is expressed and no panel sets its own width. */
+.board {
+  position: relative;
+  display: grid;
+  /* list | map | drawer. The drawer column collapses to zero when nothing
+     is selected, so the map reclaims the width instead of leaving a gap. */
+  grid-template-columns: var(--col-list) 1fr 0;
+  /* Rows must be explicitly minmax(0, 1fr). A default `auto` row is sized
+     by its tallest item, which is the 20-card list, and the map then
+     inherits that height instead of the viewport's. */
+  grid-template-rows: minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.boardListClosed {
+  grid-template-columns: 1fr 0;
+}
+
+.boardDrawerOpen {
+  grid-template-columns: var(--col-list) 1fr var(--col-drawer);
+}
+
+.boardListClosed.boardDrawerOpen {
+  grid-template-columns: 1fr var(--col-drawer);
+}
+
+/* Nothing selected: the drawer is not rendered at all, not merely hidden,
+   so it cannot trap focus or be reached by a screen reader. */
+.board:not(.boardDrawerOpen) > aside:last-child {
+  display: none;
+}
+
+.listPane {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mapPane {
+  position: relative;
+  min-height: 0;
+}
+
+.listToggle {
+  position: absolute;
+  left: var(--space-3);
+  top: var(--space-3);
+  z-index: var(--z-map-overlay);
+  padding: 5px 11px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.96);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  box-shadow: var(--shadow-1);
+}
+
+.listToggle:hover {
+  background: #fff;
+  color: var(--text-0);
+}
+
+/* Below 1400 the drawer overlays the map rather than squeezing it. Three
+   real columns need the width; two columns plus a panel do not. */
+@media (max-width: 1400px) {
+  .board,
+  .boardDrawerOpen {
+    grid-template-columns: var(--col-list) 1fr;
+  }
+  .boardListClosed,
+  .boardListClosed.boardDrawerOpen {
+    grid-template-columns: 1fr;
+  }
+  .boardDrawerOpen > aside:last-child {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--col-drawer);
+    max-width: 100%;
+    z-index: var(--z-drawer);
+    box-shadow: var(--shadow-3);
+  }
+}
+
+@media (max-width: 1100px) {
+  .board,
+  .boardDrawerOpen {
+    grid-template-columns: 288px 1fr;
+  }
+}
+
+/* Below 900 the map goes full bleed and the list becomes a sheet reached
+   from the toggle, rather than a squeezed column that serves neither. */
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+
+  .listPane {
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-drawer);
+    background: var(--surface-1);
+  }
+}
+
+/* --- focus bar ----------------------------------------------------
+   Shown when the board was opened from an order line with ?sku=. It has
+   to be impossible to miss: a filtered board that does not say it is
+   filtered is a board that appears to have lost half the territory. */
+.focusBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: none;
+  padding: 9px var(--space-4);
+  border-bottom: 1px solid var(--accent-line);
+  background: var(--accent-tint);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.focusBar strong { color: var(--text-0); }
+
+.focusGlyph { color: var(--accent); font-size: 11px; }
+
+.focusClear {
+  margin-left: auto;
+  flex: none;
+  padding: 5px 12px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.focusClear:hover { background: var(--surface-1); border-color: var(--accent); }

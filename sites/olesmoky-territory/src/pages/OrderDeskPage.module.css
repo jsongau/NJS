@@ -1,0 +1,278 @@
+.page {
+  /* Height of the context bar and of everything outside the scrollport,
+     named once so the sticky order panel can size against them instead of
+     against a magic number that drifts when the chrome changes. */
+  --order-context-h: 66px;
+  --order-chrome: 92px;
+
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Context bar: who is buying, for where. Persistent, because the answer
+   changes every number below it and a buyer should never have to scroll
+   to remember which lane they are in. */
+/* Lane identity. The two sides of the three-tier structure are
+   different places, and which one you are in changes every number
+   below, so the bar carries the lane in its ground and its left edge.
+   Peripheral vision does the work; the toggle, the heading and the
+   summary all still say it in words. */
+.contextBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  border-left: 4px solid var(--lane, var(--lane-distributor));
+  background: var(--laneTint, var(--lane-distributor-tint));
+  transition: background var(--dur-2) var(--ease-out);
+}
+
+.who { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+
+.whoMark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: var(--radius-s);
+  background: var(--lane, var(--lane-distributor));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.whoText { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+.whoText strong {
+  font-size: var(--step-0);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.whoSub {
+  font-size: var(--step--2);
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.laneWrap, .storePick { display: flex; flex-direction: column; gap: 4px; flex: none; }
+
+.laneLabel {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.lanePick {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+
+.laneBtn {
+  padding: 6px 13px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.laneBtn:hover { color: var(--text-0); }
+
+.laneOn,
+.laneOn:hover {
+  background: var(--lane, var(--surface-inverse));
+  color: #fff;
+}
+
+.storePick select {
+  appearance: none;
+  padding: 7px 26px 7px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-2) 50%),
+    linear-gradient(135deg, var(--text-2) 50%, transparent 50%);
+  background-position: calc(100% - 14px) 55%, calc(100% - 10px) 55%;
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+
+.contextLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+  flex: none;
+}
+
+.mapLink {
+  flex: none;
+  padding: 8px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.mapLink { background: var(--surface-1); }
+.mapLink:hover { background: var(--surface-1); border-color: var(--lane, var(--line-strong)); color: var(--text-0); text-decoration: none; }
+
+/* --- body --------------------------------------------------------- */
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 348px;
+  gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-5) var(--space-4) var(--space-7);
+  max-width: var(--shell-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main { min-width: 0; }
+
+.head { margin-bottom: var(--space-4); }
+
+.eyebrow {
+  margin: 0;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.head h1 {
+  margin: 5px 0 var(--space-2);
+  font-size: var(--step-4);
+  letter-spacing: -0.025em;
+}
+
+/* A short gold rule under the eyebrow. Editorial pages have marks
+   like this and product pages usually do not, which is most of why
+   product pages look like templates. */
+.eyebrow::after {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 3px;
+  margin-top: 7px;
+  border-radius: 2px;
+  background: var(--brand-gold);
+}
+
+.lede {
+  margin: 0;
+  max-width: 72ch;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* Sticky lives here, not on the card.
+   A sticky element travels only within its containing block, and a grid
+   item that is auto-sized to its content is exactly as tall as the card,
+   so there is nowhere to travel and it never appears to stick. Putting
+   sticky on the column itself, with an explicit height, gives the card a
+   viewport-sized box to sit in and its own scroll inside that. */
+.side {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  min-width: 0;
+  height: calc(100dvh - var(--nav-h) - var(--order-context-h) - var(--order-chrome));
+  max-height: calc(100dvh - var(--nav-h) - var(--order-context-h) - var(--order-chrome));
+  min-height: 320px;
+}
+
+.sending {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+  text-align: center;
+}
+
+.sentCard {
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-m);
+  background: var(--ok-tint);
+}
+
+.sentTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.sentBody {
+  margin: 0 0 var(--space-3);
+  max-width: 72ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.sentActions { display: flex; align-items: center; gap: var(--space-4); }
+
+.sentLink { font-size: var(--step--1); font-weight: 650; }
+
+.sentAgain {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+}
+.sentAgain:hover { text-decoration: underline; color: var(--text-0); }
+
+@media (max-width: 1120px) {
+  .body { grid-template-columns: 1fr; }
+  .side {
+    order: -1;
+    position: static;
+    height: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .contextBar { flex-wrap: wrap; gap: var(--space-3); }
+  .contextLinks { margin-left: 0; }
+  .head h1 { font-size: var(--step-3); }
+}

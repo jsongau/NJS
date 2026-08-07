@@ -1,0 +1,174 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  background: var(--surface-3);
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Leaflet's default marker container has a white background and a border
+   in some resets. The icons are SVG and carry their own fill. */
+:global(.fs-marker) {
+  background: none;
+  border: none;
+}
+
+:global(.fs-marker svg) {
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(20, 24, 31, 0.22));
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+:global(.fs-marker:hover svg) {
+  transform: scale(1.06);
+}
+
+:global(.leaflet-container) {
+  font-family: var(--font-ui);
+  background: var(--surface-3);
+}
+
+:global(.leaflet-control-attribution) {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text-2);
+}
+
+:global(.leaflet-control-attribution a) {
+  color: var(--text-1);
+}
+
+.routeNote {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-map-overlay);
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: var(--radius-s);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  pointer-events: none;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 320px;
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+  background: var(--surface-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-m);
+}
+
+.empty h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-0);
+}
+
+.empty p {
+  margin: 0;
+  max-width: 46ch;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.empty code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* ---------------------------------------------------------------
+   Map credit, collapsed
+
+   ODbL and CARTO's terms both require the credit. Neither requires it to
+   be a text label on the map, so it sits behind a mark and opens on hover
+   or on focus. z-index clears Leaflet's own control layer, which tops out
+   around 1000.
+   --------------------------------------------------------------- */
+.credit {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-direction: row-reverse;
+}
+
+.creditMark {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.86);
+  backdrop-filter: blur(3px);
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 10.5px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-3);
+  cursor: help;
+}
+
+.creditMark:hover,
+.credit:focus-within .creditMark {
+  color: var(--text-1);
+  border-color: var(--line-2);
+}
+
+.creditPanel {
+  /* Collapsed by default. visibility rather than display so the links
+     stay in the tab order path and focus-within can fire. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(4px);
+  transition:
+    opacity var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out),
+    visibility var(--dur-1);
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: rgb(255 255 255 / 0.92);
+  backdrop-filter: blur(3px);
+  font-size: 9.5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: var(--text-3);
+}
+
+.credit:hover .creditPanel,
+.credit:focus-within .creditPanel {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.creditPanel a {
+  color: var(--text-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.creditPanel a:hover { color: var(--text-0); }

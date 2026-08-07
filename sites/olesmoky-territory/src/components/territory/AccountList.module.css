@@ -1,0 +1,312 @@
+.pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: var(--surface-1);
+  border-right: 1px solid var(--line);
+}
+
+.controls {
+  flex: none;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+/* --- Venue tabs ----------------------------------------------------
+   A real tab strip, not three more pills.
+
+   The sort controls below are pills, and the temptation was to make
+   these match. That would have been a mistake: sort changes the ORDER of
+   a list and the venue tab changes WHICH LIST, and giving two controls
+   with different consequences the same appearance teaches a reader that
+   nothing here matters very much. So the tabs sit on a shared rail with
+   a selected tab that connects to the content below it — the oldest tab
+   metaphor there is, and it still reads instantly.
+
+   The active state inverts rather than tinting, so it survives greyscale
+   and reads for a colourblind viewer. */
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.tab {
+  flex: 1 1 0;
+  min-width: 0;
+  /* The count must never be the thing that gets clipped. */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 6px;
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius-m) - 3px);
+  background: transparent;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background: var(--surface-1);
+  color: var(--text-1);
+}
+
+.tabActive,
+.tabActive:hover {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.tabGlyph {
+  font-size: 1.05em;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.tabLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The count is the reason the tab is worth clicking, so it is set in the
+   tabular numeral face and never allowed to be the thing that wraps. */
+.tabCount {
+  flex: none;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+}
+
+.tabActive .tabCount {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--text-inverse);
+}
+
+/* Under about 420px the three labels cannot coexist with three counts.
+   The label goes and the glyph carries it, which is why every tab has a
+   glyph in the first place rather than as decoration. */
+@media (max-width: 420px) {
+  .tabLabel {
+    display: none;
+  }
+}
+
+.search {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+}
+
+.search:focus {
+  background: var(--surface-1);
+}
+
+.sortRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--space-2);
+}
+
+.sortBtn {
+  padding: 3px 9px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 550;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.sortBtn:hover {
+  background: var(--surface-3);
+}
+
+/* Active sort inverts rather than tinting, so it survives greyscale. */
+.sortActive,
+.sortActive:hover {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.count {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  border: none;
+  border-bottom: 1px solid var(--line);
+  border-left: 3px solid transparent;
+  background: var(--surface-1);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.card:hover {
+  background: var(--surface-2);
+}
+
+.cardSelected,
+.cardSelected:hover {
+  background: var(--accent-tint);
+  border-left-color: var(--accent);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.name {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.planned {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ok);
+  text-transform: uppercase;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+.city,
+.distance {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+}
+
+.stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-left: 7px;
+  border-left: 2px solid var(--line);
+}
+
+/* A gap worth acting on is marked by a heavier rule AND a bolder value,
+   never by color alone. */
+.statGap {
+  border-left-color: var(--text-0) !important;
+}
+
+.statGap dd {
+  font-weight: 700 !important;
+}
+
+.stats dt {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.stats dd {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 550;
+  color: var(--text-0);
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 42px;
+  padding: 5px 0;
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+}
+
+.scoreNum {
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.scoreLabel {
+  margin-top: 2px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.empty {
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}

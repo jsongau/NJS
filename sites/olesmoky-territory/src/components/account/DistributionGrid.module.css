@@ -1,0 +1,172 @@
+.section { padding: var(--space-4); }
+
+.summary {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.summary strong { font-weight: 700; color: var(--text-0); }
+.muted { color: var(--text-3); }
+
+.filters {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+}
+
+.filterBtn {
+  flex: 1;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filterOn,
+.filterOn:hover {
+  background: var(--surface-1);
+  color: var(--text-0);
+  box-shadow: var(--shadow-1);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Stacked row rather than a table. Three columns only, and the middle one
+   wraps, so nothing ever pushes the drawer into a horizontal scroll. */
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.rowActionable {
+  background: var(--surface-2);
+  border-color: var(--line-2);
+  box-shadow: inset 3px 0 0 var(--text-0);
+}
+
+.body { min-width: 0; }
+
+.identity {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.brand {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.pkg { font-size: var(--step--2); color: var(--text-2); }
+
+.newTag {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 600;
+  padding: 0 4px;
+  border-radius: 3px;
+  border: 1px solid var(--prov-illustrative);
+  color: var(--prov-illustrative);
+}
+
+.state {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.status,
+.inv {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.distributed { color: var(--ok); }
+.void { color: var(--risk); }
+.notAuth { color: var(--text-3); }
+.delisted { color: var(--text-2); }
+
+.inv { color: var(--text-1); font-weight: 500; }
+
+.metric {
+  font-size: var(--step--2);
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.metric span { font-weight: 650; color: var(--text-1); }
+
+.add {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-0);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.add:hover:not(:disabled) {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.addDone,
+.addDone:disabled {
+  background: var(--ok-tint);
+  border-color: var(--ok);
+  color: var(--ok);
+  cursor: default;
+  opacity: 1;
+}
+
+.noAction { display: block; width: 0; }
+
+.empty {
+  margin: 0;
+  padding: var(--space-5) 0;
+  text-align: center;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.footnote {
+  margin: var(--space-4) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-3);
+}

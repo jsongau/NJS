@@ -1,0 +1,37 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  background: var(--surface-1);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.compact {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.glyph {
+  font-size: 0.9em;
+  line-height: 1;
+}
+
+.when {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.public { color: var(--prov-public); }
+.illustrative { color: var(--prov-illustrative); }
+.modeled { color: var(--prov-modeled); }
+.observed { color: var(--prov-observed); }
+.user { color: var(--prov-user); }

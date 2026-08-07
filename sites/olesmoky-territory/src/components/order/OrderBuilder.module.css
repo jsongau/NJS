@@ -1,0 +1,348 @@
+.grid { display: flex; flex-direction: column; gap: var(--space-3); }
+
+/* No coloured bar down the edge. That pattern is in every dashboard
+   template ever shipped, and it spends a whole column of space to carry
+   one bit. The shelf strip carries twenty five. */
+.card {
+  position: relative;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out);
+}
+
+.card:hover { border-color: var(--line-2); }
+
+/* In the order: a ring, a tinted ground and a tick. Never tint alone. */
+.cardOn {
+  border-color: var(--text-0);
+  background: var(--surface-2);
+  box-shadow: 0 0 0 1px var(--text-0);
+}
+
+.inOrderTick {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px 2px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardHead {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: var(--space-3);
+}
+
+.identity { min-width: 0; }
+
+/* Brand plate over the vessel it ships in. The glyph is decorative — the
+   package is spelled out in words two lines to the right — but it is the
+   thing a spirits person reads first, so it sits with the mark rather than
+   buried in the terms list. */
+.packPlate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+}
+
+.packShape {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.packCount {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-3);
+}
+
+.name {
+  margin: 0 0 3px;
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin: 0 0 6px;
+}
+
+.pkg { font-size: var(--step--1); color: var(--text-2); }
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  font-size: var(--step--2);
+  font-weight: 700;
+}
+
+.uCritical { color: var(--risk); }
+.uHigh { color: var(--warn); }
+.uNew { color: var(--accent); }
+.uWatch { color: var(--text-3); }
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  flex: none;
+  text-align: right;
+  padding-top: 18px;
+}
+
+.price {
+  font-size: var(--step-3);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.priceUnit { font-size: var(--step--2); color: var(--text-3); }
+
+.calcToggle {
+  margin-top: 4px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+.calcToggle:hover { text-decoration: underline; }
+
+/* The retail lane says why the money is missing rather than showing an
+   empty space, because the absence is the point. */
+.noPrice {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-2);
+}
+
+.noPriceWhy {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.calc {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.calcNote { list-style: none; margin-left: -14px; color: var(--text-3); padding-top: 4px; }
+
+.why {
+  margin: var(--space-3) 0 0;
+  max-width: 74ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.terms > div { display: flex; flex-direction: column; gap: 2px; }
+
+.terms dt {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.terms dd {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.lt-stock { color: var(--ok); }
+.lt-short { color: var(--accent); }
+.lt-standard { color: var(--warn); }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-3);
+}
+
+.add {
+  padding: 11px 20px;
+  border: none;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.add:hover { background: var(--accent-600); }
+
+.stepper {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  background: var(--surface-1);
+}
+
+.stepper button {
+  width: 38px;
+  border: none;
+  background: var(--surface-3);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-0);
+  cursor: pointer;
+}
+
+.stepper button:hover { background: var(--line); }
+
+.stepper input {
+  width: 64px;
+  border: none;
+  border-left: 1px solid var(--line-2);
+  padding: 9px 6px;
+  text-align: center;
+  font-size: var(--step-0);
+  font-weight: 650;
+  background: var(--surface-1);
+}
+
+.stepUnit {
+  display: flex;
+  align-items: center;
+  padding: 0 9px 0 5px;
+  border-right: 1px solid var(--line-2);
+  font-size: var(--step--2);
+  color: var(--text-3);
+  background: var(--surface-1);
+}
+
+.lineTotal { font-size: var(--step-1); font-weight: 700; }
+
+.remove {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-3);
+  cursor: pointer;
+}
+.remove:hover { color: var(--risk); text-decoration: underline; }
+
+.evidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 7px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.evidence:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+.evidenceCount {
+  display: inline-grid;
+  place-items: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.empty {
+  padding: var(--space-6);
+  text-align: center;
+  font-size: var(--step--1);
+  color: var(--text-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-m);
+}
+
+@media (max-width: 720px) {
+  .cardHead { grid-template-columns: auto 1fr; }
+  .priceBlock {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    text-align: left;
+  }
+  .terms { gap: var(--space-4); }
+  .evidence { margin-left: 0; }
+}

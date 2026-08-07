@@ -1,0 +1,37 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px 2px 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--fam);
+  background: var(--famTint);
+  color: var(--fam);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.sm { font-size: 9.5px; padding: 1px 7px 1px 5px; }
+.md { font-size: var(--step--2); }
+
+/* A filled square, not a coloured word. Lose the hue and the label is
+   still there carrying the whole meaning. */
+.swatch {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--fam);
+}
+
+.sm .swatch { width: 7px; height: 7px; }
+
+.label { letter-spacing: 0.01em; }
+
+.note {
+  padding-left: 6px;
+  margin-left: 2px;
+  border-left: 1px solid currentColor;
+  font-weight: 500;
+  opacity: 0.85;
+}

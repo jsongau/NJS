@@ -1,0 +1,186 @@
+.wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.head h2 { margin: 0 0 4px; font-size: var(--step-1); letter-spacing: -0.01em; }
+
+.head p {
+  margin: 0;
+  max-width: 68ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.filter {
+  display: flex;
+  gap: 2px;
+  flex: none;
+  padding: 2px;
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+}
+
+.fBtn {
+  padding: 5px 11px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.fOn,
+.fOn:hover {
+  background: var(--surface-1);
+  color: var(--text-0);
+  box-shadow: var(--shadow-1);
+}
+
+.list { margin: 0; padding: 0; list-style: none; }
+
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.row:last-child { border-bottom: none; }
+.row:hover { background: var(--surface-2); }
+
+.body { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.name { font-size: var(--step-0); font-weight: 650; }
+.city { font-size: var(--step--1); color: var(--text-3); }
+
+.signals { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+.sig {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
+  font-size: var(--step--2);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.sOut { color: var(--risk); }
+.sLow { color: var(--warn); }
+.sNew { color: var(--accent); }
+.sOk { color: var(--text-3); }
+
+.link {
+  display: block;
+  padding: 5px 8px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--text-2);
+  word-break: break-all;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex: none;
+  min-width: 172px;
+}
+
+.cases { font-size: var(--step--2); color: var(--text-2); }
+.cases strong { color: var(--text-0); font-size: var(--step--1); }
+
+/* An anchor styled as the primary action. It navigates, so it stays a
+   link: middle-click and open-in-new-tab keep working. */
+.openBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 13px;
+  border-radius: var(--radius-s);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-size: var(--step--2);
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.openBtn:hover { background: var(--text-1); text-decoration: none; }
+
+.to {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-3);
+  word-break: break-all;
+  text-align: right;
+}
+
+.toast {
+  margin: 0;
+  padding: 7px var(--space-4);
+  border-top: 1px solid var(--ok);
+  background: var(--ok-tint);
+  color: var(--ok);
+  font-size: var(--step--2);
+  font-weight: 600;
+}
+
+.note {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-3);
+}
+
+@media (max-width: 900px) {
+  .head { flex-direction: column; gap: var(--space-3); }
+  .row { grid-template-columns: auto 1fr; }
+  .actions {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+    padding-top: var(--space-2);
+    border-top: 1px dashed var(--line-2);
+  }
+  .to { text-align: left; width: 100%; }
+}

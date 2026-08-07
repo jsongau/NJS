@@ -1,0 +1,266 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+  max-width: var(--shell-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.head { margin-bottom: var(--space-5); }
+.head h1 { margin: 0 0 var(--space-2); font-size: var(--step-3); }
+
+.lede {
+  margin: 0;
+  max-width: 72ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.toast {
+  margin: 0 0 var(--space-4);
+  padding: 8px 12px;
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+  border: 1px solid var(--ok);
+  color: var(--ok);
+  font-size: var(--step--2);
+  font-weight: 600;
+}
+
+.family { margin-bottom: var(--space-6); }
+
+.familyTitle {
+  margin: 0 0 var(--space-3);
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line-2);
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--space-3);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.cardInactive { background: var(--surface-2); opacity: 0.72; }
+
+/*
+  The image gets a fixed column and the copy takes the rest. Flex with a
+  shrinkable image was letting a long brand name squeeze the photograph,
+  so the two cards beside each other never lined up.
+*/
+.cardTop {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  align-items: start;
+}
+
+.cardHead { min-width: 0; }
+
+.brandName {
+  margin: 0 0 4px;
+  font-size: var(--step-0);
+  font-weight: 650;
+}
+
+.role {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.source { color: var(--text-3); font-style: italic; }
+
+.inactiveNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+}
+
+.stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-left: 7px;
+  border-left: 2px solid var(--line);
+}
+
+.gap { border-left-color: var(--text-0) !important; }
+.gap dd { font-weight: 700 !important; }
+
+.stats dt {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.stats dd { margin: 0; font-size: var(--step-0); font-weight: 600; }
+
+.rateRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.track {
+  flex: 1;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--text-0);
+}
+
+.rateNum { font-size: var(--step--2); font-weight: 650; color: var(--text-1); }
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.expand {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+.expand:hover { text-decoration: underline; }
+
+.skuTable { width: 100%; margin-top: var(--space-3); font-size: var(--step--2); }
+
+.skuTable th,
+.skuTable td {
+  padding: 4px 6px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.skuTable thead th {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+  font-weight: 700;
+}
+
+.r { text-align: right; }
+
+/* The vessel beside the package words. A grocery buyer scanning a brand's
+   package list is looking for a shape, not a string. */
+.pkgCell > svg {
+  display: inline-block;
+  vertical-align: -4px;
+  margin-right: 5px;
+}
+
+.newTag {
+  margin-left: 5px;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 600;
+  padding: 0 4px;
+  border-radius: 3px;
+  border: 1px solid var(--prov-illustrative);
+  color: var(--prov-illustrative);
+}
+
+.gapCall {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.gapCall h2 { margin: 0 0 var(--space-2); font-size: var(--step-1); }
+
+.gapLede {
+  margin: 0 0 var(--space-3);
+  max-width: 68ch;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.gapList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.gapList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.gapSku { font-size: var(--step--1); font-weight: 600; min-width: 0; }
+.gapCases { font-size: var(--step--1); font-weight: 700; margin-left: auto; white-space: nowrap; }
+
+.gapWhere {
+  font-size: var(--step--2);
+  color: var(--text-3);
+  max-width: 34ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .page { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .grid { grid-template-columns: 1fr; }
+  .gapList li { flex-wrap: wrap; }
+  .gapWhere { max-width: 100%; }
+}

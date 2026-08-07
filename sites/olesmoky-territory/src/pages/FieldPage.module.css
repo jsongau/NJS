@@ -1,0 +1,565 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-gold-600);
+  font-weight: 600;
+}
+
+.head h1 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-3);
+  line-height: 1.2;
+  max-width: 30ch;
+}
+
+.lede {
+  margin: 0;
+  max-width: 76ch;
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+/* --- Stats -------------------------------------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-3);
+}
+
+.stat {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.statKey {
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.statVal {
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.statSub {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.gold { color: var(--brand-gold-600); }
+
+/* A poor recap rate gets a rule under it as well as a colour. */
+.bad {
+  color: var(--risk);
+  border-bottom: 2px solid var(--risk);
+  align-self: flex-start;
+  padding-bottom: 1px;
+}
+
+/* --- Picker ------------------------------------------------------------- */
+
+.picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-2);
+}
+
+.tab {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tab:hover { border-color: var(--line-strong); }
+
+.tabOn,
+.tabOn:hover {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  border-color: var(--surface-inverse);
+  box-shadow: inset 3px 0 0 var(--brand-gold);
+}
+
+.tabName {
+  font-weight: 600;
+  font-size: var(--step--1);
+}
+
+.tabMeta {
+  font-size: var(--step--2);
+  opacity: 0.78;
+  line-height: 1.4;
+}
+
+/* --- Panels ------------------------------------------------------------- */
+
+.panel {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  padding: var(--space-5);
+}
+
+.sectionHead {
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--brand-gold);
+}
+
+.sectionHead h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.no {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+.sectionHead p {
+  margin: 0;
+  max-width: 80ch;
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+/* --- Pouring ------------------------------------------------------------ */
+
+.pouring {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.pouringKey {
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.brandChip {
+  font-size: var(--step--1);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--brand-gold-tint);
+  border: 1px solid var(--brand-gold-line);
+  color: var(--brand-gold-600);
+  font-weight: 500;
+}
+
+/* --- Catchment ---------------------------------------------------------- */
+
+.catchment {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.acct {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+/*
+  Readiness is carried by the icon (full jar vs dashed empty jar), by the
+  sentence, AND by a left rule of different weights. Three signals, none
+  of them colour alone.
+*/
+.s-ready { border-left: 3px solid var(--ok); }
+.s-partial { border-left: 3px solid var(--warn); }
+.s-unstocked { border-left: 4px solid var(--risk); }
+
+.acctIcon { color: var(--brand-gold-600); }
+
+.acctBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.acctName {
+  font-weight: 600;
+  font-size: var(--step--1);
+}
+
+.acctState {
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.acctMiles {
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.unit {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  margin-left: 2px;
+  font-weight: 400;
+}
+
+.acctAction {
+  font-size: var(--step--2);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.acctOk {
+  font-size: var(--step--2);
+  color: var(--ok);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.empty {
+  padding: var(--space-5);
+  background: var(--surface-3);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.derived {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--surface-3);
+  border-radius: var(--radius-m);
+  margin-bottom: var(--space-4);
+}
+
+.derived > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dKey {
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.dVal {
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.permit,
+.followUp {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+  border-left: 3px solid var(--brand-gold-line);
+  padding-left: var(--space-3);
+  max-width: 90ch;
+}
+
+.permitKey,
+.fuKey {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--brand-gold-600);
+  margin-bottom: 2px;
+}
+
+/* --- Tablet ------------------------------------------------------------- */
+
+.tabletWrap {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+/*
+  A device, not a form. The rounded frame and the dark bezel are doing one
+  job: telling a reader this is a screen somebody holds standing up at the
+  end of a queue, which is the entire context that makes the field order
+  make sense.
+*/
+.tablet {
+  background: var(--surface-inverse);
+  border-radius: var(--radius-l);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-3);
+}
+
+.tabletBrand {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--brand-gold-line);
+  text-align: center;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.fields {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fields li {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-3);
+  border-radius: var(--radius-s);
+}
+
+.fields strong {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--text-inverse);
+}
+
+.fHint {
+  display: block;
+  font-size: var(--step--2);
+  color: #a89f8f;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.fieldOn { background: rgba(255, 255, 255, 0.07); }
+
+/* The SMS ask is visibly detached from the required three. */
+.fieldOff {
+  background: none;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  margin-top: var(--space-3);
+}
+
+.fNum {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--brand-gold);
+  color: #1a1509;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.rules h3 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.rules p {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-1);
+  max-width: 80ch;
+}
+
+.ceiling {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  color: var(--text-0) !important;
+}
+
+/* --- Recap -------------------------------------------------------------- */
+
+.recapFiled,
+.recapMissing {
+  padding: var(--space-4);
+  border-radius: var(--radius-m);
+}
+
+.recapFiled {
+  background: var(--ok-tint);
+  border: 1px solid var(--ok);
+}
+
+.recapMissing {
+  background: var(--warn-tint);
+  border: 1px solid var(--warn);
+}
+
+.recapTop {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.recapMissing p,
+.recapFiled p {
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-0);
+  max-width: 84ch;
+}
+
+.recapWhy {
+  margin-bottom: 0 !important;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--brand-gold-line);
+  color: var(--text-1) !important;
+  font-size: var(--step--2) !important;
+}
+
+.recapGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+
+.recapGrid dt {
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.recapGrid dd {
+  margin: 2px 0 0;
+  font-size: var(--step-2);
+  font-weight: 600;
+}
+
+.heard {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-1);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-family: var(--font-operator);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-0);
+}
+
+/* --- Next --------------------------------------------------------------- */
+
+.next {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.primary,
+.ghost {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-s);
+  text-decoration: none;
+  font-size: var(--step--1);
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.primary {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.ghost {
+  border-color: var(--line-2);
+  color: var(--text-0);
+  background: var(--surface-1);
+}
+
+.ghost:hover { border-color: var(--brand-gold); }
+
+@media (max-width: 900px) {
+  .tabletWrap { grid-template-columns: minmax(0, 1fr); }
+  .acct {
+    grid-template-columns: 30px minmax(0, 1fr);
+    row-gap: var(--space-2);
+  }
+  .acctMiles,
+  .acctAction,
+  .acctOk { grid-column: 2; justify-self: start; }
+}

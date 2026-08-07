@@ -1,0 +1,225 @@
+/* Three rungs, and the third one carries money because it is the only
+   one where a price is lawful. The visual weight follows the law. */
+.ladder {
+  margin: var(--space-5) 0 0;
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.head { margin-bottom: var(--space-4); }
+
+.title {
+  margin: 0 0 3px;
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.sub {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.rungs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+/* The connector. A chevron between rungs rather than a line, because the
+   relationship is "feeds into", not "then". */
+.rung {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.rung + .rung::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--space-3) * -1 - 1px);
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -5px;
+  border-top: 1.5px solid var(--line-2);
+  border-right: 1.5px solid var(--line-2);
+  transform: rotate(45deg);
+}
+
+/* Rung three is the sell-in. Inked, because it is the one that carries
+   money and the one the job title is named after. */
+.rungFinal {
+  border-color: var(--text-0);
+  background: var(--surface-1);
+  box-shadow: 0 0 0 1px var(--text-0);
+}
+
+.step {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.stepFinal {
+  border-color: var(--text-0);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.rungBody { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.rungLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.rungName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rungNum {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 3px;
+  font-size: var(--step-3);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.unit {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-3);
+}
+
+.rungNote {
+  margin-top: 4px;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* --- the goal ----------------------------------------------------- */
+.goal {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.goalTop {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: 7px;
+}
+
+.goalLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.goalNum { font-size: var(--step-0); font-weight: 700; }
+
+/* Direction is carried by the arrow first and the colour second, which is
+   the rule everywhere in this app. */
+.up { font-size: var(--step--2); font-weight: 700; color: var(--ok); }
+.down { font-size: var(--step--2); font-weight: 700; color: var(--risk); }
+
+.track {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  transition: width var(--dur-2) var(--ease-out);
+}
+
+.goalNote {
+  margin: 7px 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* --- actions ------------------------------------------------------ */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+.primary {
+  padding: 10px 20px;
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.primary:hover { background: var(--accent-600); color: #fff; text-decoration: none; }
+
+.ghost {
+  padding: 10px 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  text-decoration: none;
+}
+
+.ghost:hover { background: var(--surface-3); text-decoration: none; }
+
+@media (max-width: 900px) {
+  .rungs { grid-template-columns: minmax(0, 1fr); }
+  .rung + .rung::before {
+    left: 50%;
+    top: calc(var(--space-3) * -1 - 1px);
+    margin-top: 0;
+    margin-left: -5px;
+    transform: rotate(135deg);
+  }
+}

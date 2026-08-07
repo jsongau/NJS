@@ -1,0 +1,224 @@
+/*
+  Sits on the map, bottom left, opposite the legend.
+
+  The two overlays are deliberately the same width and the same card
+  treatment. A map with two floating panels that disagree about their own
+  chrome reads as two features bolted on at different times, which is
+  exactly what it would be if nobody said otherwise.
+*/
+.panel {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-map-overlay);
+  width: 250px;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+}
+
+.head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-align: left;
+  box-shadow: inset 0 -2px 0 var(--brand-gold);
+}
+
+.headMark {
+  display: inline-grid;
+  place-items: center;
+  color: var(--brand-gold-line);
+}
+
+.headText { flex: 1; }
+
+.chev {
+  font-size: var(--step-0);
+  opacity: 0.8;
+}
+
+.body {
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* --- Promotion stepper -------------------------------------------------- */
+
+.promoRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.promoName {
+  flex: 1;
+  font-size: var(--step--1);
+  font-weight: 600;
+  font-family: var(--font-display);
+  line-height: 1.25;
+}
+
+.step {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.step:hover:not(:disabled) { border-color: var(--brand-gold); }
+.step:disabled { opacity: 0.35; cursor: default; }
+
+.timing {
+  margin: 0;
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.timingLive { color: var(--ok); }
+
+/* --- Readiness ----------------------------------------------------------- */
+
+.readyBar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.readyFill {
+  display: block;
+  height: 100%;
+  background: var(--brand-gold);
+  border-radius: var(--radius-pill);
+}
+
+.counts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--space-4);
+}
+
+.counts li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.cIcon {
+  color: var(--brand-gold-600);
+  align-self: center;
+}
+
+.cNum {
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.cLabel {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.3;
+}
+
+.featured {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.45;
+}
+
+/* --- Kit ----------------------------------------------------------------- */
+
+.kit {
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-3);
+}
+
+.kitHead {
+  margin: 0 0 var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--brand-gold-600);
+}
+
+.kitList {
+  list-style: none;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.kitList li {
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.4;
+}
+
+.by { color: var(--text-2); }
+
+.rule {
+  margin: 0;
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--text-2);
+  border-left: 2px solid var(--brand-gold-line);
+  padding-left: var(--space-2);
+}
+
+.focus {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.focus:hover {
+  border-color: var(--brand-gold);
+  background: var(--brand-gold-tint);
+}
+
+/* The map is not the primary surface on a phone; both overlays hide. */
+@media (max-width: 900px) {
+  .panel { display: none; }
+}

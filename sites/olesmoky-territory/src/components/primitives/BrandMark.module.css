@@ -1,0 +1,102 @@
+/*
+  PORTRAIT, NOT LANDSCAPE — and that is the whole change.
+
+  These boxes were sized for beer brand logos, which are wide. Ole Smoky
+  ships product photography, and a bottle is tall. Letterboxing a 3:4
+  bottle into a 3:2 box shrank it to the height of the box and left half
+  the tile empty, which is why the jars read as thumbnails somebody
+  forgot to finish.
+
+  The aspect ratio now matches the subject, the image fills it, and a
+  warm plate underneath keeps a white-background cutout from looking
+  like a hole in the card.
+*/
+.mark {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 50% 12%, #ffffff 0%, #fbf9f4 55%, #f2ede2 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: inset 0 -14px 20px -14px rgba(20, 18, 15, 0.16);
+}
+
+.mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /*
+    The official shots carry generous white margins of their own, so a
+    scale-up is what turns a correctly-fitted image into a photograph
+    that actually fills the frame. Bottom-anchored: a bottle standing on
+    the floor of its tile reads as a bottle, one floating in the middle
+    reads as a sticker.
+  */
+  transform: scale(1.14);
+  object-position: 50% 100%;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+/* A slow lift on hover. The card is a product, so it should feel like one. */
+.mark:hover img {
+  transform: scale(1.2) translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark img,
+  .mark:hover img {
+    transition: none;
+    transform: scale(1.14);
+  }
+}
+
+/* 3:4 portrait throughout. Every step is the bottle, bigger. */
+.xs { width: 26px; height: 34px; padding: 1px; border-radius: var(--radius-s); }
+.sm { width: 46px; height: 61px; padding: 2px; border-radius: var(--radius-s); }
+.md { width: 96px; height: 128px; padding: 5px; }
+.lg { width: 148px; height: 197px; padding: 8px; }
+
+/* Typographic plate for brands with no supplied asset.
+   Keyed to the brand family, with a rule along the top edge, so it reads
+   as a deliberate mark in the portfolio system rather than as a hole
+   where a picture failed to load. */
+.fallback {
+  position: relative;
+  background: var(--famTint, var(--surface-3));
+  border-color: var(--fam, var(--line-2));
+}
+
+.fallback::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--fam, var(--line-2));
+}
+
+.text {
+  padding: 3px 4px 0;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--fam, var(--text-1));
+  overflow: hidden;
+}
+
+.xs .text { font-size: 7.5px; }
+.sm .text { font-size: 9px; }
+.md .text { font-size: 12px; }
+.lg .text { font-size: 17px; }
+
+/* For marks drawn in light ink. The ground inverts; the logo is untouched,
+   which is the only correct way round with someone else's trademark. */
+.darkGround {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+}

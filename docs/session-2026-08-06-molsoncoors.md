@@ -550,3 +550,101 @@ the map's corner, opening on hover and on focus. `:focus-within` rather
 than click state, because a keyboard user has to have the panel open
 before they can tab into the links, and focus-within does that with no
 onFocus/onBlur/relatedTarget dance.
+
+---
+
+## Same day, later: the email rebuilt again, and a sent log
+
+### The compose window was showing two emails
+
+Jay's read was exact: the right pane IS the attachment. What made it
+confusing is that both panes were renderings of the SAME message, so the
+window looked like it held two different emails and left a fair question
+about which one was going out.
+
+They are two artifacts now. `BuiltEmail.text` is the email body.
+`BuiltEmail.html` is a one-page order sheet that rides along with it — no
+greeting, no sign-off, a filename across the top, because those belong to
+the message that carries the document, not to the document. The toggle
+names them: **The email** / **The attached sheet**. The attachment also
+appears in the compose column as a named file you click to view, and the
+body opens by default, because the first question in front of a compose
+window is what is being sent.
+
+A PDF writer was started and deleted on instruction. The body says "see
+attached" and names the file; producing the file itself is a later job.
+
+### Bulleted with a dot leader, and no reasons
+
+```
+  - Miller Lite 12pk 12oz cans, 12pk cans ........... 24 cases
+  - Simply Spiked variety 12pk cans, 12pk cans ....... 6 cases
+    TOTAL ========================================== 42 cases
+```
+
+Plain-text mail renders monospaced in nearly every client, so a dot leader
+genuinely lines the case counts into a column that reads straight down.
+Padded to a fixed width rather than the longest label, so the column sits
+in the same place whether the order has two lines or nine.
+
+The reason line under each item is gone. The reasons are on the sheet,
+where a manager who wants to argue with a number can find them; in the
+body they turned a four-item order into a fourteen-line wall.
+
+### The opener was creepy, and it was also the weaker argument
+
+"I was through your store this week and counted your cold box" reads like
+surveillance — a supplier walking a manager's aisles taking notes about
+them. Jay caught it. It is also the weaker claim, because anyone can look
+at a shelf.
+
+What a rep brings that a manager cannot get on their own is the FORECAST:
+how fast each item moves in THIS store, and what date it hits zero at that
+rate. So the default draft is now "What the numbers say", and the
+generated evidence sentence and the inventory-source phrasing moved with
+it ("seen on a store walk" became "from your last inventory read").
+
+Same authority, no stalking, better argument. Two drafts now instead of
+four: run rate, and before the weekend, plus the growth line when a void
+is open.
+
+### The sent log
+
+New route at `/sent`. Every order message, who it went to, which opener it
+used, and what came back. Seeded with three prior sends including a loss
+and a partial — a demo where everything gets a yes is a demo nobody
+believes.
+
+The panel above the list is the point: **which opener gets answered**,
+ranked by how often each came back agreed. That turns "which of these
+sounds better" into "which of these got answered", which is the difference
+between writing copy and running a channel.
+
+`OutboxProvider` is a separate store from the plan on purpose. The plan is
+the commercial commitment, cases the territory stands behind. The outbox
+is correspondence. Merging them would put a communications record inside
+a ledger.
+
+### The push, and why four attempts failed before it worked
+
+The cloud sandbox cannot authenticate to `jsongau/NJS`; that is a fixed
+allowlist and unrelated to any path. What unblocked it: the repo turned
+out to live INSIDE the folder already connected to Cowork, at
+`Documents/Resume and CV/njs-site`, so the file writes, staging and commit
+could all run locally through the device bridge and only the network
+operation had to be Jay's.
+
+Traps for any future session doing the same thing:
+
+- The mounted filesystem allows writes but **not deletes**. `unzip -o` fails
+  on any existing file it would replace. Move the old tree aside with `mv`
+  first, and write text files with python `open(..., "wb")`, which
+  truncates rather than unlinking.
+- Git creates lock files it then cannot remove, so `.git/index.lock`,
+  `.git/HEAD.lock` and stray `tmp_obj_*` are left behind and block the
+  NEXT git command. Set `GIT_INDEX_FILE` to a path outside the mount to
+  get a commit through, and hand the user `rm -f` lines for the leftovers.
+- `git -C <path>` beats `cd` in handed-over commands: every line is
+  standalone, nothing carries between them, no wrong-directory accidents.
+
+Shipped as `486d7ec`, deployed on `662314f`.

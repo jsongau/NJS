@@ -5,6 +5,8 @@
     { "source": "/ritual.html", "destination": "/ritual", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/molsoncoors/:path*", "destination": "/molsoncoors/index.html" }
+    { "source": "/molsoncoors/:path*", "destination": "/molsoncoors/index.html" },
+    { "source": "/405", "destination": "https://njs-405.vercel.app/405" },
+    { "source": "/405/:path*", "destination": "https://njs-405.vercel.app/405/:path*" }
   ]
 }

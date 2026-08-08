@@ -1026,7 +1026,11 @@ footer.ft a{color:var(--gold)}
 
 
 /* ===== DELIVERY ===== */
-.dlv{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:center;margin-top:24px}
+/* The two columns fit like a puzzle by balancing content, not by stretching
+   the drawing. The steps strip and the receipt line live under the road, so the
+   left stack and the right stack finish within a card of each other instead of
+   a short picture floating in the middle of a tall form's whitespace. */
+.dlv{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;margin-top:24px}
 @media(max-width:900px){.dlv{grid-template-columns:1fr}}
 .road{position:relative;background:linear-gradient(180deg,#E9F0F5 0%,#F6EFE0 58%,#EFE3CE 100%);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .road svg{display:block;width:100%;height:auto}
@@ -1057,6 +1061,8 @@ footer.ft a{color:var(--gold)}
    row of logistics logos, because the question in their head is "how long", not
    "which app". */
 .dsteps3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 12px}
+.dside .dsteps3{margin:16px 0 10px}
+.dside .dscan{margin-top:0}
 .dst{background:var(--mist);border:1px solid var(--line);border-radius:12px;padding:12px 11px;min-width:0}
 .dsi{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;
   background:rgba(255,176,32,.1);color:var(--gold);margin-bottom:9px}
@@ -3062,10 +3068,6 @@ body.entered .jwrap{max-width:296px}
           <div class="dsline"><i id="dsFill"></i></div>
         </div>
         <div class="ordh"><b>Get it sent to you</b><span>We can’t sell it to you. They can.</span></div>
-        <div class="ordzip">
-          <label for="ordWhere">Your city or ZIP</label>
-          <input id="ordWhere" type="text" inputmode="text" placeholder="91792" value="91792">
-        </div>
         <div class="ordg one">
           <a class="ordb ic solo" id="ordIC" target="_blank" rel="noopener" href="https://www.instacart.com/store/s?k=ole+smoky+moonshine"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Get it on Instacart</b><em id="icSub">Search is already filled in</em></a>
         </div>
@@ -3182,13 +3184,21 @@ body.entered .jwrap{max-width:296px}
 <section class="sec"><div class="wrap">
   <div class="kick">However you want it</div>
   <h2>The jar is a mile and a half away. We just can’t sell it to you.</h2>
-  <p class="lead" style="margin:12px 0 0"><b>7-Eleven carries Ole Smoky and 7-Eleven runs on DoorDash.</b> That overlap is the whole delivery strategy, because Ole Smoky makes it, a distributor moves it and a store sells it. This page is the part that does. Where you buy it is up to you.</p>
+  <p class="lead" style="margin:12px 0 0"><b>Ole Smoky makes it, a distributor moves it and a store sells it.</b> Instacart is the shopper standing in that store. Type where you are, and the button below opens their search with your jar already in it.</p>
   <div class="dlv">
+    <div class="dside">
     <div class="road">
-      <span class="rdtag">Live route</span>
+      <span class="rdtag">The last mile</span>
       <svg viewBox="0 0 520 250" id="roadSvg" aria-label="A pickup truck carrying a jar along a road toward a house"></svg>
-      <div class="eta"><b id="etaMin">38 min</b><span id="etaSub">2.4 miles out</span></div>
     </div>
+        <div class="dsteps3" aria-label="How it arrives">
+          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#cOnline"/></svg></span><b>You order</b><em>On Instacart</em></div>
+          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#rBox"/></svg></span><b>A shopper picks it up</b><em>From a store that has it</em></div>
+          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#pCabin"/></svg></span><b>At your door</b><em>ID checked at the door</em></div>
+        </div>
+        <a class="btn-o dscan" id="dashScan" href="#">Snap the receipt, take the points</a>
+    </div>
+
     <div>
       <div class="dvform">
         <div class="lookup">
@@ -3206,16 +3216,10 @@ body.entered .jwrap{max-width:296px}
         </div>
         <!-- One route out, not three. Three buttons make somebody choose a
              logistics provider before they have chosen a bottle. -->
-        <div class="dsteps3" aria-label="How it arrives">
-          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#cOnline"/></svg></span><b>You order</b><em>On Instacart</em></div>
-          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#rBox"/></svg></span><b>A shopper picks it up</b><em>From a store that has it</em></div>
-          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#pCabin"/></svg></span><b>At your door</b><em id="etaDoor">In about 38 min</em></div>
-        </div>
         <div class="dvbtns one">
           <a class="btn-p" id="icBtn" href="https://www.instacart.com/store/s?k=ole+smoky+moonshine" target="_blank" rel="noopener">
             <span id="icLab">Get it on Instacart</span></a>
         </div>
-        <a class="btn-o dscan" id="dashScan" href="#">Snap the receipt, take the points</a>
       </div>
     </div>
   </div>
@@ -4419,7 +4423,6 @@ function codeBar(show){
   function paintLid(){
     const f=(typeof FLAVORS!=='undefined'&&FLAVORS.find(x=>x.k===S.flavor))||(typeof FLAVORS!=='undefined'?FLAVORS[2]:null);
     if(!f)return;
-    const loc=((document.getElementById('ordWhere')||{}).value||distZip()||'').trim();
     const ic=$('#lidIC');
     if(ic)ic.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icSearch());
   }
@@ -5259,16 +5262,15 @@ const STORES={'91792':[
    Nothing here claims a given store stocks it, because the platform decides
    that at the moment of the order and no public page exposes it. */
 function wireOrder(){
-  const w=$('#ordWhere');if(!w)return;
-  /* the road scene became a three step strip; nothing to build here now */
+  if(!$('#ordIC'))return;
+  /* No ZIP here. Instacart asks for the address itself the moment it opens, so
+     collecting one first was a question answered twice. */
   function paint(){
-    const loc=(w.value||'').trim();
     const a=$('#ordIC');
     if(a)a.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icSearch());
     const sub=$('#icSub');
-    if(sub)sub.textContent=loc?('Search filled in, near '+loc):'Search is already filled in';
+    if(sub)sub.textContent='Search is already filled in';
   }
-  w.addEventListener('input',paint);
   const a0=$('#ordIC');
   if(a0)a0.addEventListener('click',()=>{
     logIt&&logIt('member','left for Instacart searching '+icSearch()+' · no identity returns from that tap');});
@@ -5360,7 +5362,7 @@ function wireDelivery(){
     const z=zip(), rows=STORES[z];
     $('#stZip').textContent=z||($('#dvWhere').value||'').trim()||'you';
     if(!rows){
-      box.innerHTML='<li class="stmiss">This sample carries one captured result set, ZIP <b>91792</b>. In production this row is a call to the same locator behind <b>olesmoky.com/pages/find-a-jar</b>, keyed on the ZIP, and the DoorDash button only lights up for retailers that actually run on it.</li>';
+      box.innerHTML='<li class="stmiss">This sample carries one captured result set, ZIP <b>91792</b>. In production this row is a call to the same locator behind <b>olesmoky.com/pages/find-a-jar</b>, keyed on the ZIP, and the delivery button only lights up for retailers a shopper can actually reach.</li>';
       return;
     }
     if(S.store==null||S.store>=rows.length){const d=rows.findIndex(r=>r.dd);S.store=d>-1?d:0;}
@@ -5389,17 +5391,12 @@ function wireDelivery(){
      flavour searches both return product results, so the term is built that way
      rather than from our full product names, which they do not index. */
   const icTerm=icSearch;
+  /* No ETA anywhere on this panel. The old badge multiplied a sample store's
+     mileage into a minutes figure, which is a real-looking number with nothing
+     real under it, on a page that criticizes trick clocks. The steps say who
+     does what; Instacart quotes the time once an actual store accepts. */
   function paint(){
-    const city=($('#dvWhere').value||'').trim();
     paintStores();
-    const s=chosen();
-    /* Distance comes from the store somebody picked. A radius selector was a
-       setting nobody came here to set, and it fought the row they had chosen. */
-    const mi=s&&s.mi?parseFloat(s.mi):2.4;
-    const mins=Math.round(18+mi*8.5);
-    $('#etaMin').textContent=mins+' min';
-    $('#etaSub').textContent=(s&&s.mi?s.mi:mi)+' miles out'+(s?', '+s.n:'');
-    const door=$('#etaDoor');if(door)door.textContent='In about '+mins+' min';
     const btn=$('#icBtn'),lab=$('#icLab');
     btn.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icTerm());
     if(lab){const f=(FLAVORS.find(x=>x.k===S.flavor))||null;

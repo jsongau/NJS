@@ -283,7 +283,7 @@ a{text-decoration:none}
    one code and one action, so it rides a bar. The bar is built to read as the
    kraft label off the jar with a brass rim on top, so it belongs to the same
    object as the lid nav and the jar itself. */
-.cbar{position:fixed;left:0;right:0;bottom:0;z-index:64;transform:translateY(112%);
+.cbar{position:fixed;left:0;right:0;bottom:0;z-index:72;transform:translateY(112%);
   background:linear-gradient(180deg,#16110C 0%,#0C0906 62%,#080605 100%);
   box-shadow:0 -18px 50px rgba(0,0,0,.66),0 -1px 0 rgba(255,231,184,.08) inset;
   transition:transform .42s cubic-bezier(.2,.9,.3,1)}
@@ -2579,6 +2579,14 @@ body.entered .jwrap{max-width:296px}
 <symbol id="oKitchen" viewBox="0 0 24 24"><path d="M8 3.4v6.2a4 4 0 0 0 8 0V3.4" fill="none" stroke="#FFB020" stroke-width="1.7" stroke-linecap="round"/><path d="M12 13.6v6.8M8.6 20.6h6.8" stroke="#FFB020" stroke-width="1.7" stroke-linecap="round"/><path d="M9.6 4.6h4.8v4.2a2.4 2.4 0 0 1-4.8 0z" fill="#FFD24A"/><circle cx="19.4" cy="5" r="1.5" fill="#FFE7B8"/></symbol>
 <symbol id="oGift" viewBox="0 0 24 24"><rect x="3.4" y="9.4" width="17.2" height="11.2" rx="2" fill="#241D16" stroke="#FFB020" stroke-width="1.6"/><rect x="2.4" y="6.2" width="19.2" height="4.4" rx="1.6" fill="#FFD24A"/><path d="M12 6.2v14.4" stroke="#E8890C" stroke-width="1.8"/><path d="M12 6c-2.6-3.4-6-.6-3.4 1.4M12 6c2.6-3.4 6-.6 3.4 1.4" fill="none" stroke="#FFB020" stroke-width="1.6"/></symbol>
 <symbol id="oOther" viewBox="0 0 24 24"><path d="M8.6 2.6h6.8v2.7l2.4 3.2V20a1.4 1.4 0 0 1-1.4 1.4H7.6A1.4 1.4 0 0 1 6.2 20V8.5l2.4-3.2z" fill="#141B1E" stroke="#22D3EE" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.2 2.6h7.6" stroke="#7DE9F7" stroke-width="1.9" stroke-linecap="round"/><circle cx="9.4" cy="15.2" r="1.15" fill="#22D3EE"/><circle cx="12" cy="15.2" r="1.15" fill="#7DE9F7"/><circle cx="14.6" cy="15.2" r="1.15" fill="#22D3EE"/></symbol>
+<symbol id="jOther" viewBox="0 0 64 64">
+  <path d="M23.5 9.5h17v4.2l3.8 5.6V52a3 3 0 0 1-3 3H22.7a3 3 0 0 1-3-3V19.3l3.8-5.6z" fill="#141B1E" stroke="#22D3EE" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M22.4 9.5h19.2" stroke="#7DE9F7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M19.7 24.6h24.6" stroke="#22D3EE" stroke-width="1.6" opacity=".55"/>
+  <circle cx="27" cy="39" r="2.5" fill="#22D3EE"/>
+  <circle cx="32" cy="39" r="2.5" fill="#7DE9F7"/>
+  <circle cx="37" cy="39" r="2.5" fill="#22D3EE"/>
+</symbol>
 <symbol id="smokeW" viewBox="0 0 16 22">
   <ellipse class="smkE" cx="8" cy="19.4" rx="3.4" ry="1.9"/>
   <path class="smkA" d="M8 18.2c0-2.7 2.9-3.3 2.9-5.7S7.4 9.6 7.4 7.2 10.3 4 10.3 1.6"/>
@@ -2723,9 +2731,9 @@ body.entered .jwrap{max-width:296px}
 
     <div class="mnpanel" id="mnPanel">
       <span class="mnglow" aria-hidden="true"></span>
-      <div class="mnhd">Three apps carry it. Pick one.</div>
+      <div class="mnhd">Uber Eats here. DoorDash on the order card, Instacart in the jar.</div>
       <div class="mnapps one">
-        <a class="mnapp ic" id="lidIC" target="_blank" rel="noopener" href="https://www.instacart.com/store/s?k=ole+smoky+moonshine"><span class="obm"></span><b>Instacart</b></a>
+        <a class="mnapp ue" id="lidIC" target="_blank" rel="noopener" href="https://www.ubereats.com/search?q=ole%20smoky%20moonshine"><span class="obm"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="#06C167"/><path d="M7.4 8.2h9.2M7.4 12h9.2M7.4 15.8h5.6" stroke="#05231A" stroke-width="1.9" stroke-linecap="round"/></svg></span><b>Uber Eats</b></a>
       </div>
       <ul class="mnret">
         <li><span class="mri"><svg width="16" height="16"><use href="#sev"/></svg></span><b>7-Eleven</b><em>Nearest stocking store on your locator</em></li>
@@ -3247,8 +3255,8 @@ body.entered .jwrap{max-width:296px}
         <!-- One route out, not three. Three buttons make somebody choose a
              logistics provider before they have chosen a bottle. -->
         <div class="dvbtns one">
-          <a class="btn-p" id="icBtn" href="https://www.instacart.com/store/s?k=ole+smoky+moonshine" target="_blank" rel="noopener">
-            <span id="icLab">Get it on Instacart</span></a>
+          <a class="btn-p" id="icBtn" href="https://www.doordash.com/search/store/ole%20smoky%20moonshine" target="_blank" rel="noopener">
+            <span id="icLab">Get it on DoorDash</span></a>
         </div>
       </div>
     </div>
@@ -3256,7 +3264,7 @@ body.entered .jwrap{max-width:296px}
   <div class="rail">
     <a href="https://olesmoky.com/pages/find-a-jar" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rPin"/></svg><b>Find a Jar</b><span>Nearest shelf, nearest bar. Their own locator.</span></a>
     <a href="https://olesmoky.com/pages/distillery" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rJar"/></svg><b>Visit a holler</b><span>Gatlinburg, Pigeon Forge, Nashville, Myrtle Beach.</span></a>
-    <a href="https://www.instacart.com/store/s?k=ole+smoky+moonshine" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rBox"/></svg><b>Get it delivered</b><span>Instacart, where they run.</span></a>
+    <a href="https://www.doordash.com/search/store/ole%20smoky%20moonshine" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rBox"/></svg><b>Get it delivered</b><span>Instacart, where they run.</span></a>
     <a href="https://olesmoky.com/collections/merchandise" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rTee"/></svg><b>The merch store</b><span>Where your $15 and your points get spent.</span></a>
   </div>
 </div></section>
@@ -3490,76 +3498,7 @@ body.entered .jwrap{max-width:296px}
   </div>
 </div></main>
 
-<main id="view-model" class="hide">
-<section class="wrap mdlv">
-
-  <header class="mvh">
-    <div class="kick">The part nobody shows you</div>
-    <h1>Every number on this page can be taken apart. That is the point.</h1>
-    <p>Loyalty decks quote the same handful of figures and almost none survive a serious question. This model runs on published sources, grades each one for how much it deserves to be trusted, and shows the answer at three levels of incrementality instead of asserting one. Move a slider and everything downstream recalculates.</p>
-  </header>
-
-  <div class="mvgrid">
-    <aside class="mvin">
-      <h2>Inputs</h2>
-      <p class="mvsub">Every default is either a published figure or a labelled assumption. Nothing here is a round number chosen because it looked good.</p>
-      <div id="mvSliders"></div>
-      <div class="mvscen">
-        <span class="mvsl">Incrementality</span>
-        <div class="mvsegs" id="mvScen">
-          <button data-i="15" class="on">15%</button>
-          <button data-i="30">30%</button>
-          <button data-i="50">50%</button>
-        </div>
-        <p class="mvsn">Leenheer et al. (<i>IJRM</i>, 2007) corrected for self-selection into membership and found roughly one seventh of the naive effect survived. Fifteen percent is that finding. Thirty and fifty are the friendlier cases. There is no published cross-industry number, so this is a switch and not a claim.</p>
-      </div>
-    </aside>
-
-    <div class="mvout">
-      <div class="mvcards" id="mvCards"></div>
-
-      <div class="mvcard mvverd" id="mvVerdict"></div>
-
-      <div class="mvcard mvbig">
-        <h3>Where the money actually goes</h3>
-        <div class="mvbars" id="mvBars"></div>
-      </div>
-
-      <div class="mvcard">
-        <h3>What this model cannot prove</h3>
-        <ul class="mvcant">
-          <li><b>That members spend more because they are members.</b> The 12 to 18 percent member lift in every loyalty deck comes from an Accenture survey of 106 loyalty executives describing their own programs. It is self reported and correlational. Members were already the heavier buyers.</li>
-          <li><b>That the program works in a saturated category.</b> Bombaij and Dekimpe (<i>IJRM</i>, 2020) looked at 358 grocery banners across 27 countries and found program effects vanish where more than three quarters of competitors also run one. Spirits is not far off that.</li>
-          <li><b>That pushing redemption pays.</b> Nastasoiu et al. (<i>JAMS</i>, 2021) simulated exactly that on Air Miles and got 2.61 percent more sales against 2.75 percent more cost. Net negative.</li>
-          <li><b>That heavy buyers move at all.</b> Liu (<i>Journal of Marketing</i>, 2007) found no measurable effect on them. Whatever this program earns, it earns from light and moderate buyers.</li>
-        </ul>
-      </div>
-
-      <div class="mvcard">
-        <h3>So how would you know</h3>
-        <ol class="mvplan">
-          <li><b>Hold out ten percent at enrolment.</b> Eligible, invited, never enrolled. Same design Taylor and Neslin used in 2005, and the only way the answer is causal rather than flattering.</li>
-          <li><b>Read it at ninety days, not thirty.</b> Points pressure and rewarded behaviour are different effects on different clocks and a thirty day read catches only the first.</li>
-          <li><b>Geo test the distillery mechanics.</b> Check ins and tours cannot be held out at the person level without telling somebody they are in an experiment. Matched market is the answer.</li>
-          <li><b>Report incremental, then attributed, in that order.</b> If the two are ever quoted the other way round, the number being defended is the wrong one.</li>
-        </ol>
-      </div>
-
-      <div class="mvcard">
-        <h3>The sources, and how far to trust them</h3>
-        <table class="mvsrc" id="mvSrc"></table>
-        <p class="fine">Grades: <b class="g-a">A</b> peer reviewed or independent. <b class="g-b">B</b> real platform data, published by a vendor with an interest. <b class="g-c">C</b> vendor survey or case study, self selected. <b class="g-d">D</b> secondhand or unsourced, shown here only so it does not get quoted at you.</p>
-      </div>
-
-      <div class="mvcard mvgaps">
-        <h3>Nine numbers nobody publishes</h3>
-        <p>Named rather than filled in. Every one of these is a place a loyalty deck usually invents a figure.</p>
-        <ul id="mvGaps"></ul>
-      </div>
-    </div>
-  </div>
-</section>
-</main>
+<main id="view-model" class="hide"><div id="cxHost"></div></main>
 
 <footer class="ft"><div class="wrap">
   <p><b>Put Your Name In The Jar</b> is a campaign concept and portfolio work sample created by Nathan J. Song for the Ole Smoky Distillery CRM Director role. It is not affiliated with, sponsored by, or endorsed by Ole Smoky Distillery.</p>
@@ -3832,6 +3771,15 @@ const OS_LINK={
   flame:['https://olesmoky.com/collections/moonshine','The Moonshine collection'],
   bourbon:['https://olesmoky.com/collections/whiskey','The Whiskey collection']
 };
+/* Three apps carry it and each one wants a different query string. The search
+   term is the same declared pour in all three cases; only the URL shape
+   changes. Named per app so nothing has to remember which is which. */
+const DLV={
+  instacart:{n:'Instacart', u:t=>'https://www.instacart.com/store/s?k='+encodeURIComponent(t)},
+  doordash :{n:'DoorDash',  u:t=>'https://www.doordash.com/search/store/'+encodeURIComponent(t)},
+  ubereats :{n:'Uber Eats', u:t=>'https://www.ubereats.com/search?q='+encodeURIComponent(t)}
+};
+
 const FLAVORS=[
  {k:'cans',  art:'jCans',   name:'Sparkling Lemonade cans',sub:'Cracked cold &middot; 4.5% &middot; 9 proof', tag:'Lowest we make', next:'the 8 pack variety',
   desc:'Four lemonades built on White Lightnin&rsquo;, no added sugar, a hundred calories, sold as an eight pack. We made it for lake days and cookouts, and it is the only thing on this wall a light drinker reaches for first.',
@@ -3859,8 +3807,19 @@ const FLAVORS=[
   share:5,  merch:1.22, per:1.12},
  {k:'bourbon',art:'jBourbon',name:'Tennessee Straight Bourbon',sub:'Sipped slow &middot; 80 proof &middot; 4 year', tag:'Our newest', next:'James Ownby Reserve',
   desc:'Straight bourbon, four years old, out at the end of 2025. It sits first in our own Whiskey Favorites row and it is the bottle that argues we are more than flavor.',
-  share:3,  merch:1.31, per:1.34}
+  share:3,  merch:1.31, per:1.34},
+ /* Pick only. Never rendered on the product wall or in a SKU list, because it is
+    not a product. It exists so the eight percent who do not see themselves in the
+    wall are counted instead of guessed at, and it is the only option on this step
+    that produces a write-in. */
+ {k:'other', art:'jOther', name:'Something else', sub:'None of these is my jar', tag:'Tell us', next:'Apple Pie', pickOnly:true,
+  desc:'The most useful answer on the page. Every other option confirms something already known. This one names a gap, and a write-in from a real customer beats an assumption from a planning deck every time.',
+  share:7,  merch:1.00, per:1.00}
 ];
+/* The wall, the tiles and the SKU pickers show products. The step one picker
+   shows choices. They are not the same list and conflating them is how a survey
+   option ends up for sale. */
+const PRODUCTS=FLAVORS.filter(f=>!f.pickOnly);
 /* Step 2. Occasion is the field that decides creative and the seasonal
    calendar. Ole Smoky already runs on two of these publicly: the Kelce
    tailgate work and the low calorie can line aimed at lake and pool days. */
@@ -4115,10 +4074,13 @@ function setView(v,force){
   if(v===2&&typeof window.paintDelivery==='function')try{window.paintDelivery();}catch(e){}
   [1,2,3].forEach(i=>{const b=$('#v'+i);if(b)b.setAttribute('aria-current',String(i===v));});
   window.scrollTo({top:0,behavior:'auto'});
-  if(v===2){paintConfirm();if(typeof paintOrder==='function')paintOrder();}
+  /* The bar goes up before the painters, not after. Convert used to call this
+     last, so a throw in either painter silently killed the code bar while My
+     Jar kept working. */
+  if(typeof codeBar==='function')codeBar(v===2||v===3);
+  if(v===2){try{paintConfirm();if(typeof paintOrder==='function')paintOrder();}catch(e){}}
   /* The code was only reachable on Convert, which is the one view a member stops
      visiting once they have an account. It follows them to My Jar now. */
-  if(typeof codeBar==='function')codeBar(v===2||v===3);
   document.body.classList.toggle('onjar',v===3);
   document.body.classList.toggle('onconv',v===2);
   if(v===3){seedDash();paintMe();shPips();paintRank();paintQuests();paintWall();paintWallet();paintStreak();paintBadges();if(window.jnavShow)window.jnavShow('secOver');const sb=$('#stky');if(sb)sb.classList.remove('on');}else stopBottle();
@@ -4209,7 +4171,7 @@ setInterval(()=>{if(!document.hidden&&!$('#view-enter').classList.contains('hide
 
 /* ---------------- BEST SELLERS ---------------- */
 const TINT=['linear-gradient(135deg,#FDF0D8,#F7DDAE)','linear-gradient(135deg,#EFE0F1,#D9BCDD)','linear-gradient(135deg,#FBEBD6,#EFCFA4)','linear-gradient(135deg,#E2F0F8,#BEDDEE)','linear-gradient(135deg,#F6E7D2,#E4C79C)','linear-gradient(135deg,#FDF5D6,#F3E3A4)'];
-$('#sellers').innerHTML=FLAVORS.map((f,i)=>`<button class="card jarcard" data-jk="${f.k}" aria-label="${f.name.replace(/&rsquo;/g,'')}, read more"><span class="art" style="background:${TINT[i%TINT.length]}"><span class="tag">${f.tag}</span><svg><use href="#${f.art}"/></svg><span class="jmore">Read more</span></span><span class="bd"><h3>${f.name}</h3><p>${f.sub}</p></span></button>`).join('');
+$('#sellers').innerHTML=PRODUCTS.map((f,i)=>`<button class="card jarcard" data-jk="${f.k}" aria-label="${f.name.replace(/&rsquo;/g,'')}, read more"><span class="art" style="background:${TINT[i%TINT.length]}"><span class="tag">${f.tag}</span><svg><use href="#${f.art}"/></svg><span class="jmore">Read more</span></span><span class="bd"><h3>${f.name}</h3><p>${f.sub}</p></span></button>`).join('');
 
 /* The wall opens a card rather than dead-ending. Brief, in our own voice, then
    out to olesmoky.com so nobody has to take this page's word for anything. */
@@ -4249,7 +4211,7 @@ function stepHTML(){
     is surprising, and none of these are. */
  if(S.step===1)return `<div class="qh">First things first, what&rsquo;s your pour?</div>
   <div class="qsub">Pick the one you reach for most and we&rsquo;ll get you moving.</div>
-  <div class="opts">${FLAVORS.map(f=>`<button class="opt" data-f="${f.k}"><span class="tag">${f.tag}</span><svg class="art"><use href="#${f.art}"/></svg><span><b>${f.name}</b><span>${f.sub}</span></span></button>`).join('')}</div>
+  <div class="opts">${FLAVORS.map(f=>`<button class="opt${f.pickOnly?' opt-alt':''}" data-f="${f.k}"><span class="tag">${f.tag}</span><svg class="art"><use href="#${f.art}"/></svg><span><b>${f.name}</b><span>${f.sub}</span></span></button>`).join('')}</div>
   <div class="qerr" id="qerr"></div><div class="qnav"><span class="hint">Tap one and we move you straight on. No extra button.</span></div>`;
 
  if(S.step===2)return `<div class="qh">Where does the jar end up?</div>
@@ -4415,12 +4377,9 @@ function codeBar(show){
    WebP into a file that is already large. */
 (function navMark(){
   const go=()=>{
-    const slot=document.querySelector('#lidIC .obm');
-    const src=document.querySelector('#ordIC .obm img');
-    if(!slot||!src)return false;
-    if(slot.querySelector('img'))return true;
-    const im=new Image();im.src=src.src;im.alt='';im.decoding='async';
-    slot.appendChild(im);return true;
+    /* The lid carries its own Uber Eats mark now, so it no longer borrows the
+       Instacart logo from the order card. Nothing to copy. */
+    return true;
   };
   if(!go())setTimeout(go,400);
 })();
@@ -4454,7 +4413,7 @@ function codeBar(show){
     const f=(typeof FLAVORS!=='undefined'&&FLAVORS.find(x=>x.k===S.flavor))||(typeof FLAVORS!=='undefined'?FLAVORS[2]:null);
     if(!f)return;
     const ic=$('#lidIC');
-    if(ic)ic.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icSearch());
+    if(ic)ic.href=DLV.ubereats.u(icSearch());
   }
   nav.addEventListener('pointerenter',paintLid);
   lid.addEventListener('click',paintLid);
@@ -4536,7 +4495,7 @@ function earn(k){const p=PTS.find(x=>x.k===k);S.earned[k]=(S.earned[k]||0)+1;
 function earnE(k){const p=ENT.find(x=>x.k===k);S.earnedE[k]=(S.earnedE[k]||0)+1;S.ent+=p.v;}
 function enter(){
   const c=code();
-  $('#codeVal').textContent='JAR15-'+c;
+  CBHIDDEN=false;$('#codeVal').textContent='JAR15-'+c;
   $('#refLink').value='nathanjsong.com/olesmoky?ref='+c;
   const f=FLAVORS.find(x=>x.k===S.flavor)||FLAVORS[0];
   const oc=OCCASIONS.find(x=>x.k===S.occ)||OCCASIONS[0];
@@ -4915,7 +4874,10 @@ function distLink(p){
   return DIST_URL+(q?'?'+q:'');
 }
 function distZip(){const m=((document.getElementById('dvWhere')||{}).value||'').match(/\d{5}/);return m?m[0]:'';}
-function distSku(){const f=(typeof FLAVORS!=='undefined'&&FLAVORS.find(x=>x.k===S.flavor))||null;return f?f.k:'';}
+function distSku(){const f=(typeof FLAVORS!=='undefined'&&FLAVORS.find(x=>x.k===S.flavor))||null;
+  /* Something else is a survey answer, not a SKU. Filtering on it would return
+     an empty shelf, so it falls through to the unfiltered view instead. */
+  return (f&&!f.pickOnly)?f.k:'';}
 S.feed=[];S.wallet=[];S.scanned={};S.pend=[];S.log=[];
 let QID=1041;
 
@@ -5297,7 +5259,7 @@ function wireOrder(){
      collecting one first was a question answered twice. */
   function paint(){
     const a=$('#ordIC');
-    if(a)a.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icSearch());
+    if(a)a.href=DLV.instacart.u(icSearch());
     const sub=$('#icSub');
     if(sub)sub.textContent='Search is already filled in';
   }
@@ -5385,7 +5347,10 @@ function wireDelivery(){
   const rd=$('#roadSvg'); if(rd&&!rd.dataset.on){rd.innerHTML=roadSVG();rd.dataset.on='1';}
   /* The jar is whatever they picked in question one. Asking again on this page
      was a dropdown restating an answer they already gave. */
-  function q(){ const f=(FLAVORS.find(x=>x.k===S.flavor))||FLAVORS[2]; return 'Ole Smoky '+f.name; }
+  function q(){ const f=(FLAVORS.find(x=>x.k===S.flavor))||FLAVORS[2];
+    /* If they told us none of the wall is their jar, search the brand rather than
+       sending them to a retailer looking for a product called Something else. */
+    return f.pickOnly?'Ole Smoky':'Ole Smoky '+f.name; }
   function zip(){ const m=($('#dvWhere').value||'').match(/\d{5}/); return m?m[0]:''; }
   function paintStores(){
     const box=$('#stores'); if(!box) return;
@@ -5428,9 +5393,9 @@ function wireDelivery(){
   function paint(){
     paintStores();
     const btn=$('#icBtn'),lab=$('#icLab');
-    btn.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icTerm());
+    btn.href=DLV.doordash.u(icTerm());
     if(lab){const f=(FLAVORS.find(x=>x.k===S.flavor))||null;
-      lab.textContent=f?('Get '+f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' on Instacart'):'Get it on Instacart';}
+      lab.textContent=f?('Get '+f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' on DoorDash'):'Get it on DoorDash';}
   }
   /* Typeahead over the baked index. Keyboard first: arrows move, Enter takes,
      Escape closes, and the list is a real listbox so a screen reader gets the
@@ -5472,7 +5437,7 @@ function wireDelivery(){
      the button has to repaint when the view mounts rather than only at load. */
   window.paintDelivery=paint;
   $('#icBtn').addEventListener('click',()=>{
-    logIt&&logIt('member','left for Instacart searching '+icTerm()+' · no identity returns from that tap');
+    logIt&&logIt('member','left for DoorDash searching '+icTerm()+' · no identity returns from that tap');
   });
   const ds=$('#dashScan');
   if(ds)ds.addEventListener('click',e=>{e.preventDefault();
@@ -5894,9 +5859,9 @@ function paintJar(){
 (function picker(){
   const g=document.getElementById('pgrid');if(!g)return;
   const tile=f=>'<button class="ptile" data-f="'+f.k+'"><span class="tg">'+f.tag+'</span><svg><use href="#'+f.art+'"/></svg><span class="ptxt"><b>'+f.name+'</b><em>'+f.sub+'</em></span></button>';
-  g.innerHTML=FLAVORS.slice(0,4).map(tile).join('');
+  g.innerHTML=PRODUCTS.slice(0,4).map(tile).join('');
   window.pkExpand=()=>{if(g.dataset.all)return;g.dataset.all='1';
-    g.innerHTML=FLAVORS.map(tile).join('');wireTiles();
+    g.innerHTML=PRODUCTS.map(tile).join('');wireTiles();
     const m=document.getElementById('pkMore');if(m)m.remove();};
   function wireTiles(){
     g.querySelectorAll('.ptile').forEach(b=>b.addEventListener('click',()=>{
@@ -6489,7 +6454,7 @@ function wallArt(w){
     document.getElementById('stZip').value=S.holler||'';
     const sel=document.getElementById('stPour');
     if(sel&&!sel.dataset.on){sel.dataset.on='1';
-      sel.innerHTML=FLAVORS.map(f=>'<option value="'+f.k+'">'+clean(f.name)+'</option>').join('');}
+      sel.innerHTML=PRODUCTS.map(f=>'<option value="'+f.k+'">'+clean(f.name)+'</option>').join('');}
     if(sel)sel.value=S.flavor||FLAVORS[0].k;
     const lw=document.getElementById('setLvlWrap');
     if(lw){const pts=S.tierPts||S.pts||0,cur=tierOf(pts),nxt=tierNext(pts);
@@ -6661,7 +6626,7 @@ function sDing(off){
       const term='Ole Smoky '+clean(f.name);
       const loc=(S.holler||'').trim();
       const go=document.getElementById('ciGo');
-      go.href='https://www.instacart.com/store/s?k='+encodeURIComponent(term);
+      go.href=DLV.instacart.u(term);
       document.getElementById('ciFixS').textContent=term+(loc?' near '+loc:'');
       const im=document.getElementById('ciMark');
       const src=document.querySelector('#ordIC .obm img');
@@ -6716,173 +6681,1035 @@ function paintBadges(){
   if(window.jnavCount)window.jnavCount('jnB',got+'/'+BADGES.length);
 }
 
+
+
+
+
+
+
+
+
+
+
 /* ============================================================
-   THE MODEL  ·  a working economy, graded sources, three scenarios
+   THE CONSOLE  ·  replaces the loyalty model view. Shadow root.
+   Nine tabs. Dense tables scroll sideways rather than squashing;
+   sub-text is the first thing dropped as the viewport narrows.
    ============================================================ */
-const MV_IN=[
-  {k:'visits', n:'Annual on-premise visits', v:5000000, min:1000000, max:6000000, step:100000, fmt:'n',
-   src:'Ole Smoky, 2022 reporting', grade:'C', note:'Company issued, measured on their own footfall counters. Visits, not people.'},
-  {k:'defl',   n:'Visits per unique person', v:2.2, min:1, max:4, step:.1, fmt:'x',
-   src:'Assumption', grade:'D', note:'A Gatlinburg trip hits three of the four venues. No published deflator exists, so this is a dial, not a fact.'},
-  {k:'seen',   n:'Share who see the offer', v:12, min:2, max:60, step:1, fmt:'p',
-   src:'Assumption', grade:'D', note:'Table tents, neck hangers, QR at the tasting counter. Depends entirely on how hard the venue works it.'},
-  {k:'entry',  n:'Landing to entry', v:25, min:5, max:60, step:1, fmt:'p',
-   src:'Unbounce, 2024', grade:'B', note:'Their sweepstakes median is 47.5% on dedicated pages fed by incentivised traffic. Twenty five is the honest version.'},
-  {k:'acct',   n:'Entry to account', v:35, min:5, max:80, step:1, fmt:'p',
-   src:'No benchmark exists', grade:'D', note:'Searched the sweepstakes platforms, the CRO reports and the loyalty vendors. Nobody publishes it.'},
-  {k:'active', n:'Still active at 12 months', v:48, min:15, max:80, step:1, fmt:'p',
-   src:'COLLOQUY 2017 and Bond 2023', grade:'A', note:'Two different methodologies landing on 46 to 50 percent is the sturdiest number in the whole model.'},
-  {k:'redeem', n:'Redeem at least once', v:20, min:5, max:60, step:1, fmt:'p',
-   src:'Taylor and Neslin, Journal of Retailing, 2005', grade:'A', note:'Control group design. Also found 97% of eligible occasions produce no redemption at all.'},
-  {k:'lift',   n:'Spend lift after redeeming', v:17.5, min:0, max:30, step:.5, fmt:'p',
-   src:'Taylor and Neslin, 2005', grade:'A', note:'The causal version. The 12 to 18 percent figure every deck uses is a survey of executives describing themselves.'},
-  {k:'spend',  n:'Annual spend per member', v:212, min:40, max:600, step:4, fmt:'$',
-   src:'Assumption', grade:'D', note:'Built from a $68 basket at about three occasions a year. Change the basket and everything below moves.'},
-  {k:'brk',    n:'Points never redeemed', v:28, min:5, max:60, step:1, fmt:'p',
-   src:'COLLOQUY Loyalty Census, 2017', grade:'A', note:'Share who abandon without ever redeeming. The vendor "5 to 30 percent healthy range" has no methodology behind it.'},
-  {k:'cpl',    n:'Cost per entry acquired', v:3.16, min:.5, max:20, step:.02, fmt:'$',
-   src:'LocaliQ, Restaurants and Food, 2025', grade:'B', note:'Paid social lead cost. A free sweepstakes entry is lower friction, so treat this as a ceiling.'},
-  {k:'earn',   n:'Points earned per active month', v:900, min:200, max:6000, step:50, fmt:'n',
-   src:'Assumption, capped at 6,000', grade:'D', note:'The ceiling is 6,000. Almost nobody hits it. At a cent a point this is the single biggest cost lever in the model, and halving the prize wall doubled it.'},
-  {k:'gm',     n:'Gross margin on incremental sales', v:42, min:15, max:70, step:1, fmt:'p',
-   src:'Assumption', grade:'D', note:'Distillery-owned retail runs richer than three-tier. Blended.'},
-  {k:'fixed',  n:'Platform and ops, annual', v:180000, min:40000, max:600000, step:5000, fmt:'$',
-   src:'Assumption', grade:'D', note:'Loyalty platform, prize fulfilment, moderation of the receipt and scan queue, one analyst.'}
+(function(){
+const host=document.getElementById("cxHost");if(!host)return;
+const SH=host.shadowRoot||host.attachShadow({mode:"open"});
+SH.innerHTML="<style>\n:root{\n  --font:\"Helvetica Neue\",Helvetica,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Arial,sans-serif;\n  --bg:#0F0B08; --surf:#171310; --surf2:#1E1813; --line:#2C231B; --line2:#392E23;\n  --ink:#F4EDE0; --ink2:#C4B7A2; --mut:#8E8271; --mut2:#6E6455;\n  --gold:#FFD24A; --gold2:#E8A81C; --amber:#E8890C;\n  --volt:#3FD0E8; --volt2:#1E7F91;\n  --moss:#6EE7A0; --moss2:#2E8B57;\n  --red:#FF8577; --red2:#B04437;\n  --r:14px;\n}\n*{box-sizing:border-box}\n:host{display:block;color:var(--ink);font-family:var(--font);line-height:1.5;font-size:14px}\n.wrap{max-width:1300px;margin:0 auto;padding:0 20px}\n.pad{padding:30px 0 80px}\n.num,.tnum{font-variant-numeric:tabular-nums}\n\n/* preview banner */\n.pv{background:var(--surf2);border-bottom:1px solid var(--line);padding:9px 0;\n  font-size:12px;color:var(--mut);text-align:center}\n.pv b{color:var(--gold)}\n\n/* header */\nh1{font-size:clamp(24px,3.4vw,36px);line-height:1.15;letter-spacing:-.02em;margin:0 0 8px}\n.lede{color:var(--ink2);margin:0;font-size:14.5px}\n.kick{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold2);font-weight:800;margin-bottom:10px}\nheader.hd{margin-bottom:22px}\n\n/* provenance strip, rule 28 */\n.prov{display:flex;flex-wrap:wrap;gap:6px 20px;padding:11px 15px;border-radius:10px;\n  background:var(--surf);border:1px solid var(--line);font-size:11.5px;color:var(--mut);margin-bottom:18px}\n.prov b{color:var(--ink2);font-weight:700}\n\n/* scope bar */\n.scope{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;padding:15px;\n  border-radius:var(--r);background:var(--surf);border:1px solid var(--line);margin-bottom:16px}\n.sf{display:flex;flex-direction:column;gap:6px;min-width:150px}\n.sf>label{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:800}\nselect,input[type=number]{padding:8px 10px;border-radius:8px;border:1px solid var(--line2);\n  background:var(--bg);color:var(--ink);font-family:var(--font);font-size:13px;font-weight:600}\nselect{cursor:pointer;min-width:180px}\ninput[type=number]{width:110px}\n.seg{display:flex;gap:3px;background:var(--bg);padding:3px;border-radius:9px;border:1px solid var(--line2)}\n.seg button{padding:6px 12px;border-radius:6px;border:none;background:transparent;color:var(--mut);\n  font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer}\n.seg button[aria-pressed=true]{background:var(--surf2);color:var(--ink)}\n.scopenote{font-size:11px;color:var(--mut2);flex:1 1 100%;margin:0}\n\n/* KPI cards as tabs, GoHighLevel pattern */\n.tabs{display:grid;grid-template-columns:repeat(8,1fr);gap:0;margin-bottom:0;\n  border-bottom:1px solid var(--line2)}\n.tab{position:relative;text-align:left;padding:15px 16px 17px;background:transparent;\n  border:none;border-right:1px solid var(--line);cursor:pointer;font-family:var(--font);\n  transition:background .14s}\n.tab:last-child{border-right:none}\n.tab:hover{background:var(--surf)}\n.tab:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}\n.tab .tl{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;\n  color:var(--mut);font-weight:800;margin-bottom:7px}\n.tab .tv{display:block;font-size:25px;font-weight:800;letter-spacing:-.025em;color:var(--ink2);\n  font-variant-numeric:tabular-nums;line-height:1.05;margin-bottom:5px}\n.tab .td{display:block;font-size:11px;color:var(--mut2);font-variant-numeric:tabular-nums}\n.tab[aria-selected=true]{background:var(--surf)}\n.tab[aria-selected=true] .tl{color:var(--gold2)}\n.tab[aria-selected=true] .tv{color:var(--ink);font-weight:800}\n.tab[aria-selected=true]::after{content:\"\";position:absolute;left:0;right:0;bottom:-1px;\n  height:2px;background:var(--gold)}\n.dl{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700}\n.dl.up{color:var(--moss)} .dl.dn{color:var(--red)} .dl.flat{color:var(--mut2)}\n.spk{display:block;margin-top:7px;opacity:.9}\n\n/* panels */\n.panel{padding:22px 0 0}\n.panel[hidden]{display:none}\n.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}\n.card{padding:18px;border-radius:var(--r);background:var(--surf);border:1px solid var(--line);margin-bottom:16px;min-width:0;overflow-wrap:anywhere}\n.card h2{font-size:16px;margin:0 0 4px;letter-spacing:-.01em}\n.card .sub{font-size:12.5px;color:var(--mut);margin:0 0 16px;max-width:78ch;line-height:1.5}\n.card h3{font-size:13px;margin:0 0 12px;color:var(--ink2)}\n\n/* tables, rules 30-33 */\ntable.dt{width:100%;border-collapse:collapse;font-size:13px}\ntable.dt th{text-align:right;padding:0 0 9px 14px;border-bottom:1.5px solid var(--line2);\n  font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);font-weight:800}\ntable.dt th:first-child{text-align:left;padding-left:0}\ntable.dt th button{all:unset;cursor:pointer;display:block;width:100%;text-align:inherit;\n  font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}\ntable.dt th button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}\ntable.dt th .sg{margin-left:5px;font-size:9px;opacity:.75}\ntable.dt td{padding:9px 0 9px 14px;border-bottom:1px solid rgba(44,35,27,.75);\n  text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.35}\ntable.dt td:first-child{max-width:340px}\ntable.dt td:first-child{text-align:left;padding-left:0;white-space:normal}\ntable.dt tbody tr:hover td{background:rgba(255,210,74,.035)}\ntable.dt tr:last-child td{border-bottom:none}\n.mn{font-weight:700}\n.md{display:block;font-size:11px;color:var(--mut2);font-weight:600;margin-top:2px;white-space:normal}\n.big{font-size:15px;font-weight:800}\n.gold{color:var(--gold)} .mossc{color:var(--moss)} .voltc{color:var(--volt)}\n.den{display:block;font-size:10.5px;color:var(--mut2);margin-top:2px}\ntr.grp td{padding:16px 0 6px;font-size:10px;letter-spacing:.11em;text-transform:uppercase;\n  color:var(--gold2);font-weight:800;border-bottom:1px solid var(--line2)}\ntr.tot td{border-top:1.5px solid var(--line2);border-bottom:none;padding-top:12px}\n\n/* funnel spine, rule 22 */\n.spine{display:flex;flex-direction:column;gap:2px}\n.sr{display:grid;grid-template-columns:190px 1fr 150px;gap:14px;align-items:center}\n.sn{font-size:12.5px;font-weight:700}\n.sn i{display:block;font-style:normal;font-size:10.5px;color:var(--mut2);font-weight:600;margin-top:1px}\n.st{height:30px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative}\n.sb{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;\n  font-size:12.5px;font-weight:800;color:#170F02;font-variant-numeric:tabular-nums;\n  min-width:46px;transition:width .3s ease;\n  background:linear-gradient(90deg,var(--gold2),var(--gold))}\n.sd{font-size:11.5px;color:var(--mut);font-variant-numeric:tabular-nums;line-height:1.3}\n.sd b{color:var(--ink2);font-size:13px;display:block}\n\n/* branch block */\n.bhdr{padding:11px 14px;border-radius:9px;background:var(--surf2);border:1px solid var(--line2);\n  font-size:12.5px;margin-bottom:14px}\n.bhdr b{color:var(--gold)}\n\n/* flags, rules 26-27 */\n.dag{color:var(--gold2);font-weight:700;font-size:10px;vertical-align:super}\n.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;padding-top:14px;\n  border-top:1px solid var(--line);font-size:11px;color:var(--mut2)}\n.legend b{color:var(--ink2)}\n.smalln{color:var(--mut2);font-style:italic}\n.tag{display:inline-block;padding:2px 7px;border-radius:5px;font-size:10px;font-weight:800;letter-spacing:.03em}\n.t-ok{background:rgba(110,231,160,.14);color:var(--moss)}\n.t-no{background:rgba(255,133,119,.14);color:var(--red)}\n.t-hm{background:rgba(255,210,74,.14);color:var(--gold)}\n.fine{font-size:11.5px;color:var(--mut2);line-height:1.5}\n.warn{padding:12px 15px;border-radius:10px;background:rgba(255,133,119,.09);\n  border:1px solid rgba(255,133,119,.24);font-size:12.5px;line-height:1.5;margin-bottom:14px}\n.warn b{color:var(--red)}\nul.tt{margin:0;padding-left:18px}\nul.tt li{margin-bottom:8px;font-size:13px;color:var(--ink2);line-height:1.5}\nul.tt li b{color:var(--ink)}\n.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}\n@media(max-width:1000px){\n  .tabs{grid-template-columns:repeat(2,1fr);border-bottom:none}\n  .tab{border:1px solid var(--line);border-radius:10px}\n  .grid2{grid-template-columns:1fr}\n  .sr{grid-template-columns:1fr;gap:4px}\n  .md{display:none}\n}\n\n/* payback bars */\n.pbrow{display:grid;grid-template-columns:64px 1fr 82px;gap:12px;align-items:center;margin-bottom:6px}\n.pbm{font-size:11px;color:var(--mut2);font-weight:700;font-variant-numeric:tabular-nums}\n.pbt{position:relative;height:20px;background:var(--bg);border-radius:6px;overflow:hidden}\n.pbf{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:linear-gradient(90deg,var(--amber),var(--gold));transition:width .28s ease}\n.pbf.over{background:linear-gradient(90deg,var(--moss2),var(--moss))}\n.pbl{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.5}\n.pbv{font-size:12.5px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums;color:var(--mut)}\n.pbv.over{color:var(--moss)}\n.pbrow.mark .pbm{color:var(--gold)}\n.pbnote{display:flex;gap:8px;margin-top:13px;padding:11px 14px;border-radius:10px;background:rgba(110,231,160,.09);border:1px solid rgba(110,231,160,.22);font-size:12.5px}\n.pbnote b{color:var(--moss)}\n.hero3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}\n.hv{padding:17px;border-radius:var(--r);background:var(--surf);border:1px solid var(--line)}\n.hv.gold{border-color:rgba(255,210,74,.3);background:linear-gradient(160deg,rgba(255,210,74,.07),var(--surf))}\n.hv span{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:800;margin-bottom:8px}\n.hv b{display:block;font-size:31px;font-weight:800;letter-spacing:-.025em;font-variant-numeric:tabular-nums}\n.hv.gold b{color:var(--gold)}\n.hv em{display:block;font-style:normal;font-size:11px;color:var(--mut2);margin-top:6px;line-height:1.45}\n@media(max-width:900px){.hero3{grid-template-columns:1fr}.tabs{grid-template-columns:repeat(2,1fr)}}\n\n/* left rail layout */\n.layout{display:grid;grid-template-columns:252px minmax(0,1fr);gap:18px;align-items:start}\n.rail{position:sticky;top:calc(var(--hdh,58px) + 104px);display:flex;flex-direction:column;gap:14px}\n.railbox{padding:15px;border-radius:var(--r);background:var(--surf);border:1px solid var(--line)}\n.railbox h4{margin:0 0 10px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);font-weight:800}\n.railbox .sf{min-width:0;margin-bottom:11px}\n.railbox select{width:100%;min-width:0}\n.rstat{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(44,35,27,.7);font-size:12px;color:var(--mut)}\n.rstat:last-child{border-bottom:none}\n.rstat b{color:var(--ink);font-size:13.5px;font-variant-numeric:tabular-nums}\n.rstat b.gold{color:var(--gold)}\n.rnote{font-size:11px;color:var(--mut2);line-height:1.5;margin:0}\n/* line chart */\n.lch text{font-family:var(--font);fill:var(--mut2);font-size:10px}\n.lch .axv{fill:var(--mut);font-size:10.5px;font-weight:700}\n.lch .bev{fill:var(--gold2);font-size:10px;font-weight:800;letter-spacing:.06em}\n/* column chart */\n.cch text{font-family:var(--font);fill:var(--mut);font-size:10.5px}\n.cch .cv{fill:var(--ink);font-weight:800;font-size:11.5px}\n.cch .cl{fill:var(--mut2)}\n@media(max-width:1000px){.layout{grid-template-columns:1fr}.rail{position:static}}\n\n/* scenario cards */\n.scen{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}\n.sc{position:relative;text-align:left;padding:15px;border-radius:var(--r);background:var(--surf);\n  border:1px solid var(--line);cursor:pointer;font-family:var(--font);transition:border-color .15s,background .15s}\n.sc:hover{background:var(--surf2)}\n.sc:focus-visible{outline:2px solid var(--gold);outline-offset:2px}\n.sc[aria-pressed=true]{border-color:var(--gold);background:linear-gradient(160deg,rgba(255,210,74,.07),var(--surf))}\n.sc .rd{width:11px;height:11px;border-radius:50%;border:2px solid var(--mut);display:inline-block;margin-right:7px;vertical-align:-1px}\n.sc[aria-pressed=true] .rd{border-color:var(--gold);background:var(--gold)}\n.sc h5{margin:0 0 3px;font-size:14px;color:var(--ink)}\n.sc p{margin:0 0 11px;font-size:11.5px;color:var(--mut2);line-height:1.4}\n.scr{display:flex;justify-content:space-between;font-size:11.5px;color:var(--mut);padding:3px 0;font-variant-numeric:tabular-nums}\n.scr b{color:var(--ink2)}\n.scf{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline}\n.scf b{font-size:17px;font-weight:800;color:var(--moss);font-variant-numeric:tabular-nums}\n.scf span{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut2);font-weight:800}\n/* hero results strip */\n.strip{display:grid;grid-template-columns:1.15fr .9fr auto repeat(4,1fr);gap:0;border-radius:var(--r);\n  overflow:hidden;background:linear-gradient(100deg,#1B2A22,#16211C);border:1px solid var(--line2);margin-bottom:16px}\n.stc{padding:15px 16px;border-right:1px solid rgba(255,255,255,.055)}\n.stc:last-child{border-right:none}\n.stc span{display:block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#7FA894;font-weight:800;margin-bottom:7px}\n.stc b{display:block;font-size:25px;font-weight:800;letter-spacing:-.025em;color:#EFF7F2;font-variant-numeric:tabular-nums;line-height:1.1}\n.stc em{display:block;font-style:normal;font-size:10.5px;color:#7FA894;margin-top:5px;line-height:1.4}\n.stc.gen{display:flex;align-items:center;justify-content:center;padding:0 12px;border-right:none}\n.stc.gen i{font-style:normal;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg)}\n.stc.hi b{color:var(--gold)}\n.stc.ok b{color:var(--moss)}\n/* action bar */\n.acts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}\n.act{padding:9px 14px;border-radius:9px;border:1px solid var(--line2);background:var(--surf);\n  color:var(--ink2);font-family:var(--font);font-size:12.5px;font-weight:700;cursor:pointer}\n.act:hover{background:var(--surf2);color:var(--ink)}\n.act:focus-visible{outline:2px solid var(--gold);outline-offset:2px}\n.act.done{border-color:var(--moss);color:var(--moss)}\n@media(max-width:1000px){.scen{grid-template-columns:1fr}.strip{grid-template-columns:1fr 1fr}.stc.gen{display:none}}\n\n/* sticky live chip bar, centred */\n.chipbar{position:sticky;top:0;z-index:40;display:flex;justify-content:center;\n  padding:9px 0 10px;margin:0 0 14px;background:linear-gradient(180deg,var(--bg) 72%,rgba(15,11,8,0));\n  backdrop-filter:blur(6px)}\n.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;align-items:center;\n  padding:7px 9px;border-radius:999px;background:var(--surf);border:1px solid var(--line2);\n  box-shadow:0 8px 26px rgba(0,0,0,.45)}\n.chip{display:flex;align-items:baseline;gap:7px;padding:6px 13px;border-radius:999px;\n  border:1px solid transparent;background:var(--bg);font-size:11.5px;color:var(--mut);white-space:nowrap}\n.chip u{text-decoration:none;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;color:var(--mut2)}\n.chip b{font-size:13.5px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}\n.chip.hi b{color:var(--gold)} .chip.ok b{color:var(--moss)}\n.chip i{font-style:normal;font-size:10.5px;font-weight:800;font-variant-numeric:tabular-nums}\n.chip i.up{color:var(--moss)} .chip i.dn{color:var(--red)} .chip i.flat{color:var(--mut2)}\n.chip.moved{border-color:var(--gold);animation:pop .5s ease}\n@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.055)}100%{transform:scale(1)}}\n.chipbar .cbl{align-self:center;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;\n  color:var(--mut2);font-weight:800;padding-right:4px}\n@media(max-width:1000px){.chipbar{position:static}.chip u{display:none}}\n\n.wsban{background:#0C1420;border-bottom:1px solid #16243A;padding:9px 0;text-align:center;font-size:12px;color:#8FA6C4}\n.wsban b{color:#CFE0F5}\n.wsban .wschip{display:inline-block;padding:3px 10px;border-radius:6px;background:#16243A;color:#9FC4EC;font-size:10px;font-weight:800;letter-spacing:.09em;margin-right:10px}\n.jhd{position:sticky;top:0;z-index:60;background:#0A0806;border-bottom:1px solid var(--line);padding:11px 0}\n.jhdi{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:14px}\n.jbrand{display:flex;align-items:center;gap:11px;margin-right:auto}\n.jlogo{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#2A2013,#120D08);flex:0 0 auto}\n.jbrand h1{margin:0;font-size:15.5px;letter-spacing:-.01em;color:var(--ink)}\n.jbrand span{display:block;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut2);font-weight:800;margin-top:1px}\n.jtabs{display:flex;gap:3px;padding:4px;border-radius:999px;background:#120E0A;border:1px solid var(--line)}\n.jtab{text-decoration:none;display:flex;align-items:center;gap:7px;padding:8px 15px;border-radius:999px;border:none;background:transparent;color:var(--mut);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer}\n.jtab i{font-style:normal;width:17px;height:17px;border-radius:50%;background:#221A11;color:var(--mut2);font-size:10px;font-weight:800;display:grid;place-items:center}\n.jtab.on{background:var(--gold);color:#160F03}\n.jtab.on i{background:rgba(0,0,0,.22);color:#160F03}\n.jbtn{text-decoration:none;display:flex;align-items:center;gap:7px;padding:9px 15px;border-radius:999px;border:1px solid var(--line2);background:#120E0A;color:var(--ink2);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}\n.jbtn.on{border-color:var(--volt);color:var(--volt)}\n.jbtn.gold{border-color:rgba(255,210,74,.5);color:var(--gold)}\n.jdot{width:9px;height:9px;border-radius:50%;background:var(--gold)}\n.wheel{padding:16px 17px 13px;border-radius:var(--r);background:var(--surf);border:1px solid var(--line);margin-bottom:14px}\n.wheelh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:12px}\n.wheelh h4{margin:0;font-size:13px;color:var(--ink)}\n.wheelh em{font-style:normal;font-size:11px;color:var(--mut2)}\n.wheelh b{font-size:22px;font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums}\ninput[type=range].wh{-webkit-appearance:none;appearance:none;width:100%;height:7px;border-radius:99px;background:linear-gradient(90deg,var(--volt2),var(--moss2) 40%,var(--gold2) 75%,var(--gold));outline:none;cursor:pointer;margin:0 0 9px}\ninput[type=range].wh::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--bg);border:3px solid var(--gold);cursor:grab;box-shadow:0 3px 10px rgba(0,0,0,.55)}\ninput[type=range].wh::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--bg);border:3px solid var(--gold);cursor:grab}\n.stops{position:relative;height:15px;font-size:10.5px;color:var(--mut2);font-weight:700}\n/* The thumb is 22px wide, so its centre travels from 11px to (100% - 11px).\n   Evenly spaced flex labels drift from the handle at both ends; this puts each\n   label exactly under the position it selects. */\n.stops span{position:absolute;top:0;white-space:nowrap;transform:translateX(-50%)}\n.stops span.first{left:0;transform:none}\n.stops span.last{left:auto;right:0;transform:none}\n.stops span.on{color:var(--gold)}\n.pill{display:inline-block;margin-left:8px;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:800;font-variant-numeric:tabular-nums;vertical-align:middle}\n.pill.up{background:rgba(110,231,160,.16);color:var(--moss)}\n.pill.dn{background:rgba(255,133,119,.16);color:var(--red)}\n.stc b{display:flex;align-items:center;flex-wrap:wrap}\n.cmp td.win{color:var(--moss);font-weight:800}\n@media(max-width:1000px){.jhdi{flex-wrap:wrap}.jtabs{order:3;width:100%}}\n\n/* ---- the sticky mini nav: the results strip, pinned under the mega nav.\n   It condenses on scroll so it costs 46px instead of 92px once you are\n   deep in a panel. Ono's strip is a fixed height; this one earns its keep. ---- */\n:host{--navh:calc(var(--hdh,58px) + 4px)}\n.stripwrap{position:sticky;top:var(--navh);z-index:38;margin:0 0 16px;\n  background:var(--bg);padding-top:8px;padding-bottom:2px}\n.strip{margin-bottom:0;transition:box-shadow .18s}\n.stripwrap.stuck .strip{box-shadow:0 12px 28px rgba(0,0,0,.5)}\n.stc{transition:padding .18s}\n.stc b{transition:font-size .18s}\n.stc em{max-height:34px;overflow:hidden;transition:max-height .18s,opacity .15s,margin .18s}\n.stripwrap.stuck .stc{padding:9px 14px}\n.stripwrap.stuck .stc b{font-size:18px}\n.stripwrap.stuck .stc em{max-height:0;opacity:0;margin-top:0}\n.stripwrap.stuck .stc span{margin-bottom:4px}\n.stsent{height:1px}\n.stc.moved{animation:cellpop .5s ease}\n@keyframes cellpop{0%{background:rgba(255,210,74,.16)}100%{background:transparent}}\n/* change log */\n.clog{display:flex;flex-direction:column;gap:0;max-height:186px;overflow-y:auto}\n.cli{padding:8px 0;border-bottom:1px solid rgba(44,35,27,.7);font-size:11.5px;line-height:1.45}\n.cli:last-child{border-bottom:none}\n.cli b{display:block;color:var(--ink2);font-size:12px;margin-bottom:2px}\n.cli span{color:var(--mut2)}\n.cli i{font-style:normal;font-weight:800;font-variant-numeric:tabular-nums}\n.cli i.up{color:var(--moss)} .cli i.dn{color:var(--red)}\n.clempty{font-size:11.5px;color:var(--mut2);line-height:1.5;margin:0}\n@media(max-width:1000px){.stripwrap{position:static}}\n\n/* journeys */\n.tabs{grid-template-columns:repeat(9,1fr)}\n.tab{padding:14px 12px 16px}\n.segchips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}\n.segchip{padding:8px 14px;border-radius:999px;border:1px solid var(--line2);background:var(--surf2);\n  color:var(--mut);font-family:var(--font);font-size:12.5px;font-weight:700;cursor:pointer}\n.segchip:hover{color:var(--ink)}\n.segchip[aria-pressed=true]{background:var(--gold);color:#160F03;border-color:transparent}\n.jw{position:relative;padding-left:30px}\n.jw:before{content:\"\";position:absolute;left:8px;top:6px;bottom:22px;width:2px;\n  background:linear-gradient(180deg,var(--gold2),var(--volt2) 55%,var(--line))}\n.jstep{position:relative;margin-bottom:11px}\n.jstep:before{content:\"\";position:absolute;left:-26px;top:17px;width:11px;height:11px;border-radius:50%;\n  background:var(--bg);border:2px solid var(--gold)}\n.jstep.sms:before{border-color:var(--volt)}\n.jstep.branch:before{border-color:var(--red)}\n.jhead{width:100%;text-align:left;display:grid;grid-template-columns:62px 1fr auto;gap:13px;align-items:center;\n  padding:13px 15px;border-radius:11px;border:1px solid var(--line);background:var(--surf);\n  font-family:var(--font);cursor:pointer}\n.jhead:hover{background:var(--surf2)}\n.jhead:focus-visible{outline:2px solid var(--gold);outline-offset:2px}\n.jday{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold2)}\n.jstep.sms .jday{color:var(--volt)}\n.jsub{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.3}\n.jtrig{display:block;font-size:11px;color:var(--mut2);font-weight:600;margin-top:2px}\n.jmeta{font-size:11px;color:var(--mut2);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}\n.jmeta b{display:block;color:var(--ink2);font-size:12.5px}\n.jbody{display:none;margin:8px 0 0;padding:15px 17px;border-radius:11px;background:var(--bg);border:1px solid var(--line)}\n.jstep.open .jbody{display:block}\n.jchan{display:inline-block;padding:2px 8px;border-radius:5px;font-size:9.5px;font-weight:800;letter-spacing:.07em;margin-bottom:10px}\n.jchan.em{background:rgba(255,210,74,.15);color:var(--gold)}\n.jchan.sm{background:rgba(63,208,232,.15);color:var(--volt)}\n.jmsg{font-size:13.5px;line-height:1.62;overflow-wrap:anywhere;color:var(--ink2);white-space:pre-line;margin:0 0 12px;\n  padding-left:13px;border-left:2px solid var(--line2)}\n.jwhy{font-size:11.5px;color:var(--mut2);line-height:1.5;margin:0}\n.jwhy b{color:var(--ink2)}\n.jstat{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}\n.jstat span{font-size:11px;color:var(--mut2)}\n.jstat b{color:var(--ink);font-variant-numeric:tabular-nums}\n@media(max-width:1000px){.tabs{grid-template-columns:repeat(3,1fr)}.jhead{grid-template-columns:52px 1fr}.jmeta{display:none}}\n\n/* ============================================================\n   RESPONSIVE. Three real breakpoints. The rule throughout is that\n   dense data scrolls sideways rather than wrapping into something\n   unreadable, and explanatory sub-text is the first thing dropped.\n   ============================================================ */\n.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px;padding:0 2px}\n.tw table.dt{min-width:540px}\n.tw::-webkit-scrollbar{height:7px}\n.tw::-webkit-scrollbar-thumb{background:var(--line2);border-radius:99px}\n.tw::-webkit-scrollbar-track{background:transparent}\n\n/* the tab row scrolls instead of squashing once nine tabs stop fitting */\n@media(max-width:1240px){\n  .tabs{display:flex;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}\n  .tabs::-webkit-scrollbar{height:0}\n  .tab{flex:0 0 auto;min-width:132px;scroll-snap-align:start}\n}\n@media(max-width:1100px){\n  .layout{grid-template-columns:1fr}\n  .rail{position:static;flex-direction:row;flex-wrap:wrap;gap:12px}\n  .railbox{flex:1 1 220px;min-width:0}\n  .strip{grid-template-columns:repeat(3,1fr)}\n  .stc.gen{display:none}\n  .stc{border-bottom:1px solid rgba(255,255,255,.055)}\n}\n@media(max-width:900px){\n  .wrap{padding:0 16px}\n  .hero3{grid-template-columns:1fr}\n  .scen{grid-template-columns:1fr}\n  .grid2,.pk2,.be{grid-template-columns:1fr}\n  .strip{grid-template-columns:repeat(2,1fr)}\n  .stc b{font-size:21px}\n  .stripwrap{position:static}\n  h1{font-size:26px}\n  .prov{gap:5px 14px;font-size:11px}\n  .sr{grid-template-columns:1fr;gap:5px}\n  .sd{text-align:left}\n  .sd b{display:inline;margin-right:5px}\n  .pbrow{grid-template-columns:52px 1fr 62px;gap:9px}\n}\n@media(max-width:640px){\n  .wrap{padding:0 13px}\n  .pad{padding:20px 0 60px}\n  .card{padding:15px}\n  .strip{grid-template-columns:1fr 1fr}\n  .stc{padding:12px 13px}\n  .stc em{display:none}\n  .tab{min-width:118px;padding:12px 11px 14px}\n  .tab .tv{font-size:21px}\n  .tab .spk{display:none}\n  .railbox{flex:1 1 100%}\n  .jhead{grid-template-columns:56px 1fr;gap:10px}\n  .jmeta{display:none}\n  .jw{padding-left:22px}\n  .jstep:before{left:-20px}\n  .acts{gap:6px}\n  .act{flex:1 1 calc(50% - 3px);text-align:center;padding:10px 8px}\n  .segchips{gap:6px}\n  .segchip{flex:1 1 calc(50% - 3px);text-align:center;font-size:12px;padding:9px 8px}\n  /* middle wheel labels collide at this width, so only the ends and the\n     active stop stay on screen */\n  .stops span{display:none}\n  .stops span.first,.stops span.last,.stops span.on{display:block}\n  .mvcards{grid-template-columns:1fr 1fr}\n  .mvc b{font-size:22px}\n  .mvc.hero{grid-column:span 2}\n  .mvc.hero b{font-size:30px}\n  .bebox b{font-size:27px}\n  .fine,.legend{font-size:11px}\n}\n@media(max-width:430px){\n  .strip{grid-template-columns:1fr}\n  .mvcards{grid-template-columns:1fr}\n  .mvc.hero{grid-column:span 1}\n  .act,.segchip{flex:1 1 100%}\n  h1{font-size:23px}\n  .hv b{font-size:27px}\n}\n</style>"+"\n\n<div class=\"wrap pad\">\n<header class=\"hd\">\n  <div class=\"kick\">The Golden Jar &middot; CRM console</div>\n  <h1>What a media budget turns into.</h1>\n  <p class=\"lede\">Pick a market, drag the spend. Everything recalculates, and every rate shows what it was divided by.</p>\n</header>\n\n<div class=\"prov\">\n  <span><b>Source</b> Census V2025, Superads, LocaliQ, Unbounce 2024, Zuko 2025, olesmoky.com, the funnel\u2019s own code</span>\n  <span><b>As of</b> 8 Aug 2026</span>\n  <span><b>Basis</b> modelled, real schema, no drawing has run</span>\n  <span><b>CPM held at $25</b> Superads US median $23.42 plus the restricted category haircut. Fixed, not a dial: media price is an input you buy, not a lever you set</span>\n</div>\n\n<div class=\"layout\">\n<aside class=\"rail\">\n  <div class=\"railbox\"><h4>Scope</h4>\n    <div class=\"sf\"><label for=\"mkt\">Market</label><select id=\"mkt\"></select></div>\n    <p class=\"rnote\" id=\"scopeNote\"></p>\n  </div>\n  <div class=\"railbox\"><h4>This market</h4><div id=\"railStats\"></div></div>\n  <div class=\"railbox\"><h4>What you changed</h4><div class=\"clog\" id=\"clog\"></div></div>\n  <div class=\"railbox\"><h4>Reading rules</h4>\n    <p class=\"rnote\">Rates under n of 30 are suppressed to counts. Daggered values are modelled. Cost per is full spend over that row. Sparklines are each scaled to their own range.</p>\n  </div>\n</aside>\n<div class=\"mainc\">\n<div class=\"wheel\">\n  <div class=\"wheelh\"><div><h4>Ad spend, 30 days</h4><em id=\"whName\"></em></div><b id=\"whVal\"></b></div>\n  <input type=\"range\" class=\"wh\" id=\"wh\" min=\"0\" max=\"4\" step=\"1\" value=\"0\" aria-label=\"Ad spend scale\">\n  <div class=\"stops\" id=\"whStops\"></div>\n</div>\n<div class=\"scen\" id=\"scen\"></div>\n<div class=\"stsent\" id=\"stSent\"></div>\n<div class=\"stripwrap\" id=\"stripwrap\"><div class=\"strip\" id=\"strip\"></div></div>\n<div class=\"acts\" id=\"acts\"><button class=\"act\" id=\"aReset\">Reset assumptions</button><button class=\"act\" id=\"aSum\">Copy executive summary</button><button class=\"act\" id=\"aCmp\">Compare scenarios</button><button class=\"act\" id=\"aCsv\">Export CSV</button></div>\n<div class=\"tabs\" role=\"tablist\" aria-label=\"Console views\" id=\"tabs\"></div>\n\n<div id=\"cmpWrap\"></div>\n<div id=\"panels\">\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-over\"  aria-labelledby=\"t-over\"  tabindex=\"0\"></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-media\" aria-labelledby=\"t-media\" tabindex=\"0\" hidden></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-enter\" aria-labelledby=\"t-enter\" tabindex=\"0\" hidden></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-conv\"  aria-labelledby=\"t-conv\"  tabindex=\"0\" hidden></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-mem\"   aria-labelledby=\"t-mem\"   tabindex=\"0\" hidden></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-aud\"   aria-labelledby=\"t-aud\"   tabindex=\"0\" hidden></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-jrny\"  aria-labelledby=\"t-jrny\"  tabindex=\"0\" hidden></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-plan\"  aria-labelledby=\"t-plan\"  tabindex=\"0\" hidden></section>\n  <section class=\"panel\" role=\"tabpanel\" id=\"p-evid\"  aria-labelledby=\"t-evid\"  tabindex=\"0\" hidden></section>\n</div>\n\n</div>\n</div>\n\n<p class=\"sr-only\" role=\"status\" aria-live=\"polite\" id=\"live\"></p>\n</div>\n";
+
+/* ============================================================
+   v6. One spine of arithmetic feeds seven tabs. Media buys
+   sessions, the funnel converts them, the club keeps them.
+   Nothing from v2 to v5 was deleted to make room.
+   ============================================================ */
+const nf=n=>Math.round(n).toLocaleString('en-US');
+const usd=v=>'$'+nf(Math.abs(v));
+const usd2=v=>'$'+(Math.round(v*100)/100).toFixed(2);
+const pc=v=>(Math.round(v*10)/10).toFixed(1)+'%';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const N_RATE=30;
+const rate=(v,n)=>n<N_RATE?'<span class="smalln">n too small</span>':pc(v);
+
+/* Census QuickFacts V2025, grade A. County pulls sum to exactly 7,315,076. */
+const TN=[['Sevier',101342,79.6],['Davidson',745904,80.1],['Knox',511453,79.5],['Shelby',910226,75.6],
+['Hamilton',390833,79.2],['Rutherford',386352,75.8],['Williamson',272061,75.5],['Montgomery',249935,74.2],
+['Sumner',215538,77.8],['Wilson',175033,76.9],['Sullivan',163759,81.3],['Blount',143820,80.5],
+['Washington',141199,82.3],['Maury',118131,78.0],['Bradley',115465,78.6],['Madison',100790,77.9]];
+const ST=[
+ {n:'Tennessee (statewide)',pop:7315076,a:78.5,venue:1,loy:'RESTRICTED',prz:'PROHIBITED'},
+ {n:'Georgia',pop:11302748,a:77.8,venue:0,loy:'PROHIBITED',prz:'UNCLEAR'},
+ {n:'North Carolina',pop:11197968,a:78.9,venue:0,loy:'PERMITTED',prz:'RESTRICTED'},
+ {n:'Virginia',pop:8880107,a:79.1,venue:0,loy:'RESTRICTED',prz:'PROHIBITED'},
+ {n:'Missouri',pop:6270541,a:78.3,venue:0,loy:'RESTRICTED',prz:'PROHIBITED'},
+ {n:'South Carolina',pop:5570274,a:79.4,venue:1,loy:'RESTRICTED',prz:'RESTRICTED'},
+ {n:'Alabama',pop:5193088,a:78.5,venue:0,loy:'PROHIBITED',prz:'RESTRICTED'},
+ {n:'Kentucky',pop:4606864,a:77.9,venue:0,loy:'PERMITTED',prz:'RESTRICTED'},
+ {n:'Arkansas',pop:3114791,a:77.6,venue:0,loy:'RESTRICTED',prz:'RESTRICTED'},
+ {n:'Mississippi',pop:2954160,a:77.7,venue:0,loy:'RESTRICTED',prz:'RESTRICTED'}];
+
+/* The funnel's own vocabulary, keys verbatim. */
+const FLAV=[['apple','Apple Pie',22],['caramel','Salty Caramel Whiskey',14],['berry','Blackberry',12],
+['cream','Butter Pecan Cream',11],['cans','Sparkling Lemonade cans',9],['pb','Peanut Butter Whiskey',9],
+['orig','Original',8],['other','Something else',7],['flame','Blue Flame',5],['bourbon','Tennessee Straight Bourbon',3]];
+const OCC=[['porch','Backyard',26],['tailgate','Game day',24],['water','Lake or pool',18],
+['kitchen',"Someone's kitchen",14],['gift','I buy it as a gift',11],['other','Somewhere else',7]];
+const AGES=[['21_24','21 to 24',14],['25_34','25 to 34',31],['35_44','35 to 44',24],
+['45_54','45 to 54',16],['55p','55 or over',10],['na','Rather not',5]];
+const AGE_PICK={'21_24':'Sparkling Lemonade cans','25_34':'Apple Pie','35_44':'Salty Caramel Whiskey',
+'45_54':'Original','55p':'Tennessee Straight Bourbon','na':'Apple Pie'};
+
+/* The source register, carried over from the original model view and extended
+   with everything the media research added. Grade is how far the source
+   deserves to be trusted, not how much it helps the argument. */
+const SRC=[
+['A','Leenheer, van Heerde, Bijmolt, Smidts','IJRM 24(1), 2007','Corrected for self selection into membership. About one seventh of the naive effect survived.'],
+['A','Taylor and Neslin','Journal of Retailing, 2005','Control group design. Points pressure plus 6% storewide, rewarded behaviour plus 17.5% after redeeming.'],
+['A','Nastasoiu, Bendle et al.','JAMS, 2021','Air Miles. A simulated redemption push returned 2.61% more sales against 2.75% more cost. Net negative.'],
+['A','Bombaij and Dekimpe','IJRM, 2020','358 banners, 27 countries. Effects disappear where most competitors also run a program.'],
+['A','Liu','Journal of Marketing 71(4), 2007','No measurable effect on heavy buyers. Gains sit with light and moderate ones.'],
+['A','Blake, Nosko, Tadelis','Econometrica 83(1), 2015','eBay field experiment. Attribution overstated returns badly. This is the case for a holdout.'],
+['A','COLLOQUY Loyalty Census','2017','46% of memberships active, 28% abandoned without ever redeeming.'],
+['A','US Census QuickFacts','V2025','County population and share 18 and over. The 95 Tennessee counties sum to exactly 7,315,076.'],
+['B','Superads Meta benchmarks','2025 to 2026','Three billion dollars of spend. US median CPM $23.42. Wine and spirits $15.95 over thirteen months.'],
+['B','Unbounce Conversion Benchmark','2024','41,000 landing pages. Sweepstakes median 47.5% blended, but paid Facebook median 14.3%. This model uses the lower one.'],
+['B','LocaliQ paid social benchmarks','2025','Restaurants and Food cost per lead $3.16. Arts and Entertainment $18.17.'],
+['B','Zuko form analytics','2025','Password fields carry 10.5% abandonment, the highest of any field. Field count is not correlated with completion.'],
+['B','Omnisend email benchmarks','2025','20 billion emails. Food and Drink opens 30.03%. Flows outperform campaigns 18x on conversion.'],
+['C','Bond Loyalty Report','2023 and 2024','About half of held memberships get used. Consumer survey, methodology not public.'],
+['C','Ole Smoky press releases','2018 to 2025','Five million annual visits, one million nine litre cases. Self reported throughout, and the visit figure stopped being published after April 2024.'],
+['C','olesmoky.com','fetched 8 Aug 2026','Tasting prices, 368 merchandise prices, venue list. Company controlled but directly observable.'],
+['D','Accenture member lift, 12 to 18%','2016','A survey of 106 loyalty executives about their own programs. Quoted everywhere. Correlational.'],
+['D','Vendor breakage, 5 to 30%','undated','A glossary entry with no underlying source. Listed here so it does not get quoted at you.'],
+['D','Email returns $38 per $1','undated','Repeated by McKinsey without a citation. Nobody can trace it to a study.']];
+const GAPS=['Sweepstakes entry to account creation with dual consent and an age gate',
+'Email opt-in rate at the point of entry','Share of a brand customer base that ever enrols',
+'Loyalty breakage with a real methodology behind it','Month by month loyalty retention curves',
+'Cost per acquired loyalty member','Dollar value of one first party record to a CPG brand',
+'Referral fraud as a rate per referral','Any beverage alcohol specific email benchmark',
+'Meta CPM broken out by US state or market'];
+/* Behaviour indexes against the average record. 1.00 is average. These are
+   modelled, not measured, and every one is a hypothesis the real drawing would
+   settle in thirty days. They are here because a declared preference that does
+   not predict a behaviour is trivia, and one that does is a segment. */
+const BEH_BASE={coupon:34, aov:46, items:1.8, dAOV:28, tour:4.5};
+const F_IDX={apple:[1.05,1.00,1.00,1.00,1.10], caramel:[1.02,1.05,1.05,0.95,1.00],
+ berry:[1.00,0.95,0.95,1.15,0.95], cream:[1.08,1.02,1.05,0.90,0.90],
+ cans:[0.92,0.72,0.80,1.55,0.85], pb:[1.10,0.95,1.00,1.05,0.95],
+ orig:[1.18,1.35,1.25,0.85,1.05], other:[0.95,1.00,1.00,1.00,1.00],
+ flame:[0.70,1.10,0.90,1.20,1.25], bourbon:[0.88,1.30,1.20,0.70,1.15]};
+const O_IDX={porch:[1.05,1.05,1.05,1.05,1.45], tailgate:[1.00,0.95,1.10,1.20,0.85],
+ water:[0.90,0.85,0.90,1.35,0.80], kitchen:[1.05,0.95,0.95,1.00,0.95],
+ gift:[1.35,1.60,1.35,0.65,1.05], other:[1.00,1.00,1.00,1.00,1.00]};
+const A_IDX={'21_24':[0.88,0.75,0.85,1.40,0.80], '25_34':[1.05,0.95,1.00,1.15,1.00],
+ '35_44':[1.08,1.10,1.05,0.95,1.10], '45_54':[1.02,1.20,1.10,0.80,1.15],
+ '55p':[0.90,1.30,1.15,0.65,1.20], na:[0.95,1.00,1.00,1.00,1.00]};
+const beh=(...ix)=>{const m=[1,1,1,1,1];ix.forEach(a=>a&&a.forEach((v,i)=>m[i]*=v));
+ return {coupon:BEH_BASE.coupon*m[0], aov:BEH_BASE.aov*m[1], items:BEH_BASE.items*m[2],
+         dAOV:BEH_BASE.dAOV*m[3], tour:BEH_BASE.tour*m[4]};};
+const ixTag=v=>{const n=Math.round(v*100);
+ return '<span class="tag '+(n>=115?'t-ok':(n<=85?'t-no':'t-hm'))+'">'+n+'</span>';};
+
+/* ============================================================
+   THE LIFECYCLE. Simulated end to end so the flow can be walked
+   through before a single line of backend exists. Copy is final,
+   the triggers are real conditions the funnel already records,
+   and every rate is modelled from the graded benchmarks.
+   ============================================================ */
+const SEGS=[
+ ['everyone','Everyone','The default path'],
+ ['gift','Original, buys as a gift','Highest merch order on the page'],
+ ['lake','Sparkling Lemonade, lake or pool','Highest delivery basket, lowest merch'],
+ ['porch','Backyard','Buys tastings at the highest rate'],
+ ['quiet','Went quiet','No action in the first seven days']
 ];
-const MV_SRC=[
-  ['A','Leenheer, van Heerde, Bijmolt, Smidts','IJRM 24(1), 2007','Corrected for self-selection into membership. About one seventh of the naive effect survived.'],
-  ['A','Taylor and Neslin','Journal of Retailing, 2005','Control group. Points pressure +6% storewide, rewarded behaviour +17.5% after redeeming.'],
-  ['A','Nastasoiu, Bendle et al.','JAMS, 2021','Air Miles. Simulated redemption push returned +2.61% sales against +2.75% cost.'],
-  ['A','Bombaij and Dekimpe','IJRM, 2020','358 banners, 27 countries. Effects disappear where most competitors also run a program.'],
-  ['A','Liu','Journal of Marketing 71(4), 2007','No measurable effect on heavy buyers. Gains sit with light and moderate ones.'],
-  ['A','Blake, Nosko, Tadelis','Econometrica 83(1), 2015','eBay field experiment. Attribution overstated returns badly. The case for a holdout.'],
-  ['A','COLLOQUY Loyalty Census','2017','46% of memberships active, 28% abandoned without ever redeeming.'],
-  ['B','Omnisend email benchmarks','2025','20B emails. Food and Drink opens 30.03%. Flows outperform campaigns 18x on conversion.'],
-  ['B','Unbounce Conversion Benchmark','2024','41,000 landing pages. Sweepstakes median 47.5%, all-industry median 6.6%.'],
-  ['B','LocaliQ paid social benchmarks','2025','Restaurants and Food cost per lead $3.16. Arts and Entertainment $18.17.'],
-  ['C','Bond Loyalty Report','2023 and 2024','About half of held memberships get used. Consumer survey, methodology not public.'],
-  ['C','Ole Smoky press releases','2018 to 2025','5M annual visits, 1M nine-litre cases, 50 states. Self reported throughout.'],
-  ['D','Accenture member lift, 12 to 18%','2016','Survey of 106 loyalty executives about their own programs. Quoted everywhere. Correlational.'],
-  ['D','Vendor breakage, 5 to 30%','undated','Glossary entry with no underlying source. Listed so it does not get quoted at you.'],
-  ['D','Email returns $38 per $1','undated','Repeated by McKinsey without a citation. Nobody can trace it to a study.']
+const JOURNEY={
+ everyone:[
+  {d:'Day 0',c:'em',s:'Your name is in the jar',t:'Fires on entry, within 60 seconds',
+   m:"Jay,\n\nYour name went in the jar about a minute ago. Five come out every Friday at 8pm Eastern and one of those five takes the Smoky Mountain weekend.\n\nYour code is JAR15-7K2QM. It takes fifteen dollars off a merch order of seventy five or more and it runs out in fourteen days.\n\nWe will not email you about the drawing more than once a week. If Friday is the only part you care about, there is a link at the bottom that turns everything else off.",
+   w:'The confirmation is the highest open rate email a program ever sends, so the code goes here and nowhere else. The opt down link matters more than it looks: giving people a smaller yes is how you avoid the unsubscribe.',
+   o:62,cl:19},
+  {d:'Day 0',c:'sm',s:'You are in. Friday at 8, five names come out.',t:'Only if the SMS box was ticked at entry',
+   m:"You are in the jar. Friday 8pm ET we pull five names.\n\nYour $15 code: JAR15-7K2QM\n\nReply STOP to end.",
+   w:'Sent once, immediately, and never again unless they act. The SMS box is unchecked at entry on purpose, so anyone here chose it twice.',
+   o:98,cl:11},
+  {d:'Day 2',c:'em',s:'The fifteen dollars is still sitting there',t:'Only if the code has not been redeemed',
+   m:"Nobody has spent your code yet.\n\nJAR15-7K2QM, fifteen off seventy five, twelve days left.\n\nThe hats move fastest and the flannel sells out every autumn. If none of it is your thing, that is fine, the code does not expire your entry.",
+   w:'Suppressed the moment the code is used, which is the whole reason the code is unique per person rather than one shared coupon.',
+   o:41,cl:14},
+  {d:'Day 5',c:'em',s:'{FLAVOR_SUBJECT}',t:'Uses the pour declared at step one',
+   m:"{FLAVOR_BODY}",
+   w:'The first message that uses what they told us. No behavioural data exists yet at day five, so the declared answer is the only signal there is, and it was volunteered rather than inferred.',
+   o:38,cl:16},
+  {d:'Day 7',c:'sm',s:'Five names came out tonight',t:'After every Friday draw, to everyone still entered',
+   m:"Five names came out of the jar tonight. Yours was not one of them.\n\nYou are automatically in next Friday. Nothing to do.\n\nReply STOP to end.",
+   w:'Telling somebody they lost is the message most programs skip, and skipping it is why people forget they entered. It also carries the only good news available: they are still in.',
+   o:96,cl:7},
+  {d:'Day 10',c:'em',s:'{OCCASION_SUBJECT}',t:'Uses the occasion declared at step two',
+   m:"{OCCASION_BODY}",
+   w:'Occasion drives creative and the seasonal calendar. Two of these map onto things Ole Smoky already markets in public, the tailgate work and the low calorie can line built for lake days.',
+   o:36,cl:15},
+  {d:'Day 12',c:'em',s:'Your code runs out Sunday',t:'Two days before expiry, suppressed if redeemed',
+   m:"JAR15-7K2QM stops working on Sunday night.\n\nFifteen off seventy five. After that it is gone and we do not reissue them.\n\nYour entry is not affected either way.",
+   w:'A real deadline, stated once. The last line is there so nobody thinks losing the code loses the drawing, which is the fear that makes people unsubscribe from an expiry email.',
+   o:44,cl:21},
+  {d:'Day 21',c:'em',s:'Three names, then you are done',t:'Sent once, referral cap is three for the life of the account',
+   m:"You get five hundred points for every friend who enters on your link, up to three. They get two thousand five hundred to start with.\n\nAfter three we stop counting. That is not a tease, it is the cap.\n\nyour link: nathanjsong.com/olesmoky?ref=7K2QM",
+   w:'Saying the cap out loud is the point. A referral program that hides its ceiling gets farmed, and the people who would farm it are never the customers you wanted.',
+   o:33,cl:12},
+  {d:'Day 30',c:'em',s:'You are sitting on 1,650 points',t:'Monthly, to anyone with an unspent balance',
+   m:"1,650 points, doing nothing.\n\nThe koozie is 800. The rocks glass is 1,500. The flannel is 6,000 and you are further along than you think.\n\nPoints never expire while the account is active.",
+   w:'Breakage is costed into the model as a real liability rather than a footnote, so the honest move is to push redemption. Nastasoiu et al. found pushing it can cost more than it earns, which is why this is monthly and not weekly.',
+   o:35,cl:18},
+  {d:'Day 90',c:'em',s:'Ninety days in',t:'Quarterly, tier and rank recalculated',
+   m:"Ninety days since you dropped your name in.\n\nStill Hand, which is the second rank, and 4,220 points earned all time. Hearts tier opens at 5,000 and takes early access with it.\n\nYou have been in eleven drawings.",
+   w:'The eleven drawings line is the one that keeps people. It reframes ninety days of not winning as eleven chances taken rather than eleven losses.',
+   o:31,cl:13}
+ ],
+ quiet:[
+  {d:'Day 8',c:'em',s:'You never used the fifteen dollars',t:'No click, no order, no check in, seven days after entry',
+   m:"You entered and then nothing, which is completely fine, but the code is about to be worth nothing too.\n\nSix days left on JAR15-7K2QM.\n\nIf the merch is not it, the jar itself is at any Total Wine or on Instacart in about an hour.",
+   w:'The offer already failed these people once. Repeating it louder does not work, so this one gives them a second door: buy the jar instead of the shirt.',
+   o:29,cl:9},
+  {d:'Day 21',c:'em',s:'One question, and it is not a survey',t:'Still no action at three weeks',
+   m:"What would have got you to use it?\n\nCheaper, different merch, or you just wanted the drawing and not the shop. One tap, no form.\n\nWe read these. The last round is why the can line is in the prize wall at all.",
+   w:'A one tap question outperforms a survey by a wide margin and it produces the only thing this program cannot buy, which is a reason. The last line proves somebody acted on the previous round.',
+   o:27,cl:15},
+  {d:'Day 45',c:'em',s:'Turning the emails down, not off',t:'Still nothing at six weeks, before any suppression',
+   m:"We are moving you to Friday only. One message a week, the draw result, nothing else.\n\nIf you would rather have nothing at all, that link still works and we will not make it hard.",
+   w:'Opt down before opt out. An address that gets one email a week is worth far more than a clean unsubscribe, and far more than an address that starts marking you as spam.',
+   o:24,cl:8},
+  {d:'Day 90',c:'em',s:'Last one',t:'No engagement in ninety days, then suppression',
+   m:"This is the last one unless you tell us otherwise.\n\nYour entry stays live and your points stay put. We just stop writing.",
+   w:'Sunsetting protects the sending domain, which protects everybody still engaged. A list that never suppresses is a list that eventually cannot reach anyone.',
+   o:21,cl:6}
+ ]
+};
+const FLAVOR_COPY={
+ apple:['Apple Pie is where most people start',"Apple Pie is the jar most people hand a friend first, which is probably how you got here.\n\nIf you want the next one along, Hunch Punch Lightnin is the same idea with more going on."],
+ orig:['You went straight for the Original',"Unflavored, hundred proof, off the same recipe the place opened with. Our own label calls it legal, just barely.\n\nPeople who drink the Original tend to buy for other people too. The decanter set is the one that moves."],
+ cans:['Built for the cooler, not the shelf',"Four lemonades on White Lightnin, no added sugar, a hundred calories, sold as an eight pack.\n\nIt is on Instacart in about an hour and nobody has ever ordered just one."],
+ caramel:['Our number one whiskey, and it is not close',"Salty Caramel outsells every other whiskey we make. Shots or over ice, and it is the one that converts people who say they do not like whiskey.\n\nCookies and Cream is the next one along."],
+ flame:['128, and it will light',"Blue Flame is uncut and unaged and it is the jar people buy to prove something.\n\nWe are not going to send you a discount on it. That would be insulting to both of us."],
+ bourbon:['Four years old, out at the end of last year',"Tennessee Straight Bourbon. Straight, four years, eighty proof, and the bottle that argues we are more than flavour.\n\nJames Ownby Reserve is the one after that."],
+ berry:['Jar, bottle, and can',"Blackberry is the only one we sell in all three formats, which means we can reach you in three different aisles.\n\nWorth knowing which one you actually want."],
+ cream:['It drinks like dessert and we are fine with that',"The creams started as distillery exclusives and went national on demand alone.\n\nBanana Pudding is the one people move to next."],
+ pb:['Ten awards in its first year',"Peanut Butter Whiskey took ten international awards the year it launched, and it recruits people who would never call themselves whiskey drinkers.\n\nCookie Dough is the follow up."],
+ other:['You said none of them','You told us none of the wall was your jar, which is more useful than any of the other nine answers.\n\nSo: what is it? One line back and a real person reads it.']
+};
+const OCC_COPY={
+ porch:['The cookout, then',"Backyard people buy tastings more than anyone else on the list, which makes sense, you are already within driving distance and already planning a weekend.\n\nThe Hooch Hop passport is free. Three stops in East Tennessee, and the shirt at the end is on us."],
+ tailgate:['Game day, then',"Tailgate is the second most common answer we get and it is the one with the hardest calendar.\n\nThe multipack is the format that matters here. Nobody brings one jar to a lot."],
+ water:['Lake or pool, then',"You picked the occasion the can line was built for. Nine proof, no added sugar, and it does not need a glass.\n\nDelivery is the channel here. Cold in an hour beats a shirt in a week."],
+ kitchen:['Somebody kitchen, late',"Small, late, mixing drinks. That is a cocktail occasion, not a shot occasion.\n\nThe rocks glasses are 1,500 points and the recipe set is free on the site."],
+ gift:['You buy it for other people',"Gift buyers place the biggest merch orders on the whole list, about a hundred dollars across three items, and more than half of them use the code.\n\nSo here is a bundle rather than a discount: the decanter set, two glasses, and the box."],
+ other:['Somewhere else, then',"None of the six were your spot, which is the answer we learn the most from.\n\nWhere does it actually end up? One line back."]
+};
+const CPM=25, FREQ=2.4, D21=0.95;
+let R={ctr:1.2, s1:52, s2:85, s3:45,
+ code:58, shop:45, find:28, road:22, share:12, hop:3,
+ mord:8, dord:20, bpo:2.1, aov:48, bmarg:11,
+ acct:64, ci1:46, ci7:23, scan:9, rcpt:6, refclr:5, sms:35,
+ p_shop:31, p_ic:19, p_road:14, p_share:8, p_code:12, p_none:16};
+const CURVE=[.13,.24,.34,.43,.51,.58,.65,.71,.77,.85,.93,1.00];
+
+/* Two ladders. A county cannot absorb a state budget, so the county ladder
+   starts at $500 and the state one at $2,000. The top two county stops carry
+   state-sized dollars and PROMOTE the market to Tennessee statewide, because
+   spending $25,000 against 76,000 adults is frequency, not reach. The dollar
+   values are shared across both ladders at those stops so the handoff lands
+   on the same number the user just dragged to. */
+const SCALES={
+ county:[{v:500,   n:'Pilot',    d:'One county. Thin, and the learning phase eats the first week'},
+         {v:2000,  n:'Test',     d:'Enough daily budget to exit learning'},
+         {v:5000,  n:'County',   d:'Segments become mailable here'},
+         {v:25000, n:'Regional', d:'Too much for one county. Promotes to Tennessee statewide', promote:2},
+         {v:150000,n:'Statewide',d:'Tennessee end to end', promote:4}],
+ state:[{v:2000,  n:'Pilot',    d:'Statewide but thin. Reach under one percent'},
+        {v:8000,  n:'Test',     d:'The flight I would launch'},
+        {v:25000, n:'Regional', d:'Meaningful frequency in the metros'},
+        {v:60000, n:'Expansion',d:'Multi market, shared creative'},
+        {v:150000,n:'Statewide',d:'Tennessee end to end'}]
+};
+let SCALE='county', STOPS=SCALES.county;
+let MKT=null, SPEND=2000, TAB='over', SORT={}, SCEN=1, STRIPPREV=null;
+/* Three named flights. A scenario sets the spend AND the rates it implies,
+   because a bigger buy with better creative does not convert like a floor test.
+   Rates stay inside the ranges the evidence register allows. */
+const BASE=JSON.parse(JSON.stringify(R));
+const SCENS=[
+ {n:'Conservative floor',d:'If everything lands at the low end',stop:0,
+  o:{ctr:0.9,s3:35,mord:5,acct:55,dord:15}},
+ {n:'The flight I would launch',d:'Real creative, enough runway to exit learning',stop:1,
+  o:{ctr:1.2,s3:45,mord:8,acct:64}},
+ {n:'Scale-up',d:'Same proven conversion, wider footprint',stop:2,
+  o:{ctr:1.35,s3:48,mord:10,acct:68,dord:23}}
 ];
-const MV_GAPS=['Sweepstakes entry to account creation rate','Email opt-in rate at point of entry',
-  'Share of a brand customer base that enrols','Loyalty breakage with a real methodology behind it',
-  'Month by month loyalty cohort retention curves','Cost per acquired loyalty member',
-  'Dollar value of one first-party record to a CPG brand','Referral fraud as a rate per referral',
-  'Any beverage-alcohol specific email benchmark'];
-
-let MV={},MV_I=15;
-MV_IN.forEach(x=>MV[x.k]=x.v);
-const mvF=(v,f)=>f==='p'?(Math.round(v*10)/10)+'%':f==='$'?'$'+num(Math.round(v)):f==='x'?v.toFixed(1)+'x':num(Math.round(v));
-const mvUSD=v=>(v<0?'-':'')+'$'+num(Math.round(Math.abs(v)));
-
-function mvCalc(){
-  const people=MV.visits/MV.defl;
-  const reached=people*(MV.seen/100);
-  const entries=reached*(MV.entry/100);
-  const accounts=entries*(MV.acct/100);
-  const active=accounts*(MV.active/100);
-  const redeemers=accounts*(MV.redeem/100);
-
-  /* Taylor and Neslin found two separate effects and most models only count one.
-     Points pressure lifts everybody who is earning. Rewarded behaviour lifts the
-     people who actually redeemed. Adding only the second understates the program;
-     adding both without the incrementality haircut overstates it wildly. */
-  const pressure=active*MV.spend*0.06;
-  const rewarded=redeemers*MV.spend*(MV.lift/100);
-  const attributed=pressure+rewarded;
-  const incremental=attributed*(MV_I/100);
-  const gp=incremental*(MV.gm/100);
-
-  const acqCost=entries*MV.cpl;
-  /* Half a cent a point, and only the ones people actually redeem cost anything.
-     Breakage belongs in the cost line, not a footnote. */
-  const ptsIssued=active*MV.earn*12;
-  const ptCost=ptsIssued*0.003*(1-MV.brk/100);
-  const prize=5000*52;
-  const cost=acqCost+ptCost+prize+MV.fixed;
-  const contribution=gp-cost;
-  const breakeven=active?cost/active/(MV.gm/100):0;
-  const headroom=MV.spend*(MV.gm/100);
-  return {people,reached,entries,accounts,active,redeemers,attributed,incremental,gp,
-    acqCost,ptCost,prize,cost,contribution,breakeven,headroom,
-    cpa:accounts?acqCost/accounts:0,
-    cpm:active?cost/active:0,
-    share:headroom?breakeven/headroom*100:0};
+function applyScen(i){
+  SCEN=i; const s=SCENS[i];
+  Object.keys(BASE).forEach(k=>R[k]=BASE[k]);
+  Object.keys(s.o).forEach(k=>R[k]=s.o[k]);
+  SPEND=STOPS[s.stop].v;
 }
 
-function mvPaint(){
-  const r=mvCalc();
-  const cards=[
-    ['Accounts created, year one',num(Math.round(r.accounts)),'From '+num(Math.round(r.entries))+' entries'],
-    ['Still active at twelve months',num(Math.round(r.active)),'The only member count worth quoting'],
-    ['Fully loaded cost per active member',mvUSD(r.cpm),'Media, points, prize and ops, divided by the people still here'],
-    ['Attributed lift',mvUSD(r.attributed),'Points pressure plus rewarded behaviour. What a dashboard would claim'],
-    ['Incremental at '+MV_I+' percent',mvUSD(r.incremental),'What a holdout would likely show'],
-    ['Break even per active member',mvUSD(r.breakeven),'Against '+mvUSD(r.headroom)+' of gross profit each, so '+Math.round(r.share)+' percent of it',
-      r.share<=60?'good':(r.share<=100?'':'bad')],
-    ['Program contribution',mvUSD(r.contribution),(r.contribution>=0?'Clears its own cost at ':'Does not clear its cost at ')+MV_I+' percent',
-      r.contribution>=0?'good':'bad']
-  ];
-  document.getElementById('mvCards').innerHTML=cards.map(c=>
-    '<div class="mvc'+(c[3]?' '+c[3]:'')+'"><span class="mvcl">'+esc(c[0])+'</span>'+
-    '<b>'+esc(c[1])+'</b><em>'+esc(c[2])+'</em></div>').join('');
-
-  const parts=[['Media to acquire entries',r.acqCost],['Points people actually redeem',r.ptCost],
-    ['The prize itself, 52 draws',r.prize],['Platform, fulfilment and ops',MV.fixed]];
-  const tot=parts.reduce((a,b)=>a+b[1],0);
-  /* The honest read, recalculated rather than written once and left there. A
-     model that always concludes the same thing is a slide, not a model. */
-  const v=document.getElementById('mvVerdict');
-  if(v){
-    const ok=r.contribution>=0;
-    v.className='mvcard mvverd '+(ok?'ok':'no');
-    v.innerHTML='<span class="mvvk">'+(ok?'It clears':'It does not clear')+'</span>'+
-      '<h3>'+(ok
-        ? 'At these inputs the program pays for itself on spend lift alone.'
-        : 'On spend lift alone, this does not pay for itself. It was never going to.')+'</h3>'+
-      '<p>Every active member has to return <b>'+mvUSD(r.breakeven)+'</b> of incremental revenue to wash, '+
-      'against <b>'+mvUSD(r.headroom)+'</b> of gross profit they generate in total. That is '+
-      '<b>'+Math.round(r.share)+' percent</b> of everything they are worth.'+
-      (ok?' At that level the case is straightforward.'
-         :' No loyalty program moves a customer that far. Liu (2007) found no measurable effect on heavy buyers at all.')+'</p>'+
-      '<p>'+(ok
-        ? 'Which means the first-party record, the footfall and the addressable base are upside on top, not the whole argument.'
-        : 'So the case is not incremental spend. It is <b>'+num(Math.round(r.active))+' consented, age-verified, first-party records</b> against roughly five million annual visits that currently produce almost none, plus a measurable route back to four owned venues. Those are the numbers to defend. Pretending the spend lift carries it is how a program gets cut in year two.')+'</p>'+
-      '<p class="mvvf">Drop the monthly earn, cut the acquisition spend or raise the account rate and this recalculates. The point is not to find the settings that make it green. It is to know which lever actually moves it.</p>';
-  }
-
-  document.getElementById('mvBars').innerHTML=parts.map(p=>
-    '<div class="mvbar"><span class="mvbl">'+esc(p[0])+'<b>'+mvUSD(p[1])+'</b></span>'+
-    '<i style="width:'+(p[1]/tot*100).toFixed(1)+'%"></i></div>').join('')+
-    '<div class="mvtot">Total annual cost <b>'+mvUSD(tot)+'</b></div>';
+function C(){
+  const a18=MKT.pop*MKT.a/100, a21=a18*D21;
+  const imps=SPEND/CPM*1000, ppl=imps/FREQ;
+  const sess=imps*R.ctr/100;
+  const f=sess*R.s1/100, o=f*R.s2/100, e=o*R.s3/100;
+  const find=e*R.find/100;
+  const mord=e*R.mord/100, dord=find*R.dord/100;
+  const revM=mord*R.aov, revD=dord*R.bpo*R.bmarg, rev=revM+revD;
+  /* 12 month value per record is the vetted figure from the payback model:
+     $21.83 at the plan inputs. Month one is the OBSERVED 30 day revenue, and
+     the remaining eleven months distribute the balance along the flow curve,
+     so the near term is real and the year total matches what was verified. */
+  const rev12=e*21.83;
+  const rem=Math.max(0,rev12-rev);
+  const roas=CURVE.map((x,i)=>i===0?rev/SPEND:(rev+rem*(x-CURVE[0])/(1-CURVE[0]))/SPEND);
+  let payback=0; for(let i=0;i<12;i++){if(roas[i]>=1){payback=i+1;break;}}
+  return {a18,a21,imps,ppl,reach:a21?ppl/a21*100:0,cpmR:ppl?SPEND/ppl*1000:0,
+    sess,cpc:sess?SPEND/sess:0,f,o,e,cpa:e?SPEND/e:0,
+    code:e*R.code/100,shop:e*R.shop/100,find,road:e*R.road/100,share:e*R.share/100,hop:e*R.hop/100,
+    mord,dord,revM,revD,rev,roas30:SPEND?rev/SPEND:0,roas,payback,rev12,
+    acct:e*R.acct/100,ci1:e*R.ci1/100,ci7:e*R.ci7/100,scan:e*R.scan/100,
+    rcpt:e*R.rcpt/100,refclr:e*R.refclr/100,sms:e*R.sms/100,
+    needRate:e?(SPEND-revD)/e/R.aov*100:0};
 }
 
-(function mvBuild(){
-  const box=document.getElementById('mvSliders');if(!box)return;
-  box.innerHTML=MV_IN.map(x=>
-    '<label class="mvr"><span class="mvrh">'+esc(x.n)+
-    '<b id="mvv-'+x.k+'">'+mvF(x.v,x.fmt)+'</b></span>'+
-    '<input type="range" id="mv-'+x.k+'" min="'+x.min+'" max="'+x.max+'" step="'+x.step+'" value="'+x.v+'">'+
-    '<span class="mvrs"><i class="g-'+x.grade.toLowerCase()+'">'+x.grade+'</i>'+esc(x.src)+'</span>'+
-    '<span class="mvrn">'+esc(x.note)+'</span></label>').join('');
-  MV_IN.forEach(x=>{
-    const el=document.getElementById('mv-'+x.k);
-    el.addEventListener('input',()=>{MV[x.k]=parseFloat(el.value);
-      document.getElementById('mvv-'+x.k).textContent=mvF(MV[x.k],x.fmt);mvPaint();});
+function series(total){const out=[];for(let i=0;i<30;i++){const t=i/29;out.push(total/30*(0.55+0.65*Math.min(1,t*2.6)));}return out;}
+function spark(vals,col){
+  if(vals.length<8)return '';
+  const w=104,h=22,p=2,mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),rg=(mx-mn)||1;
+  const pts=vals.map((v,i)=>[p+i/(vals.length-1)*(w-p*2),h-p-((v-mn)/rg)*(h-p*2)]);
+  return '<svg class="spk" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" aria-hidden="true"><polyline fill="none" stroke="'+col+'" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" points="'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')+'"/><circle cx="'+pts[pts.length-1][0].toFixed(1)+'" cy="'+pts[pts.length-1][1].toFixed(1)+'" r="2.5" fill="'+col+'"/></svg>';
+}
+function delta(cur,prev,goodUp){
+  if(prev<30)return '<span class="dl flat">'+nf(cur-prev)+' vs previous, base too small to rate</span>';
+  const d=(cur-prev)/prev*100, good=goodUp?d>=0:d<=0;
+  const cls=Math.abs(d)<0.5?'flat':(good?'up':'dn');
+  const sh=Math.abs(d)<0.5?'':(d>0?'▲':'▼');
+  return '<span class="dl '+cls+'">'+sh+' '+(d>0?'+':'')+d.toFixed(1)+'% vs previous</span>';
+}
+
+const TABS=[
+ {k:'over', l:'Overview', f:c=>c.payback?('Month '+c.payback):'12mo+', d:c=>'to payback at '+usd2(c.cpa)+' per record', up:0,s:c=>c.rev,col:'#FFD24A'},
+ {k:'media',l:'Media',    f:c=>nf(c.ppl),  d:c=>'people reached, '+pc(c.reach)+' of 21+', up:1,s:c=>c.ppl,col:'#E8A81C'},
+ {k:'enter',l:'Enter',    f:c=>nf(c.e),    d:c=>pc(c.e/c.sess*100)+' of '+nf(c.sess)+' sessions entered',up:1,s:c=>c.e,col:'#FFD24A'},
+ {k:'conv', l:'Convert',  f:c=>nf(c.code+c.shop+c.find+c.road), d:()=>'tracked clicks after entry', up:1,s:c=>c.code+c.shop+c.find+c.road,col:'#E8A81C'},
+ {k:'mem',  l:'Members',  f:c=>pc(100-R.p_none), d:()=>'took an action within 7 days', up:1,s:c=>c.e*(100-R.p_none)/100,col:'#3FD0E8'},
+ {k:'aud',  l:'Segments', f:c=>nf(c.e*2),  d:()=>'declared answers, cross tabbed', up:1,s:c=>c.e*2,col:'#C4B7A2'},
+ {k:'jrny', l:'Journeys',f:()=>JOURNEY.everyone.length+' sends', d:()=>'day 0 to day 90, per segment', up:1,s:c=>c.e,col:'#FFD24A'},
+ {k:'evid', l:'Evidence',f:()=>SRC.filter(s=>s[0]==='A').length+' of '+SRC.length, d:()=>'sources graded A, the rest disclosed', up:1,s:c=>c.e,col:'#C4B7A2'},
+ {k:'plan', l:'Plan',     f:c=>{const seg=c.e*0.22*0.26;return seg>=50?'Scale':usd(Math.ceil(SPEND*(50/Math.max(seg,.01))/500)*500);}, d:c=>{const seg=c.e*0.22*0.26;return seg>=50?'segments are mailable now':'unlocks mailable segments';}, up:1,s:c=>c.e,col:'#6EE7A0'}
+];
+
+function paintTabs(){
+  const c=C();
+  SH.getElementById('tabs').innerHTML=TABS.map(t=>{
+    const v=t.s(c), prev=v*0.82;
+    return '<button class="tab" role="tab" id="t-'+t.k+'" aria-controls="p-'+t.k+'" aria-selected="'+(TAB===t.k)+'" tabindex="'+(TAB===t.k?0:-1)+'" data-k="'+t.k+'">'+
+      '<span class="tl">'+esc(t.l)+'</span><span class="tv">'+t.f(c)+'</span><span class="td">'+t.d(c)+'</span>'+
+      delta(v,prev,t.up)+spark(series(v),t.col)+'</button>';
+  }).join('');
+  SH.querySelectorAll('.tab').forEach(b=>{
+    b.addEventListener('click',()=>select(b.dataset.k));
+    b.addEventListener('keydown',e=>{
+      const i=TABS.findIndex(x=>x.k===b.dataset.k);let j=-1;
+      if(e.key==='ArrowRight')j=(i+1)%TABS.length;
+      else if(e.key==='ArrowLeft')j=(i-1+TABS.length)%TABS.length;
+      else if(e.key==='Home')j=0;else if(e.key==='End')j=TABS.length-1;
+      if(j>=0){e.preventDefault();select(TABS[j].k);SH.getElementById('t-'+TABS[j].k).focus();}
+    });
   });
-  document.getElementById('mvScen').addEventListener('click',e=>{
-    const b=e.target.closest('button');if(!b)return;
-    MV_I=+b.dataset.i;
-    document.querySelectorAll('#mvScen button').forEach(x=>x.classList.toggle('on',x===b));
-    if(typeof sClick==='function')try{sClick();}catch(err){}
-    mvPaint();});
-  document.getElementById('mvSrc').innerHTML='<tbody>'+MV_SRC.map(s=>
-    '<tr><td><i class="g-'+s[0].toLowerCase()+'">'+s[0]+'</i></td><td><b>'+esc(s[1])+'</b><span>'+esc(s[2])+'</span></td>'+
-    '<td>'+esc(s[3])+'</td></tr>').join('')+'</tbody>';
-  document.getElementById('mvGaps').innerHTML=MV_GAPS.map(g=>'<li>'+esc(g)+'</li>').join('');
-  mvPaint();
+}
+function select(k){
+  TAB=k;location.hash=k;
+  SH.querySelectorAll('.tab').forEach(b=>{const on=b.dataset.k===k;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});
+  TABS.forEach(t=>SH.getElementById('p-'+t.k).hidden=(t.k!==k));
+  SH.getElementById('live').textContent='Showing '+TABS.find(t=>t.k===k).l+'.';
+  paintPanel();
+}
+function table(id,cols,rows,defSort){
+  const s=SORT[id]||defSort||{i:1,dir:-1};
+  const body=rows.slice();
+  if(!body.some(r=>r.grp)){
+    body.sort((a,b)=>{const av=a.sv?a.sv[s.i]:0,bv=b.sv?b.sv[s.i]:0;
+      if(av===bv)return String(a.c[0]).localeCompare(String(b.c[0]));return (av<bv?-1:1)*s.dir;});
+  }
+  return '<div class="tw"><table class="dt" data-t="'+id+'"><thead><tr>'+cols.map((cc,i)=>{
+    const act=i===s.i,gl=act?(s.dir<0?'▼':'▲'):'◇';
+    return '<th'+(act?' aria-sort="'+(s.dir<0?'descending':'ascending')+'"':'')+'>'+
+      (cc.sort===false?esc(cc.l):'<button data-i="'+i+'">'+esc(cc.l)+'<span class="sg">'+gl+'</span></button>')+'</th>';
+  }).join('')+'</tr></thead><tbody>'+
+  body.map(r=>r.grp?'<tr class="grp"><td colspan="'+cols.length+'">'+esc(r.grp)+'</td></tr>'
+    :'<tr class="'+(r.cls||'')+'">'+r.c.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+}
+function wireTables(){
+  SH.querySelectorAll('table.dt').forEach(t=>{
+    const id=t.dataset.t;
+    t.querySelectorAll('th button').forEach(b=>b.addEventListener('click',()=>{
+      const i=+b.dataset.i,cur=SORT[id]||{i:1,dir:-1};
+      SORT[id]=(cur.i===i)?{i:i,dir:-cur.dir}:{i:i,dir:i===0?1:-1};
+      SH.getElementById('live').textContent='Sorted by '+b.textContent.trim()+', '+(SORT[id].dir<0?'descending':'ascending')+'.';
+      paintPanel();
+    }));
+  });
+}
+const LEGEND='<div class="legend">'+
+ '<span><b class="dag">&dagger;</b> modelled, not measured</span>'+
+ '<span><b>n under 30</b> rate suppressed, count only</span>'+
+ '<span><b>Sparklines</b> each scaled to its own range</span>'+
+ '<span><b>Cost per</b> full spend divided by that row, not incremental</span>'+
+ '<span><b>Event names</b> verbatim from the funnel</span></div>';
+const hbar=(rows,den,denLab)=>'<div class="spine">'+rows.map(x=>{
+  const top=Math.max.apply(null,rows.map(y=>y[1]));
+  return '<div class="sr"><span class="sn">'+x[0]+(x[3]?'<i>'+esc(x[3])+'</i>':'')+'</span>'+
+    '<span class="st"><i class="sb" style="width:'+Math.max(3,(x[1]/top*100)).toFixed(1)+'%'+
+    (x[2]?';background:linear-gradient(90deg,var(--volt2),var(--volt))':'')+'">'+nf(x[1])+'</i></span>'+
+    '<span class="sd"><b>'+pc(x[1]/den*100)+'</b>of '+nf(den)+' '+denLab+'</span></div>';
+}).join('')+'</div>';
+
+function lineChart(vals,payback){
+  const W=660,H=230,L=44,Rt=64,T=16,B=30;
+  const iw=W-L-Rt, ih=H-T-B;
+  const mx=Math.max(2.2,Math.ceil(Math.max.apply(null,vals)*10)/10);
+  const X=i=>L+i/(vals.length-1)*iw, Y=v=>T+ih-(v/mx)*ih;
+  let s='<svg class="lch" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Cumulative return on ad spend by month, break even marked at one times">';
+  /* gridlines + y labels */
+  for(let g=0;g<=4;g++){const v=mx*g/4, y=Y(v);
+    s+='<line x1="'+L+'" y1="'+y+'" x2="'+(W-Rt)+'" y2="'+y+'" stroke="#2C231B" stroke-width="1"/>'+
+       '<text x="'+(L-7)+'" y="'+(y+3.5)+'" text-anchor="end">'+v.toFixed(1)+'x</text>';}
+  /* break even, rule 19: dashed, labelled at the right end, inside the plot */
+  s+='<line x1="'+L+'" y1="'+Y(1)+'" x2="'+(W-Rt)+'" y2="'+Y(1)+'" stroke="#FFD24A" stroke-width="1" stroke-dasharray="4 4" opacity=".6"/>'+
+     '<text class="bev" x="'+(W-Rt+6)+'" y="'+(Y(1)+3.5)+'">BREAK EVEN</text>';
+  /* area + line */
+  const pts=vals.map((v,i)=>X(i).toFixed(1)+','+Y(v).toFixed(1));
+  s+='<polygon points="'+X(0)+','+Y(0)+' '+pts.join(' ')+' '+X(vals.length-1)+','+Y(0)+'" fill="rgba(255,210,74,.07)"/>'+
+     '<polyline points="'+pts.join(' ')+'" fill="none" stroke="#FFD24A" stroke-width="2" stroke-linejoin="round"/>';
+  /* month labels every 3 + payback marker */
+  vals.forEach((v,i)=>{const m=i+1;
+    if(m===1||m%3===0)s+='<text x="'+X(i)+'" y="'+(H-9)+'" text-anchor="middle">M'+m+'</text>';
+    if(m===payback)s+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="4" fill="#6EE7A0"/>'+
+      '<text class="axv" x="'+X(i)+'" y="'+(Y(v)-9)+'" text-anchor="middle" fill="#6EE7A0">'+v.toFixed(2)+'x</text>';});
+  const last=vals.length-1;
+  s+='<circle cx="'+X(last)+'" cy="'+Y(vals[last])+'" r="3.5" fill="#FFD24A"/>'+
+     '<text class="axv" x="'+X(last)+'" y="'+(Y(vals[last])-9)+'" text-anchor="middle">'+vals[last].toFixed(2)+'x</text>';
+  return s+'</svg>';
+}
+function colChart(rows,fmt){ /* rows: [label, value, sub] */
+  const W=660,H=210,L=8,T=26,B=40, iw=W-L*2, ih=H-T-B, n=rows.length;
+  const bw=Math.min(88,iw/n*0.52), gap=iw/n;
+  const mx=Math.max.apply(null,rows.map(r=>r[1]))*1.15;
+  let s='<svg class="cch" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Projected records by budget">';
+  rows.forEach((r,i)=>{
+    const x=L+gap*i+(gap-bw)/2, bh=Math.max(3,r[1]/mx*ih), y=T+ih-bh;
+    s+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw+'" height="'+bh.toFixed(1)+'" rx="5" fill="'+(r[3]||'url(#gld)')+'"/>'+
+       '<text class="cv" x="'+(x+bw/2)+'" y="'+(y-7)+'" text-anchor="middle">'+(fmt?fmt(r[1]):nf(r[1]))+'</text>'+
+       '<text x="'+(x+bw/2)+'" y="'+(T+ih+16)+'" text-anchor="middle">'+esc(r[0])+'</text>'+
+       (r[2]?'<text class="cl" x="'+(x+bw/2)+'" y="'+(T+ih+30)+'" text-anchor="middle">'+esc(r[2])+'</text>':'');
+  });
+  return s.replace('aria-label="Projected records by budget">','aria-label="Projected records by budget"><defs><linearGradient id="gld" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E8890C"/><stop offset="1" stop-color="#FFD24A"/></linearGradient></defs>')+'</svg>';
+}
+/* The change log. Every adjustment is recorded with its effect, so the page
+   answers "what did that do" instead of just showing a different screen.
+   Direction of goodness per metric, never the sign. */
+let LOG=[];
+const TRACK=[
+ {k:'e',    u:'Records',      v:c=>c.e,        up:1, f:nf},
+ {k:'cpa',  u:'Cost per lead',v:c=>c.cpa,    up:0, f:v=>usd2(v)},
+ {k:'roas', u:'12mo ROAS',    v:c=>c.roas[11], up:1, f:v=>v.toFixed(2)+'x'},
+ {k:'seg',  u:'Top segment',  v:c=>c.e*0.22*0.26, up:1, f:nf}
+];
+function logChange(what){
+  const c=C(), snap={}; TRACK.forEach(t=>snap[t.k]=t.v(c));
+  if(PREV){
+    const moves=TRACK.filter(t=>Math.abs(snap[t.k]-PREV[t.k])>1e-9).map(t=>{
+      const d=snap[t.k]-PREV[t.k], good=t.up?d>=0:d<=0;
+      return '<span>'+esc(t.u)+' </span><i class="'+(good?'up':'dn')+'">'+
+        (d>0?'+':'')+t.f(d).replace('$-','-$')+'</i>';
+    });
+    if(moves.length)LOG.unshift({w:what,m:moves.join('<span>, </span>')});
+    LOG=LOG.slice(0,8);
+  }
+  PREV=snap;
+  const box=SH.getElementById('clog');
+  box.innerHTML=LOG.length
+    ? LOG.map(x=>'<div class="cli"><b>'+esc(x.w)+'</b>'+x.m+'</div>').join('')
+    : '<p class="clempty">Drag the spend wheel, pick a market or switch a flight. Every change lands here with what it moved and by how much.</p>';
+}
+let PREV=null;
+function paintScen(){
+  SH.getElementById('scen').innerHTML=SCENS.map((s,i)=>{
+    const keep=SPEND; const kr=JSON.parse(JSON.stringify(R));
+    Object.keys(BASE).forEach(k=>R[k]=BASE[k]); Object.keys(s.o).forEach(k=>R[k]=s.o[k]); SPEND=STOPS[s.stop].v;
+    const c=C(); SPEND=keep; Object.keys(kr).forEach(k=>R[k]=kr[k]);
+    return '<button class="sc" aria-pressed="'+(SCEN===i)+'" data-i="'+i+'">'+
+      '<h5><i class="rd"></i>'+esc(s.n)+'</h5><p>'+esc(s.d)+'</p>'+
+      '<div class="scr"><span>Ad spend</span><b>'+usd(STOPS[s.stop].v)+'</b></div>'+
+      '<div class="scr"><span>Link CTR</span><b>'+pc(s.o.ctr)+'</b></div>'+
+      '<div class="scr"><span>Step 2 to submit</span><b>'+pc(s.o.s3)+'</b></div>'+
+      '<div class="scr"><span>Merch order rate</span><b>'+pc(s.o.mord)+'</b></div>'+
+      '<div class="scf"><b>'+nf(c.e)+' records</b><span>'+usd2(c.cpa)+' each</span></div></button>';
+  }).join('');
+  SH.querySelectorAll('.sc').forEach(b=>b.addEventListener('click',()=>{
+    applyScen(+b.dataset.i);
+    SH.getElementById('live').textContent='Scenario: '+SCENS[SCEN].n;
+    paintAll();logChange('Flight: '+SCENS[SCEN].n);
+  }));
+}
+function paintWheel(){
+  let i=STOPS.findIndex(s=>s.v===SPEND); if(i<0)i=0;
+  const r=SH.getElementById('wh'); if(r.value!==String(i))r.value=String(i);
+  SH.getElementById('whVal').textContent=usd(SPEND);
+  SH.getElementById('whName').textContent=STOPS[i].n+' \u00b7 '+STOPS[i].d;
+  const last=STOPS.length-1;
+  SH.getElementById('whStops').innerHTML=STOPS.map((s,j)=>{
+    const cls=(j===i?'on ':'')+(j===0?'first':(j===last?'last':''));
+    const pos=(j===0||j===last)?'':' style="left:calc(11px + (100% - 22px) * '+(j/last).toFixed(4)+')"';
+    return '<span class="'+cls.trim()+'"'+pos+'>'+esc(s.n)+'</span>';
+  }).join('');
+}
+/* Delta pills. Direction of goodness per metric, never the sign: a cost
+   falling is a win even though the number went down. */
+let MOVED={};
+function pill(now,was,goodUp,fmt){
+  if(was==null||Math.abs(now-was)<1e-9)return '';
+  const d=now-was, good=goodUp?d>=0:d<=0;
+  return '<span class="pill '+(good?'up':'dn')+'">'+(d>0?'+':'-')+fmt(Math.abs(d))+'</span>';
+}
+function paintStrip(){
+  const c=C(), P=STRIPPREV, M=v=>'$'+nf(v);
+  SH.getElementById('strip').innerHTML=
+    '<div class="stc"><span>Ad spend</span><b>'+usd(SPEND)+pill(SPEND,P&&P.spend,1,M)+'</b><em>'+usd(SPEND/30)+' a day for 30 days, media only</em></div>'+
+    '<div class="stc"><span>Buys</span><b>'+nf(c.sess)+pill(c.sess,P&&P.sess,1,nf)+'</b><em>sessions at '+usd2(c.cpc)+' each, then the funnel takes over</em></div>'+
+    '<div class="stc gen"><i>Generates</i></div>'+
+    '<div class="stc hi"><span>Records</span><b>'+nf(c.e)+pill(c.e,P&&P.e,1,nf)+'</b><em>verified 21+, consented, two declared preferences each</em></div>'+
+    '<div class="stc"><span>Revenue, year one</span><b>'+usd(c.rev12)+pill(c.rev12,P&&P.rev,1,M)+'</b><em>'+usd(c.rev)+' of it lands inside the media window</em></div>'+
+    '<div class="stc ok"><span>Return</span><b>'+c.roas[11].toFixed(2)+'x'+pill(c.roas[11],P&&P.roas,1,v=>v.toFixed(2)+'x')+'</b><em>at twelve months, '+(c.payback?'break even month '+c.payback:'never breaks even')+'</em></div>'+
+    '<div class="stc hi"><span>Cost to acquire</span><b>'+usd2(c.cpa)+pill(c.cpa,P&&P.cpa,0,v=>'$'+v.toFixed(2))+'</b><em>per verified 21+ opt-in, all in on media</em></div>';
+  STRIPPREV={spend:SPEND,sess:c.sess,e:c.e,rev:c.rev12,roas:c.roas[11],cpa:c.cpa};
+}
+function execSummary(){
+  const c=C(), m=SH.getElementById('mkt');
+  const mk=m.options[m.selectedIndex].text;
+  return ['THE GOLDEN JAR  ·  '+SCENS[SCEN].n,
+  mk+'  ·  '+usd(SPEND)+' of media over 30 days',
+  '',
+  'THE BUY',
+  '  Impressions            '+nf(c.imps)+'  at '+usd2(CPM)+' CPM',
+  '  People reached         '+nf(c.ppl)+'  ('+pc(c.reach)+' of '+nf(c.a21)+' adults 21+)',
+  '  Sessions               '+nf(c.sess)+'  at '+usd2(c.cpc)+' per click',
+  '',
+  'THE FUNNEL',
+  '  Step 1 answered        '+nf(c.f),
+  '  Step 2 answered        '+nf(c.o),
+  '  Entered                '+nf(c.e)+'  ('+pc(c.e/c.sess*100)+' of sessions)',
+  '  Cost per lead        '+usd2(c.cpa),
+  '',
+  'THIRTY DAYS',
+  '  Merch orders           '+nf(c.mord)+'  ('+usd(c.revM)+')',
+  '  Delivery orders        '+nf(c.dord)+'  ('+usd(c.revD)+' supplier margin)',
+  '  Revenue                '+usd(c.rev)+'   ROAS '+c.roas30.toFixed(2)+'x',
+  '',
+  'THE YEAR',
+  '  Break even             '+(c.payback?'month '+c.payback:'not inside twelve months'),
+  '  Twelve month ROAS      '+c.roas[11].toFixed(2)+'x',
+  '  Break even order rate  '+pc(c.needRate)+'  against '+pc(R.mord)+' planned',
+  '',
+  'WHAT IS NOT CLAIMED',
+  '  Tasting revenue is zero. A $5 tasting returns a $5 coupon.',
+  '  Landing to account uses 14.3% paid Facebook, not the 47.5% blended sweepstakes median.',
+  '  Delivery counts supplier margin, not basket value.',
+  '  CPM is held flat; no public dataset prices Meta by state.',
+  '',
+  'Modelled forecast. No drawing has run. Sources: Census QuickFacts V2025,',
+  'Superads, LocaliQ, Unbounce 2024, Zuko 2025, olesmoky.com.'].join('\n');
+}
+function csv(){
+  const c=C();
+  const rows=[['section','metric','value','denominator']];
+  rows.push(['media','impressions',Math.round(c.imps),'']);
+  rows.push(['media','people reached',Math.round(c.ppl),Math.round(c.a21)+' adults 21+']);
+  rows.push(['media','sessions',Math.round(c.sess),Math.round(c.imps)+' impressions']);
+  rows.push(['media','cost per click',c.cpc.toFixed(2),'']);
+  rows.push(['enter','step 1 answered',Math.round(c.f),Math.round(c.sess)+' sessions']);
+  rows.push(['enter','step 2 answered',Math.round(c.o),Math.round(c.f)+' step 1']);
+  rows.push(['enter','entered',Math.round(c.e),Math.round(c.o)+' step 2']);
+  rows.push(['enter','cost per lead',c.cpa.toFixed(2),'']);
+  FLAV.forEach(f=>rows.push(['pick flavor',f[1],Math.round(c.f*f[2]/100),Math.round(c.f)+' answers']));
+  OCC.forEach(o=>rows.push(['pick occasion',o[1],Math.round(c.o*o[2]/100),Math.round(c.o)+' answers']));
+  AGES.forEach(a=>rows.push(['age band',a[1],Math.round(c.e*a[2]/100),Math.round(c.e)+' entrants']));
+  rows.push(['convert','code copied',Math.round(c.code),Math.round(c.e)+' entrants']);
+  rows.push(['convert','merch store opened',Math.round(c.shop),Math.round(c.e)+' entrants']);
+  rows.push(['convert','find a bottle',Math.round(c.find),Math.round(c.e)+' entrants']);
+  rows.push(['convert','delivery orders',Math.round(c.dord),Math.round(c.find)+' find a bottle clicks']);
+  rows.push(['convert','merch orders',Math.round(c.mord),Math.round(c.e)+' entrants']);
+  rows.push(['revenue','30 day revenue',Math.round(c.rev),'']);
+  rows.push(['revenue','roas 30 day',c.roas30.toFixed(2),'']);
+  rows.push(['revenue','roas 12 month',c.roas[11].toFixed(2),'']);
+  rows.push(['revenue','payback month',c.payback||'none','']);
+  return rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');
+}
+function paintAll(){paintWheel();paintScen();paintStrip();paintTabs();paintPanel();
+  const c=C();
+  SH.getElementById('railStats').innerHTML=
+    '<div class="rstat"><span>Adults 21+</span><b>'+nf(c.a21)+'</b></div>'+
+    '<div class="rstat"><span>Sessions bought</span><b>'+nf(c.sess)+'</b></div>'+
+    '<div class="rstat"><span>Entered</span><b class="gold">'+nf(c.e)+'</b></div>'+
+    '<div class="rstat"><span>Cost per lead</span><b class="gold">'+usd2(c.cpa)+'</b></div>'+
+    '<div class="rstat"><span>Return, year one</span><b>'+c.roas[11].toFixed(2)+'x</b></div>'+
+    '<div class="rstat"><span>Payback</span><b>'+(c.payback?'Month '+c.payback:'12mo+')+'</b></div>';
+}
+function paintPanel(){
+  const c=C(),P=id=>SH.getElementById(id);
+
+  /* ===== OVERVIEW ===== */
+  P('p-over').innerHTML='<div class="hero3">'+
+    '<div class="hv gold"><span>Cost per lead (CPL)</span><b>'+usd2(c.cpa)+'</b><em>'+nf(c.e)+' verified 21+ opt-ins from '+usd(SPEND)+' of media</em></div>'+
+    '<div class="hv"><span>Return, year one</span><b>'+c.roas[11].toFixed(2)+'x</b><em>'+usd(c.rev12)+' against '+usd(SPEND)+' of media</em></div>'+
+    '<div class="hv"><span>Payback</span><b>'+(c.payback?('Month '+c.payback):'12mo+')+'</b><em>'+(c.payback?('Media recovered in month '+c.payback+', then it compounds'):'Does not clear inside the year at these inputs')+'</em></div></div>'+
+    '<div class="card"><h2>Months to payback</h2>'+
+    '<p class="sub">Cumulative revenue against the media spend. The white line is break even. Cold sweepstakes traffic does not clear in thirty days and a model that says otherwise is counting revenue it did not cause.</p>'+
+    lineChart(c.roas,c.payback)+
+    (c.payback?'<div class="pbnote">Break even lands in <b>month '+c.payback+'</b>, and twelve months returns <b>'+c.roas[11].toFixed(2)+'x</b> on the media.</div>'
+      :'<div class="pbnote" style="background:rgba(255,133,119,.09);border-color:rgba(255,133,119,.22)">At these inputs it <b>never breaks even inside twelve months</b>.</div>')+'</div>'+
+    '<div class="card"><h2>What would make it wash inside the month</h2>'+
+    '<div class="grid2"><div><h3>Planned merch order rate</h3><div class="tnum" style="font-size:32px;font-weight:800">'+pc(R.mord)+'</div>'+
+    '<p class="fine">'+nf(c.mord)+' orders from '+nf(c.e)+' records</p></div>'+
+    '<div><h3>Rate that would break even</h3><div class="tnum gold" style="font-size:32px;font-weight:800">'+pc(c.needRate)+'</div>'+
+    '<p class="fine">That gap is the argument for a real offer in the welcome email rather than a thank you</p></div></div></div>'+
+    '<div class="card"><h2>How ROAS is calculated</h2>'+
+    '<p class="fine" style="margin:-6px 0 16px"><b style="color:var(--ink)">On the label.</b> This is a cost per lead, the same metric LocaliQ benchmarks at $3.16 for restaurants and food. Ours runs higher because a lead here is age gated, dual consented and carries two declared preferences, where a generic lead is an email address in a box.</p>'+
+    '<p class="sub">Two revenue lines, thirty days, divided by the media. Nothing else is counted, which is why it reads smaller than a deck would show it.</p>'+
+    table('roascalc',[{l:'Line'},{l:'Orders'},{l:'Each'},{l:'Revenue'}],[
+      {c:['<span class="mn">Merchandise</span><span class="md">'+pc(R.mord)+' of '+nf(c.e)+' records buy in month one, at the derived catalogue order value</span>','<span class="big">'+nf(c.mord)+'</span>','<span class="tnum">'+usd(R.aov)+'</span>','<span class="big mossc">'+usd(c.revM)+'</span>'],sv:[0,c.mord,R.aov,c.revM]},
+      {c:['<span class="mn">Delivery</span><span class="md">'+pc(R.dord)+' of '+nf(c.find)+' find a bottle clicks convert, '+R.bpo.toFixed(1)+' bottles a basket, '+usd2(R.bmarg)+' supplier margin each</span>','<span class="big">'+nf(c.dord)+'</span>','<span class="tnum">'+usd2(R.bpo*R.bmarg)+'</span>','<span class="big mossc">'+usd(c.revD)+'</span>'],sv:[0,c.dord,R.bpo*R.bmarg,c.revD]},
+      {c:['<span class="mn">Tastings and tours</span><span class="md">Five dollars in, five dollar coupon back. A rebated entry fee is not revenue</span>','<span class="tnum">n/a</span>','<span class="tnum">'+usd(0)+'</span>','<span class="big">'+usd(0)+'</span>'],sv:[0,0,0,0]},
+      {cls:'tot',c:['<span class="mn">Thirty day revenue over '+usd(SPEND)+' of media</span>','','','<span class="big gold">'+c.roas30.toFixed(2)+'x</span>'],sv:[0,0,0,c.roas30]}
+    ])+
+    '<p class="fine" style="margin-top:14px"><b style="color:var(--ink)">Why delivery stays small even when plenty of people order.</b> A jar rings up around twenty two dollars on Instacart, DoorDash or Uber Eats, but three tier puts a distributor and a retailer in front of Ole Smoky, so the brand books about '+usd2(R.bmarg)+' of it. Delivery is '+pc(c.rev?c.revD/c.rev*100:0)+' of revenue here across '+nf(c.dord)+' orders. Counting the full basket would roughly double the line and would be wrong.</p>'+
+    '<p class="fine" style="margin-top:9px"><b style="color:var(--ink)">And why thirty days is the wrong window.</b> Media is paid on day one, records buy across a year. Twelve months returns <b>'+c.roas[11].toFixed(2)+'x</b> with break even in '+(c.payback?'month '+c.payback:'no month inside the year')+'.</p>'+LEGEND+'</div>'+
+    '<div class="card"><h2>What this console will not do</h2><ul class="tt">'+
+    '<li><b>No tasting revenue.</b> Five dollars in Gatlinburg returns a five dollar coupon, ten in Nashville returns ten. A rebated entry fee is not a revenue line.</li>'+
+    '<li><b>No 47.5 percent conversion rate.</b> Unbounce’s sweepstakes median is blended across channels and credited mostly to email. Their paid Facebook median is 14.3 percent, and building on the higher number overstates volume more than three times.</li>'+
+    '<li><b>No county level media pricing.</b> No public dataset breaks Meta CPM out by state, and Meta retired DMA targeting in June 2026. CPM is held at $25 everywhere and the variation you see is audience size.</li>'+
+    '<li><b>No basket value on delivery.</b> A jar that rings up at twenty two dollars on Instacart pays Ole Smoky a supplier margin near eleven. The model uses the fraction, not the sticker.</li></ul>'+LEGEND+'</div>';
+
+  /* ===== MEDIA ===== */
+  P('p-media').innerHTML='<div class="card"><h2>The buy</h2>'+
+    table('media',[{l:'Metric'},{l:'Results'},{l:'Rate'},{l:'Cost per'}],[
+      {c:['<span class="mn">Amount spent</span><span class="md">Media only, prize and platform sit outside</span>','<span class="big">'+usd(SPEND)+'</span>','',''],sv:[0,SPEND,0,0]},
+      {c:['<span class="mn">Impressions</span><span class="md">Served to a 21 and over audience</span>','<span class="big">'+nf(c.imps)+'</span>','','<span class="tnum">'+usd2(CPM)+' CPM</span>'],sv:[0,c.imps,0,CPM]},
+      {c:['<span class="mn">People reached</span><span class="md">Impressions divided by frequency of '+FREQ.toFixed(1)+'x</span>','<span class="big gold">'+nf(c.ppl)+'</span>','<span class="tnum">'+pc(c.reach)+'</span><span class="den">of '+nf(c.a21)+' adults 21+</span>','<span class="tnum">'+usd2(c.cpmR)+' per 1k</span>'],sv:[0,c.ppl,c.reach,c.cpmR]},
+      {c:['<span class="mn">Sessions on the funnel</span><span class="md">Link clicks. Published sweepstakes CTRs are almost always CTR all, link runs about half</span>','<span class="big">'+nf(c.sess)+'</span>','<span class="tnum">'+pc(R.ctr)+'</span><span class="den">of impressions, link CTR<span class="dag">&dagger;</span></span>','<span class="tnum">'+usd2(c.cpc)+'</span>'],sv:[0,c.sess,R.ctr,c.cpc]},
+      {c:['<span class="mn gold">Entered the jar</span><span class="md">Completed all three steps</span>','<span class="big gold">'+nf(c.e)+'</span>','<span class="tnum">'+pc(c.e/c.sess*100)+'</span><span class="den">of sessions</span>','<span class="tnum gold">'+usd2(c.cpa)+'</span>'],sv:[0,c.e,c.e/c.sess*100,c.cpa]}
+    ])+LEGEND+'</div>'+
+    '<div class="card"><h2>Same media math, other states</h2>'+
+    '<p class="sub">The funnel travels. The law does not. Georgia and Alabama are where a clean rollout stops, and the architecture that clears all ten states is earn on alcohol, redeem on non alcohol.</p>'+
+    table('exp',[{l:'State'},{l:'Adults 21+'},{l:'Reach at this spend'},{l:'Points on alcohol',sort:false},{l:'Alcohol as prize',sort:false}],
+      ST.map(s=>{const a=s.pop*s.a/100*D21, rc=c.ppl/a*100;
+        const fl=x=>x==='PERMITTED'?'t-ok':(x==='PROHIBITED'?'t-no':'t-hm');
+        return {c:['<span class="mn">'+esc(s.n)+'</span>'+(s.venue?' <span class="tag t-ok">VENUE</span>':''),
+          '<span class="tnum">'+nf(a)+'</span>','<span class="tnum">'+rc.toFixed(2)+'%</span>',
+          '<span class="tag '+fl(s.loy)+'">'+s.loy+'</span>','<span class="tag '+fl(s.prz)+'">'+s.prz+'</span>'],sv:[0,a,rc,0,0]};}),{i:1,dir:-1})+
+    '<p class="fine" style="margin-top:13px">Tennessee itself is the hardest state in the plan: no spirits DTC shipping, alcohol banned as a prize, and a publicity release cannot be a condition of winning under TCA 47-18-120.</p></div>';
+
+  /* ===== ENTER ===== */
+  const mxs=c.sess;
+  P('p-enter').innerHTML='<div class="card"><h2>The three step entry, as built</h2>'+
+    '<p class="sub">The funnel’s actual steps and the state each writes. One question at a time, the age gate asked once on step 3 instead of a door slam on arrival.</p>'+
+    '<div class="spine">'+[
+      ['Sessions on the funnel','Landed on /olesmoky from the ad',c.sess,''],
+      ['Step 1 of 3 answered','“First things first, what’s your pour?” · writes S.flavor',c.f,pc(R.s1)+' of sessions'],
+      ['Step 2 of 3 answered','“Where does the jar end up?” · writes S.occ',c.o,pc(R.s2)+' of step 1'],
+      ['Entered · “Put me in the jar”','Name, email, age band, 21+ · fires earn(join)',c.e,pc(R.s3)+' of step 2']
+    ].map((s,i)=>'<div class="sr"><span class="sn">'+esc(s[0])+'<i>'+esc(s[1])+'</i></span>'+
+      '<span class="st"><i class="sb" style="width:'+Math.max(4,Math.pow(s[2]/mxs,0.5)*100).toFixed(1)+'%">'+nf(s[2])+'</i></span>'+
+      '<span class="sd">'+(i?'<b>'+s[3].split(' of ')[0]+'</b>of '+s[3].split(' of ')[1]:'<b>100%</b>the whole buy')+'</span></div>').join('')+'</div>'+
+    '<p class="fine" style="margin-top:13px">Overall '+pc(c.e/c.sess*100)+' of sessions entered. The biggest leak is step 2 to submit, where the email field and the 21 or over checkbox live. The build already avoids the password, the highest abandonment field at 10.5 percent.</p></div>'+
+    '<div class="card"><h2>Step 1: what they chose to pour</h2>'+
+    '<div class="bhdr">Of <b>'+nf(c.f)+' who answered step 1</b>. Share held from the brand’s own positioning.<span class="dag">&dagger;</span></div>'+
+    hbar(FLAV.map(f=>['<span class="mn">'+esc(f[1])+'</span>',c.f*f[2]/100,f[0]==='other','key: '+f[0]]),c.f,'answers')+
+    '<p class="fine" style="margin-top:11px">The cyan row, key <b>other</b>, is the only option that produces a write in.</p></div>'+
+    '<div class="card"><h2>Step 2: where the jar ends up</h2>'+
+    '<div class="bhdr">Of <b>'+nf(c.o)+' who answered step 2</b>.<span class="dag">&dagger;</span></div>'+
+    hbar(OCC.map(o=>['<span class="mn">'+esc(o[1])+'</span>',c.o*o[2]/100,o[0]==='other','key: '+o[0]]),c.o,'answers')+LEGEND+'</div>';
+
+  /* ===== CONVERT ===== */
+  P('p-conv').innerHTML='<div class="card"><h2>What entrants clicked next</h2>'+
+    '<div class="bhdr">Of <b>'+nf(c.e)+' entrants</b>, within 30 days. Actions overlap, so these do not sum and they are not a funnel.</div>'+
+    hbar([
+      ['<span class="mn">Copied the JAR15 code</span>',c.code,0,'$15 off $75 at the merch store, 14 day expiry'],
+      ['<span class="mn">Opened the merch store</span>',c.shop,0,'From the code bar or the welcome email'],
+      ['<span class="mn">Clicked find a bottle</span>',c.find,0,'ZIP lookup, retailer list, Instacart handoff'],
+      ['<span class="mn">Opened the distillery page</span>',c.road,0,'The road: The Holler, The Barrelhouse, The Barn'],
+      ['<span class="mn">Shared their referral link</span>',c.share,0,'?ref= carries the same token as the code'],
+      ['<span class="mn">Hooch Hop stamp</span>',c.hop,0,'Physical passport, three East Tennessee stops']
+    ],c.e,'entrants')+
+    '<p class="fine" style="margin-top:11px">The JAR15 token is the connective tissue: one five character code is both the merch discount and the referral parameter, joining the coupon graph to the referral graph.</p></div>'+
+    '<div class="card"><h2>Where the clicks became orders</h2>'+
+    table('conv',[{l:'Path'},{l:'Clicks'},{l:'Orders'},{l:'Click to order'}],[
+      {c:['<span class="mn">Merch store</span><span class="md">Owned checkout, code attached, fully attributable</span>','<span class="big">'+nf(c.shop)+'</span>','<span class="big mossc">'+nf(c.mord)+'</span>','<span class="tnum">'+rate(c.mord/c.shop*100,c.shop)+'</span><span class="den">of '+nf(c.shop)+' store opens</span>'],sv:[0,c.shop,c.mord,c.shop?c.mord/c.shop*100:0]},
+      {c:['<span class="mn">Instacart</span><span class="md">Third party cart. The funnel logs: left for Instacart searching apple pie, no identity returns from that tap</span>','<span class="big">'+nf(c.find)+'</span>','<span class="big mossc">'+nf(c.dord)+'</span>','<span class="tnum">'+rate(R.dord,c.find)+'</span><span class="den">of '+nf(c.find)+' find a bottle clicks</span>'],sv:[0,c.find,c.dord,R.dord]},
+      {c:['<span class="mn">Distillery visit</span><span class="md">Opens olesmoky.com/pages/distillery. A tasting is $5 with a $5 coupon back, so the venue converts at retail, not at the door</span>','<span class="big">'+nf(c.road)+'</span>','<span class="smalln">not observable</span>','<span class="smalln">no identity returns from the venue</span>'],sv:[0,c.road,0,0]}
+    ],{i:1,dir:-1})+
+    '<p class="fine" style="margin-top:13px">The gap between the owned store and the delivery handoff is the handoff tax, and the reason the click, not the order, is the delivery KPI.</p>'+LEGEND+'</div>'+
+    '<div class="card"><h2>Thirty day revenue</h2>'+
+    table('rev',[{l:'Line'},{l:'Revenue'},{l:'Orders'},{l:'Per order'}],[
+      {c:['<span class="mn">Merchandise</span><span class="md">Order value derived from 368 real catalogue prices</span>','<span class="big mossc">'+usd(c.revM)+'</span>','<span class="tnum">'+nf(c.mord)+'</span>','<span class="tnum">'+usd(R.aov)+'</span>'],sv:[0,c.revM,c.mord,R.aov]},
+      {c:['<span class="mn">Delivery</span><span class="md">'+R.bpo.toFixed(1)+' bottles a basket at '+usd2(R.bmarg)+' supplier margin, not the '+usd(R.bpo*22)+' the shopper pays</span>','<span class="big mossc">'+usd(c.revD)+'</span>','<span class="tnum">'+nf(c.dord)+'</span>','<span class="tnum">'+usd2(R.bpo*R.bmarg)+'</span>'],sv:[0,c.revD,c.dord,R.bpo*R.bmarg]},
+      {c:['<span class="mn">Tastings and tours</span><span class="md">Five in, five back. A rebated entry fee, zero on purpose</span>','<span class="big">'+usd(0)+'</span>','<span class="tnum">n/a</span>','<span class="tnum">n/a</span>'],sv:[0,0,0,0]},
+      {cls:'tot',c:['<span class="mn">Total</span>','<span class="big gold">'+usd(c.rev)+'</span>','<span class="tnum">'+c.roas30.toFixed(2)+'x</span><span class="den">return on ad spend, 30 days</span>',''],sv:[0,c.rev,c.roas30,0]}
+    ])+LEGEND+'</div>';
+
+  /* ===== MY JAR ===== */
+  P('p-mem').innerHTML='<div class="card"><h2>Engagement, priced in the funnel’s own points</h2>'+
+    '<div class="bhdr">Of <b>'+nf(c.e)+' entrants</b>. Point values verbatim from the build’s earn table.</div>'+
+    table('jar',[{l:'Mechanic'},{l:'Members'},{l:'Rate'},{l:'Points each'}],[
+      {c:['<span class="mn">Created the account</span><span class="md">earn(join) · the entry writes the record, the account keeps it</span>','<span class="big gold">'+nf(c.acct)+'</span>','<span class="tnum">'+pc(R.acct)+'</span><span class="den">of entrants</span>','<span class="tnum">1,500</span>'],sv:[0,c.acct,R.acct,1500]},
+      {c:['<span class="mn">Checked in at least once</span><span class="md">“Did you get into any Ole Smoky today?” · I did, Planning to, Not today</span>','<span class="big">'+nf(c.ci1)+'</span>','<span class="tnum">'+pc(R.ci1)+'</span><span class="den">of entrants</span>','<span class="tnum">50 per day</span>'],sv:[0,c.ci1,R.ci1,50]},
+      {c:['<span class="mn">Held a 7 day streak</span><span class="md">Weekly bonus lands on day seven</span>','<span class="big">'+nf(c.ci7)+'</span>','<span class="tnum">'+pc(R.ci7)+'</span><span class="den">of entrants</span>','<span class="tnum">+150</span>'],sv:[0,c.ci7,R.ci7,150]},
+      {c:['<span class="mn">Consented to SMS</span><span class="md">Settings toggle, never a gate in the entry flow</span>','<span class="big">'+nf(c.sms)+'</span>','<span class="tnum">'+pc(R.sms)+'</span><span class="den">of entrants</span>','<span class="tnum">0</span>'],sv:[0,c.sms,R.sms,0]},
+      {c:['<span class="mn">Scanned a jar</span><span class="md">OS-4471-APPLE 120 · OS-8802-BLUE 180 · OS-2290-JUG 400, over 200 goes to review with risk flags</span>','<span class="big">'+nf(c.scan)+'</span>','<span class="tnum">'+pc(R.scan)+'</span><span class="den">of entrants</span>','<span class="tnum">120 to 400</span>'],sv:[0,c.scan,R.scan,250]},
+      {c:['<span class="mn">Snapped a receipt</span><span class="md">Held 30 days, three per month, moderation queue</span>','<span class="big">'+nf(c.rcpt)+'</span>','<span class="tnum">'+pc(R.rcpt)+'</span><span class="den">of entrants</span>','<span class="tnum">100</span>'],sv:[0,c.rcpt,R.rcpt,100]},
+      {c:['<span class="mn">Referral cleared</span><span class="md">Friend completed registration · capped at 3 per account for life</span>','<span class="big">'+nf(c.refclr)+'</span>','<span class="tnum">'+pc(R.refclr)+'</span><span class="den">of entrants</span>','<span class="tnum">500</span>'],sv:[0,c.refclr,R.refclr,500]}
+    ],{i:1,dir:-1})+
+    '<p class="fine" style="margin-top:13px">The scan threshold is a real fraud control and the referral cap at three for life keeps the 500 point payout honest.</p>'+LEGEND+'</div>'+
+    '<div class="card"><h2>The check in question is a demand signal</h2>'+
+    '<p class="sub">“Not today” routes the member to Instacart with their pour prefilled. A survey and a store shelf in the same tap.</p>'+
+    hbar([
+      ['<span class="mn">I did</span>',c.ci1*0.38,0,'Consumption confirmed, nothing to sell'],
+      ['<span class="mn">Planning to</span>',c.ci1*0.27,0,'Intent declared, the timing window is open'],
+      ['<span class="mn">Not today</span>',c.ci1*0.35,0,'Routed to Instacart, search prefilled with their pour']
+    ],c.ci1,'check ins')+LEGEND+'</div>';
+
+  /* ===== JOURNEYS ===== */
+  const paths=[
+    ['Straight to the merch store','Copied the code, opened the store. The $15 against $75 did its job',c.e*R.p_shop/100,'mossc'],
+    ['Could not wait, went to Instacart','Entered the drawing, then bought the jar the same week instead of waiting for Friday',c.e*R.p_ic/100,'mossc'],
+    ['Planned the trip instead','Entered a raffle for a Gatlinburg weekend, then opened the planning page to price the trip themselves',c.e*R.p_road/100,'voltc'],
+    ['Recruited first','Shared the referral link before doing anything for themselves',c.e*R.p_share/100,''],
+    ['Took the code and waited','Copied JAR15, no store visit yet. The 14 day expiry is the clock',c.e*R.p_code/100,''],
+    ['Entered and went quiet','No action in the first 7 days. The win back flow owns these',c.e*R.p_none/100,'']];
+  P('p-mem').innerHTML+='<div class="card"><h2>First meaningful action within 7 days</h2>'+
+    '<div class="bhdr">Of <b>'+nf(c.e)+' entrants</b>. Exclusive, one bucket per person, so they sum to the denominator. This is the one view where a partition is honest, because a first action can only happen once.</div>'+
+    hbar(paths.map(p=>['<span class="mn'+(p[3]?' '+p[3]:'')+'">'+esc(p[0])+'</span>',p[2],0,p[1]]),c.e,'entrants')+
+    '<p class="fine" style="margin-top:13px">The third path is the one worth staring at: <b>'+nf(c.e*R.p_road/100)+' people</b> entered a drawing whose prize is a distillery weekend, then started pricing the trip themselves. The raffle is functioning as advertising for the venue, and that value never appears in a ROAS line.</p></div>'+
+    '<div class="card"><h2>Day 30 outcomes by first action</h2>'+
+    table('path',[{l:'First action'},{l:'People'},{l:'Bought anything by day 30'},{l:'Still engaged day 30'}],[
+      {c:['<span class="mn">Merch store first</span>','<span class="big">'+nf(c.e*R.p_shop/100)+'</span>','<span class="tnum">'+rate(21,c.e*R.p_shop/100)+'</span><span class="den">of this path<span class="dag">&dagger;</span></span>','<span class="tnum">'+rate(64,c.e*R.p_shop/100)+'</span>'],sv:[0,c.e*R.p_shop/100,21,64]},
+      {c:['<span class="mn">Instacart first</span>','<span class="big">'+nf(c.e*R.p_ic/100)+'</span>','<span class="tnum">'+rate(14,c.e*R.p_ic/100)+'</span><span class="den">of this path<span class="dag">&dagger;</span></span>','<span class="tnum">'+rate(51,c.e*R.p_ic/100)+'</span>'],sv:[0,c.e*R.p_ic/100,14,51]},
+      {c:['<span class="mn">Distillery page first</span>','<span class="big">'+nf(c.e*R.p_road/100)+'</span>','<span class="smalln">not observable</span>','<span class="tnum">'+rate(58,c.e*R.p_road/100)+'</span>'],sv:[0,c.e*R.p_road/100,0,58]},
+      {c:['<span class="mn">Referral first</span>','<span class="big">'+nf(c.e*R.p_share/100)+'</span>','<span class="tnum">'+rate(17,c.e*R.p_share/100)+'</span><span class="den">of this path<span class="dag">&dagger;</span></span>','<span class="tnum">'+rate(72,c.e*R.p_share/100)+'</span>'],sv:[0,c.e*R.p_share/100,17,72]},
+      {c:['<span class="mn">Took the code and waited</span>','<span class="big">'+nf(c.e*R.p_code/100)+'</span>','<span class="tnum">'+rate(9,c.e*R.p_code/100)+'</span><span class="den">of this path<span class="dag">&dagger;</span></span>','<span class="tnum">'+rate(38,c.e*R.p_code/100)+'</span>'],sv:[0,c.e*R.p_code/100,9,38]},
+      {c:['<span class="mn">No action</span>','<span class="big">'+nf(c.e*R.p_none/100)+'</span>','<span class="tnum">'+rate(2,c.e*R.p_none/100)+'</span><span class="den">of this path<span class="dag">&dagger;</span></span>','<span class="tnum">'+rate(11,c.e*R.p_none/100)+'</span>'],sv:[0,c.e*R.p_none/100,2,11]}
+    ],{i:1,dir:-1})+
+    '<p class="fine" style="margin-top:13px">Referral first is the smallest path and the stickiest, the classic pattern: people who spend social capital on a brand stay. The No action bucket does not need more email, it needs a different offer, because the current one already failed them once.</p>'+LEGEND+'</div>';
+
+  /* ===== AUDIENCE ===== */
+  const segs=[];
+  FLAV.forEach(f=>OCC.forEach(o=>segs.push({f:f[1],o:o[1],n:c.e*f[2]/100*o[2]/100})));
+  segs.sort((a,b)=>b.n-a.n);
+  const big=segs[0].n;
+  P('p-aud').innerHTML='<div class="card"><h2>Age bands, asked once at step 3</h2>'+
+    '<div class="bhdr">Of <b>'+nf(c.e)+' entrants</b>. Bands verbatim from the build, with “Rather not” counting as an answer.<span class="dag">&dagger;</span></div>'+
+    table('aud',[{l:'Band'},{l:'Entrants'},{l:'Share'},{l:'Most chosen pour',sort:false}],
+      AGES.map(a=>({c:['<span class="mn">'+esc(a[1])+'</span><span class="md">key: '+a[0]+'</span>',
+        '<span class="big">'+nf(c.e*a[2]/100)+'</span>',
+        '<span class="tnum">'+rate(a[2],c.e*a[2]/100)+'</span><span class="den">of entrants</span>',
+        esc(AGE_PICK[a[0]])+'<span class="dag">&dagger;</span>'],sv:[0,c.e*a[2]/100,a[2],0]})),{i:1,dir:-1})+
+    '<p class="fine" style="margin-top:13px">The cans and the peanut butter recruit the youngest band, the bourbon indexes oldest. Each band gets its own welcome flow on day one, because the answer was volunteered on day zero.</p></div>'+
+    '<div class="card"><h2>The cross tab is the actual asset</h2>'+
+    '<div class="bhdr">Of <b>'+nf(c.e)+' entrants</b>, the largest declared segments. Together the two answers name a person, a moment and a next message.</div>'+
+    table('seg',[{l:'Jar'},{l:'Occasion',sort:false},{l:'Records'},{l:'Share'}],
+      segs.slice(0,8).map(s=>({c:['<span class="mn">'+esc(s.f)+'</span>',esc(s.o),
+        '<span class="big">'+nf(s.n)+'</span>','<span class="tnum">'+rate(s.n/c.e*100,s.n)+'</span>'],sv:[0,0,s.n,s.n]})),{i:2,dir:-1})+
+    '<p class="fine" style="margin-top:13px">'+(big>=50
+      ?'The largest segment holds <b>'+nf(big)+' records</b>, enough to mail against and read a result from.'
+      :'The largest segment holds <b>'+nf(big)+' records</b>. That is a direction, not a mailing list. Around <b>'+usd(Math.ceil(SPEND*(50/Math.max(big,0.01))/500)*500)+'</b> of spend the top segment crosses fifty records and becomes something you can send to and measure.')+'</p></div>'+
+    '<div class="card"><h2>What a record on file actually contains</h2>'+
+    '<ul class="tt">'+
+    '<li><b>S.flavor</b> and <b>S.occ</b>, two declared preferences from ten and six options</li>'+
+    '<li><b>S.ageBand</b>, one of six bands including Rather not</li>'+
+    '<li><b>S.email</b> with <b>S.optEmail</b> consent, and <b>S.optSms</b> as a separate settings toggle, never an entry gate</li>'+
+    '<li><b>S.age</b>, the 21 or over affirmation, asked once</li>'+
+    '<li>The <b>JAR15 token</b>, one code that is both the merch discount and the referral parameter</li>'+
+    '<li>The running <b>feed</b>, every earn and spend with its event name</li></ul>'+
+    '<p class="fine" style="margin-top:13px">Two declared answers, an age band, a consented channel and a joinable token per record, times '+nf(c.e)+'. The drawing is the reason the database exists, but it is not the asset.</p>'+LEGEND+'</div>';
+
+
+  /* ===== PLAN ===== */
+  (function(){
+    const budgets=[1000,5000,10000,25000];
+    const rows=budgets.map(b=>{
+      const e2=b/CPM*1000*R.ctr/100*R.s1/100*R.s2/100*R.s3/100;
+      return [usd(b),Math.round(e2),Math.round(e2*0.22*0.26)+' in top segment', b===SPEND?'#3FD0E8':null];
+    });
+    const seg=c.e*0.22*0.26;
+    P('p-plan').innerHTML='<div class="card"><h2>What the next budget buys</h2>'+
+      '<p class="sub">Entered records by monthly spend, same market, same rates. The current selection is cyan. The threshold that matters is fifty records in the largest declared segment, the floor for mailing a segment and reading a result.</p>'+
+      colChart(rows)+
+      '<p class="fine">'+(seg>=50
+        ?'At the current spend the top segment already clears fifty. The next constraint is creative variety per segment, not volume.'
+        :'At the current spend the top segment holds about '+nf(seg)+' records. Around '+usd(Math.ceil(SPEND*(50/Math.max(seg,.01))/500)*500)+' it crosses fifty and segment level flows switch on.')+'</p></div>'+
+
+      '<div class="card"><h2>The levers, ranked by what they move</h2>'+
+      table('lev',[{l:'Lever'},{l:'Moves'},{l:'From'},{l:'The move'}],[
+        {c:['<span class="mn">Welcome offer with a real discount</span><span class="md">The break even gap lives here</span>','<span class="big gold">Payback month</span>','<span class="tnum">'+pc(R.mord)+' order rate</span>','Test $15 flat vs the current $15 off $75. The threshold is doing the damage'],sv:[0,3,0,0]},
+        {c:['<span class="mn">Kill the password at entry</span><span class="md">Highest abandonment field that exists, 10.5 percent</span>','<span class="big">Entry rate</span>','<span class="tnum">'+pc(R.s3)+' step 2 to submit</span>','Magic link entry. The build is already passwordless, keep it that way'],sv:[0,2,0,0]},
+        {c:['<span class="mn">SMS at the moment of the win</span><span class="md">Consent spikes when the prize is live</span>','<span class="big">SMS base</span>','<span class="tnum">'+pc(R.sms)+' opt in</span>','Ask again on the Friday draw notification, not at entry'],sv:[0,1,0,0]},
+        {c:['<span class="mn">Retarget the code holders</span><span class="md">Copied JAR15, never opened the store</span>','<span class="big">Merch orders</span>','<span class="tnum">'+nf(c.e*R.p_code/100)+' waiting</span>','The 14 day expiry is a built in urgency campaign nobody has to invent'],sv:[0,1,0,0]}
+      ],{i:1,dir:-1})+'</div>'+
+
+      '<div class="card"><h2>Where the next buy goes</h2>'+
+      '<p class="sub">Where the next wave of records comes from, in order of how defensible the targeting is.</p>'+
+      '<ul class="tt">'+
+      '<li><b>Lookalike seeded from JAR15 redeemers.</b> The strongest possible seed: people who entered, held the code and spent. At '+nf(c.mord)+' redeemers the seed is thin, and the platform minimum is about a hundred, which is another argument for the bigger budget first.</li>'+
+      '<li><b>Davidson County next.</b> '+nf(745904*0.801*0.95)+' adults 21 and over, an Ole Smoky venue downtown, and the same creative works. Knox after that.</li>'+
+      '<li><b>Kentucky and North Carolina before Georgia and Alabama.</b> Both expressly permit retailer loyalty on alcohol, so the club mechanics survive the border. Georgia and Alabama prohibit them, and the page should say so rather than find out in legal review.</li>'+
+      '<li><b>Age band creative variants.</b> The cans creative for 21 to 24, the bourbon creative for 55 plus, same funnel behind both. The band was volunteered at entry, so the split costs nothing.</li>'+
+      '<li><b>The write in mine.</b> Every Something else answer is a person naming a gap in the range. Read them monthly, and when ten people name the same thing, that is a product signal no survey vendor sells.</li></ul>'+LEGEND+'</div>'+
+
+      '<div class="card"><h2>Ninety days out</h2>'+
+      table('road',[{l:'Days'},{l:'Do',sort:false},{l:'Read',sort:false},{l:'Decide',sort:false}],[
+        {c:['<span class="mn">1 to 30</span>','Run the '+usd(SPEND)+' test as configured','CPA, entry rate, code copies, day 7 first actions','Kill or scale at day 21, not day 30, the learning phase eats the first week'],sv:[0,30,0,0]},
+        {c:['<span class="mn">31 to 60</span>','Scale the winning age band, launch the welcome offer test','Merch order rate against the '+pc(c.needRate)+' break even rate','Which offer clears the gap, flat discount or threshold'],sv:[0,60,0,0]},
+        {c:['<span class="mn">61 to 90</span>','Second market, lookalike from redeemers, geo holdout','Incremental lift against the holdout, day 90 engaged rate','Whether the model earns a real budget line next quarter'],sv:[0,90,0,0]}
+      ],{i:0,dir:1})+
+      '<p class="fine" style="margin-top:13px">The geo holdout in the third month is the whole credibility play: pick matched counties, keep the spend out of them, and report incremental, then attributed, in that order. If those two numbers are ever quoted the other way round, the wrong one is being defended.</p></div>';
+  })();
+
+
+  /* ===== EVIDENCE ===== */
+  P('p-evid').innerHTML='<div class="card"><h2>The sources, and how far to trust them</h2>'+
+    '<p class="sub">Grade is how far a source deserves to be trusted, not how much it helps the argument. The D rows are the figures every loyalty deck quotes, listed here so they do not get quoted at you.</p>'+
+    '<div class="tw"><table class="dt"><thead><tr><th style="width:34px">Grade</th><th>Source</th><th style="width:44%">What it actually found</th></tr></thead><tbody>'+
+    SRC.map(s=>'<tr><td style="text-align:left"><i class="g-'+s[0].toLowerCase()+'">'+s[0]+'</i></td>'+
+      '<td style="text-align:left"><span class="mn">'+esc(s[1])+'</span><span class="md">'+esc(s[2])+'</span></td>'+
+      '<td style="text-align:left" class="fine">'+esc(s[3])+'</td></tr>').join('')+'</tbody></table></div>'+
+    '<p class="fine" style="margin-top:14px"><b class="g-a">A</b> peer reviewed, government or a controlled experiment. <b class="g-b">B</b> real platform data published by a vendor with an interest. <b class="g-c">C</b> company reported or trade press, self selected. <b class="g-d">D</b> secondhand or untraceable.</p></div>'+
+
+    '<div class="card"><h2>What this model cannot prove</h2><ul class="tt">'+
+    '<li><b>That members spend more because they are members.</b> The 12 to 18 percent member lift in every loyalty deck comes from an Accenture survey of 106 loyalty executives describing their own programs. Self reported and correlational. Members were already the heavier buyers.</li>'+
+    '<li><b>That the program works in a saturated category.</b> Bombaij and Dekimpe (<i>IJRM</i>, 2020) looked at 358 grocery banners across 27 countries and found program effects vanish where more than three quarters of competitors also run one. Spirits is not far off that.</li>'+
+    '<li><b>That pushing redemption pays.</b> Nastasoiu et al. (<i>JAMS</i>, 2021) simulated exactly that on Air Miles and got 2.61 percent more sales against 2.75 percent more cost. Net negative.</li>'+
+    '<li><b>That heavy buyers move at all.</b> Liu (<i>Journal of Marketing</i>, 2007) found no measurable effect on them. Whatever this earns, it earns from light and moderate buyers.</li>'+
+    '<li><b>That the attribution above is causal.</b> Blake, Nosko and Tadelis (<i>Econometrica</i>, 2015) ran the eBay field experiment and found attributed returns badly overstated. Every number on the Convert tab is attributed, not incremental.</li></ul></div>'+
+
+    '<div class="card"><h2>So how would you know</h2><ol class="mvplan tt">'+
+    '<li><b>Hold out ten percent at entry.</b> Eligible, invited, never enrolled. The same design Taylor and Neslin used in 2005, and the only way the answer is causal rather than flattering.</li>'+
+    '<li><b>Read it at ninety days, not thirty.</b> The offer response and the habit are different effects on different clocks, and a thirty day read catches only the first.</li>'+
+    '<li><b>Geo test the distillery mechanics.</b> Check ins and tours cannot be held out at the person level without telling somebody they are in an experiment. Matched market is the answer.</li>'+
+    '<li><b>Report incremental, then attributed, in that order.</b> If the two are ever quoted the other way round, the number being defended is the wrong one.</li></ol></div>'+
+
+    '<div class="card"><h2>Ten numbers nobody publishes</h2>'+
+    '<p class="sub">Named rather than filled in. Every one of these is a place a deck usually invents a figure, and the first one is the single softest input in this entire console.</p>'+
+    '<ul class="tt">'+GAPS.map(g=>'<li>'+esc(g)+'</li>').join('')+'</ul></div>'+
+
+    '<div class="card"><h2>Still unverified in this build</h2>'+
+    '<div class="warn"><b>Marked, not filled in.</b> Flagged in the interface so none of them can quietly become a fact.</div>'+
+    '<ul class="tt">'+
+    '<li><b>The 21 and over count is derived.</b> Census QuickFacts publishes 18 and over per county and nothing finer, so a 95 percent deflator converts it. One call to the ACS subject tables replaces it with the measured figure.</li>'+
+    '<li><b>California spirits shipping.</b> Wine ships almost everywhere, distilled spirits reach roughly eleven states and DC. California is very likely closed to an out of state distiller, which would route every California bottle through a licensed retailer at supplier margin.</li>'+
+    '<li><b>The guided tour price.</b> Ole Smoky publishes tasting prices and no tour price anywhere on its own site, so no tour revenue appears here at all.</li>'+
+    '<li><b>The Tennessee loyalty reversal.</b> TABC\'s position on redeeming points against alcohol reportedly changed in July 2026, but the only account is a law firm summarising an informal conversation. No published memo exists.</li></ul>'+LEGEND+'</div>';
+
+
+  /* ===== SEGMENTS: does the declared answer predict the behaviour ===== */
+  (function(){
+    const avg=beh();
+    const row=(name,sub,share,ix,extra)=>{
+      const b=beh(ix), n=c.e*share/100;
+      return {c:['<span class="mn">'+esc(name)+'</span>'+(sub?'<span class="md">'+esc(sub)+'</span>':''),
+        '<span class="big">'+nf(n)+'</span>',
+        '<span class="tnum">'+rate(b.coupon,n)+'</span> '+ixTag(b.coupon/avg.coupon),
+        '<span class="tnum">'+usd(b.aov)+'</span> '+ixTag(b.aov/avg.aov),
+        '<span class="tnum">'+b.items.toFixed(1)+'</span>',
+        '<span class="tnum">'+usd(b.dAOV)+'</span> '+ixTag(b.dAOV/avg.dAOV),
+        '<span class="tnum">'+rate(b.tour,n)+'</span> '+ixTag(b.tour/avg.tour)],
+        sv:[0,n,b.coupon,b.aov,b.items,b.dAOV,b.tour]};
+    };
+    const cols=[{l:'Segment'},{l:'Records'},{l:'Used the code'},{l:'Merch order'},{l:'Items'},{l:'Delivery basket'},{l:'Bought a tasting'}];
+
+    const oGift=beh(F_IDX.orig,O_IDX.gift), cansWater=beh(F_IDX.cans,O_IDX.water);
+    const porch=beh(O_IDX.porch);
+
+    P('p-aud').innerHTML=
+      '<div class="card"><h2>Did the answer predict the behaviour</h2>'+
+      '<p class="sub">Every record declared a pour and an occasion before it ever bought anything. This is what those two answers are worth: the index chips read against the average record, where 100 is average, green is 115 or better and red is 85 or worse.</p>'+
+      '<div class="bhdr">Base rates across all <b>'+nf(c.e)+' records</b>: '+pc(avg.coupon)+' use the JAR15 code, '+usd(avg.aov)+' merch order at '+avg.items.toFixed(1)+' items, '+usd(avg.dAOV)+' delivery basket, '+pc(avg.tour)+' buy a tasting.<span class="dag">&dagger;</span></div>'+
+      '<h3>By what they said they pour</h3>'+
+      table('segf',cols,FLAV.map(f=>row(f[1],'key: '+f[0],f[2],F_IDX[f[0]])),{i:3,dir:-1})+
+      '<h3 style="margin-top:22px">By where the jar ends up</h3>'+
+      table('sego',cols,OCC.map(o=>row(o[1],'key: '+o[0],o[2],O_IDX[o[0]])),{i:6,dir:-1})+
+      '<h3 style="margin-top:22px">By age band</h3>'+
+      table('sega',[{l:'Band'},{l:'Records'},{l:'Used the code'},{l:'Merch order'},{l:'Items'},{l:'Delivery basket'},{l:'Bought a tasting'}],
+        AGES.map(a=>row(a[1]+'  ('+AGE_PICK[a[0]]+')','key: '+a[0],a[2],A_IDX[a[0]])),{i:3,dir:-1})+
+      LEGEND+'</div>'+
+
+      '<div class="card"><h2>Three findings worth acting on</h2>'+
+      '<p class="sub">Each one is a hypothesis the first real drawing settles in thirty days, and each one has a move attached. A segment nobody acts on is a chart.</p>'+
+      '<div class="spine">'+
+      '<div class="sr"><span class="sn">Gift buyers who drink Original<i>Highest merch order on the page</i></span>'+
+      '<span class="st"><i class="sb" style="width:100%">'+usd(oGift.aov)+'</i></span>'+
+      '<span class="sd"><b>'+oGift.items.toFixed(1)+' items</b>'+pc(oGift.coupon)+' used the code</span></div>'+
+      '<div class="sr"><span class="sn">Sparkling Lemonade at the lake<i>Highest delivery basket, lowest merch</i></span>'+
+      '<span class="st"><i class="sb" style="width:'+(cansWater.dAOV/oGift.aov*100).toFixed(0)+'%;background:linear-gradient(90deg,var(--volt2),var(--volt))">'+usd(cansWater.dAOV)+'</i></span>'+
+      '<span class="sd"><b>delivery</b>'+pc(cansWater.coupon)+' used the code</span></div>'+
+      '<div class="sr"><span class="sn">Anyone who said Backyard<i>Buys tastings at the highest rate</i></span>'+
+      '<span class="st"><i class="sb" style="width:'+(porch.tour/oGift.aov*100*8).toFixed(0)+'%;background:linear-gradient(90deg,var(--moss2),var(--moss))">'+pc(porch.tour)+'</i></span>'+
+      '<span class="sd"><b>tasting rate</b>'+ixTag(porch.tour/avg.tour)+' index</span></div></div>'+
+      '<ul class="tt" style="margin-top:18px">'+
+      '<li><b>Original plus gift is the merch segment.</b> About '+usd(oGift.aov)+' across '+oGift.items.toFixed(1)+' items, and '+pc(oGift.coupon)+' of them use the code, because a gift basket clears the $75 threshold without anyone trying. <b>The move:</b> a bundle, not a discount. They are already spending, so sell them the third shirt rather than fifteen dollars off.</li>'+
+      '<li><b>Sparkling Lemonade is the delivery segment.</b> About '+usd(cansWater.dAOV)+' a basket because nobody orders one can, and the lowest merch order on the page. <b>The move:</b> stop sending them the merch store. Send them the Instacart handoff with the eight pack prefilled.</li>'+
+      '<li><b>Backyard is the visit segment.</b> Tastings at '+pc(porch.tour)+', an index of '+Math.round(porch.tour/avg.tour*100)+' against the average. Cookout people are within driving distance and already planning a weekend. <b>The move:</b> the Hooch Hop passport, not a coupon.</li>'+
+      '<li><b>Blue Flame is the one to leave alone.</b> The lowest code use on the page. They buy on proof, not on price, and a discount on a 128 proof jar is money left on the table.</li></ul></div>'+
+
+      '<div class="card"><h2>What one record actually contains</h2>'+
+      '<ul class="tt">'+
+      '<li><b>S.flavor</b> and <b>S.occ</b>, two declared preferences from ten and six options</li>'+
+      '<li><b>S.ageBand</b>, one of six bands, with Rather not counting as an answer</li>'+
+      '<li><b>S.email</b> with <b>S.optEmail</b> consent, and <b>S.optSms</b> as a separate toggle, never an entry gate</li>'+
+      '<li><b>S.age</b>, the 21 or over affirmation, asked once</li>'+
+      '<li>The <b>JAR15 token</b>, one code that is both the merch discount and the ?ref= referral parameter, which is what makes every row above joinable</li></ul>'+
+      '<p class="fine" style="margin-top:12px">That last line is the whole reason this table can exist. Without one identifier joining the coupon to the record, none of these behaviours could be attributed to a declared answer at all.</p>'+LEGEND+'</div>';
+  })();
+
+
+  /* ===== JOURNEYS ===== */
+  (function(){
+    let SEG=window.__JSEG||'everyone';
+    const flav=SEG==='gift'?'orig':(SEG==='lake'?'cans':'apple');
+    const occ=SEG==='gift'?'gift':(SEG==='lake'?'water':(SEG==='porch'?'porch':'porch'));
+    const steps=(SEG==='quiet'?JOURNEY.quiet:JOURNEY.everyone);
+    const pool=SEG==='quiet'?c.e*R.p_none/100:(SEG==='everyone'?c.e:c.e*0.16);
+    const html=steps.map((s,i)=>{
+      let sub=s.s, body=s.m;
+      if(sub==='{FLAVOR_SUBJECT}')sub=FLAVOR_COPY[flav][0];
+      if(body==='{FLAVOR_BODY}')body=FLAVOR_COPY[flav][1];
+      if(sub==='{OCCASION_SUBJECT}')sub=OCC_COPY[occ][0];
+      if(body==='{OCCASION_BODY}')body=OCC_COPY[occ][1];
+      const sent=pool*(s.c==='sm'?R.sms/100:1)*Math.pow(0.97,i);
+      return '<div class="jstep'+(s.c==='sm'?' sms':'')+(SEG==='quiet'?' branch':'')+'" data-i="'+i+'">'+
+        '<button class="jhead" aria-expanded="false">'+
+        '<span class="jday">'+esc(s.d)+'</span>'+
+        '<span><span class="jsub">'+esc(sub)+'</span><span class="jtrig">'+esc(s.t)+'</span></span>'+
+        '<span class="jmeta"><b>'+nf(sent)+'</b>sent</span></button>'+
+        '<div class="jbody"><span class="jchan '+(s.c==='sm'?'sm':'em')+'">'+(s.c==='sm'?'SMS':'EMAIL')+'</span>'+
+        '<p class="jmsg">'+esc(body)+'</p>'+
+        '<p class="jwhy"><b>Why it exists.</b> '+esc(s.w)+'</p>'+
+        '<div class="jstat"><span>Sent <b>'+nf(sent)+'</b></span>'+
+        '<span>Open <b>'+pc(s.o)+'</b></span><span>Click <b>'+pc(s.cl)+'</b></span>'+
+        '<span>Clicks <b>'+nf(sent*s.o/100*s.cl/100)+'</b></span></div></div></div>';
+    }).join('');
+
+    P('p-jrny').innerHTML=
+      '<div class="card"><h2>The lifecycle, walked end to end</h2>'+
+      '<p class="sub">Every message below is written, triggered off a condition the funnel already records, and suppressed by a rule. Nothing sends yet. This is the flow you would hand an ESP on day one, and the reason it is here is that a loyalty program with no messaging is a points ledger nobody opens.</p>'+
+      '<div class="segchips" id="jsegs">'+SEGS.map(s=>
+        '<button class="segchip" aria-pressed="'+(SEG===s[0])+'" data-s="'+s[0]+'">'+esc(s[1])+'</button>').join('')+'</div>'+
+      '<div class="bhdr">'+esc(SEGS.find(s=>s[0]===SEG)[2])+'. About <b>'+nf(pool)+' records</b> walk this path.'+
+      (SEG==='everyone'?'':' Copy on the day 5 and day 10 sends changes with the segment.')+'</div>'+
+      '<div class="jw">'+html+'</div>'+
+      '<p class="fine" style="margin-top:16px"><b style="color:var(--ink)">Suppression, stated once.</b> The code emails stop the moment the code is redeemed. The draw SMS stops if they opt down to Friday only. Everything stops at ninety days of no engagement, because a list that never suppresses eventually cannot reach anybody. Open and click rates are modelled off Omnisend Food and Drink benchmarks and are marked as such.</p>'+LEGEND+'</div>'+
+
+      '<div class="card"><h2>What triggers what</h2>'+
+      '<p class="sub">Each of these is a field the entry form already writes. No new capture is needed to run any of the messages above.</p>'+
+      table('trig',[{l:'Trigger'},{l:'Field it reads'},{l:'Fires'},{l:'Suppresses'}],[
+        {c:['<span class="mn">Entry complete</span>','<span class="tnum">S.auth</span>','Day 0 email and SMS','Never'],sv:[0,0,0,0]},
+        {c:['<span class="mn">Code unredeemed</span>','<span class="tnum">S.wallet</span>','Day 2 and day 12','The moment it is used'],sv:[0,0,0,0]},
+        {c:['<span class="mn">Declared pour</span>','<span class="tnum">S.flavor</span>','Day 5, copy varies ten ways','If Something else, sends the write-in ask'],sv:[0,0,0,0]},
+        {c:['<span class="mn">Declared occasion</span>','<span class="tnum">S.occ</span>','Day 10, copy varies six ways','None'],sv:[0,0,0,0]},
+        {c:['<span class="mn">SMS consent</span>','<span class="tnum">S.optSms</span>','Draw results only','On STOP, permanently'],sv:[0,0,0,0]},
+        {c:['<span class="mn">No action, 7 days</span>','<span class="tnum">S.feed length</span>','The win-back branch','On any click or order'],sv:[0,0,0,0]},
+        {c:['<span class="mn">Unspent balance</span>','<span class="tnum">S.pts</span>','Day 30 monthly','Below 500 points'],sv:[0,0,0,0]},
+        {c:['<span class="mn">Referral cleared</span>','<span class="tnum">S.refs</span>','Thanks plus points','At the cap of three'],sv:[0,0,0,0]}
+      ])+LEGEND+'</div>';
+
+    SH.querySelectorAll('#jsegs .segchip').forEach(b=>b.addEventListener('click',()=>{
+      window.__JSEG=b.dataset.s; paintPanel();
+      SH.getElementById('live').textContent='Journey for '+b.textContent;
+    }));
+    SH.querySelectorAll('#p-jrny .jhead').forEach(b=>b.addEventListener('click',()=>{
+      const st=b.parentElement, on=st.classList.toggle('open');
+      b.setAttribute('aria-expanded',String(on));
+    }));
+  })();
+
+  wireTables();
+}
+
+(function(){
+  const sel=SH.getElementById('mkt');
+  sel.innerHTML='<optgroup label="States">'+ST.map((s,i)=>'<option value="S'+i+'">'+esc(s.n)+'</option>').join('')+
+    '</optgroup><optgroup label="Tennessee counties">'+
+    TN.map((cc,i)=>'<option value="C'+i+'">'+esc(cc[0])+' County ('+nf(cc[1])+')</option>').join('')+'</optgroup>';
+  sel.value='C0';
+  const sp=SH.getElementById('spend');
+  function upd(){
+    const v=sel.value;
+    const isState=v[0]==='S';
+    MKT=isState?{pop:ST[+v.slice(1)].pop,a:ST[+v.slice(1)].a,venue:ST[+v.slice(1)].venue}
+               :{pop:TN[+v.slice(1)][1],a:TN[+v.slice(1)][2],venue:+v.slice(1)===0};
+    const want=isState?'state':'county';
+    if(want!==SCALE){SCALE=want;STOPS=SCALES[want];SPEND=STOPS[0].v;}
+    const c=C();
+    SH.getElementById('scopeNote').textContent=
+      (sel.value==='C0'
+        ?'Sevier County is where Ole Smoky started, and The Holler still runs on the Parkway in Gatlinburg. Foot traffic is already arriving and going uncaptured. '
+        :(MKT.venue?'Ole Smoky operates a venue here, so foot traffic is already arriving and going uncaptured. '
+                   :'No venue here, every record has to be bought. '))+
+      (SCALE==='state'?'State scale, starts at $2,000.':'County scale, starts at $500.');
+    SH.getElementById('railStats').innerHTML=
+      '<div class="rstat"><span>Adults 21+</span><b>'+nf(c.a21)+'</b></div>'+
+      '<div class="rstat"><span>Sessions bought</span><b>'+nf(c.sess)+'</b></div>'+
+      '<div class="rstat"><span>Entered</span><b class="gold">'+nf(c.e)+'</b></div>'+
+      '<div class="rstat"><span>Cost per lead</span><b class="gold">'+usd2(c.cpa)+'</b></div>'+
+      '<div class="rstat"><span>Return, year one</span><b>'+c.roas[11].toFixed(2)+'x</b></div>'+
+      '<div class="rstat"><span>Payback</span><b>'+(c.payback?'Month '+c.payback:'12mo+')+'</b></div>';
+    paintAll();
+  }
+  function flash(b,t){const o=b.textContent;b.textContent=t;b.classList.add('done');
+    setTimeout(()=>{b.textContent=o;b.classList.remove('done');},1600);}
+  SH.getElementById('aReset').addEventListener('click',()=>{applyScen(1);sel.value='C0';SH.getElementById('cmpWrap').innerHTML='';STRIPPREV=null;upd();});
+  SH.getElementById('aSum').addEventListener('click',function(){
+    const t=execSummary();
+    if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>flash(this,'Copied to clipboard'),()=>flash(this,'Copy failed'));
+    else flash(this,'Clipboard unavailable');});
+  SH.getElementById('aCsv').addEventListener('click',function(){
+    const b=new Blob([csv()],{type:'text/csv'});const u=URL.createObjectURL(b);
+    const a=document.createElement('a');a.href=u;a.download='golden-jar-'+SCENS[SCEN].n.toLowerCase().replace(/[^a-z]+/g,'-')+'.csv';
+    document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);flash(this,'Downloaded');});
+  SH.getElementById('wh').addEventListener('input',e=>{
+    const i=+e.target.value, stop=STOPS[i];
+    if(SCALE==='county'&&stop.promote!==undefined){
+      /* Promote: switch the market to Tennessee statewide and move onto the
+         state ladder at the stop carrying the same dollars. */
+      sel.value='S0'; SCALE='state'; STOPS=SCALES.state; SPEND=STOPS[stop.promote].v;
+      MKT={pop:ST[0].pop,a:ST[0].a,venue:ST[0].venue};
+      paintAll();
+      logChange(stop.n+' at '+usd(SPEND)+'. Market promoted to Tennessee statewide');
+      SH.getElementById('live').textContent='Market promoted to Tennessee statewide.';
+    } else {
+      SPEND=stop.v; paintAll(); logChange('Spend set to '+usd(SPEND)+', '+stop.n);
+    }
+  });
+  SH.getElementById('aCmp').addEventListener('click',function(){
+    const keep=SPEND,kr=JSON.parse(JSON.stringify(R));
+    const rows=SCENS.map(s=>{
+      Object.keys(BASE).forEach(k=>R[k]=BASE[k]);Object.keys(s.o).forEach(k=>R[k]=s.o[k]);SPEND=STOPS[s.stop].v;
+      const c=C();return {n:s.n,spend:STOPS[s.stop].v,e:c.e,cpa:c.cpa,rev:c.rev,r12:c.roas[11],pb:c.payback||99,seg:c.e*0.22*0.26};});
+    SPEND=keep;Object.keys(kr).forEach(k=>R[k]=kr[k]);
+    const best=(f,up)=>rows.reduce((a,b)=>((up?f(b)>f(a):f(b)<f(a))?b:a));
+    const w=(v,b)=>v===b?' class="win"':'';
+    SH.getElementById('cmpWrap').innerHTML='<div class="card"><h2>All three flights, side by side</h2>'+
+      '<p class="sub">Best value in each column is green. The floor case is not a worse plan, it is the same plan with pessimistic inputs, which is the number to quote when someone asks what happens if nothing goes right.</p>'+
+      '<div class="tw"><table class="dt cmp"><thead><tr><th>Flight</th><th>Spend</th><th>Records</th><th>Per lead</th><th>30d revenue</th><th>12mo ROAS</th><th>Payback</th><th>Top segment</th></tr></thead><tbody>'+
+      rows.map(x=>'<tr><td><span class="mn">'+esc(x.n)+'</span></td><td>'+usd(x.spend)+'</td>'+
+        '<td'+w(x.e,best(r=>r.e,1).e)+'>'+nf(x.e)+'</td>'+
+        '<td'+w(x.cpa,best(r=>r.cpa,0).cpa)+'>'+usd2(x.cpa)+'</td><td>'+usd(x.rev)+'</td>'+
+        '<td'+w(x.r12,best(r=>r.r12,1).r12)+'>'+x.r12.toFixed(2)+'x</td>'+
+        '<td'+w(x.pb,best(r=>r.pb,0).pb)+'>'+(x.pb<99?'M'+x.pb:'none')+'</td>'+
+        '<td'+w(x.seg,best(r=>r.seg,1).seg)+'>'+nf(x.seg)+'</td></tr>').join('')+
+      '</tbody></table></div><p class="fine" style="margin-top:13px">Cost per lead barely moves across flights because the funnel rates carry it, not the budget. What the budget buys is <b>segment size</b>, and that is the column deciding whether any of this is mailable.</p></div>';
+    flash(this,'Shown below');});
+  sel.addEventListener('change',()=>{upd();logChange('Market: '+sel.options[sel.selectedIndex].text);});
+  /* Sticky state via a sentinel, so the condense is driven by geometry
+     rather than a scroll handler firing on every frame. */
+  const sent=SH.getElementById('stSent'), wrap=SH.getElementById('stripwrap');
+  if(window.IntersectionObserver&&sent){
+    new IntersectionObserver(([e])=>wrap.classList.toggle('stuck',!e.isIntersecting),
+      {threshold:0,rootMargin:'-'+(parseInt(getComputedStyle(host).getPropertyValue('--hdh'))||58)+4+'px 0px 0px 0px'}).observe(sent);
+  }
+  const h=(location.hash||'').replace('#','');
+  if(TABS.some(t=>t.k===h))TAB=h;
+  applyScen(1);upd();select(TAB);logChange('');LOG=[];logChange('');
+})();
+
 })();
 
 (function mvNav(){
@@ -6891,10 +7718,11 @@ function mvPaint(){
     const on=document.getElementById('view-model').classList.contains('hide');
     ['view-enter','view-confirm','view-me'].forEach(id=>{const e=document.getElementById(id);if(e)e.classList.add('hide');});
     document.getElementById('view-model').classList.toggle('hide',!on);
+    if(typeof codeBar==='function')codeBar(!on&&false);
     b.classList.toggle('on',on);
     document.body.classList.remove('onjar','onconv');
     if(!on&&typeof setView==='function')setView(1);
-    else{window.scrollTo({top:0,behavior:'auto'});mvPaint();}
+    else{window.scrollTo({top:0,behavior:'auto'});}
     if(typeof sClick==='function')try{sClick();}catch(e){}
   });
   ['v1','v2','v3'].forEach(id=>{const e=document.getElementById(id);

@@ -2,6 +2,18 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-08-08
+
+- `olesmoky` — the Golden Jar funnel grew a member program and a financial model.
+  Receipt capture that opens the phone camera and holds 100 points pending for 30
+  days. A tabbed member dashboard: 30 quests grouped by effort, a 40 item prize wall
+  across 16 categories, three levels, an account settings panel. New top level view,
+  The model: twelve sliders, fifteen graded sources, three incrementality scenarios,
+  and a verdict that concludes the program does not pay for itself on spend lift and
+  explains why that is the right answer. Research behind it ran six agents over
+  compliance, marketplace ranking, gamification mechanics and prize wall economics.
+  See `docs/session-2026-08-08-olesmoky-gamification.md`.
+
 ## 2026-08-07
 
 - `olesmoky` — the Golden Jar consumer sweepstakes funnel shipped at

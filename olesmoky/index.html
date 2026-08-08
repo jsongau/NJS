@@ -1043,6 +1043,23 @@ footer.ft a{color:var(--gold)}
 .dvform label{display:block;font:900 10.5px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
 .dvform select,.dvform input{width:100%;font:inherit;font-size:15px;padding:13px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
 .dvform select:focus,.dvform input:focus{outline:0;border-color:var(--shine);box-shadow:0 0 0 3px rgba(217,146,43,.18)}
+/* The three step delivery strip, on the page where somebody is deciding rather
+   than on the page where they already decided. A picture of the process beats a
+   row of logistics logos, because the question in their head is "how long", not
+   "which app". */
+.dsteps3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 12px}
+.dst{background:var(--mist);border:1px solid var(--line);border-radius:12px;padding:12px 11px;min-width:0}
+.dsi{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;
+  background:rgba(255,176,32,.1);color:var(--gold);margin-bottom:9px}
+.dst b{display:block;font:900 12.5px/1.2 var(--font);color:var(--ink)}
+.dst em{display:block;font-style:normal;font-size:10.5px;color:var(--muted-lo);margin-top:4px;line-height:1.35}
+.dst:last-child em{color:var(--moss);font-weight:800}
+@media(max-width:560px){.dsteps3{grid-template-columns:1fr;gap:6px}
+  .dst{display:flex;align-items:center;gap:11px;padding:10px 12px}
+  .dsi{margin-bottom:0;flex:0 0 auto}.dst em{margin-top:2px}}
+/* The receipt link is a second thought, not a second button. One line, always. */
+.dscan{display:block;width:100%;margin-top:9px;padding:12px;font-size:13px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;text-align:center}
 .dvbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dvbtns.one{grid-template-columns:1fr}
 /* One tappable row per store, two lines instead of four. Selecting one is the
@@ -3042,11 +3059,7 @@ body.entered .jwrap{max-width:296px}
         <p class="ordf">Each one opens that app’s own search for this bottle. Which store fills it, and whether they deliver alcohol where you are, is up to the app and your state.</p>
       </div>
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px">
-        <a class="btn-o" href="https://olesmoky.com/pages/find-a-jar" target="_blank" rel="noopener" id="findBtn">Find a shelf near me</a>
-        <a class="btn-o" href="https://olesmoky.com/pages/distillery" target="_blank" rel="noopener">Come see it made</a>
-      </div>
-      <div class="echo">Confirmation went to <b id="echoMail">you@email.com</b>. You are filed as <b id="echoStore">a new member</b>. Five names come out at the close of the entry period. Four take the kit, one takes the Smokies, and every entrant keeps the points and the code either way.</div>
+      
     </div>
   </div>
 
@@ -3173,29 +3186,23 @@ body.entered .jwrap{max-width:296px}
               aria-autocomplete="list" aria-expanded="false" aria-controls="dvList" spellcheck="false">
           </div>
           <ul class="lklist" id="dvList" role="listbox" hidden></ul>
-          <p class="lkfine" id="dvFine">8,771 towns and 13,439 ZIPs, ten states.</p>
         </div>
         <div class="stbox">
           <div class="stbh"><span class="rdtag" style="position:static">Carrying it near <b id="stZip">91792</b></span><span class="ill">From Ole Smoky&rsquo;s own Find a Jar</span></div>
           <ul class="stores" id="stores"></ul>
         </div>
+        <!-- One route out, not three. Three buttons make somebody choose a
+             logistics provider before they have chosen a bottle. -->
+        <div class="dsteps3" aria-label="How it arrives">
+          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#cOnline"/></svg></span><b>You order</b><em>On Instacart</em></div>
+          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#rBox"/></svg></span><b>A shopper picks it up</b><em>From a store that has it</em></div>
+          <div class="dst"><span class="dsi"><svg width="17" height="17" viewBox="0 0 24 24"><use href="#pCabin"/></svg></span><b>At your door</b><em id="etaDoor">In about 38 min</em></div>
+        </div>
         <div class="dvbtns one">
-          <a class="btn-p" id="ddBtn" href="https://www.doordash.com/search/store/7-eleven/" target="_blank" rel="noopener">
-            <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><use href="#sev"/></svg>
-            <span>Order from 7-Eleven on DoorDash</span></a>
+          <a class="btn-p" id="icBtn" href="https://www.instacart.com/store/s?k=ole+smoky+moonshine" target="_blank" rel="noopener">
+            <span id="icLab">Get it on Instacart</span></a>
         </div>
-        <div class="dvbtns">
-          <a class="btn-o" id="icBtn" href="https://www.instacart.com/" target="_blank" rel="noopener">Try Instacart</a>
-          <a class="btn-o" id="dashScan" href="#">Scan the Dasher receipt for points</a>
-        </div>
-        <a class="dxlink" id="dxDelivery" href="https://nathanjsong.com/olesmoky/distribution/" target="_blank" rel="noopener">
-          <span class="dxi"><svg width="17" height="17"><use href="#dxMap"/></svg></span>
-          <span class="dxt"><b>Why this store and not the one closer to you</b>The trade view behind this list: who stocks what, who can take a coupon, and where the gaps are.</span>
-        </a>
-        <div class="dvbtns">
-          <a class="btn-o" id="shelfBtn" href="https://olesmoky.com/pages/find-a-jar" target="_blank" rel="noopener">Find a shelf near me</a>
-          <a class="btn-o" href="https://olesmoky.com/pages/distillery" target="_blank" rel="noopener">Drive out to a holler</a>
-        </div>
+        <a class="btn-o dscan" id="dashScan" href="#">Snap the receipt, take the points</a>
       </div>
     </div>
   </div>
@@ -4058,6 +4065,7 @@ function setView(v,force){
   VISITED.add(v);
   const vb=$('#v'+v);if(vb)vb.classList.add('seen');
   ['view-enter','view-confirm','view-me'].forEach((id,i)=>{const e=$('#'+id);if(e)e.classList.toggle('hide',i!==v-1);});
+  if(v===2&&typeof window.paintDelivery==='function')try{window.paintDelivery();}catch(e){}
   [1,2,3].forEach(i=>{const b=$('#v'+i);if(b)b.setAttribute('aria-current',String(i===v));});
   window.scrollTo({top:0,behavior:'auto'});
   if(v===2){paintConfirm();if(typeof paintOrder==='function')paintOrder();}
@@ -4457,7 +4465,6 @@ function paintConfirm(){
     $('#matchArt').innerHTML='<use href="#'+f.art+'"/>';
     mn.textContent=f.name.replace(/&rsquo;/g,String.fromCharCode(8217)).replace(/&amp;/g,'&')+' it is.';
     $('#matchDesc').innerHTML=f.desc;
-    const fb=$('#findBtn');if(fb)fb.href='https://olesmoky.com/pages/find-a-jar';
   }
 }
 /* ---------------- ENTER ---------------- */
@@ -4482,9 +4489,11 @@ function enter(){
   $('#matchArt').innerHTML='<use href="#'+f.art+'"/>';
   $('#matchName').textContent=f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' it is.';
   $('#matchDesc').textContent=f.desc;
-  $('#findBtn').textContent='Find '+f.name+' near me';
-  $('#echoMail').textContent=S.email||'you@email.com';
-  $('#echoStore').textContent=vn;$('#homeStore').textContent=vn;
+  /* The confirmation paragraph was removed, so these are optional now. The
+     segment line in the account panel is the one that still has to be set. */
+  const em=$('#echoMail');if(em)em.textContent=S.email||'you@email.com';
+  const es=$('#echoStore');if(es)es.textContent=vn;
+  const hs=$('#homeStore');if(hs)hs.textContent=vn;
   const d=new Date(Date.now()+14*864e5);
   $('#expChip').textContent='Expires '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
   earn('join');earn('profile');earnE('join');S.auth=true;
@@ -4716,7 +4725,7 @@ $('#aiGo').addEventListener('click',()=>{
   $('#matchArt').innerHTML='<use href="#'+f.art+'"/>';
   $('#matchName').textContent=f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' it is.';
   $('#matchDesc').textContent=f.desc;
-  $('#echoMail').textContent=S.email;
+  const em2=$('#echoMail');if(em2)em2.textContent=S.email;
   $('#authMdl').classList.remove('on');
   seedDash();ledgers();acctUI();rewards();slots();
   setView(3);
@@ -5328,7 +5337,7 @@ function wireDelivery(){
       '<span class="stico"><svg width="15" height="15"><use href="#'+(s.dd?'sev':'rPin')+'"/></svg></span>'+
       '<span class="stn"><b>'+esc(s.n)+(s.mi?'<i>'+esc(s.mi)+' mi</i>':'')+'</b>'+
       '<span>'+esc(s.a.replace(/, CA /,', '))+'</span></span>'+
-      (s.dd?'<span class="stdd">DoorDash</span>':'<span class="stno">In store</span>')+
+      (s.dd?'<span class="stdd">Delivers</span>':'<span class="stno">In store</span>')+
       '<span class="sttick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.4l5 5 10-11"/></svg></span>'+
       '</button></li>').join('');
     box.querySelectorAll('.strow').forEach(btn=>btn.addEventListener('click',()=>{
@@ -5340,28 +5349,32 @@ function wireDelivery(){
   /* Picking a store has to change something or it is decoration. The chosen row
      drives the distance, the ETA and where the primary button actually goes. */
   function chosen(){const rows=STORES[zip()];return rows?rows[S.store||0]:null;}
+  /* Instacart resolves "ole smoky moonshine" plus one distinctive word. Verified
+     against their own indexed landing pages: the brand search and brand-plus-
+     flavour searches both return product results, so the term is built that way
+     rather than from our full product names, which they do not index. */
+  const IC_WORD={cans:'lemonade',cream:'butter pecan',apple:'apple',orig:'original',
+    caramel:'salty caramel',pb:'peanut butter',berry:'blackberry',flame:'blue flame',bourbon:'bourbon'};
+  function icTerm(){
+    const f=(FLAVORS.find(x=>x.k===S.flavor))||null;
+    const w=f?IC_WORD[f.k]:'';
+    return 'ole smoky moonshine'+(w?' '+w:'');
+  }
   function paint(){
     const city=($('#dvWhere').value||'').trim();
-    const term=encodeURIComponent(q());
     paintStores();
     const s=chosen();
     /* Distance comes from the store somebody picked. A radius selector was a
        setting nobody came here to set, and it fought the row they had chosen. */
     const mi=s&&s.mi?parseFloat(s.mi):2.4;
-    $('#etaMin').textContent=Math.round(18+mi*8.5)+' min';
+    const mins=Math.round(18+mi*8.5);
+    $('#etaMin').textContent=mins+' min';
     $('#etaSub').textContent=(s&&s.mi?s.mi:mi)+' miles out'+(s?', '+s.n:'');
-    const btn=$('#ddBtn'),lab=btn.querySelector('span');
-    if(s&&s.dd){
-      btn.classList.remove('off');
-      btn.href='https://www.doordash.com/search/store/'+encodeURIComponent(s.n)+'/';
-      lab.textContent='Order '+q().replace('Ole Smoky ','')+' from '+s.n+' on DoorDash';
-    }else{
-      btn.classList.add('off');
-      btn.href='https://olesmoky.com/pages/find-a-jar'+(city?'?q='+encodeURIComponent(city):'');
-      lab.textContent=(s?s.n+' is in store only. ':'')+'Check the shelf before you drive';
-    }
-    $('#icBtn').href='https://www.instacart.com/store/s?k='+term;
-    $('#shelfBtn').href='https://olesmoky.com/pages/find-a-jar'+(city?'?q='+encodeURIComponent(city):'');
+    const door=$('#etaDoor');if(door)door.textContent='In about '+mins+' min';
+    const btn=$('#icBtn'),lab=$('#icLab');
+    btn.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icTerm());
+    if(lab){const f=(FLAVORS.find(x=>x.k===S.flavor))||null;
+      lab.textContent=f?('Get '+f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' on Instacart'):'Get it on Instacart';}
   }
   /* Typeahead over the baked index. Keyboard first: arrows move, Enter takes,
      Escape closes, and the list is a real listbox so a screen reader gets the
@@ -5399,9 +5412,12 @@ function wireDelivery(){
   list.addEventListener('mousedown',e=>{const li=e.target.closest('.lkitem');
     if(li){e.preventDefault();take(hits[+li.dataset.i]);}});
   where.addEventListener('blur',()=>setTimeout(close,120));
-  ['ddBtn','icBtn'].forEach(id=>$('#'+id).addEventListener('click',()=>{
-    logIt&&logIt('member','left for '+(id==='ddBtn'?'DoorDash via 7-Eleven':'Instacart')+' · '+q()+' · no identity returns from that tap');
-  }));
+  /* The jar comes from question one, which is answered after this wires up, so
+     the button has to repaint when the view mounts rather than only at load. */
+  window.paintDelivery=paint;
+  $('#icBtn').addEventListener('click',()=>{
+    logIt&&logIt('member','left for Instacart searching '+icTerm()+' · no identity returns from that tap');
+  });
   const ds=$('#dashScan');
   if(ds)ds.addEventListener('click',e=>{e.preventDefault();
     setView(3);setTimeout(()=>{const s=$('#scanSec')||$('#view-me');if(s)s.scrollIntoView({behavior:'smooth',block:'center'});},240);});

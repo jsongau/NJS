@@ -395,11 +395,23 @@ body.cbaron .toast{bottom:104px}
 .ordb:focus-visible{outline:2px solid var(--shine);outline-offset:2px}
 /* Real marks, in their own square tile, contained and never recoloured or
    stretched. A brand logo squashed to fit is worse than no logo. */
-.obm{flex:0 0 auto;width:40px;height:40px;display:grid;place-items:center;border-radius:11px;
-  background:#fff;padding:7px;overflow:hidden}
-.obm img{width:100%;height:100%;object-fit:contain;display:block}
+/* Instacart is a 5:1 wordmark and DoorDash is a 1.5:1 symbol. A square tile
+   shrank the wordmark to nothing. A wide tile with contain lets each mark use
+   the room it actually needs. */
+.obm{flex:0 0 auto;width:88px;height:46px;display:grid;place-items:center;border-radius:9px;
+  background:#fff;padding:0;overflow:hidden}
+/* Explicit pixel caps, not percentages. A percentage max-height inside a grid
+   whose row is content sized is a cyclic dependency, and the browser resolves it
+   as none, which is why two of the three marks rendered cropped. */
+.obm img{max-width:70px;max-height:30px;width:auto;height:auto;display:block}
+/* One cap for all three made Instacart, a 5:1 wordmark, render at 13px tall next
+   to a 30px DoorDash arrow. Optical balance is not bounding boxes matching, it is
+   the amount of ink reading the same. Each mark gets its own cap. */
+#ordDD .obm img{max-height:27px;max-width:62px}
+#ordUE .obm img{max-height:32px;max-width:60px}
+#ordIC .obm img{max-height:20px;max-width:80px}
 .obm-old{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font:900 11px/1 var(--font);color:#fff}
-.ordb.dd .obm{background:#FF3008}.ordb.ue .obm{background:#06C167;color:#04301A}.ordb.ic .obm{background:#F36D00}
+
 .ordb b{font:900 12.5px/1 var(--font);color:var(--ink)}
 .ordb em{font-style:normal;font-size:10px;color:var(--muted-lo);text-align:center;line-height:1.35}
 .ordf{font-size:10.5px;line-height:1.5;color:var(--muted-lo);margin:11px 0 0}
@@ -520,7 +532,8 @@ body.onconv .mnav{display:flex}
 .mnapp.dd:hover{border-color:#FF3008}.mnapp.ue:hover{border-color:#06C167}.mnapp.ic:hover{border-color:#F36D00}
 .mnapp:focus-visible{outline:2px solid var(--shine);outline-offset:2px}
 .mnapp b{font:900 11.5px/1 var(--font);color:var(--ink)}
-.mnapp .obm{width:28px;height:28px}
+.mnapp .obm{width:56px;height:30px}
+.mnapp .obm img{max-width:48px;max-height:22px}
 .mnret{list-style:none;margin:11px 0 0;padding:9px 0 0;border-top:1px solid var(--line);display:grid;gap:7px}
 .mnret li{display:flex;align-items:center;gap:9px}
 .mri{flex:0 0 26px;width:26px;height:26px;display:grid;place-items:center;border-radius:7px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
@@ -1249,7 +1262,7 @@ footer.ft a{color:var(--gold)}
   box-shadow:0 0 14px rgba(255,210,74,.5);transition:width 1.1s cubic-bezier(.2,.9,.3,1)}
 .lvlnext{margin-top:9px;font-size:11.5px;line-height:1.5;color:rgba(251,246,236,.62)}
 .lvlnext b{color:#FFD24A;font-weight:900;font-size:13px}
-.lvlnext a{display:inline-block;margin-top:5px;color:#FFD24A;font-weight:900;font-size:11px;text-decoration:none}
+.lvlnext a{display:block;margin-top:6px;color:#FFD24A;font-weight:900;font-size:11px;text-decoration:none}
 .lvlnext a:hover{color:#FFF3D6}
 .lvlmore{margin-top:10px;background:none;border:0;padding:0;cursor:pointer;font:900 11px/1 var(--font);
   color:#FFD24A;text-align:left}
@@ -1260,6 +1273,258 @@ footer.ft a{color:var(--gold)}
 .lvlrow b em{font:900 10px/1 var(--font);font-style:normal;color:rgba(251,246,236,.45)}
 .lvlwhy{display:block;font-size:10.5px;line-height:1.45;color:rgba(251,246,236,.5);margin-top:5px}
 .lvlget{display:block;font-size:10.5px;line-height:1.45;color:#F5C542;margin-top:4px}
+
+.stwk{display:flex;align-items:flex-start;gap:26px;flex-wrap:wrap;padding:18px;border-radius:15px;
+  background:linear-gradient(120deg,rgba(255,176,32,.09),var(--mist) 62%);border:1px solid var(--line-hi)}
+.stbig{flex:0 0 auto}
+.stbig b{display:block;font:900 clamp(38px,5vw,54px)/1 var(--font);letter-spacing:-.04em;color:var(--gold);
+  font-variant-numeric:tabular-nums}
+.stbig span{display:block;font:900 11px/1 var(--font);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);margin-top:6px}
+.stbig em{display:block;font-style:normal;font-size:11.5px;color:var(--muted-lo);margin-top:6px}
+.stcal{flex:1 1 300px;min-width:0;max-width:430px;margin-left:auto}
+.stcalh{font:900 11.5px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.stcalw{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.stcalw span{text-align:center;font:900 8.5px/1 var(--font);letter-spacing:.06em;color:var(--muted-lo)}
+.stcells{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.stc{aspect-ratio:1;display:grid;place-items:center;border-radius:9px;background:var(--sand);
+  border:1px solid transparent;transition:background .25s,border-color .25s,color .25s}
+.stc.pad{background:none}
+.stc i{font-style:normal;font:800 11px/1 var(--font);color:var(--muted-lo)}
+.stc.fut{opacity:.3}
+.stc.on{background:var(--gold);box-shadow:0 2px 10px rgba(255,176,32,.26)}
+.stc.on i{color:#160F03;font-size:13px}
+.stc.miss{background:var(--red-soft);border-color:rgba(255,122,107,.32)}
+.stc.miss i{color:var(--red);font-size:13px}
+.stc.today{border-color:var(--gold-lite);box-shadow:0 0 0 2px rgba(255,231,184,.26)}
+.stkey{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font:700 9.5px/1 var(--font);color:var(--muted-lo)}
+.stkey span{display:inline-flex;align-items:center;gap:5px}
+.stkey i{width:9px;height:9px;border-radius:3px}
+.k-on{background:var(--gold)}
+.k-off{background:var(--red-soft);border:1px solid rgba(255,122,107,.4)}
+.k-tod{background:none;border:2px solid var(--gold-lite)}
+.stmiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px;margin-top:14px;align-items:stretch}
+.stm{padding:14px;border-radius:14px;background:var(--sand);border:1px solid var(--line);display:flex;flex-direction:column;
+  transition:border-color .3s,background .3s}
+.stm.got{border-color:rgba(110,231,160,.36);background:linear-gradient(150deg,rgba(110,231,160,.08),var(--sand) 62%)}
+.stmh{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
+.stmh b{font:900 13px/1 var(--font);color:var(--ink)}
+.stmh span{font:700 10.5px/1 var(--font);color:var(--muted-lo);font-variant-numeric:tabular-nums}
+.stm.got .stmh span{color:var(--moss)}
+.stmb{height:5px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin:9px 0 8px}
+.stmb i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--amber-mid),var(--gold));transition:width .8s cubic-bezier(.2,.9,.3,1)}
+.stm.got .stmb i{background:var(--moss)}
+.stmr{display:block;font-size:11px;line-height:1.45;color:var(--muted);margin-top:auto}
+.stacts{margin-top:16px}
+.stacts button{width:100%;padding:15px}
+.stacts button:disabled{opacity:.45;cursor:not-allowed;filter:saturate(.4)}
+
+/* restored: the card rewrite took these with it */
+.rdstamp{display:flex;align-items:flex-start;gap:11px;margin-top:12px;padding:13px 14px;border-radius:14px;
+  background:rgba(255,176,32,.07);border:1px solid rgba(255,210,74,.26)}
+.rdsi{flex:0 0 auto;display:grid;place-items:center;width:32px;height:32px;border-radius:10px;
+  background:var(--gold-soft);color:var(--gold)}
+.rdstamp b{display:block;font:900 12.5px/1.3 var(--font);color:var(--ink);margin-bottom:3px}
+.rdstamp>span:last-child{font-size:11.5px;line-height:1.5;color:var(--muted)}
+.rdcta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:13px;
+  text-decoration:none;padding:15px}
+.rdcta svg{transition:transform .2s}
+.rdcta:hover svg{transform:translateX(3px)}
+
+/* What a friend is actually worth, in the three numbers that matter, instead of
+   buried in a sentence above the link. */
+.refworth{display:flex;align-items:center;gap:10px;margin:14px 0 12px;padding:13px 12px;border-radius:14px;
+  background:linear-gradient(120deg,rgba(255,176,32,.10),var(--mist) 66%);border:1px solid rgba(255,210,74,.26)}
+.rwv{flex:1 1 0;text-align:center;min-width:0}
+.rwv b{display:block;font:900 19px/1 var(--font);letter-spacing:-.03em;color:var(--gold);font-variant-numeric:tabular-nums}
+.rwv span{display:block;font-size:10px;line-height:1.3;color:var(--muted-lo);margin-top:5px}
+.rwx{flex:0 0 1px;align-self:stretch;background:var(--line)}
+@media(max-width:520px){
+  .rdstop{padding:12px 11px}
+  .rdart{width:34px;height:34px}
+}
+
+/* ---------- DELIVERY, THREE STEPS ----------
+   The truck scene was one long picture that said "a thing is moving". Three
+   steps say who does what, and the only number anybody cares about sits at the
+   top instead of being implied by a cartoon. */
+.dstrip{padding:16px;border-radius:15px;background:var(--mist);border:1px solid var(--line);margin-bottom:14px}
+.dsh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.dseta{display:inline-flex;align-items:center;gap:8px;font:800 13px/1 var(--font);color:var(--muted)}
+.dseta b{font:900 15px/1 var(--font);color:var(--gold)}
+.dseta i{width:7px;height:7px;border-radius:50%;background:var(--moss);
+  box-shadow:0 0 0 4px rgba(110,231,160,.16);animation:pipPulse 1.9s ease-in-out infinite}
+.dsub{font-size:11px;color:var(--muted-lo)}
+.dsteps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dstep{display:grid;justify-items:center;text-align:center;gap:7px;padding:13px 9px;border-radius:13px;
+  background:var(--sand);border:1px solid var(--line);
+  animation:dsIn .5s cubic-bezier(.2,.9,.3,1.1) backwards;animation-delay:var(--sd,0s)}
+@keyframes dsIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.dsi{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;
+  background:rgba(255,255,255,.05);color:var(--muted-lo);transition:all .3s}
+.dsi svg{width:26px;height:26px}
+.dstep.on{border-color:rgba(255,210,74,.34);background:linear-gradient(160deg,rgba(255,176,32,.09),var(--sand) 62%)}
+.dstep.on .dsi{background:var(--gold-soft);color:var(--gold)}
+.dstep b{font:900 12px/1.25 var(--font);color:var(--ink)}
+.dstep em{font-style:normal;font-size:10.5px;line-height:1.4;color:var(--muted-lo)}
+.dsline{height:4px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:12px}
+.dsline i{display:block;height:100%;width:66%;border-radius:99px;
+  background:linear-gradient(90deg,var(--amber-mid),var(--gold));
+  animation:dsRun 2.6s cubic-bezier(.4,0,.6,1) infinite alternate}
+@keyframes dsRun{from{width:22%}to{width:78%}}
+@media(max-width:430px){
+  .dsteps{grid-template-columns:1fr;gap:8px}
+  .dstep{grid-template-columns:40px 1fr;justify-items:start;text-align:left;align-items:center;column-gap:11px}
+  .dstep .dsi{grid-row:span 2}
+}
+
+/* ---------- THE ROAD ----------
+   Not a price list. Three stops on an itinerary, numbered like a route card,
+   with the money left where it belongs: on their own booking page. A $5 tasting
+   printed under a $5,000 prize makes the prize look smaller, not the tasting
+   look cheaper. */
+.roadcard{position:relative;overflow:hidden;
+  background:linear-gradient(168deg,rgba(255,176,32,.07),var(--paper) 46%)}
+.roadcard::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 60% at 88% -6%,rgba(255,176,32,.14),transparent 62%)}
+.rdhead{position:relative;margin-bottom:18px}
+.rdkick{display:inline-flex;align-items:center;gap:8px;font:900 9.5px/1 var(--font);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.rdkick i{width:18px;height:1.4px;background:linear-gradient(90deg,var(--gold),transparent)}
+.roadcard h3{margin:11px 0 0;font:900 clamp(20px,2.5vw,25px)/1.14 var(--font);letter-spacing:-.028em;color:var(--ink)}
+.rdhead p{margin:10px 0 0;font-size:13.5px;line-height:1.62;color:var(--muted)}
+.rdstops{position:relative;list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rdstop{position:relative;display:block;padding:13px 14px;border-radius:15px;cursor:pointer;
+  background:var(--mist);border:1px solid var(--line);
+  transition:border-color .26s,background .26s,transform .26s cubic-bezier(.2,.9,.3,1.1)}
+.rdstop:hover,.rdstop:focus-visible{border-color:rgba(255,210,74,.5);background:var(--sand);
+  transform:translateX(3px);outline:none}
+.rdtop{display:flex;align-items:center;gap:11px}
+.rdn{flex:0 0 auto;font:900 10.5px/1 var(--font);color:var(--muted-lo);letter-spacing:.08em}
+.rdstop:hover .rdn{color:var(--gold-lite)}
+/* The mark lifts and turns a few degrees, so hovering feels like picking the
+   place up rather than highlighting a row. */
+.rdart{flex:0 0 auto;display:grid;place-items:center;width:38px;height:38px;border-radius:11px;
+  background:rgba(255,255,255,.045);color:var(--muted);
+  transition:color .3s,background .3s,transform .35s cubic-bezier(.2,.9,.3,1.4)}
+.rdstop:hover .rdart{color:var(--gold);background:var(--gold-soft);transform:translateY(-3px) rotate(-6deg) scale(1.08)}
+.rdname{flex:1 1 auto;min-width:0}
+.rdname b{display:block;font:900 15px/1.15 var(--font);letter-spacing:-.02em;color:var(--ink);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.rdname em{display:block;font-style:normal;font:800 9px/1 var(--font);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--gold-lite);margin-top:4px;opacity:.8}
+.rdgo{flex:0 0 auto;display:grid;place-items:center;color:var(--muted-lo);transition:color .26s,transform .26s}
+.rdstop:hover .rdgo{color:var(--gold);transform:translateX(3px)}
+.rdd{margin:9px 0 0;font-size:12px;line-height:1.5;color:var(--muted)}
+.rdmeta{display:flex;align-items:center;gap:7px;margin-top:8px;font:700 10px/1 var(--font);color:var(--muted-lo)}
+.rdopen{width:6px;height:6px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 3px rgba(110,231,160,.18)}
+.rddot{width:2.5px;height:2.5px;border-radius:50%;background:var(--muted-lo);opacity:.6}
+
+/* ---------- CHECK IN SURVEY ---------- */
+.cibx{max-width:452px;overflow:hidden}
+.cihero{padding:26px 22px 20px;text-align:center;
+  background:radial-gradient(120% 130% at 50% 0%,rgba(255,176,32,.24),transparent 68%),var(--sand);
+  border-bottom:1px solid var(--line)}
+.cistamp{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 12px;border-radius:50%;
+  background:var(--moss);color:#08140C;animation:ciPop .5s cubic-bezier(.2,.9,.3,1.4) backwards;
+  box-shadow:0 6px 26px rgba(110,231,160,.35)}
+@keyframes ciPop{from{opacity:0;transform:scale(.5) rotate(-14deg)}to{opacity:1;transform:none}}
+.cihero b{display:block;font:900 22px/1 var(--font);letter-spacing:-.02em;color:var(--ink)}
+.cihero span{display:block;margin-top:7px;font:900 12px/1 var(--font);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gold)}
+.cibody{padding:22px}
+.cibody h3{margin:0;font:900 18px/1.25 var(--font);letter-spacing:-.02em;color:var(--ink)}
+.cibody>p{margin:8px 0 18px;font-size:13px;line-height:1.6;color:var(--muted)}
+.cichoice{display:grid;gap:9px}
+.cichoice button{display:flex;align-items:center;gap:13px;padding:14px 15px;border-radius:14px;cursor:pointer;
+  background:var(--mist);border:1px solid var(--line);text-align:left;transition:all .2s}
+.cichoice button:hover{border-color:var(--gold);background:var(--sand);transform:translateY(-1px)}
+.cie{flex:0 0 auto;display:grid;place-items:center;width:38px;height:38px;border-radius:11px;
+  background:var(--sand);font-size:18px}
+.cichoice b{display:block;font:900 14px/1.2 var(--font);color:var(--ink)}
+.cichoice em{display:block;font-style:normal;font-size:11.5px;color:var(--muted-lo);margin-top:3px}
+.cifix{margin-top:16px;padding:15px;border-radius:14px;background:var(--mist);
+  border:1px solid var(--line);border-left:3px solid var(--gold)}
+.cifixh{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.cifixi{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:#fff;padding:6px}
+.cifixi img{width:100%;height:100%;object-fit:contain;display:block}
+.cifixh b{display:block;font:900 13px/1.2 var(--font);color:var(--ink)}
+.cifixh em{display:block;font-style:normal;font-size:11.5px;color:var(--gold-lite);margin-top:3px}
+.cifixgo{display:block;width:100%;text-align:center;text-decoration:none}
+.cifixf{display:block;margin-top:10px;font-size:10.5px;line-height:1.5;color:var(--muted-lo)}
+.cidone{width:100%;margin-top:14px}
+
+
+.stwk{display:flex;align-items:flex-start;gap:26px;flex-wrap:wrap;padding:18px;border-radius:15px;
+  background:linear-gradient(120deg,rgba(255,176,32,.09),var(--mist) 62%);border:1px solid var(--line-hi)}
+.stbig{flex:0 0 auto}
+.stbig b{display:block;font:900 clamp(38px,5vw,54px)/1 var(--font);letter-spacing:-.04em;color:var(--gold);
+  font-variant-numeric:tabular-nums}
+.stbig span{display:block;font:900 11px/1 var(--font);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);margin-top:6px}
+.stbig em{display:block;font-style:normal;font-size:11.5px;color:var(--muted-lo);margin-top:6px}
+/* Capped, because a month grid stretched across a wide panel gives you cells
+   the size of buttons and a calendar nobody reads as a calendar. */
+
+.stcalh{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font:900 11.5px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.stkey{display:flex;align-items:center;gap:6px;font:700 9.5px/1 var(--font);letter-spacing:.04em;
+  text-transform:none;color:var(--muted-lo)}
+.stkey i{width:9px;height:9px;border-radius:3px;margin-left:5px}
+.k-on{background:var(--gold)}
+.stcalw{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.stcalw span{text-align:center;font:900 8.5px/1 var(--font);letter-spacing:.06em;color:var(--muted-lo)}
+.stcells{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.stc{position:relative;aspect-ratio:1;display:grid;place-items:center;border-radius:9px;
+  background:var(--sand);border:1px solid transparent;transition:all .25s}
+.stc.pad{background:none}
+.stc i{font-style:normal;font:800 11px/1 var(--font);color:var(--muted-lo)}
+.stc.fut{opacity:.34}
+.stc.on{background:var(--gold);box-shadow:0 2px 10px rgba(255,176,32,.28)}
+.stc.on i{color:#160F03;font-size:13px}
+.stc.today{border-color:var(--gold-lite);box-shadow:0 0 0 2px rgba(255,231,184,.28)}
+.stacts button:disabled{opacity:.45;cursor:not-allowed;filter:saturate(.4)}
+.stmiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px;margin-top:14px;align-items:stretch}
+.stm{padding:14px;border-radius:14px;background:var(--sand);border:1px solid var(--line);
+  display:flex;flex-direction:column}
+.stm.got{border-color:rgba(110,231,160,.36);background:linear-gradient(150deg,rgba(110,231,160,.07),var(--mist) 62%)}
+.stmh{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
+.stmh b{font:900 13px/1 var(--font);color:var(--ink)}
+.stmh span{font:700 10.5px/1 var(--font);color:var(--muted-lo);font-variant-numeric:tabular-nums}
+.stm.got .stmh span{color:var(--moss)}
+.stmb{height:5px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin:9px 0 8px}
+.stmb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--amber-mid),var(--gold));transition:width .8s cubic-bezier(.2,.9,.3,1)}
+.stm.got .stmb i{background:var(--moss)}
+.stmr{display:block;font-size:11px;line-height:1.45;color:var(--muted);margin-top:auto}
+.stacts{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.stacts button{flex:1 1 200px}
+
+/* ---------- BADGES ---------- */
+.bsets{display:grid;gap:20px}
+.bset{padding:16px;border-radius:15px;background:var(--mist);border:1px solid var(--line)}
+.bset.full{border-color:rgba(255,210,74,.38);background:linear-gradient(150deg,rgba(255,176,32,.07),var(--mist) 58%)}
+.bseth{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:13px}
+.bseth h3{margin:0;font:900 15px/1.2 var(--font);letter-spacing:-.02em;color:var(--ink)}
+.bseth span{display:block;font-size:11.5px;color:var(--muted-lo);margin-top:3px}
+.bsetc{flex:0 0 auto;font:900 10.5px/1 var(--font);padding:6px 10px;border-radius:99px;
+  background:rgba(255,255,255,.06);color:var(--muted);font-variant-numeric:tabular-nums}
+.bsetc.full{background:var(--gold);color:#160F03}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:10px}
+.bdg{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:14px 11px;border-radius:13px;background:var(--paper);border:1px solid var(--line);
+  transition:border-color .22s,transform .22s;cursor:default}
+.bdg:hover,.bdg:focus-visible{border-color:var(--line-hi);transform:translateY(-2px);outline:none}
+.bdga{display:block;color:var(--muted-lo);opacity:.5;transition:all .3s}
+.bdga svg{width:46px;height:46px}
+.bdg.on .bdga{color:var(--gold);opacity:1;filter:drop-shadow(0 0 12px rgba(255,176,32,.45))}
+.bdg b{margin-top:9px;font:900 11.5px/1.25 var(--font);color:var(--muted);letter-spacing:-.01em}
+.bdg.on b{color:var(--ink)}
+.bdg span{margin-top:5px;font-size:10px;line-height:1.4;color:var(--muted-lo)}
+.bdg em{margin-top:8px;font:900 8px/1 var(--font);font-style:normal;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 8px;border-radius:99px;background:var(--gold);color:#160F03}
+@media(max-width:720px){
+      .bgrid{grid-template-columns:repeat(auto-fill,minmax(118px,1fr))}
+}
 
 /* ---------- QUEST TABS ---------- */
 .qtabs{display:flex;gap:4px;margin-bottom:10px;padding:5px;border-radius:14px;
@@ -2670,24 +2935,26 @@ body.entered .jwrap{max-width:296px}
 <main id="view-confirm" class="hide">
 
 <section class="wrap cf">
-  <aside class="card">
+  <aside class="card roadcard">
     <div class="cbd">
-      <span class="pill">Don’t want to wait on the draw</span>
-      <h3>Five names a month. Or just go this weekend.</h3>
-      <p style="font-size:13.5px;color:var(--muted);line-height:1.6;margin:10px 0 14px">One name comes out gold. If you’d rather not leave the Smokies up to a jar, the doors are open every day, and those same three stops are the Hooch Hop.</p>
-
-      <ul class="stops">
-        <li><span class="stn"><b>The Holler</b><em>903 Parkway Suite 128, Gatlinburg TN</em></span><span class="sth">10am to 11pm</span></li>
-        <li><span class="stn"><b>The Barrelhouse</b><em>650 Parkway, Gatlinburg TN</em></span><span class="sth">10am to 11pm</span></li>
-        <li><span class="stn"><b>The Barn</b><em>131 The Island Drive, Pigeon Forge TN</em></span><span class="sth">10am to 11pm</span></li>
-      </ul>
-      <div class="tprice">
-        <div><b>$5</b><span>Tasting, moonshine and whiskey, plus $5 off a bottle</span></div>
-        <div><b>$8</b><span>Premium tasting, three extra pours</span></div>
+      <div class="rdhead">
+        <span class="rdkick"><i></i>Three doors, one weekend</span>
+        <h3>You don&rsquo;t have to wait on the drawing.</h3>
+        <p>One name comes out gold every month. The road is open to everybody else, every day of the year, and it is the same three stops the winner walks.</p>
       </div>
-      <a class="btn-p" style="width:100%;margin-top:14px" href="https://olesmoky.com/pages/distillery" target="_blank" rel="noopener">Book a tour and tasting</a>
-      <p class="fine" style="margin-top:9px">Opens Ole Smoky&rsquo;s own distillery page. Guided tours run at The Holler and 6th &amp; Peabody and need a reservation. Tasting is 21 or over with ID.</p>
 
+      <ol class="rdstops"><li class="rdstop" data-go="https://olesmoky.com/pages/distillery" tabindex="0" role="link"><div class="rdtop"><span class="rdn">01</span><span class="rdart"><svg width="34" height="34"><use href="#vHoller"/></svg></span><span class="rdname"><b>The Holler</b><em>Gatlinburg</em></span><span class="rdgo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div><p class="rdd">Where it started. The original still, the tasting counter, and the room the company came out of.</p><div class="rdmeta"><i class="rdopen"></i>Open daily<span class="rddot"></span>Tours by reservation</div></li><li class="rdstop" data-go="https://olesmoky.com/pages/distillery" tabindex="0" role="link"><div class="rdtop"><span class="rdn">02</span><span class="rdart"><svg width="34" height="34"><use href="#vBarrel"/></svg></span><span class="rdname"><b>The Barrelhouse</b><em>Gatlinburg</em></span><span class="rdgo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div><p class="rdd">A quarter mile down the Parkway. The whiskey side of the house, char and time doing the work behind you.</p><div class="rdmeta"><i class="rdopen"></i>Open daily<span class="rddot"></span>Barrel room on site</div></li><li class="rdstop" data-go="https://olesmoky.com/pages/distillery" tabindex="0" role="link"><div class="rdtop"><span class="rdn">03</span><span class="rdart"><svg width="34" height="34"><use href="#vBarn"/></svg></span><span class="rdname"><b>The Barn</b><em>Pigeon Forge</em></span><span class="rdgo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div><p class="rdd">The loudest of the three. Live bluegrass on the patio most nights and the biggest room Ole Smoky owns.</p><div class="rdmeta"><i class="rdopen"></i>Open daily<span class="rddot"></span>Live music most nights</div></li></ol>
+
+      <div class="rdstamp">
+        <span class="rdsi"><svg width="17" height="17"><use href="#icPts"/></svg></span>
+        <span><b>Walk all three and the Hooch Hop is finished.</b>Same route, and the passport lives on your account instead of in your back pocket.</span>
+      </div>
+
+      <a class="btn-p rdcta" href="https://olesmoky.com/pages/distillery" target="_blank" rel="noopener" id="rdBook">
+        <span>Plan the weekend</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <p class="fine" style="margin-top:10px">Opens Ole Smoky&rsquo;s own distillery page, where the hours, the tours and the current prices live. Tasting is 21 or over with ID.</p>
     </div>
   </aside>
 
@@ -2699,16 +2966,33 @@ body.entered .jwrap{max-width:296px}
       <p style="font-size:14.5px;color:var(--muted);line-height:1.6;margin:10px auto 0;max-width:44ch" id="matchDesc"></p>
 
       <div class="ordbox">
-        <div class="mroad"><span class="rdtag">On its way</span><svg viewBox="0 0 520 250" id="roadSvg2" aria-label="A pickup truck carrying a jar along a road toward a house"></svg></div>
+        <div class="dstrip">
+          <div class="dsh"><span class="dseta"><i></i>As early as <b>10 minutes</b></span><span class="dsub">Once the store accepts it</span></div>
+          <ol class="dsteps">
+            <li class="dstep on" style="--sd:0s">
+              <span class="dsi"><svg viewBox="0 0 40 40"><rect x="9" y="12" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M14 12V9a6 6 0 0 1 12 0v3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M14 21h12" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span>
+              <b>You order</b><em>Their app, their store, their driver</em>
+            </li>
+            <li class="dstep on" style="--sd:.18s">
+              <span class="dsi"><svg viewBox="0 0 40 40"><path d="M4 26V16h16v10z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M20 19h7l5 5v2h-12z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><circle cx="11" cy="29" r="3" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="26" cy="29" r="3" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span>
+              <b>Somebody picks it up</b><em>Nearest store that has it in stock</em>
+            </li>
+            <li class="dstep" style="--sd:.36s">
+              <span class="dsi"><svg viewBox="0 0 40 40"><path d="M7 19l13-10 13 10v13a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M16 34V23h8v11" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/></svg></span>
+              <b>It is at your door</b><em>ID checked on the doorstep, every time</em>
+            </li>
+          </ol>
+          <div class="dsline"><i id="dsFill"></i></div>
+        </div>
         <div class="ordh"><b>Get it sent to you</b><span>We can’t sell it to you. They can.</span></div>
         <div class="ordzip">
           <label for="ordWhere">Your city or ZIP</label>
           <input id="ordWhere" type="text" inputmode="text" placeholder="91792" value="91792">
         </div>
         <div class="ordg">
-          <a class="ordb dd" id="ordDD" target="_blank" rel="noopener" href="https://www.doordash.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>DoorDash</b><em id="ddSub">Search</em></a>
-          <a class="ordb ue" id="ordUE" target="_blank" rel="noopener" href="https://www.ubereats.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Uber Eats</b><em id="ueSub">Search</em></a>
-          <a class="ordb ic" id="ordIC" target="_blank" rel="noopener" href="https://www.instacart.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Instacart</b><em id="icSub">Search</em></a>
+          <a class="ordb dd" id="ordDD" target="_blank" rel="noopener" href="https://www.doordash.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>DoorDash</b><em id="ddSub">Search</em></a>
+          <a class="ordb ue" id="ordUE" target="_blank" rel="noopener" href="https://www.ubereats.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Uber Eats</b><em id="ueSub">Search</em></a>
+          <a class="ordb ic" id="ordIC" target="_blank" rel="noopener" href="https://www.instacart.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Instacart</b><em id="icSub">Search</em></a>
         </div>
         <p class="ordf">Each one opens that app’s own search for this bottle. Which store fills it, and whether they deliver alcohol where you are, is up to the app and your state.</p>
       </div>
@@ -2725,7 +3009,7 @@ body.entered .jwrap{max-width:296px}
     <div class="cbd">
       <span class="pill g">Bring somebody</span>
       <h3>Every friend is another name in the jar.</h3>
-      <p style="font-size:13.5px;color:var(--muted);line-height:1.6;margin:10px 0 0">Anybody who enters on your link puts one more slip in for you, up to three. They get their own 250 points and their own $15 code.</p>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.6;margin:10px 0 0">Anybody who enters on your link puts one more slip in for you, up to three. They get 2,500 points of their own and their own $15 code.</p>
       <div class="bignum" id="refNum">1</div>
       <div style="font-size:12.5px;color:var(--muted);margin-top:2px">Name in the jar</div>
       <div class="slots" id="slots"><span class="slot you">YOU</span><span class="slot">+</span><span class="slot">+</span><span class="slot">+</span></div>
@@ -2735,6 +3019,13 @@ body.entered .jwrap{max-width:296px}
         <button id="shMail" aria-label="Share by email"><svg width="21" height="21" style="color:var(--muted)"><use href="#sMail"/></svg></button>
         <button id="shLink" aria-label="Copy link"><svg width="21" height="21" style="color:var(--muted)"><use href="#sLink"/></svg></button>
         <button id="shNat" aria-label="Share"><svg width="21" height="21" style="color:var(--muted)"><use href="#sShare"/></svg></button>
+      </div>
+      <div class="refworth">
+        <div class="rwv"><b>+500</b><span>points to you</span></div>
+        <div class="rwx"></div>
+        <div class="rwv"><b>+1</b><span>name in the jar</span></div>
+        <div class="rwx"></div>
+        <div class="rwv"><b>2,500</b><span>to them</span></div>
       </div>
       <div class="cpr"><input id="refLink" readonly value="nathanjsong.com/olesmoky?ref=XXXXX"><button class="btn-o sm" id="copyRef">Copy</button></div>
       <div class="refsim">
@@ -2922,14 +3213,10 @@ body.entered .jwrap{max-width:296px}
     <!-- Three levels, climbable, and it lives here rather than eating a section of
          the body. The bar between the current level and the next is the only part
          anybody reads, so it gets the room. -->
-    <div class="lvl" id="lvlBox">
-      <div class="lvlsteps" id="lvlSteps"></div>
-      <div class="lvlbar"><i id="lvlFill"></i></div>
-      <div class="lvlnext" id="lvlNext"></div>
-    </div>
+
 
     <div class="idshare">
-      <div class="idsh"><b>Pour one for a friend</b><span>200 points and one more name, each time somebody finishes on your link.</span></div>
+      <div class="idsh"><b>Pour one for a friend</b><span>500 points and one more name, each time somebody finishes on your link.</span></div>
       <div class="idpips" id="idPips"></div>
       <button class="btn-p idshb" id="meShare2"><svg width="17" height="17" aria-hidden="true"><use href="#sShare"/></svg><span>Open the share card</span></button>
       <span class="idcap" id="idCap">Capped at three for the life of the account.</span>
@@ -3050,9 +3337,22 @@ body.entered .jwrap{max-width:296px}
 
     <section class="pnl hide" id="pnl-secStreak">
       <div class="card"><div class="cbd">
-        <div class="kick">Keep coming back</div>
-        <h2 class="pnlh">Streak</h2>
-        <div class="stub">Lands in step 5, with the freeze. A streak that punishes one bad day loses the member it was built to keep.</div>
+        <div class="qhead">
+          <div><div class="kick">Keep coming back</div><h2 class="pnlh">Streak</h2></div>
+          <div class="qcap" id="stCap"></div>
+        </div>
+        <div class="stwk">
+          <div class="stbig" id="stBig"></div>
+          <div class="stcal">
+            <div class="stcalh" id="stMonth"></div>
+            <div class="stcalw"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+            <div class="stcells" id="stCells"></div>
+            <div class="stkey"><span><i class="k-on"></i>Checked in</span><span><i class="k-off"></i>Missed</span><span><i class="k-tod"></i>Today</span></div>
+          </div>
+        </div>
+        <div class="stmiles" id="stMiles"></div>
+        <div class="stacts"><button class="btn-p" id="stToday">Check in for today</button></div>
+        <p class="fine" style="max-width:64ch;margin-top:14px">One check-in a day, worth 50 points, and 150 more every seventh day in a row. Missing a day costs the run, not the points you already have.</p>
       </div></div>
     </section>
 
@@ -3072,9 +3372,12 @@ body.entered .jwrap{max-width:296px}
 
     <section class="pnl hide" id="pnl-secBadge">
       <div class="card"><div class="cbd">
-        <div class="kick">What you have collected</div>
-        <h2 class="pnlh">Badges</h2>
-        <div class="stub">Twenty-eight of them, landing in step 6. Unearned ones stay visible, because a badge you cannot see cannot pull you toward it.</div>
+        <div class="qhead">
+          <div><div class="kick">What you have collected</div><h2 class="pnlh">Badges</h2></div>
+          <div class="qcap" id="bCap"></div>
+        </div>
+        <div class="bsets" id="bSets"></div>
+        <p class="fine" style="max-width:66ch;margin-top:16px">Unearned badges stay on the wall rather than hiding until you qualify. A gap you can see is the thing that pulls you across it, and a set with one missing is worth more than five unrelated ones.</p>
       </div></div>
     </section>
 
@@ -3187,6 +3490,34 @@ body.entered .jwrap{max-width:296px}
   </div>
 </div></div>
 
+
+<div class="mdl" id="ciMdl"><div class="bx cibx">
+  <div class="cihero" id="ciHero">
+    <div class="cistamp" id="ciStamp"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.4l5 5 10-11"/></svg></div>
+    <b id="ciDay">Day 7</b>
+    <span id="ciPts">+25 points</span>
+  </div>
+  <div class="cibody" id="ciAsk">
+    <h3>Did you get into any Ole Smoky today?</h3>
+    <p>One tap. It decides what we send you next, and nothing else.</p>
+    <div class="cichoice">
+      <button data-a="yes"><span class="cie">&#127864;</span><b>I did</b><em>Poured, ordered or on site</em></button>
+      <button data-a="plan"><span class="cie">&#128197;</span><b>Planning to</b><em>Later today or this week</em></button>
+      <button data-a="no"><span class="cie">&#128683;</span><b>Not today</b><em>None in the house</em></button>
+    </div>
+  </div>
+  <div class="cibody hide" id="ciDone">
+    <h3 id="ciH"></h3>
+    <p id="ciP"></p>
+    <div class="cifix hide" id="ciFix">
+      <div class="cifixh"><span class="cifixi"><img id="ciMark" alt=""></span>
+        <span><b id="ciFixT">Instacart, search already filled in</b><em id="ciFixS"></em></span></div>
+      <a class="btn-p cifixgo" id="ciGo" target="_blank" rel="noopener">Open Instacart with this search</a>
+      <span class="cifixf">Whether they deliver alcohol where you are is up to the app and your state. We do not sell it and we do not see the order.</span>
+    </div>
+    <button class="btn-o cidone" data-close>Done</button>
+  </div>
+</div></div>
 
 <div class="mdl" id="setMdl"><div class="bx" style="max-width:520px">
   <div class="mh"><h3>Your account</h3><button class="x" data-close>&times;</button></div>
@@ -3350,7 +3681,7 @@ body.entered .jwrap{max-width:296px}
     </div>
     <div class="shprev"><b>What lands on their phone</b>
       <div class="q2" id="shMsgPrev"></div>
-      They get their own 250 points and their own $15 code. You get one more name in the jar, but only once they finish the quiz and confirm they are 21 or over. A click on its own is worth nothing.
+      They get 2,500 points of their own and their own $15 code. You get one more name in the jar, but only once they finish the quiz and confirm they are 21 or over. A click on its own is worth nothing.
     </div>
     <button class="btn-g" style="width:100%;margin-top:16px" id="shSim">Preview a friend joining</button>
   </div>
@@ -3474,11 +3805,15 @@ const KIT=[
  {img:'g_cooler', label:'Three jar cooler bag',cap:'<b>The bag.</b> The three jar cooler, insulated, holds a jar and whatever goes with it.'},
  {img:'g_coolie', label:'Icon can coolie',    cap:'<b>Thrown in.</b> The icon coolie rides along in the box with the shirt and the bag.'}
 ];
+/* The welcome grant is 2,500 on purpose. Endowed progress: a member handed a
+   real balance at the door treats the next reward as something they are most of
+   the way to, not something they are starting from zero on. It also makes every
+   other number on the board read as normal rather than enormous. */
 const PTS=[
- {k:'join',   t:'Joined the Jar Club',              v:100},
- {k:'profile',t:'Told us what you pour',            v:150},
+ {k:'join',   t:'Joined the Jar Club',              v:1500},
+ {k:'profile',t:'Told us what you pour',            v:1000},
  {k:'scan',   t:'Scanned a jar at the counter',     v:250},
- {k:'ref',    t:'A friend entered on your link',    v:200},
+ {k:'ref',    t:'A friend entered on your link',    v:500},
  {k:'receipt',t:'Snapped a receipt',                v:100},
  {k:'hop',    t:'Finished the Hooch Hop',           v:500}
 ];
@@ -3496,8 +3831,8 @@ let S={step:1,refPend:0,pendRef:[],flavor:null,occ:null,chan:null,ageBand:null,v
        tierPts:0,        /* points EARNED in a rolling 12 months. Spending never costs status. */
        joinedMs:0,       /* rank runs on tenure, which is a different axis to tier */
        activeMonths:0, checkins:0, tours:0,
-       streak:0, streakBest:0, streakFreeze:2, lastDayMs:0,
-       quests:{}, badges:{}, wall:{}, pendRcpt:0, monthEarned:0};
+       streak:0, streakBest:0, lastDayMs:0,
+       quests:{}, badges:{}, wall:{}, pendRcpt:0, monthEarned:0, stDays:{}};
 
 /* ============================================================
    TIERS AND RANKS  ·  two ladders, on purpose
@@ -3541,12 +3876,50 @@ function monthsIn(){return S.joinedMs?Math.max(0,Math.floor((Date.now()-S.joined
 const EARN_CEILING=6000;
 
 /* ---------- THE QUEST AND PRIZE DATA ---------- */
+const BADGES=[
+  {n:'First Bead',s:'start',d:'First jar code read, by scan or by mailed free code.',got:1},
+  {n:'Peckin\' the Cap',s:'start',d:'First distillery check-in.',got:1},
+  {n:'Hooch Hopper',s:'road',d:'Completed the digital Hooch Hop passport across The Holler, The Barrelhouse and The Barn.',got:0},
+  {n:'Three Hollers',s:'road',d:'Checked in at three different Ole Smoky locations, counting Nashville and Myrtle Beach.',got:1},
+  {n:'Ridge Runner',s:'road',d:'Checked in at every Ole Smoky location.',got:0},
+  {n:'Passed the Jar',s:'long',d:'Three referrals who joined and verified 21+.',got:0},
+  {n:'Thirty Days Runnin\'',s:'long',d:'Held the weekly engagement streak across a full 30-day window.',got:0},
+  {n:'From Can See to Can\'t See',s:'crowd',d:'Checked in at a location before noon and again at close the same day, or attended a full-day festival.',got:0},
+  {n:'Five Off the Run',s:'deep',d:'Logged tasting notes on five different Ole Smoky expressions.',got:1},
+  {n:'Cut a Shine',s:'crowd',d:'Attended a live music event at any location.',got:1},
+  {n:'Bluegrass Ear',s:'crowd',d:'Attended five live music sets.',got:0},
+  {n:'Mash-In',s:'crowd',d:'Attended a mash demonstration or seasonal mash-in event.',got:0},
+  {n:'Behind the Stills',s:'deep',d:'Completed a full guided distillery tour.',got:1},
+  {n:'Sittin\' a Spell',s:'deep',d:'Stayed 90 minutes or more on a single check-in, three separate times.',got:0},
+  {n:'Devil\'s Cut',s:'deep',d:'Found an in-app easter egg, an unmarked code, or an off-menu experience.',got:0},
+  {n:'Stump Hole',s:'deep',d:'Scanned the hidden quarterly marker at a location.',got:0},
+  {n:'Worm Box',s:'road',d:'Five location check-ins inside 30 days.',got:1},
+  {n:'Backins',s:'start',d:'Came back after a lapse of six months or more.',got:0},
+  {n:'First Frost',s:'start',d:'Completed your first full year of membership.',got:0},
+  {n:'Airish',s:'road',d:'Checked in at a Smokies location between December and February.',got:0},
+  {n:'Whistle Pig',s:'road',d:'First member through the door at a location on a given day.',got:0},
+  {n:'Boards and Bags',s:'crowd',d:'Played in a cornhole bracket.',got:0},
+  {n:'Set the Table',s:'crowd',d:'Brought four or more guests to a single event or check-in.',got:0},
+  {n:'Redd Up',s:'crowd',d:'Took part in an Ole Smoky community day: trail cleanup, Smokies conservation, wildfire relief, food.',got:0},
+  {n:'Long Sweetening',s:'long',d:'Five years of continuous membership.',got:0},
+  {n:'Char No. 4',s:'long',d:'Reached Angel\'s Share tier in a qualifying year.',got:0},
+  {n:'Kyarn Hauler',s:'road',d:'Checked in while a severe weather advisory was active at the venue.',got:0},
+  {n:'Outrun the Revenuer',s:'deep',d:'Claimed a flash drop or timed challenge within its first 60 minutes.',got:0}
+];
+const BSET=[
+  {k:'start',n:'Getting started',s:'The first of everything'},
+  {k:'road', n:'On the road',    s:'Turning up, and where'},
+  {k:'deep', n:'In deep',        s:'The ones that take knowing'},
+  {k:'crowd',n:'With people',    s:'Events, guests and the community day'},
+  {k:'long', n:'The long haul',  s:'Time, referrals and status'}
+];
+
 const QUESTS=[
-  {n:'Fill the Jar',p:500,c:'profile',r:'once',d:'Create an account and pass the 21+ gate.',m:'Acquisition and first-party data capture.'},
-  {n:'Flavor Profile',p:250,c:'profile',r:'once',d:'Answer eight questions: preferred flavors, cocktail vs neat vs shot, home state, nearest Ole Smoky location, favorite music, whether you own a grill, dog or no dog, and.',m:'First-party data capture.'},
-  {n:'Set Your Holler',p:300,c:'profile',r:'once',d:'Nominate a home location from the five venues and opt into email and SMS. Points post on double opt-in confirmation only. Pays 300 Jar Points.',m:'First-party data capture and retention.'},
+  {n:'Fill the Jar',p:600,c:'profile',r:'once',d:'Create an account and pass the 21+ gate.',m:'Acquisition and first-party data capture.'},
+  {n:'Flavor Profile',p:400,c:'profile',r:'once',d:'Answer eight questions: preferred flavors, cocktail vs neat vs shot, home state, nearest Ole Smoky location, favorite music, whether you own a grill, dog or no dog, and.',m:'First-party data capture.'},
+  {n:'Set Your Holler',p:400,c:'profile',r:'once',d:'Nominate a home location from the five venues and opt into email and SMS. Points post on double opt-in confirmation only. Pays 300 Jar Points.',m:'First-party data capture and retention.'},
   {n:'Mash Bill',p:150,c:'learn',r:'monthly',d:'A five-question monthly quiz on distilling, Appalachian vocabulary and Ole Smoky history.',m:'Retention.'},
-  {n:'Cut School',p:300,c:'learn',r:'once',d:'A four-part in-app lesson on heads, hearts and tails, with a short check at the end. Pays 300 Jar Points and unlocks the tasting-note journal.',m:'Retention and first-party data capture.'},
+  {n:'Cut School',p:400,c:'learn',r:'once',d:'A four-part in-app lesson on heads, hearts and tails, with a short check at the end. Pays 300 Jar Points and unlocks the tasting-note journal.',m:'Retention and first-party data capture.'},
   {n:'Read the Bead',p:150,c:'discover',r:'monthly',d:'Scan the code on a jar lid or neck tag in-app. Pays 150 Jar Points and 1 Draw Entry, capped at 5 scans per calendar month.',m:'Purchase velocity and repeat rate.'},
   {n:'Peckin\' the Cap',p:400,c:'visit',r:'daily',d:'Geofenced check-in at any Ole Smoky location. 400 Jar Points for your first ever check-in, 400 per location per day thereafter (2x at Singlings and above).',m:'Distillery footfall.'},
   {n:'Sittin\' a Spell',p:300,c:'visit',r:'weekly',d:'Stay 90 minutes or longer on a single location check-in. Pays 300 Jar Points, once per week. Dwell is measured by check-in and check-out taps, not by anything you order.',m:'Distillery footfall.'},
@@ -3569,51 +3942,52 @@ const QUESTS=[
   {n:'Keep the Fire',p:100,c:'streak',r:'weekly',d:'One qualifying non-consumption action per week (open the app and read, journal, browse events, complete a quest) keeps your streak alive.',m:'Retention.'},
   {n:'Thirty Days Runnin\'',p:300,c:'streak',r:'monthly',d:'Hold the weekly engagement streak across a full 30-day window for a 300 Jar Point bonus.',m:'Retention.'},
   {n:'Redd Up',p:1500,c:'event',r:'monthly',d:'Take part in an Ole Smoky community day: Smokies trail cleanup, conservation volunteering, wildfire relief, food drive.',m:'Retention and acquisition.'},
-  {n:'Haul It Home',p:10,c:'shop',r:'unlimited',d:'Earn 10 Jar Points per $1 of MERCHANDISE purchased on olesmoky.com or at any Ole Smoky retail counter.',m:'Repeat rate and purchase velocity on owned e-commerce.'},
+  {n:'Haul It Home',p:0,c:'shop',r:'unlimited',d:'Earn 10 Jar Points per $1 of MERCHANDISE purchased on olesmoky.com or at any Ole Smoky retail counter.',m:'Repeat rate and purchase velocity on owned e-commerce.'},
   {n:'Your Batch Day',p:500,c:'profile',r:'once',d:'Pays 500 Jar Points plus a tier-scaled gift, delivered in your birthday month rather than on the day so travelers can use it on a visit. Mash: sticker sheet and koozie.',m:'Retention.'},
   {n:'The Free Pour Postcard',p:0,c:'discover',r:'unlimited',d:'Mail a hand-written 3x5 card with your name, address, member ID and date of birth to Ole Smoky, The Jar Club Free Pour, and receive 1 Draw Entry per card plus, on.',m:'Acquisition.'}
 ];
 const WALL=[
-  {n:'Jar Club sticker sheet',p:700,c:'Patches and pins',v:3.49,g:''},
-  {n:'Jar lid enamel pin',p:1000,c:'Patches and pins',v:4.99,g:''},
-  {n:'Neoprene can koozie',p:1000,c:'Koozies',v:4.99,g:''},
-  {n:'Thump Keg woven patch',p:1200,c:'Patches and pins',v:5.99,g:''},
-  {n:'Whiskey pour spout 2-pack',p:1200,c:'Barware',v:5.99,g:''},
-  {n:'Stave bottle-opener keychain',p:1600,c:'Small goods',v:7.99,g:''},
-  {n:'Holler bandana',p:1600,c:'Small goods',v:7.99,g:''},
-  {n:'3D still shot glass',p:2000,c:'Glassware',v:9.99,g:''},
-  {n:'Wood-slice coaster set of 4',p:2200,c:'Barware',v:10.99,g:''},
-  {n:'Jar Club playing cards',p:2400,c:'Games',v:11.99,g:''},
-  {n:'Mash-pattern crew socks',p:2400,c:'Small goods',v:11.99,g:''},
-  {n:'Engraved copper jigger',p:3000,c:'Barware',v:14.95,g:''},
-  {n:'Rickhouse rocks glass',p:3000,c:'Glassware',v:14.99,g:''},
-  {n:'3-jar soft cooler',p:3000,c:'Coolers',v:14.99,g:''},
-  {n:'Ice sphere mould',p:3400,c:'Barware',v:16.99,g:''},
-  {n:'6-jar soft cooler',p:4000,c:'Coolers',v:19.99,g:''},
-  {n:'Barrel-top tin tacker sign',p:4000,c:'Signs',v:19.99,g:''},
-  {n:'Dog collar with jar-lid tag',p:4000,c:'Small goods',v:19.99,g:''},
-  {n:'Denim dad hat',p:5000,c:'Hats',v:24.99,g:''},
-  {n:'Ribbed knit beanie',p:5000,c:'Hats',v:24.99,g:''},
-  {n:'Logo bar rail mat',p:5000,c:'Barware',v:24.99,g:'Singlings'},
-  {n:'Boston shaker set',p:5000,c:'Barware',v:24.99,g:'Singlings'},
-  {n:'Front-of-Line pass, 4 uses',p:5000,c:'Experiences',v:25.00,g:'Singlings'},
-  {n:'Waxed canvas stillhouse apron',p:5800,c:'Small goods',v:28.99,g:'Singlings'},
-  {n:'Jar Club graphic tee',p:6000,c:'Tees',v:29.99,g:''},
-  {n:'Foam-front trucker hat',p:6600,c:'Hats',v:32.99,g:''},
-  {n:'Camo bucket hat',p:7000,c:'Hats',v:34.99,g:'Singlings'},
-  {n:'Rope-brim snapback',p:8000,c:'Hats',v:39.99,g:'Singlings'},
-  {n:'Co-branded 20oz insulated tumbler',p:9000,c:'Drinkware',v:45.00,g:'Thump Keg'},
-  {n:'Behind the Stills guided tour for two',p:10000,c:'Experiences',v:50.00,g:'Singlings'},
-  {n:'Heavyweight pullover hoodie',p:12000,c:'Hoodies',v:59.99,g:'Thump Keg'},
-  {n:'Industrial work shirt',p:12000,c:'Workwear',v:59.99,g:'Thump Keg'},
-  {n:'Brushed heavyweight flannel',p:13000,c:'Flannels',v:64.99,g:'Thump Keg'},
-  {n:'Boxed decanter and glass set',p:14000,c:'Glassware',v:69.99,g:'Thump Keg'},
-  {n:'Private mixology class for four',p:20000,c:'Experiences',v:100.00,g:'Hearts'},
-  {n:'Custom cornhole board set',p:40000,c:'Games',v:199.99,g:'Hearts'},
-  {n:'Engraved barrel head',p:40000,c:'Signs',v:199.99,g:'Hearts'},
-  {n:'Custom Jar Club neon sign',p:60000,c:'Signs',v:299.00,g:'Rickhouse'},
-  {n:'Angel\'s Share Weekend in the Smokies for two',p:120000,c:'Experiences',v:600.00,g:'Rickhouse'},
-  {n:'Barrel Pick Panel seat',p:250000,c:'Experiences',v:1250.00,g:'Angel\'s Share'}
+  {n:'$15 merch store credit',p:5000,c:'Small goods',v:15.00,g:''},
+  {n:'Jar Club sticker sheet',p:1150,c:'Patches and pins',v:3.49,g:''},
+  {n:'Jar lid enamel pin',p:1650,c:'Patches and pins',v:4.99,g:''},
+  {n:'Neoprene can koozie',p:1650,c:'Koozies',v:4.99,g:''},
+  {n:'Thump Keg woven patch',p:2000,c:'Patches and pins',v:5.99,g:''},
+  {n:'Whiskey pour spout 2-pack',p:2000,c:'Barware',v:5.99,g:''},
+  {n:'Stave bottle-opener keychain',p:2650,c:'Small goods',v:7.99,g:''},
+  {n:'Holler bandana',p:2650,c:'Small goods',v:7.99,g:''},
+  {n:'3D still shot glass',p:3350,c:'Glassware',v:9.99,g:''},
+  {n:'Wood-slice coaster set of 4',p:3650,c:'Barware',v:10.99,g:''},
+  {n:'Jar Club playing cards',p:4000,c:'Games',v:11.99,g:''},
+  {n:'Mash-pattern crew socks',p:4000,c:'Small goods',v:11.99,g:''},
+  {n:'Engraved copper jigger',p:5000,c:'Barware',v:14.95,g:''},
+  {n:'Rickhouse rocks glass',p:5000,c:'Glassware',v:14.99,g:''},
+  {n:'3-jar soft cooler',p:5000,c:'Coolers',v:14.99,g:''},
+  {n:'Ice sphere mould',p:5650,c:'Barware',v:16.99,g:''},
+  {n:'6-jar soft cooler',p:6650,c:'Coolers',v:19.99,g:''},
+  {n:'Barrel-top tin tacker sign',p:6650,c:'Signs',v:19.99,g:''},
+  {n:'Dog collar with jar-lid tag',p:6650,c:'Small goods',v:19.99,g:''},
+  {n:'Denim dad hat',p:8300,c:'Hats',v:24.99,g:''},
+  {n:'Ribbed knit beanie',p:8300,c:'Hats',v:24.99,g:''},
+  {n:'Logo bar rail mat',p:8300,c:'Barware',v:24.99,g:'Singlings'},
+  {n:'Boston shaker set',p:8300,c:'Barware',v:24.99,g:'Singlings'},
+  {n:'Front-of-Line pass, 4 uses',p:8300,c:'Experiences',v:25.00,g:'Singlings'},
+  {n:'Waxed canvas stillhouse apron',p:9650,c:'Small goods',v:28.99,g:'Singlings'},
+  {n:'Jar Club graphic tee',p:10000,c:'Tees',v:29.99,g:''},
+  {n:'Foam-front trucker hat',p:11000,c:'Hats',v:32.99,g:''},
+  {n:'Camo bucket hat',p:11650,c:'Hats',v:34.99,g:'Singlings'},
+  {n:'Rope-brim snapback',p:13300,c:'Hats',v:39.99,g:'Singlings'},
+  {n:'Co-branded 20oz insulated tumbler',p:15000,c:'Drinkware',v:45.00,g:'Thump Keg'},
+  {n:'Behind the Stills guided tour for two',p:16650,c:'Experiences',v:50.00,g:'Singlings'},
+  {n:'Heavyweight pullover hoodie',p:20000,c:'Hoodies',v:59.99,g:'Thump Keg'},
+  {n:'Industrial work shirt',p:20000,c:'Workwear',v:59.99,g:'Thump Keg'},
+  {n:'Brushed heavyweight flannel',p:21650,c:'Flannels',v:64.99,g:'Thump Keg'},
+  {n:'Boxed decanter and glass set',p:23300,c:'Glassware',v:69.99,g:'Thump Keg'},
+  {n:'Private mixology class for four',p:33300,c:'Experiences',v:100.00,g:'Hearts'},
+  {n:'Custom cornhole board set',p:66600,c:'Games',v:199.99,g:'Hearts'},
+  {n:'Engraved barrel head',p:66600,c:'Signs',v:199.99,g:'Hearts'},
+  {n:'Custom Jar Club neon sign',p:99550,c:'Signs',v:299.00,g:'Rickhouse'},
+  {n:'Angel\'s Share Weekend in the Smokies for two',p:199800,c:'Experiences',v:600.00,g:'Rickhouse'},
+  {n:'Barrel Pick Panel seat',p:416250,c:'Experiences',v:1250.00,g:'Angel\'s Share'}
 ];
 
 
@@ -3643,10 +4017,12 @@ function setView(v,force){
   [1,2,3].forEach(i=>{const b=$('#v'+i);if(b)b.setAttribute('aria-current',String(i===v));});
   window.scrollTo({top:0,behavior:'auto'});
   if(v===2){paintConfirm();if(typeof paintOrder==='function')paintOrder();}
-  if(typeof codeBar==='function')codeBar(v===2);
+  /* The code was only reachable on Convert, which is the one view a member stops
+     visiting once they have an account. It follows them to My Jar now. */
+  if(typeof codeBar==='function')codeBar(v===2||v===3);
   document.body.classList.toggle('onjar',v===3);
   document.body.classList.toggle('onconv',v===2);
-  if(v===3){seedDash();paintMe();shPips();paintRank();paintQuests();paintWall();paintWallet();if(window.jnavShow)window.jnavShow('secOver');const sb=$('#stky');if(sb)sb.classList.remove('on');}else stopBottle();
+  if(v===3){seedDash();paintMe();shPips();paintRank();paintQuests();paintWall();paintWallet();paintStreak();paintBadges();if(window.jnavShow)window.jnavShow('secOver');const sb=$('#stky');if(sb)sb.classList.remove('on');}else stopBottle();
   setTimeout(labelTables,60);
 }
 /* Stacked mobile rows need their column name traveling with the cell. */
@@ -4131,10 +4507,10 @@ function inviteOut(){
   S.refPend++;
   const who=FRIENDS[(S.refs+S.refPend)%FRIENDS.length];
   S.pendRef=S.pendRef||[];S.pendRef.push(who);
-  S.feed.unshift({kind:'pd',title:'Invite sent to '+who,detail:'200 points held until they confirm 21 and clear the trade check',amt:200,pending:true});
+  S.feed.unshift({kind:'pd',title:'Invite sent to '+who,detail:'500 points held until they confirm 21 and clear the trade check',amt:500,pending:true});
   paintFeed();slots();shPips();paintMe();
   if(typeof sPaper==='function')sPaper(0);
-  toast('Link sent. 200 points are held until '+who+' finishes.');
+  toast('Link sent. 500 points are held until '+who+' finishes.');
   return true;
 }
 function friendLanded(){
@@ -4143,12 +4519,12 @@ function friendLanded(){
   S.refPend--;S.refs++;earn('ref');earnE('ref');
   const i=S.feed.findIndex(f=>f.pending&&f.title.indexOf('Invite sent to '+who)===0);
   if(i>-1)S.feed.splice(i,1);
-  S.feed.unshift({kind:'up',title:who+' joined on your link',detail:'Referral '+S.refs+' of 3 · cleared 21 and the trade check',amt:200});
+  S.feed.unshift({kind:'up',title:who+' joined on your link',detail:'Referral '+S.refs+' of 3 · cleared 21 and the trade check',amt:500});
   ledgers();slots();paintFeed();shPips();
-  if(typeof rollBalance==='function'&&$('#meBalN')){ROLLED=false;rollBalance(200,'from '+who);}
+  if(typeof rollBalance==='function'&&$('#meBalN')){ROLLED=false;rollBalance(500,'from '+who);}
   else if(typeof sClink==='function'){sClink(0);sYesss(.12);}
   paintMe();
-  toast(who+' finished. 200 points cleared and one more name in the jar.');
+  toast(who+' finished. 500 points cleared and one more name in the jar.');
 }
 $('#simRef').addEventListener('click',friendLanded);
 function cp(t,m){if(navigator.clipboard)navigator.clipboard.writeText(t).catch(()=>{});toast(m);}
@@ -4252,8 +4628,24 @@ $('#aiGo').addEventListener('click',()=>{
   S.name='Dale';S.email=$('#aiMail').value.trim()||'member@example.com';S.age=true;S.auth=true;
   S.earned={join:1,profile:1,scan:1,receipt:1,ref:1};S.earnedE={join:1,free:4,ref:1,receipt:1};
   /* 250 join + 120 scan + 250 check in + 200 referral + 100 receipt = 920 */
-  S.demoAcct=true; S.pts=920; S.ent=7; S.refs=1; S.member=true;
-  S.tierPts=8420; S.joinedMs=Date.now()-14*30.44*864e5; S.checkins=3; S.streak=6; S.streakBest=21;
+  S.demoAcct=true; S.pts=4220; S.ent=7; S.refs=1; S.member=true;
+  S.tierPts=9800; S.joinedMs=Date.now()-14*30.44*864e5; S.checkins=3; S.streak=6; S.streakBest=21;
+  /* Two weeks of history with two days genuinely missed, because a calendar of
+     nothing but gold teaches nobody what a miss looks like, and the miss is the
+     thing the streak is protecting against. */
+  (function(){
+    /* Offsets, not fixed dates, so the history is honest on the 3rd of a month
+       as well as the 28th. The current run stays six; the misses sit behind it. */
+    const t=new Date().getDate();
+    const MISSED=[7,9];
+    let from=t;
+    for(let i=1;i<=13;i++){
+      const d=t-i;if(d<1)break;
+      from=d;
+      if(MISSED.indexOf(i)<0)S.stDays[d]='on';
+    }
+    S.stFrom=from;
+  })();
   unlock(2,true);unlock(3);
   if(typeof paintBand==='function')paintBand();
   const rc=code(); $('#refLink').value='nathanjsong.com/olesmoky?ref='+rc; $('#codeVal').textContent='JAR15-'+rc;
@@ -4266,7 +4658,7 @@ $('#aiGo').addEventListener('click',()=>{
   seedDash();ledgers();acctUI();rewards();slots();
   setView(3);
   ROLLED=false;setTimeout(()=>rollBalance(250,'for entering'),620);
-  toast('Signed in. '+num(S.pts)+" points since March. That's the shirt, covered.");
+  toast('Signed in. '+num(S.pts)+' points since March, and 780 short of the $15 credit.');
 });
 
 /* ============================================================
@@ -4517,7 +4909,7 @@ function paintFeed(){
    under review is lying by omission, and the member finds out later. */
 function pendTotal(){
   const q=S.pend.filter(p=>p.mine&&p.status==='open').reduce((a,b)=>a+b.pts,0);
-  const r=(S.refPend||0)*200;
+  const r=(S.refPend||0)*500;
   const c=(S.pendRcpt||0)*100;
   return q+r+c;
 }
@@ -4574,7 +4966,7 @@ function paintMe(){
   paintFeed();paintWallet();meRewards();acctUI();shPips();
   paintNext();
   const rn=$('#refNote');
-  if(rn)rn.textContent=S.refPend?(S.refPend+' invite'+(S.refPend>1?'s':'')+' out. '+num(S.refPend*200)+' points held until they finish.')
+  if(rn)rn.textContent=S.refPend?(S.refPend+' invite'+(S.refPend>1?'s':'')+' out. '+num(S.refPend*500)+' points held until they finish.')
     :(S.refs>=3?'Cap reached. Three for the life of the account.':'Nothing pending. Send a link and the points wait here until it clears.');
   const ip=$('#idPips');if(ip)ip.innerHTML=[0,1,2].map(i=>'<span class="shpip '+pipCls(i)+'">'+(S.refs>i?String.fromCharCode(10003):(pipCls(i)==='pend'?String.fromCharCode(183,183,183):String(i+1)))+'</span>').join('');
   refBtns();
@@ -4698,13 +5090,19 @@ function decide(id,ok){
 function seedDash(){
   if(!S.demoAcct)return;
   if(S.feed.length)return;
+  /* Every row here is real and the cleared ones sum to the balance exactly:
+     1500 + 1000 + 120 + 250 + 500 + 100 + 750 = 4,220. The 400 is pending and
+     deliberately excluded, because a dashboard that folds held points into the
+     balance is lying by omission. */
   S.feed=[
-    {kind:'pd',title:'Scanned a half gallon',detail:'Code OS-2290-JUG · over 200, so a person looks at it first',amt:400,pending:true},
-    {kind:'up',title:'Scanned Salty Caramel, 750ml',detail:'Code OS-6613-CARA · posted straight away',amt:120},
+    {kind:'pd',title:'Scanned a half gallon',detail:'Code OS-2290-JUG '+String.fromCharCode(183)+' over 200, so a person looks at it first',amt:400,pending:true},
+    {kind:'up',title:'Twelve check ins this month',detail:'50 a day, plus the seventh day bonus',amt:750},
+    {kind:'up',title:'Kayla joined on your link',detail:'Referral 1 of 3 '+String.fromCharCode(183)+' cleared once she confirmed 21 and no trade ties',amt:500},
     {kind:'up',title:'Checked in at The Holler',detail:'QR at the tasting counter, Gatlinburg',amt:250},
-    {kind:'up',title:'Kayla joined on your link',detail:'Referral 1 of 3 · cleared once she confirmed 21 and no trade ties',amt:200},
-    {kind:'up',title:'Snapped a receipt',detail:'Food City, Sevierville · reviewed and released',amt:100},
-    {kind:'up',title:'Joined the Jar Club',detail:'Account created and age affirmed',amt:250}
+    {kind:'up',title:'Scanned Salty Caramel, 750ml',detail:'Code OS-6613-CARA '+String.fromCharCode(183)+' posted straight away',amt:120},
+    {kind:'up',title:'Snapped a receipt',detail:'Food City, Sevierville '+String.fromCharCode(183)+' reviewed and released',amt:100},
+    {kind:'up',title:'Told us what you pour',detail:'The pick that decides everything we send',amt:1000},
+    {kind:'up',title:'Joined the Jar Club',detail:'Name in the jar and age affirmed',amt:1500}
   ];
   S.pend=[{id:++QID,member:'Dale Whitaker',mine:true,type:'Jar code',label:'Half gallon, 1.75L',code:'OS-2290-JUG',pts:400,status:'open',flags:[]}];
   S.log=[{who:'system',what:'session opened · 4 items in the queue',cls:''}];
@@ -4770,7 +5168,7 @@ const STORES={'91792':[
    that at the moment of the order and no public page exposes it. */
 function wireOrder(){
   const w=$('#ordWhere');if(!w)return;
-  const rd=$('#roadSvg2');if(rd&&!rd.dataset.on&&typeof roadSVG==='function'){rd.innerHTML=roadSVG();rd.dataset.on='1';}
+  /* the road scene became a three step strip; nothing to build here now */
   function paint(){
     const f=(FLAVORS.find(x=>x.k===S.flavor)||FLAVORS[2]);
     const plain=f.name.replace(/&rsquo;/g,String.fromCharCode(8217)).replace(/&amp;/g,'&');
@@ -5574,6 +5972,8 @@ function unlockAll(){[2,3].forEach(n=>{if(!UNLOCKED[n]){UNLOCKED[n]=true;const b
     document.querySelectorAll('#pcards .pnl').forEach(s=>s.classList.toggle('hide',s.id!=='pnl-'+id));
     if(id==='secQuest')paintQuests();
     if(id==='secWall')paintWall();
+    if(id==='secStreak')paintStreak();
+    if(id==='secBadge')paintBadges();
     if(id==='secFeed'&&typeof paintFeed==='function')paintFeed();
     if(id==='secOver')startBottle();else stopBottle();
     const top=document.getElementById('pcards');
@@ -5602,14 +6002,16 @@ function paintRank(){paintLevel();}
    THE LEVEL WIDGET  ·  three steps, in the sidebar
    ============================================================ */
 function paintLevel(){
-  const box=document.getElementById('lvlSteps');if(!box)return;
+  /* The rail left the sidebar. The tag beside the name carries the level now,
+     and everything else about it lives in settings. */
+  const box=document.getElementById('lvlSteps');
   const pts=S.tierPts||S.pts||0;
   const cur=tierOf(pts),nxt=tierNext(pts);
   /* lvlNow moved out of the sidebar and into the tag beside the name, and the
      old node stopped existing. Every paint target gets checked, because a
      dashboard that throws on one missing element stops painting the rest. */
   const tag=document.getElementById('lvlTag');if(tag)tag.textContent=cur.n;
-  box.innerHTML=TIERS.map((t,i)=>{
+  if(box)box.innerHTML=TIERS.map((t,i)=>{
     const done=pts>=t.p,now=t.k===cur.k;
     return '<span class="lvlstep '+(now?'now':(done?'done':''))+'" title="'+esc(t.n)+'">'+
       '<i></i><span>'+esc(t.n)+'</span></span>'+
@@ -5764,7 +6166,7 @@ function paintWall(){
     toast(w.n+' redeemed. It is in your wallet.');
   }));
   const cap=document.getElementById('wCap');
-  if(cap)cap.innerHTML='<b>'+num(S.pts)+'</b> to spend<em>Priced at retail value times two hundred, so a point is worth half a cent everywhere on this wall.</em>';
+  if(cap)cap.innerHTML='<b>'+num(S.pts)+'</b> to spend<em>Fifteen dollars of merch credit is 5,000 points. Everything else on the wall is priced off that same rate.</em>';
   if(window.jnavCount)window.jnavCount('jnW',String(WALL.filter(w=>!S.wall[w.n]).length));
 }
 /* Forty tiles need forty pictures or none. Drawn glyphs by category keep the file
@@ -5853,6 +6255,192 @@ function wallArt(w){
 })();
 
 /* ============================================================
+   STREAK  ·  check in, answer one question, get told you did well
+   ============================================================ */
+/* The freeze came out. It is the right mechanic for a language app where the
+   streak IS the product, and the wrong one here, where it added a second
+   currency to explain before anybody had earned the first. Missing a day now
+   costs the run and nothing else. */
+const ST_MILES=[
+  {d:7,  n:'One week',    r:'A sticker sheet, on us'},
+  {d:30, n:'Thirty days', r:'300 points and the Thirty Days Runnin badge'},
+  {d:90, n:'Ninety days', r:'A koozie and early access to the next drop'},
+  {d:180,n:'Half a year', r:'Your pick from the hat wall'}
+];
+const MNAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+/* Built once, then updated in place. Replacing innerHTML on every paint made the
+   whole board blink, which reads as the page reloading rather than a number
+   changing. */
+let ST_BUILT=false;
+function buildStreakShell(){
+  if(ST_BUILT)return;
+  const cells=document.getElementById('stCells');if(!cells)return;
+  const now=new Date(), y=now.getFullYear(), mo=now.getMonth();
+  const lead=(new Date(y,mo,1).getDay()+6)%7, dim=new Date(y,mo+1,0).getDate();
+  let html='';
+  for(let k=0;k<lead;k++)html+='<span class="stc pad"></span>';
+  for(let d=1;d<=dim;d++)html+='<span class="stc" data-d="'+d+'"><i></i></span>';
+  cells.innerHTML=html;
+  document.getElementById('stMonth').textContent=MNAMES[mo]+' '+y;
+  document.getElementById('stMiles').innerHTML=ST_MILES.map(m=>
+    '<div class="stm" data-m="'+m.d+'"><div class="stmh"><b>'+esc(m.n)+'</b><span></span></div>'+
+    '<div class="stmb"><i></i></div><span class="stmr">'+esc(m.r)+'</span></div>').join('');
+  ST_BUILT=true;
+}
+function paintStreak(){
+  buildStreakShell();
+  const cells=document.getElementById('stCells');if(!cells)return;
+  const cur=S.streak||0, best=Math.max(S.streakBest||0,cur);
+  const today=new Date().getDate();
+
+  cells.querySelectorAll('.stc[data-d]').forEach(c=>{
+    const d=+c.dataset.d, st=S.stDays[d];
+    const miss=!st&&d<today&&S.stFrom&&d>=S.stFrom;
+    c.className='stc'+(st==='on'?' on':(miss?' miss':''))+(d===today?' today':'')+(d>today?' fut':'');
+    c.querySelector('i').innerHTML=st==='on'?'&#10003;':(miss?'&times;':String(d));
+  });
+
+  const big=document.getElementById('stBig');
+  if(big)big.innerHTML='<b>'+num(cur)+'</b><span>day'+(cur===1?'':'s')+' running</span>'+
+    '<em>Best so far '+num(best)+'</em>';
+
+  document.querySelectorAll('#stMiles .stm').forEach(el=>{
+    const d=+el.dataset.m, got=cur>=d;
+    el.classList.toggle('got',got);
+    el.querySelector('.stmh span').textContent=got?'Claimed':num(d-cur)+' to go';
+    el.querySelector('.stmb i').style.width=Math.min(100,cur/d*100).toFixed(1)+'%';
+  });
+
+  const cap=document.getElementById('stCap');
+  if(cap)cap.innerHTML='<b>'+num(cur)+'</b>day streak<em>Longest run '+num(best)+'. 50 points a day, 150 more every seventh.</em>';
+  const tb=document.getElementById('stToday');
+  const settled=!!S.stDays[today];
+  if(tb){tb.disabled=settled;tb.textContent=settled?'Checked in today':'Check in for today';}
+  if(window.jnavCount)window.jnavCount('jnS',String(cur));
+}
+
+/* A ding worth hearing. Three notes up a major triad, each one shorter than the
+   last, so it lands as an arrival rather than a notification. */
+function sDing(off){
+  if(typeof Sfx!=='object'||!Sfx.ctx)return;
+  const c=Sfx.ctx,t=c.currentTime+(off||0);
+  [[784,0],[988,.075],[1319,.15]].forEach((n,i)=>{
+    const o=c.createOscillator();o.type='sine';o.frequency.value=n[0];
+    const g=c.createGain();
+    g.gain.setValueAtTime(.0001,t+n[1]);
+    g.gain.exponentialRampToValueAtTime(.16-i*.02,t+n[1]+.012);
+    g.gain.exponentialRampToValueAtTime(.0001,t+n[1]+.5-i*.1);
+    o.connect(g);g.connect(Sfx.master);g.connect(Sfx.verb);
+    o.start(t+n[1]);o.stop(t+n[1]+.6);
+  });
+}
+
+(function wireStreak(){
+  const t=document.getElementById('stToday');if(!t)return;
+  const mdl=document.getElementById('ciMdl');
+  t.addEventListener('click',()=>{
+    const d=new Date().getDate();
+    if(S.stDays[d]){paintStreak();toast('Already checked in today. Come back tomorrow.');return;}
+    S.stDays[d]='on';
+    if(!S.stFrom)S.stFrom=d;
+    S.streak=(S.streak||0)+1;
+    S.streakBest=Math.max(S.streakBest||0,S.streak);
+    let got=50;
+    if(S.streak%7===0)got+=150;
+    S.pts+=got;S.tierPts=(S.tierPts||0)+got;S.monthEarned=(S.monthEarned||0)+got;
+    S.feed.unshift({kind:'up',title:'Checked in, day '+S.streak,
+      detail:S.streak%7===0?'Seventh day in a row, so the weekly lands too':'Daily check in',amt:got});
+    paintStreak();paintFeed();paintMe();paintLevel();
+
+    document.getElementById('ciDay').textContent='Day '+S.streak;
+    document.getElementById('ciPts').textContent='+'+got+' points';
+    document.getElementById('ciAsk').classList.remove('hide');
+    document.getElementById('ciDone').classList.add('hide');
+    document.getElementById('ciFix').classList.add('hide');
+    mdl.classList.add('on');
+    try{if(Sfx.ctx&&Sfx.ctx.state!=='running'&&Sfx.ctx.resume)Sfx.ctx.resume();sDing(.05);}catch(e){}
+  });
+
+  /* One question, three answers, and the answer routes what happens next. That
+     is the whole reason to ask: a survey nobody acts on is a tax on the member. */
+  mdl.querySelectorAll('.cichoice button').forEach(b=>b.addEventListener('click',()=>{
+    const a=b.dataset.a;
+    S.mood=S.mood||{};S.mood[a]=(S.mood[a]||0)+1;
+    const H=document.getElementById('ciH'),P=document.getElementById('ciP');
+    document.getElementById('ciAsk').classList.add('hide');
+    document.getElementById('ciDone').classList.remove('hide');
+    if(a==='yes'){
+      H.textContent='Good. That is the one that counts.';
+      P.textContent='Logged against today. Tell us what you poured on the quest board and there are another 150 points in it.';
+      try{sYesss(0);}catch(e){}
+    }else if(a==='plan'){
+      H.textContent='We will leave the light on.';
+      P.textContent='Nothing else from us today. If it slips, the streak is the only thing at stake and it starts again the moment you come back.';
+      try{sTing();}catch(e){}
+    }else{
+      H.textContent='Then let us fix that part.';
+      P.textContent='Your pick is already in the search. Whether they deliver where you are is up to the app and your state, and nothing about this order comes back to us.';
+      const f=FLAVORS.find(x=>x.k===S.flavor)||FLAVORS[0];
+      const term='Ole Smoky '+clean(f.name);
+      const loc=(S.holler||'').trim();
+      const go=document.getElementById('ciGo');
+      go.href='https://www.instacart.com/store/s?k='+encodeURIComponent(term);
+      document.getElementById('ciFixS').textContent=term+(loc?' near '+loc:'');
+      const im=document.getElementById('ciMark');
+      const src=document.querySelector('#ordIC .obm img');
+      if(im&&src)im.src=src.src;
+      document.getElementById('ciFix').classList.remove('hide');
+      try{sTing();}catch(e){}
+      if(typeof logIt==='function')logIt('member','said no on the daily check in, sent to Instacart with '+term+' prefilled');
+    }
+  }));
+})();
+
+/* ============================================================
+   BADGES  ·  step 6
+   ============================================================ */
+/* Unearned badges stay on the wall. A set with one missing is the strongest pull
+   in the whole program, and hiding what you have not earned throws that away. */
+function badgeArt(k,got){
+  const g={
+    start:'<circle cx="24" cy="24" r="13" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M24 17v14M17 24h14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
+    road :'<path d="M18 40l4-30h4l4 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 16v3M24 24v3M24 32v3" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
+    deep :'<path d="M17 10h14v7l5 6v19a3 3 0 0 1-3 3H15a3 3 0 0 1-3-3V23l5-6z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><path d="M17 29h14" stroke="currentColor" stroke-width="2.3"/>',
+    crowd:'<circle cx="18" cy="20" r="5" fill="none" stroke="currentColor" stroke-width="2.3"/><circle cx="30" cy="20" r="5" fill="none" stroke="currentColor" stroke-width="2.3"/><path d="M10 38c0-5 3.6-8 8-8s8 3 8 8M22 38c0-5 3.6-8 8-8s8 3 8 8" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>',
+    long :'<circle cx="24" cy="24" r="13" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M24 16v9l6 4" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
+  };
+  return '<svg viewBox="0 0 48 48" aria-hidden="true">'+
+    '<circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="'+(got?'0':'2 4')+'" opacity="'+(got?'.45':'.7')+'"/>'+
+    (g[k]||g.deep)+'</svg>';
+}
+function paintBadges(){
+  const box=document.getElementById('bSets');if(!box)return;
+  BADGES.forEach(b=>{if(S.badges[b.n]===undefined)S.badges[b.n]=b.got;});
+  const got=BADGES.filter(b=>S.badges[b.n]).length;
+  box.innerHTML=BSET.map(set=>{
+    const rows=BADGES.filter(b=>b.s===set.k);
+    const n=rows.filter(b=>S.badges[b.n]).length;
+    const done=n===rows.length;
+    return '<section class="bset'+(done?' full':'')+'">'+
+      '<header class="bseth"><div><h3>'+esc(set.n)+'</h3><span>'+esc(set.s)+'</span></div>'+
+      '<b class="bsetc'+(done?' full':'')+'">'+n+' of '+rows.length+(done?' &#10003;':'')+'</b></header>'+
+      '<div class="bgrid">'+rows.map(b=>{
+        const on=!!S.badges[b.n];
+        return '<article class="bdg'+(on?' on':'')+'" tabindex="0">'+
+          '<span class="bdga">'+badgeArt(b.s,on)+'</span>'+
+          '<b>'+esc(b.n)+'</b><span>'+esc(b.d)+'</span>'+
+          (on?'<em>Earned</em>':'')+'</article>';
+      }).join('')+'</div></section>';
+  }).join('');
+  const cap=document.getElementById('bCap');
+  if(cap)cap.innerHTML='<b>'+got+' of '+BADGES.length+'</b>collected<em>'+
+    (BSET.filter(s=>{const r=BADGES.filter(b=>b.s===s.k);return r.every(b=>S.badges[b.n]);}).length)+
+    ' sets finished. The nearest one is worth more than five scattered badges.</em>';
+  if(window.jnavCount)window.jnavCount('jnB',got+'/'+BADGES.length);
+}
+
+/* ============================================================
    THE MODEL  ·  a working economy, graded sources, three scenarios
    ============================================================ */
 const MV_IN=[
@@ -5879,7 +6467,7 @@ const MV_IN=[
   {k:'cpl',    n:'Cost per entry acquired', v:3.16, min:.5, max:20, step:.02, fmt:'$',
    src:'LocaliQ, Restaurants and Food, 2025', grade:'B', note:'Paid social lead cost. A free sweepstakes entry is lower friction, so treat this as a ceiling.'},
   {k:'earn',   n:'Points earned per active month', v:900, min:200, max:6000, step:50, fmt:'n',
-   src:'Assumption, capped at 6,000', grade:'D', note:'The ceiling is 6,000. Almost nobody hits it. This is what a normal member actually earns, and it is the single biggest cost lever in the model.'},
+   src:'Assumption, capped at 6,000', grade:'D', note:'The ceiling is 6,000. Almost nobody hits it. At a cent a point this is the single biggest cost lever in the model, and halving the prize wall doubled it.'},
   {k:'gm',     n:'Gross margin on incremental sales', v:42, min:15, max:70, step:1, fmt:'p',
    src:'Assumption', grade:'D', note:'Distillery-owned retail runs richer than three-tier. Blended.'},
   {k:'fixed',  n:'Platform and ops, annual', v:180000, min:40000, max:600000, step:5000, fmt:'$',
@@ -5935,7 +6523,7 @@ function mvCalc(){
   /* Half a cent a point, and only the ones people actually redeem cost anything.
      Breakage belongs in the cost line, not a footnote. */
   const ptsIssued=active*MV.earn*12;
-  const ptCost=ptsIssued*0.005*(1-MV.brk/100);
+  const ptCost=ptsIssued*0.003*(1-MV.brk/100);
   const prize=5000*12;
   const cost=acqCost+ptCost+prize+MV.fixed;
   const contribution=gp-cost;
@@ -6035,6 +6623,62 @@ function mvPaint(){
   });
   ['v1','v2','v3'].forEach(id=>{const e=document.getElementById(id);
     if(e)e.addEventListener('click',()=>{document.getElementById('view-model').classList.add('hide');b.classList.remove('on');});});
+})();
+
+/* ============================================================
+   THE ROAD  ·  sounds that belong to a room, not an interface
+   ============================================================ */
+/* A wooden latch on hover and a struck brass bell on the tap. Both are what you
+   actually hear walking into a tasting room, which is the feeling this column is
+   selling. Throttled, because a rail of three that chirps on every pass is worse
+   than silence. */
+function sLatch(off){
+  if(typeof Sfx!=='object'||!Sfx.ctx||!Sfx.can('latch',140))return;
+  const c=Sfx.ctx,t=c.currentTime+(off||0);
+  const n=c.createBufferSource();n.buffer=Sfx.noise(.045);
+  const bp=c.createBiquadFilter();bp.type='bandpass';bp.Q.value=2.4;
+  bp.frequency.setValueAtTime(1250,t);
+  bp.frequency.exponentialRampToValueAtTime(420,t+.05);
+  const g=c.createGain();
+  n.connect(bp).connect(g);g.connect(Sfx.master);g.connect(Sfx.verb);
+  Sfx.env(g,t,{a:.0008,d:.022,r:.05,peak:.13});
+  n.start(t);
+  const o=c.createOscillator();o.type='sine';
+  o.frequency.setValueAtTime(210,t);o.frequency.exponentialRampToValueAtTime(96,t+.06);
+  const og=c.createGain();o.connect(og);og.connect(Sfx.master);
+  og.gain.setValueAtTime(.0001,t);og.gain.exponentialRampToValueAtTime(.09,t+.004);
+  og.gain.exponentialRampToValueAtTime(.0001,t+.12);
+  o.start(t);o.stop(t+.16);
+}
+function sBell(off){
+  if(typeof Sfx!=='object'||!Sfx.ctx)return;
+  const c=Sfx.ctx,t=c.currentTime+(off||0),base=1180;
+  /* Brass is inharmonic. Even ratios sound like a synth; these sound struck. */
+  [[1,.16,2.6],[2.76,.09,1.7],[5.4,.05,1.1],[8.9,.02,.7]].forEach(pp=>{
+    const o=c.createOscillator();o.type='sine';
+    o.frequency.value=base*pp[0]*(1+(Math.random()-.5)*.004);
+    const g=c.createGain();
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(pp[1],t+.003);
+    g.gain.exponentialRampToValueAtTime(.0001,t+pp[2]);
+    o.connect(g);g.connect(Sfx.master);g.connect(Sfx.verb);
+    o.start(t);o.stop(t+pp[2]+.05);
+  });
+}
+(function wireRoad(){
+  const stops=[...document.querySelectorAll('.rdstop')];
+  if(!stops.length)return;
+  const open=el=>{
+    try{sBell();}catch(e){}
+    if(typeof logIt==='function')logIt('member','opened the distillery page from '+el.querySelector('b').textContent);
+    setTimeout(()=>window.open(el.dataset.go,'_blank','noopener'),90);
+  };
+  stops.forEach(el=>{
+    el.addEventListener('pointerenter',()=>{try{sLatch();}catch(e){}},{passive:true});
+    el.addEventListener('click',()=>open(el));
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(el);}});
+  });
+  const cta=document.getElementById('rdBook');
+  if(cta)cta.addEventListener('click',()=>{try{sBell();}catch(e){}});
 })();
 
 /* ---------------- BOOT ---------------- */

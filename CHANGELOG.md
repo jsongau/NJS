@@ -4,6 +4,16 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-08
 
+- `olesmoky` — gamification finished and the economy retuned. A real month calendar
+  streak with one check in a day, a check in survey whose "no" routes to Instacart with
+  the member's flavour prefilled, 28 badges in five sets with unearned ones visible.
+  Entry now pays 2,500 and the $15 credit sits at 5,000, so the easy quests plus four
+  check ins land exactly on the first reward. Referral that converts pays 500. The
+  distillery section rewritten without prices and given animated marks and per card
+  sound, delivery rebuilt as three steps. Delivery logos rebuilt from clean sources:
+  two of the three had a transparency checkerboard baked into pixel data, and one
+  shared size cap was rendering a 5:1 wordmark at 13px next to a 30px symbol.
+
 - `olesmoky` — the Golden Jar funnel grew a member program and a financial model.
   Receipt capture that opens the phone camera and holds 100 points pending for 30
   days. A tabbed member dashboard: 30 quests grouped by effort, a 40 item prize wall

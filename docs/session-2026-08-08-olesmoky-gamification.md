@@ -145,11 +145,81 @@ at 250 points with a clean two-line feed.
 
 ---
 
+
+---
+
+## Second half of the day, v37 to v43
+
+**Streaks, without the punishment.** A real month calendar. One check in per day,
+enforced, so the counter cannot be farmed by clicking twice. Completed days carry a
+check, missed days inside the run carry a cross, and the freeze mechanic that the spec
+called for got cut on the way in. A freeze is insurance against a rule we invented; the
+simpler answer is to not punish a missed day in the first place. 50 points a day, 150
+more on the seventh.
+
+**The check in asks a question.** Did you pour an Ole Smoky today: yes, planning to, or
+not today. A "no" is the most useful answer in the program, so it routes to Instacart
+with the member's own flavour already in the search box and their town appended. A
+reinforcement tone plays on the way. This is the only place in the build where the
+answer we least want to hear gets the best experience.
+
+**Twenty eight badges in five sets**, unearned ones visible and grey, because a set with
+one missing is the strongest pull in the program and hiding what you have not earned
+throws that away.
+
+**The economy retuned.** Entering the draw now pays 2,500, which makes every other
+number legible instead of alarming. The $15 merch credit sits at 5,000. Finish the easy
+quests, 2,300, then check in four days at 50, and you land exactly on it. A referral
+that converts pays 500. The numbers were chosen so the first reward is reachable in
+under a week without spending anything, which is the whole argument that the program is
+not a rebate scheme in a hat.
+
+**The distillery section, rewritten.** It used to lead with a price list, which made a
+tourism destination read like a coupon. Prices are gone. Three cards, each with an
+animated mark that responds on hover, a road card in place of the ticket table, and a
+click sound per card. The line is now "you do not have to wait on the draw."
+
+**Delivery rebuilt as three steps**, the same shape used on the `/ono` build: pick,
+order, arrives as early as ten minutes.
+
+---
+
+## The logo bug, twice
+
+The three delivery marks were sourced as PNGs exported from a tool that renders
+transparency as a checkerboard. In two of the three, that checkerboard was baked into
+the **pixel data** at full alpha: 237 grey squares against 254 white. Composited onto a
+white tile it is invisible in a thumbnail and obvious at 3x. The Instacart mark was
+caught and cleaned earlier in the day. Uber Eats shipped with it and stayed broken for
+several versions, because the checker sat behind the word "Uber" where the black letters
+drew the eye away from it.
+
+The fix is not a threshold on lightness alone. It is neutrality plus lightness: a pixel
+whose channel spread is 6 or less and whose darkest channel is 225 or more is
+checkerboard, not artwork. That keeps the Instacart carrot's light orange and the Uber
+Eats green intact while clearing the grid.
+
+**Optical balance is not bounding boxes.** One shared cap of 30px tall rendered the
+DoorDash arrow at 30px and the Instacart wordmark, a 5:1 lockup, at 13px. Equal boxes,
+wildly unequal ink. Each mark now has its own cap: 27px for the arrow, 32px for the
+stacked Uber Eats lockup, 80px wide for the Instacart wordmark. They read the same
+weight, which is what balance actually means.
+
+---
+
+## Verified before this commit
+
+Zero console errors. Zero external requests. Zero horizontal overflow at 360, 390, 768,
+1024 and 1512. New entrant reconciles at 2,500 with a two line feed. Demo account
+reconciles at 4,220 cleared against a 4,220 feed sum, 400 pending held separately.
+Prize wall shows 11 of 41 affordable at that balance. Coupon bar mounts on My Jar. All
+three delivery marks fit their tiles with no crop and no stretch.
+
+---
+
 ## Next
 
-1. Streaks with the freeze mechanic, and the badge wall. Both specified, neither built.
-2. The reconciliation pass: a harness that reads the rendered DOM and asserts every
-   number on every surface agrees.
-3. The real next build is a backend. Everything here fakes persistence in memory. An
-   append-only ledger table, an entries table, and a referrals table with a pending
-   state a server clears when the referee confirms 21.
+1. The backend. Everything here still fakes persistence in memory. An append only
+   ledger table, an entries table, and a referrals table with a pending state a server
+   clears when the referee confirms 21.
+2. A copy pass across every surface built since v33 against the voice rules.

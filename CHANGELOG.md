@@ -4,6 +4,15 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-08
 
+- `olesmoky` — the entry form cut from five questions to three. Retail channel
+  removed, name and email merged onto one row, and every "why we ask" explainer
+  deleted. Headlines rewritten by a brand pass so each one points at the next
+  step, ending on "Last part, then you're in the jar." Age bands sit on one line
+  with a "Rather not" opt out. Occasion question gains a sixth "Somewhere else"
+  tile. The draw is weekly now, closing Friday 9pm Eastern, computed through Intl
+  so the offset is right on both sides of daylight saving, and 52 draws a year
+  instead of 12 flows through to the model.
+
 - `olesmoky` — My Jar was rendering as a flex row instead of a two column grid,
   so the sticky rail blew out to 423px and the panels stacked underneath it.
   Cause: `.dsh` meant the dashboard shell since v33 and the delivery strip header

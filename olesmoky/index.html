@@ -7,7 +7,7 @@
 <title>The Golden Jar &middot; Somebody&rsquo;s Going To The Smokies &middot; Concept by Nathan J. Song</title>
 <meta name="theme-color" content="#1C1512">
 <meta property="og:title" content="The Golden Jar &middot; Put Your Name In. Somebody&rsquo;s Going To The Smokies.">
-<meta property="og:description" content="Five names come out of the jar every month. Four take the kit. One takes a $5,000 Smoky Mountain weekend. Illustrative campaign concept by Nathan J. Song.">
+<meta property="og:description" content="Five names come out of the jar every Friday. Four take the kit. One takes a $5,000 Smoky Mountain weekend. Illustrative campaign concept by Nathan J. Song.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nathanjsong.com/olesmoky">
 <meta property="og:image" content="https://nathanjsong.com/olesmoky/og.png">
@@ -2057,14 +2057,37 @@ body.entered .pkwait{opacity:0;pointer-events:none;transform:translateY(-6px)}
 .ptile:hover svg{transform:scale(1.12) rotate(-4deg)}
 .ptile:focus-visible{outline:2px solid var(--shine);outline-offset:2px}
 .ptile.sel{border-color:var(--shine);background:rgba(255,176,32,.13);box-shadow:0 0 0 3px rgba(255,176,32,.16),0 14px 34px rgba(0,0,0,.5)}
+/* Name and email sit side by side. Two short fields stacked look like two
+   questions; side by side they look like one line of a form. */
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.f2{grid-template-columns:1fr;gap:0}}
+/* The sixth tile is a different kind of answer, so it gets a different accent
+   rather than looking like a sibling of the five above it. */
+.opt-alt{border-style:dashed;border-color:rgba(34,211,238,.34);background:rgba(34,211,238,.045)}
+.opt-alt b{color:#BFF3FB}
+.opt-alt:hover{border-color:rgba(34,211,238,.8);background:rgba(34,211,238,.1)}
 .qwhy{margin-top:16px;border-left:2px solid var(--line-hi);background:rgba(255,176,32,.05);border-radius:0 11px 11px 0;padding:11px 14px;font-size:12px;line-height:1.55;color:var(--muted)}
 .qwhy b{display:block;font:900 9.5px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--shine-deep);margin-bottom:6px}
-.ages{display:flex;flex-wrap:wrap;gap:8px}
+/* Age bands on one line. Six chips wrapping to a second row read as a longer
+   question than they are, and this is the step where nothing should look like
+   more work. They share the width instead of wrapping. */
+.ages{display:flex;flex-wrap:nowrap;gap:6px}
+.ages .agb{flex:1 1 0;min-width:0;padding:12px 5px;font:900 11.5px/1 var(--font);
+  letter-spacing:-.01em;text-align:center;white-space:nowrap}
+/* The opt out is not an age, so it stops pretending to be one sixth of a row of
+   ages and takes only the room its own words need. */
+.ages .agb[data-a="na"]{flex:0 0 auto;padding-left:11px;padding-right:11px;color:var(--muted)}
+.ages .agb[data-a="na"].sel{color:var(--gold-lite)}
 .agb{border:1.5px solid var(--line);background:rgba(255,255,255,.035);color:var(--ink);border-radius:11px;padding:12px 15px;font:900 13px/1 var(--font);cursor:pointer;transition:all .16s}
 .agb:hover{border-color:rgba(255,176,32,.5);background:rgba(255,176,32,.07)}
 .agb.sel{border-color:var(--shine);background:rgba(255,176,32,.15);color:var(--gold-lite);box-shadow:0 0 0 3px rgba(255,176,32,.14)}
 .agb:focus-visible{outline:2px solid var(--volt);outline-offset:2px}
-@media(max-width:560px){.ages{display:grid;grid-template-columns:1fr 1fr;gap:7px}.agb{padding:12px 8px;font-size:12.5px;text-align:center}}
+/* Below about 480 a single row of six puts "Rather not say" at four characters
+   and an ellipsis, which is worse than a second row. Three by two is tidy
+   rather than ragged, so the break happens on purpose. */
+@media(max-width:560px){.ages .agb{font-size:11.5px;padding:12px 4px}}
+@media(max-width:480px){.ages{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .ages .agb{font-size:11.5px;padding:12px 4px}}
 .ptile .tg{position:absolute;top:-7px;right:9px;font:900 8px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;background:var(--bar);color:var(--gold);border:1px solid var(--line-hi);padding:4px 6px;border-radius:99px}
 .pkfoot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
 .fine2{font-size:11.5px;color:var(--muted-lo);line-height:1.45}
@@ -2474,6 +2497,7 @@ body.entered .jwrap{max-width:296px}
 <symbol id="oPorch" viewBox="0 0 24 24"><path d="M3.4 10.4L12 4l8.6 6.4" fill="none" stroke="#FFB020" stroke-width="1.8" stroke-linejoin="round"/><path d="M5.4 10.6h13.2v9.4H5.4z" fill="#241D16" stroke="#FFB020" stroke-width="1.5"/><rect x="10" y="14" width="4" height="6" fill="#FFD24A"/><path d="M3 20h18" stroke="#A99C88" stroke-width="1.6" stroke-linecap="round"/></symbol>
 <symbol id="oKitchen" viewBox="0 0 24 24"><path d="M8 3.4v6.2a4 4 0 0 0 8 0V3.4" fill="none" stroke="#FFB020" stroke-width="1.7" stroke-linecap="round"/><path d="M12 13.6v6.8M8.6 20.6h6.8" stroke="#FFB020" stroke-width="1.7" stroke-linecap="round"/><path d="M9.6 4.6h4.8v4.2a2.4 2.4 0 0 1-4.8 0z" fill="#FFD24A"/><circle cx="19.4" cy="5" r="1.5" fill="#FFE7B8"/></symbol>
 <symbol id="oGift" viewBox="0 0 24 24"><rect x="3.4" y="9.4" width="17.2" height="11.2" rx="2" fill="#241D16" stroke="#FFB020" stroke-width="1.6"/><rect x="2.4" y="6.2" width="19.2" height="4.4" rx="1.6" fill="#FFD24A"/><path d="M12 6.2v14.4" stroke="#E8890C" stroke-width="1.8"/><path d="M12 6c-2.6-3.4-6-.6-3.4 1.4M12 6c2.6-3.4 6-.6 3.4 1.4" fill="none" stroke="#FFB020" stroke-width="1.6"/></symbol>
+<symbol id="oOther" viewBox="0 0 24 24"><path d="M8.6 2.6h6.8v2.7l2.4 3.2V20a1.4 1.4 0 0 1-1.4 1.4H7.6A1.4 1.4 0 0 1 6.2 20V8.5l2.4-3.2z" fill="#141B1E" stroke="#22D3EE" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.2 2.6h7.6" stroke="#7DE9F7" stroke-width="1.9" stroke-linecap="round"/><circle cx="9.4" cy="15.2" r="1.15" fill="#22D3EE"/><circle cx="12" cy="15.2" r="1.15" fill="#7DE9F7"/><circle cx="14.6" cy="15.2" r="1.15" fill="#22D3EE"/></symbol>
 <symbol id="cLiquor" viewBox="0 0 24 24"><path d="M4 8.6h16v11.8H4z" fill="#241D16" stroke="#FFB020" stroke-width="1.6"/><path d="M3 8.6L5.4 4h13.2L21 8.6" fill="none" stroke="#FFB020" stroke-width="1.6" stroke-linejoin="round"/><rect x="7" y="12" width="3.4" height="6" rx="1" fill="#FFD24A"/><rect x="13.6" y="12" width="3.4" height="6" rx="1" fill="#E8890C"/></symbol>
 <symbol id="cGrocery" viewBox="0 0 24 24"><path d="M2.6 4h2.8l2.6 11.4h9.6" fill="none" stroke="#FFB020" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 7.4h13.4l-1.8 6.4H8.4z" fill="#241D16" stroke="#FFD24A" stroke-width="1.4"/><circle cx="9.6" cy="19" r="1.7" fill="#FFB020"/><circle cx="17.4" cy="19" r="1.7" fill="#FFB020"/></symbol>
 <symbol id="cDistil" viewBox="0 0 24 24"><path d="M4 20.4L9.6 9.2V4.4h4.8v4.8L20 20.4z" fill="#241D16" stroke="#FFB020" stroke-width="1.6" stroke-linejoin="round"/><path d="M6.6 16h10.8l2.6 4.4H4z" fill="#FFD24A"/><path d="M8.4 4.4h7.2" stroke="#FFE7B8" stroke-width="1.8" stroke-linecap="round"/></symbol>
@@ -2640,7 +2664,7 @@ body.entered .jwrap{max-width:296px}
     <div class="htop">
       <div class="eyeb rise" style="--d:.02s"><i></i>The Golden Jar &middot; closes in <b id="eyD">6 days</b> &middot; free &middot; 21+</div>
       <h1 class="hh rise" style="--d:.10s">Win the ultimate <span class="neon">$5,000</span><span class="l2">Ole Smoky weekend.</span></h1>
-      <div class="hsub rise" style="--d:.22s">Three distilleries. Three nights in the Smokies. One winner every month.</div>
+      <div class="hsub rise" style="--d:.22s">Three distilleries. Three nights in the Smokies. A new winner every Friday.</div>
     </div>
 
     <ul class="pwin">
@@ -2717,7 +2741,7 @@ body.entered .jwrap{max-width:296px}
             <text x="172" y="348" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="7.6" font-weight="900" letter-spacing="2.3" fill="#3A2C1E">THE GOLDEN JAR</text>
             <path d="M124 355h96" stroke="rgba(60,42,20,.35)" stroke-width="1"/>
             <text x="172" y="370" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="12" font-weight="900" letter-spacing="-.3" fill="#2A211A">$5,000 WEEKEND</text>
-            <text x="172" y="381" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="5.2" font-weight="900" letter-spacing=".8" fill="#6B5C42">THREE DISTILLERIES &middot; FIVE NAMES MONTHLY</text>
+            <text x="172" y="381" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="5.2" font-weight="900" letter-spacing=".8" fill="#6B5C42">THREE DISTILLERIES &middot; FIVE NAMES A WEEK</text>
           </g>
           <!-- glass highlights ride over everything, including the label -->
           <path d="M100 108h180v330H100z" fill="url(#shineG)"/>
@@ -2753,7 +2777,7 @@ body.entered .jwrap{max-width:296px}
     <div class="hmid">
       <div class="lrail">
         <div class="lcard hbeat wide" id="hbeat">
-          <div class="cdlab"><div class="lk"><span class="pip pE"></span>This drawing closes in</div><em>Closes at month end. Next one opens the same day.</em></div>
+          <div class="cdlab"><div class="lk"><span class="pip pE"></span>This week&rsquo;s draw closes in</div><em id="cdWhen">Friday at 9pm Eastern</em></div>
           <div class="cdwrap"><div class="cdw"><b data-cd="D">00</b><span>Days</span></div><div class="cdw"><b data-cd="H">00</b><span>Hrs</span></div><div class="cdw"><b data-cd="M">00</b><span>Min</span></div><div class="cdw"><b data-cd="S">00</b><span>Sec</span></div></div>
         </div>
       </div>
@@ -2762,12 +2786,12 @@ body.entered .jwrap{max-width:296px}
 
     <div class="pickw" id="pickw" aria-hidden="false">
         <button class="pkwait" id="pkWait" type="button"><span class="pkwd"></span>Drop your name in first</button>
-        <div class="pkhead"><span class="pkstep">Question 1 of 5</span><h2>What are you drinking?</h2></div>
+        <div class="pkhead"><span class="pkstep">Step 1 of 3</span><h2>What are you drinking?</h2></div>
         <p class="pkwhy">Cans at 4.5% all the way up to Blue Flame at 128. Tell us where you sit and we’ll stop guessing.</p>
         <div class="pgrid" id="pgrid"></div>
         <div class="pkfoot">
           <button class="lnk" id="pkMore">See all ten</button>
-          <span class="fine2">Five names pulled every month. One comes out gold.</span>
+          <span class="fine2">Five names pulled every Friday. One comes out gold.</span>
         </div>
     </div>
 
@@ -2908,8 +2932,8 @@ body.entered .jwrap{max-width:296px}
 <section class="sec" id="quizSec"><div class="wrap">
   <div class="qcard">
     <div class="qtop">
-      <div class="qbar" id="qbar"><i class="on"></i><i></i><i></i><i></i><i></i></div>
-      <div class="qstep" id="qstep">Question 1 of 5</div>
+      <div class="qbar" id="qbar"><i class="on"></i><i></i><i></i></div>
+      <div class="qstep" id="qstep">Step 1 of 3</div>
       <div class="grow"></div>
       <button class="btn-o sm" id="demoBtn">Watch it fill itself in</button>
     </div>
@@ -2946,7 +2970,7 @@ body.entered .jwrap{max-width:296px}
       <div class="rdhead">
         <span class="rdkick"><i></i>Three doors, one weekend</span>
         <h3>You don&rsquo;t have to wait on the drawing.</h3>
-        <p>One name comes out gold every month. The road is open to everybody else, every day of the year, and it is the same three stops the winner walks.</p>
+        <p>One name comes out gold every week. The road is open to everybody else, every day of the year, and it is the same three stops the winner walks.</p>
       </div>
 
       <ol class="rdstops"><li class="rdstop" data-go="https://olesmoky.com/pages/distillery" tabindex="0" role="link"><div class="rdtop"><span class="rdn">01</span><span class="rdart"><svg width="34" height="34"><use href="#vHoller"/></svg></span><span class="rdname"><b>The Holler</b><em>Gatlinburg</em></span><span class="rdgo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div><p class="rdd">Where it started. The original still, the tasting counter, and the room the company came out of.</p><div class="rdmeta"><i class="rdopen"></i>Open daily<span class="rddot"></span>Tours by reservation</div></li><li class="rdstop" data-go="https://olesmoky.com/pages/distillery" tabindex="0" role="link"><div class="rdtop"><span class="rdn">02</span><span class="rdart"><svg width="34" height="34"><use href="#vBarrel"/></svg></span><span class="rdname"><b>The Barrelhouse</b><em>Gatlinburg</em></span><span class="rdgo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div><p class="rdd">A quarter mile down the Parkway. The whiskey side of the house, char and time doing the work behind you.</p><div class="rdmeta"><i class="rdopen"></i>Open daily<span class="rddot"></span>Barrel room on site</div></li><li class="rdstop" data-go="https://olesmoky.com/pages/distillery" tabindex="0" role="link"><div class="rdtop"><span class="rdn">03</span><span class="rdart"><svg width="34" height="34"><use href="#vBarn"/></svg></span><span class="rdname"><b>The Barn</b><em>Pigeon Forge</em></span><span class="rdgo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div><p class="rdd">The loudest of the three. Live bluegrass on the patio most nights and the biggest room Ole Smoky owns.</p><div class="rdmeta"><i class="rdopen"></i>Open daily<span class="rddot"></span>Live music most nights</div></li></ol>
@@ -3098,7 +3122,7 @@ body.entered .jwrap{max-width:296px}
 <section class="sec" id="rwSec"><div class="wrap">
   <div class="kick">Or don’t wait at all</div>
   <h2>Skip the drawing. Spend the points.</h2>
-  <p class="lead" style="margin:12px 0 0">Five names get pulled a month, so most people don’t win. That’s a strange way to thank somebody for showing up. So the points are the other door. Earn them on things you were going to do anyway, and take the shirt without ever being drawn.</p>
+  <p class="lead" style="margin:12px 0 0">Five names get pulled a week, so most people don’t win. That’s a strange way to thank somebody for showing up. So the points are the other door. Earn them on things you were going to do anyway, and take the shirt without ever being drawn.</p>
   <div class="rw" id="rwGrid"></div>
   <p class="fine" style="max-width:70ch">Points are earned on actions and spent on merchandise. They are never earned on the purchase of whiskey and they never redeem for it, which is what keeps this legal in every state including the strict ones. <button class="lnk" id="rulesLink3">Official rules summary</button></p>
 </div></section>
@@ -3485,8 +3509,8 @@ body.entered .jwrap{max-width:296px}
       <dt>Eligibility</dt><dd>Legal residents of eligible states, 21 or over at entry. Eligible states are set per drawing by counsel rather than fixed in the page, because no two spirits promotions run the same list. Employees and representatives of alcohol wholesalers and retailers are excluded, and the account carries a flag so the exclusion happens at the draw rather than on the honour system.</dd>
       <dt>No purchase necessary</dt><dd>A free entry is available every day on the main screen, in the same number of taps as any other route, writing to the same jar with the same weight.</dd>
       <dt>Entry period</dt><dd>Monthly. Entries close when the timer closes and the next period opens the same day.</dd>
-      <dt>Prize</dt><dd>Five names per period. Four runner-up kits, each one shirt and one cooler bag. One Golden Jar winner receives the Smoky Mountain Takeover, an experience package with an illustrative retail value of $5,000. Alcohol is not part of any prize, because alcohol cannot lawfully be a prize; the distillery tasting is an experience at a licensed venue and any guest must also be 21 or over.</dd>
-      <dt>Registration and bonding</dt><dd>The monthly prize pool crosses the New York and Florida $5,000 registration thresholds, so filing and bonding lead time (30 days and 7 days) sits on the launch calendar rather than being discovered after. Eligible states remain a per-drawing decision made with counsel.</dd>
+      <dt>Prize</dt><dd>Five names per weekly period. Four runner-up kits, each one shirt and one cooler bag. One Golden Jar winner receives the Smoky Mountain Takeover, an experience package with an illustrative retail value of $5,000. Alcohol is not part of any prize, because alcohol cannot lawfully be a prize; the distillery tasting is an experience at a licensed venue and any guest must also be 21 or over.</dd>
+      <dt>Registration and bonding</dt><dd>The weekly prize pool crosses the New York and Florida $5,000 registration thresholds, so filing and bonding lead time (30 days and 7 days) sits on the launch calendar rather than being discovered after. Eligible states remain a per-drawing decision made with counsel.</dd>
       <dt>Odds</dt><dd>Determined by the number of eligible entries received.</dd>
       <dt>Winner selection and notification</dt><dd>Random draw from all eligible entries. Winners notified by email, with a signed declaration and proof of age before anything ships.</dd>
       <dt>Referral entries</dt><dd>One additional entry per completed friend entry, capped at three for the life of the account, credited only when that person finishes registration and confirms 21 or over. Duplicates across email, phone and address are removed.</dd>
@@ -3779,7 +3803,8 @@ const OCCASIONS=[
  {k:'water',   art:'oWater', name:'Lake or pool',    sub:'Cooler weather, cans on ice'},
  {k:'porch',   art:'oPorch', name:'Backyard',        sub:'Cookout, fire pit, the porch'},
  {k:'kitchen', art:'oKitchen',name:'Someone&rsquo;s kitchen', sub:'Late, small, mixing drinks'},
- {k:'gift',    art:'oGift',  name:'I buy it as a gift', sub:'Rarely for me'}
+ {k:'gift',    art:'oGift',  name:'I buy it as a gift', sub:'Rarely for me'},
+ {k:'other',   art:'oOther', name:'Somewhere else',    sub:'None of these is my spot'}
 ];
 /* Step 3. Where they buy decides which retail partner gets the co-op dollar
    and whether a delivery route is even reachable for this person. */
@@ -3795,7 +3820,8 @@ const CHANNELS=[
    alcohol and none of them will build a lookalike without a range. */
 const AGES=[
  {k:'21_24',name:'21 to 24'},{k:'25_34',name:'25 to 34'},{k:'35_44',name:'35 to 44'},
- {k:'45_54',name:'45 to 54'},{k:'55p',name:'55 or over'}
+ {k:'45_54',name:'45 to 54'},{k:'55p',name:'55 or over'},
+ {k:'na',name:'Rather not'}
 ];
 const VENUES=[
  {k:'holler', art:'vHoller', name:'The Holler',      sub:'Gatlinburg TN'},
@@ -4044,23 +4070,61 @@ function labelTables(){
 window.labelTables=labelTables;
 [1,2,3].forEach(i=>{const b=$('#v'+i);if(b)b.addEventListener('click',()=>setView(i));});
 
-/* ---------------- COUNTDOWN ---------------- */
-/* A real month end, not six days from whenever the page loaded. A countdown
-   that resets on reload while the copy says "no trick clock" is exactly the
-   thing this page criticizes elsewhere. */
-const END=(function(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()+1,1,0,0,0).getTime();})();
-const SPAN=31*864e5;
+/* ---------------- COUNTDOWN ----------------
+   The draw closes Friday 9pm Eastern, computed from the real clock rather than
+   from whenever the page loaded, and it rolls over on its own.
+
+   Eastern means Eastern, not "five hours off UTC". The offset moves twice a
+   year, so the wall clock comes from Intl and the UTC instant is solved for by
+   correction rather than assumed. */
+function etParts(d){
+  const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,
+    year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',weekday:'short'});
+  const o={};for(const x of f.formatToParts(d))o[x.type]=x.value;
+  o.hour=String(Number(o.hour)%24);           /* some engines say 24 for midnight */
+  return o;
+}
+const CLOSE_HOUR=21;                           /* 9pm Eastern */
+function nextClose(from){
+  const now=from||Date.now();
+  const p=etParts(new Date(now));
+  const dow=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(p.weekday);
+  const secs=Number(p.hour)*3600+Number(p.minute)*60+Number(p.second);
+  let add=(5-dow+7)%7;                         /* 5 = Friday */
+  if(add===0&&secs>=CLOSE_HOUR*3600)add=7;
+  const base=new Date(Date.UTC(Number(p.year),Number(p.month)-1,Number(p.day)));
+  base.setUTCDate(base.getUTCDate()+add);
+  const y=base.getUTCFullYear(),mo=base.getUTCMonth(),da=base.getUTCDate();
+  /* Guess at daylight time, then correct. Bounded, so a bad zone cannot hang. */
+  let t=Date.UTC(y,mo,da,CLOSE_HOUR+4,0,0);
+  for(let i=0;i<4;i++){
+    const q=etParts(new Date(t));
+    const drift=(Number(q.day)-da)*86400+(Number(q.hour)-CLOSE_HOUR)*3600+Number(q.minute)*60+Number(q.second);
+    if(!drift)break;
+    t-=drift*1000;
+  }
+  return t;
+}
+let END=nextClose();
+const SPAN=7*864e5;
+const CD_FMT=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'long',month:'short',day:'numeric'});
+function cdWhen(){return CD_FMT.format(new Date(END)).replace(',','')+' at 9pm Eastern';}
 setInterval(()=>{
-  let d=Math.max(0,END-Date.now());
+  let d=END-Date.now();
+  /* Rolls over on its own. Nobody should reload to find out the draw they were
+     watching already happened. */
+  if(d<=0){END=nextClose(Date.now()+1000);d=END-Date.now();
+    const w=$('#cdWhen');if(w)w.textContent=cdWhen();}
   const dd=Math.floor(d/864e5),hh=Math.floor(d/36e5)%24,mm=Math.floor(d/6e4)%60,ss=Math.floor(d/1e3)%60;
   const put=(k,v)=>document.querySelectorAll('[data-cd="'+k+'"]').forEach(n=>{n.textContent=v;});
   put('D',String(dd).padStart(2,'0'));put('H',String(hh).padStart(2,'0'));
   put('M',String(mm).padStart(2,'0'));put('S',String(ss).padStart(2,'0'));
-  const dtxt=dd>0?(dd+(dd===1?' day':' days')):(hh+(hh===1?' hour':' hours'));
+  const dtxt=dd>0?(dd+(dd===1?' day':' days')):(hh>0?(hh+(hh===1?' hour':' hours')):(mm+' min'));
   const ey=$('#eyD');if(ey)ey.textContent=dtxt;
   const sy=$('#stkyD');if(sy)sy.textContent=dtxt;
   if($('#drain'))$('#drain').style.width=(d/SPAN*100)+'%';
 },1000);
+(function cdInit(){const w=document.getElementById('cdWhen');if(w)w.textContent=cdWhen();})();
 
 /* ---------------- HERO SHOWCASE ---------------- */
 let sc=0;
@@ -4110,45 +4174,33 @@ $('#sellers').innerHTML=FLAVORS.map((f,i)=>`<button class="card jarcard" data-jk
 })();
 
 /* ---------------- QUIZ ---------------- */
-function bar(){$$('#qbar i').forEach((el,i)=>el.classList.toggle('on',i<S.step));$('#qstep').textContent=S.step<=5?('Question '+S.step+' of 5'):'Entered';}
+function bar(){$$('#qbar i').forEach((el,i)=>el.classList.toggle('on',i<S.step));
+  $('#qstep').textContent=S.step<=3?('Step '+S.step+' of 3'):'Entered';}
 function stepHTML(){
- const why=t=>`<div class="qwhy"><b>Why we ask</b>${t}</div>`;
- if(S.step===1)return `<div class="qh">What are you drinking?</div>
-  <div class="qsub">Cans at 4.5% all the way up to Blue Flame at 128 proof. We put out one or two new flavors a quarter, so the whole business runs on people coming back for the next one. Where you sit now is the first thing worth knowing.</div>
+ /* Three steps, and every headline is about the next one. The explainers under
+    each question are gone: a paragraph defending an ask only helps when the ask
+    is surprising, and none of these are. */
+ if(S.step===1)return `<div class="qh">First things first, what&rsquo;s your pour?</div>
+  <div class="qsub">Pick the one you reach for most and we&rsquo;ll get you moving.</div>
   <div class="opts">${FLAVORS.map(f=>`<button class="opt" data-f="${f.k}"><span class="tag">${f.tag}</span><svg class="art"><use href="#${f.art}"/></svg><span><b>${f.name}</b><span>${f.sub}</span></span></button>`).join('')}</div>
-  ${why('This sets the line, the proof band and the first recommendation in one tap. Someone on the cans and someone on Blue Flame should never get the same email, and today they do.')}
   <div class="qerr" id="qerr"></div><div class="qnav"><span class="hint">Tap one and we move you straight on. No extra button.</span></div>`;
 
- if(S.step===2)return `<div class="qh">When does it actually come out?</div>
-  <div class="qsub">Same jar, four different nights. The occasion decides the picture, the timing and half the copy.</div>
-  <div class="opts">${OCCASIONS.map(o=>`<button class="opt" data-o="${o.k}"><svg class="art"><use href="#${o.art}"/></svg><span><b>${o.name}</b><span>${o.sub}</span></span></button>`).join('')}</div>
-  ${why('This drives the creative and the calendar. Game day answers get the football window, lake answers get May through August, gift answers get November and nothing in July.')}
+ if(S.step===2)return `<div class="qh">Where does the jar end up?</div>
+  <div class="qsub">Pick the spot it usually lands, then we&rsquo;ll get you to the last step.</div>
+  <div class="opts">${OCCASIONS.map(o=>`<button class="opt${o.k==='other'?' opt-alt':''}" data-o="${o.k}"><svg class="art"><use href="#${o.art}"/></svg><span><b>${o.name}</b><span>${o.sub}</span></span></button>`).join('')}</div>
   <div class="qerr" id="qerr"></div><div class="qnav"><button class="back" data-back>Back</button><span class="hint">Tap one to keep going.</span></div>`;
 
- if(S.step===3)return `<div class="qh">Where do you pick it up?</div>
-  <div class="qsub">Ole Smoky cannot sell to you directly in most states. Knowing which shelf you stand in front of is the difference between a useful offer and a dead link.</div>
-  <div class="opts">${CHANNELS.map(c=>`<button class="opt" data-c="${c.k}"><svg class="art"><use href="#${c.art}"/></svg><span><b>${c.name}</b><span>${c.sub}</span></span></button>`).join('')}</div>
-  ${why('This is the field the coupon depends on. It decides which retailer gets the co-op dollar, whether a delivery route even exists near you, and who is worth inviting to a distillery.')}
-  <div class="qerr" id="qerr"></div><div class="qnav"><button class="back" data-back>Back</button><span class="hint">Tap one to keep going.</span></div>`;
-
- if(S.step===4)return `<div class="qh">Where should we send it, and how old are you?</div>
-  <div class="qsub">Your email is where the pick, the 250 points and the winner announcement go. The age band is the one thing we are legally required to have.</div>
-  <div class="fld"><label for="fe">Email address</label><input id="fe" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" value="${esc(S.email)}"></div>
+ if(S.step===3)return `<div class="qh">Last part, then you&rsquo;re in the jar.</div>
+  <div class="qsub">We just need a name and an email so we know where to find you Friday.</div>
+  <div class="f2">
+    <div class="fld"><label for="fn">First name</label><input id="fn" type="text" autocomplete="given-name" placeholder="Your first name" value="${esc(S.name)}"></div>
+    <div class="fld"><label for="fe">Email address</label><input id="fe" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" value="${esc(S.email)}"></div>
+  </div>
   <div class="fld"><label>Age</label><div class="ages" id="ages">${AGES.map(a=>`<button type="button" class="agb ${S.ageBand===a.k?'sel':''}" data-a="${a.k}">${a.name}</button>`).join('')}</div></div>
-  <label class="chk"><input type="checkbox" id="fc1" ${S.optEmail?'checked':''}><span><b>Email me my pick and my points</b>Recommendations, drops and news from Ole Smoky. Needed to send you the 250 points.</span></label>
+  <label class="chk"><input type="checkbox" id="fc1" ${S.optEmail?'checked':''}><span><b>Email me my pick and my points</b>Recommendations, drops and news from Ole Smoky. Needed to send you the points.</span></label>
   <label class="chk"><input type="checkbox" id="fc2" ${S.age?'checked':''}><span><b>I am 21 or over</b>Required to enter. We ask once, here, instead of stopping you at the door.</span></label>
-  ${why('Every ad platform enforces 21 plus on alcohol and none of them will build a lookalike audience without an age range. One tap here is worth more than a year of guessing.')}
   <div class="qerr" id="qerr"></div>
-  <div class="qnav"><button class="btn-p" id="go3">Keep going</button><button class="back" data-back>Back</button></div>`;
-
- if(S.step===5)return `<div class="qh">What should we call you?</div>
-  <div class="qsub">A first name is enough. Add a mobile only if you want it, because texts get opened faster than email and the code runs out in 14 days.</div>
-  <div class="fld"><label for="fn">First name</label><input id="fn" type="text" autocomplete="given-name" placeholder="Your first name" value="${esc(S.name)}"></div>
-  <div class="fld"><label for="fp">Mobile number, optional</label><input id="fp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" value="${esc(S.phone)}"></div>
-  <label class="chk"><input type="checkbox" id="fc3" ${S.optSms?'checked':''}><span><b>Text me too</b>Optional. Message and data rates may apply. Reply STOP to opt out any time.</span></label>
-  ${why('Skipping this changes nothing about your entry. It’s here because a name and a way to reach you are what turn a record into somebody you can actually talk to.')}
-  <div class="qerr" id="qerr"></div>
-  <div class="qnav"><button class="btn-g" id="go5">Put my name in the jar</button><button class="back" data-back>Back</button></div>`;
+  <div class="qnav"><button class="btn-g" id="go3">Put me in the jar</button><button class="back" data-back>Back</button></div>`;
  return '';
 }
 function renderStep(){
@@ -4161,24 +4213,18 @@ function renderStep(){
   if(S.step===2)$$('#qbody .opt').forEach(b=>b.addEventListener('click',()=>{
     $$('#qbody .opt').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
     S.occ=b.dataset.o;setTimeout(()=>{S.step=3;renderStep()},430);}));
-  if(S.step===3)$$('#qbody .opt').forEach(b=>b.addEventListener('click',()=>{
-    $$('#qbody .opt').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
-    S.chan=b.dataset.c;setTimeout(()=>{S.step=4;renderStep()},430);}));
-  if(S.step===4){
+  if(S.step===3){
     $$('#qbody .agb').forEach(b=>b.addEventListener('click',()=>{
       $$('#qbody .agb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
       S.ageBand=b.dataset.a;if(typeof sTing==='function')sTing();}));
     $('#go3').addEventListener('click',()=>{
-      const e=$('#fe').value.trim();
+      const n=$('#fn').value.trim(),e=$('#fe').value.trim();
+      if(!n){$('#qerr').textContent='Add your first name so the slip has something on it.';return;}
       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){$('#qerr').textContent='Add a valid email so we can send your pick.';return;}
-      if(!S.ageBand){$('#qerr').textContent='Pick your age band. It is the one field we are required to keep.';return;}
+      if(!S.ageBand){$('#qerr').textContent='Pick an age band. Rather not say counts.';return;}
       if(!$('#fc2').checked){$('#qerr').textContent='We can only enter you if you are 21 or over.';return;}
-      S.email=e;S.optEmail=$('#fc1').checked;S.age=true;S.step=5;renderStep();});
+      S.name=n;S.email=e;S.optEmail=$('#fc1').checked;S.age=true;enter();});
   }
-  if(S.step===5)$('#go5').addEventListener('click',()=>{
-    const n=$('#fn').value.trim();
-    if(!n){$('#qerr').textContent='Add your first name so the pick has your name on it.';return;}
-    S.name=n;S.phone=$('#fp').value.trim();S.optSms=$('#fc3').checked;enter();});
 }
 /* ---------------- THE ENTRY GESTURE ----------------
    Click once, watch a slip fall into the glass, and only then get asked a
@@ -4252,7 +4298,7 @@ $('#ctaEnter').addEventListener('click',enterDraw);
     const run=()=>{
       b.classList.add('gone');
       if(typeof demo==='function')demo();
-      else{S.flavor='caramel';S.occ='tailgate';S.chan='conv';S.ageBand='25_34';
+      else{S.flavor='caramel';S.occ='tailgate';S.ageBand='25_34';
         S.email='hiring@olesmoky.com';S.name='Dale';S.age=true;S.step=5;
         try{renderStep();}catch(e){}enter();acctUI();rewards();}
     };
@@ -4417,11 +4463,10 @@ function enter(){
   $('#refLink').value='nathanjsong.com/olesmoky?ref='+c;
   const f=FLAVORS.find(x=>x.k===S.flavor)||FLAVORS[0];
   const oc=OCCASIONS.find(x=>x.k===S.occ)||OCCASIONS[0];
-  const ch=CHANNELS.find(x=>x.k===S.chan)||CHANNELS[0];
   const ag=AGES.find(x=>x.k===S.ageBand);
   const dash=' '+String.fromCharCode(183)+' ';
   const clean=s=>String(s).replace(/&rsquo;/g,String.fromCharCode(8217)).replace(/&amp;/g,'&');
-  const vn=[f.name,oc.name,ch.name,ag?ag.name:''].filter(Boolean).map(clean).join(dash);
+  const vn=[f.name,oc.name,ag?ag.name:''].filter(Boolean).map(clean).join(dash);
   $('#matchArt').innerHTML='<use href="#'+f.art+'"/>';
   $('#matchName').textContent=f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' it is.';
   $('#matchDesc').textContent=f.desc;
@@ -4655,7 +4700,7 @@ $('#aiGo').addEventListener('click',()=>{
   unlock(2,true);unlock(3);
   if(typeof paintBand==='function')paintBand();
   const rc=code(); $('#refLink').value='nathanjsong.com/olesmoky?ref='+rc; $('#codeVal').textContent='JAR15-'+rc;
-  const f=FLAVORS[4];S.flavor=f.k;S.occ='tailgate';S.chan='conv';S.ageBand='25_34';
+  const f=FLAVORS[4];S.flavor=f.k;S.occ='tailgate';S.ageBand='25_34';
   $('#matchArt').innerHTML='<use href="#'+f.art+'"/>';
   $('#matchName').textContent=f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' it is.';
   $('#matchDesc').textContent=f.desc;
@@ -4753,21 +4798,16 @@ async function demo(){
     o=$$('#qbody .opt');
     say('Demo: game day, which sets the whole calendar');cur(o[0]);await wait(620);
     o[0].classList.add('sel');await wait(620);if(stopDemo)throw 0;
-    S.occ='tailgate';S.step=3;renderStep();await wait(420);
-    o=$$('#qbody .opt');
-    say('Demo: buys it at a convenience store, so DoorDash is reachable');cur(o[2]);await wait(620);
-    o[2].classList.add('sel');await wait(620);if(stopDemo)throw 0;
-    S.chan='conv';S.step=4;renderStep();await wait(420);
-    say('Demo: typing an email');cur($('#fe'),.18);await wait(420);
-    await typeIn($('#fe'),'hiring@olesmoky.com');await wait(260);if(stopDemo)throw 0;
-    say('Demo: confirming 21 or over');cur($('#fc2'),.05,.4);await wait(420);$('#fc2').checked=true;await wait(420);
+    S.occ='tailgate';S.step=3;renderStep();await wait(460);
+    say('Demo: typing a name');cur($('#fn'),.18);await wait(400);
+    await typeIn($('#fn'),'Dale');await wait(240);if(stopDemo)throw 0;
+    say('Demo: typing an email');cur($('#fe'),.18);await wait(360);
+    await typeIn($('#fe'),'hiring@olesmoky.com');await wait(240);if(stopDemo)throw 0;
+    say('Demo: confirming 21 or over');cur($('#fc2'),.05,.4);await wait(400);$('#fc2').checked=true;await wait(400);
     say('Demo: picking an age band');const ab=$$('#qbody .agb');if(ab[1]){cur(ab[1]);await wait(380);ab.forEach(x=>x.classList.remove('sel'));ab[1].classList.add('sel');}
-    S.ageBand='25_34';await wait(360);
-    S.email='hiring@olesmoky.com';S.age=true;S.step=5;renderStep();await wait(400);
-    say('Demo: adding a name');cur($('#fn'),.18);await wait(400);
-    await typeIn($('#fn'),'Dale');await wait(300);if(stopDemo)throw 0;
-    S.name='Dale';await wait(200);
-    say('Demo: putting the name in the jar');cur($('#go5'),.5,.5);await wait(520);
+    S.ageBand='25_34';await wait(340);
+    S.name='Dale';S.email='hiring@olesmoky.com';S.age=true;
+    say('Demo: putting the name in the jar');cur($('#go3'),.5,.5);await wait(520);
     enter();acctUI();rewards();
   }catch(e){/* the demo was stopped mid walk, which is a normal exit */}
   finally{
@@ -4778,7 +4818,7 @@ async function demo(){
 }
 $('#dskip').addEventListener('click',()=>{
   stopDemo=true;S.demo=false;
-  S.flavor='caramel';S.occ='tailgate';S.chan='conv';S.ageBand='25_34';S.email='hiring@olesmoky.com';S.name='Dale';S.age=true;S.auth=true;
+  S.flavor='caramel';S.occ='tailgate';S.ageBand='25_34';S.email='hiring@olesmoky.com';S.name='Dale';S.age=true;S.auth=true;
   $('#dcur').classList.remove('on');$('#dbadge').classList.remove('on');$('#demoBtn').disabled=false;
   enter();acctUI();rewards();
 });
@@ -6550,7 +6590,7 @@ function mvCalc(){
      Breakage belongs in the cost line, not a footnote. */
   const ptsIssued=active*MV.earn*12;
   const ptCost=ptsIssued*0.003*(1-MV.brk/100);
-  const prize=5000*12;
+  const prize=5000*52;
   const cost=acqCost+ptCost+prize+MV.fixed;
   const contribution=gp-cost;
   const breakeven=active?cost/active/(MV.gm/100):0;
@@ -6580,7 +6620,7 @@ function mvPaint(){
     '<b>'+esc(c[1])+'</b><em>'+esc(c[2])+'</em></div>').join('');
 
   const parts=[['Media to acquire entries',r.acqCost],['Points people actually redeem',r.ptCost],
-    ['The prize itself',r.prize],['Platform, fulfilment and ops',MV.fixed]];
+    ['The prize itself, 52 draws',r.prize],['Platform, fulfilment and ops',MV.fixed]];
   const tot=parts.reduce((a,b)=>a+b[1],0);
   /* The honest read, recalculated rather than written once and left there. A
      model that always concludes the same thing is a slide, not a model. */

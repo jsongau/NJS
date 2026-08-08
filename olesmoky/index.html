@@ -386,6 +386,15 @@ body.cbaron .toast{bottom:104px}
   border-radius:11px;padding:11px 13px;color:var(--ink);font:800 14px/1 var(--font)}
 .ordzip input:focus{outline:0;border-color:var(--shine);box-shadow:0 0 0 3px rgba(255,176,32,.14)}
 .ordg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+/* One app now. The tile becomes a row so the mark, the name and the promise sit
+   on one line instead of a card with a lot of nothing under it. */
+.ordg.one{grid-template-columns:1fr}
+.ordb.solo{flex-direction:row;align-items:center;gap:14px;text-align:left;padding:14px 16px}
+.ordb.solo b{font-size:15px}
+.ordb.solo em{font-style:normal;font-size:11.5px;color:var(--muted-lo);margin-left:auto;text-align:right}
+@media(max-width:480px){.ordb.solo em{display:none}}
+.mnapps.one{grid-template-columns:1fr}
+.mnapps.one .mnapp{flex-direction:row;justify-content:center;gap:11px;padding:12px}
 @media(max-width:420px){.ordg{grid-template-columns:1fr}}
 .ordb{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;padding:12px 6px;
   border:1.5px solid var(--line);border-radius:13px;background:rgba(255,255,255,.035);
@@ -407,8 +416,6 @@ body.cbaron .toast{bottom:104px}
 /* One cap for all three made Instacart, a 5:1 wordmark, render at 13px tall next
    to a 30px DoorDash arrow. Optical balance is not bounding boxes matching, it is
    the amount of ink reading the same. Each mark gets its own cap. */
-#ordDD .obm img{max-height:27px;max-width:62px}
-#ordUE .obm img{max-height:32px;max-width:60px}
 #ordIC .obm img{max-height:20px;max-width:80px}
 .obm-old{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font:900 11px/1 var(--font);color:#fff}
 
@@ -534,6 +541,8 @@ body.onconv .mnav{display:flex}
 .mnapp b{font:900 11.5px/1 var(--font);color:var(--ink)}
 .mnapp .obm{width:56px;height:30px}
 .mnapp .obm img{max-width:48px;max-height:22px}
+#lidIC .obm img{max-height:15px;max-width:62px}
+.mnapp .obm{width:70px;height:32px}
 .mnret{list-style:none;margin:11px 0 0;padding:9px 0 0;border-top:1px solid var(--line);display:grid;gap:7px}
 .mnret li{display:flex;align-items:center;gap:9px}
 .mri{flex:0 0 26px;width:26px;height:26px;display:grid;place-items:center;border-radius:7px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
@@ -2085,11 +2094,14 @@ body.entered .pkwait{opacity:0;pointer-events:none;transform:translateY(-6px)}
 .opt-alt:hover{border-color:rgba(34,211,238,.8);background:rgba(34,211,238,.1)}
 /* -- the place lookup -- */
 .lookup{position:relative}
-.lkin{position:relative;display:flex;align-items:center}
+.lkin{display:flex;align-items:center}
 .lkic{position:absolute;left:13px;color:var(--shine-deep);pointer-events:none}
 .lookup input{width:100%;padding-left:38px}
 .lkfine{font-size:11px;color:var(--muted-lo);margin:7px 0 0}
-.lklist{position:absolute;z-index:40;left:0;right:0;top:calc(100% - 22px);margin:0;padding:6px;
+/* Below the field, not over it. top:100% with the label height subtracted was
+   guesswork, and the guess was wrong: the list covered the thing you were
+   typing into. Anchored to the input's own wrapper instead. */
+.lklist{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;
   list-style:none;max-height:274px;overflow-y:auto;border-radius:13px;
   background:var(--bar);border:1px solid var(--line-hi);box-shadow:0 22px 54px rgba(0,0,0,.66)}
 .lkitem{display:flex;align-items:baseline;gap:9px;padding:9px 11px;border-radius:9px;cursor:pointer}
@@ -2133,7 +2145,12 @@ body.entered .pkwait{opacity:0;pointer-events:none;transform:translateY(-6px)}
 .mag{--mgx:0px;--mgy:0px;transform:translate3d(var(--mgx),var(--mgy),0)}
 .mag:active{transform:translate3d(var(--mgx),var(--mgy),0) scale(.975)}
 .mag:focus-visible{outline:2px solid var(--volt);outline-offset:3px}
-.tchips{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
+/* Three short promises, one line. Wrapped to three rows they read as a list of
+   terms rather than a row of reassurances. */
+.tchips{display:flex;flex-wrap:nowrap;gap:6px;margin-top:15px;min-width:0}
+.tchips .tchip{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:620px){.tchips .tchip{font-size:10.5px;padding-left:9px;padding-right:9px;gap:5px}}
+@media(max-width:430px){.tchips{flex-wrap:wrap}}
 .tchip{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:99px;padding:7px 12px}
 /* -- the jar, and the CTA fused into it -- */
 .jstage{position:relative;display:flex;align-items:center;justify-content:center;min-height:430px;overflow:hidden;isolation:isolate;padding:8px 0 4px}
@@ -2671,10 +2688,8 @@ body.entered .jwrap{max-width:296px}
     <div class="mnpanel" id="mnPanel">
       <span class="mnglow" aria-hidden="true"></span>
       <div class="mnhd">Three apps carry it. Pick one.</div>
-      <div class="mnapps">
-        <a class="mnapp dd" id="lidDD" target="_blank" rel="noopener" href="https://www.doordash.com/"><span class="obm">DD</span><b>DoorDash</b></a>
-        <a class="mnapp ue" id="lidUE" target="_blank" rel="noopener" href="https://www.ubereats.com/"><span class="obm">UE</span><b>Uber Eats</b></a>
-        <a class="mnapp ic" id="lidIC" target="_blank" rel="noopener" href="https://www.instacart.com/"><span class="obm">IC</span><b>Instacart</b></a>
+      <div class="mnapps one">
+        <a class="mnapp ic" id="lidIC" target="_blank" rel="noopener" href="https://www.instacart.com/store/s?k=ole+smoky+moonshine"><span class="obm"></span><b>Instacart</b></a>
       </div>
       <ul class="mnret">
         <li><span class="mri"><svg width="16" height="16"><use href="#sev"/></svg></span><b>7-Eleven</b><em>Nearest stocking store on your locator</em></li>
@@ -3051,10 +3066,8 @@ body.entered .jwrap{max-width:296px}
           <label for="ordWhere">Your city or ZIP</label>
           <input id="ordWhere" type="text" inputmode="text" placeholder="91792" value="91792">
         </div>
-        <div class="ordg">
-          <a class="ordb dd" id="ordDD" target="_blank" rel="noopener" href="https://www.doordash.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>DoorDash</b><em id="ddSub">Search</em></a>
-          <a class="ordb ue" id="ordUE" target="_blank" rel="noopener" href="https://www.ubereats.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Uber Eats</b><em id="ueSub">Search</em></a>
-          <a class="ordb ic" id="ordIC" target="_blank" rel="noopener" href="https://www.instacart.com/"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Instacart</b><em id="icSub">Search</em></a>
+        <div class="ordg one">
+          <a class="ordb ic solo" id="ordIC" target="_blank" rel="noopener" href="https://www.instacart.com/store/s?k=ole+smoky+moonshine"><span class="obm"><img src="data:image/webp;base64,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" alt="" loading="lazy" decoding="async"></span><b>Get it on Instacart</b><em id="icSub">Search is already filled in</em></a>
         </div>
         <p class="ordf">Each one opens that app’s own search for this bottle. Which store fills it, and whether they deliver alcohol where you are, is up to the app and your state.</p>
       </div>
@@ -3209,7 +3222,7 @@ body.entered .jwrap{max-width:296px}
   <div class="rail">
     <a href="https://olesmoky.com/pages/find-a-jar" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rPin"/></svg><b>Find a Jar</b><span>Nearest shelf, nearest bar. Their own locator.</span></a>
     <a href="https://olesmoky.com/pages/distillery" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rJar"/></svg><b>Visit a holler</b><span>Gatlinburg, Pigeon Forge, Nashville, Myrtle Beach.</span></a>
-    <a href="https://www.doordash.com/search/store/7-eleven/" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rBox"/></svg><b>Get it delivered</b><span>7-Eleven on DoorDash, where they run.</span></a>
+    <a href="https://www.instacart.com/store/s?k=ole+smoky+moonshine" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rBox"/></svg><b>Get it delivered</b><span>Instacart, where they run.</span></a>
     <a href="https://olesmoky.com/collections/merchandise" target="_blank" rel="noopener"><svg width="30" height="30"><use href="#rTee"/></svg><b>The merch store</b><span>Where your $15 and your points get spent.</span></a>
   </div>
 </div></section>
@@ -4363,6 +4376,21 @@ function codeBar(show){
   b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
 })();
 
+/* The Instacart mark is inlined once, on the Convert order row. The mini nav
+   borrows the same data URI at runtime rather than shipping a second copy of a
+   WebP into a file that is already large. */
+(function navMark(){
+  const go=()=>{
+    const slot=document.querySelector('#lidIC .obm');
+    const src=document.querySelector('#ordIC .obm img');
+    if(!slot||!src)return false;
+    if(slot.querySelector('img'))return true;
+    const im=new Image();im.src=src.src;im.alt='';im.decoding='async';
+    slot.appendChild(im);return true;
+  };
+  if(!go())setTimeout(go,400);
+})();
+
 /* ---------------- THE LID ----------------
    Hover opens it on a mouse, tap opens it on a thumb, and keyboard focus opens
    it for anyone doing neither. One class drives all three. */
@@ -4391,12 +4419,9 @@ function codeBar(show){
   function paintLid(){
     const f=(typeof FLAVORS!=='undefined'&&FLAVORS.find(x=>x.k===S.flavor))||(typeof FLAVORS!=='undefined'?FLAVORS[2]:null);
     if(!f)return;
-    const q=encodeURIComponent('Ole Smoky '+f.name.replace(/&rsquo;/g,String.fromCharCode(8217)).replace(/&amp;/g,'&'));
     const loc=((document.getElementById('ordWhere')||{}).value||distZip()||'').trim();
-    const dd=$('#lidDD'),ue=$('#lidUE'),ic=$('#lidIC');
-    if(dd)dd.href='https://www.doordash.com/search/store/'+q+'/';
-    if(ue)ue.href='https://www.ubereats.com/search?q='+q+(loc?'&pl='+encodeURIComponent(loc):'');
-    if(ic)ic.href='https://www.instacart.com/store/s?k='+q;
+    const ic=$('#lidIC');
+    if(ic)ic.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icSearch());
   }
   nav.addEventListener('pointerenter',paintLid);
   lid.addEventListener('click',paintLid);
@@ -5237,22 +5262,32 @@ function wireOrder(){
   const w=$('#ordWhere');if(!w)return;
   /* the road scene became a three step strip; nothing to build here now */
   function paint(){
-    const f=(FLAVORS.find(x=>x.k===S.flavor)||FLAVORS[2]);
-    const plain=f.name.replace(/&rsquo;/g,String.fromCharCode(8217)).replace(/&amp;/g,'&');
-    const term='Ole Smoky '+plain, q=encodeURIComponent(term);
-    const loc=(w.value||'').trim(), lq=loc?encodeURIComponent(loc):'';
-    $('#ordDD').href='https://www.doordash.com/search/store/'+q+'/';
-    $('#ordUE').href='https://www.ubereats.com/search?q='+q+(lq?'&pl='+lq:'');
-    $('#ordIC').href='https://www.instacart.com/store/s?k='+q;
-    const near=loc?('near '+loc):'near you';
-    $('#ddSub').textContent=near;$('#ueSub').textContent=near;$('#icSub').textContent=near;
+    const loc=(w.value||'').trim();
+    const a=$('#ordIC');
+    if(a)a.href='https://www.instacart.com/store/s?k='+encodeURIComponent(icSearch());
+    const sub=$('#icSub');
+    if(sub)sub.textContent=loc?('Search filled in, near '+loc):'Search is already filled in';
   }
   w.addEventListener('input',paint);
-  ['ordDD','ordUE','ordIC'].forEach(id=>{const a=$('#'+id);if(a)a.addEventListener('click',()=>{
-    logIt&&logIt('member','left for '+a.querySelector('b').textContent+' searching '+(FLAVORS.find(x=>x.k===S.flavor)||FLAVORS[2]).name+' · no identity returns from that tap');});});
+  const a0=$('#ordIC');
+  if(a0)a0.addEventListener('click',()=>{
+    logIt&&logIt('member','left for Instacart searching '+icSearch()+' · no identity returns from that tap');});
   paint();
   window.paintOrder=paint;
 }
+/* One place decides what Instacart gets asked for. Three copies of this string
+   in three functions is how the header link and the page button end up
+   searching for different things. Verified against Instacart's own indexed
+   landing pages: they resolve "ole smoky moonshine" plus one distinctive word,
+   and they do not index our full product names. */
+const IC_WORD={cans:'lemonade',cream:'butter pecan',apple:'apple',orig:'original',
+  caramel:'salty caramel',pb:'peanut butter',berry:'blackberry',flame:'blue flame',bourbon:'bourbon'};
+function icSearch(){
+  const f=(typeof FLAVORS!=='undefined'&&FLAVORS.find(x=>x.k===S.flavor))||null;
+  const w=f?IC_WORD[f.k]:'';
+  return 'ole smoky moonshine'+(w?' '+w:'');
+}
+
 /* ============================================================
    PLACES  ·  a real index, baked in
    ============================================================ */
@@ -5353,13 +5388,7 @@ function wireDelivery(){
      against their own indexed landing pages: the brand search and brand-plus-
      flavour searches both return product results, so the term is built that way
      rather than from our full product names, which they do not index. */
-  const IC_WORD={cans:'lemonade',cream:'butter pecan',apple:'apple',orig:'original',
-    caramel:'salty caramel',pb:'peanut butter',berry:'blackberry',flame:'blue flame',bourbon:'bourbon'};
-  function icTerm(){
-    const f=(FLAVORS.find(x=>x.k===S.flavor))||null;
-    const w=f?IC_WORD[f.k]:'';
-    return 'ole smoky moonshine'+(w?' '+w:'');
-  }
+  const icTerm=icSearch;
   function paint(){
     const city=($('#dvWhere').value||'').trim();
     paintStores();

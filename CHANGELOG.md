@@ -4,6 +4,15 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-08
 
+- `olesmoky` — the delivery locator drops the product dropdown and the radius
+  picker for one place field, backed by 8,771 real towns and 13,439 ZIPs pulled
+  from the project's own Postgres and baked into the file. Typeahead with
+  keyboard nav and a real listbox, ranked so Austin, Texas beats Austin, Nevada.
+  Encoded as text rather than JSON, 168KB, and the page still makes zero
+  external requests. Official rules chip removed from the hero, rules still
+  reachable from the Convert fine print and the footer. Five stale copies of the
+  old 250 point entry figure corrected to 2,500.
+
 - `olesmoky` — the entry form cut from five questions to three. Retail channel
   removed, name and email merged onto one row, and every "why we ask" explainer
   deleted. Headlines rewritten by a brand pass so each one points at the next

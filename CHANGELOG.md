@@ -4,6 +4,61 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-08
 
+- `olesmoky` — My Jar was rendering as a flex row instead of a two column grid,
+  so the sticky rail blew out to 423px and the panels stacked underneath it.
+  Cause: `.dsh` meant the dashboard shell since v33 and the delivery strip header
+  since v42, and the later rule won. Fourth class name collision in this build
+  after `.scan`, `.acct` and `.opt`, so there is now a check that fails the
+  build on any top level class defined twice with conflicting layout. Dashboard
+  frame widened to 1300 with a 286px rail, and on a phone the sub-nav pill you
+  press now scrolls itself into view. The Enter page is untouched.
+
+- `olesmoky` — question one is a drawn slip that writes itself. Type a name and
+  it appears on the paper, the rule inks in left to right, the seal stamps, the
+  pen lifts off the page and the whole thing tilts. Three slips drift up past it
+  on a loop. The rose glow is now bound to the button path only: it answers
+  "I pressed that, where did it go?", so somebody who walks straight into the
+  form never sees it, and it clears the moment either of them starts typing.
+  Right column settled at jar, countdown, buttons.
+
+- `olesmoky` — the draw goes weekly. It closes Friday 9pm Pacific, computed from
+  the real zone through Intl rather than a hardcoded offset, and it rolls over
+  on its own without a reload. The clock and the entry button are now one
+  component leading the right column, with two heat states read off the real
+  remaining time. Name is question one again and the retail channel question is
+  cut, so entering is type a word and press; the button then glides the page
+  down to the field over 820ms and shakes it. Real delivery marks in the mini
+  nav, borrowed from the copies already inlined in Convert. Cadence swept
+  through every surface that claimed monthly, including the jar label and the
+  financial model, where 52 draws a year instead of 12 moves contribution to
+  -$902k.
+
+- `olesmoky` — hero trust chip row removed. The three promises it carried are
+  down to two useful ones and they moved onto the button that needs them, and
+  the official rules link moved into the fine print under it so the entry offer
+  keeps a compliant disclosure without a row of its own. Both hero columns now
+  end within 6px of each other. Caught while in there: five copies of the old
+  250 point entry figure, three versions after the economy moved to 2,500. A
+  reordered funnel and a three column hero were tried and reverted before push.
+
+- `olesmoky` — the countdown moved out from under the form and up above the jar,
+  where the prize and the deadline read as one glance. Every tile question is now
+  exactly six fixed size options: five answers and a sixth "Something else" in
+  cyan, shaped like a real flavour record so the eight lookups downstream keep
+  working instead of being special cased. The one-at-a-time "This one?" nudge is
+  retired for a lit rim on all six at once, and hover and select change colour
+  only, never size.
+
+- `olesmoky` — the whole entry form moved into the hero card beside the jar.
+  All five questions render in one slot instead of starting above the fold and
+  finishing in a separate full width section, so the page stops changing shape
+  halfway through being answered. The standalone quiz section is gone and there
+  is one renderer for every step. After you enter the draw the demo pointer
+  walks from the button to the first tile and knocks on it. Trap found: the
+  tiles borrowed the retired quiz component's class name and inherited a
+  `display:block` from it, which forced the nudge badge visible on every tile at
+  once. Third class name collision in this build.
+
 - `olesmoky` — gamification finished and the economy retuned. A real month calendar
   streak with one check in a day, a check in survey whose "no" routes to Instacart with
   the member's flavour prefilled, 28 badges in five sets with unearned ones visible.

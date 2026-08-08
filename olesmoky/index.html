@@ -909,9 +909,15 @@ footer.ft a{color:var(--gold)}
 .thankband b{display:block;font-size:16px;margin-bottom:3px}
 
 
-/* ===== DASHBOARD SHELL ===== */
-.dsh{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;padding-top:30px}
-@media(max-width:940px){.dsh{grid-template-columns:1fr}}
+/* ===== DASHBOARD SHELL =====
+   1120 is a measure for one column of prose. This is a rail plus a grid of
+   cards, and squeezing 41 prize tiles into a reading width is why the wall felt
+   cramped. Wider frame, still air on both sides, never bleed. */
+.dsh{display:grid;grid-template-columns:286px minmax(0,1fr);gap:26px;align-items:start;
+  padding-top:30px;max-width:1300px}
+@media(max-width:1380px){.dsh{max-width:none}}
+@media(max-width:1120px){.dsh{grid-template-columns:262px minmax(0,1fr);gap:20px}}
+@media(max-width:940px){.dsh{grid-template-columns:1fr;gap:18px}}
 .idcard{background:linear-gradient(160deg,#241A12,#3A2716 62%,#4A3119);color:#FBF6EC;border-radius:var(--r);padding:22px;box-shadow:var(--shadow);position:sticky;top:calc(var(--hdh,58px) + 62px)}
 @media(max-width:940px){.idcard{position:static}}
 .idcard .who{display:flex;align-items:center;gap:12px;margin-bottom:16px}
@@ -1077,7 +1083,7 @@ footer.ft a{color:var(--gold)}
    Height is fixed so nothing shifts when it engages. */
 .jnav{position:sticky;top:var(--hdh,58px);z-index:64;background:rgba(10,8,6,.94);
   backdrop-filter:blur(14px);border-bottom:1px solid var(--line);height:52px;display:flex;align-items:center}
-.jnav-in{display:flex;gap:6px;align-items:center;width:100%;max-width:1180px;margin:0 auto;
+.jnav-in{display:flex;gap:6px;align-items:center;width:100%;max-width:1340px;margin:0 auto;
   padding:0 max(18px,env(safe-area-inset-left));overflow-x:auto;scrollbar-width:none;
   -webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 0 92%,transparent)}
 .jnav-in::-webkit-scrollbar{display:none}
@@ -1349,7 +1355,7 @@ footer.ft a{color:var(--gold)}
    steps say who does what, and the only number anybody cares about sits at the
    top instead of being implied by a cartoon. */
 .dstrip{padding:16px;border-radius:15px;background:var(--mist);border:1px solid var(--line);margin-bottom:14px}
-.dsh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.dstrh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .dseta{display:inline-flex;align-items:center;gap:8px;font:800 13px/1 var(--font);color:var(--muted)}
 .dseta b{font:900 15px/1 var(--font);color:var(--gold)}
 .dseta i{width:7px;height:7px;border-radius:50%;background:var(--moss);
@@ -2967,7 +2973,7 @@ body.entered .jwrap{max-width:296px}
 
       <div class="ordbox">
         <div class="dstrip">
-          <div class="dsh"><span class="dseta"><i></i>As early as <b>10 minutes</b></span><span class="dsub">Once the store accepts it</span></div>
+          <div class="dstrh"><span class="dseta"><i></i>As early as <b>10 minutes</b></span><span class="dsub">Once the store accepts it</span></div>
           <ol class="dsteps">
             <li class="dstep on" style="--sd:0s">
               <span class="dsi"><svg viewBox="0 0 40 40"><rect x="9" y="12" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M14 12V9a6 6 0 0 1 12 0v3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M14 21h12" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span>
@@ -5966,9 +5972,29 @@ function unlockAll(){[2,3].forEach(n=>{if(!UNLOCKED[n]){UNLOCKED[n]=true;const b
 
   /* Panels, not anchors. A dashboard where every section is always mounted is a
      page you scroll past four things you did not come for. */
+  /* On a phone the rail is wider than the screen, so the pill you just pressed
+     can sit off the edge of its own bar: you tap Prize wall and the thing that
+     lights up is somewhere you cannot see. Centre it, and scroll the rail rather
+     than the element so the page itself never moves. */
+  const rail=nav.querySelector('.jnav-in');
+  function reveal(el){
+    if(!rail||!el)return;
+    if(rail.scrollWidth<=rail.clientWidth+2)return;
+    /* Measured off bounding rects, not offsetLeft. offsetLeft is relative to the
+       nearest positioned ancestor, and the bar is position:sticky, so the pill
+       reports its distance from the sticky wrapper rather than from the rail's
+       own scroll origin. Two pills landed short because of it. */
+    const a=el.getBoundingClientRect(),c=rail.getBoundingClientRect();
+    const want=rail.scrollLeft+(a.left-c.left)-(c.width-a.width)/2;
+    const to=Math.max(0,Math.min(want,rail.scrollWidth-rail.clientWidth));
+    if(Math.abs(to-rail.scrollLeft)<2)return;
+    try{rail.scrollTo({left:to,behavior:RM?'auto':'smooth'});}catch(e){rail.scrollLeft=to;}
+  }
+
   function show(id){
     pills.forEach(p=>{const on=p.dataset.go===id;
-      p.classList.toggle('on',on);p.setAttribute('aria-selected',String(on));});
+      p.classList.toggle('on',on);p.setAttribute('aria-selected',String(on));
+      if(on)reveal(p);});
     document.querySelectorAll('#pcards .pnl').forEach(s=>s.classList.toggle('hide',s.id!=='pnl-'+id));
     if(id==='secQuest')paintQuests();
     if(id==='secWall')paintWall();

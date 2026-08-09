@@ -4,6 +4,15 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-08
 
+- `olesmoky` — the black-on-black text was `:root` used inside two shadow roots,
+  where it matches nothing, so every palette token was undefined and `color`
+  fell back to inherit, i.e. the UA button colour. `:host` fixes the console and
+  the Prize Wall at once. Streak rebuilt on real date keys with month paging, a
+  derived streak and a seeded history; milestone bars, the member-card collapse
+  and its floating strip removed; Prize wall is now the default My Jar tab;
+  Activity writes a row on signup and has an empty state; coupon bar scoped to
+  Convert; mini-nav copy rewritten for action. 60 jsdom assertions passing.
+  See `docs/session-2026-08-08-olesmoky-shadow-tokens.md`.
 - `olesmoky` — the delivery locator drops the product dropdown and the radius
   picker for one place field, backed by 8,771 real towns and 13,439 ZIPs pulled
   from the project's own Postgres and baked into the file. Typeahead with

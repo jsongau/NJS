@@ -2,6 +2,30 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-08-09
+
+- `olesmoky` — mobile audit and repair. An unterminated `padding:8px 13` in the
+  prize wall stylesheet was swallowing twenty rules including the whole toolbar
+  layout and its 900px block. Prize wall overlays were trapped behind the site
+  header by `isolation:isolate` on the host plus `z-index:5` on main, so the
+  lightbox close button sat under the chrome. A model-dashboard rule was leaking
+  onto every My Jar panel, killing the sticky filter bar. All inputs to 16px on
+  phones, 44px hit areas on the view switcher and streak arrows, redemption confirm
+  scrolls instead of clipping, touch fallbacks for hover-only product cues.
+- `olesmoky` — Today and This week became tabs. Quest names rewritten to state the
+  action; Set Your Holler collided with the venue name. Heraldic shield sigils for
+  all nine categories. Claim-to-collect language: "Jar the 400", and every claim
+  ends with the distance to the $15. Hidden-marker quest replaced with Confirm Your
+  Address; the driver quest retargeted to the delivery with an Instacart CTA.
+- `olesmoky` — prize wall: 20% coupon stacking on the subtotal, pagination with a
+  page jump, two shuffleable eight-item rails one per category, quick filters in
+  one row with In reach set apart, $9.99 or 3,350 points shipping at redemption.
+- `olesmoky` — My Jar opens on 2,500 and counts up to it. Streak check-in moved
+  above the calendar with drawn wax-seal and spent-match day marks. Badge codex
+  cut 28 to 12 and made earnable. Premium Codex at 3,000 doubles referrals and
+  opens three quests. Convert columns hold one height and greet by name.
+  330 jsdom assertions passing. See `docs/session-2026-08-08-olesmoky-board.md`.
+
 ## 2026-08-08
 
 - `olesmoky` — quest board rebuilt. Six filter tabs over thirty cards became three

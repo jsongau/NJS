@@ -1,0 +1,59 @@
+# Who decides the Ole Smoky CRM Director hire
+
+Ole Smoky is a private company controlled by Apax Partners, which acquired a majority stake from Centerview Capital in February 2022 and closed in March 2022. The person who decides this hire in practice is **Michael Novy**, CEO since 26 August 2025, an outside commercial operator brought in by the board to reverse a 6% volume decline. He was hired out of Calabasas Beverage Company, where he ran 818 Tequila and Sprinter, so he arrives already convinced that direct consumer relationships matter. Above him sits **Nick Hartman**, the Apax partner who has held an Ole Smoky board seat since March 2022 and who spoke for the ownership in the CEO announcement; he does not interview a director level candidate, but the standard by which Novy judges spending is Hartman's standard. Influencing from the side are **Matthew Keith**, SVP Global Sales since June 2024, who owns the distributor relationship the job description explicitly puts inside CRM's scope, and the founders **Joe Baker** and **Cory Cottongim**, still significant shareholders, who are the cultural check on anything that touches the brand's voice. **Robert Hall**, CEO from 2016 to 2025 and Chair of Responsibility.org, is leaving, but the conservative compliance posture he built is still the company's default and will be in the room after he is gone. **Jane Morreau**, the former Brown-Forman CFO, sat on the board from July 2023 to 2025 and appears to have departed; treat her as a former director and her financial standard as the one any remaining independent director would apply. There is no confirmed reporting line for the Director, CRM role in any public source, and no complete board roster is published. Both are unverified.
+
+## Where they overlap
+
+Three things every one of them cares about. The work sample must lead with these.
+
+**One. Five million visits a year, zero identified customers.** Ole Smoky's own Loyalty Program page reads, in full, "Join our Loyalty Program. Get updates on Moonshine, Whiskey and Canned Cocktails," plus a single email field. No points, no tiers, no member account, no link from the main navigation, hero asset dating to March 2022. The Hooch Hop passport is real and live since October 2022 but is paper with rubber stamps and captures nothing. There is no loyalty app in the stack. Everyone in this group already knows the traffic exists; nobody has to be sold on the size of it. The pitch is not fixing a programme. It is building the first one.
+
+**Two. Volume, not engagement.** 2024 shipped 1.2 million nine litre cases, down 6% year on year. Visitor footfall is also declining, roughly 5.7 million in 2021 to 5.0 million plus in 2023, after which the company stopped publishing. The CEO was replaced over this. Every metric in the work sample has to terminate in depletions, repeat purchase or new household acquisition. Points issued and badges earned are inputs, never outcomes.
+
+**Three. Compliance as a design input, not a disclaimer.** The outgoing CEO chairs Responsibility.org, the founder is a lawyer, the sales leader lives inside three tier, and the sponsor is thinking about a disclosure schedule. Georgia and Alabama both prohibit loyalty points on alcohol purchases outright. Tennessee has no distilled spirits DTC licence at all. The one architecture that clears all ten southeastern states is earn on alcohol, redeem on non alcohol, which is exactly what Total Wine already does. Showing that architecture, with cites, in the first two minutes converts the hardest constraint in the category into the strongest evidence of judgement.
+
+## Where they diverge
+
+**Brand romance versus payback.** The argument that wins Joe Baker loses Nick Hartman. Baker built a hosted experience in his hometown and reads generic loyalty language as disrespect. Hartman classifies the asset as internet and consumer, is roughly four years into a hold, and wants cost, payback period and a diligence ready risk register. Neither of them wants the other's deck. The resolution is order, not compromise: numbers first, voice second, and never let the voice work carry the commercial argument.
+
+**Consumer channel versus trade channel.** Novy's instinct from 818 and Sprinter is direct to consumer. Matthew Keith owns the Southern Glazer's relationship and will read an unexplained direct channel as disintermediation. The bridge is receipt capture: because of three tier law neither of them can see off premise purchase today, so a member who uploads a receipt hands the consumer team its attribution and hands the sales team account level SKU velocity from the same record. Presented that way it is one mechanic serving two people who would otherwise be arguing.
+
+**Speed versus caution.** Novy was hired to accelerate and has a mandate to move. Hall's institutional legacy, Baker's legal training and any CFO minded director all push toward getting the rules right first. A work sample that only shows speed reads as reckless to half the room; one that only shows caution reads as slow to the other half. The way through is to show that the compliance work is already done, which converts caution into velocity rather than trading against it.
+
+**Novelty versus proof.** A gamified quest board impresses the CEO who came from celebrity backed DTC. It reads as unpriced risk to a sponsor and as a trademark and regulatory surface to a lawyer founder. North Carolina 14-306.4 is the concrete example: it bans sweepstakes run through an entertaining display, expressly including a game played while revealing a prize, escalating to a Class G felony on a third offence. Spin to win and scratch to reveal are inside that language. A plain form is not.
+
+## Person by person
+
+| Person | Role | Most impressive single thing | Most off putting single thing |
+|---|---|---|---|
+| Michael Novy | CEO, decides the hire | Receipt capture as the fix for the three tier blind spot, tied directly to depletions and new household acquisition | Engagement metrics with no line to volume, or a UI led pitch |
+| Nick Hartman | Apax partner, board director | Payback period plus the argument that a consented member base is a transferable asset at exit | An unlabelled assumption presented as measured data |
+| Matthew Keith | SVP Global Sales | Off premise purchase data handed back to sales as account and SKU level ammunition for distributor reviews | Anything that reads as a consumer channel routing around the distributor |
+| Joe Baker | Co-founder, shareholder | Extending the Hooch Hop paper passport into an identified record without killing the stamp ritual | Template loyalty language with mountain graphics bolted on |
+| Cory Cottongim | Co-founder, shareholder | Naming discipline that keeps local vocabulary honest and free of competitor trademarks | Brand voice that could belong to any company |
+| Robert Hall | Outgoing CEO, Chair of Responsibility.org | A daily quest pool deliberately firewalled from consumption, purchase and venue presence | Any mechanic that rewards drinking more, faster or longer |
+| Jane Morreau | Former board director, ex Brown-Forman CFO | Points treated as a liability with a stated breakage and accrual assumption | Booking rebated tasting fees as revenue, or gross numbers with no margin |
+| Apax Partners | Majority owner | The asset framed as first party data that survives a change of control | Capital intensity, or a payback that lands past the hold window |
+| Patricof Co | Minority athlete investor | Referral mechanics that measure what a partnership moment actually captured | Not a gate on this hire |
+
+## What this means for the Jar Club build
+
+**Lead the whole thing with the receipt.** Upload Your Receipt at 3,000 points is the strongest item in the sample and it is currently sitting behind the Premium Codex paywall inside a quest list. It should be the first screen anyone sees, with one line of framing: three tier law means Ole Smoky never sees who bought a bottle through Instacart or Total Wine, and this is the only mechanic in the programme that buys that data. It is the one argument that satisfies Novy, Hartman and Keith at the same time.
+
+**Put the numbers before the interface.** The first view should be cost to stand up, cost to run, incremental value per identified member, and payback period, with every derived input labelled by grade. Use 14.3% as the paid Facebook sweepstakes conversion floor, not the 47.5% blended Unbounce median, and say why in one sentence. Using 47.5% overstates volume by about 3.3x and any competent diligence catches it. Being the person who caught it first is worth more than the bigger number.
+
+**Show the compliance architecture as a diagram, not a caveat.** Earn on alcohol, redeem on non alcohol, on one screen, with Georgia 560-2-2-.14(1) and Alabama 20-X-6-.12 named as the states that force the design and Total Wine named as the precedent. Add the four constraints that shaped the mechanics: no alcohol as a prize under TABC 0100-01-.03(14)(c), mandatory 21 plus gating under TABC 0100-06-.03(14)(f), no publicity release as a condition of prize receipt under TCA 47-18-120(c)(3)(C), and no entertaining display sweepstakes under North Carolina 14-306.4. Cap total announced prize value at or below $5,000 and state that this removes Florida and New York registration entirely.
+
+**Keep the daily pool firewalled and say so on the page.** DAILY_POOL stays a hard coded allowlist rather than a filter, and the reason gets one visible line: a daily resetting slot implies a daily cadence, so nothing that resets daily may touch consumption, purchase or presence at a drinking venue. Name the cut that proves it, the 300 point reward for staying ninety minutes at a bar, replaced by Name Your Driver at the same points for logging a designated driver or a rideshare. That single trade is the most persuasive thing in the build for anyone who has sat on the Responsibility.org board.
+
+**Add a trade view.** One screen showing what the member data gives the sales organisation: SKU velocity by account from receipt data, repeat rate by market, and a distributor facing summary. Without it the sample answers a narrower question than the job description asks, and it leaves the one stakeholder most able to block the programme with no reason to support it.
+
+**Extend the Hooch Hop, do not replace it.** Keep the stamp. The digital version should look and feel like the paper passport getting a memory, not like the passport being retired. This is free credibility with both founders and it costs nothing to say explicitly.
+
+**Add a liability line.** State the breakage assumption for issued points and note that the $15 credit and the stacking 20% coupon at 2,500 points create a deferred obligation. It is two sentences and it is the difference between a marketing artefact and something a former CFO would take seriously.
+
+**Cut anything that only impresses.** No spin to win, no scratch to reveal, no animated instant win. They are illegal in North Carolina, they are the first thing a lawyer founder flags, and they add nothing the plain mechanics do not already deliver.
+
+## Sourcing note
+
+Every claim in the individual files carries a source URL and a date. Where no quote or fact could be verified, the file says so in plain words rather than filling the gap. Specific items flagged unverified across this set: the reporting line for the Director, CRM role; the complete current board roster; whether Jane Morreau remains a director; whether Robert Hall has fully departed; Apax's exact ownership percentage, fund vehicle and hold clock; and any statement by Cottongim, Keith or Morreau on CRM, loyalty or first party data. The business and compliance facts referenced in this README are drawn from `docs/olesmoky-evidence-register.md`, which carries the grade and source for each one.

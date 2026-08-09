@@ -4,6 +4,15 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-08
 
+- `olesmoky` — quest board rebuilt. Six filter tabs over thirty cards became three
+  zones by time horizon with claim-to-collect, set bonuses and a ledger for the rest.
+  Quest names rewritten to state the action; Set Your Holler collided with the venue
+  name. Sittin' a Spell cut on compliance, replaced with Name Your Driver. Badges cut
+  28 to 12 and made earnable for the first time. Premium Codex at 3,000 points that
+  doubles referrals and opens three quests, priced so one delivery receipt pays it
+  back. Featured 20% coupon on the prize wall with a drawn ticket that tears open on
+  hover. 2,500 point count-up on My Jar. Four class-name collisions found and fixed.
+  201 jsdom assertions passing. See `docs/session-2026-08-08-olesmoky-board.md`.
 - `olesmoky` — the black-on-black text was `:root` used inside two shadow roots,
   where it matches nothing, so every palette token was undefined and `color`
   fell back to inherit, i.e. the UA button colour. `:host` fixes the console and

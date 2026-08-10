@@ -1,8 +1,9 @@
 # Ole Smoky / The Jar Club, 10 Aug 2026
 
-v128 and v129. The return arithmetic, the purchase breakdown, the audience
-comparison rebuilt out of the sticky bar.
-**707 assertions across 30 jsdom suites, all passing.**
+v128 through v130. The return arithmetic, the purchase breakdown, the audience
+comparison rebuilt out of the sticky bar, and the prize wall clipping fixed for
+good with a build check behind it.
+**731 assertions across 32 jsdom suites, all passing.**
 
 ---
 
@@ -171,6 +172,55 @@ an interview reads as a category error to Matthew Keith. Use "owned venues".
 
 ---
 
+## The prize wall, second pass, and the check that should have caught it
+
+### A scroll container inside a clipping container does not scroll
+
+`.tools` was one nowrap row with `overflow-x:auto`. It sits inside `.pnl`, and
+`.pnl` carries `overflow:hidden` from a declaration 500 lines earlier. The
+result is that Sort and the last category were **cut off, not scrolled off**,
+with no scrollbar to indicate anything was missing.
+
+Several earlier fixes aimed at width and all of them missed, because the width
+was never wrong. Two wrapping rows now, nothing scrolling sideways.
+
+**Lesson.** Before adding `overflow:auto`, check every ancestor for
+`overflow:hidden`. Scrolling only works if the chain above it lets it.
+
+### Six across was self inflicted
+
+Splitting `.grid` into `.sgrid` last session stopped the rails being squashed to
+four, and overshot: `auto-fill` at `minmax(168px,1fr)` lands on six or seven.
+Two card sizes on one page reads as a bug even when it is a decision. Both grids
+are `repeat(4,minmax(0,1fr))` and step down together.
+
+### tdup.js
+
+The duplicate selector build check, owed since 8 Aug and finally written. It
+parses both shadow stylesheets and fails when a selector sets the **same
+property** to two different values at equal specificity, which is the only case
+that can silently undo a fix. It does not ban duplicate selectors, because some
+are deliberate.
+
+First run caught two: `.srch` and `.lbfig` each declaring `max-width` twice.
+Both dead code from earlier passes, both removed rather than the check loosened.
+
+**Run it before any CSS edit is called done.** This is the class of bug behind
+roughly ten "still broken" reports across two sessions.
+
+### Inventory counts, all of them, gone
+
+`256 of 444 in reach`, the count on every category chip, the count on In reach,
+`N rewards and N within reach`, and `1 to 24 of 447`. A large catalogue number
+sitting next to a member's balance only makes the balance look small, and how
+much stock the shop holds is not the member's business.
+
+The header now names the next reward and the gap to it. The member's own
+redemption count stays, because that one is about them.
+
+Kept: the `N matches` readout, which only appears while a filter is active. A
+filter with no feedback is worse than a number.
+
 ## Traps for the next session
 
 1. `grep` patterns that match the stylesheet will dump the entire 40KB CSS line
@@ -179,8 +229,13 @@ an interview reads as a category error to Matthew Keith. Use "owned venues".
    thing is meant to be gone, stop rendering it.
 3. `#audsw` no longer exists. `paintAud()` early-returns and is effectively
    dead; the live comparison is `audCompare()` on the Segments panel.
-4. Still true from the last session: 45 duplicate top-level selectors, CSS
-   inside JS strings needs escaped newlines, `esc()` will eat glossary markup.
+4. Still true from the last session: CSS inside JS strings needs escaped
+   newlines, and `esc()` will eat glossary markup.
+5. **Run `tdup.js` after any CSS edit.** Duplicate selectors are now checked,
+   but only for the properties in its WATCH list. Add to that list rather than
+   assuming it covers everything.
+6. `.pnl` carries `overflow:hidden`. Nothing inside the prize wall may be wider
+   than its column, and no descendant can scroll horizontally.
 
 ## Next
 
@@ -188,5 +243,4 @@ an interview reads as a category error to Matthew Keith. Use "owned venues".
    Smoky owns, against $9.91 paid to Meta for one member. Closes the platform
    gap and the gift shop gap in one build.
 2. The console nav is still ten tabs.
-3. A duplicate-selector build check, which would have caught roughly ten bugs
-   across two sessions and is still not written.
+3. ~~A duplicate-selector build check.~~ Written, `tdup.js`, green.

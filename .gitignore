@@ -1,3 +1,10 @@
 .DS_Store
 _to_delete/
 docs/interview-coaching.md
+
+# Preview iterations never live in the repo. Anything committed here deploys as
+# a live public page, so version numbered working files have no business in it.
+# Previews go to the scratchpad and get delivered as files in chat instead.
+previews/
+*-v[0-9].html
+*-v[0-9][0-9].html

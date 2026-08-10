@@ -179,9 +179,8 @@ a{text-decoration:none}
 .back{background:none;border:0;font:900 13.5px/1 var(--font);color:var(--muted);cursor:pointer;padding:8px 0}
 .back:hover{color:var(--ink)}
 /* ================= GRIDS ================= */
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .g6{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media(max-width:900px){.g3{grid-template-columns:1fr}.g6{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.g6{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.g6{grid-template-columns:1fr}}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);overflow:hidden}
 .jarcard .art{height:142px;display:flex;align-items:center;justify-content:center;position:relative}
@@ -190,10 +189,6 @@ a{text-decoration:none}
 .jarcard .bd{padding:14px 15px 16px}
 .jarcard h3{font-size:16px;margin-bottom:5px}
 .jarcard p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}
-.step{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow-sm)}
-.step .n{width:34px;height:34px;border-radius:999px;background:var(--bar);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;margin-bottom:13px}
-.step h3{margin-bottom:7px}
-.step p{font-size:14px;color:var(--muted);margin:0;line-height:1.6}
 /* ================= CONFIRM ================= */
 .cf{display:grid;grid-template-columns:.92fr 1.16fr .92fr;gap:16px;align-items:stretch;padding-top:34px}
 /* The three columns hold one height no matter what the funnel loaded into them.
@@ -1111,8 +1106,12 @@ footer.ft a{color:var(--gold)}
 .steps3 b{display:block;font-size:14.5px;margin-bottom:2px}
 .steps3 span{font-size:13px;color:var(--muted);line-height:1.5}
 .codein{display:flex;gap:9px;flex-wrap:wrap}
-.codein input{flex:1;min-width:200px;font:900 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;padding:14px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
+.codein input{flex:1;min-width:200px;font:900 16px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;padding:14px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
 .codein input:focus{outline:0;border-color:var(--shine);box-shadow:0 0 0 3px rgba(217,146,43,.18)}
+/* The three controls in the scan row landed on their thumb size by accident,
+   out of padding plus line height, which is a number that moves the next time
+   anybody touches the type. Declared, they cannot drift under 44. */
+.codein input,.codein .btn-p,.codein .btn-o{min-height:44px}
 .scanmsg{font-size:13.5px;font-weight:800;min-height:22px;margin-top:11px}
 .scanmsg.ok{color:var(--moss)}.scanmsg.bad{color:var(--red)}.scanmsg.wait{color:var(--shine-deep)}
 .testcodes{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.7}
@@ -2939,6 +2938,134 @@ body.entered .jwrap{max-width:296px}
   .tabs button,.q .act button,.shgrid button{min-height:44px}
   .opt .tag{min-height:0}
 }
+
+/* ============================================================
+   THE READ. One camera, many outcomes.
+   ============================================================ */
+.mk{display:block}
+.mk .mkoff *{stroke:#5A4A36!important;fill:none!important}
+.mk .mkoff{opacity:.85}
+
+/* the reveal. Replaces the viewfinder, never a modal over dimmed content. */
+.rvlhost[hidden]{display:none}
+.rvl{padding:18px;border-radius:15px;background:rgba(24,18,12,.9);border:1px solid var(--line2,#392E23);
+  animation:rvlin .32s cubic-bezier(.2,.9,.3,1)}
+@keyframes rvlin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rvlrib{font:800 10px/1 var(--font,inherit);letter-spacing:.18em;text-transform:uppercase;color:var(--muted,#B0A28C)}
+.rvlmk{display:flex;justify-content:center;margin:14px 0 10px}
+.rvlv{font-size:19px;font-weight:900;letter-spacing:-.01em;line-height:1.3;color:var(--ink,#FBF3E4);margin-bottom:12px}
+.rvlnum{font-size:34px;font-weight:900;letter-spacing:-.03em;color:var(--gold,#FFD24A);
+  font-variant-numeric:tabular-nums;line-height:1.05;margin-bottom:12px}
+.rvlnum.small{font-size:22px}
+.rvlnum.held{color:#FFC65C}
+.rvlnum.zero{color:#22D3EE}
+.rvlnum.spent{color:#5A4A36}
+.rvlnum em{display:block;font-style:normal;font-size:11.5px;font-weight:700;color:var(--muted,#B0A28C);
+  letter-spacing:0;margin-top:6px}
+.rvlrc{border-top:1px solid rgba(57,46,35,.8);border-bottom:1px solid rgba(57,46,35,.8);
+  padding:10px 0;margin-bottom:14px}
+.rvlrc>div{display:flex;justify-content:space-between;gap:14px;padding:3px 0;
+  font:700 12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+.rvlrc u{text-decoration:none;color:var(--muted,#B0A28C)}
+.rvlrc b{color:var(--ink,#FBF3E4);text-align:right}
+.rvlgo{width:100%;min-height:48px}
+.rvl2{display:block;width:100%;min-height:44px;margin-top:8px;padding:0 10px;border:none;background:none;
+  box-sizing:border-box;color:var(--muted,#B0A28C);cursor:pointer;text-decoration:underline;
+  text-underline-offset:3px;font-family:var(--font,inherit);font-size:12.5px;font-weight:800;line-height:1.35}
+.rvl2:hover{color:var(--gold,#FFD24A)}
+.rvltick{margin:12px 0 0;font-size:11.5px;line-height:1.6;color:var(--muted,#B0A28C)}
+
+/* the event card: two doors, one pick, and the one not taken stays visible */
+.doorhd{margin:0 0 9px;font-size:12.5px;color:var(--muted,#B0A28C)}
+.doors{display:grid;gap:9px;margin-bottom:14px}
+@media(min-width:620px){.doors{grid-template-columns:1fr 1fr}}
+.door{display:block;text-align:left;padding:13px 14px;min-height:88px;border-radius:12px;
+  border:1.5px solid var(--line2,#392E23);background:rgba(255,255,255,.02);cursor:pointer;font-family:inherit;
+  transition:border-color .16s,background .16s}
+.door:hover{border-color:var(--gold,#FFD24A);background:rgba(255,210,74,.06)}
+.doormk{display:block;margin-bottom:7px}
+.door u{display:block;text-decoration:none;font-size:12px;font-weight:800;color:var(--ink,#FBF3E4)}
+.door b{display:block;font-size:22px;font-weight:900;color:var(--gold,#FFD24A);margin:4px 0 3px;
+  font-variant-numeric:tabular-nums}
+.door em{display:block;font-style:normal;font-size:11px;color:var(--muted,#B0A28C);line-height:1.45}
+.doors.done .door{cursor:default;min-height:0;padding:11px 13px}
+.door.won{border-color:#6EE7A0;background:rgba(110,231,160,.08)}
+.door.won b{color:#6EE7A0}
+.door.lost{opacity:.5}
+.door.lost u,.door.lost b{text-decoration:line-through}
+.door.lost b{color:var(--muted,#B0A28C);font-size:15px}
+
+/* the passport strip inside a venue check in */
+.hopstrip{display:flex;gap:7px;margin-bottom:10px}
+.hopstrip i{flex:1;height:34px;border-radius:8px;border:1.5px dashed var(--line2,#392E23)}
+.hopstrip i.on{border-style:solid;border-color:#6EE7A0;background:rgba(110,231,160,.16);
+  animation:hoppress .34s cubic-bezier(.2,1.4,.4,1)}
+@keyframes hoppress{0%{transform:scale(.72) rotate(-7deg);opacity:.35}55%{transform:scale(1.06) rotate(2deg)}100%{transform:none}}
+
+/* the table tent: the gate comes before the phone field, never after */
+.tentwhy{margin:0 0 14px;font-size:12px;line-height:1.6;color:var(--muted,#B0A28C)}
+.agegate{padding:13px 14px;border-radius:11px;background:rgba(0,0,0,.28);border:1px solid var(--line2,#392E23);margin-bottom:10px}
+.agegate.ok{border-color:rgba(110,231,160,.4)}
+.agegate.under{border-color:rgba(34,211,238,.4)}
+.agegate u{display:block;text-decoration:none;font:800 9.5px/1 inherit;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted,#B0A28C);margin-bottom:9px}
+.agegate select{min-height:44px;margin-right:7px;font-size:16px}
+.agnote{margin:9px 0 0;font-size:11px;line-height:1.55;color:var(--muted,#B0A28C)}
+.tentphone[hidden]{display:none}
+.tentphone input{width:100%;min-height:48px;padding:0 13px;border-radius:10px;font-size:16px;
+  border:1px solid var(--line2,#392E23);background:rgba(0,0,0,.3);color:var(--ink,#FBF3E4);font-family:inherit}
+.tentcon{margin:9px 0 0;font-size:11px;line-height:1.6;color:var(--muted,#B0A28C)}
+
+/* the code hint: the router, working inside the keyboard */
+.codehint{font:800 10px/1 inherit;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted,#B0A28C);align-self:center;min-width:74px}
+.codehint.on{color:var(--gold,#FFD24A)}
+
+/* the showcase. It is supporting cast now: it sits under the whole scan row,
+   spans both columns, and carries a smaller heading than the primary surface,
+   because the jar plus the three steps plus the code box is the experience and
+   this is the evidence that the same reader handles five more objects. */
+.shcwrap{grid-column:1/-1;margin-top:30px;padding-top:22px;border-top:1px solid var(--line2,#392E23)}
+.shchd{margin:0 0 5px;font:900 15px/1.2 var(--font,inherit);letter-spacing:-.01em;color:var(--ink,#FBF3E4)}
+.shcsub{margin:0;max-width:70ch;font-size:12.5px;line-height:1.55;color:var(--muted,#B0A28C)}
+.showcase{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px}
+@media(min-width:760px){.showcase{grid-template-columns:1.15fr 1fr}}
+.shcL{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:9px;align-content:start}
+.shcm{display:flex;flex-direction:column;align-items:center;gap:7px;padding:13px 8px;border-radius:12px;
+  border:1px solid var(--line2,#392E23);background:transparent;cursor:pointer;font-family:inherit;min-height:44px;
+  transition:border-color .16s,background .16s}
+.shcm:hover{background:rgba(255,255,255,.03)}
+.shcm.sel{border-color:var(--gold,#FFD24A);background:rgba(255,210,74,.07)}
+.shcm b{font-size:11.5px;font-weight:800;color:var(--ink,#FBF3E4);text-align:center}
+.shcm u{text-decoration:none;font-size:10px;color:var(--muted,#B0A28C);text-align:center;line-height:1.35}
+.shcall{grid-column:1/-1;min-height:44px;border-radius:11px;border:1px dashed var(--line2,#392E23);
+  background:transparent;color:var(--muted,#B0A28C);font:800 11.5px/1 inherit;letter-spacing:.1em;
+  text-transform:uppercase;cursor:pointer}
+.shcall.sel,.shcall:hover{border-style:solid;border-color:var(--gold,#FFD24A);color:var(--gold,#FFD24A)}
+.shcR{display:grid;gap:11px;align-content:start}
+.shcblk{padding:14px 15px;border-radius:12px;background:rgba(0,0,0,.24);border:1px solid var(--line2,#392E23)}
+.shcblk .rvlrc{border-bottom:none;padding-bottom:0;margin-bottom:0}
+/* The showcase in the reading state. The six cards stay, at a tighter rhythm so
+   the reveal above them still owns the screen. The detail column and the show
+   all control stand down: a second summary of the object you are already
+   reading is noise, and Show all six only means anything at rest. */
+#shcWrap.picking{margin-top:22px;padding-top:16px}
+#shcWrap.picking .shcsub{max-width:64ch}
+#shcWrap.picking .showcase{grid-template-columns:1fr;margin-top:12px}
+#shcWrap.picking .shcR,#shcWrap.picking .shcall{display:none}
+#shcWrap.picking .shcL{grid-template-columns:repeat(auto-fit,minmax(104px,1fr))}
+#shcWrap.picking .shcm{padding:11px 7px;gap:6px}
+#shcWrap.picking .shcm svg{width:56px;height:56px}
+#shcWrap.picking .shcm u{display:none}
+
+/* the camera: the brackets tighten on lock. Nothing sweeps. */
+.cam.lock .vfind{box-shadow:0 0 0 2000px rgba(11,8,5,.55)}
+.cam.lock .vfind i{border-color:var(--gold,#FFD24A);width:34px;height:34px}
+.vfind i{transition:border-color .16s,width .16s,height .16s}
+@media(max-width:600px){
+  .rvl{padding:15px}
+  .rvlnum{font-size:29px}
+}
 </style>
 </head>
 <body>
@@ -2976,6 +3103,420 @@ body.entered .jwrap{max-width:296px}
 .flick{animation:flick 1.1s ease-in-out infinite;transform-origin:center bottom}
 @keyframes flick{0%,100%{transform:scaleY(1) scaleX(1)}50%{transform:scaleY(1.13) scaleX(.93)}}
 </style>
+<style>
+/* ============================================================
+   NAV KEEP. Added last on purpose. The file carries duplicate top
+   level selectors and the last declaration wins, so this block is
+   the final stylesheet in the document. If you add another one
+   after it, re-read that sentence.
+   ============================================================ */
+
+/* ---------- the real Ole Smoky mark in the round slot ---------- */
+.jclogo{width:54px;height:54px;filter:drop-shadow(0 2px 9px rgba(0,0,0,.55))}
+.jclogo img{width:100%;height:100%;object-fit:contain;display:block}
+@media(max-width:1080px){.jclogo{width:46px;height:46px}}
+@media(max-width:560px){.jclogo{width:40px;height:40px}}
+
+/* ---------- the account chip and its panel ---------- */
+.jcm{position:relative;flex:0 0 auto}
+.jcm-chip{min-height:44px;gap:8px}
+.jcm-chip:focus-visible{outline:2px solid var(--volt);outline-offset:2px}
+.jcm-chip .jcm-car{flex:0 0 auto;opacity:.7;transition:transform .16s ease}
+.jcm-chip[aria-expanded="true"] .jcm-car{transform:rotate(180deg)}
+.jcm-chip[aria-expanded="true"]{border-color:var(--gold)}
+.jcm-chip.in .av{background:var(--shine);color:#fff}
+@media(max-width:1240px){.jcm-chip .jcm-chiptxt{display:none}.jcm-chip{padding:5px 8px 5px 5px}}
+
+/* header.hd is z-index:70 and creates a stacking context, so the panel can
+   only ever compete inside it. The header lifts while the panel is open:
+   above the glossary popup at 400 and the drop overlay at 480, below the
+   checkout at 800. */
+header.hd.acctopen{z-index:490}
+.jcm-panel{position:absolute;right:0;top:calc(100% + 8px);width:284px;z-index:12;
+  background:#141009;border:1px solid #2C231B;border-radius:12px;padding:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.66);transform-origin:top right;transform:scale(.97);
+  opacity:0;visibility:hidden;text-align:left;
+  transition:transform 120ms cubic-bezier(.4,0,1,1),opacity 120ms cubic-bezier(.4,0,1,1),visibility 0s linear 120ms}
+.jcm-panel.open{transform:scale(1);opacity:1;visibility:visible;
+  transition:transform 160ms cubic-bezier(.16,1,.3,1),opacity 160ms cubic-bezier(.16,1,.3,1),visibility 0s}
+.jcm-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+  min-height:44px;padding:0 8px;margin:0;border:0;border-radius:8px;background:none;cursor:pointer;
+  text-align:left;text-decoration:none;font:500 13.5px/1.2 var(--font);color:#FBF6EC;
+  box-shadow:none;letter-spacing:0;white-space:normal;text-transform:none;
+  transition:background 120ms ease-out}
+.jcm-row:hover{background:rgba(255,210,74,.06);border-color:transparent;color:#FBF6EC;box-shadow:none}
+.jcm-row:focus-visible{outline:2px solid var(--volt);outline-offset:-2px}
+.jcm-main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.jcm-lab{display:flex;align-items:center;gap:8px;font:700 13.5px/1.2 var(--font);color:#FBF6EC}
+.jcm-sub{display:block;font:500 10px/1.35 var(--font);letter-spacing:.3px;color:#B0A28C;text-transform:none}
+.jcm-rule{height:1px;background:#2C231B;margin:8px 0}
+.jcm-row .av{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;flex:0 0 auto;
+  background:var(--gold);color:#241703;font:900 11px/1 var(--font)}
+/* the switch. Track and knob, no glow, no pulse. */
+.jcm-sw{position:relative;flex:0 0 auto;width:38px;height:22px;border-radius:11px;
+  border:1px solid #5E4E3B;background:#100C09;
+  transition:background 140ms ease-out,border-color 140ms ease-out}
+.jcm-sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+  background:#B0A28C;transition:transform 160ms cubic-bezier(.16,1,.3,1),background 160ms ease-out}
+.jcm-row[aria-pressed="true"] .jcm-sw,.jcm-row[aria-checked="true"] .jcm-sw{background:rgba(255,210,74,.14);border-color:var(--gold)}
+.jcm-row[aria-pressed="true"] .jcm-sw::after,.jcm-row[aria-checked="true"] .jcm-sw::after{transform:translateX(16px);background:var(--gold)}
+@media(max-width:430px){.jcm-panel{width:min(284px,calc(100vw - 24px))}}
+@media(prefers-reduced-motion:reduce){
+  .jcm-panel,.jcm-sw,.jcm-sw::after,.jcm-chip .jcm-car{transition:none}
+}
+/* the switch, honoured across the page */
+body.jcm-rm *,body.jcm-rm *::before,body.jcm-rm *::after{
+  animation-duration:.001ms!important;animation-iteration-count:1!important;
+  transition-duration:.001ms!important;scroll-behavior:auto!important}
+
+/* ================= SIGN IN SURFACE =================
+   Added last on purpose. Everything in this block is scoped to #authMdl or to
+   class names that exist nowhere else in the file, so nothing above can win. */
+#authMdl .bx.authbx{max-width:460px;width:100%;overflow:auto}
+.authrib{margin:0;padding:11px 16px;background:linear-gradient(90deg,#0B0F16 0%,#141C28 50%,#0B0F16 100%);color:#A8BDD8;font:700 11.5px/1.5 var(--font);border-bottom:1px solid rgba(127,169,216,.22);border-radius:var(--r) var(--r) 0 0}
+.authrib b{color:#DCEBFB;font-weight:900}
+/* ---- the demo door. Option A from the spec, the member card ---- */
+.dmdoor{display:flex;align-items:center;gap:14px;width:100%;min-height:118px;padding:14px 15px;margin:0 0 4px;border-radius:16px;border:1.5px solid var(--gold);background:linear-gradient(135deg,rgba(255,210,74,.15),rgba(255,138,76,.07) 52%,rgba(25,20,16,0) 100%);color:var(--ink);cursor:pointer;text-align:left;font-family:var(--font);transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+.dmdoor:hover{transform:translateY(-2px);border-color:var(--gold-lite);box-shadow:0 14px 32px rgba(255,210,74,.24)}
+.dmdoor:active{transform:translateY(0)}
+.dmdoor:focus-visible{outline:2px solid var(--gold-lite);outline-offset:3px}
+.dmjar{flex:0 0 auto;width:54px;height:54px;display:block}
+.dmjar svg{display:block}
+.dmtx{flex:1 1 auto;min-width:0;display:block}
+.dmkick{display:block;font:900 10.5px/1 var(--font);letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.dmh{display:block;font:900 19px/1.2 var(--font);color:var(--ink);margin:8px 0 10px}
+.dmchips{display:flex;flex-wrap:wrap;gap:6px}
+.dmchips i{font:800 11px/1 var(--font);font-style:normal;color:var(--gold-lite);background:rgba(255,210,74,.12);border:1px solid rgba(255,210,74,.30);border-radius:999px;padding:6px 9px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dmchev{flex:0 0 auto;width:28px;height:28px;display:block}
+.dmchev svg{display:block}
+/* ---- divider ---- */
+.author{display:flex;align-items:center;gap:12px;margin:18px 0}
+.author::before,.author::after{content:"";flex:1 1 auto;height:1px;background:var(--line)}
+.author span{font:900 10.5px/1 var(--font);letter-spacing:.13em;text-transform:uppercase;color:var(--muted-lo)}
+/* ---- Sign in with Google, dark theme, to Google's branding guidelines.
+   Fill #131314, 1px inside border #8E918F, label #E3E3E3 at 500 14/20,
+   12px padding, 10px gap, pill, 44px tall. The G is Google's own asset and
+   is never recoloured, never monochrome and never sits on gold. ---- */
+.gsib{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:44px;padding:0 12px;border-radius:999px;background:#131314;border:1px solid #8E918F;cursor:pointer;font-family:var(--font);transition:background .14s ease}
+.gsib:hover{background:#1C1C1D}
+.gsib:focus-visible{outline:2px solid var(--gold-lite);outline-offset:3px}
+.gsig{display:block;width:20px;height:20px;flex:0 0 auto}
+.gsig svg{display:block}
+.gsil{font:500 14px/20px var(--font);color:#E3E3E3;letter-spacing:.15px;white-space:nowrap}
+/* ---- the simulated response. Jar Club colours, no Google chrome ---- */
+.gsim{margin:16px 0 0;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:14px;background:var(--mist);padding:15px 16px 18px}
+.gsim:focus{outline:0}
+.gsimtop{display:flex;align-items:flex-start;gap:10px}
+.gsim h4{margin:0;flex:1 1 auto;font:900 16px/1.25 var(--font);color:var(--ink)}
+.gsimx{min-height:44px;min-width:44px;border:0;background:none;color:var(--shine-deep);font:900 12.5px/1 var(--font);cursor:pointer;font-family:var(--font)}
+.gsimx:hover{color:var(--gold-lite)}
+.gsimp{font-size:12.8px;color:var(--muted);line-height:1.6;margin:6px 0 14px}
+.gclaims{margin:0 0 16px;border-top:1px solid var(--line)}
+.gclaims .gcrow{padding:11px 0;border-bottom:1px solid var(--line)}
+.gclaims dt{margin:0 0 5px;font:900 12.5px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--gold-lite);word-break:break-word}
+.gclaims dd{margin:0;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.gclaims dd b{color:var(--ink);font-weight:900}
+.gsimgo{width:100%;min-height:48px}
+/* ---- the form ---- */
+#authMdl .fld{max-width:none;margin-bottom:16px}
+#authMdl input#anDob{height:50px;font-size:16px;letter-spacing:.05em;font-variant-numeric:tabular-nums}
+#authMdl input.otp{height:56px;padding:0 15px;font:900 24px/1 var(--font);letter-spacing:.32em;text-indent:.32em;text-align:center;font-variant-numeric:tabular-nums}
+#authMdl input[readonly]{opacity:.72}
+.authhelp{margin:8px 0 0;font-size:12px;line-height:1.55;color:var(--muted-lo)}
+.authdeny{border:1px solid var(--red);background:var(--red-soft);border-radius:12px;padding:13px 14px;font-size:13px;line-height:1.62;color:var(--ink);margin-bottom:14px}
+.authdeny:focus{outline:2px solid var(--red);outline-offset:2px}
+.authdeny b{display:block;margin-bottom:5px;font-weight:900}
+.authdeny a{color:var(--gold-lite);font-weight:900}
+.chkrow{display:flex;gap:12px;align-items:center;min-height:44px;padding:5px 0;margin:0;cursor:pointer;font-size:13.5px;line-height:1.45;color:var(--ink)}
+.chkrow input{width:20px;height:20px;flex:0 0 auto;margin:0;accent-color:var(--shine);cursor:pointer}
+.chkrow span{font-weight:800}
+.authgo{width:100%;min-height:48px}
+/* ---- the three line CRM commentary strip ---- */
+.crmstrip{margin-top:20px;padding-top:15px;border-top:1px solid var(--line);display:grid;gap:11px}
+.crmstrip p{margin:0;font-size:12px;line-height:1.6;color:var(--muted-lo)}
+.crmstrip b{color:var(--gold-lite);font-weight:900}
+/* ---- 390px. A bottom sheet, so the door and the Google button sit in
+   thumb reach. svh rather than vh so the iOS URL bar cannot clip it. ---- */
+@media(max-width:430px){
+  #authMdl{align-items:flex-end;padding:0}
+  #authMdl .bx.authbx{max-width:none;width:100%;max-height:92vh;max-height:92svh;border-radius:20px 20px 0 0}
+  #authMdl .mb{padding:18px 18px calc(24px + env(safe-area-inset-bottom))}
+  #authMdl .authgo{position:sticky;bottom:calc(2px + env(safe-area-inset-bottom));z-index:3}
+  .dmh{font-size:18px}
+  .dmdoor{gap:12px;padding:13px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .dmdoor,.gsib{transition:none}
+  .dmdoor:hover{transform:none}
+}
+body.jcm-rm .dmdoor,body.jcm-rm .gsib{transition:none}
+body.jcm-rm .dmdoor:hover{transform:none}
+
+/* ============================================================
+   CONVERSION FOOTER
+   Order is deliberate: state what this is first, then the legal
+   and utility material. The footer lives outside
+   every <main>, so it renders on all four views and reads no view state.
+   ============================================================ */
+footer.ft{padding:0;font-size:12.5px}
+/* ---- 1. the concept note. First band now, so it carries the rule and the
+        top breathing room the trust row used to hold. ---- */
+.ftnote{border-top:1px solid var(--line-hi);border-bottom:1px solid var(--line);padding:42px 0 30px}
+.ftnote p{margin:0 0 12px;max-width:100ch}
+.ftnote p:last-child{margin:0}
+/* ---- 2. legal and utility ---- */
+.ftlegal{padding:20px 0 calc(34px + env(safe-area-inset-bottom))}
+.ftlinks{display:flex;flex-wrap:wrap;align-items:center;gap:0 22px}
+.ftl{display:inline-flex;align-items:center;min-height:44px;font:800 12.5px/1.2 var(--font);color:var(--shine-deep);text-decoration:none;background:none;border:0;padding:0;cursor:pointer}
+.ftl:hover{color:var(--gold-lite)}
+.ftl:focus-visible{outline:2px solid var(--volt);outline-offset:3px;border-radius:5px}
+.ftsmall{margin:6px 0 0;font-size:11.5px;color:var(--muted-lo);line-height:1.6;max-width:78ch}
+@media(max-width:560px){
+  .ftlinks{gap:0 18px}
+  .ftnote{padding:32px 0 24px}
+}
+
+/* ============================================================
+   SCAN PANE, FOCUS MODE. This is the last block of the last
+   stylesheet in the document, on purpose. The file carries
+   duplicate top level selectors and the last declaration wins.
+   Anything added after this outranks it.
+   ============================================================ */
+
+/* The live region. It had no rule anywhere in the document stylesheets, only
+   inside a shadow root, so the status sentence printed itself into the layout
+   under the code box and read as a duplicated headline. Announced now, drawn
+   never. */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* The two states. Everything the teaching state owns is toggled by the hidden
+   attribute so the state is readable from the DOM and not only from the paint,
+   and these rules beat the display values those elements carry by default. */
+#bottleBox[hidden],#steps3Scan[hidden],#demoChips[hidden],#scanFine[hidden],
+#shcWrap[hidden],#tpWrap[hidden],#focusMk[hidden],#backJar[hidden]{display:none!important}
+#paneCode.sfocus{align-items:start}
+
+/* The reading state, left column: that object's own mark, at size, named. */
+.focusmk{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
+  padding:22px 14px;border-radius:var(--r,16px);text-align:center;
+  background:radial-gradient(ellipse at 50% 36%,rgba(255,210,74,.10),rgba(0,0,0,0) 70%);
+  border:1px solid var(--line2,#392E23)}
+.focusart{display:flex;align-items:center;justify-content:center}
+.focusart svg{display:block;width:132px;height:132px}
+.focusmk b{font-size:15px;font-weight:900;letter-spacing:-.01em;color:var(--ink,#FBF3E4)}
+.focusmk u{text-decoration:none;font-size:11.5px;line-height:1.45;color:var(--muted,#B0A28C);max-width:26ch}
+.sfocus .focusmk{animation:sfocin .18s ease both}
+@keyframes sfocin{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+/* The reading state, right column. The card is capped so the whole state fits
+   one 900px viewport, and the rows scroll inside the card rather than the page
+   growing underneath it. */
+#paneCode .rvl{animation:rvlin .18s cubic-bezier(.2,.9,.3,1)}
+/* The cap, the scrolling body and the non shrinking foot all moved to the three
+   band block at the bottom of this stylesheet, where they can be read in one
+   place. The tick line is no longer inside the scrolling body, so the rule that
+   used to trim its bottom margin there went with them. */
+
+/* Back to the jar. Always on screen in the reading state, never a gesture. */
+.backjar{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  min-height:44px;margin:16px 0 22px;padding:0 16px;border-radius:11px;cursor:pointer;
+  border:1px solid var(--line2,#392E23);background:rgba(255,255,255,.03);
+  color:var(--ink,#FBF3E4);font:800 13px/1 var(--font,inherit);
+  transition:border-color .18s ease,color .18s ease,background .18s ease}
+.backjar svg{flex:0 0 auto}
+.backjar:hover{border-color:var(--gold,#FFD24A);color:var(--gold,#FFD24A);background:rgba(255,210,74,.06)}
+.backjar:focus-visible{outline:2px solid var(--volt,#B7F24A);outline-offset:3px}
+
+/* The demo chips. They were inline code elements separated by collapsing
+   whitespace, so at some widths two of them fused into one unreadable string.
+   A chip is a control, so it is a button, in a flex row, with a real gap. */
+.testcodes{margin-top:15px;font-size:12px;line-height:1.5;color:var(--muted,#B0A28C)}
+.tclab{display:block;margin-bottom:9px;font:800 10px/1 var(--font,inherit);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted,#B0A28C)}
+.tcrow{display:flex;flex-wrap:wrap;gap:8px}
+.tcc{display:inline-flex;align-items:center;min-height:44px;padding:0 13px;border-radius:10px;
+  border:1px solid var(--line2,#392E23);background:rgba(255,255,255,.02);cursor:pointer;
+  color:var(--ink,#FBF3E4);font:800 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.04em;white-space:nowrap;
+  transition:border-color .18s ease,color .18s ease,background .18s ease}
+.tcc:hover{border-color:var(--gold,#FFD24A);color:var(--gold,#FFD24A);background:rgba(255,210,74,.06)}
+.tcc:focus-visible{outline:2px solid var(--volt,#B7F24A);outline-offset:2px}
+
+/* The passport. Three named slots, every one of them legible as a slot. An
+   empty dashed box reads as a broken input, so an uncollected stamp carries the
+   venue silhouette, the venue name and its own state instead. */
+.hopstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.hopslot{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px 9px;
+  border-radius:11px;text-align:center;background:rgba(0,0,0,.18);
+  border:1.5px dashed var(--line2,#392E23)}
+.hopslot .hopart{display:block;opacity:.42}
+.hopslot .hopart svg{display:block}
+.hopslot b{font-size:10.5px;font-weight:800;line-height:1.25;color:var(--muted,#B0A28C)}
+.hopslot u{text-decoration:none;font:800 9px/1.2 var(--font,inherit);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted-lo,#8A7C68)}
+.hopslot.on{border-style:solid;border-color:#6EE7A0;background:rgba(110,231,160,.13);
+  animation:hoppress .34s cubic-bezier(.2,1.4,.4,1)}
+.hopslot.on .hopart{opacity:1}
+.hopslot.on b{color:var(--ink,#FBF3E4)}
+.hopslot.on u{color:#6EE7A0}
+
+/* The touchpoint strip. Default state only, under the showcase. */
+.tpwrap{grid-column:1/-1;margin-top:26px;padding-top:20px;border-top:1px solid var(--line2,#392E23)}
+.tphd{margin:0 0 4px;font:900 15px/1.2 var(--font,inherit);letter-spacing:-.01em;color:var(--ink,#FBF3E4)}
+.tpsub{margin:0 0 14px;max-width:70ch;font-size:12.5px;line-height:1.55;color:var(--muted,#B0A28C)}
+.tprow{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+@media(min-width:860px){.tprow{grid-template-columns:1fr 1fr}}
+.tpi{display:grid;grid-template-columns:30px 1fr;gap:11px;align-items:start;padding:11px 13px;
+  border-radius:11px;border:1px solid var(--line2,#392E23);background:rgba(0,0,0,.2)}
+.tpmk{display:block}
+.tpmk svg{display:block}
+.tpi u{display:block;margin-bottom:4px;text-decoration:none;font:800 9.5px/1 var(--font,inherit);
+  letter-spacing:.13em;text-transform:uppercase;color:var(--muted-lo,#8A7C68)}
+.tpi b{display:block;margin-bottom:4px;font-size:12.5px;font-weight:900;color:var(--gold,#FFD24A)}
+.tpi .tpln{display:block;font-size:12px;line-height:1.5;color:var(--muted,#B0A28C)}
+
+/* The compliance note now sits once, under the strip, in the default state. */
+.scanfine{grid-column:1/-1;margin:22px 0 0;max-width:82ch}
+
+@media(max-width:760px){
+  .focusart svg{width:112px;height:112px}
+  .focusmk{padding:18px 14px}
+}
+@media(max-width:400px){
+  .hopslot{padding:9px 4px 8px}
+  .hopslot b{font-size:9.5px}
+  .tcc{padding:0 11px;font-size:11.5px}
+}
+@media(prefers-reduced-motion:reduce){
+  .sfocus .focusmk{animation:none}
+  #paneCode .rvl{animation:none}
+  .hopslot.on{animation:none}
+  .tcc,.backjar,.rcfix{transition:none}
+}
+body.jcm-rm .sfocus .focusmk,body.jcm-rm #paneCode .rvl,body.jcm-rm .hopslot.on{animation:none}
+body.jcm-rm .tcc,body.jcm-rm .backjar,body.jcm-rm .rcfix{transition:none}
+
+/* ============================================================
+   THE REVEAL, REBUILT AS THREE BANDS
+   Head, body, foot. Only the body scrolls. The foot is the tick
+   line and both controls, and it never shrinks, so none of the
+   three can slide underneath the primary button the way the
+   tick line did. Written last because the last declaration in
+   this document wins.
+   ============================================================ */
+.rvl{display:flex;flex-direction:column}
+.rvlhead{flex:0 0 auto}
+.rvlscroll{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+.rvlbody{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.rvlbody>:last-child{margin-bottom:0}
+/* The affordance. It appears only when the body really does overflow, measured
+   after every paint, and it is a drawn chevron and a sentence rather than a
+   fade that a reader has to guess at. */
+.rvlmore{flex:0 0 auto;display:none;align-items:center;justify-content:center;gap:7px;
+  margin:8px 0 0;padding:7px 0 0;border-top:1px dashed var(--line2,#392E23);
+  font:800 10px/1 var(--font,inherit);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted-lo,#8A7C68)}
+.rvl.canscroll .rvlmore{display:flex}
+.rvlfoot{flex:0 0 auto;margin-top:14px;padding-top:13px;border-top:1px solid rgba(57,46,35,.85)}
+.rvlfoot .rvltick{margin:0 0 13px}
+/* The primary button carries a 26px drop shadow from the global button rule.
+   Inside a card that is a smear across the line of type above it, so it comes
+   off here and the button keeps its colour instead. */
+.rvlfoot .rvlgo{margin:0;box-shadow:none}
+.rvlfoot .rvlgo:hover{transform:none;filter:brightness(1.05)}
+.rvlfoot .rvl2{margin-top:10px}
+/* The moment. A drawn tick and one line, sitting above the tick line. */
+.rvlstamp{display:flex;align-items:center;gap:9px;margin:0 0 12px;padding:9px 11px;border-radius:11px;
+  background:rgba(110,231,160,.10);border:1px solid rgba(110,231,160,.34)}
+.rvlstamp.calm{background:rgba(255,255,255,.03);border-color:var(--line2,#392E23)}
+.rvlstamp svg{flex:0 0 auto;display:block}
+.rvlstamp b{font:800 12px/1.4 var(--font,inherit);color:var(--ink,#FBF3E4)}
+.rvlstamp .ckdraw{stroke-dasharray:34;stroke-dashoffset:34;animation:ckdraw .5s cubic-bezier(.4,.9,.3,1) forwards}
+@keyframes ckdraw{to{stroke-dashoffset:0}}
+.rvlstamp.still .ckdraw{animation:none;stroke-dashoffset:0}
+/* The held marker. It was minted on the page and only ever styled inside the
+   wall's shadow sheet, so a held number carried a bare dagger with no rule
+   behind it. Held is the one state that has to look unfinished on purpose. */
+.rvlnum .dag{font-size:.42em;font-weight:900;vertical-align:super;margin-left:3px;color:#FFC65C}
+.rvlnum.spent .dag{color:#5A4A36}
+/* The delivery receipt read back, and the correction the member can make. No
+   confidence percentage anywhere: the only useful answer to a bad read is a
+   field you can retype, so that is what this is. */
+.rcread{margin:0 0 14px;padding:12px 13px;border-radius:11px;
+  background:rgba(0,0,0,.24);border:1px solid var(--line2,#392E23)}
+.rcread>u{display:block;text-decoration:none;font:800 9.5px/1 var(--font,inherit);
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted-lo,#8A7C68);margin-bottom:9px}
+.rcrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 0;
+  font:700 12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+.rcrow span{flex:0 0 auto;color:var(--muted,#B0A28C)}
+.rcrow b{min-width:0;color:var(--ink,#FBF3E4);text-align:right;overflow-wrap:anywhere}
+.rcrow.rcedit{display:block;padding:6px 0}
+.rcread input{width:100%;min-height:44px;margin-top:5px;padding:0 11px;border-radius:9px;
+  font-size:16px;box-sizing:border-box;border:1px solid var(--line2,#392E23);
+  background:rgba(0,0,0,.34);color:var(--ink,#FBF3E4);font-family:inherit}
+.rcread input:focus-visible{outline:2px solid var(--gold,#FFD24A);outline-offset:1px}
+.rcfix{display:block;width:100%;min-height:44px;margin-top:11px;padding:0 12px;border-radius:10px;
+  box-sizing:border-box;border:1px solid var(--line2,#392E23);background:rgba(255,255,255,.03);
+  color:var(--ink,#FBF3E4);font:800 12.5px/1.35 var(--font,inherit);cursor:pointer;
+  transition:border-color .16s ease,color .16s ease}
+.rcfix:hover{border-color:var(--gold,#FFD24A);color:var(--gold,#FFD24A)}
+.rcfix:focus-visible{outline:2px solid var(--gold,#FFD24A);outline-offset:2px}
+.rcok{margin:11px 0 0;font-size:11.5px;line-height:1.55;color:#6EE7A0}
+
+/* The reading state cap. It floors at 280px so the card cannot be squeezed to
+   nothing on a short window, and everything past the cap scrolls in the body
+   rather than being cut off at the frame. */
+.sfocus .rvl{display:flex;flex-direction:column;overflow:hidden;
+  min-height:200px;max-height:min(520px,max(280px,calc(100vh - 300px)))}
+.sfocus .rvl .rvlmk{display:none}
+
+/* Back to the jar, and the code box under it. Twelve pixels read as a collision
+   between a 44px control and a 44px input, so the two get a real band. */
+.backjar{margin:16px 0 22px}
+.sfocus .codein{margin-top:0}
+
+/* The points landing. One token, drawn, on an arc, then the balance counts the
+   last stretch itself. Fixed to the viewport so no parent can clip it, and it
+   removes itself. Nothing loops. */
+.ptarc{position:fixed;left:0;top:0;z-index:200;pointer-events:none;will-change:transform;
+  padding:5px 10px;border-radius:999px;white-space:nowrap;
+  font:900 13px/1 var(--font,inherit);letter-spacing:-.01em;
+  background:var(--gold,#FFD24A);color:#241703;
+  box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.ptarc.held{background:rgba(255,198,92,.18);color:#FFC65C;border:1px solid rgba(255,198,92,.5);
+  box-shadow:none;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.bal.land{animation:balland .34s cubic-bezier(.3,1.5,.4,1)}
+@keyframes balland{0%{transform:none}42%{transform:scale(1.055)}100%{transform:none}}
+
+/* The camera interstitial. */
+#camShot{max-width:76%;max-height:46%;border-radius:12px;display:block;object-fit:cover;
+  border:1px solid rgba(255,255,255,.24);box-shadow:0 10px 28px rgba(0,0,0,.5)}
+.cam.shot .vfind{display:none}
+.camnote{max-width:84%;margin:9px 0 0;text-align:center;
+  font:700 11.5px/1.5 var(--font,inherit);color:rgba(251,246,236,.82)}
+
+/* The concept note. It carried 42px and read as though its two columns were
+   resting on the rule above them, so the band gets room of its own on every
+   view. This is the last declaration for it in the document. */
+.ftnote{padding-top:56px}
+
+@media(max-width:760px){
+  .sfocus .rvl{min-height:0;max-height:min(440px,max(260px,calc(100vh - 340px)))}
+}
+@media(max-width:560px){
+  .ftnote{padding-top:36px}
+  .rvlfoot{margin-top:12px;padding-top:12px}
+  .backjar{margin:14px 0 20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .rvlstamp .ckdraw{animation:none;stroke-dashoffset:0}
+  .bal.land{animation:none}
+}
+body.jcm-rm .rvlstamp .ckdraw{animation:none;stroke-dashoffset:0}
+body.jcm-rm .bal.land{animation:none}
+</style>
+
 
 <!-- ================= SVG SPRITE ================= -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -3331,37 +3872,11 @@ body.entered .jwrap{max-width:296px}
 <header class="hd"><div class="in">
   <a class="brandlk" href="#" onclick="return false" aria-label="Ole Smoky Distillery, The Jar Club">
     <span class="jclogo" aria-hidden="true">
-      <svg viewBox="0 0 120 120" role="img">
-        <defs>
-          <linearGradient id="jcRim" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#8A5410"/><stop offset=".38" stop-color="#FFE7B8"/>
-            <stop offset=".68" stop-color="#D9922B"/><stop offset="1" stop-color="#8A5410"/></linearGradient>
-          <linearGradient id="jcLiq" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#FFD98A"/><stop offset="1" stop-color="#B8701C"/></linearGradient>
-          <clipPath id="jcJarClip"><path d="M46 50h28v27a14 14 0 0 1-14 14 14 14 0 0 1-14-14z"/></clipPath>
-        </defs>
-        <circle cx="60" cy="60" r="57" fill="#0F0B08" stroke="url(#jcRim)" stroke-width="3"/>
-        <circle cx="60" cy="60" r="50" fill="none" stroke="#F5C542" stroke-width="1.6"
-                stroke-dasharray="1.6 5" stroke-linecap="round" opacity=".8"/>
-        <path d="M50 40h20v3.6H50z" fill="url(#jcRim)"/>
-        <path d="M47 43.4h26v5.2H47z" fill="url(#jcRim)"/>
-        <path d="M50.5 43.4v5.2M55 43.4v5.2M59.5 43.4v5.2M64 43.4v5.2M68.5 43.4v5.2" stroke="#2A1A08" stroke-width=".8" opacity=".55"/>
-        <path d="M46 48.6h28v28.4a14 14 0 0 1-14 14 14 14 0 0 1-14-14z" fill="#160F03"/>
-        <g clip-path="url(#jcJarClip)">
-          <rect x="46" y="58" width="28" height="34" fill="url(#jcLiq)"/>
-          <rect x="46" y="58" width="28" height="1.4" fill="#FFF3D6"/>
-          <path d="M50 66l1.4 3 3 1.4-3 1.4-1.4 3-1.4-3-3-1.4 3-1.4z" fill="#FFF6E4" opacity=".9"/>
-          <rect x="49" y="52" width="3" height="38" rx="1.5" fill="#fff" opacity=".2"/>
-        </g>
-        <path d="M46 48.6h28v28.4a14 14 0 0 1-14 14 14 14 0 0 1-14-14z" fill="none" stroke="#FFE7B8" stroke-width="1.8"/>
-        <path d="M60 15.5l1.9 4 4.3.6-3.1 3 .8 4.3-3.9-2.1-3.9 2.1.8-4.3-3.1-3 4.3-.6z" fill="#F5C542"/>
-        <path d="M41 100.5l1.5 3.2 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5z" fill="#D9922B"/>
-        <path d="M79 100.5l1.5 3.2 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5z" fill="#D9922B"/>
-        <text x="60" y="34" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="9.4"
-              font-weight="900" letter-spacing="3.1" fill="#FFE7B8">THE</text>
-        <text x="60" y="103" text-anchor="middle" font-family="Helvetica Neue,Arial" font-size="12.6"
-              font-weight="900" letter-spacing="2.4" fill="#FFD24A">JAR CLUB</text>
-      </svg>
+      <!-- The real Ole Smoky mark, served from their own CDN. The element and
+           its class stay put because the code bar clones .jclogo innerHTML at
+           runtime. Only the inner content changed. -->
+      <img src="https://olesmoky.com/cdn/shop/t/10/assets/logo-ole-smoky_700x700.png?v=10103389621447862681707937263"
+           alt="Ole Smoky Tennessee Distillery" width="120" height="120" loading="eager" decoding="async">
     </span>
     <span class="bsep" aria-hidden="true"></span>
     <span class="btxt"><b>The Jar Club</b><em>An Ole Smoky Moonshine promotion</em></span>
@@ -3376,8 +3891,39 @@ body.entered .jwrap{max-width:296px}
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><span>The model</span></button>
   <a class="distb" id="distNav" href="https://nathanjsong.com/olesmoky/distribution/" target="_blank" rel="noopener">
     <svg width="16" height="16" aria-hidden="true"><use href="#dxMap"/></svg><span>Distribution</span></a>
-  <button class="acct" id="acctBtn"><span class="av" id="acctAv">&#9679;</span><span id="acctTxt">Sign in</span></button>
-  <button class="sfxb" id="sfxBtn" aria-pressed="true" aria-label="Sound"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="sfxl">Sound on</span><svg class="smk" viewBox="0 0 16 22" aria-hidden="true"><use href="#smokeW"/></svg></button>
+  <!-- ACCOUNT. The standalone Sign in button and the standalone Sound toggle
+       merged into one chip with a panel under it. The ids acctBtn, acctAv,
+       acctTxt and sfxBtn are load bearing: acctUI() and wireSfx() bind to
+       them. They moved, they were never renamed. -->
+  <div class="jcm" id="jcmWrap">
+    <button class="acct jcm-chip" id="jcmChip" aria-haspopup="true" aria-expanded="false" aria-controls="jcmPanel" aria-label="Account and settings">
+      <span class="av" id="jcmAv">&#9679;</span><span class="jcm-chiptxt" id="jcmTxt">Sign in</span>
+      <svg class="jcm-car" width="11" height="11" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.6 4.4L6 7.8l3.4-3.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="jcm-panel" id="jcmPanel" aria-label="Account and settings">
+      <button class="jcm-row" id="acctBtn">
+        <span class="jcm-main">
+          <span class="jcm-lab"><span class="av" id="acctAv">&#9679;</span><span id="acctTxt">Sign in</span></span>
+          <small class="jcm-sub" id="jcmAcctSub">Earn points and keep your jar</small>
+        </span>
+      </button>
+      <div class="jcm-rule"></div>
+      <button class="jcm-row" id="sfxBtn" aria-pressed="true" aria-label="Sound">
+        <span class="jcm-main">
+          <span class="jcm-lab">Sound</span>
+          <small class="jcm-sub sfxl">Sound on</small>
+        </span>
+        <span class="jcm-sw" aria-hidden="true"></span>
+      </button>
+      <button class="jcm-row" id="jcmMotion" role="switch" aria-checked="false">
+        <span class="jcm-main">
+          <span class="jcm-lab">Reduced motion</span>
+          <small class="jcm-sub">Holds every mark still</small>
+        </span>
+        <span class="jcm-sw" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
   <button class="tgl hide" id="themeBtn" aria-hidden="true" tabindex="-1"><i id="themeIcon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3A2A00" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.4v2.6M12 19v2.6M21.6 12H19M5 12H2.4M18.8 5.2l-1.9 1.9M7.1 16.9l-1.9 1.9M18.8 18.8l-1.9-1.9M7.1 7.1L5.2 5.2"/></svg></i></button>
 </div></header>
 
@@ -3688,16 +4234,6 @@ body.entered .jwrap{max-width:296px}
   <p class="lead" style="margin:12px 0 26px">These are the six that sell. Tap any of them for the short version, then go read the long one on our own site.</p>
   <div class="g6" id="sellers"></div>
 </div></section>
-
-<section class="sec"><div class="wrap">
-  <div class="kick">How the campaign pays for itself</div>
-  <h2>What one entry is worth.</h2>
-  <div class="g3" style="margin-top:26px">
-    <div class="step"><div class="n">1</div><h3>Somebody we can reach</h3><p>Ole Smoky sells through distributors and stores. An entry is a name, an email and a flavor, given willingly, that the brand can talk to again next month.</p></div>
-    <div class="step"><div class="n">2</div><h3>Something worth knowing</h3><p>What they pour, which distillery is closest, whether they have ever set foot in one. That is a real answer to what to make more of and where to put the next tasting room, before a single dollar of media is spent.</p></div>
-    <div class="step"><div class="n">3</div><h3>A sale you can trace</h3><p>Every $15 code is unique. When it comes back through the merch store it names the campaign, the flavor and the person. Nobody has to guess whether the drawing worked.</p></div>
-  </div>
-</div></section>
 </main>
 <!-- ============================================================ -->
 <!-- VIEW 2 : CONVERT                                             -->
@@ -3965,7 +4501,7 @@ body.entered .jwrap{max-width:296px}
 
     <div class="two">
       <div class="statl"><b id="meEnt">0</b><span>/3 referrals this month</span></div>
-      <div class="statl"><b id="mePend">0</b><span>points pending</span></div>
+      <div class="statl"><b id="mePend">0</b><span id="mePendLbl">points pending</span></div>
     </div>
 
     <!-- Three levels, climbable, and it lives here rather than eating a section of
@@ -4004,24 +4540,91 @@ body.entered .jwrap{max-width:296px}
           <svg viewBox="0 0 240 340" id="bottleSvg" aria-label="A rotating whiskey jar with a barcode wrapped around the label"></svg>
           <span class="spin">Rotating &middot; the code wraps the jar</span>
           <div class="cam" id="cam">
-            <div class="vfind"><i></i><i></i><i></i><i></i><div class="laser"></div></div>
+            <!-- The sweeping laser is gone. It depicted a 1990s barcode wand and
+                 no camera decoder does anything like it, so it was motion that
+                 described nothing. The brackets tighten on lock instead. -->
+            <div class="vfind"><i></i><i></i><i></i><i></i></div>
+            <!-- The honest interstitial. A real build reads the code out of this
+                 photograph. This one shows the photograph, says so in a sentence,
+                 and then hands over the demo code rather than pretending. -->
+            <img id="camShot" alt="The photo just taken" hidden>
             <div class="camtxt" id="camTxt">Hold the code inside the frame</div>
+            <p class="camnote" id="camNote" hidden></p>
           </div>
         </div>
+        <!-- FOCUS STATE, left column. The jar owns this slot at rest because the
+             jar is the object in market today. The moment any other object
+             reads, the jar steps aside and that object's own mark takes the
+             slot, so a viewer always knows what they are looking at without a
+             caption fighting the reveal for the same attention. -->
+        <div class="focusmk" id="focusMk" hidden>
+          <div class="focusart" id="focusMkArt"></div>
+          <b id="focusMkName"></b>
+          <u id="focusMkWhere"></u>
+        </div>
         <div>
-          <ol class="steps3">
+          <!-- The three steps are the primary instruction again. The jar beside
+               them is the object in market today, so the pair is the whole ask:
+               peel it, point at it, get points. Everything else the reader
+               handles is evidence, and evidence belongs underneath. -->
+          <ol class="steps3" id="steps3Scan">
             <li><span class="sn">1</span><div><b>Peel the neck hanger</b><span>Every jar leaves the line with its own code. No two are the same, so a photo of somebody else's does nothing.</span></div></li>
             <li><span class="sn">2</span><div><b>Point your camera at it</b><span>Or type it in if the light is bad. Both land in the same place.</span></div></li>
             <li><span class="sn">3</span><div><b>Points land in your jar</b><span>Small ones post straight away. Anything over 200 gets looked at by a person first, so it can take a day.</span></div></li>
           </ol>
+          <div class="rvlhost" id="rvlHost" hidden></div>
+          <button type="button" class="backjar" id="backJar" hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5.5 4.5 12l6.5 6.5"/><path d="M5 12h14"/></svg>
+            Back to the jar
+          </button>
           <div class="codein">
-            <input id="codeIn" placeholder="OS-0000-XXXX" maxlength="14" aria-label="Jar code">
+            <input id="codeIn" placeholder="OS-0000-XXXX" maxlength="16" aria-label="Code from the jar or any of the other five objects">
+            <span class="codehint" id="codeHint"></span>
             <button class="btn-p" id="scanBtn">Scan with camera</button>
+            <!-- Same input the receipt uses. accept plus capture is what actually
+                 opens the rear camera on a phone; on a desktop it is not used at
+                 all, because the button falls back to the simulation there. -->
+            <input id="scanCam" type="file" accept="image/*" capture="environment" hidden>
             <button class="btn-o" id="enterBtn">Enter code</button>
           </div>
           <div class="scanmsg" id="scanMsg"></div>
-          <div class="testcodes">Demo codes, tap to fill: <code data-c="OS-4471-APPLE">OS-4471-APPLE</code> <code data-c="OS-8802-BLUE">OS-8802-BLUE</code> <code data-c="OS-2290-JUG">OS-2290-JUG</code></div>
+          <p class="sr-only" role="status" aria-live="polite" id="scanLive"></p>
+          <!-- Six chips, six buttons, one flex row with a real gap. They used to
+               be inline code elements separated by collapsing whitespace, which
+               is why two of them fused into one unreadable string at some
+               widths. A chip is a control, so it is a button at 44px. -->
+          <div class="testcodes" id="demoChips">
+            <span class="tclab">Demo codes, tap one to run it</span>
+            <div class="tcrow">
+              <button type="button" class="tcc" data-c="OS-4471-APPLE">OS-4471-APPLE</button>
+              <button type="button" class="tcc" data-c="EV-0822-BARN">EV-0822-BARN</button>
+              <button type="button" class="tcc" data-c="VN-BARREL">VN-BARREL</button>
+              <button type="button" class="tcc" data-c="TT-HOLLER-01">TT-HOLLER-01</button>
+              <button type="button" class="tcc" data-c="RC-9931-DASH">RC-9931-DASH</button>
+              <button type="button" class="tcc" data-c="MS-0417-TEE">MS-0417-TEE</button>
+            </div>
+          </div>
         </div>
+        <!-- Supporting cast. Six cards, every one of them live: tapping a card
+             fills the box above and runs the read, so a viewer can see all six
+             outcomes without owning a single one of the objects. -->
+        <section class="shcwrap" id="shcWrap" aria-labelledby="shcHd">
+          <h3 class="shchd" id="shcHd">What else reads</h3>
+          <p class="shcsub">The jar code is the one in market today. These are the rest of the system, all reading through the same box above. Tap any card to run it.</p>
+          <div class="showcase" id="showcase"></div>
+        </section>
+
+        <!-- The touchpoint strip. Six objects is a nice demo; six objects each
+             sitting on a named part of the business is the answer to the job.
+             One line each, rendered from the same six marks so the strip can
+             never drift away from what the reader actually reads. -->
+        <section class="tpwrap" id="tpWrap" aria-labelledby="tpHd">
+          <h3 class="tphd" id="tpHd">What each one is doing for the business</h3>
+          <p class="tpsub">Six objects, six touchpoints, one profile underneath them.</p>
+          <ul class="tprow" id="tpRow"></ul>
+        </section>
+
+        <p class="fine scanfine" id="scanFine">Nothing here ever hands over a drink. On its own distillery floor Ole Smoky wears a manufacturer hat and may pour a free sample, capped at half an ounce a label, under TCA 57-3-202. Six feet away at the bar it wears a liquor by the drink hat and may not give away a drink or award alcohol as a prize at all, under TN 0100-01-.03(14). Both rules are live on the same night at the same address, so every outcome on this page is points, a ticket, branded merchandise, access or consent.</p>
       </div>
 
       <div class="scan rcpt hide" id="paneRcpt" role="tabpanel" aria-labelledby="tabRcpt">
@@ -4155,10 +4758,27 @@ body.entered .jwrap{max-width:296px}
 
 <main id="view-model" class="hide"><div id="cxHost"></div></main>
 
-<footer class="ft"><div class="wrap">
+<footer class="ft" id="siteFoot">
+
+  <!-- ---------- 1. CONCEPT NOTE, kept word for word ---------- -->
+  <div class="ftnote"><div class="wrap">
   <p><b>Put Your Name In The Jar</b> is a campaign concept and portfolio work sample created by Nathan J. Song for the Ole Smoky Distillery CRM Director role. It is not affiliated with, sponsored by, or endorsed by Ole Smoky Distillery.</p>
   <p>No live drawing is being run on this page and no entry is being collected. The Smoky Mountain Takeover, the runner-up kits, the name counter, the 2,500 points, the $15 code and every figure in the forecast are proposed, illustrative, and modeled. Product names, apparel, venues and the Hooch Hop are drawn from public sources including <a href="https://olesmoky.com" target="_blank" rel="noopener">olesmoky.com</a>. Merchandise imagery is official Ole Smoky imagery used as visual reference for a concept. <button class="lnk" id="rulesLink2">Official rules summary</button></p>
-</div></footer>
+  </div></div>
+
+  <!-- ---------- 2. LEGAL AND UTILITY ---------- -->
+  <div class="ftlegal"><div class="wrap">
+    <nav class="ftlinks" aria-label="Legal and utility links">
+      <button type="button" class="lnk rulesLnk ftl">Official rules summary</button>
+      <button type="button" class="lnk rulesLnk ftl">Privacy and data handling</button>
+      <button type="button" class="lnk rulesLnk ftl">Entry terms</button>
+      <a class="ftl" href="https://responsibility.org" target="_blank" rel="noopener">responsibility.org</a>
+      <a class="ftl" href="mailto:natejmsong@gmail.com">Contact Nathan J. Song</a>
+    </nav>
+    <p class="ftsmall">The rules, privacy and terms links open the proposed summary for this concept. They are not a live published policy, because nothing is being collected here.</p>
+  </div></div>
+
+</footer>
 
 <div class="mdl" id="rulesMdl"><div class="bx">
   <div class="mh"><h3>Official rules summary</h3><button class="x" data-close>&times;</button></div>
@@ -4242,24 +4862,108 @@ body.entered .jwrap{max-width:296px}
   </div>
 </div></div>
 
-<div class="mdl" id="authMdl"><div class="bx" style="max-width:460px">
-  <div class="mh"><h3 id="authTitle">Create your Jar Club account</h3><button class="x" data-close>&times;</button></div>
+<div class="mdl" id="authMdl"><div class="bx authbx" style="max-width:460px" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-describedby="authRib">
+  <p class="authrib" id="authRib"><b>Prototype.</b> Nothing is sent and no account is created. This surface exists to show how identity, consent and the age gate are actually captured.</p>
+  <div class="mh"><h3 id="authTitle">Get into the Jar Club</h3><button class="x" data-close aria-label="Close">&times;</button></div>
   <div class="mb">
-    <div class="tabs" id="authTabs"><button data-t="new" aria-pressed="true">Create account</button><button data-t="in" aria-pressed="false">Sign in</button></div>
-    <div id="authNew">
-      <div class="fld"><label for="anName">First name</label><input id="anName" type="text" placeholder="Your first name"></div>
-      <div class="fld"><label for="anMail">Email</label><input id="anMail" type="email" placeholder="you@email.com"></div>
-      <label class="chk"><input type="checkbox" id="anAge"><span><b>I am 21 or over</b>Required. Asked once, stored on the account, never asked again.</span></label>
-      <div class="qerr" id="anErr"></div>
-      <button class="btn-g" style="width:100%" id="anGo">Claim my 2,500 points</button>
-      <p class="fine">Starts you at 2,500 points. No password, ever. We send a six digit code when you come back.</p>
+
+    <!-- ===== The demo door. Option A from the spec: a surface, not a sentence.
+         It is the largest thing here, it is first in the tab order, and it shows
+         the payload instead of describing it. ===== -->
+    <button type="button" class="dmdoor" id="demoDoor" aria-label="Walk in as Dale, the demo member. Member since March, 2,140 points, Tier 2, 3 rewards ready.">
+      <span class="dmjar">
+        <svg viewBox="0 0 40 54" width="54" height="54" aria-hidden="true" focusable="false">
+          <defs><clipPath id="dmJarClip"><path d="M8.6 14.4c0-2.1 1.7-2.8 1.7-4.6V8.2h19.4v1.6c0 1.8 1.7 2.5 1.7 4.6v31.9a5.4 5.4 0 0 1-5.4 5.4H14a5.4 5.4 0 0 1-5.4-5.4z"/></clipPath></defs>
+          <rect x="10.4" y="1.6" width="19.2" height="4.4" rx="1.6" fill="#C9A24A"/>
+          <rect x="9.2" y="5.2" width="21.6" height="4.4" rx="1.4" fill="#8E7431"/>
+          <path d="M9.2 7.4h21.6" stroke="#6B5722" stroke-width=".9"/>
+          <path d="M8.6 14.4c0-2.1 1.7-2.8 1.7-4.6V8.2h19.4v1.6c0 1.8 1.7 2.5 1.7 4.6v31.9a5.4 5.4 0 0 1-5.4 5.4H14a5.4 5.4 0 0 1-5.4-5.4z" fill="#120D09" stroke="#FFD24A" stroke-width="1.6" stroke-linejoin="round"/>
+          <g clip-path="url(#dmJarClip)">
+            <!-- the fill level, drawn at 62 percent of the inside height -->
+            <rect x="6" y="27.2" width="28" height="26" fill="#E8890C"/>
+            <rect x="6" y="27.2" width="28" height="1.3" fill="#FFE7B8"/>
+          </g>
+          <rect x="12.8" y="13.4" width="2.6" height="29" rx="1.3" fill="#FFFFFF" opacity=".16"/>
+        </svg>
+      </span>
+      <span class="dmtx">
+        <span class="dmkick">Member since March</span>
+        <span class="dmh">Walk in as Dale</span>
+        <span class="dmchips"><i>2,140 points</i><i>Tier 2</i><i>3 rewards ready</i></span>
+      </span>
+      <span class="dmchev">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <circle cx="14" cy="14" r="13" fill="none" stroke="#FFD24A" stroke-width="1.4" opacity=".7"/>
+          <path d="M12 9l5 5-5 5" fill="none" stroke="#FFD24A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="author" id="authOr"><span>or set your own up</span></div>
+
+    <!-- Google's own four colour mark, from the official sign in asset bundle.
+         Never recoloured, never monochrome, never on a gold background. -->
+    <button type="button" class="gsib" id="gsiBtn">
+      <span class="gsig" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 48 48" focusable="false"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48z"/></svg></span>
+      <span class="gsil">Continue with Google</span>
+    </button>
+
+    <!-- Clicking the button does not fake a Google account chooser. It opens
+         this, in Jar Club colours, with no Google chrome on it at all. -->
+    <section class="gsim hide" id="gPanel" tabindex="-1" aria-labelledby="gSimH">
+      <div class="gsimtop"><h4 id="gSimH">Simulated response.</h4><button type="button" class="gsimx" id="gBack">Back</button></div>
+      <p class="gsimp">This prototype does not connect to Google. Here is the ID token a real integration would hand back, and what the CRM does with each claim.</p>
+      <dl class="gclaims">
+        <div class="gcrow"><dt>sub</dt><dd>Stored as a permanent alias. <b>The durable key.</b> It survives the member changing their Gmail address, which the email on its own does not.</dd></div>
+        <div class="gcrow"><dt>email</dt><dd>Normalised, hashed, matched against existing members. If it hits, the alias attaches to the record that is already there. <b>No second Dale.</b></dd></div>
+        <div class="gcrow"><dt>email_verified: true</dt><dd>Skips the six digit code entirely. Verified at source.</dd></div>
+        <div class="gcrow"><dt>given_name</dt><dd>Fills the first name, so we never have to ask for it.</dd></div>
+        <div class="gcrow"><dt>picture</dt><dd><b>Not stored.</b> We do not need it, and holding it would create a deletion obligation.</dd></div>
+      </dl>
+      <button type="button" class="btn-g gsimgo" id="gGo">Continue as Dale</button>
+    </section>
+
+    <div id="authFlow">
+      <!-- Step 1. Age affirmation, before the email field, because the DISCUS
+           Code puts it before the collection of any information. -->
+      <div class="fld" id="dobRow">
+        <label for="anDob">Date of birth</label>
+        <input id="anDob" type="text" inputmode="numeric" maxlength="10" autocomplete="bday" placeholder="MM / DD / YYYY" aria-describedby="dobHelp">
+        <p class="authhelp" id="dobHelp">We ask once and store it on your account. You will never be asked again.</p>
+      </div>
+      <div class="authdeny hide" id="dobDeny" role="alert" tabindex="-1"></div>
+
+      <!-- Step 2. One email field. No tabs. -->
+      <div class="fld hide" id="mailRow">
+        <label for="anMail">Email</label>
+        <input id="anMail" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" aria-describedby="mailHelp">
+        <p class="authhelp" id="mailHelp">One field. If this address is already on a member record we sign you back into that one instead of opening a second.</p>
+      </div>
+
+      <!-- Step 3. One code input, and consent on the same panel. -->
+      <div class="hide" id="codeRow">
+        <div class="fld">
+          <label for="anCode">Six digit code</label>
+          <input id="anCode" class="otp" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" aria-describedby="codeHelp">
+          <p class="authhelp" id="codeHelp">Paste it and it submits itself. No password, now or later.</p>
+        </div>
+        <label class="chkrow" for="anCon1"><input type="checkbox" id="anCon1"><span>Email me about drops, releases and my rewards.</span></label>
+        <label class="chkrow" for="anCon2"><input type="checkbox" id="anCon2"><span>Text me. Only about redemptions and pickups.</span></label>
+        <div class="fld hide" id="phoneRow">
+          <label for="anPhone">Mobile number</label>
+          <input id="anPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(865) 555 0134" aria-describedby="phoneHelp">
+          <p class="authhelp" id="phoneHelp">Only because you ticked the text box. It is also the number the tasting room counter looks you up by.</p>
+        </div>
+      </div>
+
+      <div class="qerr" id="anErr" aria-live="polite"></div>
+      <button type="button" class="btn-g authgo" id="anGo">Continue</button>
     </div>
-    <div id="authIn" class="hide">
-      <div class="fld"><label for="aiMail">Email</label><input id="aiMail" type="email" value="dale@example.com"></div>
-      <label style="display:block;font:900 11px/1 var(--font);letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Six digit code</label>
-      <div class="codebox" id="cbox"><input maxlength="1" value="4"><input maxlength="1" value="7"><input maxlength="1" value="2"><input maxlength="1" value="9"><input maxlength="1" value="1"><input maxlength="1" value="6"></div>
-      <div class="demohint"><b>Demo account.</b> The code is filled in. This signs you in as somebody who has been collecting since March, so you can see the redemption side without earning your way there first.</div>
-      <button class="btn-g" style="width:100%" id="aiGo">Sign me in</button>
+
+    <div class="crmstrip">
+      <p><b>One person, one record.</b> The email, the phone number added later, and the Google account ID all resolve to the same member ID, so the tasting room counter and the inbox are looking at the same Dale.</p>
+      <p><b>Date of birth is asked once and stored on the account.</b> That is what lets us stop asking, and it is also the birthday trigger.</p>
+      <p><b>Consent is logged per channel with a timestamp and the exact wording shown.</b> An email opt in never becomes permission to text.</p>
     </div>
   </div>
 </div></div>
@@ -5382,54 +6086,115 @@ function paintBand(){
 }
 (function wireBand(){
   const g=document.getElementById('abGo'),i=document.getElementById('abIn');
-  const open=t=>{
-    const m=document.getElementById('authMdl');if(!m)return;
-    document.querySelectorAll('#authTabs button').forEach(b=>{
-      const sel=b.dataset.t===t;b.setAttribute('aria-pressed',String(sel));b.classList.toggle('on',sel);});
-    document.getElementById('authNew').classList.toggle('hide',t!=='new');
-    document.getElementById('authIn').classList.toggle('hide',t!=='in');
-    const ti=document.getElementById('authTitle');
-    if(ti)ti.textContent=t==='new'?'Create your Jar Club account':'Sign back in';
-    const pre=document.getElementById('anMail');
-    if(t==='new'&&pre&&!pre.value&&S.email)pre.value=S.email;
-    m.classList.add('on');
-    if(typeof sClick==='function')try{sClick();}catch(e){}
-  };
-  if(g)g.addEventListener('click',()=>{if(S.member){setView(3);return;}open('new');});
-  if(i)i.addEventListener('click',()=>open('in'));
+  if(g)g.addEventListener('click',()=>{if(S.member){setView(3);return;}openAuth();});
+  if(i)i.addEventListener('click',()=>openAuth());
 })();
 $('#acctBtn').addEventListener('click',()=>{
   if(S.auth){setView(3);return;}
-  $('#authMdl').classList.add('on');
+  openAuth();
 });
-$$('#authTabs button').forEach(b=>b.addEventListener('click',()=>{
-  const t=b.dataset.t;
-  $$('#authTabs button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-  $('#authNew').classList.toggle('hide',t!=='new');
-  $('#authIn').classList.toggle('hide',t!=='in');
-  $('#authTitle').textContent=t==='new'?'Create your Jar Club account':'Welcome back';
-}));
-$('#anGo').addEventListener('click',()=>{
-  const n=$('#anName').value.trim(),e=$('#anMail').value.trim();
-  if(!n){$('#anErr').textContent='We need a first name for the account.';return;}
-  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){$('#anErr').textContent='That email will not deliver.';return;}
-  if(!$('#anAge').checked){$('#anErr').textContent='We can only open an account for somebody 21 or over.';return;}
-  S.name=n;S.email=e;S.age=true;S.auth=true;S.member=true;S.joinedMs=Date.now();unlock(2,true);unlock(3);
-  if(typeof seedStreak==='function'&&!Object.keys(S.stDays).length)seedStreak(20);
-  /* The account is the event. Activity that starts empty reads as broken
-     rather than new, and the first row is what teaches somebody the tab
-     is a running record and not a placeholder. */
-  if(!S.feed.some(x=>x.title==='Account opened'))
-    S.feed.unshift({kind:'up',title:'Account opened',detail:'Name on file, 21 affirmed, and the jar starts keeping score',amt:2500});
-  if(!S.earned.join){earn('join');earn('profile');earnE('join');}
-  $('#authMdl').classList.remove('on');
-  seedDash();ledgers();acctUI();rewards();paintBand();paintRank();setView(3);
-  toast('Account created. 2,500 points are already in there.');
+
+/* ============================================================
+   THE SIGN IN SURFACE
+
+   Identify first. There is deliberately no Create account / Sign in pair of
+   tabs on this screen any more, and the reason is not aesthetic.
+
+   A two tab surface manufactures duplicate records. A member who forgot they
+   signed up in March picks Create account, types the same address, and the
+   system either errors at them or opens a second profile against the same
+   human being. One email field lets the lookup decide whether this is a
+   return or a creation, which removes the entire duplicate class before it
+   can exist. Deduplicating afterwards is a project. Not creating the
+   duplicate is a design decision.
+   ============================================================ */
+let AUTHRET=null, AGEBLOCK=false, AUTHSTEP=1;
+
+function authReset(){
+  const q=id=>document.getElementById(id);
+  AUTHSTEP=1;
+  q('gPanel').classList.add('hide');
+  q('demoDoor').classList.remove('hide');
+  q('authOr').classList.remove('hide');
+  q('gsiBtn').classList.remove('hide');
+  q('authFlow').classList.remove('hide');
+  q('anErr').textContent='';
+  q('mailRow').classList.add('hide');
+  q('codeRow').classList.add('hide');
+  q('phoneRow').classList.add('hide');
+  q('anGo').textContent='Continue';
+  /* An underage entry is not re offered in the same session. About one alcohol
+     site in five actually blocks the second attempt, which is the difference
+     between a gate and theatre. */
+  const blocked=AGEBLOCK;
+  q('dobRow').classList.toggle('hide',blocked);
+  q('anGo').classList.toggle('hide',blocked);
+  q('dobDeny').classList.toggle('hide',!blocked);
+}
+
+function openAuth(){
+  const m=document.getElementById('authMdl');if(!m)return;
+  /* Remember what opened it so Escape can hand focus back. Never remember
+     something inside the dialog, or closing would bounce focus into a hidden
+     subtree. */
+  const from=document.activeElement;
+  AUTHRET=(from&&from!==document.body&&!m.contains(from))?from:document.getElementById('acctBtn');
+  authReset();
+  const pre=document.getElementById('anMail');
+  if(pre&&!pre.value&&S.email)pre.value=S.email;
+  m.classList.add('on');
+  /* Focus lands on the free door, not the close button and not the email
+     field. The first thing a keyboard user reaches should be the way in.
+     Once synchronously so keyboard users are never left on the body, once on
+     the next tick in case a transition is still settling the layout. */
+  const land=()=>{const t=AGEBLOCK?document.getElementById('dobDeny'):document.getElementById('demoDoor');if(t)try{t.focus();}catch(e){}};
+  land();setTimeout(land,20);
+  if(typeof sClick==='function')try{sClick();}catch(e){}
+}
+function closeAuth(){
+  const m=document.getElementById('authMdl');if(m)m.classList.remove('on');
+}
+
+/* Whatever closed it, the scrim, the X, Escape or a successful sign in, focus
+   goes back where it came from. Watching the class covers every one of them
+   without touching the existing close handlers. */
+(function authFocusReturn(){
+  const m=document.getElementById('authMdl');if(!m||!window.MutationObserver)return;
+  let was=m.classList.contains('on');
+  new MutationObserver(()=>{
+    const now=m.classList.contains('on');
+    if(was&&!now&&AUTHRET&&document.contains(AUTHRET)){try{AUTHRET.focus();}catch(e){}}
+    was=now;
+  }).observe(m,{attributes:true,attributeFilter:['class']});
+})();
+
+/* Escape closes the dialog through the shared handler above. This puts focus
+   back on the trigger in the same tick, rather than waiting on the observer. */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(AUTHRET&&document.contains(AUTHRET)&&!document.getElementById('authMdl').classList.contains('on')){try{AUTHRET.focus();}catch(err){}}
 });
-/* Which seat you are taking. The whole point of showing two is that the same
-   ledger looks completely different depending on which side of it you sit. */
-$('#aiGo').addEventListener('click',()=>{
-  S.name='Dale';S.email=$('#aiMail').value.trim()||'member@example.com';S.age=true;S.auth=true;
+
+/* Focus trap. Tab off either end wraps inside the dialog. */
+(function authTrap(){
+  const m=document.getElementById('authMdl');if(!m)return;
+  m.addEventListener('keydown',e=>{
+    if(e.key!=='Tab')return;
+    const all=m.querySelectorAll('button,input,select,textarea,a[href],[tabindex]:not([tabindex="-1"])');
+    const f=[];
+    for(let k=0;k<all.length;k++){const el=all[k];if(!el.disabled&&el.getClientRects().length)f.push(el);}
+    if(!f.length)return;
+    const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  });
+})();
+
+/* The demo member. One path, used by the card at the top of the dialog and by
+   Continue as Dale inside the simulated Google response, so both doors land a
+   hiring manager in exactly the same signed in state. */
+function demoSignIn(){
+  S.name='Dale';S.email='dale@example.com';S.age=true;S.auth=true;
   S.earned={join:1,profile:1,scan:1,receipt:1,ref:1};S.earnedE={join:1,free:4,ref:1,receipt:1};
   S.demoAcct=true; S.pts=4220; S.ent=7; S.refs=1; S.member=true;
   S.tierPts=9800; S.joinedMs=Date.now()-14*30.44*864e5; S.checkins=3; S.streak=6; S.streakBest=21;
@@ -5445,12 +6210,155 @@ $('#aiGo').addEventListener('click',()=>{
   $('#matchName').textContent=f.name.replace(/&rsquo;/g,String.fromCharCode(8217))+' it is.';
   $('#matchDesc').textContent=f.desc;
   const em2=$('#echoMail');if(em2)em2.textContent=S.email;
-  $('#authMdl').classList.remove('on');
+  closeAuth();
   seedDash();ledgers();acctUI();rewards();slots();
   setView(3);
   ROLLED=false;setTimeout(()=>rollBalance(250,'for entering'),620);
   toast('Signed in. '+num(S.pts)+' points since March, and 780 short of the $15 credit.');
-});
+}
+
+(function wireAuth(){
+  const q=id=>document.getElementById(id);
+  const dob=q('anDob'), mail=q('anMail'), otp=q('anCode'), go=q('anGo'), err=q('anErr');
+  const c1=q('anCon1'), c2=q('anCon2'), phone=q('anPhone');
+  if(!dob||!mail||!otp||!go)return;
+
+  q('demoDoor').addEventListener('click',()=>demoSignIn());
+
+  /* The button is built to Google's spec and looks entirely real. Clicking it
+     does not imitate Google's account chooser, which the guidelines do not
+     cover. It opens our own panel and shows the token mapping instead. */
+  q('gsiBtn').addEventListener('click',()=>{
+    q('demoDoor').classList.add('hide');
+    q('authOr').classList.add('hide');
+    q('gsiBtn').classList.add('hide');
+    q('authFlow').classList.add('hide');
+    const p=q('gPanel');p.classList.remove('hide');
+    try{p.focus();}catch(e){}
+  });
+  q('gBack').addEventListener('click',()=>{authReset();try{q('gsiBtn').focus();}catch(e){}});
+  q('gGo').addEventListener('click',()=>demoSignIn());
+
+  /* Slashes insert themselves. One field, month day year, because a checkbox
+     reading "I am 21 or over" is not age affirmation under the Code. */
+  function fmtDob(raw,del){
+    const d=raw.replace(/[^0-9]/g,'').slice(0,8);
+    let o=d.slice(0,2);
+    if(d.length>2||(d.length===2&&!del))o+='/';
+    o+=d.slice(2,4);
+    if(d.length>4||(d.length===4&&!del))o+='/';
+    o+=d.slice(4,8);
+    return o;
+  }
+  dob.addEventListener('input',e=>{
+    const del=!!(e.inputType&&e.inputType.indexOf('delete')===0);
+    const v=fmtDob(dob.value,del);
+    if(v!==dob.value)dob.value=v;
+  });
+  function ageFrom(v){
+    const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(String(v).trim());
+    if(!m)return null;
+    const mo=+m[1],da=+m[2],yr=+m[3];
+    if(mo<1||mo>12||da<1||da>31||yr<1900)return null;
+    const d=new Date(yr,mo-1,da);
+    if(d.getFullYear()!==yr||d.getMonth()!==mo-1||d.getDate()!==da)return null;
+    const n=new Date();
+    let a=n.getFullYear()-yr;
+    if(n.getMonth()<mo-1||(n.getMonth()===mo-1&&n.getDate()<da))a--;
+    return a;
+  }
+  function deny(){
+    AGEBLOCK=true;
+    err.textContent='';
+    q('dobRow').classList.add('hide');
+    q('mailRow').classList.add('hide');
+    q('codeRow').classList.add('hide');
+    go.classList.add('hide');
+    const d=q('dobDeny');
+    d.innerHTML='<b>We cannot let you through.</b>The Jar Club is for people 21 and over, and the date you entered is under that. The field will not be offered again in this session. If drinking is a problem for you or for somebody you know, <a href="https://responsibility.org" target="_blank" rel="noopener">responsibility.org</a> is a good place to start.';
+    d.classList.remove('hide');
+    try{d.focus();}catch(e){}
+  }
+
+  function verify(){
+    const v=otp.value.replace(/[^0-9]/g,'');
+    if(v.length!==6){err.textContent='The code is six digits.';return;}
+    err.textContent='';
+    createAccount();
+  }
+  otp.addEventListener('input',()=>{
+    const v=otp.value.replace(/[^0-9]/g,'').slice(0,6);
+    if(v!==otp.value)otp.value=v;
+  });
+  /* Paste fills the field and submits it. Blocking paste is the thing WCAG
+     2.2 SC 3.3.8 exists to stop, and the visible Verify button stays anyway,
+     because auto submit on its own strands a screen reader mid announcement. */
+  otp.addEventListener('paste',()=>{setTimeout(()=>{
+    const v=otp.value.replace(/[^0-9]/g,'').slice(0,6);
+    otp.value=v;
+    if(v.length===6)verify();
+  },0);});
+
+  c2.addEventListener('change',()=>{
+    q('phoneRow').classList.toggle('hide',!c2.checked);
+    if(c2.checked)try{phone.focus();}catch(e){}
+  });
+
+  function createAccount(){
+    const e=(mail.value||'').trim();
+    const local=e.split('@')[0].replace(/[^a-zA-Z]/g,'');
+    S.name=local?local.charAt(0).toUpperCase()+local.slice(1).toLowerCase():'Friend';
+    S.email=e;S.age=true;S.dob=dob.value;S.auth=true;S.member=true;S.joinedMs=Date.now();
+    /* One appended row per channel, never a boolean on the user record. A
+       boolean cannot answer what somebody agreed to and when, which is the
+       only question an audit actually asks. */
+    S.consents=S.consents||[];
+    const ts=new Date().toISOString(), surface='Sign in dialog, Jar Club web';
+    S.consents.push({channel:'email',state:!!c1.checked,ts:ts,copy:'Email me about drops, releases and my rewards.',surface:surface});
+    S.consents.push({channel:'sms',state:!!c2.checked,ts:ts,copy:'Text me. Only about redemptions and pickups.',surface:surface});
+    if(c2.checked&&phone.value.trim())S.phone=phone.value.trim();
+    unlock(2,true);unlock(3);
+    if(typeof seedStreak==='function'&&!Object.keys(S.stDays).length)seedStreak(20);
+    /* The account is the event. Activity that starts empty reads as broken
+       rather than new, and the first row is what teaches somebody the tab
+       is a running record and not a placeholder. */
+    if(!S.feed.some(x=>x.title==='Account opened'))
+      S.feed.unshift({kind:'up',title:'Account opened',detail:'Age affirmed once, email verified, consent logged per channel',amt:2500});
+    if(!S.earned.join){earn('join');earn('profile');earnE('join');}
+    closeAuth();
+    seedDash();ledgers();acctUI();rewards();paintBand();paintRank();setView(3);
+    toast('Account created. 2,500 points are already in there.');
+  }
+
+  go.addEventListener('click',()=>{
+    if(AGEBLOCK)return;
+    if(AUTHSTEP===1){
+      const a=ageFrom(dob.value);
+      if(a===null){err.textContent='Give the full date as month, day and year.';return;}
+      if(a<21){deny();return;}
+      err.textContent='';S.age=true;
+      dob.readOnly=true;
+      q('mailRow').classList.remove('hide');
+      AUTHSTEP=2;
+      try{mail.focus();}catch(e){}
+      return;
+    }
+    if(AUTHSTEP===2){
+      const e=mail.value.trim();
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){err.textContent='That email will not deliver.';return;}
+      err.textContent='';
+      mail.readOnly=true;
+      q('codeRow').classList.remove('hide');
+      go.textContent='Verify and open my jar';
+      AUTHSTEP=3;
+      try{otp.focus();}catch(e){}
+      return;
+    }
+    verify();
+  });
+
+  [dob,mail,otp,phone].forEach(el=>{if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();go.click();}});});
+})();
 
 /* ============================================================
    REWARDS
@@ -5726,10 +6634,17 @@ let ROLLED=false,ROLLING=false;
 /* Watching a number arrive is the payoff for everything the entry flow just asked
    for. Slow start, hard acceleration through the middle, soft landing, one pop.
    Nobody feels 2,500 points if the number is simply printed. */
+/* One owner per element. The intro count and a scan landing were both writing
+   frames into the balance at the same time, so whichever finished last decided
+   what the number said. A sequence stamp on the element settles it: the newest
+   claim wins and the older loop stands down on its next frame. */
+let BALSEQ=0;
 function countUp(el,to,ms,done){
   if(!el)return;
+  const seq=++BALSEQ; el.__seq=seq;
   const t0=performance.now(); let lastTick=0;
   function frame(now){
+    if(el.__seq!==seq)return;
     const p=Math.min(1,(now-t0)/ms);
     const e=p<.5 ? 4*p*p*p : 1-Math.pow(-2*p+2,3)/2;
     el.textContent=num(Math.round(to*e));
@@ -5756,13 +6671,16 @@ function rollIn(){
   const bal=document.getElementById('meBalN');
   const rw=document.getElementById('refWon');
   const to=S.pts||0;
-  if(bal&&to>0)bal.textContent='0';
+  if(bal&&to>0&&ROLLIN_PENDING)bal.textContent='0';
   if(rw)rw.textContent='0';
   requestAnimationFrame(()=>{
     try{if(typeof sReel==='function')sReel(.05,9);}catch(e){}
     countUp(rw,2500,1400);
-    if(bal&&to>0)countUp(bal,to,1500,()=>{ROLLIN_PENDING=false;});
-    else ROLLIN_PENDING=false;
+    /* If a scan has already landed points into this balance, the introduction
+       is over. Restarting it from zero at that point would take the member's
+       new points away in front of them and hand them back a second later. */
+    if(bal&&to>0&&ROLLIN_PENDING)countUp(bal,to,1500,()=>{ROLLIN_PENDING=false;});
+    else{ ROLLIN_PENDING=false; if(bal&&!ROLLING)bal.textContent=num(S.pts); }
   });
 }
 function rollBalance(credit,why){
@@ -5770,6 +6688,7 @@ function rollBalance(credit,why){
   ROLLING=true;ROLLED=true;
   const to=S.pts,from=Math.max(0,to-(credit||0));
   const n=$('#meBalN');if(!n){ROLLING=false;return;}
+  const seq=++BALSEQ; n.__seq=seq;
   const dur=1500,t0=performance.now();let lastTick=0;
   if(credit){
     const c=document.createElement('span');c.className='credit';c.textContent='+'+num(credit)+(why?' '+why.toLowerCase():'');
@@ -5778,6 +6697,7 @@ function rollBalance(credit,why){
   }
   el.classList.remove('roll');void el.offsetWidth;el.classList.add('roll');
   function frame(now){
+    if(n.__seq!==seq){ROLLING=false;return;}
     const p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);
     n.textContent=num(Math.round(from+(to-from)*e));
     if(now-lastTick>66&&typeof sTick==='function'){sTick(e);lastTick=now;}
@@ -5819,7 +6739,7 @@ function cpnMakeCode(){
   return 'OS20-'+blk()+'-'+blk();
 }
 async function cpnCopyCode(btn){
-  const c=S.coupon&&S.coupon.code; if(!c)return;
+  const c=(btn&&btn.dataset&&btn.dataset.cpncode)||(S.coupon&&S.coupon.code); if(!c)return;
   let ok=false;
   try{ await navigator.clipboard.writeText(c); ok=true; }
   catch(e){
@@ -5838,18 +6758,27 @@ async function cpnCopyCode(btn){
 /* One renderer, three homes: the wall banner, the account Profile tab, and
    nowhere else. It used to live in the member rail, which meant taking a coupon
    changed the shape of the one panel that is on screen the whole time. */
-function couponHTML(){
-  const c=S.coupon; if(!c)return '';
+let CPNSEQ=0;
+function couponHTML(o){
+  /* Called with nothing it renders the member's own coupon, exactly as before.
+     Called with an object it renders that one, which is how the merch slip
+     reuses this block instead of growing a second copy button. */
+  const c=o||S.coupon; if(!c)return '';
+  /* Three homes means this block can be on screen twice, so the gradient id
+     has to be unique per render or the two copies collide. */
+  const gid=(++CPNSEQ);
+  const head=c.head||(c.pct+'% off your entire order');
+  const fine=c.fine||'Merch store only, never alcohol. Comes off before your $15.';
   return ''+
   '<div class="cpnbox">'+
     '<div class="cpnbh">'+
       '<svg width="18" height="18" viewBox="0 0 44 44" aria-hidden="true">'+
-        '<defs><linearGradient id="cpbG" x1="0" y1="0" x2="1" y2="1">'+
+        '<defs><linearGradient id="cpbG'+gid+'" x1="0" y1="0" x2="1" y2="1">'+
           '<stop offset="0" stop-color="#FFE9A3"/><stop offset="1" stop-color="#E0851C"/></linearGradient></defs>'+
-        '<path d="M5 12a3 3 0 0 1 3-3h28a3 3 0 0 1 3 3v5a4 4 0 0 0 0 8v5a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-5a4 4 0 0 0 0-8z" fill="none" stroke="url(#cpbG)" stroke-width="2.6"/>'+
-      '</svg><b>'+c.pct+'% off your entire order</b></div>'+
+        '<path d="M5 12a3 3 0 0 1 3-3h28a3 3 0 0 1 3 3v5a4 4 0 0 0 0 8v5a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-5a4 4 0 0 0 0-8z" fill="none" stroke="url(#cpbG'+gid+')" stroke-width="2.6"/>'+
+      '</svg><b>'+esc(head)+'</b></div>'+
     '<div class="cpnbrow">'+
-      '<button type="button" class="cprcode" data-cpncopy="1" aria-label="Copy the discount code '+esc(c.code)+'">'+
+      '<button type="button" class="cprcode" data-cpncopy="1" data-cpncode="'+esc(c.code)+'" aria-label="Copy the discount code '+esc(c.code)+'">'+
         '<span class="cprk">'+esc(c.code)+'</span><u>Click to copy code</u>'+
         '<svg class="cpricon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+
           '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>'+
@@ -5857,7 +6786,7 @@ function couponHTML(){
         'Shop the merch store'+
         '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a>'+
     '</div>'+
-    '<p class="cprfine">Merch store only, never alcohol. Comes off before your $15.</p>'+
+    '<p class="cprfine">'+esc(fine)+'</p>'+
   '</div>';
 }
 /* Delegated, so it works in the page and inside the wall's shadow root without
@@ -5920,6 +6849,9 @@ function paintMe(){
   if(!$('#meBalN'))return;
   if(typeof paintCoupon==='function'&&!PAINTING_CPN){PAINTING_CPN=1;try{paintCoupon();}finally{PAINTING_CPN=0;}}
   if(!ROLLING&&!ROLLIN_PENDING)$('#meBalN').textContent=num(S.pts);$('#meEnt').textContent=num(S.ent);$('#mePend').textContent=num(pendTotal());
+  /* Held is not pending in the sense a member reads pending. It is money that
+     is not theirs to spend yet, so the label says so the moment there is any. */
+  const _pl=$('#mePendLbl'); if(_pl)_pl.textContent=pendTotal()>0?'points held':'points pending';
   $('#meAv').textContent=(S.name||'D').slice(0,1).toUpperCase();
   $('#meName').textContent=(S.name||'Dale')+(S.name==='Dale'?' Whitaker':'');
   const _mt=$('#meTier');if(_mt)_mt.innerHTML='&#9733; '+tierOf(S.tierPts||S.pts||0).n;
@@ -5940,45 +6872,1037 @@ function sTick(prog){if(!Sfx.can('tick',50))return;const c=Sfx.ctx,t=c.currentTi
   o.connect(bp).connect(g);g.connect(Sfx.master);g.connect(Sfx.verb);
   Sfx.env(g,t,{a:.001,d:.02,r:.05,peak:.038});o.start(t);o.stop(t+.09);}
 
+
+/* ============================================================
+   THE READ. One camera, many outcomes.
+
+   The scanner used to do one thing: read a jar code, add points. That is a
+   loyalty app feature. What the job description actually asks for is
+   "on-pack (QR code, sweepstakes, etc.) and POS mechanisms that convert
+   anonymous purchasers into known, opted-in contacts" and "capture attendee
+   data at events, festivals, and activations and route it into unified
+   profiles". Those are FIVE different physical objects producing five
+   different outcomes, all writing to one profile.
+
+   THE COMPLIANCE SPINE, and it is the reason the outcomes are what they are.
+   Tennessee puts two hats on the same company at the same address.
+   Wearing the MANUFACTURER hat on its own distillery premises, Ole Smoky may
+   serve samples with or without cost, capped at half an ounce per SKU per
+   tasting. TCA 57-3-202(i)(1) and (k)(1)(B).
+   Wearing the LIQUOR BY THE DRINK hat at the bar, it may not give away any
+   drink, may not award alcoholic beverages as a prize, and may not run any
+   contest that uses alcohol as a prize. TN Comp. R. & Regs. 0100-01-.03(14)(a)
+   and (c).
+   Both are in force on the same night. So: NO SCAN IN THIS BUILD EVER AWARDS
+   ALCOHOL. Points, tickets, branded merchandise, access and consent only.
+   ============================================================ */
+const SCANK={
+  jar:  {n:'Jar code',    where:'Neck hanger on every bottle',  col:'#FFD24A', kind:'jar'},
+  event:{n:'Event card',  where:'Handed out at the show',       col:'#E8890C', kind:'event'},
+  venue:{n:'Venue code',  where:'On the door at all three',      col:'#6EE7A0', kind:'venue'},
+  tent: {n:'Table tent',  where:'On the bar and the tables',    col:'#22D3EE', kind:'tent'},
+  /* Not retail. A delivery receipt only, from Instacart, DoorDash or Uber Eats.
+     Those three platforms tell the brand nothing about who ordered, so the
+     photographed receipt is the only proof the order ever happened, and
+     delivery is the channel the brand is actually pushing. */
+  rcpt: {n:'Delivery receipt', where:'Instacart, DoorDash or Uber Eats', col:'#C9A3FF', kind:'rcpt'},
+  /* The sixth. Somebody has just been given a free shirt for finishing the
+     trip, and the slip in the box is the one moment we can turn a person who
+     was given merchandise into a person who buys it. */
+  merch:{n:'Merch slip',  where:'In the box with your shirt',   col:'#F2A03C', kind:'merch'}
+};
+/* The router. It does not ask what you are scanning. The prefix decides, which
+   is also why every code is typeable: a person who cannot use a camera is not
+   locked out of a single outcome. */
+const RCODES={
+ 'OS-4471-APPLE':{k:'jar',  n:'Apple Pie, 750ml',      p:120},
+ 'OS-8802-BLUE' :{k:'jar',  n:'Blue Flame, 750ml',     p:180},
+ 'OS-2290-JUG'  :{k:'jar',  n:'Half gallon, 1.75L',    p:400},
+ 'EV-0822-BARN' :{k:'event',n:'The Barn, 22 August',   venue:'The Barn, Pigeon Forge',
+                  next:'12 September', pre:18, pub:26, tee:'The tour shirt'},
+ 'EV-0906-PEA'  :{k:'event',n:'6th & Peabody, 6 Sept', venue:'6th & Peabody, Nashville',
+                  next:'27 September', pre:20, pub:28, tee:'The Nashville shirt'},
+ 'VN-HOLLER'    :{k:'venue',n:'The Holler',            city:'Gatlinburg',  p:250},
+ 'VN-BARREL'    :{k:'venue',n:'The Barrelhouse',       city:'Gatlinburg',  p:250},
+ 'VN-BARN'      :{k:'venue',n:'The Barn',              city:'Pigeon Forge',p:250},
+ 'TT-HOLLER-01' :{k:'tent', n:'The Holler list',       what:'Show nights and nothing else.'},
+ 'RC-9931-DASH' :{k:'rcpt', n:'DoorDash delivery',      plat:'DoorDash',
+                  basket:'Apple Pie 750ml and two cans', date:'8 August', p:100},
+ 'MS-0417-TEE'  :{k:'merch',n:'The tour shirt, large',  order:'SO-118204', sku:'OS-TEE-TOUR-L',
+                  size:'Large', off:20}
+};
+function scanKindOf(c){ const d=RCODES[c]; return d?d.k:null; }
+
+
+/* ---- THE REVEAL. One anatomy, five fills.
+   Rows 1, 5, 6, 7 and 8 never move whatever was scanned. That is the claim
+   this surface makes, and it is why the showcase can render the same block. */
+/* The card is three bands, not one stack. The head never moves, the body is the
+   only thing that scrolls, and the foot carries the tick line and both controls
+   so none of the three can ever end up underneath the primary button. The tick
+   used to live at the bottom of the scrolling body, which is exactly how it
+   ended up half under the button's drop shadow with no way to reach it. */
+function revealCard(o){
+  const K=SCANK[o.k];
+  return '<div class="rvl">'+
+    '<div class="rvlhead">'+
+      '<div class="rvlrib">'+esc(K.n)+(o.spent?', spent':'')+'</div>'+
+      '<div class="rvlmk">'+mark(o.k,96,!!o.spent)+'</div>'+
+      '<div class="rvlv">'+o.verdict+'</div>'+
+    '</div>'+
+    '<div class="rvlscroll">'+
+      '<div class="rvlbody">'+
+        (o.value||'')+
+        '<div class="rvlrc">'+o.rows.map(r=>'<div><u>'+esc(r[0])+'</u><b>'+r[1]+'</b></div>').join('')+'</div>'+
+      '</div>'+
+      '<p class="rvlmore" aria-hidden="true">'+
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5 12 15.5 18 9.5"/></svg>'+
+        'More in the card, scroll it</p>'+
+    '</div>'+
+    '<div class="rvlfoot">'+
+      '<div class="rvlstamp" id="rvlStamp" hidden></div>'+
+      '<p class="rvltick">'+o.tick+'</p>'+
+      /* One primary that is genuinely somewhere else on the internet is an
+         anchor, not a button pretending to be one. Everything else stays a
+         button, so the foot has exactly one .rvlgo either way. */
+      (o.primaryHref
+        ? '<a class="btn-p rvlgo" id="rvlGo" href="'+esc(o.primaryHref)+'" target="_blank" rel="noopener">'+esc(o.primary)+'</a>'
+        : '<button class="btn-p rvlgo" id="rvlGo">'+esc(o.primary)+'</button>')+
+      '<button class="rvl2" id="rvl2">'+esc(o.secondary)+'</button>'+
+    '</div>'+
+  '</div>';
+}
+/* The scroll affordance is measured, never assumed. A card that fits says
+   nothing; a card that does not says so in words with a drawn chevron, because
+   a body that silently clips its last line is the defect this replaces. */
+function revealFit(){
+  const card=document.querySelector('#rvlHost .rvl');
+  if(!card)return;
+  const b=card.querySelector('.rvlbody');
+  if(!b){card.classList.remove('canscroll');return;}
+  const over=(b.scrollHeight||0)-(b.clientHeight||0)>2;
+  card.classList.toggle('canscroll',!!over);
+}
+function rvlNum(v,cls,note){
+  return '<div class="rvlnum '+(cls||'')+'">'+v+(note?'<em>'+note+'</em>':'')+'</div>';
+}
+/* ---- ONE ANATOMY, SIX FILLS.
+   Every reveal in this surface prints the same five rows in the same five
+   positions: the code, the object it was printed on, the state that read left
+   behind, one detail that belongs to that kind, and the line that says what
+   went into the profile. Only the content changes. The last row is the whole
+   reason this is a CRM work sample and not a loyalty toy: a scan that pays a
+   member and tells the business nothing is a coupon, not a capture. */
+const CRMLINE={
+ jar:  'The SKU, the code, the time and the account it landed in',
+ event:'That you were at this show, and which of the two doors you wanted',
+ venue:'Which venue, the time you walked in, and your visit count',
+ tent: 'A mobile number, the venue it came from, and the words you agreed to',
+ rcpt: 'The platform, the basket and the date of an order nobody else reports',
+ merch:'The order, the SKU, your size, and that you buy merchandise'
+};
+/* The merch store. One constant, so the coupon block, the primary button and
+   the wallet can never point at three different places. */
+const MERCHURL='https://olesmoky.com/collections/merchandise';
+/* The exact words shown above the number field, held in one place so the copy
+   a person read and the copy written into the consent record cannot drift. */
+const TENT_CONSENT='Up to 4 messages a month from The Jar Club. Msg and data rates may apply. Reply STOP to quit, HELP for help. Consent is not a condition of purchase.';
+/* A readable timestamp with no locale surprises and no chance of NaN. */
+function stampNow(){
+  const MO=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const t=new Date(); let h=t.getHours(); const ap=h<12?'am':'pm'; h=h%12||12;
+  return t.getDate()+' '+MO[t.getMonth()]+', '+h+':'+String(t.getMinutes()).padStart(2,'0')+ap;
+}
+/* Each builder returns the reveal object. No builder knows about the others,
+   which is what keeps six outcomes from turning into six layouts. pgo and sgo
+   name what the two controls actually do, so no button is a decoration and no
+   secondary is a way of saying nothing. */
+function outJar(c,d){
+  if(S.scanned[c]){
+    return {k:'jar',spent:1,verdict:'This one is spent. It read earlier for '+d.p+' points.',
+      value:rvlNum(num(d.p),'spent','already banked'),
+      rows:[['Code',esc(c)],['Jar',esc(d.n)],['Status','Read once, as designed'],
+            ['Balance',num(S.pts)],['Into your profile',esc(CRMLINE.jar)]],
+      primary:'Find this read in Activity',pgo:'feed',
+      secondary:'Scan the next jar',sgo:'scan',
+      tick:'Every code works once. That is why every jar leaves the line with a different one.'};
+  }
+  S.scanned[c]=1;
+  const held=d.p>200;
+  if(held){
+    S.pend.unshift({id:++QID,member:S.name||'Dale',mine:true,type:'Jar code',label:d.n,code:c,pts:d.p,status:'open',
+      flags:[{t:'High value',risk:true},{t:'First scan on this account',risk:false},{t:'Device matches profile',risk:false}]});
+    feedAdd('pd','Scanned '+d.n,'Code '+c+' waiting on review because it is over 200 points',d.p);
+    logIt('scanner','queued '+c+' '+String.fromCharCode(183)+' '+d.p+' pts '+String.fromCharCode(183)+' '+(S.name||'Dale'));
+  }else{
+    S.pts+=d.p;
+    feedAdd('up','Scanned '+d.n,'Code '+c+' posted straight away',d.p);
+    logIt('scanner','auto-approved '+c+' '+String.fromCharCode(183)+' '+d.p+' pts','g');
+  }
+  return {k:'jar',
+    verdict:held?'Read it. '+d.p+' points are held, not posted.':'Read it. '+d.p+' points from '+esc(d.n)+'.',
+    value:rvlNum(num(d.p)+(held?'<span class="dag">&dagger;</span>':''),held?'held':'',held?'held, not posted':'in your account now'),
+    rows:[['Code',esc(c)],['Jar',esc(d.n)],
+          ['Status',held?'Held. A person reads it inside one business day.':'Posted. Nothing to wait for.'],
+          ['Balance',num(S.pts)],['Into your profile',esc(CRMLINE.jar)]],
+    primary:held?'Watch it clear in Activity':'See what '+num(S.pts)+' gets you',
+    pgo:held?'feed':'wall',
+    secondary:'Scan the next jar',sgo:'scan',
+    tick:held?'Anything over 200 gets read by a person first. That is the fraud control, and it is why this number sits beside your balance instead of inside it.'
+              :'Logged just now. Reverse it in Activity. '+num(Math.max(0,5000-S.pts))+' points from your $15.'};
+}
+function outEvent(c,d){
+  const took=S.evTook&&S.evTook[c];
+  if(took){
+    return {k:'event',spent:1,verdict:'You took the '+(took==='tee'?'shirt':'presale seat')+' on this card.',
+      value:'<div class="doors done">'+
+        '<div class="door '+(took==='tix'?'won':'lost')+'"><u>Presale seat</u><b>$'+d.pre+'</b><em>'+esc(d.next)+'</em></div>'+
+        '<div class="door '+(took==='tee'?'won':'lost')+'"><u>'+esc(d.tee)+'</u><b>Free</b><em>0 points</em></div></div>',
+      rows:[['Card',esc(c)],['Show',esc(d.n)],
+            ['Status',took==='tee'?'Spent. The shirt ships in 3 to 5 days.':'Spent. The seat is held at $'+d.pre+'.'],
+            ['Taken',took==='tee'?'The shirt':'The seat'],
+            ['Into your profile',esc(CRMLINE.event)]],
+      primary:took==='tee'?'Track the shirt in Activity':'See the seat in Activity',pgo:'feed',
+      secondary:'Scan something else',sgo:'exit',
+      tick:'One card, one pick. The other door stays visible because a thing you did not take is still a thing you chose.'};
+  }
+  return {k:'event',
+    verdict:esc(d.n)+'. You were there.',
+    value:'<p class="doorhd">One card, one pick. Taking either spends it, and the card keeps for 7 days.</p>'+
+      '<div class="doors">'+
+      '<button class="door" data-door="tix" data-c="'+esc(c)+'"><span class="doormk">'+mark('venue',32)+'</span>'+
+        '<u>Next show, '+esc(d.next)+'</u><b>$'+d.pre+'</b><em>Members only. Public price $'+d.pub+'</em></button>'+
+      '<button class="door" data-door="tee" data-c="'+esc(c)+'"><span class="doormk">'+mark('jar',32)+'</span>'+
+        '<u>'+esc(d.tee)+'</u><b>Free</b><em>0 points. Ships in 3 to 5 days</em></button>'+
+      '</div>',
+    rows:[['Card',esc(c)],['Show',esc(d.n)],['Status','Open. Both doors are still live for 7 days.'],
+          ['Venue',esc(d.venue)],['Into your profile',esc(CRMLINE.event)]],
+    primary:'Decide later, it keeps for 7 days',pgo:'scan',
+    secondary:'Scan something else',sgo:'exit',
+    tick:'The seat is a service the distillery sells, so three tier does not touch it. The shirt is a branded advertising specialty given straight to a consumer, which 27 CFR 6.84 names by that word. Neither one is a drink, and that is not an accident.'};
+}
+/* The Hooch Hop passport. The strip used to be three bare boxes, one filled and
+   two dashed and empty, which reads as a broken form and not as a passport with
+   two stamps still to collect. Every slot now carries the venue silhouette, the
+   venue name and its own state, so an unfilled stamp is legibly an unfilled
+   stamp. The paper card it replaces has the same three named squares on it. */
+const HOPKEY={'VN-HOLLER':'holler','VN-BARREL':'barrel','VN-BARN':'barn'};
+function hopHas(c){ S.hop=S.hop||{}; return !!(S.hop[c]||S.hop[HOPKEY[c]]); }
+function hopCount(){ return Object.keys(HOPKEY).filter(hopHas).length; }
+function hopStripHTML(){
+  return '<div class="hopstrip" role="list" aria-label="Hooch Hop passport">'+
+    Object.keys(HOPKEY).map(c=>{
+      const on=hopHas(c), v=RCODES[c]||{n:c,city:''};
+      return '<div class="hopslot'+(on?' on':'')+'" role="listitem">'+
+        '<span class="hopart">'+mark('venue',30,!on)+'</span>'+
+        '<b>'+esc(v.n)+'</b>'+
+        '<u>'+(on?'Stamped':'Still to collect')+'</u>'+
+      '</div>';
+    }).join('')+'</div>';
+}
+function outVenue(c,d){
+  S.hop=S.hop||{};
+  const already=hopHas(c);
+  if(already){
+    return {k:'venue',verdict:'Already stamped here today.',
+      value:hopStripHTML()+rvlNum('0','zero','no second stamp, and none taken away'),
+      rows:[['Code',esc(c)],['Venue',esc(d.n)+', '+esc(d.city)],['Status','Stamped earlier today'],
+            ['Stamp',hopCount()+' of 3'],['Into your profile',esc(CRMLINE.venue)]],
+      primary:'Stamp a different venue',pgo:'scan',
+      secondary:'See tonight in Activity',sgo:'feed',
+      tick:'The Hooch Hop stamps once per venue per day, so walking back through the same door is a calm nothing rather than a refusal. Ole Smoky has run the paper version since 2022 and it captures nothing today.'};
+  }
+  S.hop[c]=1; S.pts+=d.p;
+  const n=hopCount(), full=n>=3;
+  feedAdd('up','Checked in at '+d.n,'Hooch Hop stamp '+n+' of 3',d.p);
+  logIt('scanner','venue check-in '+String.fromCharCode(183)+' '+d.n+' '+String.fromCharCode(183)+' stamp '+n,'g');
+  return {k:'venue',
+    verdict:full?'Passport full. The shirt is yours.':'You are at '+esc(d.n)+'.',
+    value:hopStripHTML()+'<div class="rvlnum small">'+num(d.p)+'<em>points in, and a stamp</em></div>',
+    rows:[['Code',esc(c)],['Venue',esc(d.n)+', '+esc(d.city)],
+          ['Status',full?'Stamped. Three of three, the shirt is open.':'Stamped just now, '+num(d.p)+' points posted'],
+          ['Stamp',n+' of 3'],['Into your profile',esc(CRMLINE.venue)]],
+    primary:full?'Pick my size':'Stamp the next venue',pgo:full?'wall':'scan',
+    secondary:'See the check in in Activity',sgo:'feed',
+    tick:full?'Three stamps, one shirt. Same reward Ole Smoky already pays on paper, except this one leaves a record.'
+             :(3-n)+' stamp'+(3-n===1?'':'s')+' left. The venue code is a word on the door as well as a square, so somebody who cannot use a camera is not locked out.'};
+}
+/* The table tent. It is the only object here that pays nothing on purpose, so
+   it is the only one that must never look like a win. The gate comes before the
+   number field, an under 21 answer closes the door for the session, and the
+   words a person agreed to are stored with the consent rather than described. */
+function outTent(c,d){
+  if(S.ageDenied){
+    return {k:'tent',verdict:'This one is 21 and over.',
+      value:rvlNum('0','zero','nothing captured, and nothing will be')+
+        '<p class="tentwhy">The gate was answered under 21, so the number field does not open again on this device tonight. No number was asked for, and the year was not kept.</p>',
+      rows:[['Tent',esc(c)],['List',esc(d.n)],['Status','Closed. Under 21.'],
+            ['Frequency','Nothing is sent'],['Into your profile','Nothing. No number, no year, no record.']],
+      primary:'Back to the scanner',pgo:'scan',
+      secondary:'Scan something else',sgo:'exit',
+      tick:'A gate that reopens on the next tap is not a gate. The answer holds for the session, and the only thing written down is that nothing was written down.'};
+  }
+  if(S.smsJoined){
+    const at=(S.consent&&S.consent.at)||'earlier this month';
+    return {k:'tent',verdict:'You are already on '+esc(d.n)+'.',
+      value:rvlNum('0','zero','consent is never paid for'),
+      rows:[['Tent',esc(c)],['List',esc(d.n)],['Status','On the list since '+esc(at)],
+            ['Frequency','Up to 4 a month'],['Into your profile',esc(CRMLINE.tent)]],
+      primary:'See what we send',pgo:'feed',
+      secondary:'Leave the list',sgo:'leave',
+      tick:'One tap to leave, not a support form. A list you cannot get off is a list that reports you.'};
+  }
+  return {k:'tent',
+    verdict:esc(d.n)+'. '+esc(d.what),
+    value:rvlNum('0','zero','This pays nothing')+
+      '<p class="tentwhy">A consent you paid for is a consent that unsubscribes. Points are never given for an opt in on this page.</p>'+
+      '<div class="agegate" id="ageGate"><u>Born in</u>'+
+        '<select id="agM" aria-label="Birth month">'+['Month','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((m,i)=>'<option value="'+(i||'')+'">'+m+'</option>').join('')+'</select>'+
+        '<select id="agY" aria-label="Birth year"><option value="">Year</option>'+
+          Array.from({length:70},(_,i)=>2010-i).map(y=>'<option value="'+y+'">'+y+'</option>').join('')+'</select>'+
+        '<p class="agnote">We check the year. We do not keep it. The profile stores a birth month only.</p>'+
+      '</div>'+
+      '<div class="tentphone" id="tentPhone" hidden>'+
+        '<input id="tentTel" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(865) 555 0147" aria-label="Mobile number">'+
+        '<p class="tentcon" id="tentCopy">'+esc(TENT_CONSENT)+'</p>'+
+      '</div>',
+    rows:[['Tent',esc(c)],['List',esc(d.n)],['Status','Not on the list yet'],
+          ['Frequency','Up to 4 a month'],['Into your profile',esc(CRMLINE.tent)]],
+    primary:'Join by text',pgo:'join',
+    secondary:'Not tonight',sgo:'exit',
+    tick:'Zero points, said out loud, because paying for a phone number is how you buy a list that leaves. The gate sits at the value transfer, not at the door, which is what TN 0100-06-.03(14)(f) actually requires.'};
+}
+
+/* The delivery receipt. Home delivery only. Instacart, DoorDash and Uber Eats
+   sit between the brand and the drinker and hand back nothing, so this photo is
+   the only record that the order happened at all. It shows what was read and
+   lets the member correct it, because a number telling somebody the machine is
+   87 percent sure is a number they cannot do anything with. */
+function outRcpt(c,d){
+  if(S.scanned[c]){
+    return {k:'rcpt',spent:1,verdict:'This delivery is already logged.',
+      value:rvlNum(num(d.p),'spent','already sent for review'),
+      rows:[['Receipt',esc(c)],['Platform',esc(d.plat)],['Status','Read once, as designed'],
+            ['Basket',esc(d.basket)],['Into your profile',esc(CRMLINE.rcpt)]],
+      primary:'Find this delivery in Activity',pgo:'feed',
+      secondary:'Scan something else',sgo:'exit',
+      tick:'One order, one read. Photographing it twice does not make it two deliveries.'};
+  }
+  S.scanned[c]=1;
+  S.pend.unshift({id:++QID,member:S.name||'Dale',mine:true,type:'Delivery receipt',label:d.n,code:c,pts:d.p,status:'open',
+    flags:[{t:'Home delivery, not a store',risk:false},{t:'Date and line item readable',risk:false},{t:'Holds 30 days for returns',risk:false}]});
+  feedAdd('pd','Read a delivery receipt','Order from '+d.plat+' on '+d.date+', held while a person reads it',d.p);
+  logIt('scanner','queued '+c+' '+String.fromCharCode(183)+' delivery receipt '+String.fromCharCode(183)+' '+d.p+' pts');
+  return {k:'rcpt',
+    verdict:'Read it. A '+esc(d.plat)+' order, '+d.p+' points held.',
+    value:rvlNum(num(d.p)+'<span class="dag">&dagger;</span>','held','held until a person reads it, inside one business day')+
+      '<div class="rcread" id="rcRead">'+
+        '<u>What we read off your photo</u>'+
+        '<div class="rcrow"><span>Platform</span><b id="rcPlat">'+esc(d.plat)+'</b></div>'+
+        '<div class="rcrow"><span>Basket</span><b id="rcBask">'+esc(d.basket)+'</b></div>'+
+        '<div class="rcrow"><span>Ordered</span><b id="rcDate">'+esc(d.date)+'</b></div>'+
+        '<button type="button" class="rcfix" id="rcFix">That is not what it says, fix it</button>'+
+      '</div>',
+    rows:[['Receipt',esc(c)],['Platform',esc(d.plat)],['Status','Held. Decided within one business day.'],
+          ['Basket',esc(d.basket)],['Into your profile',esc(CRMLINE.rcpt)]],
+    primary:'Watch it clear in Activity',pgo:'feed',
+    secondary:'Scan something else',sgo:'exit',
+    tick:'Home delivery only, Instacart, DoorDash or Uber Eats, never a store shelf. Flat 100 points however big the basket, because the points come from sending the record and not from what was in it. The three platforms never tell us an order happened, so this photo is the only proof of one, and it posts once the 30 day return window closes.'};
+}
+/* The merch slip. The shirt was free, so this is the first time this person has
+   ever been asked to buy merchandise. It pays in a discount, never in points,
+   and it reuses the coupon block the wall already renders. */
+function outMerch(c,d){
+  S.msCpn=S.msCpn||{};
+  const head=d.off+'% off your next shirt';
+  const fine='Merch store only, never alcohol. One shirt, one time.';
+  if(S.msCpn[c]){
+    return {k:'merch',spent:1,verdict:'This slip already turned into a code.',
+      value:couponHTML({code:S.msCpn[c],head:head,fine:fine}),
+      rows:[['Slip',esc(c)],['Shirt',esc(d.n)],['Status','Code already issued. Zero points, as before.'],
+            ['Order',esc(d.order)],['Into your profile',esc(CRMLINE.merch)]],
+      primary:'Open the merch store',primaryHref:MERCHURL,
+      secondary:'Scan something else',sgo:'exit',
+      tick:'One slip, one code. The slip is printed once and it ships inside the box, so there is nothing to forward around.'};
+  }
+  S.scanned[c]=1;
+  const code=cpnMakeCode();
+  S.msCpn[c]=code;
+  feedAdd('up','Read the merch slip','Code '+code+', '+d.off+'% off the next shirt',0);
+  logIt('scanner','merch slip '+c+' '+String.fromCharCode(183)+' issued '+code,'g');
+  MOMENT_TEXT='Claimed. The code is yours.';
+  return {k:'merch',
+    verdict:'The shirt landed. Here is '+d.off+'% off the next one.',
+    value:couponHTML({code:code,head:head,fine:fine}),
+    rows:[['Slip',esc(c)],['Shirt',esc(d.n)],['Status','Code issued. Zero points, by design.'],
+          ['Order',esc(d.order)],['Into your profile',esc(CRMLINE.merch)]],
+    primary:'Open the merch store',primaryHref:MERCHURL,
+    secondary:'Scan something else',sgo:'exit',
+    tick:'The free shirt was already the reward, so paying points twice for the same garment would be paying for a thing we gave away. A discount on the second shirt turns a gift into a first purchase, and merchandise is not alcohol, so nothing here has to clear a state first.'};
+}
+
+/* ---- the marks. Six objects, six drawings, never one icon set recoloured.
+   Each is viewBox 0 0 72 72 so the reveal and the showcase share art. */
+let MKSEQ=0;
+function mark(k,size,off){
+  /* Every mark carried <linearGradient id="jarfill"> and id="vnfill". mark()
+     runs about twenty times a paint, so the document ended up with a dozen
+     copies of each id. Duplicate ids are invalid, and worse, url(#jarfill)
+     resolves to whichever copy the parser saw first, so a dimmed mark could
+     silently pull the lit gradient. One sequence number per call fixes both. */
+  const s=size||72, dim=off?' class="mkoff"':'', gid=(++MKSEQ);
+  const A={
+  jar:'<g'+dim+'>'+
+    '<rect x="27" y="17" width="18" height="5" rx="1.6" fill="none" stroke="#C9A54A" stroke-width="2.4"/>'+
+    '<ellipse cx="36" cy="16" rx="9" ry="2.2" fill="none" stroke="#C9A54A" stroke-width="2.2"/>'+
+    '<path d="M24.5 30 L24 55 a2.5 2.5 0 0 0 2.5 2.5 h19 a2.5 2.5 0 0 0 2.5-2.5 L48 30 Z" fill="url(#jarfill'+gid+')" stroke="#C9A54A" stroke-width="2.4" stroke-linejoin="round"/>'+
+    '<path d="M24.2 38 H47.8" stroke="#FFE9A3" stroke-width="1.6"/>'+
+    '<circle cx="30" cy="46" r="1.7" fill="#FFE9A3" opacity=".55"/><circle cx="33" cy="51" r="1.2" fill="#FFE9A3" opacity=".4"/>'+
+    '<g class="mkhang" style="transform-origin:47px 21px">'+
+      '<rect x="45" y="20" width="14" height="18" rx="1.4" fill="#E8DCC4" stroke="#8A6520" stroke-width="1.6"/>'+
+      '<circle cx="52" cy="24" r="2.2" fill="none" stroke="#8A6520" stroke-width="1.4"/>'+
+      '<path d="M52 21.8 V19.4" stroke="#8A6520" stroke-width="1.4"/>'+
+      '<path d="M47.5 29 h11 M47.5 32 h9 M47.5 35 h7" stroke="#8A6520" stroke-width="1.5" stroke-linecap="round"/>'+
+    '</g></g>',
+  event:'<g'+dim+'>'+
+    '<path d="M9.2 20 L10.4 26 L8.6 33 L9.5 40 L8 47 L9.2 52 H62 a2 2 0 0 0 2-2 V22 a2 2 0 0 0-2-2 Z" fill="#F3E4C9" stroke="#8E7B62" stroke-width="1.9" stroke-linejoin="round"/>'+
+    '<g class="mkstub" style="transform-origin:48px 52px">'+
+      '<path d="M48 20 H62 a2 2 0 0 1 2 2 V50 a2 2 0 0 1-2 2 H48 Z" fill="#EAD9BB" stroke="#8E7B62" stroke-width="1.9"/>'+
+      '<path d="M53 26 v9 M56.5 26 v9 M60 26 v9" stroke="#8E7B62" stroke-width="1.5" stroke-linecap="round"/>'+
+    '</g>'+
+    '<path d="M48 20 V52" stroke="#C9A54A" stroke-width="1.8" stroke-dasharray="2.4 2.4" class="mkperf"/>'+
+    '<path d="M14 28 H42" stroke="#FFD24A" stroke-width="2.4" stroke-linecap="round"/>'+
+    '<path d="M14 35 H38 M14 40 H33" stroke="#8E7B62" stroke-width="1.5" stroke-linecap="round"/></g>',
+  venue:'<g'+dim+'>'+
+    '<ellipse cx="36" cy="63" rx="18" ry="3" fill="#E8890C" opacity=".3" class="mkspill"/>'+
+    '<rect x="20" y="14" width="32" height="48" rx="1.4" fill="none" stroke="#5C3A1F" stroke-width="2.4"/>'+
+    '<path d="M24 18 L48 20.5 L48 59.5 L24 62 Z" fill="url(#vnfill'+gid+')" stroke="#5C3A1F" stroke-width="2" class="mkleaf"/>'+
+    '<path d="M24 24 h3 M24 38 h3 M24 52 h3" stroke="#5C3A1F" stroke-width="2"/>'+
+    '<circle cx="44" cy="40" r="2.4" fill="none" stroke="#5C3A1F" stroke-width="1.8"/>'+
+    '<g class="mksign" style="transform-origin:36px 3px">'+
+      '<path d="M26 6 V2 M46 6 V2" stroke="#5C3A1F" stroke-width="1.6"/>'+
+      '<rect x="16" y="6" width="40" height="9" rx="1.5" fill="#F3E4C9" stroke="#5C3A1F" stroke-width="1.9"/>'+
+      '<path d="M22 10.5 H50" stroke="#8E7B62" stroke-width="1.7" stroke-linecap="round"/>'+
+    '</g></g>',
+  tent:'<g'+dim+'>'+
+    '<path d="M20 60 L54 52" stroke="#0F0B08" stroke-width="3" opacity=".4"/>'+
+    '<path d="M44 16 L54 22 L54 52 L44 56 Z" fill="#C8B49A" stroke="#8E7B62" stroke-width="1.8" class="mkback"/>'+
+    '<path d="M20 20 L44 16 L44 56 L20 60 Z" fill="#F3E4C9" stroke="#8E7B62" stroke-width="2" class="mkfront"/>'+
+    '<path d="M44 16 V56" stroke="#8E7B62" stroke-width="2.2"/>'+
+    '<path d="M25 26.5 L39 24.2" stroke="#FFD24A" stroke-width="2.6" stroke-linecap="round"/>'+
+    '<g class="mkqr"><rect x="26" y="34" width="11" height="11" rx="1" fill="none" stroke="#5C3A1F" stroke-width="1.8" transform="skewY(-9)"/>'+
+    '<rect x="27.2" y="35.2" width="3.5" height="3.5" fill="#5C3A1F" transform="skewY(-9)"/>'+
+    '<rect x="32.3" y="34.6" width="3.5" height="3.5" fill="#5C3A1F" transform="skewY(-9)"/>'+
+    '<rect x="27.2" y="40.3" width="3.5" height="3.5" fill="#5C3A1F" transform="skewY(-9)"/></g></g>',
+  rcpt:'<g'+dim+'>'+
+    '<path d="M24 10 H48 V56 L45.4 58.2 L42.8 55.6 L40.2 58.4 L37.6 55.8 L35 58.6 L32.4 55.6 L29.8 58.4 L27.2 55.8 L24 58 Z" fill="#F3E4C9" stroke="#8E7B62" stroke-width="1.9" stroke-linejoin="round" class="mkstrip"/>'+
+    '<path d="M24 12.4 H48" stroke="#8E7B62" stroke-width="2"/>'+
+    '<path d="M28 17 H44" stroke="#5C3A1F" stroke-width="2.4" stroke-linecap="round"/>'+
+    '<path d="M26 21 H46" stroke="#8E7B62" stroke-width="1"/>'+
+    '<path d="M27 25 h12 M42 25 h3 M27 29 h9 M42 29 h3 M27 33 h11 M42 33 h3 M27 37 h7 M42 37 h3 M27 41 h12 M42 41 h3" stroke="#8E7B62" stroke-width="1.2" stroke-linecap="round"/>'+
+    '<path d="M26 46 H46" stroke="#8E7B62" stroke-width="1"/>'+
+    '<path d="M27 50 h4 M39 50 h7" stroke="#5C3A1F" stroke-width="2.2" stroke-linecap="round"/></g>',
+  /* A packing slip with the shirt's swing tag still hanging off it. Drawn for
+     this subject: the folded corner and the tear line are the slip, the
+     pentagon and the punched hole are the tag. Nothing recoloured. */
+  merch:'<g'+dim+'>'+
+    '<path d="M12 12 h26 l8 8 v39 a2.4 2.4 0 0 1-2.4 2.4 H14.4 A2.4 2.4 0 0 1 12 59 Z" fill="#F3E4C9" stroke="#8E7B62" stroke-width="1.9" stroke-linejoin="round"/>'+
+    '<path d="M38 12 v8 h8" fill="#E2CFAE" stroke="#8E7B62" stroke-width="1.7" stroke-linejoin="round"/>'+
+    '<path d="M17 27 H34" stroke="#FFD24A" stroke-width="2.6" stroke-linecap="round"/>'+
+    '<path d="M17 33 H38 M17 37.5 H32" stroke="#8E7B62" stroke-width="1.5" stroke-linecap="round"/>'+
+    '<path d="M12 43.5 H46" stroke="#C9A54A" stroke-width="1.6" stroke-dasharray="2.6 2.6" class="mkperf"/>'+
+    '<path d="M17 49 h9 M17 54 h14" stroke="#5C3A1F" stroke-width="2.1" stroke-linecap="round"/>'+
+    '<g class="mktag" style="transform-origin:47px 22px">'+
+      '<path d="M47 22 C 51.5 27, 53 31, 52.5 35.5" fill="none" stroke="#8A6520" stroke-width="1.5" stroke-linecap="round"/>'+
+      '<path d="M41.5 42 L49 34.5 h13 a2 2 0 0 1 2 2 v14 a2 2 0 0 1-2 2 H49 Z" fill="#E8DCC4" stroke="#8A6520" stroke-width="1.9" stroke-linejoin="round"/>'+
+      '<circle cx="50.5" cy="42" r="2.1" fill="none" stroke="#8A6520" stroke-width="1.4"/>'+
+      '<path d="M56 39 v9 M58.5 39 v9 M61 39 v9" stroke="#8A6520" stroke-width="1.5" stroke-linecap="round"/>'+
+    '</g></g>'
+  };
+  return '<svg class="mk mk-'+k+'" viewBox="0 0 72 72" width="'+s+'" height="'+s+'" aria-hidden="true">'+
+    '<defs><linearGradient id="jarfill'+gid+'" x1="0" y1="0" x2="0" y2="1">'+
+      '<stop offset="0" stop-color="#FFD98A"/><stop offset=".55" stop-color="#F2A03C"/><stop offset="1" stop-color="#C4553A"/></linearGradient>'+
+    '<linearGradient id="vnfill'+gid+'" x1="0" y1="0" x2="1" y2="1">'+
+      '<stop offset="0" stop-color="#FFD24A" stop-opacity=".55"/><stop offset="1" stop-color="#E8890C" stop-opacity=".55"/></linearGradient></defs>'+
+    (A[k]||'')+'</svg>';
+}
+
+/* ---------- focus mode ----------
+   The pane has two jobs and they were both on screen at once: teach a first
+   timer how to scan, and show a reader the outcome of a scan. Stacked together
+   that is a jar, three steps, a reveal, six chips and a compliance paragraph in
+   one column, which fits no screen. So the pane has two states. At rest it is
+   the teaching state, jar on the left and the three steps on the right. The
+   moment a code resolves it becomes the reading state: that object's own mark
+   on the left, that object's reveal on the right, and one control back. */
+/* What else reads stays up in both states. It is the only control that moves
+   a reader from one object to the next, so hiding it stranded them on
+   whichever card they opened first with no way back to the other five. */
+const FOCUSHIDE=['bottleBox','steps3Scan','demoChips','scanFine','tpWrap'];
+function enterFocus(k){
+  const p=document.getElementById('paneCode'); if(!p)return;
+  const art=document.getElementById('focusMkArt'),
+        nm=document.getElementById('focusMkName'),
+        wh=document.getElementById('focusMkWhere'),
+        mkw=document.getElementById('focusMk'),
+        back=document.getElementById('backJar');
+  if(art)art.innerHTML=mark(k,132);
+  if(nm)nm.textContent=SCANK[k]?SCANK[k].n:'';
+  if(wh)wh.textContent=SCANK[k]?SCANK[k].where:'';
+  FOCUSHIDE.forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=true;});
+  /* The showcase drops into its picker state: six cards, the one just read
+     marked selected, and the detail column stood down because the reveal above
+     is already saying everything that column would repeat. */
+  FOCUSK=k;
+  const shc=document.getElementById('shcWrap');
+  if(shc){ shc.hidden=false; shc.classList.add('picking'); }
+  paintShowcase();
+  if(mkw)mkw.hidden=false;
+  if(back)back.hidden=false;
+  p.classList.add('sfocus');
+}
+function exitFocus(refocus,quiet){
+  /* quiet is for the failure path. A code that does not read has to put the
+     resting state back, because the message it prints points at the cards under
+     What else reads and focus mode is exactly what hides those cards. It must
+     not clear the message it is about to write, so quiet skips both the message
+     and the announcement. */
+  const p=document.getElementById('paneCode'); if(!p)return;
+  p.classList.remove('sfocus');
+  FOCUSHIDE.forEach(id=>{const e=document.getElementById(id);if(e)e.hidden=false;});
+  /* Nothing is being read, so nothing is selected. All six cards come back
+     unpressed and the detail column comes back with them. */
+  FOCUSK=null;
+  const shc=document.getElementById('shcWrap');
+  if(shc){ shc.hidden=false; shc.classList.remove('picking'); }
+  paintShowcase();
+  const mkw=document.getElementById('focusMk'); if(mkw)mkw.hidden=true;
+  const back=document.getElementById('backJar'); if(back)back.hidden=true;
+  const host=document.getElementById('rvlHost'); if(host){host.hidden=true;host.innerHTML='';}
+  if(!quiet){
+    const msg=document.getElementById('scanMsg'); if(msg){msg.className='scanmsg';msg.textContent='';}
+    const live=document.getElementById('scanLive'); if(live)live.textContent='Back to the jar. The three steps are showing again.';
+  }
+  /* preventScroll, always. Moving focus is an accessibility duty; moving the
+     viewport to do it is not, and a phone keyboard opening under a jumped page
+     is how a reader loses their place. */
+  if(refocus){const i=document.getElementById('codeIn');if(i&&i.focus)try{i.focus({preventScroll:true});}catch(e){try{i.focus();}catch(x){}}}
+}
+
+/* ============================================================
+   WHAT A SUCCESSFUL READ LOOKS LIKE
+   Points that arrive without being seen to arrive are points the
+   member does not believe in. So a read that pays draws the
+   number out of the reveal, throws it on an arc into the balance
+   in the rail, and lets the balance count the last stretch. It
+   runs once, it is over inside 700ms, and under reduced motion
+   it does not run at all: the number simply changes, because the
+   motion was never the message.
+   Nothing here confetties, pulses, glows or sweeps. The only
+   moving parts are a token on a path and digits counting.
+   ============================================================ */
+function motionOff(){
+  try{ if(document.body&&document.body.classList.contains('jcm-rm'))return true; }catch(e){}
+  try{ if(typeof RM!=='undefined'&&RM)return true; }catch(e){}
+  try{ return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches); }catch(e){}
+  return false;
+}
+function boxOf(el){
+  try{ const r=el.getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2,ok:(r.width||r.height)>0}; }
+  catch(e){ return {x:0,y:0,ok:false}; }
+}
+/* One token, one arc, one removal. Fixed to the viewport so no card, pane or
+   overflow can clip it on the way across. */
+let ARCS=0;
+function arcToken(fromEl,toEl,label,cls){
+  if(motionOff())return false;
+  if(!fromEl||!toEl||ARCS>2)return false;
+  const a=boxOf(fromEl), b=boxOf(toEl);
+  if(!a.ok||!b.ok)return false;
+  const el=document.createElement('span');
+  el.className='ptarc'+(cls?' '+cls:'');
+  el.setAttribute('aria-hidden','true');
+  el.textContent=label;
+  document.body.appendChild(el);
+  ARCS++;
+  const lift=Math.min(190,Math.max(54,Math.abs(b.x-a.x)*.30+Math.abs(b.y-a.y)*.16));
+  const dur=560,t0=performance.now();
+  const place=(x,y,sc,op)=>{ el.style.transform='translate3d('+(x-14)+'px,'+(y-11)+'px,0) scale('+sc+')'; el.style.opacity=String(op); };
+  place(a.x,a.y,1,1);
+  function frame(now){
+    const p=Math.min(1,(now-t0)/dur), e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+    place(a.x+(b.x-a.x)*e, a.y+(b.y-a.y)*e-Math.sin(Math.PI*e)*lift, 1-.34*e, p<.84?1:Math.max(0,(1-p)/.16));
+    if(p<1)requestAnimationFrame(frame);
+    else{ try{el.remove();}catch(x){} ARCS=Math.max(0,ARCS-1); }
+  }
+  requestAnimationFrame(frame);
+  return true;
+}
+/* The balance counts to whatever S.pts already says. It is never a second
+   source of truth: the number is read off the account, so every other surface
+   in the document lands on the same figure. */
+let LANDRAF=null;
+function landBalance(amount){
+  const n=document.getElementById('meBalN'); if(!n)return;
+  const to=S.pts, from=Math.max(0,to-(amount||0));
+  if(LANDRAF){try{cancelAnimationFrame(LANDRAF);}catch(e){}LANDRAF=null;}
+  /* Take the number off whatever was counting it, including the first paint
+     count, which otherwise keeps writing frames on top of this one. */
+  const seq=++BALSEQ; n.__seq=seq;
+  ROLLIN_PENDING=false;
+  if(!amount||motionOff()){ ROLLING=false; n.textContent=num(to); return; }
+  ROLLING=true;
+  const bal=document.getElementById('meBal');
+  if(bal){ bal.classList.remove('land'); void bal.offsetWidth; bal.classList.add('land');
+           setTimeout(()=>{try{bal.classList.remove('land');}catch(e){}},480); }
+  const dur=600,t0=performance.now();
+  function frame(now){
+    if(n.__seq!==seq){LANDRAF=null;ROLLING=false;return;}
+    const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
+    n.textContent=num(Math.round(from+(to-from)*e));
+    if(p<1)LANDRAF=requestAnimationFrame(frame);
+    else{ LANDRAF=null; ROLLING=false; n.textContent=num(S.pts); }
+  }
+  LANDRAF=requestAnimationFrame(frame);
+}
+/* The drawn tick that sits inside the reveal. Claim moments draw it in half a
+   second. A consent capture gets the same tick with the animation off and a
+   quieter shell, because celebrating somebody handing over a phone number is
+   the wrong signal to send about what that number is for. */
+function stampReveal(txt,calm){
+  const st=document.getElementById('rvlStamp'); if(!st)return;
+  const still=calm||motionOff();
+  st.className='rvlstamp'+(calm?' calm':'')+(still?' still':'');
+  st.hidden=false;
+  st.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="'+(calm?'#B0A28C':'#6EE7A0')+
+    '" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+    '<path class="ckdraw" d="M4.5 12.6l5 5 10-11"/></svg><b>'+esc(txt)+'</b>';
+}
+/* Six kinds, four different truths about what just happened. Points posted,
+   points held, a thing claimed, a consent captured. Only the first celebrates. */
+let MOMENT_HINT=null, MOMENT_TEXT=null;
+function scanMoment(kind,granted,held,wrote){
+  const hint=MOMENT_HINT; MOMENT_HINT=null;
+  const said=MOMENT_TEXT; MOMENT_TEXT=null;
+  const host=document.getElementById('rvlHost');
+  const src=(host&&(host.querySelector('.rvlnum')||host.querySelector('.rvlhead')))||host;
+  if(granted>0){
+    arcToken(src,document.getElementById('meBal'),'+'+num(granted));
+    landBalance(granted);
+    stampReveal(num(granted)+' points are in your balance.');
+    return 'posted';
+  }
+  if(held>0){
+    /* Held points are not spendable and the rail says so in words. Nothing
+       counts up, because nothing arrived. */
+    arcToken(src,document.getElementById('mePend'),'held','held');
+    stampReveal(num(held)+' points held, not in your balance yet.',true);
+    return 'held';
+  }
+  if(!wrote&&!hint)return 'none';
+  if(kind==='tent'||hint==='calm'){ stampReveal(said||'Consent recorded. It pays nothing, deliberately.',true); return 'calm'; }
+  stampReveal(said||'Claimed. It is yours.');
+  return 'claim';
+}
+try{ window.__scanMoment=scanMoment; }catch(e){}
+
 /* ---------- scanning ---------- */
 function submitCode(raw,viaCam){
   const c=(raw||'').trim().toUpperCase();
-  const m=$('#scanMsg');
-  if(!c){m.className='scanmsg bad';m.textContent='Type a code or use the camera.';return;}
-  if(!CODES[c]){m.className='scanmsg bad';m.textContent='That code is not one of ours. Check the neck hanger and try again.';logIt('scanner','rejected '+c+' · unknown code','r');return;}
-  if(S.scanned[c]){m.className='scanmsg bad';m.textContent='Already scanned. Every code works exactly once, which is the whole point of printing a different one on every jar.';logIt('scanner','rejected '+c+' · duplicate','r');return;}
-  S.scanned[c]=1;
-  const d=CODES[c];
-  if(d.p>200){
-    const it={id:++QID,member:S.name||'Dale',mine:true,type:'Jar code',label:d.n,code:c,pts:d.p,status:'open',
-      flags:[{t:'High value',risk:true},{t:'First scan on this account',risk:false},{t:'Device matches profile',risk:false}]};
-    S.pend.unshift(it);
-    feedAdd('pd','Scanned '+d.n,'Code '+c+' · waiting on review because it is over 200 points',d.p);
-    m.className='scanmsg wait';m.innerHTML='Read it. <b>'+d.p+' points are held</b> until somebody signs off, because anything over 200 goes to review. Open <b>4 &middot; Back office</b> and approve it.';
-    logIt('scanner','queued '+c+' · '+d.p+' pts · '+(S.name||'Dale'));
-  }else{
-    S.pts+=d.p;
-    feedAdd('up','Scanned '+d.n,'Code '+c+' · posted straight away',d.p);
-    m.className='scanmsg ok';m.textContent='Read it. '+d.p+' points from a '+d.n+', in your account now.';
-    logIt('scanner','auto-approved '+c+' · '+d.p+' pts','g');
-    confetti();
+  const m=$('#scanMsg'), host=$('#rvlHost');
+  /* One place to fail. It drops out of focus mode first, so the reader is never
+     looking at object A's card while the message underneath talks about code B,
+     and it speaks the failure as well as printing it. */
+  const fail=(txt,logged)=>{
+    exitFocus(false,true);
+    m.className='scanmsg bad'; m.textContent=txt;
+    const lv=$('#scanLive'); if(lv)lv.textContent=txt;
+    if(logged)logIt('scanner',logged,'r');
+  };
+  if(!c){ fail('Type a code, or point the camera at the jar in your hand.'); return; }
+  const d=RCODES[c];
+  if(!d){
+    fail('Nothing here reads that. The cards under What else reads are the six things that do.',
+         'rejected '+c+' · unknown code');
+    return;
   }
-  $('#codeIn').value='';paintMe();
+  /* Measured, never declared. The builders each move the account in their own
+     way, so the moment reads the difference the read made rather than trusting
+     a number typed into six places. */
+  const pts0=S.pts, pend0=S.pend.length, feed0=S.feed.length;
+  const out = d.k==='jar'   ? outJar(c,d)
+            : d.k==='event' ? outEvent(c,d)
+            : d.k==='venue' ? outVenue(c,d)
+            : d.k==='tent'  ? outTent(c,d)
+            : d.k==='rcpt'  ? outRcpt(c,d)
+            : d.k==='merch' ? outMerch(c,d) : null;
+  if(!out)return;
+  S.readKinds=S.readKinds||{}; S.readKinds[d.k]=1;
+  m.className='scanmsg';m.textContent='';
+  if(host){ host.innerHTML=revealCard(out); host.hidden=false; wireReveal(c,d,out); }
+  enterFocus(d.k);
+  $('#codeIn').value='';
+  /* The moment runs before the repaint, not after it. paintMe writes the
+     balance straight into the rail, so running it first printed the final
+     number and the count up then started again from below it, which is a
+     flash and a lie in the same tenth of a second. The moment takes the
+     balance under its own control first, and paintMe stands off while it does. */
+  const granted=S.pts-pts0;
+  const held=(S.pend.length>pend0)?(S.pend[0]&&S.pend[0].pts||0):0;
+  const wrote=S.feed.length>feed0;
+  scanMoment(d.k,granted,held,wrote);
+  paintMe(); paintShowcase();
+  try{ revealFit(); }catch(e){}
+  const live=$('#scanLive');
+  if(live)live.textContent=SCANK[d.k].n+' read. '+String(out.verdict).replace(/<[^>]+>/g,'')+
+    (granted>0?' Balance '+num(S.pts)+'.':held>0?' Held, not in the balance.':'');
+}
+/* Where the two controls actually go. Neither one is allowed to be a way of
+   saying nothing: one of them names the consequence of the read and opens the
+   panel where that consequence lives, the other puts the reader back on the
+   scanner with the six objects showing. */
+function revealAct(tok){
+  if(tok==='scan'){ exitFocus(true); return; }
+  if(tok==='wall'||tok==='feed'){
+    exitFocus(false);
+    const dest = tok==='wall' ? 'secWall' : 'secFeed';
+    try{ if(window.jnavShow)window.jnavShow(dest); }catch(e){}
+    const lv=document.getElementById('scanLive');
+    if(lv)lv.textContent = tok==='wall' ? 'Opened the prize wall.' : 'Opened your activity.';
+    return;
+  }
+  exitFocus(false);
+}
+/* The consent capture, and its mirror. Joining writes a record with the channel
+   it came in on, the moment it happened and the exact sentence that was on
+   screen when it did. Leaving writes the same shape in reverse, because an opt
+   out that only deletes a row is an opt out you cannot prove you honoured. */
+function tentJoin(c,d){
+  const ph=document.getElementById('tentPhone'), tel=document.getElementById('tentTel');
+  const say=txt=>{ const m=document.getElementById('scanMsg'); if(m){m.className='scanmsg bad';m.textContent=txt;}
+                   const lv=document.getElementById('scanLive'); if(lv)lv.textContent=txt; };
+  if(!ph||ph.hidden){ say('Give the year first. The gate comes before the number, not after it.'); return; }
+  if(!tel||tel.value.replace(/\D/g,'').length<10){ say('Put a mobile number in before joining.'); return; }
+  const at=stampNow();
+  const copy=(document.getElementById('tentCopy')||{textContent:TENT_CONSENT}).textContent;
+  S.consent={ch:'SMS',act:'joined',at:at,copy:copy,where:d.n,code:c};
+  S.consentLog=(S.consentLog||[]).concat([S.consent]);
+  S.smsJoined=true;
+  feedAdd('up','Joined '+d.n,'SMS consent captured '+at+' at the table tent. Zero points, by design.',0);
+  logIt('scanner','tent '+c+' '+String.fromCharCode(183)+' SMS consent '+at+' '+String.fromCharCode(183)+' "'+copy+'"','g');
+  MOMENT_HINT='calm';
+  submitCode(c);
+}
+function tentLeave(c,d){
+  if(!S.smsJoined){ revealAct('exit'); return; }
+  const at=stampNow();
+  S.consentLog=(S.consentLog||[]).concat([{ch:'SMS',act:'left',at:at,copy:'Reply STOP to quit',where:d.n,code:c}]);
+  S.consent=null; S.smsJoined=false;
+  feedAdd('dn','Left '+d.n,'Opt out recorded '+at+'. One tap, no support form.',0);
+  logIt('scanner','tent '+c+' '+String.fromCharCode(183)+' SMS consent withdrawn '+at,'r');
+  MOMENT_HINT='calm'; MOMENT_TEXT='Consent withdrawn. Nothing else on the account changed.';
+  submitCode(c);
+}
+/* The receipt read back. A confidence percentage is a number a drinker can do
+   nothing with, so this shows the three fields that were read and hands over
+   the pen instead. Correcting updates the queued item and the ledger line that
+   already exists rather than writing a second one, so a fix is never a second
+   scan. */
+function rcptFix(c,d){
+  const box=document.getElementById('rcRead'), btn=document.getElementById('rcFix');
+  if(!box||!btn)return;
+  if(btn.dataset.mode==='edit'){
+    const gv=id=>{const e=document.getElementById(id);return e&&e.value?String(e.value).trim():'';};
+    const plat=gv('rcPlatIn')||d.plat, bask=gv('rcBaskIn')||d.basket, date=gv('rcDateIn')||d.date;
+    d.plat=plat; d.basket=bask; d.date=date;
+    const q=S.pend.find(x=>x.code===c);
+    if(q){ q.label=plat+' delivery'; q.corrected=true; }
+    const line=S.feed.find(f=>f.title==='Read a delivery receipt');
+    if(line)line.detail='Order from '+plat+' on '+date+', corrected by the member, held while a person reads it';
+    logIt('scanner','receipt '+c+' corrected by member '+String.fromCharCode(183)+' '+plat+' '+String.fromCharCode(183)+' '+bask+' '+String.fromCharCode(183)+' '+date,'g');
+    box.innerHTML='<u>What we read off your photo</u>'+
+      '<div class="rcrow"><span>Platform</span><b id="rcPlat">'+esc(plat)+'</b></div>'+
+      '<div class="rcrow"><span>Basket</span><b id="rcBask">'+esc(bask)+'</b></div>'+
+      '<div class="rcrow"><span>Ordered</span><b id="rcDate">'+esc(date)+'</b></div>'+
+      '<p class="rcok">Corrected. The reviewer sees your version, not ours.</p>';
+    /* The rows above are the same three facts, so they move with it. */
+    [['Platform',plat],['Basket',bask]].forEach(([lab,val])=>{
+      const row=[...document.querySelectorAll('#rvlHost .rvlrc > div')]
+        .find(dv=>dv.querySelector('u')&&dv.querySelector('u').textContent.trim()===lab);
+      if(row)row.querySelector('b').textContent=val;
+    });
+    const vd=document.querySelector('#rvlHost .rvlv');
+    if(vd)vd.textContent='Read it, and corrected. A '+plat+' order, '+d.p+' points held.';
+    const lv=document.getElementById('scanLive');
+    if(lv)lv.textContent='Correction saved. '+plat+', '+bask+', '+date+'.';
+    try{ revealFit(); }catch(e){}
+    return;
+  }
+  box.innerHTML='<u>What we read off your photo</u>'+
+    '<label class="rcrow rcedit"><span>Platform</span><input id="rcPlatIn" aria-label="Delivery platform" value="'+esc(d.plat)+'"></label>'+
+    '<label class="rcrow rcedit"><span>Basket</span><input id="rcBaskIn" aria-label="What was in the order" value="'+esc(d.basket)+'"></label>'+
+    '<label class="rcrow rcedit"><span>Ordered</span><input id="rcDateIn" aria-label="Date of the order" value="'+esc(d.date)+'"></label>'+
+    '<button type="button" class="rcfix" id="rcFix" data-mode="edit">Save the correction</button>';
+  const nb=document.getElementById('rcFix');
+  if(nb)nb.onclick=()=>rcptFix(c,d);
+  try{ revealFit(); }catch(e){}
+}
+function wireReveal(c,d,out){
+  const go=$('#rvlGo'), sec=$('#rvl2');
+  /* The merch slip renders the same coupon block the wall renders, so it wires
+     with the same delegated handler rather than growing a second copy button. */
+  try{ if(typeof couponWire==='function')couponWire($('#rvlHost')); }catch(e){}
+  const act=tok=>{
+    if(tok==='join'){ tentJoin(c,d); return; }
+    if(tok==='leave'){ tentLeave(c,d); return; }
+    revealAct(tok);
+  };
+  /* An anchor primary navigates on its own. Hanging a handler on it would mean
+     tearing the card down underneath the tab that is opening. */
+  if(go&&go.tagName!=='A')go.onclick=()=>act(out.pgo||'scan');
+  if(sec)sec.onclick=()=>act(out.sgo||'exit');
+  const fix=$('#rcFix');
+  if(fix)fix.onclick=()=>rcptFix(c,d);
+  $$('.door[data-door]').forEach(b=>b.onclick=()=>{
+    const pick=b.dataset.door;
+    S.evTook=S.evTook||{}; S.evTook[c]=pick;
+    if(pick==='tee'){ feedAdd('up','Claimed '+d.tee,'Event card '+c+' '+String.fromCharCode(183)+' free, no points spent',0);
+      logIt('scanner','event card '+c+' '+String.fromCharCode(183)+' shirt claimed','g');
+      MOMENT_TEXT='Claimed. The shirt is yours.'; }
+    else { feedAdd('up','Held a presale seat','Event card '+c+' '+String.fromCharCode(183)+' $'+d.pre+' member price, public is $'+d.pub,0);
+      logIt('scanner','event card '+c+' '+String.fromCharCode(183)+' presale seat held','g');
+      MOMENT_TEXT='Claimed. The seat is held at $'+d.pre+'.'; }
+    /* The feed entry is already written by the time the rescan runs, so the
+       rescan cannot see that anything happened. The hint carries it across. */
+    MOMENT_HINT='claim';
+    submitCode(c);
+  });
+  const gate=$('#ageGate');
+  if(gate){
+    const chk=()=>{
+      const mo=+$('#agM').value, yr=+$('#agY').value;
+      if(!mo||!yr)return;
+      const ok=(2026-yr)>=21;
+      const ph=$('#tentPhone');
+      if(ok){ ph.hidden=false; gate.classList.add('ok'); }
+      else{
+        /* Denied, and denied for the session. The old build reopened the whole
+           gate on the next tap, which is a door that asks again until it gets
+           the answer it wants. Nothing is captured on this path, and the
+           primary stops being Join by text because there is nothing to join. */
+        ph.hidden=true; gate.classList.add('under');
+        S.ageDenied=true;
+        logIt('scanner','tent '+c+' '+String.fromCharCode(183)+' under 21 '+String.fromCharCode(183)+' nothing captured','r');
+        $('#rvlHost').querySelector('.rvlv').textContent='This one is 21 and over.';
+        out.pgo='scan';
+        $('#rvlGo').textContent='Back to the scanner';
+        const stat=[...$('#rvlHost').querySelectorAll('.rvlrc > div')]
+          .find(dv=>dv.querySelector('u')&&dv.querySelector('u').textContent.trim()==='Status');
+        if(stat)stat.querySelector('b').textContent='Closed. Under 21.';
+        const prof=[...$('#rvlHost').querySelectorAll('.rvlrc > div')]
+          .find(dv=>dv.querySelector('u')&&dv.querySelector('u').textContent.trim()==='Into your profile');
+        if(prof)prof.querySelector('b').textContent='Nothing. No number, no year, no record.';
+        const nte=$('#rvlHost').querySelector('.rvlnum em');
+        if(nte)nte.textContent='nothing captured, and nothing will be';
+        const frq=[...$('#rvlHost').querySelectorAll('.rvlrc > div')]
+          .find(dv=>dv.querySelector('u')&&dv.querySelector('u').textContent.trim()==='Frequency');
+        if(frq)frq.querySelector('b').textContent='Nothing is sent';
+        const sec2=$('#rvl2'); if(sec2){ sec2.textContent='Scan something else'; out.sgo='exit'; }
+        gate.innerHTML='<p class="agnote">The Barn does all ages shows. Nothing is captured here, and the number field does not open again tonight.</p>';
+        try{ revealFit(); }catch(e){}
+      }
+    };
+    $('#agM').onchange=chk; $('#agY').onchange=chk;
+  }
 }
 function wireScan(){
   if(!$('#scanBtn'))return;
   $('#enterBtn').addEventListener('click',()=>submitCode($('#codeIn').value));
   $('#codeIn').addEventListener('keydown',e=>{if(e.key==='Enter')submitCode($('#codeIn').value)});
-  $$('.testcodes code').forEach(b=>b.addEventListener('click',()=>{$('#codeIn').value=b.dataset.c;$('#codeIn').focus();}));
+  /* The format hint updates as you type, which is the router working inside the
+     keyboard. It is the cheapest possible proof that the prefix really does the
+     routing rather than a tab switcher doing it off screen. */
+  $('#codeIn').addEventListener('input',()=>{
+    const v=($('#codeIn').value||'').trim().toUpperCase(), hint=$('#codeHint');
+    if(!hint)return;
+    const k = /^OS-/.test(v)?'jar' : /^EV-/.test(v)?'event' : /^VN-/.test(v)?'venue'
+            : /^TT-/.test(v)?'tent' : /^RC-/.test(v)?'rcpt' : /^MS-/.test(v)?'merch' : null;
+    hint.textContent = k ? SCANK[k].n : (v?'Keep going':'');
+    hint.className = 'codehint'+(k?' on':'');
+  });
+  /* A chip is a code that resolves, so tapping one runs it. Filling the box and
+     making the reader press a second button was a step that taught nothing. */
+  $$('#demoChips .tcc').forEach(b=>b.addEventListener('click',()=>{
+    const c=b.dataset.c;
+    const i=$('#codeIn');
+    if(i){ i.value=c; try{i.dispatchEvent(new Event('input'));}catch(e){} }
+    submitCode(c);
+  }));
+  const back=$('#backJar');
+  if(back)back.addEventListener('click',()=>exitFocus(true));
+  /* Two questions, both answered by the platform rather than by a string
+     somebody wrote about the platform: does this input support capture at all,
+     and is there a coarse pointer on the other end of it. Both true means a
+     phone, and a phone gets the rear camera. Anything else keeps the
+     simulation exactly as it was. */
+  function captureReady(){
+    try{
+      const probe=document.createElement('input');
+      if(!('capture' in probe))return false;
+    }catch(e){ return false; }
+    try{
+      if(window.matchMedia&&window.matchMedia('(any-pointer:coarse)').matches)return true;
+    }catch(e){}
+    try{ return (navigator.maxTouchPoints||0)>0; }catch(e){ return false; }
+  }
+  try{ window.__captureReady=captureReady; }catch(e){}
+  /* Whichever object the reader is looking at is the one the camera resolves
+     to, so the photo they just took lands on the card they were already
+     holding rather than on whatever the rotation felt like next. */
+  function selectedKind(){
+    const k=(typeof FOCUSK!=='undefined'&&FOCUSK)||SHOWK;
+    return (k&&k!=='__all'&&SCANK[k])?k:'jar';
+  }
+  const camIn=$('#scanCam');
+  if(camIn)camIn.addEventListener('change',()=>{
+    const f=camIn.files&&camIn.files[0]; if(!f)return;
+    let done=false;
+    const go=srcUrl=>{ if(done)return; done=true; camInterstitial(srcUrl); };
+    try{
+      const fr=new FileReader();
+      fr.onload=e=>go(e.target&&e.target.result);
+      fr.onerror=()=>go('');
+      fr.readAsDataURL(f);
+    }catch(e){ go(''); }
+  });
+  /* The honest bit. No decode is faked. The photograph is shown, the sentence
+     says what a real build would do with it, and then the demo code for the
+     object on screen is submitted so the flow completes and the reveal appears. */
+  function camInterstitial(srcUrl){
+    const cam=$('#cam'),t=$('#camTxt'),shot=$('#camShot'),note=$('#camNote');
+    const k=selectedKind(), code=demoCodeFor(k)||'OS-4471-APPLE';
+    /* The viewfinder lives inside the jar stage, and the reading state hides
+       the jar stage, so step back to the resting state or the interstitial
+       would play behind a display:none. */
+    const bb=$('#bottleBox');
+    if(bb&&bb.hidden)exitFocus(false,true);
+    if(shot){ if(srcUrl){shot.src=srcUrl;shot.hidden=false;} else {shot.hidden=true;} }
+    if(cam)cam.classList.add('on','shot');
+    if(t)t.textContent='Photo taken';
+    if(note){ note.hidden=false;
+      note.textContent='A real build reads the code out of this photo. This one does not pretend to, so it hands you the '+
+        String(SCANK[k].n).toLowerCase()+' demo code instead.'; }
+    setTimeout(()=>{
+      if(cam)cam.classList.remove('on','shot','lock');
+      if(shot){ shot.hidden=true; try{shot.removeAttribute('src');}catch(e){} }
+      if(note){ note.hidden=true; note.textContent=''; }
+      if(camIn)try{camIn.value='';}catch(e){}
+      submitCode(code,true);
+    }, motionOff()?420:1450);
+  }
   $('#scanBtn').addEventListener('click',async()=>{
+    if(camIn&&captureReady()){ try{camIn.value='';}catch(e){} camIn.click(); return; }
     const cam=$('#cam'),t=$('#camTxt');
     const typed=($('#codeIn').value||'').trim().toUpperCase();
-    const pick=CODES[typed]?typed:Object.keys(CODES).find(k=>!S.scanned[k])||'OS-4471-APPLE';
-    cam.classList.add('on');t.textContent='Hold the code inside the frame';
-    await wait(1100);t.textContent='Focusing';
-    await wait(900);t.textContent='Reading '+pick;
-    await wait(800);cam.classList.remove('on');
+    /* Rotate through the kinds that have not been read yet, so a viewer who
+       just keeps pressing the button sees all six outcomes rather than the
+       same one six times. */
+    let pick=RCODES[typed]?typed:null;
+    if(!pick){
+      S.readKinds=S.readKinds||{};
+      pick=Object.keys(RCODES).find(k=>!S.readKinds[RCODES[k].k]&&!S.scanned[k])
+         || Object.keys(RCODES).find(k=>!S.scanned[k]) || 'OS-4471-APPLE';
+    }
+    const K=SCANK[RCODES[pick].k];
+    cam.classList.add('on');t.textContent='Point it at the code on the jar';
+    await wait(700);cam.classList.add('lock');t.textContent=K.n+' in frame';
+    await wait(520);cam.classList.remove('on','lock');
     submitCode(pick,true);
+  });
+  paintShowcase();
+  paintTouchpoints();
+  /* A card that fits at 1200px does not fit at 360px, so the affordance is
+     measured again whenever the box it lives in changes size. */
+  try{
+    window.addEventListener('resize',()=>{try{revealFit();}catch(e){}},{passive:true});
+    if(window.ResizeObserver){
+      const ro=new ResizeObserver(()=>{try{revealFit();}catch(e){}});
+      const h=document.getElementById('rvlHost'); if(h)ro.observe(h);
+    }
+  }catch(e){}
+}
+
+/* ---- the touchpoint strip. Six objects is a demo. Six objects each sitting on
+   a named part of the business is the answer to the brief, so the mapping is
+   stated on the page instead of being left for a reader to infer. Rendered from
+   the same six marks the reader uses, so the strip cannot drift. */
+const TPMAP={
+ jar:  ['On-pack data capture','The neck hanger turns an anonymous purchaser into a known, opted in contact.'],
+ event:['Experiential and field marketing','Captures attendee data at the show and routes it into one profile.'],
+ venue:['Distillery retail and tourism','The door at the owned locations, where a visit becomes a record.'],
+ tent: ['On-premise and POS capture','On-premise means a licensed bar, which is the trade and distributor surface.'],
+ rcpt: ['Ecommerce and delivery','The only proof a home delivery ever happened.'],
+ merch:['Ecommerce, merch, apparel and accessories','The slip is what turns a free shirt into a repeat purchase.']
+};
+function paintTouchpoints(){
+  const el=document.getElementById('tpRow'); if(!el)return;
+  el.innerHTML=Object.keys(SCANK).map(k=>{
+    const t=TPMAP[k]||['',''];
+    return '<li class="tpi"><span class="tpmk">'+mark(k,30)+'</span>'+
+      '<div class="tpbd"><u>'+esc(SCANK[k].n)+'</u><b>'+esc(t[0])+'</b><span class="tpln">'+esc(t[1])+'</span></div></li>';
+  }).join('');
+}
+/* ---- the showcase. Supporting cast, under the scan row. It has to survive
+   being a screenshot, because a screenshot is how a work sample circulates,
+   and every card is live: tapping one fills the box above and runs the read. */
+let SHOWK='jar';
+/* Selection is a fact about the reading state, not about the detail column,
+   so it hangs off its own variable. Null means nothing is being read. */
+let FOCUSK=null;
+/* The first code registered for a kind is that kind's demo code, so the cards
+   and the chips can never drift apart from the router. */
+function demoCodeFor(k){ return Object.keys(RCODES).find(c=>RCODES[c].k===k)||''; }
+const SHOWROW={
+ jar:  [['Object','Neck hanger, every bottle'],['Outcome','Points, posted or held'],['Over 200','Goes to a human first'],['Captures','SKU, code, time, identity']],
+ event:[['Object','Card handed out at the show'],['Outcome','Presale seat or a free shirt'],['One card','One pick, then it is spent'],['Captures','Attendance, venue, intent']],
+ venue:[['Object','The door at The Holler, The Barrelhouse and The Barn'],['Outcome','Check in, Hooch Hop stamp'],['Three stamps','A shirt, same as the paper one'],['Captures','Location, time, visit count']],
+ tent: [['Object','Table tent on the bar'],['Outcome','Join the list by text, zero points'],['Points','Zero, deliberately'],['Captures','Consent, number, venue']],
+ rcpt: [['Object','A home delivery receipt'],['Outcome','Points held, then a person reads it'],['Why it matters','The only proof a delivery order happened, and delivery is the channel being pushed'],['Captures','Platform, basket, date']],
+ merch:[['Object','The slip in the box with your shirt'],['Outcome','A one time code, zero points'],['Why it matters','Turns a free shirt into a first merch purchase'],['Captures','Order, SKU, size, repeat intent']]
+};
+function paintShowcase(){
+  const el=$('#showcase'); if(!el)return;
+  const all=SHOWK==='__all';
+  el.innerHTML=
+   '<div class="shcL">'+Object.keys(SCANK).map(k=>{
+      const on=S.readKinds&&S.readKinds[k];
+      const sel=(FOCUSK===k);
+      return '<button class="shcm'+(sel?' sel':'')+'" data-sk="'+k+'" aria-pressed="'+(sel?'true':'false')+'">'+
+        mark(k,72,!on)+'<b>'+esc(SCANK[k].n)+'</b><u>'+esc(SCANK[k].where)+'</u></button>';
+    }).join('')+
+    '<button class="shcall'+(all?' sel':'')+'" data-sk="__all">Show all six</button></div>'+
+   '<div class="shcR">'+(all?Object.keys(SCANK):[SHOWK]).map(k=>
+      '<div class="shcblk"><div class="rvlrib">'+esc(SCANK[k].n)+'</div>'+
+      '<div class="rvlrc">'+SHOWROW[k].map(r=>'<div><u>'+esc(r[0])+'</u><b>'+esc(r[1])+'</b></div>').join('')+'</div></div>').join('')+
+   '</div>';
+  /* Every card is a scan. It fills the box above with that kind's demo code and
+     runs it, so the reveal a viewer gets from a card is the identical reveal a
+     drinker gets from the object. No second code path, no mock. */
+  el.querySelectorAll('[data-sk]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.sk;
+    if(k==='__all'){ SHOWK='__all'; paintShowcase(); return; }
+    SHOWK=k;
+    const c=demoCodeFor(k);
+    if(!c){ paintShowcase(); return; }
+    const inp=$('#codeIn');
+    if(inp){ inp.value=c; try{inp.dispatchEvent(new Event('input'));}catch(e){} }
+    /* A card click reads a code. It does not move the page. The old
+       scrollIntoView threw the reader somewhere they did not ask to go and
+       cost them their place in the document, which is worse than a card that
+       opens slightly below the fold. Scroll position is now identical before
+       and after, and the only focus move is preventScroll. */
+    submitCode(c);
+    paintShowcase();
   });
 }
 
@@ -6374,7 +8298,7 @@ function wireShare(){
 }
 
 /* ============================================================
-   SFX — synthesized, one AudioContext, silent until asked
+   SFX, synthesized. One AudioContext, silent until asked
    ============================================================ */
 const Sfx=(()=>{
   /* Sound is on from the first paint. The browser will not let an AudioContext
@@ -11897,6 +13821,110 @@ function sBell(off){
 
 /* ---------------- BOOT ---------------- */
 renderStep();ledgers();slots();hop();rewards();acctUI();wireScan();wireDelivery();wireOrder();wireShare();shPips();paintJar();paintBand();paintRank();
+
+/* ============================================================
+   ACCOUNT MENU
+   The chip in the bar opens the panel under it. Sign in, Sound and
+   Reduced motion live inside. Sound is the page's own #sfxBtn handler,
+   untouched, so the switch and the audio can never disagree.
+   ============================================================ */
+(function accountMenu(){
+  "use strict";
+  var chip=document.getElementById('jcmChip');
+  var panel=document.getElementById('jcmPanel');
+  var hdr=document.querySelector('header.hd');
+  var motionBtn=document.getElementById('jcmMotion');
+  var av=document.getElementById('acctAv');
+  var acctTxt=document.getElementById('acctTxt');
+  var acctSub=document.getElementById('jcmAcctSub');
+  var chipAv=document.getElementById('jcmAv');
+  var chipTxt=document.getElementById('jcmTxt');
+  if(!chip||!panel)return;
+
+  function rows(){
+    return Array.prototype.slice.call(panel.querySelectorAll('.jcm-row'))
+      .filter(function(el){return el.getClientRects().length>0;});
+  }
+  function openPanel(){
+    panel.classList.add('open');
+    /* THE PANEL WAS PAINTING UNDER THE PAGE. header.hd carries z-index:70 and
+       therefore creates a stacking context, so the panel's own z-index only
+       ever competed inside that context. Anything on the page above 70, like
+       the golden ticket card at z-index:120, painted straight over it.
+       The header lifts to 490 only while the panel is open: above the glossary
+       popup at 400 and the drop overlay at 480, still below the checkout at
+       800 and the cursor layer, so it can never cover a real overlay. */
+    if(hdr)hdr.classList.add('acctopen');
+    chip.setAttribute('aria-expanded','true');
+    var r=rows();
+    if(r.length)r[0].focus();
+  }
+  function closePanel(refocus){
+    panel.classList.remove('open');
+    if(hdr)hdr.classList.remove('acctopen');
+    chip.setAttribute('aria-expanded','false');
+    if(refocus)try{chip.focus();}catch(e){}
+  }
+  chip.addEventListener('click',function(){
+    if(panel.classList.contains('open'))closePanel(true);else openPanel();
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&panel.classList.contains('open'))closePanel(true);
+  });
+  document.addEventListener('click',function(e){
+    if(!panel.classList.contains('open'))return;
+    if(panel.contains(e.target)||chip.contains(e.target))return;
+    closePanel(false);
+  });
+  /* Sign in opens a modal. The panel should be gone behind it, but focus must
+     not be yanked back to the chip while the dialog is claiming it. */
+  panel.addEventListener('click',function(e){
+    var t=e.target&&e.target.closest?e.target.closest('#acctBtn'):null;
+    if(t)setTimeout(function(){closePanel(false);},0);
+  });
+  panel.addEventListener('keydown',function(e){
+    if(e.key!=='Tab')return;
+    var r=rows();
+    if(!r.length)return;
+    var first=r[0],last=r[r.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  });
+
+  /* ---------------- reduced motion ---------------- */
+  function setRM(on){
+    motionBtn.setAttribute('aria-checked',on?'true':'false');
+    document.body.classList.toggle('jcm-rm',on);
+  }
+  if(motionBtn){
+    var pref=false;
+    try{pref=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+    if(pref)setRM(true);
+    motionBtn.addEventListener('click',function(){
+      setRM(motionBtn.getAttribute('aria-checked')!=='true');
+    });
+  }
+
+  /* ---------------- chip reads off acctUI ---------------- */
+  function syncAcct(){
+    var letter=av?(av.textContent||'').trim():'';
+    var isLetter=/^[A-Za-z0-9]$/.test(letter);
+    var t=acctTxt?(acctTxt.textContent||'').trim():'Sign in';
+    if(chipAv)chipAv.innerHTML=isLetter?'':'&#9679;';
+    if(chipAv&&isLetter)chipAv.textContent=letter;
+    if(chipTxt)chipTxt.textContent=t;
+    chip.classList.toggle('in',isLetter);
+    chip.setAttribute('aria-label',isLetter?'Account and settings, signed in':'Account and settings');
+    if(acctSub)acctSub.textContent=(t==='Sign in')?'Earn points and keep your jar':'Open my jar';
+  }
+  syncAcct();
+  if(window.MutationObserver){
+    if(av)new MutationObserver(syncAcct).observe(av,{childList:true,characterData:true,subtree:true});
+    if(acctTxt)new MutationObserver(syncAcct).observe(acctTxt,{childList:true,characterData:true,subtree:true});
+  }
+})();
+
+
 </script>
 </body>
 </html>

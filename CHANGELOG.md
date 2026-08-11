@@ -28,6 +28,16 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-08
 
+- `olesmoky` — the model view now opens with a pilot scorecard: $1,000 of Meta
+  ads, Tennessee only, 21+, thirty days. Thirteen tiles computed forward from
+  cited benchmarks (Gupta Media and Triple Whale CPMs, WordStream 2025 CPC and
+  CTR, Formstack contest-form conversion) so they cannot disagree: 83,333
+  impressions, 1,425 clicks at $0.70, 447 entries at $2.24, 246 accounts at
+  $4.07, 19 merch orders, 14 distillery visits, 11 Instacart first orders,
+  $2,980 attributed and 3.0x ROAS. The national-scale stress test stays below
+  it, reframed as the version that tries to kill it rather than the verdict.
+  Research by a paid-social agent with source URLs in the footnote.
+
 - `olesmoky` — quest board rebuilt. Six filter tabs over thirty cards became three
   zones by time horizon with claim-to-collect, set bonuses and a ledger for the rest.
   Quest names rewritten to state the action; Set Your Holler collided with the venue

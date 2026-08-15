@@ -4,6 +4,8 @@ import { LANE_META, LANE_ORDER, OCCASION_CLASS_META } from "@/domain/lanes";
 import { OBJECTIONS } from "@/data/objections";
 import { OFFERS } from "@/data/venue";
 import { PACKAGES } from "@/data/packages";
+import { RAIL_DESTINATIONS } from "@/app/SideRail";
+import { sectionFor } from "@/app/sections";
 import { LaneChip } from "@/components/primitives/LaneChip";
 import {
   ProvenanceBadge,
@@ -95,6 +97,16 @@ export function RationalePage() {
 
   const publishedOffers = OFFERS.filter((o) => o.provenance === "public");
   const packageFamilies = new Set(PACKAGES.map((p) => p.family));
+
+  /*
+    Counted off the navigation itself rather than typed. The rail exports
+    its destinations, and resolving each one through sectionFor gives the
+    number of distinct identities the section machine actually paints. Add
+    a screen and both figures move on their own.
+  */
+  const sections = new Set(
+    RAIL_DESTINATIONS.map((d) => sectionFor(d)).filter(Boolean),
+  );
 
   return (
     <div className={styles.page} data-sec="method">
@@ -436,6 +448,70 @@ export function RationalePage() {
             lost the caveat it was born with. That is the decision here I
             would defend hardest, and it is the one that made the research
             slower and the result usable.
+          </p>
+
+          <h3 className={styles.h3}>
+            Two navigations, and one place a path becomes a colour
+          </h3>
+          <p>
+            There are two ways around this application rather than one,
+            because a rail that is right for a person working the desk on a
+            Tuesday is wrong for somebody meeting it for the first time.
+            The rail carries{" "}
+            <span className="num">{RAIL_DESTINATIONS.length}</span>{" "}
+            destinations grouped by the part of the job they belong to. The
+            mega nav opens the same places as a map. Neither is allowed to
+            disagree with the other about what is featured, because the one
+            featured key is declared once, in one file, and both read it.
+            Two chrome elements claiming to feature different things is not
+            expressible.
+          </p>
+          <p>
+            Underneath both, section identity is resolved{" "}
+            <strong>once</strong>. The obvious way to colour{" "}
+            <span className="num">{sections.size}</span> sections is to pass
+            a colour down: the rail hands its row one, the header hands its
+            rule one, the page hands its furniture one. That is twenty
+            special cases in the first week and forty in the second, and
+            every one of them is a place where a screen added later quietly
+            gets no identity at all.
+          </p>
+          <p>
+            So identity is carried by one attribute, <code>data-sec</code>,
+            and resolved by one stylesheet. Custom properties inherit, so
+            the shell setting that attribute from the current path paints
+            the whole screen, and the rail setting it on a row paints that
+            row with the section it leads to. Same attribute, same rules,
+            two jobs. A component that wants in writes{" "}
+            <code>var(--sec-ink)</code> and is done. Nothing anywhere else
+            in the application writes a section colour by hand.
+          </p>
+          <div className={`${styles.pnl} ${styles.flag}`}>
+            <h3 className={styles.h4}>Colour is the third signal, always</h3>
+            <p className={styles.last}>
+              I am colourblind, and that turned out to be a design
+              constraint worth having rather than one to work around. Every
+              section is named in the rail, named in the breadcrumb, named
+              in the page title, and carries its own drawn mark before it
+              is ever tinted. The colour reinforces a label that is already
+              there and it never carries a state on its own. Two sections
+              may look alike to somebody; no two are ever spelled alike.
+              The same rule is why this page is titled Rationale in three
+              places and why the lane chips above carry a shape as well as
+              a hue.
+            </p>
+          </div>
+          <p>
+            The section palette is solved rather than picked. Hues sit on
+            one wheel with a minimum adjacency distance between neighbours,
+            which is also why{" "}
+            <Link to="/segments">Segments</Link> wears the Lanes identity,
+            the cup wears Leagues, and this page wears{" "}
+            <Link to="/method">Method</Link> instead of each taking a hue of
+            its own. Past a certain count the wheel stops having room, and a
+            twenty fourth colour that fails the distance check is worse than
+            an honest reuse: it says two places are different when the only
+            real difference is that somebody wanted a new colour.
           </p>
 
           <div className={`${styles.pnl} ${styles.flag}`}>

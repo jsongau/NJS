@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import type { Lane } from "@/domain/types";
 import {
   DOOR_ONLY,
@@ -806,6 +807,25 @@ export function MethodPage() {
             Everything else is labelled as modeled, illustrative, entered or
             withheld, and the labels are enforced by the components rather
             than by good intentions.
+          </p>
+          {/*
+            THE ONE LINK OUT, AND WHY IT IS HERE RATHER THAN IN THE RAIL.
+
+            This page settles whether a figure is right. It does not say why
+            the application is shaped the way it is: why the desk ranks on
+            reachability before size, why the two ledgers never add together,
+            why a fundraiser night is the opening move. Those are decisions
+            rather than calculations and they live on Rationale.
+
+            A reader who has come this far is exactly the reader who wants
+            the other half, and they are the only reader who does, which is
+            why this is one sentence at the foot of a header rather than a
+            thirty first row in the rail.
+          */}
+          <p className={styles.subLede}>
+            This page answers whether a figure is right.{" "}
+            <Link to="/rationale">Rationale</Link> answers why the thing is
+            shaped this way at all, and how it was built.
           </p>
         </header>
 

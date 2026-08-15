@@ -1,0 +1,383 @@
+/*
+  The search field and the list of suggestions under it.
+
+  THE DROPDOWN NEVER COVERS THE FIELD. It is anchored under the input
+  and it is a sibling of it, not an overlay laid on top of the head, so
+  the letters a person is typing stay on screen at every width including
+  380px. That constraint is the reason the popup is positioned from the
+  bottom of the wrapper rather than from the top: a list that grows
+  upward is a list that eventually sits over the thing that produced it.
+
+  IT IS DENSE ON PURPOSE. Each row is two lines of small type inside a
+  44px target, which is the same rhythm the list cards behind it use.
+  Roomier rows would put three suggestions on a phone screen and turn a
+  jump into a scroll.
+
+  NOTHING HERE IS CARRIED BY COLOUR ALONE. The active row is marked by a
+  heavy left rule, a raised surface and `aria-selected`; the organisation
+  type and the pitch status each carry a glyph and a word before they
+  carry a hue; the matched field is named in words. Turn the screen
+  greyscale and every row still reads.
+*/
+
+.wrap {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The field
+   --------------------------------------------------------------- */
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.fieldGlyph {
+  position: absolute;
+  left: var(--space-2);
+  font-size: var(--step-0);
+  line-height: 1;
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-7) var(--space-2) var(--space-6);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.input::placeholder {
+  color: var(--text-3);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+/* The clear control appears only when there is something to clear, and
+   it is a real button with a real name rather than a decorative cross. */
+.clear {
+  position: absolute;
+  right: var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  min-height: 36px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  background: none;
+  font-size: var(--step--1);
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.clear:hover {
+  border-color: var(--line-2);
+  background: var(--surface-2);
+  color: var(--text-0);
+}
+
+.clear:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ---------------------------------------------------------------
+   The popup
+   --------------------------------------------------------------- */
+
+.popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--z-drawer);
+  margin-top: var(--space-1);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+}
+
+/* The popup is in the tree at all times so `aria-controls` always names
+   something real. `hidden` has to beat the layout rule above it. */
+.popup[hidden] {
+  display: none;
+}
+
+.listbox {
+  max-height: min(52vh, 420px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.groupHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--text-2);
+}
+
+.groupCount {
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   A row
+   --------------------------------------------------------------- */
+
+.option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  border-left: 3px solid transparent;
+  cursor: pointer;
+}
+
+.option:last-child {
+  border-bottom: 0;
+}
+
+.option:hover {
+  background: var(--surface-2);
+}
+
+/*
+  THE ACTIVE ROW IS NOT THE FOCUSED ROW, because focus never leaves the
+  input. So it is drawn the way a focused row would be and marked with
+  `aria-selected` for anybody listening rather than looking.
+*/
+.option[data-active="true"] {
+  border-left-color: var(--accent);
+  background: var(--accent-tint);
+}
+
+.lane {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+}
+
+.body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-0);
+  overflow-wrap: anywhere;
+}
+
+.mark {
+  padding: 0 1px;
+  border-radius: 2px;
+  background: var(--brand-gold-tint);
+  box-shadow: inset 0 -2px 0 var(--brand-gold);
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.3;
+  color: var(--text-2);
+  min-width: 0;
+}
+
+.type,
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 600;
+}
+
+.metaGlyph {
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+/* The field that matched, named in words so a row is never mysterious. */
+.matched {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  max-width: 100%;
+  padding: 1px var(--space-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--text-1);
+  overflow-wrap: anywhere;
+}
+
+.action {
+  color: var(--text-2);
+}
+
+.hidden {
+  padding: 1px var(--space-1);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-s);
+  background: var(--warn-tint);
+  color: var(--text-0);
+  font-weight: 600;
+}
+
+.distance {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.unit {
+  font-size: var(--step--2);
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The two rows that change the board rather than the selection
+   --------------------------------------------------------------- */
+
+.filterOption {
+  background: var(--surface-0);
+}
+
+.filterGlyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Nothing matched
+   --------------------------------------------------------------- */
+
+.emptyLead {
+  margin: 0;
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-1);
+  overflow-wrap: anywhere;
+}
+
+.emptyLead strong {
+  color: var(--text-0);
+}
+
+.clearOption {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.clearGlyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  color: var(--text-2);
+}
+
+.clearText {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.more {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 420px) {
+  .listbox {
+    max-height: min(46vh, 340px);
+  }
+
+  .option {
+    padding: var(--space-2);
+  }
+
+  /* The distance is on the second line at this width rather than
+     squeezing the name into four characters. */
+  .option {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .option {
+    transition: none;
+  }
+}

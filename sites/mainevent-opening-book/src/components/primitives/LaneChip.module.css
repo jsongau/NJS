@@ -1,0 +1,98 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px 2px 5px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--lane, var(--line-2));
+  background: var(--laneTint, var(--surface-2));
+  color: var(--lane, var(--text-1));
+  font-weight: 650;
+  white-space: nowrap;
+  vertical-align: middle;
+  max-width: 100%;
+  /*
+    THE CHIP OWNS ITS OWN LINE HEIGHT AND DOES NOT INHERIT ONE.
+
+    This is not tidiness. `.label` below clips with `overflow: hidden`,
+    so any host that sets `line-height: 0` on an ancestor, which is the
+    standard reflex for closing an inline-block descender gap, collapses
+    the label's line box to nothing and the lane's NAME disappears while
+    the colour and the 8px glyph survive. That happened: the desk's lane
+    filter buttons shipped that way and nine chips on the landing page
+    carried no word at all. The rule that colour is never the only
+    signal cannot depend on every calling page getting its own
+    line-height right, so the primitive states its own and is immune.
+
+    1.55 is the document's body line height from base.css, chosen so
+    that pinning it changes nothing anywhere it was already inherited,
+    which is 1305 of the 1391 chips rendered across the fourteen routes.
+  */
+  line-height: 1.55;
+}
+
+.sm {
+  font-size: 9.5px;
+  padding: 1px 8px 1px 4px;
+  gap: 4px;
+}
+
+.md { font-size: var(--step--2); }
+
+/*
+  THE CAP. A pointed mark for calendar-locked lanes, a square one for
+  discretionary lanes.
+
+  Drawn with clip-path on a solid block rather than with a border trick,
+  because a border-triangle inherits nothing useful and cannot take the
+  lane colour from a custom property without three more declarations.
+  This way one element, one background, two shapes.
+
+  The size is deliberately not tiny. At 7px a triangle and a square are
+  the same smudge, which would defeat the entire purpose of drawing them.
+*/
+.cap {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--lane, var(--text-2));
+}
+
+.sm .cap { width: 8px; height: 8px; }
+
+/* Pointed: the date buys, not the buyer. */
+.locked .cap {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+/* Square: somebody has to decide. */
+.discretionary .cap {
+  clip-path: none;
+  border-radius: 1px;
+}
+
+.glyph {
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+.label {
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+  The occasion-class chip carries no lane hue at all. The class is a
+  property of the whole board rather than of one lane, and painting it
+  with one lane's colour would say something untrue about the other
+  seven.
+*/
+.neutralChip {
+  border-color: var(--line-2);
+  background: var(--surface-2);
+  color: var(--text-1);
+  padding-left: 6px;
+}
+
+.neutralChip .cap { background: var(--text-2); }

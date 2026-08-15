@@ -1,0 +1,306 @@
+/*
+  The working set lead.
+
+  IT IS THE LOUDEST BLOCK ON THE SCREEN BECAUSE IT IS THE ONLY ONE THAT
+  CHANGES. The panels that used to hold this position were standing facts
+  set in the same weights on every reading, which is how a filter came to
+  look like it did nothing. Everything here is a fact about the current
+  reading and nothing here is true of all of them.
+
+  THE TONE IS THE THIRD SIGNAL AND NEVER THE FIRST. The glyph, the word
+  and the figure all change with the reading, so the block is legible in
+  greyscale. The tone is spent on one rule along the top edge and on the
+  glyph, which is the same rule the bucket cards followed before it.
+*/
+
+.wrap {
+  margin-bottom: var(--space-5);
+}
+
+.lead {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--tone, var(--line-strong));
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+}
+
+/*
+  THE SWEEP. A rule travels across the top edge once, on a fresh element,
+  which is what a reader sees the instant a reading lands. It is drawn as
+  a bar rather than as a wash, so it is a shape moving and not a colour
+  arriving, and it runs over a duration token so the reduced motion block
+  at the foot of tokens.css flattens it without this file knowing.
+*/
+.lead::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--tone, var(--line-strong));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.lead[data-tick="yes"]::before {
+  animation: lead-sweep var(--dur-3) var(--ease-out);
+}
+
+@keyframes lead-sweep {
+  0% {
+    transform: scaleX(0);
+  }
+  60% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+/* Belt and braces, stated where the animation is declared so it cannot
+   be lost the next time the tokens are rewritten. */
+@media (prefers-reduced-motion: reduce) {
+  .lead[data-tick="yes"]::before {
+    animation: none;
+  }
+}
+
+.kicker {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+}
+
+.headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-5);
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.glyph {
+  color: var(--tone, var(--text-2));
+  line-height: 1;
+}
+
+.count {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.value {
+  font-size: var(--step-5);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-0);
+  /* Tabular figures, so a rolling count does not shove the words beside
+     it left and right on every frame. */
+  font-variant-numeric: tabular-nums;
+}
+
+.of {
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The figures that belong to this reading and to no other
+   --------------------------------------------------------------- */
+
+.facts {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-3) var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-4) 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.factLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+}
+
+.factValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   The first rows, by name
+   --------------------------------------------------------------- */
+
+.rows {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: var(--space-4) 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  counter-reset: lead-row;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.1fr) auto;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.rowName {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+  overflow-wrap: anywhere;
+}
+
+/* The position in the queue, printed rather than implied by order alone,
+   because an ordered list read aloud gives the number and an ordered list
+   looked at does not. */
+.rowName::before {
+  counter-increment: lead-row;
+  content: counter(lead-row, decimal-leading-zero) " ";
+  margin-right: var(--space-2);
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.rowKind {
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.rowWhen {
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.rowOpen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  min-height: 32px;
+  padding: 0 var(--space-1);
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.rowOpen:hover {
+  color: var(--accent-700);
+}
+
+.rowOpen:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+.empty {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.actions button {
+  min-height: 44px;
+}
+
+@media (pointer: coarse) {
+  .rowOpen {
+    min-height: 44px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .rowWhen {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .lead {
+    padding: var(--space-4);
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rowOpen {
+    justify-content: flex-start;
+  }
+}

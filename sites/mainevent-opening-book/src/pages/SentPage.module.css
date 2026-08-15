@@ -1,0 +1,945 @@
+/*
+  The outbox.
+
+  ONE VISUAL IDEA CARRIES THIS FILE: the page is a filing cabinet, and the
+  loudest thing in it is the message itself. Everything around a body is
+  metadata set small, in caps, on hairlines. The body is the only monospace
+  block on the card, on the white ground, at a capped measure, and it is
+  the only place the eye is invited to slow down.
+
+  THE EMPTY STATE IS BUILT LIKE A SECTION, NOT LIKE A GAP. It carries the
+  gold top rule the guarantee panel carries, a heading, two columns and two
+  real links. Most readers see it before they see a single message, so it
+  gets the weight a first impression deserves rather than the grey line an
+  empty list usually gets.
+
+  The measure on a body is about seventy characters. Monospace at full page
+  width is genuinely hard to read back, and reading it back is the whole
+  reason it is kept.
+
+  Nothing signals by colour alone. Every outcome carries its glyph and its
+  word from OUTCOME_META, every kind carries its glyph and word from
+  KIND_META, and the tone is the third thing. Strip the colour out and the
+  page still reads.
+
+  Down to 380px the two-column empty state and the field grid collapse to
+  stacks, and the body keeps its line breaks by wrapping rather than
+  scrolling sideways, because a horizontal scrollbar inside an email is a
+  message nobody reads.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  margin-bottom: var(--space-6);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--step-2);
+}
+
+.subLede {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+/* ---------------------------------------------------------------
+   The guarantee
+   --------------------------------------------------------------- */
+
+.guarantee {
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand-gold);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+}
+
+.facts {
+  list-style: none;
+  margin: var(--space-4) 0 var(--space-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.factGlyph {
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+.factText {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 82ch;
+}
+
+.factLead {
+  color: var(--text-0);
+}
+
+.guaranteeWhy {
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 82ch;
+}
+
+/* ---------------------------------------------------------------
+   What is in the log
+   --------------------------------------------------------------- */
+
+.tally {
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+}
+
+.tallyHead {
+  margin-bottom: var(--space-4);
+}
+
+.tallyNote {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: var(--space-4);
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.figureValue {
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text-0);
+}
+
+/* The reader's own sends lead the row, because they are the only figure
+   on it that says anything about the reader. */
+.figure:first-child .figureValue {
+  color: var(--accent);
+}
+
+.figureLabel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.legends {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.legendTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+}
+
+.legendList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.legendRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.legendMark {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.legendLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.legendCount {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.legendNote {
+  grid-column: 1 / -1;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.legendFoot {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.toneGlyph {
+  color: var(--tone, var(--text-2));
+  line-height: 1;
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.section {
+  margin-bottom: var(--space-6);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.sectionTools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sectionNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 82ch;
+}
+
+.plainEmpty {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ---------------------------------------------------------------
+   One sent message
+   --------------------------------------------------------------- */
+
+.card {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.marks {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.kindChip,
+.outcomeChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text-1);
+}
+
+.outcomeChip {
+  border-color: var(--tone, var(--line-2));
+  color: var(--text-0);
+}
+
+.chipGlyph {
+  line-height: 1;
+  color: var(--text-2);
+}
+
+.outcomeChip .chipGlyph {
+  color: var(--tone, var(--text-2));
+}
+
+/* The subject line is set in the display face, because on a real screen
+   full of mail it is the thing a person reads and everything else on the
+   row is what they read afterwards. */
+.subject {
+  margin: var(--space-3) 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.3;
+  color: var(--text-0);
+  max-width: 62ch;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.fieldLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+.fieldValue {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+  overflow-wrap: anywhere;
+}
+
+.fieldNote {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+}
+
+.quoteFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin-bottom: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.quoteFact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------
+   The body
+   --------------------------------------------------------------- */
+
+.bodyBlock {
+  margin-bottom: var(--space-3);
+}
+
+.bodyBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.bodyToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.bodyToggle:hover {
+  color: var(--accent-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.caret {
+  font-size: var(--step--2);
+  line-height: 1;
+}
+
+.copyRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* The one-line preview exists so a collapsed card is never a card with
+   nothing in it. It is greyer and smaller than the body, so nobody
+   mistakes the excerpt for the message. */
+.preview {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 74ch;
+}
+
+.body {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--text-0);
+  /* The template wrote real line breaks. They are kept, and the block
+     wraps rather than scrolling, because sideways scrolling inside an
+     email body is a message nobody finishes. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-width: 72ch;
+}
+
+.copyStatus {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 74ch;
+}
+
+.copyStatus:empty {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------
+   What came back
+   --------------------------------------------------------------- */
+
+.reply {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.replyLabel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+.replyText {
+  margin: 0;
+  font-family: var(--font-operator);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-0);
+  max-width: 70ch;
+}
+
+.noReply {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.cardFoot {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+}
+
+/*
+  The two controls that used to be links out of the application. The
+  letter now opens in a dialog over this log, so they are buttons, and
+  they keep the appearance a citation link had because nothing about
+  what they lead to has changed.
+*/
+.quoteButton {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: var(--step--1);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quoteButton:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--signal);
+  text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   The empty state
+   --------------------------------------------------------------- */
+
+.empty {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand-gold);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+}
+
+.emptyEyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--brand-gold-600);
+}
+
+.emptyTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+  line-height: 1.25;
+  max-width: 40ch;
+}
+
+.emptyLede {
+  margin: 0 0 var(--space-5);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 78ch;
+}
+
+.emptyGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.emptyCol {
+  min-width: 0;
+}
+
+.emptyColTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+}
+
+.emptyFields {
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.emptyFields strong {
+  color: var(--text-0);
+}
+
+.door {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.door + .door {
+  margin-top: var(--space-3);
+}
+
+.doorHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.doorGlyph {
+  color: var(--accent);
+  line-height: 1;
+}
+
+.doorText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.doorLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+}
+
+.doorLinkNote {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.emptyFoot {
+  margin: var(--space-5) 0 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+/* ---------------------------------------------------------------
+   Foot
+   --------------------------------------------------------------- */
+
+.foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 88ch;
+}
+
+.dot {
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .legends,
+  .emptyGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .inner {
+    padding: var(--space-4) var(--space-4) var(--space-7);
+  }
+  .guarantee,
+  .tally,
+  .empty {
+    padding: var(--space-4);
+  }
+  .card {
+    padding: var(--space-4);
+  }
+  .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .quoteFacts {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .bodyBar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 400px) {
+  .h1 {
+    font-size: var(--step-3);
+  }
+  .figureValue {
+    font-size: var(--step-3);
+  }
+  .emptyTitle {
+    font-size: var(--step-1);
+  }
+  .subject {
+    font-size: var(--step-0);
+  }
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .body {
+    padding: var(--space-3);
+  }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------------
+   THE IDENTITY BLOCK, WRITTEN OUT RATHER THAN TAKEN FROM `Wordmark`
+
+   `Wordmark` prints the organisation as plain text, and the name has to
+   be the control that opens the record: that is the one thing the owner
+   asked for by name. The primitive takes a string, not a node, and it is
+   not this file's to change while other agents are in the tree, so the
+   three parts of it are composed here instead and the type below is
+   copied from `Wordmark.module.css` exactly so the two cannot be told
+   apart on screen.
+   --------------------------------------------------------------- */
+
+.ident {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.identText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.identName {
+  font-size: var(--step-0);
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.identMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.identSub {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

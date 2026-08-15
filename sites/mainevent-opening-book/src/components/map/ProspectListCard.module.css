@@ -1,0 +1,456 @@
+/*
+  The list line.
+
+  ONE ROW HEIGHT FOR EVERY LINE, CHOSEN OR NOT, HOVERED OR NOT, PRESSED
+  OR NOT. This is the rule the rest of the file exists to keep. The list
+  is read down at speed, so the rank column, the name column and the
+  score column each have to start at the same offset on every line; a row
+  that grows because it was chosen, or because an organisation has a long
+  name, breaks the three straight lines a reader is actually following.
+
+  So the name is one line with an ellipsis, the rank sits in a block of
+  fixed size whether or not it is filled, nothing wraps, and every state
+  in this file is drawn with paint and with transform. No state changes a
+  width, a height, a padding, a margin or a border thickness.
+
+  THE BOX IS GONE AND THE RULE REPLACED IT. This was a hundred and two
+  white pills floating six pixels apart on a well, which is the shape
+  every generated dashboard ships and which the owner read as plain on
+  sight. Structure now comes from alignment and from hairlines, the way
+  it does in a printed book: one sheet of paper, a rule between entries,
+  a numbered column down the left. It is also six pixels a row cheaper,
+  which is where the eleventh visible organisation came from.
+
+  NO ACCENT BAR DOWN THE LEFT EDGE. It was the selection treatment here
+  and it is the single most template-looking gesture in the vocabulary,
+  which is why it was the thing the owner named. Nothing in this file
+  draws a vertical rule at the start of a row, chosen or otherwise.
+
+  COLOUR IS NEVER THE ONLY SIGNAL. The owner is colourblind, so every
+  state below is carried by at least two channels that are not hue:
+  ground luminance, ink weight, the stamped rank block, the closing
+  rules, position under the cursor, and `aria-current` in the
+  accessibility tree.
+*/
+
+.item {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /*
+    The rule belongs to the line above it, which is why it is a bottom
+    border and not a top one: the first line in the list then sits flush
+    against the head's own rule instead of doubling it.
+  */
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+  /*
+    Ground only. The content's own movement is transformed on `.card`,
+    so the paint and the motion are separate layers and neither of them
+    can push the line below out of place.
+  */
+  transition: background-color var(--dur-1) var(--ease-out);
+}
+
+/* Every tenth line closes with a stronger rule, so the column reads in
+   tens the way a ruler does. It is the same one pixel; only the value
+   changes, so nothing reflows. */
+.item[data-decade] { border-bottom-color: var(--line-2); }
+
+/*
+  THREE COLUMNS, TWO OF THEM FIXED. The rank column is sized to a three
+  digit rank and the score column to a three digit score plus its meter
+  and badge, so both are the same width on every line in the list
+  whatever the numbers happen to be. Only the middle column, which holds
+  the name and the chips, takes what is left, which is the one part of
+  the row that should absorb a narrower column rather than pushing the
+  alignment around.
+*/
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  /*
+    44px is the floor and the content sets the rest. Six pixels of
+    vertical padding over a forty pixel stack lands the row at fifty
+    two, which clears the target and is the difference of one more
+    organisation on screen in every ten. Below six the chips start
+    touching the rule and the row reads as a table band.
+  */
+  min-height: 44px;
+  padding: 6px var(--space-3);
+  border: 0;
+  background: transparent;
+  font-family: var(--font-ui);
+  color: var(--text-0);
+  text-align: left;
+  cursor: pointer;
+  /*
+    MOTION IS TRANSFORM AND NOTHING ELSE, AND IT IS SHORT. A hundred and
+    two rows go past under a cursor that is moving, so anything longer
+    than about a tenth of a second stops reading as response and starts
+    reading as lag on the way down and as nausea on the way back up.
+    120ms is the token the rest of the app uses for exactly this, and
+    `prefers-reduced-motion` sets it to zero at the token, so the states
+    below still happen, instantly.
+  */
+  transition: transform var(--dur-1) var(--ease-out);
+  will-change: transform;
+}
+
+/*
+  ── HOVER: THE LINE LEANS TOWARD THE MAP ──────────────────────────
+
+  Nothing at all used to happen here until a click had already been
+  committed, which is most of what "it does not look fun to click"
+  means. Three things happen now and all three are cheap: the ground
+  lifts one step, the content leans two pixels toward the map it is
+  pointing at, and the organisation's name lights its underline amber.
+
+  Two pixels is deliberately almost nothing. It is enough that a row
+  feels live under the cursor and small enough that running the length
+  of a hundred rows does not read as a wave.
+*/
+.item:hover { background: var(--surface-2); }
+.card:hover { transform: translate3d(2px, 0, 0); }
+
+/*
+  ── PRESS: THE LINE TAKES THE WEIGHT ──────────────────────────────
+
+  A real press response, which is the other half of the same complaint.
+  The ground deepens a further step and the content settles one pixel
+  down, so the row reads as taking the press rather than as waiting for
+  the state to arrive from somewhere else. `:active` matches the item as
+  well as the card because activation applies up the ancestor chain,
+  which is what lets the ground and the movement stay on the two
+  elements that own them.
+*/
+.item:active { background: var(--surface-3); }
+.card:active { transform: translate3d(2px, 1px, 0); }
+
+/*
+  ── THE SELECTION CONTROL, STRETCHED BEHIND THE CONTENT ───────────
+
+  Drawn behind rather than over, and that is the load bearing decision
+  in this rule. Over the top it would be a sheet of glass across the
+  row: the `title` on the score, which is the only place a reader can
+  find out why a row scored what it scored without opening the panel,
+  would stop appearing. Behind it, the content keeps its pointer
+  events, the box above catches the click and hands it to the same
+  action, and this button is left doing the two jobs only a real
+  control can do, which are the keyboard and the accessible name.
+
+  Everything else in the card is a static grid item, so a positioned
+  element with z-index 0 would still paint on top of all of it. The rule
+  below lifts the content into its own layer rather than pushing this
+  button into a negative one, because a negative z-index escapes the
+  card entirely and lands the button behind the row's own background.
+*/
+.select {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.card > *:not(.select) {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+  THE FOCUS RING IS INSET. Drawn outside, it would overlap the line
+  above and be clipped by the scroll container on the way past. Two
+  pixels in, it reads as a ring around the selectable part of the row
+  and nothing eats it.
+*/
+.select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ---------------------------------------------------------------
+   ── SELECTION: THE RANK IS STAMPED AND THE RULES CLOSE ──────────
+
+   WHAT THE TREATMENT MEANS. A ledger entry that has been pulled out to
+   be worked on gets marked in the margin and ruled off from the entries
+   around it. That is the whole idea here: the rank block, which is the
+   glyph a reader is already using to keep their place, fills with ink
+   and its digits reverse out; and the hairline above and below the line
+   closes into a full weight rule, so the chosen organisation is
+   bracketed out of the run of the book rather than decorated inside it.
+
+   THREE CHANNELS, NONE OF THEM HUE. The stamp is a shape change and a
+   luminance inversion. The closing rules are a line weight change. The
+   ground deepens a step. Read with every drop of colour removed, the
+   chosen line is still the only one on a darker paper, between two
+   heavier rules, with a black block in the margin.
+
+   NOTHING MOVES. The stamp paints inside a block that is already the
+   same size on every row, and the rules are inset shadows rather than
+   borders, so choosing an organisation cannot shift the hundred lines
+   under it by a pixel.
+   --------------------------------------------------------------- */
+
+.item[data-selected] {
+  background: var(--surface-3);
+  box-shadow:
+    inset 0 1px 0 var(--line-strong),
+    inset 0 -1px 0 var(--line-strong);
+}
+
+/* ---------------------------------------------------------------
+   The rank column
+   --------------------------------------------------------------- */
+
+.rankSlot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/*
+  RESERVED, NOT CONDITIONAL. The block is the same width and the same
+  height on every line in the list and only one line in the list ever
+  fills it. Sizing it to its state would move the rank of the chosen row
+  a millimetre, which is exactly the kind of small movement that makes a
+  long list feel unsteady.
+*/
+.rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 26px;
+  height: 19px;
+  padding-right: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--text-3);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+/* Every fifth rank in a darker ink. The rhythm the list needed cost
+   nothing in height because it was spent on a colour value in a column
+   the eye is already running down. */
+.item[data-tick] .rank { color: var(--text-1); }
+
+.item:hover .rank { color: var(--text-0); }
+
+.item[data-selected] .rank {
+  background: var(--text-0);
+  color: var(--surface-1);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------
+   Name and chips
+   --------------------------------------------------------------- */
+
+.ident {
+  display: grid;
+  align-content: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+/*
+  ONE LINE, ALWAYS. A wrapped name is two rows for one organisation and
+  it pushes every line under it out of alignment for the rest of the
+  scroll. The full name is on the button's own `title` and on the row's
+  accessible name, so nothing is lost to a reader who needs it, and the
+  record is one press away.
+*/
+.name {
+  display: block;
+  min-width: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.name > * {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item[data-selected] .name { font-weight: 700; }
+
+/*
+  THE UNDERLINE IS THE THING THAT MOVES UNDER THE CURSOR.
+
+  `RecordName` paints its underline at `--line-2` at rest, which over a
+  hundred and two rows is a column of underlined names, and a page where
+  everything is underlined is a page where the underline has stopped
+  meaning anything. Held down to the palest rule at rest, it reads as
+  the faint pencil line under an entry in a book.
+
+  Running the cursor down the list then lights each name in turn, and
+  landing on the name itself thickens it. Two different signals for two
+  different presses: the row selects, the name opens the record. The
+  three selectors below are written at rising specificity on purpose,
+  because `RecordName` owns its own hover rule and the last word has to
+  be the card's.
+*/
+.item .card .name > * {
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1px;
+}
+
+.item .card:hover .name > * {
+  text-decoration-color: var(--brand-gold);
+}
+
+.item .card .name > *:hover {
+  text-decoration-color: var(--brand-gold);
+  text-decoration-thickness: 2px;
+}
+
+/*
+  THE LANE MARK AND THE STATUS, AND NOTHING ELSE ON THIS LINE. The
+  occasion class chip came off with the figure grid: the segment at the
+  top of the pane now filters by exactly that, so a chip repeating it a
+  hundred and two times down the column was answering a question the
+  reader had already answered for themselves.
+
+  The row does not wrap. Two chips at the small size fit the desktop
+  column with room to spare, and a third would have to earn a second
+  line for every line in the list rather than for the one that needed
+  it.
+*/
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   The one figure, as a numeral and as a length
+
+   The word "SCORE" used to be printed under every one of these in
+   nine pixel capitals beside an amber triangle, which is a caption
+   repeated a hundred and two times for a column that only ever holds
+   one kind of number. It is printed once now, in the pane's caption,
+   and the space it freed went to the meter.
+   --------------------------------------------------------------- */
+
+/*
+  THE BAND IS CARRIED AS TWO CUSTOM PROPERTIES RATHER THAN AS TWO SETS OF
+  RULES. The numeral and the meter have to agree about how dark the ink
+  is, and the selected line has to be able to overrule both of them in
+  one place. Done with ordinary selectors that is a specificity race
+  between "high band" and "chosen", which whichever way it is written
+  ends up depending on the order the bundler happened to emit the rules
+  in. A custom property set on the block and read by its two children
+  resolves at the block, so the last word is always the more specific
+  selector and never the later one.
+*/
+.scoreBlock {
+  --score-ink: var(--text-1);
+  --meter-ink: var(--text-1);
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  text-align: right;
+}
+
+.scoreBlock[data-band="high"] {
+  --score-ink: var(--text-0);
+  --meter-ink: var(--text-0);
+}
+
+.scoreBlock[data-band="low"] {
+  --score-ink: var(--text-2);
+  --meter-ink: var(--text-2);
+}
+
+/*
+  THE WEIGHT RAMP IS THE READABLE HALF OF THE FIGURE. Seventy and over
+  is the morning's work and it is set in the darkest ink at the heaviest
+  weight; forty five to sixty nine steps back; under forty five steps
+  back again. Nothing here is a hue, so the ranking of the column
+  survives a greyscale print and a colourblind reader equally.
+*/
+.score {
+  font-size: var(--step-1);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.score { color: var(--score-ink); }
+
+.scoreBlock[data-band="high"] .score { font-weight: 700; }
+.scoreBlock[data-band="mid"] .score { font-weight: 600; }
+.scoreBlock[data-band="low"] .score { font-weight: 500; }
+
+.scoreFoot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/*
+  THE METER. A fixed track so the fills line up down the column, square
+  ends because this is a ledger and not a progress bar, and the fill
+  drawn in ink rather than in a colour because its whole job is to be
+  read with the colour gone.
+
+  The width comes in as a custom property from the card, which is the
+  one number on this screen that has to be set per row. Drawn on a
+  pseudo element so the track keeps its own box and the fill cannot
+  affect the layout of the row it sits in.
+*/
+.meter {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 3px;
+  background: var(--line-2);
+}
+
+.meter::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--fill, 0%);
+  background: var(--meter-ink);
+}
+
+.item[data-selected] .meter { background: var(--line-strong); }
+.item[data-selected] .scoreBlock { --meter-ink: var(--text-0); --score-ink: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   Narrow
+
+   THERE IS NO PHONE VARIANT OF THIS ROW, AND THAT IS THE POINT. There
+   used to be a rule below 420px that rearranged the score. It was keyed
+   to the VIEWPORT, and the viewport is the one measurement that does
+   not describe this row: it is at its narrowest inside the desktop
+   column, where the rule never fired, and at its widest inside the
+   phone sheet, where it did.
+
+   The layout above is three columns, two of them a fixed number of
+   pixels and the third free to shrink to nothing, so it holds at any
+   width this row is ever given and every reader gets the same line.
+   --------------------------------------------------------------- */

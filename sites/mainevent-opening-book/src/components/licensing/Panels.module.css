@@ -1,0 +1,249 @@
+/*
+  Shared furniture for the three supply-side screens.
+
+  The register is the inherited one and unchanged: cool paper ground,
+  hairline rules, one hot amber doing the editorial work, no gradients and
+  no shadows carrying structure. Every colour here is a token by name;
+  there is not a hex value in this file and there must never be one, since
+  the palette is retuned independently of this code.
+*/
+
+/* ---------------------------------------------------------------
+   Stat strip
+   --------------------------------------------------------------- */
+
+.strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 1px;
+  margin-bottom: var(--space-6);
+  /* Hairlines between the tiles rather than bordered cards, so the strip
+     reads as one instrument, which is what it is. */
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: var(--space-4);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.statValue {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.statUnit {
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-2);
+}
+
+.statLabel {
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Bars. Always with the number.
+   --------------------------------------------------------------- */
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.barTrack {
+  flex: 1;
+  min-width: 48px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+
+/*
+  An over-budget bar gets a hatch as well as a colour and a number, so it
+  survives greyscale. Three signals on the one row that matters most is
+  not excessive; it is the row somebody has to spot from across a desk.
+*/
+.barOver {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--surface-1) 0,
+    var(--surface-1) 2px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+.barValue {
+  flex: none;
+  font-size: var(--step--1);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-0);
+  min-width: 5.5ch;
+  text-align: right;
+}
+
+/* ---------------------------------------------------------------
+   Filter chips
+   --------------------------------------------------------------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* 44px of tap target on a phone, kept as min-height rather than padding
+     so the label still centres at every size. */
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font: inherit;
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--line-strong);
+  color: var(--text-0);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/*
+  The pressed state is a heavier border, a heavier weight and a tint, in
+  that order. A pressed state carried only by a background tint is
+  invisible to the reader this application was designed around.
+*/
+.chipOn {
+  border-color: var(--tone);
+  border-width: 2px;
+  padding: 0 calc(var(--space-3) - 1px);
+  background: var(--surface-2);
+  color: var(--text-0);
+  font-weight: 750;
+}
+
+.chipGlyph {
+  color: var(--tone);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.chipCount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.chipOn .chipCount {
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   Token marks
+   --------------------------------------------------------------- */
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.2;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+
+.markSm {
+  font-size: var(--step--2);
+}
+
+.markGlyph {
+  color: var(--tone);
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+/* ---------------------------------------------------------------
+   Section heads
+   --------------------------------------------------------------- */
+
+.sectionHead {
+  max-width: 88ch;
+  margin-bottom: var(--space-4);
+}
+
+.sectionEyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--brand-gold-600);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-2);
+  letter-spacing: -0.01em;
+}
+
+.sectionLede {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.sectionMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+@media (max-width: 560px) {
+  .strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statValue {
+    font-size: var(--step-2);
+  }
+}

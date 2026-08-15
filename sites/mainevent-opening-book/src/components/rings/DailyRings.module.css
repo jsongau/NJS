@@ -1,0 +1,556 @@
+/*
+  THE DAILY STRIP.
+
+  It is a card of three rings and a line of week figures, and it is
+  deliberately about a hundred and forty pixels tall rather than a hero.
+  A progress mechanic that takes the top third of a working screen has
+  stopped being a reading of the work and started competing with it.
+
+  ── WHAT MOVES IN HERE, AND WHAT NEVER WILL ────────────────────────
+  Two things move. A segment that has just been earned arrives by growing
+  in WEIGHT, staggered round the ring, and a ring being pressed travels
+  two pixels onto its own edge. That is the whole list.
+
+  Neither one touches a figure. The numbers are the reading, and a figure
+  that moves while somebody is reading it is a figure they have to wait
+  for. There is no pulse, no sweep on load, no celebration and nothing
+  that loops.
+
+  EVERY DURATION IN THIS FILE IS A TOKEN, including the stagger, which is
+  computed as a token multiplied by the segment's index rather than
+  written in milliseconds. That is the difference between an animation
+  that stops under prefers-reduced-motion and one that merely starts
+  late; the block at the foot of this file is the second line of defence
+  rather than the only one.
+
+  THE GEOMETRY IS FIXED SO A COUNT CAN CHANGE WITHOUT MOVING ANYTHING.
+  Every slot that holds a figure or a state word is sized for the widest
+  thing it can ever contain: the numbers are tabular mono in a fixed
+  character width, the state row has a fixed height, and the three rings
+  are equal columns of a grid rather than flex items that resize around
+  their contents. A strip that reflowed as the third touch of the morning
+  landed would make the whole page twitch at exactly the moment it was
+  meant to feel settled.
+*/
+
+.strip {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+/* ---------------------------------------------------------------
+   The head
+   --------------------------------------------------------------- */
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-2);
+}
+
+.date {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+/* Pushed to the end of the row so the strip has one control in one
+   predictable place rather than a cluster. */
+.settings {
+  margin-left: auto;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings:hover { background: var(--surface-3); color: var(--text-0); }
+.settings[aria-expanded="true"] {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+/* ---------------------------------------------------------------
+   The three rings
+   --------------------------------------------------------------- */
+
+/*
+  Equal columns, always three across, down to 380px. Stacking them would
+  turn a glance into a scroll, and the whole value of three rings is that
+  the day reads in one look.
+*/
+.rings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.ring {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  /* The floor is 44px on a finger from base.css; this is a tall control
+     and states it explicitly so the height never depends on its
+     contents. */
+  min-height: 148px;
+  padding: var(--space-2) var(--space-1);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  text-align: center;
+  /* THE CHUNK. Three pixels of edge under the key at rest, and the press
+     drops the key onto it. The shadow is not transitioned, only the
+     transform, so this costs one composited layer and no paint. */
+  box-shadow: 0 3px 0 var(--line-2);
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.ring:hover { background: var(--surface-2); }
+
+.ring:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--line-2);
+}
+
+/*
+  THE PRESSED STATE IS AN INVERSION, NOT A TINT. Which ring is currently
+  filtering the list below has to be legible without colour, so the
+  pressed cell swaps ink and paper. That is a value difference and it
+  survives greyscale, a printout and a phone in the sun.
+*/
+.ring[aria-pressed="true"] {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+/*
+  A CLOSED RING IS DEFINITE, AND IT IS ALLOWED TO LOOK IT. A two pixel
+  edge in the ring's own tone, a filled ground, and the strike stamp
+  drawn over the arc. No glow, no scale, no flourish and no sound: the
+  mark, the edge and the word "Closed" underneath are three signals and
+  three is enough.
+*/
+.ring[data-state="closed"] {
+  background: var(--surface-3);
+  border: 2px solid var(--tone, var(--line-strong));
+  padding: calc(var(--space-2) - 1px) 0;
+  box-shadow: 0 3px 0 var(--line-strong);
+}
+
+/*
+  THE STAMP, at the top right of the arc, half off it, the way a stamp
+  lands on a page. It is positioned rather than in flow so the ring's
+  fixed geometry does not move when a ring closes.
+*/
+.arcWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.stamp {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  display: inline-flex;
+  color: var(--text-0);
+  /* The strike's cross reads the section colour by default. On the ring
+     it should be the ring's own tone, which is the colour the arc under
+     it is already drawn in. */
+  --sec: var(--tone, var(--ok));
+}
+
+.ring[data-state="closed"][aria-pressed="true"] {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+}
+
+.ringLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.ring[aria-pressed="true"] .ringLabel { color: var(--text-inverse); }
+
+.arc {
+  width: 52px;
+  height: 52px;
+  flex: none;
+}
+
+/*
+  The undone segments are a hairline and the done segments are the ring's
+  tone at full weight. Two channels, thickness and value, before hue is
+  considered at all.
+*/
+.segOff {
+  stroke: var(--line-2);
+  stroke-width: 4;
+}
+
+.segOn {
+  stroke: var(--tone, var(--text-0));
+  stroke-width: 7;
+  /*
+    THE LANDING. A segment that has just been earned arrives by growing
+    from the hairline weight of an undone segment to its own, which is
+    the value arriving rather than a decoration over it. It runs once,
+    on the commit that changes the segment's class, because a CSS
+    animation starts when its name starts applying and React reuses the
+    element underneath.
+
+    The delay is a duration token multiplied by the segment's index, so
+    the stagger and the animation collapse together to nothing under
+    reduced motion. A stagger written in milliseconds would survive that
+    query and leave segments sitting at their start weight.
+  */
+  animation: seg-land var(--dur-2) var(--ease-out)
+    calc(var(--i, 0) * var(--dur-1) * 0.34) backwards;
+}
+
+@keyframes seg-land {
+  from {
+    stroke-width: 4;
+    opacity: 0.35;
+  }
+  to {
+    stroke-width: 7;
+    opacity: 1;
+  }
+}
+
+.ring[aria-pressed="true"] .segOff { stroke: var(--text-3); }
+.ring[aria-pressed="true"] .segOn { stroke: var(--text-inverse); }
+
+.arcGlyph {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  fill: var(--text-2);
+  dominant-baseline: central;
+}
+
+.ring[aria-pressed="true"] .arcGlyph { fill: var(--text-inverse); }
+.ring[data-state="closed"] .arcGlyph { fill: var(--text-0); }
+.ring[data-state="closed"][aria-pressed="true"] .arcGlyph { fill: var(--text-inverse); }
+
+/* ---------------------------------------------------------------
+   The figures
+   --------------------------------------------------------------- */
+
+.figures {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  /* Sized for the widest reading this slot can ever hold, so a count
+     going from 9 to 10 moves nothing beside it. */
+  min-width: 8ch;
+  height: 26px;
+}
+
+.done {
+  font-size: var(--step-2);
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.ring[aria-pressed="true"] .done { color: var(--text-inverse); }
+
+.of {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.target {
+  font-size: var(--step-0);
+  color: var(--text-2);
+}
+
+.ring[aria-pressed="true"] .of,
+.ring[aria-pressed="true"] .target { color: var(--text-inverse); }
+
+.state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  /* Fixed, because "Not started" and "Closed" are different widths and
+     the strip must not resettle when one becomes the other. */
+  height: 18px;
+  max-width: 100%;
+}
+
+.stateGlyph {
+  font-size: var(--step--2);
+  line-height: 1;
+  color: var(--tone, var(--text-1));
+}
+
+.stateWord {
+  font-family: var(--font-display);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+/* The word carries the completion as loudly as the mark does, so on a
+   closed ring it is the brightest ink on the cell. */
+.ring[data-state="closed"] .stateWord {
+  color: var(--text-0);
+  font-weight: 800;
+}
+
+.ring[aria-pressed="true"] .stateGlyph,
+.ring[aria-pressed="true"] .stateWord { color: var(--text-inverse); }
+
+/* ---------------------------------------------------------------
+   The week line
+   --------------------------------------------------------------- */
+
+.week {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.weekLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+
+.weekFigure {
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.weekUnit { color: var(--text-2); }
+
+.basis {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   Targets
+   --------------------------------------------------------------- */
+
+.targets {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.targetRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.targetLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  min-width: 12ch;
+}
+
+.targetInput {
+  width: 6ch;
+  min-height: 36px;
+  padding: 0 var(--space-2);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  color: var(--text-0);
+  text-align: center;
+}
+
+.targetBasis {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.reinstate { margin: 0; }
+
+/* ---------------------------------------------------------------
+   The list a press reveals
+   --------------------------------------------------------------- */
+
+.list {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.listHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.listHeading {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+}
+
+.listCount {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.rows {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--line);
+}
+
+.row:first-child { border-top: 0; }
+
+.rowName {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.rowWhy {
+  flex: 1 1 100%;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.listNote {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+/*
+  THE COMPLETION STATE LIVES IN components/play/ClearedBoard NOW.
+
+  It was a single settled line here, on the argument that Superhuman's
+  Inbox Zero image occupies the space the work vacated and costs the
+  reader nothing. That argument is intact and the typography was wrong
+  for it: a cleared day was being reported in the same register as a
+  missing record. The panel that replaced it is the same one every empty
+  queue in the application should use, so a reader learns the strike box
+  once and reads it everywhere. Still no modal, because a modal blocks
+  the next action, and still no confetti, because this gets opened in
+  front of a general manager.
+*/
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+/*
+  380px IS A REAL LAYOUT, and the rings stay three across in it. The ring
+  itself loses ten pixels, the labels lose a step, and the figures keep
+  their size because the figures are the reading. Nothing is dropped: a
+  strip that hid the state word on a phone would be a strip that hid the
+  half of the signal a colourblind reader depends on.
+*/
+@media (max-width: 460px) {
+  .strip { padding: var(--space-3); }
+
+  .ring {
+    min-height: 132px;
+    padding: var(--space-2) 2px;
+  }
+
+  .arc { width: 44px; height: 44px; }
+
+  .ringLabel { font-size: 9px; letter-spacing: 0.06em; }
+
+  .figures { min-width: 0; }
+
+  .done { font-size: var(--step-1); }
+
+  .stateWord { font-size: 10px; }
+
+  .targetLabel { min-width: 0; flex: 1 1 100%; }
+}
+
+/* ---------------------------------------------------------------
+   Motion
+   --------------------------------------------------------------- */
+
+/*
+  The two things that move in this file are the segment landing and the
+  press travel, and both are already still under this query because both
+  are written in duration tokens. The sweep below is belt and braces and
+  it is deliberately total: anything added to this strip later cannot
+  quietly become the one animation in the application that ignores the
+  setting.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .strip,
+  .strip *,
+  .strip *::before,
+  .strip *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

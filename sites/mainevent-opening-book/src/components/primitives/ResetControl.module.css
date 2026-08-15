@@ -1,0 +1,237 @@
+/*
+  The reset control in the chrome.
+
+  Three states in one stack: a quiet trigger, a confirmation that drops
+  below it as a panel, and a short-lived acknowledgement. The panel is
+  positioned rather than inline because the sentence it carries names
+  every kind of change about to be destroyed, and a sentence that long
+  laid inline would push the navigation around every time somebody armed
+  it. A nav that reflows when you hover near the reset button is a nav
+  people stop trusting.
+*/
+
+.root {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  padding: 6px 13px 6px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+/*
+  THE TARGET IS 44px EVEN THOUGH THE BUTTON IS NOT.
+
+  The nav bar is 56px tall and holds a lockup, a countdown, a period
+  select and a fourteen item menu, so a 44px block of visible chrome in
+  the corner would out-weigh every one of them and pull the eye to the
+  one control nobody should be reaching for often. Growing the HIT AREA
+  instead gives a thumb and a shaky hand the full 44px without spending
+  a pixel of visual weight on it. The nav's own gap is var(--space-5), so
+  the expanded area cannot overlap its neighbour.
+*/
+.trigger::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 100%;
+  min-width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+.trigger:hover {
+  border-color: var(--brand-gold);
+  color: var(--text-0);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The ring completes itself on hover. A reset control that turns is the
+   one piece of motion in this app that means something: it is showing
+   you the action, not decorating the button. */
+.glyph { flex: none; transition: transform var(--dur-3) var(--ease-out); }
+.trigger:hover .glyph { transform: rotate(-140deg); }
+
+.ring { opacity: 0.95; }
+.head { opacity: 0.95; }
+.core { opacity: 0.22; }
+.trigger:hover .core { opacity: 0.4; }
+
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  color: var(--text-2);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ── The confirmation ──────────────────────────────────────────── */
+
+.armed {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: var(--z-tray);
+  width: 34ch;
+  max-width: calc(100vw - var(--space-5));
+  padding: var(--space-3);
+  border: 1px solid var(--risk);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-3);
+  text-align: left;
+}
+
+.armedText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.armedActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/*
+  Both buttons clear 44px for real here. This panel is temporary, it owns
+  its own space, and the pair is a keep-or-destroy decision where an
+  expanded invisible hit area on two adjacent controls would overlap and
+  turn a mis-tap into exactly the outcome the panel exists to prevent.
+*/
+.confirm,
+.cancel {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.confirm {
+  border: 1px solid var(--risk);
+  background: var(--risk);
+  color: var(--surface-1);
+}
+
+.confirm:hover { filter: saturate(1.1) brightness(0.94); }
+
+.cancel {
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  color: var(--text-1);
+}
+
+.cancel:hover { background: var(--surface-2); color: var(--text-0); }
+
+.confirm:focus-visible,
+.cancel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Done, and where the work lives ────────────────────────────── */
+
+.done {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  padding: 6px 13px 6px 10px;
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--ok);
+  white-space: nowrap;
+}
+
+.done .glyph { transform: rotate(-360deg); }
+
+/*
+  The storage line. Deliberately the quietest type in the chrome: it is
+  a standing fact rather than a notification, and a permanent line that
+  shouts becomes a line nobody reads within a day.
+*/
+.storage {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0;
+  max-width: 46ch;
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--text-3);
+}
+
+/* The failed state says a different WORD, not a redder version of the
+   same one. Colour is never the only signal in this app. */
+.storageWarn {
+  color: var(--risk);
+  font-weight: 600;
+}
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  /* THE ONE BAND WHERE THE NOTE CANNOT FIT. The nav is still a single
+     row here and it is already fighting for room, so the standing note
+     steps out of the way. Below 900px the nav wraps and the space comes
+     back, which is why this query has a floor rather than being open
+     ended. Only the compact variant is ever hidden: the full sentence in
+     the page body keeps its place, and the confirmation panel says it
+     again before anything is destroyed, so the fact is never available
+     on a wide screen alone. */
+  .storageCompact { display: none; }
+}
+
+@media (max-width: 1180px) {
+  .armed { width: min(34ch, calc(100vw - var(--space-4) * 2)); }
+}
+
+@media (max-width: 900px) {
+  /*
+    The nav wraps at this width and the control lands on the left of its
+    row, so a panel hung from the right edge of the button walks straight
+    off the side of a phone and takes the confirm button with it. Anchor
+    it to the left instead and let it use the width it has: a
+    confirmation you cannot read is a confirmation you cannot give.
+  */
+  .root { align-items: flex-start; }
+  .armed {
+    left: 0;
+    right: auto;
+    width: calc(100vw - var(--space-3) * 2);
+    max-width: 34ch;
+  }
+}

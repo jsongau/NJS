@@ -1,0 +1,493 @@
+/*
+  The drawer overlays rather than pushing the desk aside.
+
+  A three column board that reflows when a row is opened moves every other
+  row on the page, which means the reader loses the row they just clicked.
+  An overlay keeps the list exactly where it was, so closing the drawer
+  returns the eye to the same place it left.
+
+  It is a modal dialog and it says so: a scrim, aria-modal, Escape to
+  close, and focus returned to the row that opened it. The alternative was
+  a non-modal side panel, which reads as lighter and quietly leaves a
+  keyboard reader tabbing through sixty-nine rows behind the panel.
+*/
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  /* The lighter wash. The board stays visible and working to the left of
+     the drawer, so the dim only has to say which half is live. A token
+     because it has to darken both grounds, and the near black it used to
+     be darkened only the pale one. */
+  background: var(--scrim);
+}
+
+.drawer {
+  position: fixed;
+  top: var(--sticky-h);
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-drawer);
+  display: flex;
+  flex-direction: column;
+  width: min(var(--col-drawer), 100vw);
+  background: var(--surface-1);
+  border-left: 1px solid var(--line-2);
+  box-shadow: var(--shadow-3);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  flex: none;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  /* The one amber hairline on the panel, so the head reads as a head
+     without a heavier rule or a filled bar. */
+  box-shadow: inset 0 -3px 0 -2px var(--brand-gold-line);
+  background: var(--surface-2);
+}
+
+.headTop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.headText {
+  min-width: 0;
+  flex: 1;
+}
+
+.name {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+  line-height: 1.2;
+}
+
+.name:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.headChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  cursor: pointer;
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+.close:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+  color: var(--text-0);
+}
+
+.doorLine {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------
+   Body
+   --------------------------------------------------------------- */
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.section {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+}
+
+.subTitle {
+  margin: var(--space-4) 0 var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-1);
+}
+
+/* --- Fact list ------------------------------------------------- */
+
+.facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 10ch 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.fact dt {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.fact dd {
+  margin: 0;
+  min-width: 0;
+  font-size: var(--step--1);
+  color: var(--text-0);
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.hint {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  color: var(--text-1);
+  word-break: break-all;
+}
+
+/* ---------------------------------------------------------------
+   The written door. The one block on this panel that is framed,
+   because it is the one a reader should stop on.
+   --------------------------------------------------------------- */
+
+.doorSection {
+  background: var(--surface-2);
+}
+
+.email {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+
+.emailValue {
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+  word-break: break-all;
+}
+
+.sourceLine {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+}
+
+.sourceLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--text-3);
+}
+
+.sourceLink {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  word-break: break-all;
+}
+
+.sourcePath {
+  color: var(--text-2);
+}
+
+.doorNote {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.touchLine {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.windowValue {
+  font-size: var(--step--1);
+  font-weight: 650;
+}
+
+.windowChips {
+  display: inline-flex;
+  gap: 5px;
+}
+
+/* --- Headcount ------------------------------------------------- */
+
+.headcount {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+
+.headcountValue {
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-0);
+}
+
+.headcountUnit {
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.basis {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.lanesBox {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.lanesLead {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.lanesNote {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* --- Package --------------------------------------------------- */
+
+.packHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.packHeadText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.packName {
+  font-size: var(--step-0);
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.priceLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.inclusions {
+  margin: 0 0 var(--space-3);
+  padding-left: 1.1em;
+  font-size: var(--step--1);
+  color: var(--text-1);
+  line-height: 1.55;
+}
+
+.inclusions li { margin-bottom: 2px; }
+
+/* --- Prior correspondence -------------------------------------- */
+
+.sentList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sentRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+}
+
+.sentKind {
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 10px;
+}
+
+.sentDate {
+  color: var(--text-3);
+  text-align: right;
+}
+
+.sentSubject {
+  grid-column: 1 / -1;
+  color: var(--text-0);
+  line-height: 1.4;
+}
+
+.sentOutcome {
+  grid-column: 1 / -1;
+  color: var(--tone, var(--text-2));
+  font-weight: 650;
+}
+
+/* ---------------------------------------------------------------
+   Foot
+   --------------------------------------------------------------- */
+
+.foot {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line-2);
+  background: var(--surface-2);
+}
+
+/*
+  It reads as the link it used to be and behaves as the button it now
+  is. The letter opens over this drawer rather than at a route of its
+  own, so the control cannot be an anchor, and a control that changed
+  its appearance as well as its behaviour would be a second change
+  nobody asked for.
+*/
+.quoteLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: var(--step--1);
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quoteLink:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--signal);
+  text-underline-offset: 3px;
+}
+
+.footNote {
+  font-size: var(--step--2);
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* The chrome wraps to two rows below this width, so a drawer pinned
+     under a fixed nav height would sit in the wrong place. Full screen
+     is also simply the right shape for a phone. */
+  .drawer {
+    top: 0;
+    width: 100vw;
+    border-left: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .section { padding: var(--space-3); }
+  .head { padding: var(--space-3); }
+  .fact {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .headcountValue { font-size: var(--step-1); }
+}

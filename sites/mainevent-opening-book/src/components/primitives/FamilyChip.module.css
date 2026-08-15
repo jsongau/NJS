@@ -1,0 +1,51 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px 2px 7px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--fam);
+  background: var(--famTint);
+  color: var(--fam);
+  font-weight: 650;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.sm { font-size: 9.5px; padding: 1px 7px 1px 5px; gap: 5px; }
+.md { font-size: var(--step--2); }
+
+/* The patterned square. Lose the hue and this is still a distinct shape
+   from the other four families, which is the requirement. */
+.glyph {
+  font-size: 1.1em;
+  line-height: 1;
+  flex: none;
+}
+
+.label { letter-spacing: 0.01em; }
+
+/* With a note the chip stops being a chip and becomes a legend row, so it
+   drops the pill shape and lets the sentence wrap. */
+.withNote {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  border-radius: var(--radius-s);
+  padding: var(--space-2) var(--space-3);
+  white-space: normal;
+}
+
+.note {
+  padding-left: var(--space-2);
+  border-left: 1px solid currentColor;
+  font-size: var(--step--2);
+  font-weight: 450;
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+@media (max-width: 560px) {
+  .withNote { flex-wrap: wrap; }
+  .note { border-left: none; padding-left: 0; }
+}

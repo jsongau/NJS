@@ -1,0 +1,1249 @@
+/*
+  Today.
+
+  ONE VISUAL IDEA CARRIES THIS FILE: the next thing is bigger than
+  everything else on the page, and it is bigger by a lot.
+
+  A dashboard laid out as a grid of equal panels tells a reader that
+  everything on it matters equally, which is never true and is least true
+  at nine in the morning. So the top card runs the full width, carries the
+  largest type on the page, and gets the amber rule that nothing else
+  here gets. The two halves below it are equal to each other and smaller
+  than the card. The risk tiles are smaller again. The week is smallest.
+  That is the reading order, printed in size, and it survives greyscale.
+
+  THE TWO HALVES ARE VISUALLY DIFFERENT ON PURPOSE, and never by hue
+  alone. Inbound carries a heavier top rule and mono figures on the
+  brighter surface; outbound carries the activity ledger's lighter
+  treatment, a step smaller, on the quieter one. Each names its unit in
+  its own subheading. They must never look like two columns of the same
+  number, because the whole discipline of this application is that they
+  are not.
+
+  Below 1000px the halves stack rather than compress. Two columns of
+  wrapped fragments is worse than a decision, and on a phone the reading
+  order is the priority order anyway: inbound first, because it is the
+  half with somebody waiting.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head { margin-bottom: var(--space-4); }
+
+.headTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.h1 {
+  margin: 0;
+  font-size: var(--step-3);
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--step-2);
+}
+
+.h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step-0);
+}
+
+/* ── WHY I BUILT THIS ─────────────────────────────────────────────
+   Shut by default and styled as a control, not as a banner. The one
+   place on a working screen where the argument is allowed to stand. */
+.built { margin: 0; }
+
+.builtToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 28px;
+  padding: 2px var(--space-3) 2px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+.builtToggle:hover { border-color: var(--line-3); color: var(--text-0); }
+
+.builtGlyph { color: var(--brand-gold-600); }
+.builtCaret { color: var(--text-3); }
+
+.builtBody {
+  max-width: 76ch;
+  margin-top: var(--space-3);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--brand-gold-line);
+  color: var(--text-1);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+.builtBody p { margin: 0 0 var(--space-2); }
+.builtBody p:last-child { margin-bottom: 0; }
+
+.deskDate {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.dot { color: var(--text-3); }
+
+/* ---------------------------------------------------------------
+   Section furniture, shared
+   --------------------------------------------------------------- */
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.sectionCount {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.nextSection,
+.halvesSection,
+.riskSection,
+.weekSection {
+  margin-bottom: var(--space-6);
+}
+
+/* ---------------------------------------------------------------
+   ONE. The next thing.
+   --------------------------------------------------------------- */
+
+/* This page carries no eyebrow, so the rule along the top of the one
+   card that matters most is where the section shows up instead. An edge
+   rather than a fill, and the card is already the only thing on the
+   screen at this size, so the colour is confirming a hierarchy the
+   layout has already stated. */
+.nextCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--sec, var(--brand-gold));
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+}
+
+/*
+  The card takes focus when the pager steps to it, so it needs a ring of
+  its own. Drawn outside the border, because unlike a list row this card
+  has clear air around it and an inset ring would be lost against the
+  three pixel gold rule along its top edge.
+*/
+.nextCard:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.nextMain { min-width: 0; }
+
+.nextChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+/* The request's own lifecycle state, as a glyph and a word. It sits
+   beside the task chip rather than inside it because the two say
+   different things: what state the enquiry is in, and what that state
+   makes somebody do this morning. */
+.statusWord {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.nextName {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+}
+
+.nextWho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.nextAsk {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  color: var(--text-1);
+  max-width: 68ch;
+}
+
+.nextBecause {
+  margin: 0 0 var(--space-4);
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--line-2);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 70ch;
+}
+
+.nextAction {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--brand-gold-tint);
+}
+
+.nextActionLabel {
+  margin: 0 0 var(--space-1);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--brand-gold-600);
+}
+
+.nextActionText {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 550;
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 66ch;
+}
+
+.nextButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/*
+  The primary action is a LINK rather than a button, because it navigates.
+  It is painted as the page's primary control because it is the one thing
+  this screen is asking anybody to do.
+*/
+.primaryLink,
+.secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.primaryLink {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-inverse);
+}
+
+.primaryLink:hover {
+  background: var(--accent-600);
+  border-color: var(--accent-600);
+  color: var(--text-inverse);
+  text-decoration: none;
+}
+
+.secondaryLink {
+  background: var(--surface-1);
+  border-color: var(--line-2);
+  color: var(--text-0);
+}
+
+.secondaryLink:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+  text-decoration: none;
+}
+
+/* --- The clock ---------------------------------------------------- */
+
+.clock {
+  align-self: start;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+/* Late is a heavier rule and a filled glyph as well as a tone. The word
+   beside the glyph says which state it is, so none of this depends on
+   anybody seeing the colour. */
+.clock[data-late="true"] {
+  border-left: 3px solid var(--risk);
+  background: var(--risk-tint);
+}
+
+.clock[data-late="false"] {
+  border-left: 3px solid var(--info);
+}
+
+.clockState {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.clock[data-late="true"] .clockState { color: var(--risk); }
+
+.clockFigure {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.clockWhen {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.clockCommitment {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* --- Why this one ------------------------------------------------- */
+
+.why {
+  grid-column: 1 / -1;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.whyToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  cursor: pointer;
+}
+
+.whyToggle:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+}
+
+.whyScore {
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--brand-gold-600);
+}
+
+.whyWord { color: var(--text-1); }
+.whyCaret { color: var(--text-2); }
+
+.whyBody { margin-top: var(--space-3); }
+
+.whyLede {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 84ch;
+}
+
+.whyTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--2);
+}
+
+.whyTable th,
+.whyTable td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+.whyTable thead th {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  background: var(--surface-2);
+}
+
+.whyLabel {
+  width: 22%;
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.pointsCol,
+.whyPoints {
+  width: 76px;
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.whyText { color: var(--text-2); }
+
+.whyTotal { color: var(--brand-gold-600); }
+
+.whyTable tfoot th,
+.whyTable tfoot td {
+  border-bottom: none;
+  border-top: 2px solid var(--line-2);
+  font-weight: 700;
+}
+
+/* --- Runners up --------------------------------------------------- */
+
+.runners {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.runnerCount {
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.runnerList {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.runner {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.runner:last-child { border-bottom: none; }
+
+.runnerScore {
+  padding: 2px 0;
+  font-size: var(--step-0);
+  font-weight: 700;
+  text-align: right;
+  color: var(--text-2);
+}
+
+.runnerBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.runnerName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.runnerChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+
+.runnerWhen {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.runnerFoot {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+}
+
+.emptyBig {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 84ch;
+}
+
+/* ---------------------------------------------------------------
+   TWO. The two halves.
+   --------------------------------------------------------------- */
+
+.halves {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.inbound,
+.outbound {
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* Inbound gets the heavier rule: it is the half with somebody waiting. */
+.inbound { border-top: 3px solid var(--info); }
+
+/* Outbound takes the activity ledger's own identity, one step lighter,
+   so the two halves of this page match the two ledgers on the Book. */
+.outbound {
+  border-top: 3px solid var(--ledger-activity);
+  background: var(--surface-2);
+}
+
+.halfHead {
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.halfTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+.halfGlyph {
+  font-size: 0.9em;
+  line-height: 1;
+  color: var(--text-2);
+}
+
+.halfUnit {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 56ch;
+}
+
+.halfSubhead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.figureValue {
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+/* The outbound figures are a step smaller than the inbound ones, the
+   same way the Book page draws hours a step smaller than dollars. Hours
+   are the input; a piece of work with a person on the end of it is the
+   thing being answered. */
+.outbound .figureValue { font-size: var(--step-1); }
+
+.figureLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.halfText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 62ch;
+}
+
+.halfFoot {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+}
+
+.shifts,
+.deskList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.shift {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 60px;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--step--2);
+}
+
+.shift:last-child { border-bottom: none; }
+
+.shiftWhere {
+  min-width: 0;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-0);
+}
+
+.shiftHours {
+  text-align: right;
+  font-weight: 700;
+  color: var(--ledger-activity);
+}
+
+.shiftState {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-2);
+}
+
+.deskRow {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.deskRow:last-child { border-bottom: none; }
+
+.deskScore {
+  font-size: var(--step-0);
+  font-weight: 700;
+  text-align: right;
+  color: var(--text-2);
+}
+
+.deskBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.deskName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--accent);
+}
+
+.deskMiles {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.deskNext {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   THREE. At risk.
+   --------------------------------------------------------------- */
+
+.riskTiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.riskTile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--tone);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font-weight: 400;
+}
+
+.riskTile:hover {
+  border-color: var(--line-strong);
+  border-left-color: var(--tone);
+  background: var(--surface-2);
+  text-decoration: none;
+}
+
+/* The selected tile is a filled panel and a heavier rule, not a hue, and
+   it also carries aria-current. A segmented control that signals its
+   selection with colour alone is the commonest failure in this pattern. */
+.riskTile[data-active="true"] {
+  border-color: var(--accent);
+  border-left-width: 6px;
+  background: var(--accent-tint);
+  box-shadow: var(--shadow-1);
+}
+
+.riskTileTop {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.riskGlyph {
+  color: var(--tone);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.riskCount {
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.riskState {
+  margin-left: auto;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+/* An empty group says "clear" in words and drops its count to the meta
+   grey, so a zero never reads as a failure and never reads as an alarm. */
+.riskTile[data-empty="true"] .riskCount { color: var(--text-2); }
+.riskTile[data-empty="true"] .riskState { color: var(--ok); }
+.riskTile[data-empty="false"] .riskState { color: var(--text-1); }
+
+.riskLabel {
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--text-0);
+}
+
+.riskOf {
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.riskPanel {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.riskPanelHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.riskPanelCount {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.riskSentence {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 88ch;
+}
+
+.riskList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.riskItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.riskItemHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.riskItemName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--accent);
+}
+
+.riskItemClock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  justify-self: end;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.riskItemDetail {
+  grid-column: 1 / -1;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 84ch;
+}
+
+.riskItemLink {
+  grid-column: 1 / -1;
+  font-size: var(--step--2);
+}
+
+.riskFoot {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   FOUR. The week.
+   --------------------------------------------------------------- */
+
+.weekGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.weekCard {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.weekCardTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.weekFigure {
+  margin: 0;
+  font-size: var(--step-4);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text-0);
+}
+
+.weekUnit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin: var(--space-2) 0 var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.weekText {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.weekText:last-child { margin-bottom: 0; }
+
+/* --- The response record ----------------------------------------- */
+
+.record {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.recordHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.recordFigures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.recordDisclosure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  border-left: 3px solid var(--prov-illustrative);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 88ch;
+}
+
+.recordFoot {
+  margin: 0;
+  font-size: var(--step--2);
+}
+
+/* ---------------------------------------------------------------
+   Foot
+   --------------------------------------------------------------- */
+
+.pageFoot {
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 96ch;
+}
+
+/* A real control rather than a styled span: it changes the URL and the
+   panel, so it is a button and it looks like the link it behaves as. */
+.resetRisk {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.resetRisk:hover { color: var(--accent-600); }
+
+/* ---------------------------------------------------------------
+   Responsive. Three real breakpoints, each a decision.
+   --------------------------------------------------------------- */
+
+/*
+  The clock stops being a side panel before the text column gets narrow
+  enough to wrap badly, and it keeps its place in the reading order when
+  it does.
+
+  Moving it to the top of the stack was tried and reverted. It put the
+  most urgent fact first for a sighted reader and left a screen reader
+  hearing the source order, which is the visual-order mismatch that
+  meaningful sequence exists to prevent. The task chip at the very top of
+  the card already says "Answer, overdue" in a word, so nothing is lost
+  by leaving the clock where the markup puts it.
+*/
+@media (max-width: 1080px) {
+  .nextCard { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Two halves become one column rather than two columns of fragments.
+   Inbound stays first: it is the half with somebody waiting. */
+@media (max-width: 1000px) {
+  .halves { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .inner { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .h1 { font-size: var(--step-3); }
+  .nextCard { padding: var(--space-4); }
+  .nextName { font-size: var(--step-2); }
+  .weekFigure { font-size: var(--step-3); }
+  .record { padding: var(--space-4); }
+  .riskItem { grid-template-columns: minmax(0, 1fr); }
+  .riskItemClock { justify-self: start; white-space: normal; }
+}
+
+/*
+  At the narrowest supported width the score table stops being a table
+  layout and becomes stacked blocks. A three column table inside a 380px
+  viewport either scrolls sideways or squeezes the reasoning into two
+  words a line, and the reasoning is the entire point of the panel. The
+  markup stays a table, so the header association a screen reader reads
+  is unchanged; only the painting changes.
+*/
+@media (max-width: 560px) {
+  .figures { grid-template-columns: minmax(0, 1fr); }
+
+  .whyTable,
+  .whyTable tbody,
+  .whyTable tfoot,
+  .whyTable tr,
+  .whyTable th,
+  .whyTable td {
+    display: block;
+    width: auto;
+  }
+
+  .whyTable thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .whyTable tr {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .whyTable th,
+  .whyTable td {
+    padding: 0 0 var(--space-1);
+    border-bottom: none;
+  }
+
+  .whyPoints::after {
+    content: " points";
+    font-weight: 400;
+    color: var(--text-2);
+  }
+
+  .runner { grid-template-columns: 38px minmax(0, 1fr); }
+  .nextButtons > * { width: 100%; justify-content: center; }
+}
+
+/*
+  Nothing on this page animates position or size. The only transitions
+  are colour, and they inherit the reduced-motion switch from the
+  duration tokens. This block is here so the intent is on the record
+  rather than assumed.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .riskTile,
+  .primaryLink,
+  .secondaryLink,
+  .whyToggle {
+    transition: none;
+  }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}

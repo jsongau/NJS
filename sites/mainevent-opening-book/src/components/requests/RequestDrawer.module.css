@@ -1,0 +1,694 @@
+/*
+  One inbound enquiry, on one surface.
+
+  The panel is built the same way as the prospect drawer, and that is a
+  decision rather than laziness. A reader who has opened one detail panel
+  in this application has learned where the close button is, that Escape
+  works, that focus comes back to the row they left, and that the head is
+  identity while the body is evidence. Inventing a second panel language
+  for the inbound half would make the reader learn the same thing twice.
+
+  THE ONE THING THIS PANEL DOES THAT THE OTHER DOES NOT is pin a single
+  primary action to the bottom. The prospect drawer is a reference
+  document; this is a queue item somebody is about to act on, and the
+  verb should still be under the reader's thumb after they have scrolled
+  through the score breakdown.
+
+  Every state on this panel carries a glyph and a word before it carries
+  a tone: a captured field is a filled circle and the word "captured", a
+  field the route never asked for is a barred circle and the sentence
+  that says so. Nothing here is legible only in colour.
+
+  At 380px the panel takes the full viewport width and the two column
+  fact rows become stacks. Nothing is allowed to scroll sideways.
+*/
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  /* See ProspectDrawer. The lighter wash, and a token because a near
+     black dims paper and does nothing at all to the dark ground. */
+  background: var(--scrim);
+}
+
+.drawer {
+  position: fixed;
+  top: var(--sticky-h);
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-drawer);
+  display: flex;
+  flex-direction: column;
+  width: min(var(--col-drawer), 100vw);
+  background: var(--surface-1);
+  border-left: 1px solid var(--line-2);
+  box-shadow: var(--shadow-3);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  flex: none;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  box-shadow: inset 0 -3px 0 -2px var(--brand-gold-line);
+  background: var(--surface-2);
+}
+
+.headTop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.headText {
+  min-width: 0;
+  flex: 1;
+}
+
+.name {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+  line-height: 1.2;
+}
+
+.name:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.headChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  cursor: pointer;
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.close:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+  color: var(--text-0);
+}
+
+.headLine {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Body
+   --------------------------------------------------------------- */
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.section {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+}
+
+.subTitle {
+  margin: var(--space-4) 0 var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-1);
+}
+
+/* --- What they sent --------------------------------------------- */
+
+.said {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.saidText {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+.saidFoot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.ask {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-3);
+}
+
+.askLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.askText {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+/* --- Fact rows --------------------------------------------------- */
+
+.facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.fact dt {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.fact dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.hint {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  color: var(--text-1);
+  overflow-wrap: anywhere;
+}
+
+.statusNote,
+.disclosure,
+.walkIn,
+.gapLine,
+.leadPack,
+.laneWarn,
+.terms {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.statusNote strong,
+.walkIn strong {
+  color: var(--text-0);
+}
+
+.toneGlyph {
+  color: var(--tone, var(--text-2));
+  line-height: 1.4;
+}
+
+/* --- The three qualifying fields --------------------------------- */
+
+.qualifiers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.qualifier {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+/* A field that is present loses the tinted well, so the three rows read
+   as answered, answered, still open without anybody counting glyphs. */
+.qualifier[data-held="true"] {
+  background: var(--surface-1);
+}
+
+.qualifierGlyph {
+  color: var(--tone, var(--text-2));
+  line-height: 1.4;
+}
+
+.qualifierBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.qualifierHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.qualifierLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.qualifierValue {
+  font-size: var(--step--2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+}
+
+.qualifierWhy {
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* --- The organisation -------------------------------------------- */
+
+.whyFit {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.links {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+}
+
+/*
+  It reads as the citation link it used to be and behaves as the button
+  it now is. The letter opens in a dialog over this queue rather than at
+  a route with no rail on it, so the control cannot be an anchor.
+*/
+.quoteButton {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: var(--step--1);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quoteButton:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--signal);
+  text-underline-offset: 3px;
+}
+
+/* --- Packages ---------------------------------------------------- */
+
+.packs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.packHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.packName {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.packPrice {
+  font-size: var(--step--1);
+}
+
+.packMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.dot {
+  color: var(--text-3);
+  padding: 0 var(--space-1);
+}
+
+/* --- Lane arithmetic --------------------------------------------- */
+
+.laneMaths {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.laneFigure {
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.laneWords {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* --- The derived task -------------------------------------------- */
+
+.taskHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+
+.taskLabel {
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.taskDue {
+  margin-left: auto;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.taskBecause {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.taskAction {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  background: var(--brand-gold-tint);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+.taskActionLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-gold-600);
+}
+
+.reasons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.reason {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+}
+
+.reasonHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.reasonLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.reasonPoints {
+  margin-left: auto;
+  padding: 1px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.reasonWhy {
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* --- Leagues ------------------------------------------------------ */
+
+.leagueLead {
+  /* A paragraph rather than a flex row, because the programme name sits
+     inside a sentence and a flex container would break that sentence
+     into three stacked pieces. */
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.unpublished {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.unpublishedItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+}
+
+.unpublishedField {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.unpublishedNote {
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.standing {
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+.copyRow button,
+.footActions button {
+  min-height: 44px;
+}
+
+.copyRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+/* ---------------------------------------------------------------
+   The pinned action
+   --------------------------------------------------------------- */
+
+.foot {
+  flex: none;
+  padding: var(--space-4);
+  border-top: 1px solid var(--line-2);
+  background: var(--surface-2);
+}
+
+.footActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.footLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--accent);
+  color: var(--text-inverse);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footLink:hover {
+  background: var(--accent-600);
+  border-color: var(--accent-600);
+}
+
+.footWhy {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 560px) {
+  .drawer {
+    width: 100vw;
+  }
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+  .taskDue {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+  .laneFigure {
+    font-size: var(--step-3);
+  }
+}

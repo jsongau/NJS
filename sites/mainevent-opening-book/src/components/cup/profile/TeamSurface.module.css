@@ -1,0 +1,292 @@
+/*
+  THE TEAM SURFACE.
+
+  Everything structural lives in CupDialog.module.css. This file carries
+  only what is particular to a team: the formation sentence, the roster
+  rows, the run, and the fee.
+
+  A NAME NEVER TRUNCATES. Bowling teams pick long names on purpose and
+  every cell here is sized for the two line case, so there is no ellipsis
+  anywhere in this file.
+
+  Tokens by name only. No hex, no [data-theme].
+*/
+
+.seed {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   How it formed
+   --------------------------------------------------------------- */
+
+.move {
+  margin: 0;
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sec-leagues);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+.captainRole,
+.basis {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.none {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  color: var(--text-2);
+}
+
+.teamNote {
+  margin: 0;
+  display: flex;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The roster
+   --------------------------------------------------------------- */
+
+.seats {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: 700;
+  color: var(--warn);
+}
+
+.roster {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.rosterRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  min-height: 44px;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.rosterHandle {
+  font-family: var(--font-operator, var(--font-mono));
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.rosterPosition {
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.captainMark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.rosterBall {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The run
+   --------------------------------------------------------------- */
+
+.standing {
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.run {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.runRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.runHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.runNight {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.runRound {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.runBody {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+}
+
+.runOpponent {
+  font-size: var(--step--1);
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.runRule {
+  color: var(--text-2);
+  font-style: normal;
+}
+
+.runPending {
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.runScore {
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.runWon {
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.runLost {
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.runDash,
+.runPins {
+  color: var(--text-2);
+}
+
+.runFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+}
+
+.runWhen {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.blank {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The fee
+   --------------------------------------------------------------- */
+
+.fee {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+}
+
+.feeValue {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-display, var(--font-ui));
+  font-size: var(--step-3);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.feeUnit {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.feeSplit {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.feeNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   380 is a real layout
+   --------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .rosterRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+  }
+
+  .rosterBall {
+    grid-column: 1 / -1;
+  }
+}

@@ -1,0 +1,249 @@
+/*
+  ONE LEAGUE.
+
+  This file carries only what is different about the detail route. The
+  page frame, the section rules, the ladder, the team grid and the slot
+  strip all come from LeaguesPage.module.css, because two copies of a
+  ladder drift within a week and the one on the detail route is the same
+  ladder at full height rather than a second design.
+
+  Tokens by name only. There is no hex value in this file.
+*/
+
+.crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--text-2);
+}
+
+/*
+  The route back to the board is a destination and not a word in a
+  sentence, so it takes the 44px floor rather than the line height of the
+  eyebrow it sits in.
+*/
+.crumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--sec-leagues-ink);
+}
+
+.crumbSep {
+  color: var(--line-strong);
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.titleRow h1 {
+  margin: 0;
+}
+
+.tagline {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.4;
+  color: var(--text-1);
+  max-width: 62ch;
+}
+
+/* ---------------------------------------------------------------
+   The season shape
+   --------------------------------------------------------------- */
+
+.shape {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--sec-leagues);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.shapeItem {
+  min-width: 0;
+}
+
+.shapeItem dt {
+  margin: 0 0 2px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.shapeItem dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--sec-leagues-ink);
+}
+
+.shapeNote {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+  max-width: 82ch;
+}
+
+.priceBlock {
+  max-width: 82ch;
+}
+
+/* ---------------------------------------------------------------
+   The way in
+   --------------------------------------------------------------- */
+
+.joinGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.joinPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.joinTitle {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.joinNote,
+.joinBasis {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.joinOrg {
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.positions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.positionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.position {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.positionNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 82ch;
+}
+
+/* ---------------------------------------------------------------
+   Asks
+   --------------------------------------------------------------- */
+
+.askList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ask {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.askHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.askRole {
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.askNote {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.asAt {
+  margin: 0 0 var(--space-6);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* The one line that says bowlers appear as handles. It sits above the
+   team cards, where the rosters are, and it is the whole disclosure. */
+.handleNote {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}

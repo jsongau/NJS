@@ -1,0 +1,136 @@
+/*
+  Start over, in the body of a page.
+
+  Same action as the control in the chrome and a different set of
+  constraints: there is room here, so the confirmation sits inline where
+  the reader is already looking, the buttons are real 44px targets rather
+  than expanded hit areas, and the storage line gets a whole sentence
+  instead of four words.
+*/
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  flex: none;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.trigger:hover {
+  background: var(--surface-2);
+  color: var(--text-0);
+  border-color: var(--line-strong);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  color: var(--text-2);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ── The confirmation ──────────────────────────────────────────── */
+
+.armed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+  max-width: 52ch;
+  padding: var(--space-3);
+  border: 1px solid var(--risk);
+  border-radius: var(--radius-m);
+  background: var(--risk-tint);
+}
+
+.armedText {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.armedActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.confirm,
+.cancel {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.confirm {
+  border: 1px solid var(--risk);
+  background: var(--risk);
+  /* The token, not a raw white. --surface-1 is the paper this app is
+     printed on and it is the only white it is allowed to use. */
+  color: var(--surface-1);
+}
+
+.confirm:hover { filter: saturate(1.1) brightness(0.94); }
+
+.cancel {
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  color: var(--text-1);
+}
+
+.cancel:hover { background: var(--surface-2); color: var(--text-0); }
+
+.confirm:focus-visible,
+.cancel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.done {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  max-width: 52ch;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ok);
+}

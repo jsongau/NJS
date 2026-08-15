@@ -1,0 +1,1673 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;700&display=swap');
+
+/* ============================================================
+   Design tokens. The Opening Book, Main Event Brea.
+
+   THE THEME IS CALLED THE CABINET. A dark housing, a bright
+   screen, marquee type, and ink thrown at the screen at full
+   strength. Every colour on it emits rather than reflects,
+   because the room this software is about is a dark room full of
+   lit objects.
+
+   WHAT REPLACED WHAT, AND WHY IT HAD TO. The palette before this
+   one was warm paper, a brass hairline and a house blue, and it
+   was a good paper. It was still a paper. Asked twice for an
+   arcade, it answered with a nicer library, and the owner was
+   right to say so. A ground is the only decision in a palette
+   that every screen inherits, so a light ground means an arcade
+   can only ever be applied to the top of this product, and a
+   theme that is applied is decoration. This ground is committed:
+   near black everywhere, no light data pane held back as a safe
+   harbour, one lit panel used as an event rather than as a
+   default.
+
+   THE THREE SOURCES AND WHAT EACH GAVE.
+   Splatoon gave the method: colour at full chroma on a near black
+   ground, and no apology for it. Every ink below is constructed
+   at the most saturation the sRGB gamut will hold at its stated
+   lightness, which is why the acid green is #00d778 and not a
+   polite sage.
+   Cooking Mama gave the warmth and the chunk: the radii went up,
+   the display face is heavy and slightly rounded, the numerals
+   are oversized, and the lit panel is a warm cream rather than a
+   clinical white.
+   Cyberpunk gave the light: the ground is a violet black rather
+   than the blue grey that every framework ships, because blue
+   grey is the dark mode version of exactly the cool paper this
+   theme was hired to replace.
+
+   WHY A DARK GROUND IS ALSO THE RIGHT TOOL. This is used in a
+   car, in a school car park, on a phone at 380px, between
+   go-sees. Dense data on dark is not a compromise; it is what
+   every trading terminal and every scoreboard in the building
+   already does. The 102 row table did not get quieter, it got a
+   ground that stops competing with it.
+
+   NO MAIN EVENT LOGO, WORDMARK, TRADE DRESS OR SAMPLED BRAND
+   COLOUR. EVERY COLOUR BELOW WAS CONSTRUCTED IN CIELAB at a
+   chosen lightness, chroma and hue by scripts/theme_cabinet.py,
+   then measured with the WCAG 2.x relative luminance formula
+   against every surface it is actually painted on. None was
+   picked off mainevent.com and none was eyedropped from a
+   photograph. The source material is the wider visual language of
+   arcades, which nobody owns: ink, phosphor, marquee light. A hue
+   is not a mark; a lockup is, and there is no lockup here. The
+   disclaimer sits in the footer of every screen and the full
+   contrast table is published on /method.
+
+   Accessibility contract, carried over and still enforced by
+   arithmetic rather than by good intentions: Nathan is
+   colourblind, so NOTHING in this system may signal state by
+   colour alone. Every status token below has a matching glyph and
+   word in the component that uses it. Saturated colour collapses
+   harder under dichromacy than muted colour does, so going loud
+   made this harder and more important at once. The lane ramp's
+   worst pair moved from 8.85 to 10.00 dE2000 under simulated
+   protanopia, deuteranopia and tritanopia anyway, and the light
+   ground holds 8.72 of the same measurement. Those numbers are the
+   reason this theme is defensible rather than merely louder, and
+   the reason the second ground is a theme rather than a filter.
+
+   TWO GROUNDS, ONE PALETTE. There is a light theme now and it is
+   the same cabinet under house lights, not a paper theme
+   returning. It selects on <html data-theme="light"> and nothing
+   else. Dark stays :root, which means dark is what renders if
+   JavaScript never runs, if storage is unavailable, or if the
+   attribute is missing or misspelt.
+
+   THE HUES CARRY THE IDENTITY AND THE LIGHTNESS CARRIES THE
+   GROUND. The violet stays at hue 300, the pressable cyan at 205,
+   the signal at 336, the featured key at 62, and all twenty
+   section hues keep their eighteen degree spacing and their slot.
+   Only the lightness moves, and the chroma only where the sRGB
+   gamut forces it. That is why a second ground cost a column in a
+   table rather than a thousand edits, and it is the whole argument
+   the toggle is evidence for.
+
+   THREE THINGS INVERT AND EACH ONE IS A TRAP.
+   1. The surface ramp. On dark --surface-0 is the darkest and
+      --surface-3 the LIGHTEST, so --surface-3 sets the floor for
+      light ink. On light it flips back and --surface-3 is the
+      darkest, so it sets the floor for dark ink. It is the hardest
+      paper in both grounds; the audit works that out rather than
+      asserting it.
+   2. --surface-inverse and --text-inverse mean "the inverted
+      panel" and "the ink on it, and on any bright fill". They do
+      NOT mean "dark surface" and "light ink". On dark the panel is
+      a lit cream; on light it is the housing. Read the note on
+      those tokens before touching either.
+   3. The tints. Deep washes on dark, pale washes on light, and in
+      both grounds no tint is allowed past --surface-3, so no wash
+      ever quietly becomes the new floor for the text ramp.
+
+   HOW TO CHANGE ANYTHING IN HERE. Edit the LCh request in the BASE
+   table in scripts/theme_cabinet.py, which states one hue and two
+   lightness/chroma pairs per token, then:
+     python3 scripts/theme_cabinet.py check    # audits BOTH grounds,
+                                               # exits non-zero on a defect
+                                               # in either
+     python3 scripts/theme_cabinet.py css      # regenerate the values in
+                                               # both blocks below
+     python3 scripts/theme_cabinet.py tables   # regenerate these comments
+     node scripts/contrast-walk.mjs            # prove both in a browser
+   Do not type a hex in here by hand. Every value below is output,
+   including the two select chevrons, which are data URIs that
+   cannot read a custom property and so carry their hex inside the
+   string.
+   ============================================================ */
+
+:root {
+  /* --- Surfaces ---------------------------------------------
+     0 is the page, 1 is a card, 2 is a raised or hovered card,
+     3 is an inset well (table headers, code, empty states, the
+     track behind a bar).
+
+     THE DIRECTION OF THE RAMP IS INVERTED AND THAT IS THE WHOLE
+     THEME. On paper 0 was the lightest and 3 the darkest, and 3
+     set the floor for every ink because it was the darkest thing
+     a dark ink had to sit on. Here 0 is the darkest and 3 is the
+     LIGHTEST, so 3 is again the hardest background, this time for
+     light ink. Every ratio published below that says "worst
+     paper" is measured against --surface-3.
+
+     Constructed at L* 7, 12, 18 and 25, hue 300. Hue 300 is a
+     violet black and it is chosen against the alternative rather
+     than for itself: the default dark ground of every framework
+     and every dashboard is a blue grey near hue 250, which is the
+     dark mode equivalent of the cool paper this file used to
+     open with. Violet is the colour of ink, it reads as pigment
+     rather than as slate, and it is the one decision here that
+     four hundred screens inherit.
+
+     --surface-inverse IS NO LONGER A DARK BLOCK. On a dark
+     product the inverted surface is the LIT one: L* 95 at hue 78,
+     a warm marquee cream. It is the map chrome band, the daily
+     rings panel, the offers card, the field panel and the
+     excision block on /method, and on this theme those read as
+     the screen inside the cabinet rather than as ink on paper.
+     --text-inverse moved with it and is now a dark ink. */
+  --surface-0: #16141c;
+  --surface-1: #201e28;
+  --surface-2: #2d2b36;
+  --surface-3: #3d3a47;
+  --surface-inverse: #fbefe2;
+
+  /* --- Text -------------------------------------------------
+     0 is primary, 1 is secondary, 2 is tertiary/meta, 3 is the
+     dimmest legible step.
+
+     ALL FOUR CLEAR 4.5:1 AT ANY SIZE, ON EVERY SURFACE THEY ARE
+     ACTUALLY PAINTED ON, AND THAT INCLUDES EVERY TINT IN THIS
+     FILE. The rule the last theme fixed stays fixed: --text-3 is
+     not "reserved for large text", because a rule a token cannot
+     enforce is a rule the codebase breaks silently. Constructed
+     at L* 97, 85, 78 and 70, hue 300, so the ink carries the same
+     violet as the ground and never reads as a cold grey dropped
+     onto a warm black.
+
+                    s0     s1     s2     s3   worst tint
+       --text-0   16.97  15.28  12.93  10.31   11.06
+       --text-1   12.37  11.14   9.42   7.51    8.06
+       --text-2   10.09   9.09   7.69   6.13    6.58
+       --text-3    7.91   7.13   6.03   4.81    5.15
+
+     The worst tint in the system is --ledger-revenue-tint, which
+     is the lightest wash in the file. The floor for the whole
+     ramp is 4.81, which is --text-3 on --surface-3. The old ramp
+     cleared its floor by 0.23; this one clears it by 0.31 and has
+     more headroom at the top, which is what buys the hierarchy
+     back on a ground this dark: 1.11 between --text-1 and
+     --text-2, 1.28 between --text-2 and --text-3.
+
+     ON THE LIT PANEL. --text-inverse is the dark ink for the
+     inverted surface, 13.86:1 on --surface-inverse, and it is
+     also the label on every bright fill in the file: the primary
+     button, the pressed ledger toggle, the map legend tick.
+     --text-inverse-2 is its second rung at 6.66:1, and
+     --line-inverse is a rule on the lit panel rather than a
+     control boundary, so it is tuned to be seen rather than to
+     clear 3:1. */
+  --text-0: #f7f6fb;
+  --text-1: #d6d3de;
+  --text-2: #c2bfcc;
+  --text-3: #aca9b6;
+  --text-inverse: #2e2117;
+  --text-inverse-2: #645144;
+  --line-inverse: #baa89b;
+
+  /* --- Accent -----------------------------------------------
+     Electric cyan at L* 74, hue 205, at the most chroma the gamut
+     holds there. On a violet black ground it is the coldest and
+     the most luminous thing on the page, which is what makes a
+     button read as pressable before anybody reads its label, and
+     it is the only ink in the file that is neither a status nor a
+     section, so a control never gets mistaken for a state.
+
+     600 and 700 go BRIGHTER rather than darker, because on a dark
+     ground the hover of a lit control is more light and not less.
+     --accent is 5.46:1 on the worst paper as text and carries the
+     dark ink at 7.55:1 as a fill.
+
+     Interactive affordances only. Never used to encode data. */
+  --accent: #16c9d4;
+  --accent-600: #0ce8f4;
+  --accent-700: #99f7ff;
+  --accent-tint: #013b3f;
+  --accent-line: #0f8991;
+
+  /* --- The signal colour ------------------------------------
+     THE TOKEN IS STILL CALLED --brand-gold AND THE COLOUR IS NOT
+     GOLD ANY MORE. It is hot magenta, L* 70 at hue 336, and the
+     name stays because sixty odd CSS modules and roughly a
+     hundred and eighty declarations say --brand-gold. Renaming it
+     would be an API change wearing a paint job. Read it as "the
+     signal colour" everywhere it appears; --signal below is an
+     alias for anything written from here on.
+
+     It is the editorial colour: rules, eyebrows, the active nav
+     mark, the leading edge on a hovered row, the ring segments,
+     the figure that matters on a panel, the countdown to open. It
+     replaces a brass, and the change is the loudest single
+     decision in this file. On paper the editorial colour had to
+     be dark enough to carry text on near white, which capped it
+     at a greyed brass. On a near black ground the cap is gone and
+     the constraint runs the other way, so the editorial colour
+     can be the brightest ink in the room and still measure
+     4.83:1 on the worst paper.
+
+     --brand-gold-line IS THE SIGNAL COLOUR AS IT APPEARS ON THE
+     LIT PANEL, which is the only job it has ever had: the eyebrow
+     on the excision block, the glyph and the counter on the
+     offers card, the link inside the Kraemer panel on /field,
+     plus a hover border on a card. The lit panel flipped from
+     dark to bright with the theme, so this flipped with it and is
+     now a DEEP magenta at L* 45 rather than a pale one. It
+     measures 4.73:1 as text on the lit panel and 3.07:1 as a
+     border on a card, which are the only two things it is asked
+     to do.
+
+     What the signal colour is NOT: a status. It never means
+     anything. The moment a colour means something it has to earn
+     a glyph. */
+  --brand-gold: #fe7cde;
+  --brand-gold-600: #feade7;
+  --brand-gold-tint: #4a2b41;
+  --brand-gold-line: #c500a5;
+
+  /* Aliases. New code should say what it means; old code keeps
+     working because the value is the same object. */
+  --signal: var(--brand-gold);
+  --signal-600: var(--brand-gold-600);
+  --signal-tint: var(--brand-gold-tint);
+  --signal-line: var(--brand-gold-line);
+
+  /* --- Status -----------------------------------------------
+     Always paired with a glyph and a word. See the contract at
+     the top of this file. Each ink clears 4.5:1 on its own tint,
+     because a status chip sets its label in the ink at 9.5px, and
+     each tint is darker than --surface-3 so that no tint ever
+     becomes the new floor for the text ramp.
+
+     ON A DARK GROUND A STATUS IS A DIFFERENT CONSTRUCTION. On
+     paper the ink was dark and the tint was a near white wash of
+     the same hue. Here the ink is bright and the tint is a deep
+     wash at L* 21 to 23, so a chip reads as a lit label in a
+     recessed well. That inversion is why every one of these had
+     to be rebuilt rather than lightened.
+
+       --ok    5.80 on the worst paper, 6.69 on its tint
+       --warn  7.29                     8.14
+       --risk  4.83                     5.38
+       --info  5.15                     5.75
+       --neutral 5.47                   6.30 */
+  --ok: #00d778;
+  --ok-tint: #1c3826;
+  --warn: #fdcc01;
+  --warn-tint: #3f3316;
+  --risk: #fe8988;
+  --risk-tint: #512929;
+  --info: #32bcfe;
+  --info-tint: #10384e;
+  --neutral: #b8b4c3;
+  --neutral-tint: #33313b;
+
+  /* --- Provenance -------------------------------------------
+     Every commercial number in this app carries a provenance
+     badge. All six clear 4.5:1 on the lightest paper in the
+     system, because a badge that cannot be read is worse than no
+     badge, and the worst of them measures 5.77.
+
+     They are deliberately NOT the loudest inks here. On paper
+     "quiet" meant low chroma; on a dark ground quiet means lower
+     luminance than the thing it annotates, which is why these sit
+     at L* 76 while the figure beside them is --text-0 at L* 97. */
+  --prov-public: #03dece;
+  --prov-illustrative: #93bdff;
+  --prov-modeled: #deb800;
+  --prov-observed: #00d770;
+  --prov-user: #bdb9c8;
+  --prov-withheld: #e9bcff;
+
+  /* --- Lane accents -----------------------------------------
+     Used on lane cards, map markers and legend entries. The lane
+     is also always spelled out in text and always carries its
+     glyph.
+
+     THE STRUCTURE SURVIVED THE GROUND CHANGE; THE ARITHMETIC
+     UNDER IT DID NOT. It is still a three by three matrix, three
+     hue families crossed with three lightness bands, because nine
+     lanes still cannot be separated by lightness alone. What
+     changed is which end of the ramp is impossible.
+
+     ON PAPER THERE WAS A CEILING. A lane chip painted the lane
+     colour as text on a near white tint, so the ink could not go
+     above about L* 45, and below L* 20 every hue is black. That
+     left twenty five points of lightness for nine values.
+
+     ON A CABINET THERE IS A FLOOR AND A GAMUT. The tint is now
+     dark, so the ink has to be light: at least L* 59 to hold
+     4.5:1 on its own tint and 3:1 as a mark on --surface-3. Above
+     that the sRGB gamut narrows fast and asymmetrically. At L* 88
+     a yellow still holds 85 chroma and a violet holds 24, so the
+     naive answer, three bands pushed high for separation, ends in
+     three pastels and a palette that measures well and looks like
+     a hospital. CIEDE2000 makes it worse: its lightness term is
+     divided by a factor that grows with distance from L* 50, so
+     a ten point step at L* 88 is worth far less than the same
+     step at L* 30.
+
+     SO THE RAMP WAS SEARCHED, NOT PICKED. scripts/lane_search.py
+     sweeps hue triples crossed with band lightnesses and per band
+     hue drift, takes the maximum in gamut chroma at every cell,
+     rejects any arrangement whose weakest cell falls below a
+     chroma floor, and keeps the arrangement with the highest
+     worst pair separation under Vienot, Brettel and Mollon
+     protanopia, deuteranopia and tritanopia. The answer is bands
+     at L* 59, 73 and 87, and three families at hue 162, 72 and
+     312, each drifting ten degrees across its bands to buy back
+     chroma at the light end.
+
+                     acid          ember          ultra
+       band 1     schools     local retail     healthcare
+       band 2    colleges     auto/finance    hospitality
+       band 3     fitness      corporate          faith
+
+     Greyscale gives you the band: three flat value steps at
+     #8e8e8e, #b3b3b3 and #dadada, fourteen L* apart, instead of
+     nine indistinguishable greys. The pointed and square caps in
+     LaneChip give you the buyer class, and every pair inside a
+     band differs in cap or glyph. The temperature story survives:
+     the acid family is exactly the three calendar locked lanes
+     and the two warm families are the six discretionary ones.
+
+     THE FLOOR ACROSS ALL THIRTY SIX PAIRS UNDER SIMULATED
+     DICHROMACY IS 10.00 dE2000, against 8.85 for the paper theme
+     and 1.32 for the palette that preceded both. Loud got safer,
+     which is the opposite of what everyone expects and is the
+     reason the search exists.
+
+       lane                 ink       tint     L*  ink/tint  ink/s3
+       schools            #03a35a   #0b2c18   59     4.61     3.37
+       local-retail-food  #db7200   #38200b   59     4.65     3.39
+       healthcare         #b469fe   #2e203b   59     4.61     3.37
+       colleges           #0ccc90   #022c1c   73     7.29     5.31
+       auto               #fa9f03   #352208   73     7.25     5.29
+       hospitality        #d19efe   #2e203b   73     7.24     5.30
+       fitness            #12f6c8   #002c22   87    10.87     7.94
+       corporate          #ffd48b   #312405   87    10.86     7.94
+       faith              #ead0ff   #2e203b   87    10.80     7.90
+
+     Tightest pairs, worst of the three dichromacies:
+       colleges vs fitness           10.00
+       schools vs local-retail-food  10.42
+       local-retail-food vs auto     10.42
+       hospitality vs faith          10.42
+       colleges vs corporate         10.66
+
+     ONE HONEST NOTE, UNCHANGED. Inside a band the three lanes are
+     the same grey by design and the cap and glyph resolve them.
+     That is a deliberate trade: the alternative is nine lanes
+     separated by three L*, which resolves nothing. */
+
+  /* Band 1, deepest. L* 59 */
+  --lane-schools: #03a35a;
+  --lane-schools-tint: #0b2c18;
+  --lane-local-retail-food: #db7200;
+  --lane-local-retail-food-tint: #38200b;
+  --lane-healthcare: #b469fe;
+  --lane-healthcare-tint: #2e203b;
+
+  /* Band 2, middle. L* 73 */
+  --lane-colleges: #0ccc90;
+  --lane-colleges-tint: #022c1c;
+  --lane-auto: #fa9f03;
+  --lane-auto-tint: #352208;
+  --lane-hospitality: #d19efe;
+  --lane-hospitality-tint: #2e203b;
+
+  /* Band 3, lightest. L* 87, which is where the gamut runs out. */
+  --lane-fitness: #12f6c8;
+  --lane-fitness-tint: #002c22;
+  --lane-corporate: #ffd48b;
+  --lane-corporate-tint: #312405;
+  --lane-faith: #ead0ff;
+  --lane-faith-tint: #2e203b;
+
+  /* --- Package families -------------------------------------
+     Drawn from the same three families and the same three bands
+     as the lanes, and the same rule applies: the family is
+     spelled out in words wherever these appear, and colour is the
+     second signal rather than the first.
+
+     The distinction that matters commercially is between the
+     packages Main Event publishes a price for and the ones it
+     gates behind a sales manager, so those two sit in different
+     hue families and different bands rather than next to each
+     other. */
+  --fam-corporate: #03a35a;
+  --fam-corporate-tint: #0b2c18;
+  --fam-youth-group: #12f6c8;
+  --fam-youth-group-tint: #002c22;
+  --fam-self-serve: #ffd48b;
+  --fam-self-serve-tint: #312405;
+  --fam-buyout: #d19efe;
+  --fam-buyout-tint: #2e203b;
+  --fam-fundraiser: #fa9f03;
+  --fam-fundraiser-tint: #352208;
+
+  /* --- Ledger identity --------------------------------------
+     The two ledgers read as different places, and they must.
+
+     ON PAPER THE MONEY COLUMN WAS THE DARKEST INK IN THE FILE AND
+     THE ACTIVITY COLUMN A LIGHTER OLIVE. The relationship is the
+     same here and the direction flips, which is what a ground
+     change does to every emphasis token in a system: booked
+     revenue is now the BRIGHTEST thing on the panel at L* 88, and
+     outbound activity is a dimmer olive at L* 70. A pre-opening
+     report is exactly where hours out of the building get quietly
+     dressed up as results, and these two must never be mistaken
+     for each other at a glance. Reinforcement only, since the
+     ledger is named in the toggle, in the heading and in the
+     summary.
+
+     Both are painted as fills with --text-inverse on top, at
+     11.36:1 and 6.80:1, and both are painted as text on a card,
+     at 8.13:1 and 4.85:1. That two way use is why they sit where
+     they sit and not higher. */
+  --ledger-revenue: #ffd6a4;
+  --ledger-revenue-tint: #46341a;
+  --ledger-activity: #a0b600;
+  --ledger-activity-tint: #323419;
+
+  /* --- Lines ------------------------------------------------
+     THE RULE IS LIGHTER THAN THE SURFACE NOW, WHICH IS THE ONLY
+     WAY A RULE WORKS ON A DARK GROUND, and --line-strong is still
+     the one that has to hold a number. It draws control borders
+     in seventy five declarations, several of them the resting
+     border of a button or an input, and WCAG 1.4.11 asks 3:1 of a
+     control boundary.
+
+     It was 1.99:1 in the original theme, 3.06:1 in the paper
+     theme, and it is 3.26:1 here against --surface-3, which is
+     the LIGHTEST paper in this system and therefore the hardest
+     background a light rule can sit on. On a card it is 4.83:1
+     and on the page 5.37:1.
+
+       token          s0     s1     s2     s3
+       --line        1.89   1.70   1.44   1.15
+       --line-2      2.72   2.45   2.08   1.66
+       --line-strong 5.37   4.83   4.09   3.26
+
+     --line is the hairline inside a card; it separates, it does
+     not enclose. --line-2 is the divider between two blocks of
+     content. Neither of those two is ever the only boundary of
+     something pressable. */
+  --line: #46434f;
+  --line-2: #5d5a6a;
+  --line-strong: #8d899a;
+
+  /* --- Section identity -------------------------------------
+     EVERY NAVIGATION SECTION IS A SECTION OF PLAY, AND THIS IS
+     WHAT IT PLAYS WITH. Three tokens per section:
+
+       --sec-<name>        the mark. A rail bar, an active edge, a
+                           page rule. L* 66 or 78, alternating
+                           down the rail. Clears 3:1 on every
+                           paper as an essential graphic.
+       --sec-<name>-ink    the text. L* 76 or 86, so it clears
+                           4.5:1 on every paper AND on its own
+                           glow. This is the one that may carry
+                           words.
+       --sec-<name>-glow   the wash behind the section. L* 20, so
+                           it is always darker than --surface-3
+                           and never becomes the new floor for the
+                           text ramp.
+
+     HOW THE HUES WERE CHOSEN. Twenty hues spread evenly round the
+     wheel, eighteen degrees apart, so no two sections anywhere in
+     the application share a colour in normal vision. Which slot
+     gets which hue is then searched by annealing in
+     scripts/theme_cabinet.py, maximising the worst separation
+     between sections that sit within two slots of each other in
+     the rail, measured as CIEDE2000 after simulated protanopia,
+     deuteranopia and tritanopia. Lightness alternates down the
+     rail as well, so two neighbours differ in value as well as in
+     hue, which is the one separation that survives a reader with
+     no colour vision at all.
+
+     THE ORDER HAD TO BE RE-SOLVED FOR THE SECOND GROUND, WHICH IS
+     THE MOST USEFUL THING THE LIGHT THEME TURNED UP. The previous
+     order was annealed against the dark ground alone. Re-scored
+     against the light one it fell to 3.03 dE2000: the capacity and
+     coaching inks sit two slots apart, and at L* 20 a green and a
+     violet project onto nearly the same dark teal under
+     tritanopia, where at L* 86 the same two hues keep thirty units
+     of chroma between them. A hue order that is safe on one ground
+     is not evidence about the other. So the objective became the
+     worst floor across BOTH grounds and the anneal was restarted a
+     hundred and forty times.
+
+     THE FLOOR IS 7.76 dE2000 ON DARK AND 8.14 ON LIGHT for any two
+     sections within two slots of each other, on both the mark and
+     the ink. The dark number went UP, from 7.74, because being
+     forced to satisfy two grounds at once landed on a better
+     arrangement for the first one. Across all twenty the floor is
+     lower and it is meant to be: two sections that never appear
+     together do not have to be told apart, and twenty hues cannot
+     all survive dichromacy at once. Colour here is an aid to
+     place, never a signal of state; the section is always named in
+     the rail, in the page title and in the document title.
+
+       section      hue    mark       ink        glow      ink/glow  nearest
+       today        162  #00b780    #0dd597    #0e3727      6.89     10.60
+       requests      18  #feabaf    #fdcbcd    #4c2528      9.11     10.60
+       desk         108  #9ba900    #b5c503    #313214      6.86     15.01
+       maps         216  #01d4ed    #63e9ff    #01363e      9.15      9.68
+       lanes        342  #ff68c9    #ff9cd7    #47253a      6.90      9.68
+       field        126  #7ad804    #89f105    #273418      9.21      9.06
+       leagues      288  #809bfe    #abb7fe    #282f4c      6.83      8.24
+       inbox        198  #14d6d8    #0feff1    #003738      9.13      8.24
+       sent          54  #fe7a2b    #fea677    #462919      6.87     10.86
+       replies       36  #ffac9c    #feccc2    #4a2620      9.21     10.86
+       objections   234  #11aed7    #0bcbfb    #003544      6.87      8.31
+       book         252  #78cafe    #b0ddfe    #00344c      9.16      8.31
+       week           0  #fe70a3    #ffa0bd    #4b2431      6.90      9.49
+       capacity      72  #ffb14f    #fecf9c    #412c14      9.16      9.49
+       packages     270  #42a5fe    #8ebffd    #17324d      6.89      8.65
+       coaching     180  #13d8bf    #00f1d5    #003730      9.15      8.65
+       method        90  #bf9d04    #deb800    #392f12      6.90      8.44
+       partners     324  #f7a3ff    #fbc6fe    #402842      9.13      8.44
+       promo        306  #b18cfe    #cbadff    #352b48      6.89      9.12
+       spend        144  #0cde58    #07f862    #1c361f      9.15     24.00
+
+     Every ink above also clears 4.5:1 on every one of the four
+     papers; the lowest is 5.77. */
+  --sec-today: #96aa02;
+  --sec-today-ink: #b0c701;
+  --sec-today-glow: #2f3214;
+  --sec-requests: #0ddc8d;
+  --sec-requests-ink: #0bf59e;
+  --sec-requests-glow: #123724;
+  --sec-desk: #ff69c4;
+  --sec-desk-ink: #fe9dd3;
+  --sec-desk-glow: #472539;
+  --sec-maps: #fea1f6;
+  --sec-maps-ink: #fec5f8;
+  --sec-maps-glow: #422740;
+  --sec-lanes: #c683fe;
+  --sec-lanes-ink: #d9a8fe;
+  --sec-lanes-glow: #3a2a46;
+  --sec-field: #0bdab1;
+  --sec-field-ink: #01f3c6;
+  --sec-field-glow: #03382c;
+  --sec-leagues: #feb070;
+  --sec-leagues-ink: #feceaa;
+  --sec-leagues-glow: #442b16;
+  --sec-inbox: #7fd703;
+  --sec-inbox-ink: #8ef003;
+  --sec-inbox-glow: #273418;
+  --sec-sent: #fe70a3;
+  --sec-sent-ink: #ffa0bd;
+  --sec-sent-glow: #4b2431;
+  --sec-replies: #c0b9fe;
+  --sec-replies-ink: #d8d2fe;
+  --sec-replies-glow: #2f2d4a;
+  --sec-objections: #14ace8;
+  --sec-objections-ink: #5fc6fe;
+  --sec-objections-glow: #01344a;
+  --sec-book: #dcc105;
+  --sec-book-ink: #f5d703;
+  --sec-book-glow: #373012;
+  --sec-week: #ff7387;
+  --sec-week-ink: #ffa2aa;
+  --sec-week-glow: #4c2429;
+  --sec-capacity: #1fa7ff;
+  --sec-capacity-ink: #84c0ff;
+  --sec-capacity-glow: #12324d;
+  --sec-packages: #3bd0fe;
+  --sec-packages-ink: #9ae1ff;
+  --sec-packages-glow: #003544;
+  --sec-coaching: #0ab2b9;
+  --sec-coaching-ink: #19cfd8;
+  --sec-coaching-glow: #023639;
+  --sec-method: #ffaca2;
+  --sec-method-ink: #ffcbc4;
+  --sec-method-glow: #4b2622;
+  --sec-partners: #ff7946;
+  --sec-partners-ink: #ffa583;
+  --sec-partners-glow: #48281c;
+  --sec-promo: #0cd7cb;
+  --sec-promo-ink: #0cf0e3;
+  --sec-promo-glow: #003734;
+  --sec-spend: #6f9ffd;
+  --sec-spend-ink: #a2bafe;
+  --sec-spend-glow: #23304d;
+
+  /* --- The featured key -------------------------------------
+     THE ONE WARM THING ON A COLD CABINET, and it belongs to
+     exactly one control: the key that opens the trade area
+     board, on the strip and on the rail.
+
+     WHY IT IS NOT A TWENTY FIRST SECTION COLOUR. The twenty
+     above name places. This names a rank. Maps already has a
+     section colour and keeps it, because the board itself is
+     still the maps section when a reader is standing on it;
+     what this paints is the KEY, which is a different object
+     with a different job. A section says where you are. This
+     says which one to press first.
+
+     WHY HUE 62. The grounds are a violet black at hue 300 and
+     the one interactive colour is an electric cyan at hue 205,
+     so the warm half of the wheel is where nothing structural
+     already lives. Hue 62 is a true orange: 36 is the red the
+     risk ink sits on and 90 is the yellow the maps section
+     wears, and both ends of that span are hues this palette
+     already spends. At L* 70 the gamut still holds full chroma
+     there, which is what makes it read as a lit lamp rather
+     than as a tinted panel.
+
+     THE KEY IS A FILLED PLATE AND THIS IS ITS FACE, not an
+     outline and not a wash, and that is what makes the feature
+     survive with no colour vision at all. Every other key on
+     the strip is light type on a near black housing; this one
+     inverts to dark type on a light face. In greyscale the face
+     is #ababab against a housing of #151515, which is a value
+     relationship rather than a hue one.
+
+       token           L*   carries --text-inverse   worst paper
+       --feature       70          6.80                 4.83
+       --feature-600   80          9.14                 6.50
+
+     --feature-edge is L* 45, the moulded shoulder the key sits
+     on and drops onto when pressed. It is depth rather than a
+     boundary: the boundary of this control is the face, which
+     measures 7.95 against the housing and 4.83 against the
+     lightest paper in the file. */
+  --feature: #ff8e26;
+  --feature-600: #feb782;
+  --feature-edge: #a65500;
+
+  /* --- The four things that are not colours but are the ground --
+     Each of these was a literal somewhere else in the codebase
+     until there were two grounds, at which point every one of them
+     was a decision about the dark theme frozen into a file that
+     had no way to say so.
+
+     --color-scheme tells the browser which way round its own
+     scrollbars, form controls and canvas go. Getting it wrong
+     gives a light page dark native scrollbars, which is the
+     loudest possible way to look unfinished.
+
+     --map-filter is applied to the Leaflet tile pane only, never
+     to the marker or popup panes, so every mark this application
+     draws keeps its constructed colour. CARTO's basemap is a near
+     white map. On the dark ground it is inverted, and the hue
+     rotation puts the hue back where the inversion flipped it. On
+     the light ground there is nothing to invert: the tiles are
+     already the right ground, so they only get settled back a
+     little so the marks stay on top of them.
+
+     --hatch-ink is the diagonal hatch over the gated half of a
+     package bar. The bar is a bright ink on dark and a deep ink on
+     light, so the hatch is a black on one and a white on the
+     other.
+
+     --select-chevron and --select-chevron-ink are the arrow on a
+     <select>, on a card and on the inverted panel. A data URI is
+     opaque to the cascade and cannot read a custom property, so
+     the hex has to live inside the string. They are generated with
+     the rest of the palette rather than typed, which is the only
+     way a chevron does not quietly stay one theme behind. */
+  --color-scheme: dark;
+  --type-track: 0.004em;
+  --font-smooth: antialiased;
+  --font-smooth-moz: grayscale;
+  --map-filter: invert(1) hue-rotate(180deg) brightness(0.86)
+                contrast(0.92) saturate(0.72);
+  --hatch-ink: rgba(0, 0, 0, 0.42);
+  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%23fe7cde' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --select-chevron-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%232e2117' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  /* --- Radius / elevation -----------------------------------
+     Structure still comes from rules and type. Depth is a second
+     signal for the things that genuinely sit above the page.
+
+     THE RADII WENT UP AGAIN, AND THAT IS THE COOKING MAMA HALF OF
+     the reference doing its work: a chunky corner reads as a
+     moulded plastic bezel rather than as a region of a
+     spreadsheet. Two more pixels each.
+
+     THE SHADOWS HAD TO BE REBUILT, NOT RETINTED. A dark shadow
+     under a dark card is invisible, which is why every dark
+     interface that simply keeps its shadows looks flat. Each
+     level is now two things at once: a real shadow in pure black
+     at a much higher alpha, which still works because the ground
+     is not black, plus an inset hairline of light along the top
+     edge. The rim is what makes a raised surface read as lit from
+     above, and it is the closest this file gets to drawing an
+     actual bevel.
+
+     --shadow-3 is the only genuinely raised one and it is
+     reserved for things that float over content: modals, the
+     search panel, the map cards. */
+  --radius-s: 10px;
+  --radius-m: 14px;
+  --radius-l: 18px;
+  --radius-pill: 999px;
+  --shadow-1:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  --shadow-2:
+    0 3px 10px rgba(0, 0, 0, 0.55),
+    0 1px 2px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-3:
+    0 18px 44px rgba(0, 0, 0, 0.66),
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075);
+
+  /* --- The three depth effects that are not a shadow ---------
+     ADDED BY THE SWEEP PASS, not by scripts/theme_cabinet.py.
+     Every value above is generated; these three are hand written
+     because they are alpha over an unknown background rather than
+     a solved colour, and the audit has nothing to measure them
+     against. If the generator ever learns to emit them, these are
+     the names it has to keep.
+
+     WHY THEY ARE TOKENS AT ALL. Each one was a literal rgba in a
+     component, and each one meant the opposite thing on the
+     second ground. A scrim written as a near black at 0.32 is
+     the clearest case: over a light page it is a proper dim, and
+     over this ground it is nothing at all, so a modal opened on
+     dark had no wash behind it and the page behind it stayed at
+     full strength. The rule a scrim has to obey is not "be dark",
+     it is "be darker than what it covers", and that is two values
+     rather than one.
+
+     --scrim is the wash behind a drawer, a sheet or a floating
+     pane, all of which leave part of the page working beside them.
+     --scrim-strong is behind a modal, which owns the screen and
+     says so. On this ground both are pure black, because the
+     ground is a violet near black and nothing else goes under it.
+
+     --well-inset is the shadow inside a recessed slot: the rail's
+     count wells, and anything else that reports rather than
+     invites a press.
+
+     --rim-top is the hairline of light along the top edge of a
+     raised band, the same bevel the shadows above draw, available
+     on its own for the one band that draws its own shadow. */
+  --scrim: rgba(0, 0, 0, 0.55);
+  --scrim-strong: rgba(0, 0, 0, 0.72);
+  --well-inset: inset 0 1px 2px rgba(0, 0, 0, 0.45);
+  --rim-top: rgba(255, 255, 255, 0.1);
+
+  /* --- Type -------------------------------------------------
+     THREE FACES, AND EACH ONE HAS A JOB IT IS THE BEST AVAILABLE
+     ANSWER TO. The last theme kept its type deliberately
+     unchanged and said so; that was the right call for a paper
+     theme and it is the wrong one for a marquee, because a
+     marquee is mostly type.
+
+     RUBIK IS THE DISPLAY FACE. Heavy, geometric, and rounded at
+     the corners, which is the Cooking Mama half of the reference
+     in a typeface: chunky and friendly rather than technical. Set
+     at 700 and 800 with negative tracking it reads as signage. It
+     replaces Spectral, which was a book serif and was the single
+     strongest remaining argument that this product is a library.
+
+     INTER IS THE BODY AND THE UI FACE AND IT DID NOT MOVE. This
+     is the one place where boring is the requirement: a hundred
+     and two rows at 11px get read all day, and Inter is a face
+     built for exactly that at exactly that size. Swapping it for
+     something with character would cost legibility to buy a
+     quality the headings already supply.
+
+     AZERET MONO IS THE READOUT. Every figure that gets compared
+     down a column is mono and tabular. IBM Plex Mono did that job
+     correctly and anonymously; Azeret has squared terminals and a
+     mechanical rhythm that make a column of numbers read as a
+     scoreboard rather than as a report, at the same 600 unit
+     advance width so nothing in the tables moves.
+
+     --font-operator NOW POINTS AT THE MONO, AND THAT IS A REAL
+     DECISION RATHER THAN A LEFTOVER. The operator note is the
+     fourth wall: the surface where Nathan steps out of the
+     product to explain a decision. On paper that was a serif,
+     because a serif is a person's voice on a printed page. Three
+     faces is the budget, a fourth would be indulgent, and on a
+     cabinet the honest register for a note from the person who
+     built the machine is a console printout. It sits on the only
+     green surface in the file and it is set in the readout face.
+
+     IF THE FONT REQUEST FAILS every stack below falls through to
+     something present on the machine, and the proof harness
+     stubs Google Fonts to empty on purpose so that every route is
+     rendered and measured in the fallback. */
+  --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Azeret Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: "Rubik", "Trebuchet MS", system-ui, sans-serif;
+  --font-operator: "Azeret Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* The scale is a 1.2 ratio up to step 3 and then opens out, so
+     a page title and a headline figure get marquee size without
+     moving a single one of the sizes a table uses. Steps -2, -1
+     and 0 are byte for byte what they were. */
+  --step--2: 0.694rem;
+  --step--1: 0.833rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.44rem;
+  --step-3: 1.728rem;
+  --step-4: 2.15rem;
+  --step-5: 2.6rem;
+
+  /* --- Space (8px base) ------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* --- Motion ----------------------------------------------- */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+
+  /* --- Operator note fourth wall ----------------------------
+     A green console. It is the only surface in the file with
+     green in it, which is what it was on paper too, and it is the
+     only place the product stops being the product.
+
+     THE FOURTH WALL HAD TO BE REBUILT ON A NEW AXIS. On paper it
+     worked by being cooler and greener than a warm page. On a
+     dark product the old trick, a light panel against a light
+     page, is gone, so this one is a deep green black at L* 13
+     against a violet black page at L* 7, with its own mint accent
+     at 8.91:1 and its own ink pair. The face changed with it: see
+     the note on --font-operator above.
+
+     ONE HONEST NOTE. Nothing currently reads --op-surface or the
+     five tokens under it. The operator VOICE is still on eight
+     routes and reads --font-operator, but the surface that used
+     to carry it was refactored away at some point before this
+     wave. The tokens are rebuilt and kept rather than deleted,
+     because deleting a token is an API change and because the
+     next component that needs a fourth wall should not have to
+     reinvent one. They are measured to the same floor as
+     everything else in this file. */
+  --op-surface: #0b261c;
+  --op-surface-2: #163126;
+  --op-line: #315244;
+  --op-accent: #00dba2;
+  --op-text-0: #dff2e9;
+  --op-text-1: #afc6bc;
+  --op-dur-slide: 480ms;
+  --op-dur-settle: 520ms;
+  --op-stagger: 70ms;
+  --op-ease-awaken: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- Z-index ---------------------------------------------- */
+  --z-map-overlay: 10;
+  --z-rail: 20;
+  --z-nav: 30;
+  --z-drawer: 40;
+  --z-tray: 45;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+
+  /* --- Layout ----------------------------------------------- */
+  --nav-h: 56px;
+  --subnav-h: 0px;
+  --sticky-h: calc(var(--nav-h) + var(--subnav-h));
+  --shell-max: 1440px;
+  --shell-pad: var(--space-5);
+
+  /* The three-column board. These are the single source of truth;
+     the grid template reads them and nothing else sets a width. */
+  --col-list: 328px;
+  --col-drawer: 432px;
+  --tray-h: 56px;
+  /* Three families added when the floor, the accounts board and
+     the competitive set arrived. The whole rail was re-solved rather
+     than these three being bolted on with leftover hues: adjacency is
+     a property of the ORDER, so adding a section without re-solving
+     silently degrades pairs that were fine before. Twenty five
+     sections would not clear the 7.5 floor at all, which is why Pay
+     and the district report share the floor's identity the way the
+     cup already shares the leagues'. */
+  --sec-accounts: #05d4f1;
+  --sec-accounts-ink: #73e7ff;
+  --sec-accounts-glow: #01363f;
+  --sec-team: #d59402;
+  --sec-team-ink: #f8ad00;
+  --sec-team-glow: #3e2d13;
+  --sec-rivals: #00ba37;
+  --sec-rivals-ink: #02d942;
+  --sec-rivals-glow: #1e361d;
+}
+
+/* ============================================================
+   THE SAME CABINET WITH THE HOUSE LIGHTS ON.
+
+   THIS IS NOT THE WARM PAPER THEME COMING BACK. That palette was
+   replaced for good reasons and it is not what this is. Every hue
+   below is the hue above it: the violet is still the violet, the
+   cyan is still the pressable colour, the magenta is still the
+   signal, the orange is still the featured key, and every one of
+   the twenty sections keeps the slot it was annealed into. What
+   moved is the lightness column, and the chroma only where the
+   sRGB gamut refused the request.
+
+   INK ON PAPER, NOT PAPER PRETENDING TO BE A DOCUMENT. The dark
+   ground gave every ink a FLOOR: it had to be bright enough to
+   carry 4.5:1 against the lightest surface. The light ground gives
+   the same inks a CEILING at about L* 37, for the same arithmetic
+   run the other way, and the whole table below falls out of that
+   one number. Nothing here was lightened by eye.
+
+   Regenerate with: python3 scripts/theme_cabinet.py css
+   ============================================================ */
+:root[data-theme="light"] {
+  /* --- Surfaces ---------------------------------------------
+     THE RAMP RUNS THE OTHER WAY AND THAT IS THE WHOLE THEME
+     AGAIN. 0 is the page and the LIGHTEST, 3 is the inset well and
+     the DARKEST, so 3 is once more the hardest background in the
+     system, this time for dark ink. Every ratio published in this
+     block that says "worst paper" is --surface-3, and the audit
+     finds that out by taking a minimum rather than by being told.
+
+     Constructed at L* 98, 94, 89 and 82, hue 300, the same violet
+     as the housing at a fifth of the chroma. It is the same
+     pigment thinned, not a different paper stock, which is what
+     keeps the two grounds recognisably one product.
+
+     --surface-inverse IS THE HOUSING. On the dark ground the
+     inverted panel is the lit cream; here it is L* 10 at hue 300,
+     which is within a point of the dark theme's own card. The map
+     chrome band, the daily rings panel, the offers card, the field
+     panel and the excision block on /method are the one place in
+     the light theme where the cabinet shows through, and
+     --text-inverse moved with it and is a near white again. */
+  --surface-0: #faf8fe;
+  --surface-1: #efedf6;
+  --surface-2: #e1dee9;
+  --surface-3: #cdcad7;
+  --surface-inverse: #1c1a25;
+
+  /* --- Text -------------------------------------------------
+     ALL FOUR CLEAR 4.5:1 AT ANY SIZE, ON EVERY SURFACE AND EVERY
+     TINT, exactly as they do on the dark ground. Constructed at
+     L* 10, 22, 29 and 35, hue 300, so the ink carries the same
+     violet as the paper and never reads as a cold grey dropped on
+     a warm white.
+
+                    s0     s1     s2     s3   worst tint
+       --text-0     16.24  14.76  12.90  10.62   11.56
+       --text-1     11.72  10.66   9.31   7.66    8.34
+       --text-2      9.15   8.32   7.27   5.99    6.52
+       --text-3      7.35   6.68   5.84   4.80    5.23
+
+     The worst tint in this ground is ledger-revenue-tint,
+     which is the deepest wash in the file, at 5.23 against the
+     dimmest ink. The floor for the whole ramp is 4.80, which is
+     --text-3 on --surface-3, against 4.81 for the same pair on the
+     dark ground. The two ramps are within two hundredths of each
+     other at every step, which is the point: a reader toggling the
+     theme gets the same hierarchy, not a different one that also
+     happens to pass.
+
+     ON THE INVERTED PANEL. --text-inverse is the near white for
+     the housing, 15.47:1 on --surface-inverse, and it is also
+     the label on every bright fill in the file: the primary
+     button, the pressed ledger toggle, the map legend tick, the
+     featured key. On the dark ground that same token is a dark
+     ink. A component that assumes either direction is broken in
+     one of the two themes and will look fine to whoever wrote it.
+     --text-inverse-2 is its second rung at 7.47:1 and
+     --line-inverse is a rule on the panel rather than a control
+     boundary, so it is tuned to be seen at 1.97:1 rather than to
+     clear 3:1. */
+  --text-0: #1c1b20;
+  --text-1: #36333e;
+  --text-2: #46434f;
+  --text-3: #54515d;
+  --text-inverse: #f4f2fa;
+  --text-inverse-2: #ada9b8;
+  --line-inverse: #4d4959;
+
+  /* --- Accent -----------------------------------------------
+     Hue 205 at L* 36, at the most chroma the gamut holds there. It
+     is a deep teal rather than an electric cyan and it is the same
+     colour: on a near white page the only way to be the thing a
+     reader presses is to be the darkest saturated ink on it, and
+     4.5:1 on --surface-3 caps a text ink at about L* 37.
+
+     600 and 700 go DEEPER rather than brighter, which is the same
+     gesture as the dark theme's 600 and 700 going brighter: a
+     pressed control moves away from its paper. --accent is
+     4.66:1 on the worst paper as text and carries the near
+     white ink at 6.78:1 as a fill.
+
+     --accent-line is the moulded shoulder under a pressed key, so
+     it is deeper than the face in both grounds.
+
+     Interactive affordances only. Never used to encode data. */
+  --accent: #065e64;
+  --accent-600: #004a4f;
+  --accent-700: #02363a;
+  --accent-tint: #b8e8ec;
+  --accent-line: #004549;
+
+  /* --- The signal colour ------------------------------------
+     Still hue 336, still called --brand-gold, still not gold. At
+     L* 34 it is a deep magenta that measures 4.98:1 on the
+     worst paper, so it can do the one thing the paper theme's
+     brass could never do and carry small text anywhere.
+
+     --brand-gold-line IS THE SIGNAL COLOUR ON THE INVERTED PANEL,
+     which is the only job it has ever had, plus a hover border on
+     a card. Those two demands pull against each other and the
+     window between them is about two points of lightness wide in
+     each ground: it has to clear 4.5:1 on the panel and 3:1 on a
+     card, and with the panel at L* 10 and the card at L* 94 that
+     leaves L* 55 to 57. At L* 56 it measures 4.72:1 as text on
+     the panel and 3.14:1 as a border on a card. On the dark
+     ground the same token is a DEEP magenta at L* 45 for exactly
+     the same two reasons. It is the clearest example in the file
+     of a token whose meaning is a job rather than a lightness.
+
+     What the signal colour is NOT: a status. It never means
+     anything. The moment a colour means something it has to earn
+     a glyph. */
+  --brand-gold: #97007e;
+  --brand-gold-600: #760062;
+  --brand-gold-tint: #f6d3eb;
+  --brand-gold-line: #f500ce;
+
+  /* --- Status -----------------------------------------------
+     Always paired with a glyph and a word. Each ink clears 4.5:1
+     on its own tint, because a status chip sets its label in the
+     ink at 9.5px, and every tint is LIGHTER than --surface-3 so
+     that no wash ever becomes the new floor for the text ramp.
+     That is the same rule as the dark ground with the inequality
+     flipped, and it is enforced by the audit rather than by
+     intention.
+
+     --warn IS AN OLIVE HERE AND THAT IS HONEST. A yellow that has
+     to carry 4.5:1 on a near white paper is not a yellow, it is a
+     dark gold. The alternative is a warn chip a person cannot read
+     or a rule that exempts one token, and both are worse than a
+     colour that is duller than it was. The hue is unchanged, the
+     glyph and the word do the work they always did.
+
+       --ok        4.99 on the worst paper,  5.89 on its tint
+       --warn      4.66 on the worst paper,  5.51 on its tint
+       --risk      5.20 on the worst paper,  6.15 on its tint
+       --info      4.85 on the worst paper,  5.74 on its tint
+       --neutral   5.02 on the worst paper,  5.93 on its tint */
+  --ok: #015d31;
+  --ok-tint: #c6e4ce;
+  --warn: #685200;
+  --warn-tint: #ecdbbb;
+  --risk: #9f0027;
+  --risk-tint: #fdd3d0;
+  --info: #00587c;
+  --info-tint: #c2e1f9;
+  --neutral: #514e5c;
+  --neutral-tint: #dedbe7;
+
+  /* --- Provenance -------------------------------------------
+     All six clear 4.5:1 on the darkest paper in the system and the
+     worst measures 4.80. They are deliberately not the
+     loudest inks here: on the dark ground quiet meant lower
+     luminance than the figure they annotate, and here it means
+     higher, so they sit near L* 35 while the figure beside them is
+     --text-0 at L* 10. */
+  --prov-public: #00554f;
+  --prov-illustrative: #005592;
+  --prov-modeled: #635100;
+  --prov-observed: #00602e;
+  --prov-user: #54505f;
+  --prov-withheld: #6f00ab;
+
+  /* --- Lane accents -----------------------------------------
+     THE MATRIX SURVIVED THE SECOND GROUND AND THE BANDS FLIPPED
+     END FOR END. Still three hue families crossed with three
+     lightness bands, still hues 162, 72 and 312 with the same ten
+     degree per band drift, because a lane's hue is its identity
+     and schools is the same green with the lights on or off.
+
+     WHAT MOVED IS THE THREE BAND LIGHTNESSES, AS A BLOCK. On the
+     dark ground a lane ink had a FLOOR near L* 59: it carries
+     9.5px chip text on a deep tint and has to hold 3:1 as a mark
+     on the lightest paper. Here both demands become a CEILING near
+     L* 44, so the bands are 43, 31 and 19. Band 1 means the same
+     thing in both grounds, the band nearest the ground and the
+     quietest of the three.
+
+     THE FLOOR ACROSS ALL THIRTY SIX PAIRS UNDER SIMULATED
+     DICHROMACY IS 8.72 dE2000, against 10.00 on the dark
+     ground. It is lower and it is not a defect: at the bottom of
+     the range the sRGB gamut holds less chroma, so two hues that
+     the eye separates by saturation on a dark ground have to be
+     separated by value here. It clears the 8.00 the contract asks
+     with room, and the greyscale bands do the rest.
+
+       lane                 ink       tint     L*  ink/tint  ink/s3
+       schools           #03753f   #cbeed5   43     4.62    3.60
+       local-retail-food #9f5100   #fedfcb   43     4.56    3.57
+       healthcare        #891afe   #f1dfff   43     4.60    3.58
+       colleges          #005439   #c6efda   31     7.20    5.60
+       auto              #694000   #fde1c5   31     7.18    5.58
+       hospitality       #6300c5   #f1dfff   31     7.16    5.57
+       fitness           #003629   #c1efe0   19    10.70    8.35
+       corporate         #3d2b00   #f8e2c3   19    10.79    8.44
+       faith             #400085   #f1dfff   19    10.75    8.37
+
+     Tightest pairs, worst of the three dichromacies:
+       hospitality                 faith                 8.72
+       colleges                    fitness               8.87
+       schools                     local-retail-food     9.50
+       auto                        corporate             9.56
+       local-retail-food           auto                  9.69
+
+     Greyscale still gives you the band: three flat values twelve
+     L* apart instead of nine indistinguishable greys. The pointed
+     and square caps in LaneChip give the buyer class, and every
+     pair inside a band differs in cap or glyph. Inside a band the
+     three lanes are the same grey by design, which is the same
+     deliberate trade both other grounds made. */
+  --lane-schools: #03753f;
+  --lane-schools-tint: #cbeed5;
+  --lane-colleges: #005439;
+  --lane-colleges-tint: #c6efda;
+  --lane-fitness: #003629;
+  --lane-fitness-tint: #c1efe0;
+  --lane-local-retail-food: #9f5100;
+  --lane-local-retail-food-tint: #fedfcb;
+  --lane-auto: #694000;
+  --lane-auto-tint: #fde1c5;
+  --lane-corporate: #3d2b00;
+  --lane-corporate-tint: #f8e2c3;
+  --lane-healthcare: #891afe;
+  --lane-healthcare-tint: #f1dfff;
+  --lane-hospitality: #6300c5;
+  --lane-hospitality-tint: #f1dfff;
+  --lane-faith: #400085;
+  --lane-faith-tint: #f1dfff;
+
+  /* --- Package families -------------------------------------
+     Drawn from the same three families and the same three bands as
+     the lanes, and the same rule applies: the family is spelled
+     out in words wherever these appear. */
+  --fam-corporate: #03753f;
+  --fam-corporate-tint: #cbeed5;
+  --fam-youth-group: #003629;
+  --fam-youth-group-tint: #c1efe0;
+  --fam-self-serve: #3d2b00;
+  --fam-self-serve-tint: #f8e2c3;
+  --fam-buyout: #6300c5;
+  --fam-buyout-tint: #f1dfff;
+  --fam-fundraiser: #694000;
+  --fam-fundraiser-tint: #fde1c5;
+
+  /* --- Ledger identity --------------------------------------
+     Booked revenue is the loudest thing on the panel and outbound
+     activity is the quieter olive beside it, in both grounds.
+     Loud is the brightest ink at L* 88 on dark and the deepest at
+     L* 26 here, which is the same emphasis built out of the
+     opposite material. A pre-opening report is exactly where hours
+     out of the building get quietly dressed up as results, and
+     these two must never be mistaken for each other at a glance.
+
+     Both are painted as fills with --text-inverse on top, at
+     9.75:1 and 6.77:1, and both are painted as text on a card,
+     at 9.33:1 and 6.48:1. That two way use is why they sit
+     where they sit and not deeper. */
+  --ledger-revenue: #563700;
+  --ledger-revenue-tint: #ead0b4;
+  --ledger-activity: #4f5a00;
+  --ledger-activity-tint: #dbdcbd;
+
+  /* --- Lines ------------------------------------------------
+     THE RULE IS DARKER THAN THE SURFACE AGAIN, which is the only
+     way a rule works on a light ground, and --line-strong is still
+     the one that has to hold a number: it draws control borders in
+     seventy five declarations and WCAG 1.4.11 asks 3:1 of a
+     control boundary. It measures 3.20:1 against --surface-3,
+     the darkest paper here and therefore the hardest background a
+     dark rule can sit on, against 3.26 for the same token on the
+     dark ground.
+
+       token            s0     s1     s2     s3
+       --line         1.87   1.70   1.48   1.22
+       --line-2       2.73   2.49   2.17   1.79
+       --line-strong  4.90   4.46   3.89   3.20
+
+     --line is the hairline inside a card and --line-2 the divider
+     between two blocks. Neither is ever the only boundary of
+     something pressable. */
+  --line: #bab7c4;
+  --line-2: #9a96a6;
+  --line-strong: #6f6b7b;
+
+  /* --- Section identity -------------------------------------
+     Same twenty hues, same twenty slots, re-solved so that one
+     order serves both grounds. See the long note in the dark block
+     for why the previous order collapsed here and what replaced
+     it.
+
+       --sec-<name>        the mark. L* 44 or 32 alternating down
+                           the rail. Clears 3:1 on every paper.
+       --sec-<name>-ink    the text. L* 34 or 20, so it clears
+                           4.5:1 on every paper AND on its own
+                           glow.
+       --sec-<name>-glow   the wash behind the section. L* 88, so
+                           it is always lighter than --surface-3
+                           and never becomes the new floor for the
+                           text ramp.
+
+     THE FLOOR IS 8.14 dE2000 for any two sections within two
+     slots of each other, on both the mark and the ink, against
+     7.76 on the dark ground.
+
+       section      hue    mark       ink        glow      ink/glow  nearest
+       today        162  #017752    #035c3f    #bde6d2      5.91     11.53
+       requests      18  #9a0132    #68001e    #fdd3d4      9.61      9.11
+       desk         108  #646e00    #4d5500    #dfdfbc      5.90      9.11
+       maps         216  #05535e    #01363e    #b1e6f0      9.66     12.95
+       lanes        342  #c40092    #9a0071    #f9d2e8      5.90     12.95
+       field        126  #2c5500    #1d3700    #d4e2c1      9.66     16.62
+       leagues      288  #0063d7    #044ca7    #d7dbfd      5.95     12.47
+       inbox        198  #035455    #003738    #b1e7e7      9.64     12.47
+       sent          54  #b04800    #8a3600    #fcd5c2      5.92     10.26
+       replies       36  #9c000d    #690000    #fed3ca      9.61     10.26
+       objections   234  #04718d    #06576d    #b5e4f8      5.95      9.37
+       book         252  #025172    #00344c    #bee1fd      9.64      9.37
+       week           0  #cc006b    #9f0052    #ffd1dd      5.94     10.14
+       capacity      72  #6d4200    #472a00    #f4d8bd      9.63     17.63
+       packages     270  #016caf    #005389    #cadeff      5.93     11.82
+       coaching     180  #03554b    #003730    #b5e7dc      9.71     11.82
+       method        90  #7d6600    #604e00    #ebdbbb      5.95     12.73
+       partners     324  #840095    #580064    #f0d4f1      9.63     12.73
+       promo        306  #6840ff    #2314fe    #e4d7f8      5.91     10.85
+       spend        144  #00581d    #003910    #c8e4c8      9.66     10.85
+
+     Every ink above also clears 4.5:1 on all four papers; the
+     lowest is 4.98. */
+  --sec-today: #616f00;
+  --sec-today-ink: #4a5500;
+  --sec-today-glow: #dedfbc;
+  --sec-requests: #005735;
+  --sec-requests-ink: #003920;
+  --sec-requests-glow: #c0e6cf;
+  --sec-desk: #c6008d;
+  --sec-desk-ink: #9a006d;
+  --sec-desk-glow: #fad2e7;
+  --sec-maps: #890087;
+  --sec-maps-ink: #5c005b;
+  --sec-maps-glow: #f3d4ef;
+  --sec-lanes: #9217fe;
+  --sec-lanes-ink: #7100cf;
+  --sec-lanes-glow: #e9d6f6;
+  --sec-field: #005644;
+  --sec-field-ink: #00382c;
+  --sec-field-glow: #b9e7d7;
+  --sec-leagues: #773c00;
+  --sec-leagues-ink: #4d2600;
+  --sec-leagues-glow: #f8d6bf;
+  --sec-inbox: #2d5500;
+  --sec-inbox-ink: #1e3700;
+  --sec-inbox-glow: #d4e2c0;
+  --sec-sent: #cc006b;
+  --sec-sent-ink: #9f0052;
+  --sec-sent-glow: #ffd1dd;
+  --sec-replies: #003ebd;
+  --sec-replies-ink: #01277f;
+  --sec-replies-glow: #ded9fb;
+  --sec-objections: #007099;
+  --sec-objections-ink: #085676;
+  --sec-objections-glow: #bde2fc;
+  --sec-book: #574b00;
+  --sec-book-ink: #393000;
+  --sec-book-glow: #e8dcbb;
+  --sec-week: #cf034b;
+  --sec-week-ink: #a20139;
+  --sec-week-glow: #fdd2d5;
+  --sec-capacity: #006daa;
+  --sec-capacity-ink: #035484;
+  --sec-capacity-glow: #c7dffe;
+  --sec-packages: #005268;
+  --sec-packages-ink: #003544;
+  --sec-packages-glow: #b6e4f8;
+  --sec-coaching: #057479;
+  --sec-coaching-ink: #00595e;
+  --sec-coaching-glow: #b0e7e9;
+  --sec-method: #9b001a;
+  --sec-method-ink: #69000c;
+  --sec-method-glow: #ffd3cd;
+  --sec-partners: #bf3700;
+  --sec-partners-ink: #962800;
+  --sec-partners-glow: #fed4c4;
+  --sec-promo: #005550;
+  --sec-promo-ink: #003734;
+  --sec-promo-glow: #b3e7e1;
+  --sec-spend: #0367c5;
+  --sec-spend-ink: #004f9b;
+  --sec-spend-glow: #d3dcfe;
+
+  /* --- The featured key -------------------------------------
+     THE ONE WARM THING ON A COLD CABINET, in both grounds, and it
+     belongs to exactly one control: the key that opens the trade
+     area board.
+
+     THE KEY IS A FILLED PLATE AND THIS IS ITS FACE, and the
+     inversion is what makes the feature survive with no colour
+     vision at all. On the dark ground every other key is light
+     type on a near black housing and this one inverts to dark type
+     on a light face. Here every other key is dark type on a near
+     white housing and this one inverts to light type on a deep
+     face. The gesture is identical; only the material swapped.
+
+       token           L*   carries --text-inverse   worst paper
+       --feature       42           5.39                  3.71
+       --feature-600   33           7.54                  5.19
+
+     --feature-edge is the moulded shoulder the key drops onto when
+     pressed. It is depth rather than a boundary: the boundary of
+     this control is the face itself. */
+  --feature: #9b4f00;
+  --feature-600: #7b3d00;
+  --feature-edge: #5f2e00;
+
+  /* --- Operator note fourth wall ----------------------------
+     A green console, and the only surface in the file with green
+     in it, which is what it was on paper and on the dark ground
+     too. It is the one place the product stops being the product.
+
+     ON THIS GROUND IT IS A PALE CONSOLE RATHER THAN A DEEP ONE. On
+     dark it works by being a deep green black at L* 13 against a
+     violet black page at L* 7. Here it is a green white at L* 92
+     against a violet white page at L* 98, with its own accent at
+     5.69:1 and its own ink pair. Same distance, same
+     direction, opposite material.
+
+     ONE HONEST NOTE, CARRIED OVER. Nothing currently reads
+     --op-surface or the five tokens under it. The operator VOICE
+     is still on eight routes and reads --font-operator, but the
+     surface that used to carry it was refactored away. The tokens
+     are kept and measured rather than deleted, because deleting a
+     token is an API change. */
+  --op-surface: #d6ede3;
+  --op-surface-2: #c7e3d6;
+  --op-line: #98b8a9;
+  --op-accent: #04664a;
+  --op-text-0: #1f2f28;
+  --op-text-1: #425a4f;
+
+  /* --- Elevation --------------------------------------------
+     THE SHADOWS HAD TO BE REBUILT FOR THE SECOND TIME, NOT
+     RETINTED. On the dark ground a shadow is a deep black at a
+     high alpha plus an inset hairline of light along the top edge,
+     because a dark shadow under a dark card is invisible. On a
+     light ground the opposite is true: black at 0.5 under a white
+     card is a bruise, and the rim of light has nothing to catch.
+     So the alphas drop by roughly a factor of four and the inset
+     rim becomes a hairline of the housing along the top edge,
+     which is what a real object does on a lit desk.
+
+     The radii, the type scale, the space scale, the motion and the
+     layout tokens are not in this block at all. They are not
+     properties of the ground and a theme that moved them would be
+     a redesign wearing a toggle. The two exceptions are below and
+     they are corrections rather than choices: tracking and font
+     smoothing exist to cancel the bloom that lit type has on a
+     dark ground, and dark ink on paper does not bloom. */
+  --shadow-1:
+    0 1px 2px rgba(28, 20, 40, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --shadow-2:
+    0 3px 10px rgba(28, 20, 40, 0.10),
+    0 1px 2px rgba(28, 20, 40, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --shadow-3:
+    0 18px 44px rgba(28, 20, 40, 0.18),
+    0 4px 12px rgba(28, 20, 40, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  /* --- The three depth effects that are not a shadow ---------
+     See the note in the dark block for what each one is for.
+
+     THE SCRIMS ARE THE HOUSING VIOLET RATHER THAN BLACK, and at
+     roughly two thirds of the alpha they carry on dark. Pure black
+     over paper is a bruise, and the same violet the shadows above
+     are mixed from keeps the dimmed page in the family rather than
+     turning it grey. The alphas are lower because there is much
+     further to fall from a near white page than from a near black
+     one, and a heavier wash here would read as a second dark theme
+     arriving for as long as the modal is open.
+
+     --well-inset drops by roughly a factor of three for the same
+     reason the shadows did: a black at 0.45 inside a pale slot is
+     a smear rather than a recess.
+
+     --rim-top goes UP rather than down. A tenth of a white is
+     plenty of bevel against a near black band and nothing at all
+     against a pale one, so it climbs to match the inset rim the
+     shadows above already carry on this ground. */
+  --scrim: rgba(28, 20, 40, 0.38);
+  --scrim-strong: rgba(28, 20, 40, 0.52);
+  --well-inset: inset 0 1px 2px rgba(28, 20, 40, 0.14);
+  --rim-top: rgba(255, 255, 255, 0.7);
+
+  /* --- The four things that are not colours but are the ground -
+     See the note in the dark block. The map filter is the one that
+     changes shape rather than value: CARTO's basemap is already a
+     light map, so on this ground there is nothing to invert and
+     the tiles only get settled back a little so the lane marks
+     stay on top of them. */
+  --color-scheme: light;
+  --type-track: 0;
+  --font-smooth: auto;
+  --font-smooth-moz: auto;
+  --map-filter: brightness(1.02) contrast(0.94) saturate(0.72);
+  --hatch-ink: rgba(255, 255, 255, 0.5);
+  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%2397007e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --select-chevron-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%23f4f2fa' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  /* Three families added when the floor, the accounts board and
+     the competitive set arrived. The whole rail was re-solved rather
+     than these three being bolted on with leftover hues: adjacency is
+     a property of the ORDER, so adding a section without re-solving
+     silently degrades pairs that were fine before. Twenty five
+     sections would not clear the 7.5 floor at all, which is why Pay
+     and the district report share the floor's identity the way the
+     cup already shares the leagues'. */
+  --sec-accounts: #05535f;
+  --sec-accounts-ink: #01363f;
+  --sec-accounts-glow: #b1e6f2;
+  --sec-team: #8c6000;
+  --sec-team-ink: #6d4900;
+  --sec-team-glow: #f1d9bc;
+  --sec-rivals: #037921;
+  --sec-rivals-ink: #015e17;
+  --sec-rivals-glow: #cae4c7;
+}
+
+/* ============================================================
+   PAPER IS THE THIRD GROUND AND IT IS ALREADY SOLVED.
+
+   PDF export in this app is the browser's own Print to PDF driven
+   by src/styles/print.css, so whatever is on screen is what goes
+   on the sheet. A sheet of paper is white whichever theme the
+   reader had on, and before this block a person exporting a quote
+   from the dark theme got near black cards on white paper: hard
+   to read and expensive to print.
+
+   So print takes the light palette. Not a third set of values, the
+   same ones, because the constraint print has is the constraint
+   the light ground already answered. This is the cheapest evidence
+   in the file that the second theme was worth building properly
+   rather than bolting on.
+
+   Regenerate with: python3 scripts/theme_cabinet.py css
+   ============================================================ */
+@media print {
+  :root {
+    --surface-0: #faf8fe;
+    --surface-1: #efedf6;
+    --surface-2: #e1dee9;
+    --surface-3: #cdcad7;
+    --surface-inverse: #1c1a25;
+    --text-0: #1c1b20;
+    --text-1: #36333e;
+    --text-2: #46434f;
+    --text-3: #54515d;
+    --text-inverse: #f4f2fa;
+    --text-inverse-2: #ada9b8;
+    --line-inverse: #4d4959;
+    --accent: #065e64;
+    --accent-600: #004a4f;
+    --accent-700: #02363a;
+    --accent-tint: #b8e8ec;
+    --accent-line: #004549;
+    --brand-gold: #97007e;
+    --brand-gold-600: #760062;
+    --brand-gold-tint: #f6d3eb;
+    --brand-gold-line: #f500ce;
+    --ok: #015d31;
+    --ok-tint: #c6e4ce;
+    --warn: #685200;
+    --warn-tint: #ecdbbb;
+    --risk: #9f0027;
+    --risk-tint: #fdd3d0;
+    --info: #00587c;
+    --info-tint: #c2e1f9;
+    --neutral: #514e5c;
+    --neutral-tint: #dedbe7;
+    --prov-public: #00554f;
+    --prov-illustrative: #005592;
+    --prov-modeled: #635100;
+    --prov-observed: #00602e;
+    --prov-user: #54505f;
+    --prov-withheld: #6f00ab;
+    --ledger-revenue: #563700;
+    --ledger-revenue-tint: #ead0b4;
+    --ledger-activity: #4f5a00;
+    --ledger-activity-tint: #dbdcbd;
+    --line: #bab7c4;
+    --line-2: #9a96a6;
+    --line-strong: #6f6b7b;
+    --op-surface: #d6ede3;
+    --op-surface-2: #c7e3d6;
+    --op-line: #98b8a9;
+    --op-accent: #04664a;
+    --op-text-0: #1f2f28;
+    --op-text-1: #425a4f;
+    --feature: #9b4f00;
+    --feature-600: #7b3d00;
+    --feature-edge: #5f2e00;
+    --lane-schools: #03753f;
+    --lane-schools-tint: #cbeed5;
+    --lane-colleges: #005439;
+    --lane-colleges-tint: #c6efda;
+    --lane-fitness: #003629;
+    --lane-fitness-tint: #c1efe0;
+    --lane-local-retail-food: #9f5100;
+    --lane-local-retail-food-tint: #fedfcb;
+    --lane-auto: #694000;
+    --lane-auto-tint: #fde1c5;
+    --lane-corporate: #3d2b00;
+    --lane-corporate-tint: #f8e2c3;
+    --lane-healthcare: #891afe;
+    --lane-healthcare-tint: #f1dfff;
+    --lane-hospitality: #6300c5;
+    --lane-hospitality-tint: #f1dfff;
+    --lane-faith: #400085;
+    --lane-faith-tint: #f1dfff;
+    --fam-corporate: #03753f;
+    --fam-corporate-tint: #cbeed5;
+    --fam-youth-group: #003629;
+    --fam-youth-group-tint: #c1efe0;
+    --fam-self-serve: #3d2b00;
+    --fam-self-serve-tint: #f8e2c3;
+    --fam-buyout: #6300c5;
+    --fam-buyout-tint: #f1dfff;
+    --fam-fundraiser: #694000;
+    --fam-fundraiser-tint: #fde1c5;
+    --sec-today: #017752;
+    --sec-today-ink: #035c3f;
+    --sec-today-glow: #bde6d2;
+    --sec-requests: #9a0132;
+    --sec-requests-ink: #68001e;
+    --sec-requests-glow: #fdd3d4;
+    --sec-desk: #646e00;
+    --sec-desk-ink: #4d5500;
+    --sec-desk-glow: #dfdfbc;
+    --sec-maps: #05535e;
+    --sec-maps-ink: #01363e;
+    --sec-maps-glow: #b1e6f0;
+    --sec-lanes: #c40092;
+    --sec-lanes-ink: #9a0071;
+    --sec-lanes-glow: #f9d2e8;
+    --sec-field: #2c5500;
+    --sec-field-ink: #1d3700;
+    --sec-field-glow: #d4e2c1;
+    --sec-leagues: #0063d7;
+    --sec-leagues-ink: #044ca7;
+    --sec-leagues-glow: #d7dbfd;
+    --sec-inbox: #035455;
+    --sec-inbox-ink: #003738;
+    --sec-inbox-glow: #b1e7e7;
+    --sec-sent: #b04800;
+    --sec-sent-ink: #8a3600;
+    --sec-sent-glow: #fcd5c2;
+    --sec-replies: #9c000d;
+    --sec-replies-ink: #690000;
+    --sec-replies-glow: #fed3ca;
+    --sec-objections: #04718d;
+    --sec-objections-ink: #06576d;
+    --sec-objections-glow: #b5e4f8;
+    --sec-book: #025172;
+    --sec-book-ink: #00344c;
+    --sec-book-glow: #bee1fd;
+    --sec-week: #cc006b;
+    --sec-week-ink: #9f0052;
+    --sec-week-glow: #ffd1dd;
+    --sec-capacity: #6d4200;
+    --sec-capacity-ink: #472a00;
+    --sec-capacity-glow: #f4d8bd;
+    --sec-packages: #016caf;
+    --sec-packages-ink: #005389;
+    --sec-packages-glow: #cadeff;
+    --sec-coaching: #03554b;
+    --sec-coaching-ink: #003730;
+    --sec-coaching-glow: #b5e7dc;
+    --sec-method: #7d6600;
+    --sec-method-ink: #604e00;
+    --sec-method-glow: #ebdbbb;
+    --sec-partners: #840095;
+    --sec-partners-ink: #580064;
+    --sec-partners-glow: #f0d4f1;
+    --sec-promo: #6840ff;
+    --sec-promo-ink: #2314fe;
+    --sec-promo-glow: #e4d7f8;
+    --sec-spend: #00581d;
+    --sec-spend-ink: #003910;
+    --sec-spend-glow: #c8e4c8;
+    --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%2397007e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --select-chevron-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.4 1.6 6 6.2l4.6-4.6' fill='none' stroke='%23f4f2fa' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --hatch-ink: rgba(255, 255, 255, 0.5);
+    --color-scheme: light;
+    /* Added by the sweep pass alongside the three in the light block.
+       Paper is a light ground, so it takes the light ground's depth for
+       the same reason it takes the light ground's ink. */
+    --scrim: rgba(28, 20, 40, 0.38);
+    --scrim-strong: rgba(28, 20, 40, 0.52);
+    --well-inset: inset 0 1px 2px rgba(28, 20, 40, 0.14);
+    --rim-top: rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Leaflet paints its own panes at z-index 400+, which would sit over
+   our drawer and nav. Contain it to our map layer. */
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom { z-index: var(--z-map-overlay) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --op-dur-slide: 0ms;
+    --op-dur-settle: 0ms;
+    --op-stagger: 0ms;
+  }
+}

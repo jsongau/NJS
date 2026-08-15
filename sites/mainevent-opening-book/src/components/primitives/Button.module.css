@@ -1,0 +1,125 @@
+/*
+  ── THE PRESS IS A REAL PRESS ──────────────────────────────────────
+  A button on this product is a key on a machine, so it has an edge under
+  it at rest and it travels onto that edge when it is pressed. One pixel
+  is enough: the reading is the arrival, not the distance.
+
+  ONLY THE TRANSFORM IS TRANSITIONED. The edge is a box-shadow and it is
+  swapped instantly rather than animated, because these buttons appear
+  inside long lists, one per row in places, and an animated box-shadow is
+  a full repaint of everything underneath it. A transform is a composited
+  layer on the one element being pressed and costs nothing on any of the
+  others.
+
+  The duration is a token, so the travel is gone entirely for a reader
+  who has asked their system to stop moving things, and the pressed state
+  itself survives: the key still bottoms out, it simply arrives in one
+  frame.
+*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-s);
+  border: 1px solid transparent;
+  font-weight: 550;
+  line-height: 1.2;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 0 var(--line);
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 var(--line);
+}
+
+.btn:disabled {
+  box-shadow: none;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.md {
+  padding: 8px 14px;
+  font-size: var(--step--1);
+}
+
+.sm {
+  padding: 5px 10px;
+  font-size: var(--step--2);
+}
+
+/* The lit key. Its edge is the accent's own line colour rather than the
+   general hairline, so a primary control reads as one moulded object
+   rather than as a bright face on a grey base. */
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-inverse);
+  box-shadow: 0 2px 0 var(--accent-line);
+}
+
+.primary:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--accent-line);
+}
+.primary:hover:not(:disabled) {
+  background: var(--accent-600);
+  border-color: var(--accent-600);
+}
+
+.secondary {
+  background: var(--surface-1);
+  border-color: var(--line-2);
+  color: var(--text-0);
+}
+.secondary:hover:not(:disabled) {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+}
+
+.ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-1);
+}
+.ghost:hover:not(:disabled) {
+  background: var(--surface-3);
+  color: var(--text-0);
+}
+
+.danger {
+  background: var(--surface-1);
+  border-color: var(--line-2);
+  color: var(--risk);
+}
+.danger:hover:not(:disabled) {
+  background: var(--risk-tint);
+  border-color: var(--risk);
+}
+
+.glyph {
+  display: inline-flex;
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+/*
+  Belt and braces. The duration tokens are already zero under this query,
+  and this states it where the travel is declared so it cannot be lost
+  the next time the tokens are rewritten.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}

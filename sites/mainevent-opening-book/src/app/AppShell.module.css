@@ -1,0 +1,265 @@
+/*
+  The shell is exactly one viewport tall and does not scroll. Scrolling
+  belongs to the page inside it and to the panes inside that: the prospect
+  list, the drawer, the lane board. That is what keeps the strip, the rail
+  and the countdown always visible and the map from being pushed off
+  screen by a hundred and two cards.
+
+  Two rows and two columns. The mega nav spans the top row; the rail and
+  the route split the second. The rail keeps its own track rather than
+  overlaying, so nothing in a page can ever be underneath it.
+*/
+.shell {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+
+  /* THE MEASUREMENTS THE CHROME AND THE SHELL BOTH NEED.
+
+     They are declared here, on the common ancestor, and read from all
+     three files. Custom properties inherit, so this is the one place any
+     of the components has to look, and a width written twice is a width
+     that will disagree with itself the first time somebody adjusts one
+     of them.
+
+     --rail-w            the column
+     --rail-w-collapsed  the same column with the words taken out
+     --mega-h            the strip across the top
+     --drawer-w          the rail as a drawer, below 900px only */
+  --rail-w: 252px;
+  --rail-w-collapsed: 72px;
+  /* Six pixels taller than it was, and the six are spent on the marquee:
+     the display face at 800 needs the room, and a strip this permanent
+     is where the product either reads as a cabinet or does not. */
+  --mega-h: 56px;
+  --drawer-w: min(300px, 86vw);
+}
+
+/*
+  ONE COLUMN, AND THE COLUMN IS THE ROUTE.
+
+  A takeover is the absence of the chrome, so the grid loses the tracks
+  the strip and the rail occupied rather than keeping them and hiding what
+  stood in them. A zero width track, a visibility toggle or a z-index
+  would all leave a strip of the screen that looks like the page and
+  belongs to something else, and a click landing in it would go nowhere a
+  reader can explain.
+*/
+.shell[data-mode="full-bleed"] {
+  /* One track each way. The row is stated rather than left implicit
+     because the railed shell declares two rows, and a surface dropped
+     into the first of them would be sized by its content instead of by
+     the viewport. */
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+/*
+  The rail's track. It holds the rail and nothing else, and at full width
+  it is simply the first column of the second row.
+*/
+.drawer {
+  grid-row: 2;
+  grid-column: 1;
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+}
+
+/*
+  The content column. Its own stacking and scrolling context, so nothing
+  inside a page can paint over the rail and nothing in the rail moves when
+  a page scrolls. It holds the route and nothing else: there is no footer
+  here and no floating badge, so there is no wrapper around it either. An
+  element that exists only to hold two things that were deleted is a gap
+  waiting to be styled around.
+*/
+.main {
+  grid-row: 2;
+  grid-column: 2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/*
+  THE SEAM. A lit rule in the section's own colour across the top of the
+  working area, and the single cheapest way to make arriving somewhere
+  feel like arriving. It reads the --sec property the shell root sets
+  from the path, so it changes with the screen and there is no per
+  section code anywhere near it.
+
+  It is painted over the sticky header rather than under it, because the
+  header scrolls a band of page underneath itself and a seam that
+  disappeared behind it would flicker on every scroll. Two pixels, no
+  pointer events, no transition: a rule that faded between sections would
+  be a colour crossfading through the whole wheel on every navigation.
+*/
+.main::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 6;
+  height: 2px;
+  background: var(--sec, var(--signal));
+  pointer-events: none;
+}
+
+.shell[data-mode="full-bleed"] .main {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+/*
+  The scrim exists only while the rail is a drawer, so at full width it is
+  not on the page at all rather than transparent and in the way.
+*/
+.scrim {
+  display: none;
+}
+
+/*
+  ── THE FULL BLEED SURFACE ─────────────────────────────────────────
+  A flex column filling the viewport, which is the same shape every other
+  page root in this application takes. A header and a figure strip sit at
+  their own heights; the pane region takes flex: 1 and min-height: 0 and
+  fills what is left.
+
+  The focus ring is real but conditional. Focus moves here on entry, which
+  is right for a reader arriving by keyboard and would be an odd full
+  screen outline for one who arrived by clicking a link, so :focus-visible
+  carries it and the resting :focus state is quiet. It is inset because an
+  outline drawn outside a surface that touches all four edges of the
+  viewport is an outline nobody sees.
+*/
+.surface {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-0);
+}
+
+.surface:focus {
+  outline: none;
+}
+
+.surface:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ===============================================================
+   BELOW 900px THE RAIL IS A DRAWER
+
+   252 pixels of permanent chrome on a 380 pixel handset is two thirds
+   of the screen, so the rail comes out of the layout and slides over it
+   instead, opened by the hamburger the mega nav carries at exactly this
+   width. The strip itself stays: the six destinations pressed all day
+   are on screen at every width, and the hamburger sits beside them so
+   the other thirteen are always one visible press away.
+
+   The breakpoint is repeated in MegaNav.module.css and in the NARROW
+   constant in AppShell.tsx. A media query cannot read a custom property,
+   which is a real limitation of CSS, and all three say 900.
+   =============================================================== */
+
+@media (max-width: 899px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .main {
+    grid-column: 1;
+  }
+
+  .drawer {
+    position: fixed;
+    top: var(--mega-h);
+    bottom: 0;
+    left: 0;
+    width: var(--drawer-w);
+    z-index: var(--z-drawer);
+    background: var(--surface-2);
+    border-right: 1px solid var(--line-2);
+    box-shadow: var(--shadow-3);
+    /* Off screen and untouchable when shut. The transform rather than a
+       display toggle is what lets it slide, and the visibility is what
+       stops a pointer finding it in the gutter while it is out there.
+       The rail inside it is also marked inert from AppShell.tsx, which
+       is the part that keeps it out of the tab order. */
+    transform: translateX(-101%);
+    visibility: hidden;
+    transition:
+      transform var(--dur-3) var(--ease-out),
+      visibility 0s linear var(--dur-3);
+  }
+
+  .shell[data-nav="open"] .drawer {
+    transform: none;
+    visibility: visible;
+    transition:
+      transform var(--dur-3) var(--ease-out),
+      visibility 0s;
+  }
+
+  /*
+    The scrim is a real button, so it is reset to look like nothing. It
+    dims the route behind the drawer, which is the only signal on screen
+    that the page has stopped taking presses.
+
+    IT USED TO BE MIXED FROM --text-0 AND THAT FOLLOWED THE THEME
+    BACKWARDS. The ink colour does move with the ground, but it moves
+    the opposite way to the ground: on the dark theme --text-0 is a near
+    white, so forty two percent of it over the page was a milky veil that
+    made the route behind the drawer BRIGHTER. A scrim has exactly one
+    job and it is to be darker than what it covers, in both grounds,
+    which is what --scrim is for.
+  */
+  .scrim {
+    position: fixed;
+    top: var(--mega-h);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: calc(var(--z-drawer) - 1);
+    display: block;
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: var(--scrim);
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+    transition: opacity var(--dur-3) var(--ease-out);
+  }
+
+  .shell[data-nav="open"] .scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/*
+  ── REDUCED MOTION ─────────────────────────────────────────────────
+  tokens.css already flattens every duration to zero under this query, so
+  this is belt and braces rather than the only line holding it. It is
+  written out because a drawer sliding across a phone is the single most
+  likely thing in this application to make somebody with vestibular
+  trouble put it down, and a rule that says so where the animation is
+  declared will not be lost the next time the tokens are rewritten.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .scrim {
+    transition: none;
+  }
+}

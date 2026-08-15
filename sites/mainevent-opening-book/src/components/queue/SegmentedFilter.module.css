@@ -1,0 +1,107 @@
+/*
+  The segmented filter.
+
+  It reads as one instrument rather than as a row of loose buttons: a
+  single well, hairlines between the segments, and the pressed one lifted
+  onto the page ground with a rule under it. That is the shape a reader
+  already knows from a segmented control, and it is the shape that makes
+  "one of these is on" obvious before anything is read.
+
+  EVERY SEGMENT IS 44 PIXELS TALL. This is the control the whole screen
+  turns on and it is pressed with a thumb as often as with a mouse.
+*/
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+  padding: var(--space-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.seg {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.seg:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+}
+
+.seg:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/*
+  THE PRESSED SEGMENT, IN FOUR SIGNALS AND ONLY THE LAST OF THEM COLOUR.
+  A filled marker where the others carry an open one, the heaviest weight
+  on the row, a rule along the bottom edge, and the section paper under
+  it. Any one of the first three survives greyscale on its own.
+*/
+.seg[data-on="yes"] {
+  border-color: var(--line);
+  border-bottom-color: var(--tone, var(--line-strong));
+  background: var(--surface-0);
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.mark {
+  color: var(--tone, var(--text-3));
+  font-size: var(--step--2);
+  line-height: 1;
+}
+
+.glyph {
+  color: var(--tone, var(--text-2));
+  line-height: 1;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* The count is a readout rather than a parenthetical, so it stays
+   readable when a segment wraps and so the figures line up down the row
+   on a narrow screen. */
+.count {
+  min-width: 2ch;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  font-size: var(--step--2);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+  text-align: center;
+}
+
+.seg[data-on="yes"] .count {
+  background: var(--surface-2);
+  color: var(--text-0);
+}
+
+@media (max-width: 560px) {
+  .seg {
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    padding: 0 var(--space-2);
+  }
+}

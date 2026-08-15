@@ -1,0 +1,381 @@
+/*
+  ENROLLMENT.
+
+  This is the one panel on the board that is real product rather than a
+  declared exhibition, so it is built to be pressed: the head names the
+  cup, the offer states the terms in a grid a captain can read in ten
+  seconds, and the field underneath shows exactly who is in and exactly
+  how many places are left, one row per place including the empty ones.
+
+  Every free slot is a row rather than a number in a sentence, because
+  five rows saying "slot free" is a truer picture of a field of sixteen
+  than the figure five is.
+
+  Tokens by name only. No hex, and no [data-theme] selector.
+*/
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+
+.head {
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--line);
+  border-top: 3px solid var(--ok);
+  background: var(--ok-tint);
+}
+
+.headTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.kicker {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--sec-leagues-ink));
+}
+
+.name {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-display, inherit);
+  font-size: var(--step-3);
+  line-height: 1.15;
+}
+
+.strapline {
+  margin: 0;
+  max-width: 68ch;
+  font-size: var(--step-0);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.body {
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* ---------------------------------------------------------------
+   The offer
+   --------------------------------------------------------------- */
+
+.offer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.slots {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.slotsLine {
+  margin: 0;
+  font-size: var(--step-0);
+  color: var(--text-1);
+}
+
+.slotsFree {
+  font-family: var(--font-mono);
+  font-size: var(--step-4);
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.slotsWhy {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.terms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.term {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.term dt {
+  margin: 0 0 4px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.term dd {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-0);
+}
+
+.termSub {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.termBadge {
+  display: block;
+  margin-top: var(--space-2);
+}
+
+.feeNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  max-width: 84ch;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The act
+   --------------------------------------------------------------- */
+
+.act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.actPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-pill);
+  background: var(--ok-tint);
+  color: var(--text-0);
+  font-size: var(--step-0);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out);
+}
+
+.actPrimary:hover {
+  background: var(--surface-3);
+}
+
+.actNote {
+  flex: 1 1 30ch;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The field
+   --------------------------------------------------------------- */
+
+.fieldTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-1);
+  font-size: var(--step-1);
+}
+
+.fieldCount {
+  font-family: var(--font-mono);
+  color: var(--text-2);
+}
+
+.fieldLede {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.entries {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entry {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ok);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.entry[data-short="yes"] {
+  border-left-color: var(--warn);
+  background: var(--warn-tint);
+}
+
+.entryTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.entryName {
+  flex: 1 1 12ch;
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.entrySlot {
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.entryFacts {
+  display: grid;
+  gap: 2px;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.entryRoster {
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.entryOrgNone {
+  color: var(--text-3);
+}
+
+.entryShort {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.entryShortWord {
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.entryAct {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 34px;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out);
+}
+
+.entryAct:hover {
+  background: var(--surface-3);
+  border-color: var(--sec-leagues);
+}
+
+.free {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-0);
+}
+
+.freeMark {
+  color: var(--text-3);
+  font-size: var(--step-1);
+}
+
+.freeWord {
+  flex: 1 1 auto;
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   380 is a real layout
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .offer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .head,
+  .body {
+    padding: var(--space-4);
+  }
+
+  .name {
+    font-size: var(--step-2);
+  }
+
+  .entries {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

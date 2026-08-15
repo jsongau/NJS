@@ -1,0 +1,724 @@
+/*
+  THE FLOOR.
+
+  A strip of seat cards over a lens over a team row, because a seat
+  carries four different sorts of fact at once: what it is, what it
+  holds, what it is allowed to do, and how far through its ramp it is. A
+  table cell holds a number and none of those is a number.
+
+  COLOUR IS NEVER THE ONLY SIGNAL. Filled and open carry a glyph and a
+  word before they carry a tone. A granted permission says "Granted" and
+  a withheld one says "Withheld" and names the step. A signed ramp step
+  carries a filled disc, an unsigned one an empty ring, and the date is
+  printed either way. Put the whole page through greyscale and nothing is
+  lost.
+
+  MOTION IS CONFINED TO CHROME AND CAPPED AT --dur-2. The only things
+  that move are the working set lead's own rule sweep and roll, which
+  that component owns and documents, and the press states below. No data
+  surface on this page animates and nothing animates on mount. The
+  blanket reduced motion rule at the foot is the second line of defence
+  rather than the only one, because every duration here already comes
+  from a token that tokens.css zeroes.
+
+  Tokens by name only. There is no hex value in this file.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--sec-team-ink));
+}
+
+.h1 {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.thesis {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  max-width: 84ch;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.thesisGlyph {
+  color: var(--sec-ink, var(--sec-team-ink));
+  line-height: 1.3;
+}
+
+.lede,
+.subLede {
+  margin: 0 0 var(--space-3);
+  max-width: 80ch;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.subLede {
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.section {
+  margin-bottom: var(--space-7);
+}
+
+/* ---------------------------------------------------------------
+   Monday
+   --------------------------------------------------------------- */
+
+.actions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+/*
+  A FIGURE COLUMN AND A BODY COLUMN. The count is the thing a manager
+  scans down; the verb is the thing they read once they have stopped. At
+  520px the two stack, figure first, because the number is what decides
+  whether the rest is read at all.
+*/
+.action {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sec-ink, var(--sec-team-ink));
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.actionFigure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.actionValue {
+  font-family: var(--font-mono);
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.actionUnit {
+  font-size: var(--step--2);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.actionBody {
+  min-width: 0;
+}
+
+.actionSeat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+.actionGlyph {
+  color: var(--text-3);
+}
+
+.actionVerb {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-0);
+}
+
+.actionBecause {
+  margin: 0 0 var(--space-2);
+  max-width: 72ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.actionLink {
+  margin: 0;
+  font-size: var(--step--1);
+}
+
+/* ---------------------------------------------------------------
+   The seats
+   --------------------------------------------------------------- */
+
+.seats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.seatCell {
+  display: flex;
+  min-width: 0;
+}
+
+/*
+  --tone is the seat's own state colour, handed in by the page. It is
+  spent on a top rule and on the state glyph and nowhere else, because
+  the word beside it already carries the reading.
+*/
+.seat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--tone, var(--neutral));
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.seat[data-on="yes"] {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+}
+
+.seatHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.seatOrdinal {
+  margin: 0;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+}
+
+.seatTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-0);
+}
+
+.seatState {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.seatGlyph {
+  color: var(--tone, var(--text-2));
+}
+
+.seatSince {
+  font-weight: 400;
+  color: var(--text-2);
+}
+
+.seatSource {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.seatBrief {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.seatLanes {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+}
+
+.seatFacts {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.seatFact {
+  display: grid;
+  gap: 2px;
+}
+
+.seatFact dt {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.seatFact dd {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.of {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 400;
+  color: var(--text-1);
+}
+
+.seatRamp,
+.seatPermission {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-0);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.seatRampWord {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.seatRampFigure {
+  color: var(--text-1);
+}
+
+.seatRamp[data-ramp="closed"] .seatGlyph {
+  color: var(--ok);
+}
+
+.seatRamp[data-ramp="under-way"] .seatGlyph {
+  color: var(--info);
+}
+
+.seatRamp[data-ramp="not-started"] .seatGlyph {
+  color: var(--neutral);
+}
+
+.seatPermission[data-granted="yes"] .seatGlyph {
+  color: var(--ok);
+}
+
+.seatPermission[data-granted="no"] {
+  border-color: var(--warn);
+  background: var(--warn-tint);
+  color: var(--text-0);
+}
+
+.seatPermission[data-granted="no"] .seatGlyph {
+  color: var(--warn);
+}
+
+.seatOpen {
+  margin: auto 0 0;
+}
+
+/*
+  44px on a coarse pointer, and the pressed state is a border and a
+  weight rather than only a tint.
+*/
+.seatButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 36px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-0);
+  font: inherit;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out);
+}
+
+.seatButton:hover {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
+
+.seatButton[aria-pressed="true"] {
+  border-color: var(--sec-ink, var(--sec-team-ink));
+  background: var(--surface-2);
+}
+
+@media (pointer: coarse) {
+  .seatButton {
+    min-height: 44px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   The seat on screen
+   --------------------------------------------------------------- */
+
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.ramp,
+.permission {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.detailTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.detailNote {
+  margin: 0 0 var(--space-3);
+  max-width: 70ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.steps {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-0);
+}
+
+.step[data-signed="no"] {
+  border-style: dashed;
+}
+
+.stepN {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.stepBody {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stepTitle {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.stepWhen {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.stepSign {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.step[data-signed="yes"] .stepSign .seatGlyph {
+  color: var(--ok);
+}
+
+.step[data-signed="no"] .stepSign .seatGlyph {
+  color: var(--neutral);
+}
+
+.stepGate {
+  align-self: center;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-pill);
+  font-size: var(--step--2);
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--text-0);
+  background: var(--warn-tint);
+}
+
+.permission[data-granted="no"] {
+  border-color: var(--warn);
+}
+
+.permissionLine {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.permission[data-granted="yes"] .permissionLine .seatGlyph {
+  color: var(--ok);
+}
+
+.permission[data-granted="no"] .permissionLine .seatGlyph {
+  color: var(--warn);
+}
+
+.permissionWhy,
+.permissionCost {
+  margin: 0 0 var(--space-3);
+  max-width: 62ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.permissionCost {
+  margin-bottom: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The team row
+   --------------------------------------------------------------- */
+
+.team {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ledger-activity);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.teamLedger {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  max-width: 78ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.teamLedger .seatGlyph {
+  color: var(--ledger-activity);
+}
+
+.teamFacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+
+.teamFact {
+  display: grid;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+}
+
+.teamFact dt {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.teamFact dd {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.teamRule {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-0);
+  max-width: 82ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.teamRule .seatGlyph {
+  color: var(--risk);
+}
+
+/* ---------------------------------------------------------------
+   Foot
+   --------------------------------------------------------------- */
+
+.foot {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  max-width: 88ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .action {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .actionFigure {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .step {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  .stepGate {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* The second line of defence. Every duration above is already a token
+   that tokens.css zeroes under this query. */
+@media (prefers-reduced-motion: reduce) {
+  .seatButton {
+    transition: none;
+  }
+}
+
+/* A provenance badge sitting inside a sentence rather than beside a
+   figure. It needs the space the sentence does not give it. */
+.inlineProv {
+  margin-left: var(--space-1);
+  white-space: nowrap;
+}

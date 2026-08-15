@@ -1,0 +1,1219 @@
+/*
+  The district report.
+
+  TWO DOCUMENTS IN ONE FILE, and the one at the bottom is the point.
+
+  On screen this is a page in an application: a control strip, a scenario
+  clock, a sources panel, all on whichever ground the reader has chosen.
+  On paper it is a one page report a District Sales Manager reads between
+  two venues. The @media print block is the layout this page was designed
+  for, and everything above it is what that layout looks like when it
+  happens to be on a monitor.
+
+  THE SAME THREE RULES THE WEEK SHEET PRINTS UNDER.
+
+  1. NO FILLED PANELS. Every tinted block becomes white with a hairline
+     rule on paper. A report that lays toner behind a quarter of its own
+     surface costs money, jams in a shared office printer and reads worse
+     than the hairline version.
+
+  2. NOTHING IS SIGNALLED BY COLOUR ALONE. Standing rule of this
+     codebase, and print is where it pays twice: every status here is a
+     glyph and a word before it is a hue, so the sheet means the same
+     thing out of a mono laser printer.
+
+  3. NOTHING BREAKS ACROSS A PAGE THAT A PERSON READS AS ONE THING. A
+     held date whose release date lands on page two is a held date
+     nobody reads. Every row, every ledger and every exception carries
+     the shared avoid-break class from print.css.
+
+  The raw black in the print block is the one sanctioned exception to the
+  no raw hex rule in this codebase, for the plain reason that paper is
+  neither of the two grounds and ink is black.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Screen control strip
+   --------------------------------------------------------------- */
+
+.controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
+  gap: var(--space-5);
+  align-items: start;
+  margin-bottom: var(--space-5);
+}
+
+.controlsText { min-width: 0; }
+
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.lede {
+  margin: 0;
+  max-width: 78ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.controlsActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--sec, var(--brand-gold));
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.printNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The scenario clock. Chrome, and drawn as chrome.
+   --------------------------------------------------------------- */
+
+.clockBar {
+  margin-bottom: var(--space-5);
+  padding: var(--space-4);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.clockHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.clockTitle {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.clockGlyph { color: var(--text-3); }
+
+.clockNote {
+  margin: 0;
+  flex: 1;
+  min-width: 240px;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.clockRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.clockKey {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  color: var(--text-1);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
+}
+
+.clockKey:hover { border-color: var(--brand-gold-line); }
+
+/* Chosen is a filled key, a heavier weight and aria-pressed, never a hue
+   on its own. */
+.clockKey[aria-pressed="true"] {
+  border-color: var(--sec, var(--brand-gold));
+  background: var(--sec, var(--brand-gold));
+  color: var(--text-inverse);
+  font-weight: 700;
+}
+
+.clockKeyLabel { font-weight: 600; }
+.clockKeyDate { font-size: var(--step--2); opacity: 0.85; }
+
+.clockReading {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 96ch;
+}
+
+/* ---------------------------------------------------------------
+   The document
+   --------------------------------------------------------------- */
+
+.sheet {
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+}
+
+/* --- Masthead ---------------------------------------------------- */
+
+.masthead {
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+  border-bottom: 2px solid var(--text-0);
+}
+
+.mastheadTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.sheetEyebrow {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--brand-gold-600);
+}
+
+.sheetVenue {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.sheetTitle {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-ui);
+  font-size: var(--step-3);
+  line-height: 1.2;
+  color: var(--text-0);
+}
+
+.sheetRange {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.addressee {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+}
+
+.addresseeItem { min-width: 0; }
+
+.addresseeItem dt {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.addresseeItem dd {
+  margin: 2px 0 0;
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.headline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+
+.mastheadNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border-left: 3px solid var(--brand-gold);
+  background: var(--brand-gold-tint);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-1);
+  max-width: 96ch;
+}
+
+/* --- A figure, which this document repeats about thirty times ---- */
+
+.figure { min-width: 0; }
+
+.figureLabel {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.figureBody {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 2px 0 0;
+}
+
+.figureValue {
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.figureUnit,
+.figureNote {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.figureNote {
+  flex-basis: 100%;
+  max-width: 60ch;
+}
+
+/* --- Sections ---------------------------------------------------- */
+
+.section { margin-bottom: var(--space-6); }
+
+.sectionTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line-2);
+  font-family: var(--font-ui);
+  font-size: var(--step-2);
+  color: var(--text-0);
+}
+
+.sectionNum {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.sectionNote {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 96ch;
+}
+
+.empty {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+/* --- The two ledgers --------------------------------------------- */
+
+.ledgers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+/*
+  THE TWO LEDGERS GET DIFFERENT LEFT RULES AND NOTHING ELSE.
+
+  They are deliberately not one table. A table with a total row is one
+  keystroke away from adding hours to dollars, and the whole reason the
+  two live in separate arrays is that a pre opening report is exactly
+  where that happens.
+*/
+.ledger {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ledger-revenue);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.ledger:last-child { border-left-color: var(--ledger-activity); }
+
+.ledgerTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-1);
+}
+
+.ledgerFigures {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.ledgerFoot {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--line-2);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 96ch;
+}
+
+.ledgerFootLabel,
+.paceLabel,
+.askLabel,
+.quoteLabel,
+.writeInLabel {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 9.5px;
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+/* --- Pro rata and pace ------------------------------------------- */
+
+.pace {
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.paceTitle {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.paceFigures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-4);
+  margin: 0 0 var(--space-3);
+}
+
+.paceLine {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 96ch;
+}
+
+.paceFoot {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 96ch;
+}
+
+.paceFoot + .paceFoot { margin-top: var(--space-2); }
+
+.track { margin: 0 0 var(--space-3); }
+
+.trackRail {
+  position: relative;
+  height: 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.trackFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--ledger-activity);
+}
+
+/* The straight line mark. A rule, not a colour, and labelled in the key
+   underneath so it survives greyscale and a mono printer. */
+.trackMark {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--text-0);
+}
+
+.trackKey {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.trackKeyItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+/* --- The board --------------------------------------------------- */
+
+.statusList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.statusRow {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) 54px 48px;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.statusName {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.statusGlyph { color: var(--text-2); }
+
+.statusBar {
+  display: block;
+  height: 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.statusFill {
+  display: block;
+  height: 100%;
+  background: var(--neutral);
+}
+
+.statusCount {
+  text-align: right;
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.statusShare {
+  text-align: right;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* --- Rows: holds, losses, enquiries, commitments ------------------ */
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.row {
+  padding: var(--space-3) 0 var(--space-3) var(--space-4);
+  border-left: 2px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+.rowHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.rowName {
+  font-size: var(--step-0);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.rowLane {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/*
+  The state chip. The word carries the reading and the glyph carries it
+  again; the border weight is the third signal, and the hue is the
+  fourth. Nothing here is legible only in colour.
+*/
+.rowState {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.rowState[data-past="yes"] {
+  border-color: var(--warn);
+  color: var(--text-1);
+}
+
+.rowNote {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 96ch;
+}
+
+.rowFacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.rowFact { min-width: 0; }
+
+.rowFact dt {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.rowFact dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 3px 0 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+/* A second line inside a fact, for the sentence that belongs under a
+   date rather than beside it. */
+.rowSub {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 60ch;
+}
+
+.quote {
+  margin: 0 0 var(--space-3);
+  padding: 0 0 0 var(--space-3);
+  border-left: 2px solid var(--line-2);
+}
+
+.quote p {
+  margin: 2px 0 0;
+  font-family: var(--font-operator);
+  font-size: var(--step--1);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 88ch;
+}
+
+/* --- The exceptions ---------------------------------------------- */
+
+.asks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  counter-reset: ask;
+}
+
+.ask {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--text-0);
+  border-radius: var(--radius-s);
+}
+
+.askHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.askTitle {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--step-1);
+  line-height: 1.3;
+  color: var(--text-0);
+}
+
+.askWhat {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 96ch;
+}
+
+.askDecision {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  border-left: 3px solid var(--brand-gold);
+  background: var(--brand-gold-tint);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-0);
+  max-width: 96ch;
+}
+
+.askBy {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 96ch;
+}
+
+/* --- The pen part ------------------------------------------------ */
+
+.debrief {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+}
+
+/*
+  A ruled line sized for a ballpoint, not a dotted border. A dotted rule
+  photocopies into a smudge, and this document gets photocopied.
+*/
+.writeIn { margin: 0; }
+
+.rule {
+  display: block;
+  height: 22px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+/* ---------------------------------------------------------------
+   Sources panel, screen only
+   --------------------------------------------------------------- */
+
+.method {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.methodTitle {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--step-1);
+  color: var(--text-0);
+}
+
+.methodList {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 96ch;
+}
+
+/* ---------------------------------------------------------------
+   Responsive, down to 380px
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .controls { grid-template-columns: minmax(0, 1fr); }
+  .sheet { padding: var(--space-5) var(--space-4); }
+}
+
+@media (max-width: 620px) {
+  .inner { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .h1 { font-size: var(--step-3); }
+  .sheetTitle { font-size: var(--step-2); }
+  .ledgers { grid-template-columns: minmax(0, 1fr); }
+  .statusRow {
+    grid-template-columns: minmax(0, 1fr) 44px 44px;
+    gap: var(--space-2);
+  }
+  /* The bar is the first thing to go at narrow widths. It is the one
+     part of the row that carries nothing the count and the share do not
+     already say. */
+  .statusBar { display: none; }
+  .row { padding-left: var(--space-3); }
+  .ask { padding: var(--space-3); }
+}
+
+@media (max-width: 420px) {
+  .headline,
+  .addressee,
+  .rowFacts,
+  .paceFigures { grid-template-columns: minmax(0, 1fr); }
+  .sheet { padding: var(--space-4) var(--space-3); }
+  .clockKey { width: 100%; }
+}
+
+/* Coarse pointers get a 44px target on every control this page draws. */
+@media (pointer: coarse) {
+  .clockKey { min-height: 44px; }
+}
+
+/* A reader who has asked for less motion gets none. */
+@media (prefers-reduced-motion: reduce) {
+  .clockKey { transition: none; }
+}
+
+/* ===============================================================
+   PRINT. The layout this page was designed for.
+
+   Raw black on white, deliberately, and this is the one place in the
+   codebase where a hex literal is correct: paper is neither ground and
+   ink is black.
+   =============================================================== */
+
+@media print {
+  /*
+    The shell's chrome is not this page's to edit, so these rules are
+    scoped to a class the component puts on the body while it is mounted
+    and takes off again on unmount. The shared print stylesheet already
+    hides nav and header buttons; what is left after that is the brand
+    block, the period selector, the footer and the demo badge, none of
+    which belong on a document that goes to a district manager.
+  */
+  :global(body.district-report-print header),
+  :global(body.district-report-print footer),
+  :global(body.district-report-print [role="status"]) {
+    display: none !important;
+  }
+
+  /*
+    EVERYTHING THE SHELL DRAWS AROUND THE DOCUMENT, HIDDEN BY POSITION
+    RATHER THAN BY CLASS NAME.
+
+    The shared print stylesheet hides the nav landmark, and what survives
+    it is the strip the nav sits on: a hamburger, the wordmark and the
+    ground switch, none of which belong on a page that goes to a district
+    manager. Their class names are hashed inside a CSS module this page
+    does not own and cannot reach, so the rule names the shell's own
+    shape instead: inside the shell, everything that is not the main
+    content column comes off. That shape is already assumed by the week
+    sheet's print block one file over, so this is the existing contract
+    rather than a new one.
+  */
+  :global(body.district-report-print #root > div > *:not(main)) {
+    display: none !important;
+  }
+
+  /*
+    THE SEAM COMES OFF TOO. The shell paints a two pixel rule in the
+    section's own colour across the top of the working area, which is
+    the right call on a monitor and is a coloured hairline across the
+    head of side one on paper. It is a pseudo element on main, so it is
+    reachable without touching the shell's own file.
+  */
+  :global(body.district-report-print main)::before {
+    display: none !important;
+  }
+
+  /* The shell is one viewport tall with an inner scroller, which is
+     right on a monitor and would print one screenful and bin the rest. */
+  :global(body.district-report-print #root),
+  :global(body.district-report-print #root > div),
+  :global(body.district-report-print main) {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .page {
+    overflow: visible;
+    background: transparent;
+  }
+
+  .inner {
+    max-width: none;
+    padding: 0;
+  }
+
+  /* No filled panels, no shadows, no rounded cards. Toner goes on
+     letterforms and hairlines and nowhere else. */
+  /*
+    THE COLOUR IS !important AND THAT IS THE POINT OF THE RULE.
+
+    Without it, any selector carrying two classes beats this one on
+    specificity and a fact list keeps the screen's mid grey on paper.
+    Measured, that left about a hundred and forty nodes rendering in
+    three greys, which photocopies into mush at seven and a half points.
+    The hierarchy on paper is type size, weight and rules; the ink is
+    black, once, everywhere.
+  */
+  .sheet,
+  .sheet * {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+
+  .sheet {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    font-size: 9pt;
+  }
+
+  .masthead {
+    padding-bottom: 5pt;
+    margin-bottom: 7pt;
+    border-bottom: 1.5pt solid #000;
+  }
+
+  .sheetTitle { font-size: 15pt; }
+  .sheetRange { font-size: 8pt; margin-bottom: 6pt; }
+  .sheetEyebrow,
+  .sheetVenue { font-size: 7pt; }
+
+  .addressee {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8pt;
+    padding: 4pt 0;
+    margin-bottom: 7pt;
+    border: none;
+    border-top: 0.5pt solid #999;
+    border-bottom: 0.5pt solid #999;
+    border-radius: 0;
+  }
+
+  .addresseeItem dt { font-size: 6.5pt; }
+  .addresseeItem dd { font-size: 8.5pt; }
+
+  .headline {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9pt;
+    margin-bottom: 7pt;
+  }
+
+  .figureLabel { font-size: 6.5pt; }
+  .figureValue { font-size: 12pt; }
+  .figureUnit,
+  .figureNote { font-size: 7pt; line-height: 1.35; }
+
+  .mastheadNote {
+    padding: 3pt 0 0 6pt;
+    border-left: 1pt solid #000;
+    font-size: 7.5pt;
+  }
+
+  .section { margin-bottom: 8pt; }
+
+  .sectionTitle {
+    font-size: 11.5pt;
+    padding-bottom: 3pt;
+    border-bottom: 0.5pt solid #000;
+  }
+
+  .sectionNum {
+    width: 13pt;
+    height: 13pt;
+    border: 0.5pt solid #000;
+    font-size: 7pt;
+  }
+
+  .sectionNote { font-size: 7.5pt; margin-bottom: 5pt; line-height: 1.4; }
+
+  .empty {
+    padding: 3pt 0;
+    border: none;
+    border-top: 0.5pt dashed #999;
+    border-radius: 0;
+    font-size: 8pt;
+  }
+
+  /* The two ledgers keep their two rules on paper, because the rule is
+     what stops them reading as one table with a total. */
+  .ledgers { gap: 12pt; }
+
+  .ledger {
+    padding: 0 0 0 6pt;
+    border: none;
+    border-left: 1pt solid #000;
+    border-radius: 0;
+  }
+
+  .ledgerTitle { font-size: 8.5pt; margin-bottom: 5pt; }
+  .ledgerFigures { gap: 4pt; }
+
+  .ledgerFoot {
+    margin-top: 5pt;
+    padding-top: 3pt;
+    border-top: 0.5pt dashed #999;
+    font-size: 7.5pt;
+  }
+
+  .ledgerFootLabel,
+  .paceLabel,
+  .askLabel,
+  .quoteLabel,
+  .writeInLabel { font-size: 6.5pt; }
+
+  .pace {
+    padding: 3pt 0 4pt 6pt;
+    margin-bottom: 5pt;
+    border: none;
+    border-left: 0.5pt solid #999;
+    border-radius: 0;
+  }
+
+  .paceTitle { font-size: 9pt; margin-bottom: 4pt; }
+  .paceLine { font-size: 8pt; margin-bottom: 3pt; line-height: 1.4; }
+  .paceFoot { font-size: 7pt; }
+  .paceFigures { gap: 8pt; }
+
+  .trackRail {
+    height: 8pt;
+    border: 0.5pt solid #000;
+    border-radius: 0;
+  }
+
+  /* Hatching rather than a fill, so the bar is legible with print
+     backgrounds off and costs almost no toner with them on. */
+  .trackFill {
+    background: repeating-linear-gradient(
+      45deg,
+      #000,
+      #000 0.6pt,
+      transparent 0.6pt,
+      transparent 2.4pt
+    ) !important;
+  }
+
+  .trackMark { background: #000 !important; width: 1pt; }
+  .trackKey { font-size: 7pt; gap: 3pt 10pt; }
+
+  .statusList { gap: 3pt; }
+
+  .statusRow {
+    grid-template-columns: 120pt minmax(0, 1fr) 32pt 30pt;
+    gap: 8pt;
+    font-size: 8pt;
+  }
+
+  .statusBar {
+    height: 6pt;
+    border: 0.5pt solid #000;
+    border-radius: 0;
+  }
+
+  .statusFill {
+    background: repeating-linear-gradient(
+      45deg,
+      #000,
+      #000 0.6pt,
+      transparent 0.6pt,
+      transparent 2.4pt
+    ) !important;
+  }
+
+  .rows { gap: 4pt; }
+
+  .row {
+    padding: 2pt 0 2pt 6pt;
+    border-left: 0.5pt solid #999;
+    border-bottom: 0.5pt solid #ccc;
+  }
+
+  .rowName { font-size: 9.5pt; }
+  .rowNote { font-size: 7.5pt; line-height: 1.4; }
+
+  .rowState {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    font-size: 7.5pt;
+  }
+
+  .rowFacts {
+    grid-template-columns: 96pt 96pt minmax(0, 1fr);
+    gap: 3pt 10pt;
+  }
+
+  .rowFact dt { font-size: 6.5pt; }
+  .rowFact dd { font-size: 8pt; }
+  .rowSub { font-size: 7pt; }
+
+  .quote { border-left: 0.5pt solid #999; }
+  .quote p { font-size: 8pt; line-height: 1.35; }
+
+  .asks { gap: 5pt; }
+
+  .ask {
+    padding: 3pt 0 3pt 6pt;
+    border: none;
+    border-left: 1pt solid #000;
+    border-radius: 0;
+  }
+
+  .askTitle { font-size: 10pt; }
+  .askWhat { font-size: 8pt; margin-bottom: 3pt; line-height: 1.4; }
+
+  .askDecision {
+    padding: 2pt 0 2pt 6pt;
+    margin-bottom: 4pt;
+    border-left: 1pt solid #000;
+    font-size: 8.5pt;
+  }
+
+  .askBy { font-size: 7.5pt; margin-bottom: 3pt; }
+
+  .debrief {
+    padding: 0;
+    border: none;
+    gap: 7pt;
+  }
+
+  /* One line of ballpoint. Sixteen points is about the height of adult
+     handwriting done standing up, and it is the largest single lever on
+     how many sides this report runs to. */
+  .rule {
+    height: 13pt;
+    border-bottom: 0.5pt solid #000;
+  }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root, exactly as the week
+   sheet does it. This is a document a person operates rather than an
+   essay, so it gets 14px rows, 12px meta and a 1.4 line height. Steps 4
+   and 5 are untouched: the figures stay large, this is a tightening
+   rather than a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+.page :is(h1, h2, h3) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}

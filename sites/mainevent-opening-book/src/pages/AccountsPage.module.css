@@ -1,0 +1,1441 @@
+/*
+  THE ACCOUNT BOARD.
+
+  A column of blocks rather than a table, because an account carries four
+  different sorts of fact at once: what it has signed, when its next
+  occasion falls, how long since anybody spoke to it, and what has to
+  happen the fortnight after its event. A table cell holds a number. It
+  does not hold a dated obligation with an owner on it, and it certainly
+  does not hold one at 380px.
+
+  COLOUR IS NEVER THE ONLY SIGNAL. Every state carries a glyph and a word
+  before it carries a hue, every window bar has its two dates printed
+  beside it in words, the conflict says the word "conflict", and the
+  cleared mark is a drawn box with a figure in it. Put the whole page
+  through greyscale and nothing is lost.
+
+  MOTION IS CONFINED TO CHROME AND CAPPED AT --dur-2. The only thing that
+  moves on this screen is a scenario key and a row's own hover, both of
+  which are chrome. Data never animates. The blanket reduced motion rule
+  at the foot of this file is the second line of defence rather than the
+  only one, because every duration here already comes from a token that
+  tokens.css zeroes.
+
+  Tokens by name only. There is no hex value in this file.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-5);
+}
+
+/* The one line whose job is to say which section the reader is standing
+   in, so it wears that section's own ink. The fallback keeps it right on
+   a screen rendered outside the shell. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--sec-accounts-ink));
+}
+
+.h1 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-4);
+}
+
+.thesis,
+.framing {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  max-width: 84ch;
+  line-height: 1.55;
+}
+
+.thesis {
+  font-size: var(--step-1);
+  color: var(--text-0);
+}
+
+.thesisGlyph {
+  color: var(--sec-ink, var(--sec-accounts-ink));
+  line-height: 1.3;
+}
+
+.framing {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.framingGlyph {
+  color: var(--prov-public);
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------
+   The scenario clock. Chrome, and drawn as chrome.
+   --------------------------------------------------------------- */
+
+/*
+  A DASHED RULE AND A RECESSED GROUND, SO NOBODY READS IT AS A FILTER.
+  Every other bordered block on this page is a solid rule around data.
+  This one is the instrument that moves the date, it sits outside the
+  data entirely, and the difference has to be visible before the label is
+  read.
+*/
+.clockBar {
+  margin: 0 0 var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.clockHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.clockTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+
+.clockGlyph {
+  color: var(--sec-ink, var(--sec-accounts-ink));
+}
+
+.clockNote {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.clockRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.clockKey {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--text-1);
+  font: inherit;
+  font-size: var(--step--2);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--dur-1) ease-out,
+    border-color var(--dur-1) ease-out;
+}
+
+.clockKey:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+}
+
+/* The pressed key is a heavier border, a heavier weight and an inset
+   shoulder, so the current reading is legible with no colour at all. */
+.clockKey[aria-pressed="true"] {
+  border-color: var(--sec-ink, var(--sec-accounts-ink));
+  box-shadow: inset 0 0 0 1px var(--sec-ink, var(--sec-accounts-ink));
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.clockKeyLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.clockKeyDate {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.clockKey[aria-pressed="true"] .clockKeyDate {
+  color: var(--text-1);
+}
+
+.clockReading {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.section {
+  margin-bottom: var(--space-7);
+  border-top: 1px solid var(--line-2);
+  padding-top: var(--space-5);
+}
+
+.blockTitle {
+  margin: var(--space-5) 0 var(--space-3);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.sectionFoot {
+  margin: var(--space-4) 0 0;
+  max-width: 84ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.quiet {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.none {
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The conflict
+   --------------------------------------------------------------- */
+
+/*
+  THREE SIGNALS ON THIS BLOCK AND ONLY ONE OF THEM IS COLOUR: the word
+  "conflict" in the kicker, the hatched edge down the left, and the
+  amber. The hatch is a shape, so it survives greyscale and it survives a
+  printout.
+*/
+.conflict {
+  position: relative;
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-m);
+  background: var(--warn-tint);
+}
+
+.conflict::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 8px;
+  border-radius: var(--radius-m) 0 0 var(--radius-m);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--warn),
+    var(--warn) 3px,
+    var(--warn-tint) 3px,
+    var(--warn-tint) 7px
+  );
+}
+
+.conflictKicker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-0);
+}
+
+.conflictGlyph {
+  color: var(--warn);
+}
+
+.conflictTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+}
+
+.conflictName {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.conflictOcc {
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.conflictDates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.conflictDates li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.conflictWhat {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.conflictWhen {
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.conflictAway {
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.conflictVerb {
+  margin: 0;
+  max-width: 84ch;
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   The next dated thing per account
+   --------------------------------------------------------------- */
+
+.nextList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.nextItem {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.4fr) minmax(120px, 0.8fr) minmax(150px, 1fr) minmax(140px, 1fr);
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.nextName {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.nextVerb {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.nextWhen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.nextDays {
+  color: var(--text-2);
+}
+
+.nextOcc {
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+@media (max-width: 720px) {
+  .nextItem {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------------
+   The obligations that have fallen due
+   --------------------------------------------------------------- */
+
+.due {
+  padding: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.dueHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.dueTitle {
+  margin: 0;
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+/* The figure sits in a slot wide enough for its largest value, so
+   nothing on the page moves when it changes. */
+.dueCount {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.dueValue {
+  min-width: 2ch;
+  text-align: right;
+  font-size: var(--step-3);
+  font-weight: 800;
+  color: var(--text-0);
+}
+
+.dueOf {
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.dueList,
+.handledList,
+.refList,
+.aheadList {
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.dueRow,
+.handledRow,
+.refRow,
+.aheadRow {
+  display: grid;
+  grid-template-columns: 22px minmax(120px, 0.9fr) minmax(160px, 1.3fr) minmax(110px, 0.7fr) minmax(90px, 0.6fr) auto;
+  gap: var(--space-2) var(--space-3);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.dueRow {
+  border-color: var(--warn);
+}
+
+.dueGlyph,
+.refGlyph,
+.aheadGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--info);
+}
+
+.dueLabel,
+.refLabel,
+.aheadLabel {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.dueName,
+.refName,
+.aheadName {
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.dueWhen,
+.refWhen,
+.aheadWhen {
+  color: var(--text-0);
+}
+
+.dueAway,
+.aheadAway,
+.refOwner {
+  color: var(--text-2);
+}
+
+.dueAct,
+.handledUndo {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font: inherit;
+  font-size: var(--step--1);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--dur-1) ease-out;
+}
+
+.dueAct:hover,
+.handledUndo:hover {
+  background: var(--surface-3);
+}
+
+/*
+  A HANDLED ROW STAYS FULLY LEGIBLE. No strike-through and no fade: a
+  completed touch is evidence, and evidence that is harder to read than
+  the work still outstanding is the wrong way round. The mark, the word
+  and the position carry the state instead.
+*/
+.handledRow {
+  grid-template-columns: 22px minmax(60px, auto) 1fr auto;
+  border-color: var(--ok);
+  background: var(--ok-tint);
+  color: var(--text-0);
+}
+
+.handledMark {
+  font-size: var(--step-0);
+  font-weight: 800;
+  color: var(--ok);
+}
+
+.handledLabel {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: var(--step--2);
+  color: var(--text-0);
+}
+
+.handledWhat {
+  color: var(--text-0);
+}
+
+.refRow {
+  grid-template-columns: 22px minmax(110px, auto) minmax(150px, 1.2fr) minmax(110px, auto) auto;
+  border-style: dashed;
+}
+
+.refGlyph {
+  color: var(--neutral);
+}
+
+.aheadRow {
+  grid-template-columns: 22px minmax(110px, auto) minmax(150px, 1.2fr) minmax(110px, auto) auto;
+  background: var(--surface-1);
+}
+
+.clearedWrap {
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-m);
+}
+
+.clearedWrap:focus-visible {
+  outline-offset: 4px;
+}
+
+/*
+  AT A PHONE WIDTH A ROW BECOMES A FLOWING LINE, NOT A TWO COLUMN GRID.
+  Two columns with six children puts every other child into the glyph
+  column, which is how an organisation name ends up set one word per
+  line. Flex lets the label, the name, the date and the verb wrap as
+  words do, and the row stays one thing.
+*/
+@media (max-width: 860px) {
+  .dueRow,
+  .handledRow,
+  .refRow,
+  .aheadRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: var(--space-1);
+  }
+}
+
+/* The five offsets, printed, because a boundary a reader cannot see is a
+   boundary they have to take on trust. */
+.offsets {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.offsetItem {
+  display: grid;
+  grid-template-columns: 22px minmax(110px, auto) minmax(110px, auto) minmax(110px, auto) 1fr;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.offsetGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--sec-ink, var(--sec-accounts-ink));
+}
+
+.offsetLabel {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.offsetDays {
+  color: var(--text-0);
+}
+
+.offsetOwner {
+  color: var(--text-2);
+}
+
+.offsetWhy {
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+@media (max-width: 860px) {
+  .offsetItem {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: var(--space-1);
+  }
+}
+
+/* ---------------------------------------------------------------
+   The four figures
+   --------------------------------------------------------------- */
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-3);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* A tile with no denominator is drawn differently from one with a
+   figure in it, and the difference is a dashed rule rather than a
+   colour, because the reading is "this cannot be measured yet" and not
+   "this is a worse number". */
+.tile[data-state="waiting"] {
+  border-style: dashed;
+  border-color: var(--line-strong);
+}
+
+.tileLabel {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.tileFormula {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  color: var(--text-2);
+}
+
+.tileValue {
+  margin: 0;
+  font-size: var(--step-5);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.tileSub {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.tileWaiting {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.tileWaitGlyph {
+  color: var(--neutral);
+}
+
+.tileBecause,
+.tileFirst,
+.tileNote,
+.tileLedger {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.tileNote {
+  color: var(--text-2);
+}
+
+.tileLedger {
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line-2);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.tileProv {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The twelve month clock
+   --------------------------------------------------------------- */
+
+/*
+  THE PLOT IS THE SECOND DRAWING OF FACTS THAT ARE ALREADY PRINTED.
+  Every bar sits in the same row as the name and the dates it draws, so
+  a reader never has to count down two separate lists to pair them.
+  Below a phone width the whole drawing is removed rather than squeezed,
+  because fifteen month labels in 380 pixels is a smear and every date it
+  draws is in words beside it. A reader on a phone loses a picture and
+  keeps the whole reading.
+*/
+.clock {
+  --clock-label: minmax(240px, 32%);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.plotHead {
+  display: grid;
+  grid-template-columns: var(--clock-label) 1fr;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+  border: 1px solid transparent;
+}
+
+/* Two lanes: the today flag on top, the month labels underneath. They
+   never share a row, so the flag can never paint over a month name. */
+.axis {
+  position: relative;
+  height: 44px;
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.axisMonth {
+  position: absolute;
+  top: 16px;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-left: 3px;
+  border-left: 1px solid var(--line-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  overflow: hidden;
+}
+
+.axisMonth[data-year="yes"] {
+  border-left-color: var(--line-strong);
+}
+
+.axisLabel {
+  line-height: 13px;
+  white-space: nowrap;
+}
+
+.axisYear {
+  font-size: 9px;
+  line-height: 11px;
+  color: var(--text-2);
+}
+
+.todayFlag {
+  position: absolute;
+  top: 0;
+  height: 14px;
+  line-height: 14px;
+  transform: translateX(-50%);
+  padding: 0 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+
+.trackCell {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.barRow {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 18px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+}
+
+.bar {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--info);
+}
+
+.bar[data-open="yes"] {
+  background: var(--warn);
+}
+
+/* A conflicted window is hatched as well as tinted, so the reading is a
+   texture rather than a hue. */
+.bar[data-conflict="yes"] {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--warn),
+    var(--warn) 4px,
+    var(--surface-2) 4px,
+    var(--surface-2) 8px
+  );
+  box-shadow: 0 0 0 1px var(--warn);
+}
+
+.occasionMark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  transform: translateX(-1px);
+  border-radius: var(--radius-pill);
+  background: var(--ok);
+}
+
+.eventMark {
+  position: absolute;
+  top: 3px;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-6px) rotate(45deg);
+  background: var(--surface-1);
+  border: 2px solid var(--text-0);
+}
+
+.todayLine {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 1px;
+  background: var(--text-1);
+}
+
+.clockRows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.clockItem {
+  display: grid;
+  grid-template-columns: var(--clock-label) 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+/* An inset shoulder rather than a thicker border, because a border on
+   one row would move that row's track three pixels out of step with the
+   axis above it, which on a fifteen month span is two days. */
+.clockItem[data-conflict="yes"] {
+  border-color: var(--warn);
+  box-shadow: inset 3px 0 0 0 var(--warn);
+}
+
+.clockText {
+  min-width: 0;
+}
+
+.clockName {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin: 0 0 var(--space-2);
+}
+
+.clockNameText {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.clockOcc {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.clockOpenNow,
+.clockConflict {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.clockOpenNow {
+  border: 1px solid var(--warn);
+  background: var(--warn-tint);
+}
+
+.clockConflict {
+  border: 1px solid var(--warn);
+  background: var(--surface-2);
+}
+
+.clockDates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.clockDates strong {
+  color: var(--text-0);
+}
+
+.clockLead {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legendBar {
+  width: 26px;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--info);
+}
+
+.legendOcc {
+  width: 3px;
+  height: 16px;
+  border-radius: var(--radius-pill);
+  background: var(--ok);
+}
+
+.legendEvent {
+  width: 11px;
+  height: 11px;
+  transform: rotate(45deg);
+  background: var(--surface-1);
+  border: 2px solid var(--text-0);
+}
+
+.legendToday {
+  width: 1px;
+  height: 16px;
+  background: var(--text-1);
+}
+
+@media (max-width: 860px) {
+  .plotHead,
+  .trackCell {
+    display: none;
+  }
+
+  .clockItem {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------------
+   The account cards
+   --------------------------------------------------------------- */
+
+.cards {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.card {
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* The state is a glyph, a word and a count before it is an edge. The
+   edge is the fourth signal and it never carries a reading alone. */
+.card[data-state="at-risk"],
+.card[data-state="window-open"] {
+  border-left: 4px solid var(--warn);
+}
+
+.card[data-state="lapsed"] {
+  border-left: 4px solid var(--risk);
+}
+
+.cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--step-2);
+}
+
+.cardName {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.cardBecause {
+  margin: 0;
+  flex-basis: 100%;
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.cardSub {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--text-0);
+}
+
+.health {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.healthCell {
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.healthCell dt {
+  margin-bottom: 4px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.healthCell dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step-0);
+  color: var(--text-0);
+}
+
+.healthSub {
+  flex-basis: 100%;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.lines,
+.occasions,
+.traces {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.line {
+  display: grid;
+  grid-template-columns: minmax(110px, auto) minmax(90px, auto) minmax(80px, auto) auto 1fr;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.lineDate,
+.lineValue {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.lineAway {
+  color: var(--text-2);
+}
+
+.lineDetail {
+  color: var(--text-1);
+}
+
+.lineFoot {
+  margin: var(--space-2) 0 0;
+  max-width: 84ch;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.occasion {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(220px, 1.2fr) minmax(200px, 1.1fr);
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.occLabel {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.occWindow strong,
+.occNext strong {
+  color: var(--text-0);
+}
+
+/* A block rather than a flex row, so the figure stays attached to the
+   words that give it a unit. In a flex row "122" and "day cycle" are two
+   items and a narrow column puts them on two lines. */
+.occCycle {
+  display: block;
+  line-height: 1.6;
+  grid-column: 1 / -1;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line-2);
+  color: var(--text-2);
+}
+
+.trace {
+  display: grid;
+  grid-template-columns: 22px minmax(110px, auto) minmax(110px, auto) minmax(90px, auto) minmax(110px, auto) 1fr;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.trace[data-due="yes"] {
+  background: var(--surface-2);
+}
+
+.traceGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--sec-ink, var(--sec-accounts-ink));
+}
+
+.traceLabel {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.traceWhen {
+  color: var(--text-0);
+}
+
+.traceAway,
+.traceOwner {
+  color: var(--text-2);
+}
+
+.traceNote {
+  line-height: 1.5;
+}
+
+.cardFoot {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-2);
+  max-width: 92ch;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+@media (max-width: 860px) {
+  .line,
+  .occasion {
+    grid-template-columns: 1fr;
+  }
+
+  .trace {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: var(--space-1);
+  }
+}
+
+/* ---------------------------------------------------------------
+   States, lead times and thresholds
+   --------------------------------------------------------------- */
+
+.states,
+.leads,
+.thresholds {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.stateRow {
+  display: grid;
+  grid-template-columns: minmax(170px, auto) 3ch 1fr;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.stateCount {
+  font-size: var(--step-1);
+  font-weight: 800;
+  text-align: right;
+  color: var(--text-0);
+}
+
+.stateNote {
+  line-height: 1.5;
+}
+
+.leadRow,
+.thresholds li {
+  display: grid;
+  grid-template-columns: minmax(170px, auto) minmax(220px, auto) 1fr;
+  gap: var(--space-2) var(--space-3);
+  align-items: baseline;
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.thresholds {
+  margin-top: var(--space-4);
+}
+
+.leadName,
+.thresholdLabel {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.leadDays,
+.thresholdValue {
+  color: var(--text-0);
+}
+
+.leadSource,
+.thresholdNote {
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+@media (max-width: 860px) {
+  .leadRow,
+  .thresholds li {
+    grid-template-columns: 1fr;
+  }
+
+  .stateRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: var(--space-1);
+  }
+
+  .stateCount {
+    text-align: left;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Reduced motion. The second line of defence, not the only one: every
+   duration above already comes from a token that tokens.css zeroes.
+   Nothing on this page conveys a reading through movement, so removing
+   all of it removes nothing.
+   --------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .page *,
+  .page *::before,
+  .page *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

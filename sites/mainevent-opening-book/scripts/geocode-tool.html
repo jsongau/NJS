@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fair Share — address geocoder</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --ink:#14181f; --ink-2:#5a6472; --ink-3:#8b95a3;
+    --line:#e3e7ec; --accent:#1f5fd0; --ok:#0f7a52; --warn:#8a5a00; --risk:#a8261b;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+    padding:32px 20px 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:22px;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--ink-2);margin:0 0 24px;max-width:70ch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
+  button{font:inherit;font-weight:600;border-radius:8px;border:1px solid var(--accent);
+    background:var(--accent);color:#fff;padding:10px 18px;cursor:pointer}
+  button:disabled{opacity:.5;cursor:default}
+  button.ghost{background:#fff;color:var(--accent)}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:16px 0 4px}
+  .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+  .status{font-size:13px;color:var(--ink-2)}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:700}
+  td.num{font-family:var(--mono);font-size:12px;white-space:nowrap}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;
+    border:1px solid currentColor;white-space:nowrap}
+  .t-ok{color:var(--ok)} .t-warn{color:var(--warn)} .t-risk{color:var(--risk)}
+  textarea{width:100%;height:280px;font-family:var(--mono);font-size:11.5px;line-height:1.5;
+    border:1px solid var(--line);border-radius:8px;padding:12px;background:#fbfcfd;color:var(--ink)}
+  .note{font-size:13px;color:var(--ink-2);background:#fbfcfd;border-left:3px solid var(--accent);
+    padding:10px 14px;border-radius:0 6px 6px 0;margin:14px 0}
+  code{font-family:var(--mono);font-size:12px;background:#eef1f5;padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Fair Share address geocoder</h1>
+  <p class="sub">Geocodes the 20 retail accounts plus the Harbor Distributing facility against the US Census Bureau
+  geocoder, straight from your browser. Nothing is uploaded anywhere. Click Run, wait about 20 seconds, then copy
+  the JSON at the bottom and paste it back into the chat.</p>
+
+  <div class="card">
+    <div class="row">
+      <button id="run">Run geocoder</button>
+      <button id="copy" class="ghost" disabled>Copy JSON</button>
+      <span class="status" id="status">Ready. 21 addresses queued.</span>
+    </div>
+    <div class="bar"><i id="prog"></i></div>
+    <div class="note">
+      This checks three things the source data flagged: whether Smart &amp; Final at 21080 Golden Springs Dr is in
+      Walnut or Diamond Bar, whether the three addresses numbered 17550 are genuinely distinct locations, and
+      whether any matched city or ZIP differs from what the source file claimed.
+    </div>
+  </div>
+
+  <div class="card">
+    <table id="tbl">
+      <thead><tr><th>ID</th><th>Retailer</th><th>Latitude</th><th>Longitude</th><th>Matched address</th><th>Check</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:15px;margin:0 0 10px">Findings</h2>
+    <div id="findings" class="status">Run the geocoder to populate.</div>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:15px;margin:0 0 10px">JSON to paste back</h2>
+    <textarea id="out" spellcheck="false" placeholder="Results appear here after the run."></textarea>
+  </div>
+</div>
+
+<script>
+const ADDRESSES = [
+  ["vons-west-covina","Vons","777 Glendora Ave, West Covina, CA 91790","West Covina","91790"],
+  ["albertsons-diamond-bar","Albertsons","2400 S Diamond Bar Blvd, Diamond Bar, CA 91765","Diamond Bar","91765"],
+  ["ralphs-colima","Ralphs","18318 Colima Rd, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["stater-bros-colima","Stater Bros.","19025 Colima Rd, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["smart-final-diamond-bar","Smart & Final","21080 Golden Springs Dr, Diamond Bar, CA 91789","Diamond Bar","91789"],
+  ["superior-grocers-colima","Superior Grocers","18303 Colima Rd, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["northgate-west-covina","Northgate Market","1120 S Azusa Ave, West Covina, CA 91790","West Covina","91790"],
+  ["ranch99-nogales","99 Ranch Market","1015 S Nogales St, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["hmart-diamond-bar","H Mart","2825 S Diamond Bar Blvd, Diamond Bar, CA 91765","Diamond Bar","91765"],
+  ["costco-industry","Costco Wholesale","17550 Castleton St, City of Industry, CA 91748","City of Industry","91748"],
+  ["sams-club-industry","Sam's Club","17550 Gale Ave, City of Industry, CA 91748","City of Industry","91748"],
+  ["walmart-industry","Walmart Supercenter","17150 Gale Ave, City of Industry, CA 91745","City of Industry","91745"],
+  ["target-colima","Target","17751 Colima Rd, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["cvs-colima","CVS Pharmacy","19121 Colima Rd, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["walgreens-colima","Walgreens","19115 Colima Rd, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["seven-eleven-colima","7-Eleven","18540 Colima Rd, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["ampm-labin","ampm","18940 Labin Ct, Rowland Heights, CA 91748","Rowland Heights","91748"],
+  ["circle-k-amar","Circle K","15425 Amar Rd, La Puente, CA 91744","La Puente","91744"],
+  ["total-wine-industry","Total Wine & More","17550 Colima Rd, City of Industry, CA 91748","City of Industry","91748"],
+  ["bevmo-west-covina","BevMo!","2753 E Eastland Center Dr, West Covina, CA 91791","West Covina","91791"],
+  ["harbor-santa-fe-springs","Harbor Distributing","11204 Norwalk Blvd, Santa Fe Springs, CA 90670","Santa Fe Springs","90670"]
+];
+
+/* The Census geocoder supports JSONP, which sidesteps CORS entirely.
+   One in-flight request at a time, so we stay polite and the results stay ordered. */
+let seq = 0;
+function geocode(address){
+  return new Promise(resolve => {
+    const cb = "__geo" + (seq++);
+    const timer = setTimeout(() => { cleanup(); resolve(null); }, 12000);
+    function cleanup(){
+      clearTimeout(timer);
+      delete window[cb];
+      if (s.parentNode) s.parentNode.removeChild(s);
+    }
+    window[cb] = data => {
+      cleanup();
+      const m = data && data.result && data.result.addressMatches;
+      resolve(m && m.length ? m[0] : null);
+    };
+    const s = document.createElement("script");
+    s.onerror = () => { cleanup(); resolve(null); };
+    s.src = "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress"
+          + "?address=" + encodeURIComponent(address)
+          + "&benchmark=2020&vintage=Current&format=jsonp&callback=" + cb;
+    document.body.appendChild(s);
+  });
+}
+
+const miles = (a,b) => {
+  const R=3958.8, rad=d=>d*Math.PI/180;
+  const dLat=rad(b.lat-a.lat), dLng=rad(b.lng-a.lng);
+  const h=Math.sin(dLat/2)**2 + Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+};
+
+document.getElementById("run").onclick = async () => {
+  const btn = document.getElementById("run");
+  const statusEl = document.getElementById("status");
+  const prog = document.getElementById("prog");
+  const tbody = document.querySelector("#tbl tbody");
+  btn.disabled = true; tbody.innerHTML = "";
+
+  const coordinates = [], unresolved = [], mismatches = [];
+
+  for (let i = 0; i < ADDRESSES.length; i++){
+    const [id, name, addr, srcCity, srcZip] = ADDRESSES[i];
+    statusEl.textContent = "Geocoding " + (i+1) + " of " + ADDRESSES.length + " — " + name;
+    const m = await geocode(addr);
+    const tr = document.createElement("tr");
+
+    if (!m){
+      unresolved.push(id);
+      tr.innerHTML = `<td class="num">${id}</td><td>${name}</td><td colspan="3" class="num">no match</td>
+        <td><span class="tag t-risk">UNRESOLVED</span></td>`;
+    } else {
+      const lat = m.coordinates.y, lng = m.coordinates.x;
+      const gotCity = (m.addressComponents && m.addressComponents.city) || "";
+      const gotZip  = (m.addressComponents && m.addressComponents.zip) || "";
+      const cityOff = gotCity && gotCity.toLowerCase() !== srcCity.toLowerCase();
+      const zipOff  = gotZip && gotZip !== srcZip;
+      if (cityOff || zipOff){
+        mismatches.push(`${id}: source said ${srcCity} ${srcZip}, geocoder returned ${gotCity} ${gotZip}`);
+      }
+      coordinates.push({ id, lat, lng, matchedAddress: m.matchedAddress,
+        matchedCity: gotCity, matchedZip: gotZip, status: "matched" });
+      const tag = (cityOff||zipOff) ? `<span class="tag t-warn">CITY/ZIP DIFFERS</span>`
+                                    : `<span class="tag t-ok">OK</span>`;
+      tr.innerHTML = `<td class="num">${id}</td><td>${name}</td>
+        <td class="num">${lat.toFixed(7)}</td><td class="num">${lng.toFixed(7)}</td>
+        <td>${m.matchedAddress}</td><td>${tag}</td>`;
+    }
+    tbody.appendChild(tr);
+    prog.style.width = Math.round(((i+1)/ADDRESSES.length)*100) + "%";
+  }
+
+  // The three 17550s: are they genuinely distinct locations?
+  const byId = Object.fromEntries(coordinates.map(c => [c.id, c]));
+  const trio = ["costco-industry","sams-club-industry","total-wine-industry"].map(id => byId[id]).filter(Boolean);
+  let trioRead = "Could not evaluate: one or more of the three did not geocode.";
+  if (trio.length === 3){
+    const d = [
+      ["Costco vs Sam's Club", miles(trio[0], trio[1])],
+      ["Costco vs Total Wine", miles(trio[0], trio[2])],
+      ["Sam's Club vs Total Wine", miles(trio[1], trio[2])]
+    ];
+    const min = Math.min(...d.map(x => x[1]));
+    trioRead = d.map(x => `${x[0]}: ${x[1].toFixed(2)} mi`).join(" · ") + " — "
+      + (min < 0.05
+        ? "these land essentially on top of each other, which points to a copy-paste artifact in the source data."
+        : "distinct locations, so the shared 17550 street number is a coincidence, not a data error.");
+  }
+
+  const sf = byId["smart-final-diamond-bar"];
+  const findings = {
+    smartFinalCity: sf
+      ? `Geocoder matched "${sf.matchedAddress}" (city ${sf.matchedCity||"n/a"}, zip ${sf.matchedZip||"n/a"}). 91789 is a shared Walnut/Diamond Bar ZIP; this is the authoritative read.`
+      : "Smart & Final did not geocode; the Walnut vs Diamond Bar conflict is unresolved.",
+    the17550s: trioRead,
+    mismatches: mismatches.length ? mismatches : ["None. Every matched city and ZIP agreed with the source file."]
+  };
+
+  document.getElementById("findings").innerHTML =
+    `<p style="margin:0 0 8px"><strong>Smart &amp; Final:</strong> ${findings.smartFinalCity}</p>
+     <p style="margin:0 0 8px"><strong>The three 17550s:</strong> ${findings.the17550s}</p>
+     <p style="margin:0"><strong>City/ZIP mismatches:</strong> ${findings.mismatches.join("<br>")}</p>`;
+
+  document.getElementById("out").value = JSON.stringify(
+    { generatedAt: new Date().toISOString(), source: "US Census Bureau geocoder, benchmark 2020, Current vintage",
+      coordinates, unresolved, findings }, null, 2);
+
+  statusEl.textContent = `Done. ${coordinates.length} matched, ${unresolved.length} unresolved.`;
+  document.getElementById("copy").disabled = false;
+  btn.disabled = false;
+};
+
+document.getElementById("copy").onclick = () => {
+  const t = document.getElementById("out");
+  t.select(); document.execCommand("copy");
+  document.getElementById("copy").textContent = "Copied";
+  setTimeout(() => document.getElementById("copy").textContent = "Copy JSON", 1600);
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,891 @@
+/*
+  The desk owns its own scrolling.
+
+  AppShell is exactly one viewport tall and does not scroll, so a page
+  that simply grows pushes the footer and the chrome off the bottom of
+  the screen. Every top level page in this app takes flex: 1, min-height:
+  0 and scrolls inside itself, which is what keeps the countdown and the
+  demo badge permanently visible while a reader is forty rows down.
+*/
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-5);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+/* ---------------------------------------------------------------
+   The KPI strip
+   --------------------------------------------------------------- */
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  margin-bottom: var(--space-5);
+  /* Hairlines between the tiles rather than five bordered cards. The
+     strip reads as one instrument that way, which is what it is. */
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: var(--space-4);
+  background: var(--surface-1);
+}
+
+.kpiValue {
+  font-size: var(--step-4);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text-0);
+}
+
+.kpiLabel {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+  line-height: 1.3;
+}
+
+/* ---------------------------------------------------------------
+   Filters
+   --------------------------------------------------------------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.laneFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/*
+  The chip is the label and the button is the control.
+
+  Wrapping the existing LaneChip rather than restyling it means the eight
+  lanes look identical here, on the lane board and on the map, and the
+  pressed state is carried by a ring and by aria-pressed rather than by a
+  colour change that would fight the lane's own hue.
+*/
+/*
+  NO line-height HERE, AND THAT IS THE POINT.
+
+  This rule used to carry `line-height: 0`, the usual reflex for killing
+  the descender gap an inline-block leaves under itself. It was doing
+  nothing of the sort: the button is `inline-flex`, and a flex container
+  has no inline gap to kill. What it did do was cascade a zero
+  line-height into the LaneChip inside it, where `.label` clips with
+  `overflow: hidden`, so all nine lane names on the landing page
+  rendered at zero pixels high. Nine filter chips reduced to a colour and
+  an 8px glyph, on the one screen where the rule that colour is never the
+  only signal matters most, and invisible to anybody reading the source.
+  If a gap ever does appear under a row of these, fix it on the row that
+  lays them out and never by zeroing a line-height that a child inherits.
+*/
+.laneBtn {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  cursor: pointer;
+}
+
+.laneBtn:hover {
+  background: var(--surface-3);
+}
+
+.laneBtn[aria-pressed="true"] {
+  border-color: var(--text-0);
+  background: var(--surface-3);
+  box-shadow: var(--shadow-1);
+}
+
+.allLanes {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 11px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--text-1);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.filterRight {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.searchWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.searchLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.search {
+  width: 24ch;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+}
+
+.search:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+.emailToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.emailToggle:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+}
+
+/* Pressed carries a filled glyph, a darker ground and aria-pressed. The
+   colour is the third signal here as everywhere else. */
+.emailToggle[aria-pressed="true"] {
+  background: var(--ok-tint);
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.emailToggleGlyph { font-size: 1.05em; line-height: 1; }
+
+/* ---------------------------------------------------------------
+   Result bar
+   --------------------------------------------------------------- */
+
+.resultBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.resultCount {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.resultCount strong { color: var(--text-0); }
+
+/* The written-door count is a second fact on the same line, so it is set
+   quieter rather than given a sentence of its own. */
+.resultAside { color: var(--text-3); }
+
+.clearAll {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.empty {
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  color: var(--text-2);
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------
+   The ranked list
+   --------------------------------------------------------------- */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.row {
+  position: relative;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  transition: border-color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out);
+}
+
+.row:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+}
+
+/*
+  Booked and lost rows are parked at the bottom by the selector. They are
+  greyed here too, and they are not hidden: a pipeline that quietly
+  deletes its losses is a pipeline nobody can learn anything from.
+*/
+.row[data-parked="true"] {
+  background: var(--surface-2);
+  opacity: 0.82;
+}
+
+/*
+  THE ROW THE PAGER IS STANDING ON.
+
+  A rule down the leading edge, a warmer paper, and the words "you are
+  here" in the identity column. The rule is drawn as an inset shadow
+  rather than a border so the row's box does not change size and the
+  board does not step sideways every time Next is pressed.
+
+  The focus ring is drawn inside the row rather than outside it, because
+  the pager hands focus to a list item that already sits flush against
+  its neighbours and an outward ring would be clipped by the row above.
+*/
+/* The edge is the section's, and only the edge. One row at a time wears
+   it, so the board never reads as a hundred and two rows striped in a
+   colour, and the washed ground and the heavier type carry the same
+   signal for anybody who cannot separate the two hues. */
+.row[data-current="true"] {
+  background: var(--brand-gold-tint);
+  border-color: var(--brand-gold-line);
+  box-shadow: inset 3px 0 0 0 var(--sec, var(--brand-gold));
+}
+
+.row[data-current="true"][data-parked="true"] { opacity: 1; }
+
+.row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.hereMark {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-gold-600);
+}
+
+.rowGrid {
+  display: grid;
+  grid-template-columns:
+    3ch 38px minmax(200px, 1.5fr) minmax(150px, 1.1fr)
+    100px 130px 118px;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.rank {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: -0.02em;
+}
+
+.identity {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/*
+  The stretched hit area. The button is the real control; the pseudo
+  element makes the whole card clickable without nesting anything inside
+  anything, and every other control on the row is lifted above it.
+*/
+/*
+  ── THE ROW'S OWN CONTROL, AND THE NAME'S, AS SIBLINGS ────────────
+
+  This used to be one button carrying the organisation's name, with a
+  stretched pseudo element making the whole row its hit area. The name is
+  a control in its own right now, so the two have been separated: this
+  button is the stretched area and nothing else, and the name sits above
+  it as a sibling.
+
+  It is drawn behind the content rather than over it, at z-index 0, and
+  every control on this row that must stay pressable already lifts itself
+  to 1. That list is the score toggle, the action row, the breakdown and
+  now the name, and it was already the arrangement this row used.
+*/
+.rowOpen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: none;
+  cursor: pointer;
+}
+
+/*
+  Inset, because the ring is drawn against the row's own edge on all four
+  sides and an outward offset would be clipped by the list above and
+  below it.
+*/
+.rowOpen:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/*
+  The visible name. It carries the type the button used to carry and
+  nothing else; `RecordName` inside it declares `font: inherit`, so this
+  is the one place the desk's name typography is written down.
+*/
+.name {
+  position: relative;
+  z-index: 1;
+  align-self: start;
+  justify-self: start;
+  font-size: var(--step-0);
+  font-weight: 650;
+  line-height: 1.25;
+  color: var(--text-0);
+}
+
+.row:hover .name { color: var(--accent); }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.colLabel {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+
+.contact { min-width: 0; }
+
+.email {
+  display: block;
+  font-size: var(--step--2);
+  color: var(--text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noEmail {
+  display: block;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.metric { min-width: 0; }
+
+/* Same story as `.laneBtn` above: this is a grid item wrapping a fixed
+   38px plate, so it had no inline gap to close either, and the
+   `line-height: 0` it carried only travelled down into the plate's
+   initials. The plate now sets its own metric. */
+.plateWrap {
+  display: inline-flex;
+  flex: none;
+}
+
+.metricValue {
+  display: block;
+  font-size: var(--step-0);
+  font-weight: 650;
+  line-height: 1.15;
+  color: var(--text-0);
+}
+
+.metricUnit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--text-3);
+  line-height: 1.3;
+}
+
+/* --- The score toggle ------------------------------------------ */
+
+.scoreToggle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  cursor: pointer;
+  text-align: left;
+}
+
+.scoreToggle:hover {
+  border-color: var(--brand-gold);
+  background: var(--brand-gold-tint);
+}
+
+.scoreValue {
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--brand-gold-600);
+}
+
+.scoreWord {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.scoreCaret {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+/* --- The next action ------------------------------------------- */
+
+.next {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--brand-gold);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+}
+
+.nextLabel {
+  flex: none;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-gold-600);
+}
+
+.nextText {
+  font-size: var(--step--1);
+  color: var(--text-0);
+  line-height: 1.45;
+}
+
+/* --- Row actions ----------------------------------------------- */
+
+.actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.touchCount {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   The score breakdown. The most persuasive thing on the page, so it
+   gets the room it needs rather than a tooltip.
+   --------------------------------------------------------------- */
+
+.breakdown {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.breakdownTitle {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--text-0);
+}
+
+.scoreTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--2);
+}
+
+.scoreTable th,
+.scoreTable td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.scoreTable thead th {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--line-2);
+  padding-bottom: 5px;
+}
+
+.pointsCol { width: 150px; }
+
+.componentLabel {
+  width: 17ch;
+  font-weight: 650;
+  color: var(--text-0);
+  padding-right: var(--space-3);
+}
+
+.pointsCell {
+  width: 150px;
+  white-space: nowrap;
+}
+
+.points {
+  display: inline-block;
+  min-width: 4ch;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.totalPoints {
+  font-size: var(--step-1);
+  color: var(--brand-gold-600);
+}
+
+/*
+  The bar is decoration and is marked as such in the markup. The signed
+  number beside it carries the value and the sign carries the direction,
+  so a reader who cannot see the bar at all loses nothing.
+*/
+.bar {
+  display: inline-block;
+  width: 84px;
+  height: 6px;
+  margin-left: var(--space-2);
+  vertical-align: middle;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+/* A penalty is drawn hatched as well as coloured, so the two directions
+   are distinguishable without relying on hue. */
+.scoreTable tr[data-sign="minus"] .barFill {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--risk),
+    var(--risk) 3px,
+    var(--risk-tint) 3px,
+    var(--risk-tint) 6px
+  );
+}
+
+.scoreTable tr[data-sign="minus"] .points { color: var(--risk); }
+
+.why {
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.scoreTable tfoot th {
+  font-size: var(--step--2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  border-bottom: none;
+}
+
+.scoreTable tfoot td { border-bottom: none; }
+
+.breakdownFoot {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 0.94em;
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Show all
+   --------------------------------------------------------------- */
+
+.moreWrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* ---------------------------------------------------------------
+   Responsive. The row loses columns in the order they stop earning
+   their place: the metrics fold under the identity block first,
+   because a distance is a qualifier and a name is the row.
+   --------------------------------------------------------------- */
+
+@media (max-width: 1280px) {
+  .kpis { grid-template-columns: repeat(3, 1fr); }
+  .rowGrid {
+    grid-template-columns: 3ch 38px minmax(180px, 1.4fr) minmax(140px, 1fr) 96px 116px;
+  }
+  /* The headcount column is the first thing to go. It is the softest
+     figure on the row and the only one restated in the drawer. */
+  .metricSize { display: none; }
+}
+
+@media (max-width: 1000px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .rowGrid {
+    grid-template-columns: 3ch 38px 1fr auto;
+    row-gap: var(--space-3);
+  }
+  .contact,
+  .metric {
+    grid-column: 3 / -1;
+  }
+  .metricSize { display: block; }
+  .scoreToggle { align-self: start; }
+  .componentLabel { width: auto; }
+}
+
+@media (max-width: 720px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filterRight {
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+  .search { width: 100%; }
+  .searchWrap { flex: 1 1 16ch; }
+  .scoreTable thead { display: none; }
+  .scoreTable th,
+  .scoreTable td {
+    display: block;
+    width: auto;
+    padding: 2px 0;
+    border-bottom: none;
+  }
+  .scoreTable tbody tr {
+    display: block;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .scoreTable tfoot tr { display: block; padding-top: var(--space-2); }
+  .pointsCell { width: auto; }
+}
+
+@media (max-width: 520px) {
+  .inner { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .kpis { grid-template-columns: 1fr; }
+  .h1 { font-size: var(--step-3); }
+  .rowGrid {
+    grid-template-columns: 3ch 1fr;
+    gap: var(--space-2) var(--space-3);
+  }
+  /* The plate is the fastest thing to fix on while the eye is moving
+     down a long column, and at this width there is no column to scan.
+     It goes, and the rank number keeps the left edge. */
+  .plateWrap { display: none; }
+  .contact,
+  .metric,
+  .identity {
+    grid-column: 2 / -1;
+  }
+  .scoreToggle {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+  .scoreCaret { position: static; margin-left: auto; }
+  .actions > * { flex: 1 1 auto; }
+  .touchCount { flex-basis: 100%; }
+}
+
+@media (max-width: 380px) {
+  .inner { padding: var(--space-3) var(--space-2) var(--space-7); }
+  .row { padding: var(--space-3); }
+  .kpiValue { font-size: var(--step-3); }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}

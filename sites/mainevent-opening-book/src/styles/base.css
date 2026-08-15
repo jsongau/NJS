@@ -1,0 +1,569 @@
+/* Base layer. THE CABINET: a dark housing, a bright screen, marquee type,
+   and the same cabinet under house lights on <html data-theme="light">.
+   The palette, the reasoning and every measured ratio live in tokens.css.
+
+   NOTHING IN THIS FILE MAY ASK WHICH THEME IS ON. There is not one
+   [data-theme="light"] selector below and there is not meant to be. Every
+   place this layer used to hold a decision about the dark ground, and there
+   were four, now reads a token: --color-scheme for the browser's own
+   chrome, --map-filter for the basemap, --hatch-ink for the gated bar and
+   --select-chevron for the arrow inside a data URI. A difference between
+   the two grounds that a component can see is a difference that will be got
+   wrong somewhere; a difference that is a token cannot be. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--sticky-h) + var(--space-4));
+}
+
+/*
+  THE TRACKING IS NOT A FLOURISH, IT IS A CORRECTION, AND IT BELONGS TO THE
+  GROUND RATHER THAN TO THE TYPEFACE.
+
+  Light type on a dark ground blooms: the lit glyph spreads into the dark
+  counter and a 400 weight starts reading like a 450. Every route in this
+  app is dense text, so left alone the whole application would have come
+  out a step heavier than it was designed. Grayscale antialiasing plus a
+  hair of positive tracking gives the letters their spacing back. It is
+  measured in the screenshots rather than argued: the same table set
+  without it reads visibly denser at 11px.
+
+  DARK INK ON A LIGHT GROUND DOES THE OPPOSITE: it thins, so the same
+  correction applied there costs weight instead of giving it back and the
+  102 row table goes grey. So both halves of the correction are tokens.
+  --type-track is 0.004em on the dark ground and 0 on the light one, and
+  the smoothing hints go back to the platform's own on light, which is the
+  right answer for dark ink and the wrong one for lit type.
+*/
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  letter-spacing: var(--type-track);
+  color: var(--text-0);
+  background: var(--surface-0);
+  -webkit-font-smoothing: var(--font-smooth);
+  -moz-osx-font-smoothing: var(--font-smooth-moz);
+}
+
+/*
+  HEADINGS ARE THE MARQUEE, AND THIS IS THE BIGGEST TYPOGRAPHIC DECISION
+  IN THE FILE.
+
+  The theme before this one set its headings in a book serif and argued,
+  correctly for that theme, that an arcade typeface was the fastest way
+  to look like a fan site. That argument was about DECORATIVE arcade
+  faces: pixel fonts, chrome bevels, a wordmark with a lightning bolt in
+  it. It is not an argument against weight.
+
+  A marquee is not a decorated letter, it is a HEAVY one. So the headings
+  are Rubik at 800 with negative tracking: geometric, chunky, rounded at
+  the corners. It is a working sans with real mass, which means it reads
+  as signage at 34px and as a label at 16px, and it never stops being
+  legible, which a novelty face does immediately.
+
+  The split survives and it is still a rule, not a mood: DISPLAY FOR
+  VOICE, INTER FOR WORK. Anything the reader is meant to hear in a voice
+  gets Rubik. Anything they are meant to operate, so labels, buttons,
+  table headers and figures, stays in Inter and in the mono, because a
+  display face in a column of numbers is harder to compare and this is a
+  working tool before it is anything else.
+*/
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.014em;
+  line-height: 1.2;
+  color: var(--text-0);
+  margin: 0 0 var(--space-3);
+}
+
+/* Small headings are doing labelling work, not voice work. */
+h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-size: var(--step-4);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.026em;
+}
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+h4 { font-size: var(--step-0); }
+
+/* A page title on a phone is the one place the step above earns nothing.
+   At 380px, 34px of Rubik 800 wraps a four word heading onto three lines
+   and pushes the first row of actual content below the fold, so the
+   title steps back down and the leading stays tight. */
+@media (max-width: 560px) {
+  h1 { font-size: var(--step-3); }
+}
+
+p { margin: 0 0 var(--space-3); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* The underline arrives in the signal colour rather than in the link's own
+   cyan, so the hover reads as a second light coming on rather than as one
+   light changing shade. The link itself still brightens, so the hover is
+   never carried by the rule alone. */
+a:hover {
+  color: var(--accent-600);
+  text-decoration: underline;
+  text-decoration-color: var(--brand-gold-line);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Every figure that gets compared down a column is mono and tabular.
+   Without tabular-nums, a column of case counts wobbles as digits change,
+   which makes a plan table read as sloppy for reasons a viewer can't name. */
+.num,
+td.num,
+.tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ============================================================
+   THE FOCUS RING, WHICH IS THE MOST USED PIECE OF CHROME IN THE
+   APPLICATION.
+
+   THREE LAYERS, AND THE MIDDLE ONE IS THE POINT. Working out
+   from the control: a 2px band of --surface-0, then a 2px outline
+   in the interactive cyan, then a wash of the same cyan.
+
+   The band is what makes this ring correct rather than merely
+   pretty. Each ground has ONE surface running against it, the
+   inverted panel, and it is a real panel that real controls sit
+   on: the map chrome band, the daily rings, the offers card, the
+   excision block on /method. On the dark ground a cyan ring
+   measures 5.46:1 on the page and 1.79:1 on that panel, so a
+   single colour ring cannot be correct in both places. Two
+   adjacent colours can: wherever the cyan loses contrast the page
+   colour beside it has 14:1, and wherever the page colour loses
+   contrast the cyan has 5.46. That is exactly the technique WCAG
+   1.4.11 describes for an indicator that has to work on an unknown
+   background, and it means the ring needs no per surface exception
+   anywhere.
+
+   IT SURVIVED THE SECOND GROUND WITHOUT A LINE CHANGING, which is
+   the test of whether it was built or arranged. Both layers are
+   tokens that invert together: on light the band is the near white
+   page and the outline is a deep teal, so the pair is still one
+   colour that holds on paper and one that holds on the housing.
+
+   THE RING IS STILL A RING AND NOT A GLOW. No animation, no
+   pulse, no colour cycling. It appears instantly on
+   :focus-visible and it never moves, because a focus indicator
+   that animates is a focus indicator that is briefly wrong.
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 2px var(--surface-0),
+    0 0 0 8px color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+/* Focus rings must survive on the map, where Leaflet resets outlines. */
+.leaflet-container :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* A text caret in the interactive blue, so the place a person is typing
+   belongs to the same system as the place they last clicked. */
+input,
+textarea { caret-color: var(--accent); }
+
+/* Selected text takes the signal wash. It is free, it happens dozens of
+   times a session, and a default browser blue is the single most common
+   way a themed application gives itself away. */
+::selection {
+  background: var(--brand-gold-tint);
+  color: var(--text-0);
+}
+
+/* The scrollbars belong to the cabinet. The inner scroll region is on
+   screen at all times on every route, so a default gutter down the right
+   of the page is a permanent piece of somebody else's design language,
+   and on a dark ground a light system scrollbar is a stripe of glare. */
+* {
+  scrollbar-color: var(--line-2) transparent;
+  scrollbar-width: thin;
+  color-scheme: var(--color-scheme);
+}
+
+/* Prose list markers in the signal colour. A bullet is the smallest piece
+   of chrome there is and there are hundreds of them on the method page. */
+li::marker { color: var(--brand-gold); }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--surface-1);
+  color: var(--text-0);
+  border: 1px solid var(--line-strong);
+  border-left: 4px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  box-shadow: var(--shadow-3);
+  z-index: var(--z-toast);
+}
+.skip-link:focus { left: var(--space-3); top: var(--space-3); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+table { border-collapse: collapse; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* ============================================================
+   TOUCH TARGETS ON A COARSE POINTER.
+
+   The desktop design is dense on purpose. A finger is not a mouse
+   pointer, so on a coarse pointer every control gets a 44px floor,
+   whatever the component that drew it thinks it wants.
+
+   WHY THESE ARE !important, WHICH IS NOT A DECISION TAKEN LIGHTLY.
+   This is a floor, not a style. A CSS module class beats a bare
+   element selector on specificity, so `min-height: 38px` written in
+   one component's file quietly won against this rule and the buttons
+   on the week sheet, the map stat bar and the offers card came out at
+   36, 38 and 40 pixels on a phone. A floor that any component can
+   undercut by accident is not a floor. Components stay free to be
+   denser than 44px on a mouse; none of them may be denser than 44px
+   on a finger.
+
+   TEXT INPUTS ARE CONTROLS TOO. The previous rule exempted them, so
+   the desk search box measured 34.6px and the go-see run form 38.6px,
+   which are the two places on the phone where a person actually types.
+
+   CHECKBOXES ALSO GET A WIDTH. The packages filter checkbox inherited
+   the 44px height and kept a 13px width, which made it the narrowest
+   target in the application. A target is two dimensional.
+
+   ── WHERE THE LINE IS DRAWN ON LINKS ──────────────────────────
+   A blanket rule on `a` would be wrong. This application is mostly
+   prose and its prose is full of links, and a 44px tall inline-flex
+   link inside a sentence blows the line box apart and leaves the
+   paragraph limping. So the rule covers links that are CONTROLS,
+   which are the ones that stand alone as a destination:
+
+     nav a      the numbered top bar, the mega panel, the in-page
+                rail on /method. Every one of these is a list of
+                destinations and none of them is a sentence.
+     header a   the wordmark, which is the route home.
+     footer a   the methodology link, which is the footer's only
+                control.
+     a.tap      the explicit opt in, for a standalone link that
+                lives outside those three containers. Source links
+                under a figure are the main case: they read as one
+                line of a citation block, not as words in a
+                sentence.
+
+   A link with words on either side of it inside a paragraph is a
+   word in a sentence, it is not marked .tap, and it stays exempt.
+   That is deliberate and it is the correct reading of the success
+   criterion: the target size rule exempts a target that is in a
+   sentence or block of text.
+
+   THE ALTERNATIVE THAT WAS REJECTED. The other honest way to draw
+   this line is structural: give the floor to any link whose computed
+   display is block or flex, on the theory that a link laid out as a
+   box is a control and a link laid out inline is a word. It is a
+   tidier rule and it cannot be written in CSS, because there is no
+   selector for a computed display. The near miss, `a:not(p a)`, was
+   rejected for the opposite reason: it is expressible but it is
+   wrong, since it would also catch every standalone link that
+   happens to sit in a paragraph and miss every prose link inside a
+   list item or a table cell, and this application has both.
+
+   ONE MORE EXEMPTION, NAMED SO IT IS NOT MISTAKEN FOR AN OVERSIGHT.
+   The OpenStreetMap and CARTO credits inside
+   `.leaflet-control-attribution` measure about 10px tall. They are
+   licence text before they are navigation, they are set at 9px for
+   exactly that reason further down this file, and a 44px floor on
+   them would put a finger-high grey band across the corner of the
+   map to make a credit line tappable. They are left at their drawn
+   size deliberately.
+   ============================================================ */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  [role="tab"],
+  summary,
+  select,
+  textarea,
+  input:not([type="hidden"]) {
+    min-height: 44px !important;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 44px !important;
+  }
+
+  nav a,
+  header a,
+  footer a,
+  a.tap {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* ── THE ONE EXEMPTION, AND WHY ────────────────────────────────
+     Leaflet gives every marker `role="button"`, so the floor above
+     caught the map pins and stretched a 34px square icon to 44.
+     A pin is not laid out, it is PLACED: its anchor is its own
+     centre, so ten extra pixels of height move the mark five
+     pixels south of the coordinate it is claiming to mark. A
+     target rule that moves the data is worse than the target it
+     was fixing. The pins stay their drawn size, they still clear
+     the 24px AA floor, and every one of the same organisations is
+     also a full width row in the list pane beside the map, which
+     is the target a finger is meant to use. */
+  .leaflet-marker-icon,
+  .leaflet-marker-icon * {
+    min-height: 0 !important;
+  }
+}
+
+/* Nothing in this theme moves that a reader did not ask to move, and the
+   few things that do are covered here. The focus ring, the row leading
+   edge and the ring segments are all state changes rather than
+   animations, so with motion reduced they simply arrive. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Map attribution.
+   Required by the OpenStreetMap ODbL licence and by CARTO's basemap
+   terms, so it stays. It does not have to shout: smallest legible size,
+   quietest grey, and the "Leaflet" courtesy plug removed since only the
+   data and tile credits are actually obligatory.
+
+   The plate is mixed from the card paper rather than typed as a white
+   with an alpha, because a cold white patch in the corner of a warm map
+   is exactly the sort of leftover that makes a theme look applied rather
+   than built. */
+.leaflet-control-attribution {
+  padding: 1px 6px !important;
+  background: color-mix(in srgb, var(--surface-1) 76%, transparent) !important;
+  border-radius: var(--radius-s) 0 0 0;
+  font-size: 9px !important;
+  line-height: 1.5 !important;
+  color: var(--text-3) !important;
+}
+
+.leaflet-control-attribution a {
+  color: var(--text-3) !important;
+  text-decoration: none;
+}
+
+.leaflet-control-attribution a:hover { color: var(--text-1) !important; }
+
+
+/* ============================================================
+   Selects, styled once, globally.
+
+   WHY GLOBAL AND NOT PER-COMPONENT. There are six <select> elements in
+   this app across four pages, and every one of them was rendering as
+   the operating system's default control, a grey chrome box with a
+   system chevron that changes shape between macOS, Windows and Android.
+   One unstyled native control is the single fastest way to make an
+   otherwise considered interface look unfinished, because it is the one
+   element a reader has seen ten thousand times somewhere else.
+
+   Styling them in six component files would have meant six copies of
+   the same rule drifting apart. This is the one place a select's
+   appearance is decided.
+
+   THE CHEVRON IS AN INLINE SVG IN A DATA URI rather than a pseudo
+   element. A <select> cannot host ::after, since the browser owns its
+   inside, so the arrow has to be a background image, and inlining it
+   means no second network request and no icon font.
+
+   THE TWO LITERAL COLOURS BELOW ARE THE ONLY ONES OUTSIDE tokens.css,
+   AND THEY ARE UNAVOIDABLE. A data URI is an opaque string to the
+   cascade: it cannot read a custom property, so the value has to be
+   spelled out. They are `--brand-gold`, the signal colour, for the
+   chevron on a card, and `--text-inverse` for the chevron on the lit
+   panel. They are named here so that whoever changes either token knows
+   to change these two as well.
+
+   WHAT IS DELIBERATELY NOT DONE: this is still a native <select>. A
+   custom listbox would let me style the OPEN menu too, and it would
+   also mean reimplementing keyboard navigation, type-ahead, screen
+   reader semantics and the mobile wheel picker, all of which the
+   native control already does correctly. Styling the closed state and
+   leaving the open state to the platform is the right trade here.
+   ============================================================ */
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: var(--space-2) var(--space-7) var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background-color: var(--surface-1);
+  background-image: var(--select-chevron);
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  background-size: 12px 8px;
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--text-0);
+  cursor: pointer;
+  line-height: 1.4;
+  box-shadow: var(--shadow-1);
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
+}
+
+select:hover {
+  border-color: var(--brand-gold-line);
+  background-color: var(--surface-2);
+}
+
+select:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+select:disabled {
+  opacity: 0.55;
+  cursor: default;
+  background-image: none;
+}
+
+/* The lit panel needs the inverse treatment, and on this theme "inverse"
+   means a bright cream surface rather than a dark one, so the overlays
+   are mixed from the DARK ink. They are mixed from the token rather than
+   typed as a black with an alpha, for the same reason the map plate is:
+   a literal rgba is a colour the next theme cannot move. */
+.onInk select,
+select.onInk {
+  background-color: color-mix(in srgb, var(--text-inverse) 8%, transparent);
+  border-color: color-mix(in srgb, var(--text-inverse) 24%, transparent);
+  color: var(--text-inverse);
+  background-image: var(--select-chevron-ink);
+}
+
+.onInk select:hover,
+select.onInk:hover {
+  background-color: color-mix(in srgb, var(--text-inverse) 14%, transparent);
+  border-color: var(--brand-gold);
+}
+
+/*
+  The open menu is the platform's, but Chromium and Firefox both honour
+  these two on the option list, so the popup at least inherits the app's
+  paper rather than a system grey.
+*/
+select option {
+  background: var(--surface-1);
+  color: var(--text-0);
+}
+
+
+/* ============================================================
+   THE BASEMAP.
+
+   Leaflet is pointed at CARTO's `light_all` tile set in
+   MapCanvas.tsx, which is a near white map. On a near black
+   application that is a floodlit rectangle in the middle of the
+   page, and every lane marker painted on it is a bright ink on a
+   bright ground, which is the one place in the system where a
+   lane colour would have stopped carrying its 3:1.
+
+   Inverting the tile pane is the standard answer and it is the
+   correct one here: it is one declaration, it does not require a
+   second tile provider or an API key, it leaves the attribution
+   obligation untouched because the tiles are still CARTO's, and
+   it applies ONLY to `.leaflet-tile-pane`. The marker pane, the
+   popup pane and the overlay pane are siblings, so every mark
+   this application draws keeps its constructed colour exactly as
+   tokens.css measured it.
+
+   The hue rotation is what stops the inversion turning water
+   orange: invert alone flips the hue as well as the value, and
+   rotating a further 180 degrees puts it back. The small
+   reductions in brightness and saturation settle the result into
+   the same violet black family as the rest of the page rather
+   than leaving it a cold blue grey.
+   ============================================================ */
+.leaflet-container {
+  background: var(--surface-0);
+}
+
+.leaflet-tile-pane {
+  filter: var(--map-filter);
+}
+
+
+/* ============================================================
+   THE REPAIRS THAT USED TO BE HERE ARE GONE, AND THAT IS THE
+   POINT OF WRITING IT DOWN.
+
+   Five component modules painted a light-on-dark colour as a
+   literal `rgba(244, 247, 250, ...)`, which was correct only for
+   as long as the inverted surface was a dark block. This layer
+   carried a patch for each of them, reaching into the modules
+   from outside with `body [class*="..."]` selectors, and it said
+   in its own comment that the owners of those files should delete
+   the patch the moment they tokenised their own colour.
+
+   They now have. MapBoard, TradeAreaPage, MethodPage, BookPage
+   and PackagesPage read --text-inverse-2, --line-inverse and
+   --hatch-ink directly, so the global layer has nothing left to
+   correct and a reader of any one of those files can see what it
+   paints without knowing this block existed. A patch that outlives
+   its defect is just a second place the colour is decided.
+
+   ONE THING CHANGED RATHER THAN MOVED. The patch gave those focus
+   rings back to --accent. Measured on the band they are actually
+   drawn on, --accent is 1.79:1 on the lit cream and 2.28:1 on the
+   housing, so it failed the 3:1 a focus indicator owes on both
+   grounds. They are --text-inverse now, which is 13.78 and 15.47,
+   and which is the ink that band carries by construction.
+   ============================================================ */

@@ -1,0 +1,679 @@
+/*
+  The group quote, and the only page in this application a customer sees.
+
+  IT IS DELIBERATELY THE ODD ONE OUT. Every internal screen is a working
+  instrument: dense rows, small type, several columns, a lot of state on
+  screen at once. This one is a letter. One column, one measure, bigger
+  type, the display serif at a step nothing else in the app uses, and a
+  great deal more air than a desk would ever justify.
+
+  THE PAGE IS A SHEET ON A GROUND. The reader is holding a document
+  addressed to their organisation, so the content sits on white paper with
+  a single amber rule across the top, floating on the same cool ground the
+  rest of the app uses. Sections are separated by hairlines and space,
+  never by boxes inside boxes, because a customer-facing page that looks
+  like a dashboard tells the reader they are looking at somebody's system
+  rather than at something written for them.
+
+  THREE THINGS EARN A SURFACE OF THEIR OWN and nothing else does: the
+  opening-status notice, because it is the fact the reader most needs and
+  the one a venue would most like to bury; the calculator, because it is
+  the only interactive thing here; and the offer, which is the only place
+  amber is allowed to fill rather than to rule. Everything else is type
+  and hairlines.
+
+  No gradients, no glows, no drop shadows doing structural work. The only
+  shadow on the page is the one that lifts the sheet off the ground by a
+  single pixel.
+
+  AT 380px THIS IS THE PRIMARY CASE, not the fallback. The link arrives by
+  email and gets opened on a phone in a corridor, so the narrow layout is
+  the one the copy was measured against: the sheet loses its side margin
+  and its radius, the heading steps down twice, the calculator rows become
+  stacks, and the one button goes full width where a thumb can reach it.
+*/
+
+.page {
+  min-height: 100vh;
+  background: var(--surface-0);
+  padding: var(--space-6) var(--space-5) var(--space-7);
+}
+
+/* 68ch is the measure this page is set to. A quote read on a laptop
+   should not run to a hundred characters a line; it is a letter, and a
+   letter has a column width. */
+.sheet {
+  max-width: 68ch;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6) var(--space-6);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand-gold);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-1);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head { margin-bottom: var(--space-6); }
+
+.eyebrow {
+  margin: 0 0 var(--space-3);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brand-gold-600);
+}
+
+/* The largest type in the application, and it is a customer's name.
+   overflow-wrap is not defensive styling here: several organisations in
+   the data set are long single words set at 40px on a 380px screen. */
+.h1 {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--step-5);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.h2 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--text-0);
+}
+
+.lede {
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+/* Body copy is a full step larger than the internal screens use. A page
+   somebody reads once, on a phone, from an email, is not a page to save
+   space on. */
+.body {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+.body:last-child { margin-bottom: 0; }
+
+.body strong { color: var(--text-0); }
+
+.plain {
+  font-size: var(--step-0);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Sections. Hairline and space, never a box.
+   --------------------------------------------------------------- */
+
+.section {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+/* The sentence that proves this was written for one organisation. It is
+   set in the serif at reading size with an amber rule beside it, which is
+   the same treatment the replies page gives a buyer's own words. */
+.quote {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-2) 0 var(--space-2) var(--space-4);
+  border-left: 3px solid var(--brand-gold);
+  font-family: var(--font-operator);
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+.aside {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.sourceLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.sourceNote { color: var(--text-2); }
+
+/* ---------------------------------------------------------------
+   The opening state
+   --------------------------------------------------------------- */
+
+.notice {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.noticeHead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-0);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-0);
+}
+
+/* Glyph, word and colour, in that order of importance. The amber warning
+   tone is the third signal and never the first. */
+.noticeHead > span:first-child { color: var(--warn); }
+
+.noticeBody {
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Attractions
+   --------------------------------------------------------------- */
+
+.attractions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.attraction {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--line-2);
+}
+
+.attractionLabel {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.attractionNote {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The package
+   --------------------------------------------------------------- */
+
+.pkgHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.pkgNames {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pkgName {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-0);
+}
+
+.pkgFamily {
+  font-size: var(--step--2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+.inclusions {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.inclusion {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-0);
+}
+
+.tick {
+  color: var(--brand-gold);
+  font-size: var(--step--1);
+  line-height: 1.6;
+}
+
+/* Published terms, as a definition list rather than a table. Four short
+   facts do not need column rules, and a table on a customer page reads as
+   a spreadsheet somebody forgot to take out. */
+.terms {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.term {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  align-items: baseline;
+}
+
+.termLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.termValue {
+  margin: 0;
+  font-size: var(--step-0);
+  color: var(--text-0);
+}
+
+.smallPrint {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The calculator
+   --------------------------------------------------------------- */
+
+.calc {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.calcLabel {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+/* Deliberately large. It is the only field on the page and the number in
+   it is the number the whole quote turns on. */
+.calcInput {
+  width: 100%;
+  max-width: 220px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: var(--text-0);
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
+}
+
+.calcInput:hover { border-color: var(--brand-gold-line); }
+
+.calcInput:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+.calcHelp {
+  margin: var(--space-2) 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.calcEmpty {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.calcRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.calcRow {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--space-1) var(--space-4);
+  align-items: baseline;
+}
+
+/* The total, or the sentence standing in for one, is the last row and the
+   only one set on the sheet's own paper. Size and ground do the ranking;
+   nothing here is coloured to mean anything. */
+.calcRow[data-lead="true"] {
+  margin-top: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.calcRowLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.calcRowValue {
+  font-size: var(--step-0);
+  color: var(--text-0);
+  min-width: 0;
+}
+
+.calcRowNote {
+  grid-column: 2;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* A published minimum or maximum the entered number falls outside. Glyph,
+   bold word, then the tone. */
+.flag {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.flag > span:first-child { color: var(--warn); }
+.flag strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   The offer. The one place amber fills rather than rules.
+   --------------------------------------------------------------- */
+
+.offer {
+  padding: var(--space-5);
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-m);
+  background: var(--brand-gold-tint);
+}
+
+.offerName {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-0);
+}
+
+.offerWhat {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-0);
+}
+
+.offerCost {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--brand-gold-line);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.offerCost > span:first-child { color: var(--brand-gold-600); }
+
+/* ---------------------------------------------------------------
+   The one action
+   --------------------------------------------------------------- */
+
+.cta {
+  width: 100%;
+  justify-content: center;
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--step-1);
+}
+
+.ctaNote {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The confirmation. A real state change on the page.
+   --------------------------------------------------------------- */
+
+.confirm {
+  padding: var(--space-5);
+  border: 1px solid var(--ok);
+  border-radius: var(--radius-m);
+  background: var(--ok-tint);
+}
+
+.confirm:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.confirmHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.confirmHead > span:first-child {
+  color: var(--ok);
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+}
+
+.confirmBody {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+.confirmRows {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.confirmRow {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: var(--space-1) var(--space-4);
+  align-items: baseline;
+}
+
+.confirmRow dt {
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.confirmRow dd {
+  margin: 0;
+  font-size: var(--step-0);
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.confirmFoot {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The footer this page carries for itself
+   --------------------------------------------------------------- */
+
+.footer {
+  max-width: 68ch;
+  margin: var(--space-5) auto 0;
+  padding: 0 var(--space-1);
+}
+
+.demoBadge {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.demoBadge > span:first-child { color: var(--brand-gold-600); }
+
+.disclaimer {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Narrow. The phone in the corridor is the primary case.
+   --------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .page { padding: var(--space-4) var(--space-3) var(--space-6); }
+  .sheet { padding: var(--space-5) var(--space-4) var(--space-5); }
+  .h1 { font-size: var(--step-3); }
+  .lede { font-size: var(--step-0); }
+  .calc { padding: var(--space-4); }
+  .offer { padding: var(--space-4); }
+  .confirm { padding: var(--space-4); }
+
+  /* Label above value everywhere. It is the order the rows are read
+     aloud in anyway, and 150px of label on a 340px screen leaves nothing
+     for the number. */
+  .term,
+  .calcRow,
+  .confirmRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .calcRowNote { grid-column: 1; }
+}
+
+@media (max-width: 400px) {
+  .page { padding: var(--space-3) var(--space-2) var(--space-5); }
+
+  /* The sheet gives up its margin and its corners rather than its
+     padding. Text that runs to the edge of a phone is harder to read
+     than a page with no visible border. */
+  .sheet {
+    padding: var(--space-4) var(--space-4) var(--space-5);
+    border-radius: var(--radius-s);
+  }
+  /* Still the biggest thing on the page at 380px. A customer's name set
+     smaller than the section headings would be a strange letter. */
+  .h1 { font-size: var(--step-3); }
+  .h2 { font-size: var(--step-1); }
+  .quote { font-size: var(--step-0); }
+  .attractionLabel { font-size: var(--step-0); }
+  .pkgName { font-size: var(--step-1); }
+  .offerName { font-size: var(--step-1); }
+  .confirmHead { font-size: var(--step-1); }
+  .calcInput { max-width: none; font-size: var(--step-1); }
+  .cta { font-size: var(--step-0); }
+}
+

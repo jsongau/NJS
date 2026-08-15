@@ -23,6 +23,7 @@ import { SentPage } from "@/pages/SentPage";
 import { CoachingPage } from "@/pages/CoachingPage";
 import { MethodPage } from "@/pages/MethodPage";
 import { QuotePage } from "@/pages/QuotePage";
+import { RationalePage } from "@/pages/RationalePage";
 import { TodayPage } from "@/pages/TodayPage";
 import { RequestsPage } from "@/pages/RequestsPage";
 import { InboxPage } from "@/pages/InboxPage";
@@ -106,6 +107,15 @@ export function App() {
               <Routes>
                 {/* Prospect facing. No internal chrome. */}
                 <Route path="/quote/:prospectId" element={<QuotePage />} />
+
+                {/* The page about the console rather than a page of it.
+                It sits out here for the same reason the quote does: it is
+                a different kind of object, read rather than operated, and
+                it carries its own frame. Keeping it outside also means
+                the dashboard is untouched by its existence. No rail row,
+                no strip key, no section token, no count. This route and
+                one string in emit-route-stubs.mjs are the whole diff. */}
+                <Route path="/rationale" element={<RationalePage />} />
 
                 {/* Everything the sales manager uses. */}
                 <Route

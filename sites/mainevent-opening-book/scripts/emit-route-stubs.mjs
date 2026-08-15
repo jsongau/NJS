@@ -109,6 +109,9 @@ const ROUTES = [
   "sent",
   "coaching",
   "method",
+  // Why the console is shaped the way it is. Outside the shell, and the
+  // URL that goes in a cover letter, so it must resolve on a cold open.
+  "rationale",
   // The quote pages are the URLs that go in emails, so they must resolve
   // on a cold open with no client-side routing. One stub per prospect.
   ...prospectIds().map((id) => `quote/${id}`),

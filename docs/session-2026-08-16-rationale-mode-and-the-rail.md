@@ -111,3 +111,145 @@ first. Worth knowing before debugging a phantom "another git process".
    public repo, `jsongau/samyang-grain`.
 5. The 27 rationale screens have not been fact-checked line by line against the
    source they describe.
+
+---
+
+# 2026-08-16, part two — the fact-check, and what it cost
+
+## What happened
+
+Six checkers read every claim in the twenty seven explanation screens
+against the code and data each one describes. **Forty six findings: 28
+wrong, 18 unsupported.** All forty six fixed. Then a sweep of the rest of
+the codebase found **128 more** stale or false figures across 70 files,
+including copy a reader sees on screen.
+
+## The rule that was applied, and it is the one worth keeping
+
+**An unsupported claim about the real world is deleted, not reworded.** No
+substitute figure from memory, no going to the web to find something that
+fits the sentence already written. A shorter true paragraph beats a longer
+plausible one, every time.
+
+A wrong number is corrected to whatever the code actually produces,
+**verified by running it**. A matching code comment is not verification:
+this codebase had roughly eighty comments confidently repeating a figure
+that had been wrong for days.
+
+## The worst of what was in there
+
+- **Chuck E. Cheese at $9.99 a child, and Topgolf publishing a per head
+  figure.** Neither company appears anywhere in the research. The claim
+  also contradicted the competitor register's own headline finding, which
+  is that six of six publish no group price.
+- **A fundraiser rate table**: Urban Air 20, Sky Zone 20, Stars and
+  Strikes 15, Chuck E. Cheese 25 above $2,500 through a local Field
+  Marketing Specialist. Four real competitors, four invented rates, one
+  invented job title at a named company. Only the Main Event 20 per cent
+  was ever sourced.
+- **Main Event's Brea page running Tempe, Arizona body copy.** No record.
+- **A Dave and Buster's 10-K**, special events at 9.8 per cent of FY2018
+  revenue. No record.
+- **A thirty eight item could-not-verify list**, asserted twice. The real
+  list has nine items.
+- **Booking pace of 36 days and October as the highest inquiry month.** No
+  record, and the research file says close to the opposite.
+
+## The pattern, and it is the lesson
+
+Every one of the eighteen unsupported claims was **plausible, specific and
+confidently phrased**. That is what made them dangerous. None of them
+looked like a guess. They looked like research.
+
+The wrong-number findings share one cause: **the dataset grew from 102
+organisations to 211 mid-build**, and prose written against the old size
+was never revisited. Nothing failed. Nothing warned. The number simply
+stopped being true and every sentence around it kept its confident tone.
+
+## Method was the worst place for it
+
+`/method` is the screen whose entire subject is where the numbers came
+from, and it said the board was gathered in two research passes. It was
+three. Behind the copy, `censusPass` was defined as every row with no
+place id, which silently merged the real 33-row second pass with the
+109-row third, so the second-pass email ratio it printed described a
+cohort that does not exist.
+
+Fixed by splitting on the retrieval date each row already carries: 69
+Places rows on 11 August, 33 hand-researched rows on 11 August, 109
+industry rows on 14 August. The page now prints `69 and 33 and 109 is
+211` against a board counted independently at 211, so a future divergence
+shows up on screen rather than hiding.
+
+## Also shipped
+
+- **`/start`**, a door. Outside the shell on the same precedent as the
+  quote letter: addressed to a visitor rather than to somebody working a
+  desk. This is the URL that goes in an application.
+- **Open Graph tags and a preview card.** This address travels by being
+  pasted, not by being searched, so the noindex directive and the preview
+  tags are not in tension. The disclaimer is printed on the image as well
+  as in the description, because a description truncates and an image does
+  not.
+- **Two build checks** in `scripts/`: `check-build-is-committed.mjs`
+  asserts the committed `me/` is this source built, byte for byte, and
+  `check-post-build.mjs` asserts no product photography returned, that
+  every route has a real file, and that the preview card exists. Both are
+  run by hand for now.
+
+## The workflow file that blocked the push
+
+CI is written, at `.github/workflows/opening-book.yml`, and is
+**deliberately untracked**. GitHub refuses a push from a Personal Access
+Token that creates or updates anything under `.github/workflows/` unless
+the token carries the `workflow` scope. The first push attempt uploaded
+every object and was then rejected at the ref update, all or nothing, for
+that one file.
+
+The site going live was worth more than the automation, so the workflow
+came out of the commits and stays on disk. To land it: add the `workflow`
+scope to the token at github.com/settings/tokens, then
+`git add .github && git commit && git push`. Nothing else is waiting on
+it. Worth remembering as a general rule: a workflow file is the one kind
+of file that can reject an otherwise clean push, so it belongs in its own
+commit.
+
+## Traps discovered
+
+**A comment is not a source.** Eighty-odd comments in this repo agreed
+with each other and were all wrong together. Only the data and the
+executing code count.
+
+**Prose goes stale silently, and code does not.** A renamed function
+breaks the build. A sentence describing 102 organisations when there are
+211 breaks nothing and reads exactly as well as it did when it was true.
+The only defence is deriving figures at render time, which is now what
+`/start` and the corrected screens do.
+
+**Set comparison hid a change that multiset comparison found.** The first
+screen diff reported "only additions" on a screen whose word count had
+gone down by five. A line appearing three times in one build and twice in
+the other is invisible to a set.
+
+**A check that lies in your favour is worse than no check.** The first
+version of the two-mode walk selected `aside a, nav[aria-label] a` as
+"the rail", swept up in-page links, and reported sixty rows on Today
+against forty nine on its explanation. It failed screens that were fine
+and would have passed screens that were not.
+
+## Still open
+
+1. `/segments` renders 17 em and en dashes, all inside two sourced UCI
+   Health organisation names. The no-dash rule and the never-alter-a-
+   sourced-fact rule collide, and the call is Jay's.
+2. The Nature's Mark row carries a `public` badge on the row while its
+   lead time and minimum order quantity, both invented, print underneath
+   with no badge of their own. The prose now says so. The real fix is
+   per-field provenance rather than per-row.
+3. `vercel.json` has an `X-Robots-Tag` for `/tawa` and none for `/me`.
+4. `GEOCODED_NOTES.md` records an unresolved anchor conflict: wave-2
+   distances were computed against 33.9168 / -117.9000 while `venue.ts`
+   carries 33.9190296 / -117.9009311, so stored `milesFromVenue` values
+   can differ from a recomputation by up to about 0.2 miles.
+5. The Grain source is still committed nowhere. Agreed destination is its
+   own public repo, `jsongau/samyang-grain`.

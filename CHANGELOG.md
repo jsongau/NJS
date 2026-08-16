@@ -2,6 +2,23 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-08-16 (2)
+
+- `me` — fact-checked all 27 explanation screens against the code and data
+  they describe. 46 findings: 28 wrong, 18 unsupported. Every unsupported
+  claim about a real company deleted rather than reworded, including
+  invented prices for Chuck E. Cheese and Topgolf and a fundraiser rate
+  table naming four competitors and a job title, none of it sourced. 128
+  further corrections across 70 files, including on-screen copy: Desk and
+  Lanes claimed all 211 organisations carried a Google place id when 69 do.
+  Method rebuilt to describe three research passes rather than two, with
+  the second-pass cohort no longer silently merged with the third. Added
+  `/start` as a door for cold arrivals, Open Graph tags and a preview card,
+  and two build checks: one asserting the committed site is this source
+  built byte for byte, one asserting no product photography returned and
+  every route has a real file behind it. Details in
+  `docs/session-2026-08-16-rationale-mode-and-the-rail.md`.
+
 ## 2026-08-16
 
 - `me` — Rationale shipped as a mode rather than a page: every screen explained

@@ -9,7 +9,8 @@ import { usePipeline } from "@/state/PipelineProvider";
 import { useTheme } from "@/state/ThemeProvider";
 import { INBOX_PATH } from "@/pages/InboxPage";
 import { useShellFigures } from "./SideRail";
-import { FEATURED_KEY, type SectionId } from "./sections";
+import { FEATURED_KEY, normalisePath, type SectionId } from "./sections";
+import { isRationalePath, toConsole, toRationale } from "@/data/rationale";
 import styles from "./MegaNav.module.css";
 
 /**
@@ -146,14 +147,62 @@ interface MegaItem {
   rank: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
+/*
+  THE STRIP STOPPED BEING A SHORTER COPY OF THE RAIL.
+
+  Every one of the six keys this list used to carry was also a row in the
+  rail, which meant the bar had no job the rail was not already doing and
+  a reader had two places to look for one answer. The rule now is one
+  line long: THE BAR IS WHAT IS WAITING FOR YOU, THE RAIL IS WHERE THINGS
+  ARE. Nothing appears in both.
+
+  So Desk and Book left, because they are places and the rail is the map.
+  Today, Inbox and Requests stayed, because each one is a count of work
+  that arrived without being asked for and a reader needs to see it from
+  any screen without opening anything.
+
+  Leagues stayed on the same reasoning even though it reads as a place:
+  the four is teams waiting to be answered, not leagues that exist, and a
+  league ask that sits unanswered for a week is a lost season rather than
+  a stale row. Maps stayed as the featured key, which is a different
+  instrument again and is argued for beside it below.
+*/
 const ITEMS: MegaItem[] = [
   { to: "/today", label: "Today", sec: "today", rank: 1 },
   { to: INBOX_PATH, label: "Inbox", sec: "inbox", rank: 2 },
   { to: "/requests", label: "Requests", sec: "requests", rank: 3 },
-  { to: "/", label: "Desk", sec: "desk", rank: 4 },
-  { to: "/book", label: "Book", sec: "book", rank: 5 },
-  { to: "/leagues", label: "Leagues", sec: "leagues", rank: 6 },
+  { to: "/leagues", label: "Leagues", sec: "leagues", rank: 4 },
 ];
+
+/*
+  THE MODE SWITCH, AND WHY IT IS ON THE BAR RATHER THAN ON A PAGE.
+
+  Console and Rationale are not two destinations, they are two readings
+  of the same work: the instrument, and the argument for why it is shaped
+  like that. A control that changes which of those you are in is a
+  different class of thing from a control that changes which screen you
+  are on, so it sits before the queues and outside their list, with a
+  divider between.
+
+  It was on the Rationale page itself first, which meant the way back was
+  visible from Rationale and the way in was visible from nowhere. A mode
+  you can leave but cannot enter is not a mode.
+*/
+/*
+  THE MODE SWITCH, AND WHY IT DOES NOT SEND YOU HOME.
+
+  Console and Rationale are two readings of the same work: the
+  instrument, and the argument for why the instrument is shaped like
+  that. So the switch is not a link to two pages, it is a translation of
+  the address you are already at. Standing on Lanes and pressing
+  Rationale gets you how Lanes was built, and pressing Console again puts
+  you back on Lanes.
+
+  The first version sent both modes to a fixed destination, which threw
+  away the reader's place every time they asked a question about the
+  screen in front of them. That is the opposite of what a mode is for.
+*/
+
 
 /**
  * THE GROUND SWITCH, WHICH IS ONE BUTTON AND NOT TWO OPTIONS.
@@ -388,6 +437,36 @@ export function MegaNav({
       <GroundSwitch />
 
       <nav className={styles.nav} aria-label="The screens used every day">
+        {/* Modes first, then what is waiting. The divider is drawn by
+            the slot rather than by a character, for the same reason the
+            featured key's is. */}
+        <div className={styles.modes} role="group" aria-label="Mode">
+          {(() => {
+            const here = normalisePath(pathname);
+            const inRationale = isRationalePath(here);
+            const pair = [
+              { label: "Console", to: toConsole(here), current: !inRationale },
+              { label: "Rationale", to: toRationale(toConsole(here)), current: inRationale },
+            ];
+            return pair.map((m) => (
+              <NavLink
+                key={m.label}
+                to={m.to}
+                /* Whether a mode is current is decided above, not by
+                   prefix matching. to="/" matches every path in this
+                   application, so without this Console would light up
+                   while standing on a Rationale screen. */
+                end
+                className={[styles.mode, m.current ? styles.modeCurrent : ""]
+                  .filter(Boolean)
+                  .join(" ")}
+                aria-current={m.current ? "page" : undefined}
+              >
+                {m.label}
+              </NavLink>
+            ));
+          })()}
+        </div>
         <ul className={styles.list}>
           {ITEMS.map((item) => {
             const count = counts[item.to];

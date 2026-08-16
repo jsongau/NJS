@@ -10,7 +10,9 @@ import {
   formatDate,
 } from "@/domain/licensing";
 import {
+  ANIME_GAP,
   LICENCES,
+  LICENCE_BY_ID,
   NATURES_MARK_RETAIL_PARTNERS,
   NATURES_MARK_ROOT,
   NATURES_MARK_SOURCE,
@@ -79,10 +81,76 @@ import styles from "./PartnersPage.module.css";
  * itself, which is the most important badge on the page: a real company
  * with invented commercial terms is the one shape of row that could
  * mislead somebody.
+ *
+ * ── WHY A GAP BLOCK SITS SECOND AND NOT LAST ──────────────────────
+ * The Round1 posting asks for anime and game properties and this
+ * register holds none. That is a hole in the middle of the one screen
+ * that posting would be read against, and a hole has exactly three
+ * possible treatments: fill it with a claim, leave it silent, or answer
+ * it.
+ *
+ * Filling it was rejected in `data/partners.ts` and the reasoning is
+ * there. Silence was rejected here. A reader who knows the trade will
+ * notice the absence within seconds of seeing nine Western family
+ * licences offered to an arcade led by anime, and an absence somebody
+ * else notices first is worth less than nothing: it reads either as not
+ * knowing the floor or as hoping nobody checked.
+ *
+ * So the block sits directly under the licence list, while the nine are
+ * still on screen, and it argues the one honest bridge that exists
+ * before it states the gap that remains. Putting it last would have made
+ * it a footnote, and a gap disclosed in a footnote is a gap somebody was
+ * hoping you would read late.
+ *
+ * The block prints no anime or game property name, deliberately, and
+ * says on screen that it is doing so. That sentence is the only form of
+ * the claim a reader can check on the spot: they can look, and there are
+ * none.
  */
 
 /** Injected rather than read off the clock, so the arithmetic is checkable. */
 const NOW = PARTNERS_AS_OF;
+
+/**
+ * A span that is built on one side and not on the other.
+ *
+ * Drawn here rather than pulled from an icon set, and drawn as a
+ * diagram rather than as decoration: the solid deck with piers under it
+ * is the part of the catalogue that exists, the break is the gap, and
+ * the dashed deck is a crossing nobody has built. It carries no meaning
+ * that the words beside it do not already carry, which is why it is
+ * hidden from assistive technology instead of being given a label that
+ * would make a reader listen to a picture of an argument.
+ */
+function BridgeMark() {
+  return (
+    <svg
+      className={styles.gapMark}
+      viewBox="0 0 76 20"
+      width="76"
+      height="20"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      >
+        {/* Built: a deck and the two piers holding it up. */}
+        <path d="M3 7 H34" />
+        <path d="M9 7 V17" />
+        <path d="M28 7 V17" />
+        <path d="M3 17 H34" strokeWidth="1" opacity="0.5" />
+
+        {/* Not built: the same deck, drawn as an intention. */}
+        <path d="M42 7 H73" strokeDasharray="3 4" opacity="0.75" />
+        <path d="M67 7 V17" strokeDasharray="3 4" opacity="0.75" />
+      </g>
+    </svg>
+  );
+}
 
 type StateFilter = RelationshipState | "all";
 type KindFilter = PartnerKind | "all";
@@ -116,6 +184,13 @@ export function PartnersPage() {
   }, [rows, stateFilter, kindFilter, query]);
 
   const onPartnersPage = LICENCES.filter((l) => l.onPartnersPage).length;
+
+  /* Both counts are read off the gap record rather than written into the
+     markup, so the zero on screen stays a zero because the data says so
+     and not because a digit was typed here once and never revisited. */
+  const bridge = LICENCE_BY_ID[ANIME_GAP.bridgeLicenceId];
+  const japaneseOnList = ANIME_GAP.japaneseLicenceIds.length;
+  const animeOrGameOnList = ANIME_GAP.animeOrGameLicenceIds.length;
 
   return (
     <div className={styles.page}>
@@ -275,11 +350,147 @@ export function PartnersPage() {
         </section>
 
         {/* ===========================================================
-            2. THE REGISTER
+            2. THE GAP, AND THE ONE BRIDGE ACROSS PART OF IT
+            =========================================================== */}
+        <section className={styles.section} aria-labelledby="gap-h">
+          <SectionHead
+            eyebrow="Two"
+            id="gap-h"
+            title="The anime gap, and the one bridge on the list"
+            lede="The posting asks for a category this register does not hold. Both halves of that are on this screen."
+            meta={
+              <>
+                <ProvenanceBadge provenance="modeled" compact />
+                <span>
+                  Everything in this block is an argument built on the nine
+                  published names above. An argument is not a source, and
+                  nothing here is badged as one.
+                </span>
+              </>
+            }
+          />
+
+          <blockquote className={styles.posting}>
+            <p>{ANIME_GAP.postingLine}</p>
+            <cite>{ANIME_GAP.postingCite}</cite>
+          </blockquote>
+
+          <StatStrip label="The gap in two figures">
+            <Stat
+              value={japaneseOnList}
+              unit={`of ${onPartnersPage}`}
+              label="Japanese properties on the published list"
+              note="Sanrio, and only Sanrio. Counted off the register rather than typed in."
+              provenance="modeled"
+            />
+            <Stat
+              value={animeOrGameOnList}
+              unit={`of ${onPartnersPage}`}
+              label="Anime or game properties on the register"
+              note="No source read for this application publishes one. The figure is stated rather than filled."
+              provenance="modeled"
+              tone="var(--warn)"
+            />
+          </StatStrip>
+
+          <div className={styles.gapGrid}>
+            <div className={styles.gapCol}>
+              <h3 className={styles.gapColTitle}>
+                <BridgeMark />
+                <span>What the list does reach</span>
+              </h3>
+
+              {/* The bridge names itself, and the name wears the public
+                  badge while the argument around it wears modeled. Those
+                  are two different kinds of fact sitting one line apart,
+                  so they are badged one line apart. */}
+              <p className={styles.gapBridge}>
+                <span className={styles.gapBridgeName}>{bridge.name}</span>
+                <ProvenanceBadge provenance={bridge.provenance} compact />
+                <span className={styles.gapBridgeSrc}>
+                  Named under License Partners on{" "}
+                  <a
+                    className={styles.link}
+                    href={bridge.source}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    natures-mark.com/partners
+                  </a>
+                </span>
+              </p>
+
+              <ul className={styles.gapList}>
+                {ANIME_GAP.reach.map((p) => (
+                  <li key={p.id} className={styles.gapItem}>
+                    <h4 className={styles.gapHeading}>
+                      <span>{p.heading}</span>
+                      <ProvenanceBadge provenance={p.provenance} compact />
+                    </h4>
+                    <p className={styles.gapBody}>{p.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={`${styles.gapCol} ${styles.gapColShort}`}>
+              <h3 className={styles.gapColTitle}>
+                <span>What it does not reach</span>
+              </h3>
+              <ul className={styles.gapList}>
+                {ANIME_GAP.shortfall.map((p) => (
+                  <li key={p.id} className={styles.gapItem}>
+                    <h4 className={styles.gapHeading}>
+                      <span>{p.heading}</span>
+                      <ProvenanceBadge provenance={p.provenance} compact />
+                    </h4>
+                    <p className={styles.gapBody}>{p.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={styles.gapCol}>
+              <h3 className={styles.gapColTitle}>
+                <span>What closing it would take</span>
+              </h3>
+              <ul className={styles.gapList}>
+                {ANIME_GAP.route.map((p) => (
+                  <li key={p.id} className={styles.gapItem}>
+                    <h4 className={styles.gapHeading}>
+                      <span>{p.heading}</span>
+                      <ProvenanceBadge provenance={p.provenance} compact />
+                    </h4>
+                    <p className={styles.gapBody}>{p.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className={styles.gapRefuse}>
+            <h3 className={styles.gapColTitle}>
+              <span>What this block does not claim</span>
+            </h3>
+            <ul className={styles.refuseList}>
+              {ANIME_GAP.notClaimed.map((line) => (
+                <li key={line} className={styles.refuseItem}>
+                  <span aria-hidden="true" className={styles.refuseGlyph}>
+                    ○
+                  </span>
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ===========================================================
+            3. THE REGISTER
             =========================================================== */}
         <section className={styles.section} aria-labelledby="reg-h">
           <SectionHead
-            eyebrow="Two"
+            eyebrow="Three"
             id="reg-h"
             title="The register"
             lede="Coldest relationship first."
@@ -462,11 +673,11 @@ export function PartnersPage() {
         </section>
 
         {/* ===========================================================
-            3. LICENCE COVERAGE
+            4. LICENCE COVERAGE
             =========================================================== */}
         <section className={styles.section} aria-labelledby="cov-h">
           <SectionHead
-            eyebrow="Three"
+            eyebrow="Four"
             id="cov-h"
             title="Which route could carry which property"
             lede="A capability map. No property here is under an approved promotion."

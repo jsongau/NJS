@@ -198,6 +198,24 @@ export interface MapBoardProps {
    */
   onExit?: () => void;
   /**
+   * A route level control that belongs beside Back rather than beside the
+   * board's own switches, which in practice means the Console/Rationale
+   * mode switch.
+   *
+   * WHY THE SLOT EXISTS. Every other screen carries that switch on the
+   * mega nav, and this one unmounts the mega nav along with the rail
+   * because it is a takeover. Without somewhere to put it, Maps is the
+   * single screen in the application from which its own explanation is
+   * unreachable, and "every screen has an explanation at its own address"
+   * stops being true on exactly the screen a reader is most likely to ask
+   * the question. A walk of all twenty seven screens in both modes is
+   * what surfaced it.
+   *
+   * It is a slot rather than a hardcoded link for the same reason `note`
+   * is: the board has no business knowing what routes exist.
+   */
+  modeLink?: ReactNode;
+  /**
    * The page's own prose, slotted into the chrome band. The board draws
    * the band because the band carries a live view of board state, the
    * hide list control; the page writes the words because the words are
@@ -277,6 +295,7 @@ export function MapBoard({
   screenName = "The trade area",
   screenNote,
   onExit,
+  modeLink,
   note,
 }: MapBoardProps) {
   const pipeline = usePipeline();
@@ -918,6 +937,8 @@ export function MapBoard({
               </span>
             </button>
           ) : null}
+
+          {modeLink}
 
           <div className={styles.chromeTitle}>
             <h1 className={styles.chromeName}>{screenName}</h1>

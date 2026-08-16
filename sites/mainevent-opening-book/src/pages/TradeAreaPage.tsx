@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FullBleedRoute, useFullBleedExit } from "@/app/AppShell";
 import { ProvenanceBadge } from "@/components/primitives/ProvenanceBadge";
 import { MapBoard } from "@/components/map/MapBoard";
@@ -110,6 +111,27 @@ export function TradeAreaPage() {
         screenName="Maps"
         screenNote="Stage two of five. Every organisation in the book, plotted from its own published coordinates."
         onExit={exit}
+        /*
+          THE ONE SCREEN THAT HAS TO CARRY ITS OWN MODE SWITCH.
+
+          Rationale is a mode rather than a page: every screen is
+          explained at its own address with a prefix, and the switch to
+          it lives on the mega nav. This route unmounts the mega nav
+          along with the rail, so without this control Maps would be the
+          only screen in the application whose explanation cannot be
+          reached from it.
+
+          There is no path translation here, unlike on the bar. Only the
+          console side of Maps is a takeover; /rationale/map is an
+          ordinary railed document, so the traffic is one way and a
+          general purpose switch would be machinery for a case that
+          cannot occur.
+        */
+        modeLink={
+          <Link className={styles.modeLink} to="/rationale/map">
+            Rationale
+          </Link>
+        }
         note={
           <details className={styles.rings}>
             {/*

@@ -521,6 +521,309 @@
 }
 
 /* ---------------------------------------------------------------
+   The milestone rail
+
+   Seven marks on a spine, each filled on its own evidence. The fill is
+   a SHAPE and not a colour: a reached mark is a ring with a solid core,
+   an unreached mark is a ring with nothing in it, and a part delivery is
+   a half disc. That survives greyscale, a printout and the wrong sort of
+   eyes, which is the house rule everywhere else on this page and there
+   was no reason to break it inside an SVG.
+
+   The spine is drawn once, under the marks, so that a gap in the middle
+   of an order reads as a gap in a sequence rather than as two unrelated
+   dots.
+   --------------------------------------------------------------- */
+
+.rail {
+  display: block;
+  width: 118px;
+  max-width: 100%;
+  height: 16px;
+  margin-bottom: 4px;
+  flex: none;
+  overflow: visible;
+}
+
+.railSpine {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.railMarkOn {
+  fill: var(--surface-1);
+  stroke: var(--text-1);
+  stroke-width: 1.4;
+}
+
+.railMarkOff {
+  fill: var(--surface-1);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.railMarkCore {
+  fill: var(--text-0);
+}
+
+.railMarkPart {
+  fill: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The match mark and the section that carries it
+   --------------------------------------------------------------- */
+
+.matchIntro {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.matchMark {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+.markLine line {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.markBox rect {
+  fill: var(--surface-2);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+/* The two font sizes in this drawing are the only raw numbers in the
+   file, and they are raw on purpose. Inside an SVG a length is a USER
+   UNIT in the viewBox coordinate system, not a CSS pixel: a type token
+   would be resolved against the page and then scaled again by the
+   viewBox, so the label would grow as the drawing shrank. Colours are
+   still tokens, because those do not scale. */
+.markLabel text {
+  fill: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.markNote text {
+  fill: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.matchIntroBody {
+  min-width: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.matchIntroBody p {
+  margin: 0 0 var(--space-3);
+}
+
+.matchIntroBody ul {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-4);
+}
+
+.matchIntroBody li {
+  margin-bottom: var(--space-2);
+}
+
+.matchIntroBody strong {
+  color: var(--text-0);
+}
+
+.matchIntroNote {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-2);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Cells the buying sections add
+   --------------------------------------------------------------- */
+
+.licence {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.reading {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.4;
+  color: var(--text-1);
+}
+
+.readingNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--line-strong);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+  text-align: left;
+}
+
+/* ---------------------------------------------------------------
+   Compliance checks
+
+   Two lists, deliberately drawn the same way. A reader should be able to
+   see at a glance that the second list is longer than the first, which is
+   the argument the section is making, and that only works if the two are
+   the same furniture.
+   --------------------------------------------------------------- */
+
+.subHead {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.subLede {
+  margin: 0 0 var(--space-3);
+  max-width: 80ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+/* min() inside the minmax is not decoration. A bare minmax(280px, 1fr)
+   will not shrink below its own minimum, so at 360px the column is wider
+   than the viewport and the whole document scrolls sideways. The min()
+   lets the track collapse to the space that actually exists. */
+.checks,
+.judgements {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.check,
+.judgement {
+  display: block;
+  padding: var(--space-4);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+/* Tint AND a left rule AND a glyph AND the word "failing" in the body.
+   Four signals, because the colour is never allowed to be the one. */
+.checkFail {
+  background: var(--risk-tint);
+  box-shadow: inset 3px 0 0 0 var(--risk);
+}
+
+.checkHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.checkTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.checkGlyphOk {
+  color: var(--ok);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.checkGlyphBad {
+  color: var(--risk);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.checkGlyphHand {
+  color: var(--info);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.checkScore {
+  flex: none;
+  font-size: var(--step--2);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.checkClause,
+.checkMethod {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.checkClause strong,
+.checkMethod strong {
+  color: var(--text-0);
+}
+
+.checkFails {
+  display: block;
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--risk);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.checkSkips {
+  display: block;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--warn);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
    Narrow
    --------------------------------------------------------------- */
 
@@ -591,6 +894,32 @@
 
   .dateText {
     white-space: normal;
+  }
+
+  /* The rail and the reading are the two cells that must not be squeezed
+     into the right hand column of a collapsed row. A seven mark rail
+     right-aligned against its own label wraps to 40px and stops being a
+     sequence; a reading sentence right-aligned is unreadable at any
+     width. Both get the full row and their label above them. */
+  .table td.wideCol {
+    display: block;
+  }
+
+  .table td.wideCol > * {
+    text-align: left;
+  }
+
+  .table td.wideCol::before {
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .matchIntro {
+    grid-template-columns: 1fr;
+  }
+
+  .matchMark {
+    max-width: 100%;
   }
 }
 

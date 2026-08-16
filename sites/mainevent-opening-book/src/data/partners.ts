@@ -1,4 +1,4 @@
-import type { Licence, Partner } from "@/domain/licensing";
+import type { Licence, LicenceGap, Partner } from "@/domain/licensing";
 
 /**
  * THE RELATIONSHIP REGISTER.
@@ -159,6 +159,148 @@ export const LICENCES: Licence[] = [
 export const LICENCE_BY_ID: Record<string, Licence> = Object.fromEntries(
   LICENCES.map((l) => [l.id, l]),
 );
+
+/**
+ * THE GAP THIS REGISTER HAS AGAINST ONE PARTICULAR FLOOR.
+ *
+ * The Round1 posting carries a line that nothing above answers, and it
+ * is quoted below exactly as the posting prints it: "Incorporate
+ * culturally relevant and trending anime/game properties into product
+ * offerings."
+ *
+ * The published list has no anime property on it and no game property on
+ * it. `RESEARCH_licensors.md` records that as "Not covered" and it stays
+ * recorded that way, because every alternative was a way of writing one
+ * in.
+ *
+ * ── WHAT WAS REJECTED, AND WHY ────────────────────────────────────
+ *
+ * REJECTED: a tenth licence row. The most tempting fix on this file is
+ * one more object in `LICENCES` carrying a Japanese property and a badge
+ * reading illustrative. It would render beautifully and it would be the
+ * end of the nine, because a reader who spots one invented licence has
+ * no way left to tell which of the others were read off a page.
+ * `data/sellthrough.ts` throws at module load if that list stops being
+ * nine, which is a check doing precisely the job it was written for.
+ *
+ * REJECTED: a field on the Sanrio record. The bridge argument wanted to
+ * live on the licence itself, as an origin note or a Japanese flag. The
+ * `Licence` type refuses extra fields for a stated reason: every other
+ * field on that record was read off a published page, so anything
+ * sitting beside them inherits the look of having been published too. An
+ * argument about why Sanrio matters to this employer is not a published
+ * fact. It lives out here instead, in its own shape, badged for what it
+ * is.
+ *
+ * REJECTED: naming anime and game properties as market colour. It is
+ * permitted to say what an anime led floor typically carries, and any
+ * reader could name five of them faster than this file could. They are
+ * absent anyway. The names would print inches from nine real published
+ * licences on the same screen, and the ten second read of a property
+ * name sitting next to a licence list is that it is a licence. The gap
+ * is stated in words instead. Words cannot be misread as inventory.
+ *
+ * ── WHAT IS KEPT ──────────────────────────────────────────────────
+ *
+ * Sanrio, which is the one Japanese property on the published list and
+ * therefore the only honest bridge available. It is argued as a bridge
+ * and never as a substitute for the category that is missing, because a
+ * bridge that is described as a floor is just a longer way of lying.
+ *
+ * Every line below is `modeled`. It is an argument built on top of the
+ * nine public names above, and an argument is not a source.
+ */
+export const ANIME_GAP: LicenceGap = {
+  postingLine:
+    "Incorporate culturally relevant and trending anime/game properties into product offerings.",
+  postingCite:
+    "Round1, Cerritos. New Business Development Promotion Planner Manager / Senior Manager",
+
+  bridgeLicenceId: "sanrio",
+  japaneseLicenceIds: ["sanrio"],
+
+  /* Empty on purpose. The count on screen is read off this array, so the
+     zero a reader sees is the data speaking rather than a digit typed
+     into the markup that somebody has to remember to keep true. */
+  animeOrGameLicenceIds: [],
+
+  reach: [
+    {
+      id: "eight-and-one",
+      heading: "Nine properties, and exactly one of them is Japanese",
+      body: "Eight of the nine are American properties. Sanrio is the ninth, and on a list assembled for North American retail doors it is the only one whose owner is a Japanese company.",
+      provenance: "modeled",
+    },
+    {
+      id: "bridge",
+      heading: "Sanrio is the bridge, and it is a real one",
+      body: "A current, globally licensed Japanese character company, already named on a page a supplier publishes. For a Japanese owned operator it is the one name on this list that needs no introduction, and it is the name that makes the other eight worth a meeting rather than a polite no.",
+      provenance: "modeled",
+    },
+    {
+      id: "bridge-limit",
+      heading: "A bridge is not a floor",
+      body: "Sanrio opens a conversation with a buyer who already knows the name. It does not stock an arcade led by anime and game properties, and nobody should read it as though it did. No property on this page carries approval for any promotion.",
+      provenance: "modeled",
+    },
+  ],
+
+  shortfall: [
+    {
+      id: "none-held",
+      heading: "No anime property and no game property is on this register",
+      body: "Not one. No source read for this application publishes an anime or game licence held by anybody Jay has a connection to, so none is seeded, none is claimed and none is hinted at.",
+      provenance: "modeled",
+    },
+    {
+      id: "against-this-floor",
+      heading: "Against this particular floor that is a real gap",
+      body: "Round1 sells an arcade led by anime and game properties. Nine Western family licences plus one Japanese character brand do not serve that floor, and a candidate who says otherwise is telling a buyer something the buyer already knows to be untrue.",
+      provenance: "modeled",
+    },
+    {
+      id: "no-names",
+      heading: "No anime or game property is named on this screen at all",
+      body: "Not even as an example of what the category looks like. A property name printed beside a published licence list reads as a licence to anybody scanning for ten seconds, and the nine above are worth more than the illustration would have been.",
+      provenance: "modeled",
+    },
+  ],
+
+  route: [
+    {
+      id: "ask-the-open-question",
+      heading: "Ask the question already open on the register",
+      body: "The one supplier connection here has an unanswered question against it: which of the published properties can be scheduled to a family entertainment venue rather than a retail door. That is the first call, and it is about the nine rather than about anything not on the list.",
+      provenance: "modeled",
+    },
+    {
+      id: "new-licensor",
+      heading: "Treat the category as a new licensor, not an extension",
+      body: "Nothing on this page reaches an anime or game property. Closing that means a licensor who is not on this list, which is a new agreement, a new approval route and new artwork rather than a line added to a register.",
+      provenance: "modeled",
+    },
+    {
+      id: "buy-from-the-holder",
+      heading: "Buy the category from whoever actually holds it",
+      body: "A supplier who does not hold a property cannot sell it, whatever else they make well. Keeping those two facts apart on one screen is most of what a register is for.",
+      provenance: "modeled",
+    },
+    {
+      id: "machinery-exists",
+      heading: "The buying machinery is already built and is property agnostic",
+      body: "Sell-through per property, the licensor report, purchase orders, invoices and contract terms all run on whatever licence is put into them. What is missing here is the licence, not the ability to plan, buy and report against one.",
+      provenance: "modeled",
+    },
+  ],
+
+  notClaimed: [
+    "No agreement between Main Event, Round1 or any licensor named on this page.",
+    "No anime or game licence held, sourceable, quoted or in discussion by anybody named here.",
+    "No licensor contact, royalty rate, minimum order, lead time, factory or country of manufacture. No source read publishes any of them.",
+    "No anime or game property name anywhere on this screen, by choice rather than by oversight.",
+    "Japanese and English fluency is the posting's other question. It is a fact about a person rather than something software can demonstrate.",
+  ],
+};
 
 /**
  * The twenty four retailers the same page names.

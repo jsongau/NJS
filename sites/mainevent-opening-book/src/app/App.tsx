@@ -39,6 +39,7 @@ import { SegmentsPage } from "@/pages/SegmentsPage";
 import { PartnersPage } from "@/pages/PartnersPage";
 import { PromoPage } from "@/pages/PromoPage";
 import { SpendPage } from "@/pages/SpendPage";
+import { SellThroughPage } from "@/pages/SellThroughPage";
 
 /**
  * Routes. Two shells, deliberately.
@@ -108,14 +109,6 @@ export function App() {
                 {/* Prospect facing. No internal chrome. */}
                 <Route path="/quote/:prospectId" element={<QuotePage />} />
 
-                {/* The page about the console rather than a page of it.
-                It sits out here for the same reason the quote does: it is
-                a different kind of object, read rather than operated, and
-                it carries its own frame. Keeping it outside also means
-                the dashboard is untouched by its existence. No rail row,
-                no strip key, no section token, no count. This route and
-                one string in emit-route-stubs.mjs are the whole diff. */}
-                <Route path="/rationale" element={<RationalePage />} />
 
                 {/* Everything the sales manager uses. */}
                 <Route
@@ -231,7 +224,7 @@ export function App() {
                               path="/objections"
                               element={<ObjectionsPage />}
                             />
-                            {/* The supply side. Three screens answering a
+                            {/* The supply side. Four screens answering a
                             second posting, at Round1 in Cerritos, which asks
                             for licensor relationships, sell-through reporting
                             and budget control rather than group bookings.
@@ -249,10 +242,58 @@ export function App() {
                             <Route path="/partners" element={<PartnersPage />} />
                             <Route path="/promo" element={<PromoPage />} />
                             <Route path="/spend" element={<SpendPage />} />
+                            {/* The fourth is the only one of them addressed
+                            to somebody outside the building. /promo is the
+                            internal stock table; this is the statement that
+                            goes to the party who owns the property, set to
+                            print on letter paper, carrying what was bought,
+                            what moved, what is left, at what margin, and what
+                            that implies for the next order. It reads the same
+                            counts as /promo so the two documents can never
+                            contradict each other. */}
+                            <Route
+                              path="/sellthrough"
+                              element={<SellThroughPage />}
+                            />
 
                             <Route path="/sent" element={<SentPage />} />
                             <Route path="/coaching" element={<CoachingPage />} />
                             <Route path="/method" element={<MethodPage />} />
+                            {/*
+                              THE WHOLE OF RATIONALE, IN ONE ROUTE.
+
+                              Every console screen has an explanation at
+                              the same address with /rationale in front of
+                              it, so this is a prefix match rather than
+                              twenty seven declarations that could fall
+                              out of step with the rail. The page reads
+                              the rest of the path and looks the screen up
+                              by its CONSOLE path, which is the only key
+                              either mode uses.
+                            */}
+                            <Route
+                              path="/rationale/*"
+                              element={<RationalePage />}
+                            />
+                            {/* Method settles whether a figure is right.
+                            This settles why the thing is shaped this way
+                            at all, which makes them siblings and puts
+                            this route beside that one.
+
+                            IT IS IN THE SHELL, and the first attempt had
+                            it outside beside the quote. That was wrong.
+                            The quote is outside because a customer must
+                            never see the venue's own call sheet. Nobody
+                            reading this is a customer: they are looking
+                            at the instrument and asking why it is built
+                            like this, and answering that on a bare page
+                            with no rail and no nav strips the reader of
+                            the thing being explained. The argument and
+                            the evidence belong on one screen. */}
+                            <Route
+                              path="/rationale"
+                              element={<RationalePage />}
+                            />
                             <Route
                               path="*"
                               element={<Navigate to="/" replace />}

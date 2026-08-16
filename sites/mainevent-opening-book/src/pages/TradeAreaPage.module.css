@@ -225,3 +225,47 @@
     max-height: 62dvh;
   }
 }
+/*
+  THE MODE SWITCH ON A TAKEOVER.
+
+  Same box as Back because the two are peers: both leave this surface,
+  one to where you came from and one to the argument for why this
+  surface is shaped like a takeover in the first place. It is drawn
+  quieter, without the outline, because Back is the control a reader on
+  a full screen board is hunting for and two identical outlines side by
+  side would make them read the wrong one.
+
+  It is a link and not a button. It goes to an address, that address is
+  worth copying out of the bar, and a button that navigates is a link
+  that has thrown away the middle click.
+*/
+.modeLink {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-m);
+  color: var(--text-inverse);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0.82;
+}
+
+.modeLink:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--text-inverse) 14%, transparent);
+}
+
+/* Below the width where Back itself drops to one word, the band is four
+   controls in 380 pixels and this is the one that can wait. It is not
+   deleted from the application: the rail carries the same destination,
+   and a reader on a handset reaches it from there. */
+@media (max-width: 560px) {
+  .modeLink {
+    display: none;
+  }
+}
+

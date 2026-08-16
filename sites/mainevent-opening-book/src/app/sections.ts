@@ -115,6 +115,14 @@ const BY_PATH: Record<string, SectionId> = {
   "/partners": "partners",
   "/promo": "promo",
   "/spend": "spend",
+  /* The sell-through statement wears the Budget identity rather than a
+     twenty fourth hue. Same reasoning as /pay under the floor and
+     /segments under lanes: it is an OUTPUT of the supply side rather
+     than a place of its own, it sits beside Budget in the rail, and a
+     separate colour would have drawn one trade as two. It is still named
+     in the rail, in the breadcrumb and in the page title, which is where
+     a section is actually told apart. */
+  "/sellthrough": "spend",
   "/leagues": "leagues",
   "/book/accounts": "accounts",
   "/team": "team",
@@ -155,7 +163,43 @@ const BY_PATH: Record<string, SectionId> = {
  * check is written as a segment comparison rather than a startsWith so a
  * future /leagues-archive cannot inherit a colour by accident.
  */
-export function sectionFor(pathname: string): SectionId | null {
+/**
+ * A path with its trailing slash taken off, and it is load bearing.
+ *
+ * Every route in this application is served as a prerendered directory,
+ * so a reader who lands on /rationale/ rather than /rationale gets the
+ * same screen from a different string. React Router hands that string
+ * through unchanged, which means every `pathname === "/thing"` in the
+ * chrome is false for half the ways a person can arrive at it, and the
+ * failure is silent: the page renders, the section colour falls back,
+ * and the mode switch marks the wrong mode. It cost an hour to find once
+ * and it is not costing it twice.
+ *
+ * The root is left alone, because "/" with its slash removed is "".
+ */
+export function normalisePath(pathname: string): string {
+  return pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+}
+
+export function sectionFor(rawPathname: string): SectionId | null {
+  /*
+    AN EXPLANATION WEARS THE COLOUR OF THE SCREEN IT EXPLAINS.
+
+    /rationale/lanes resolves to Lanes and /rationale resolves to the
+    desk, because Rationale is a second reading of the same places rather
+    than a place of its own. Giving the whole mode one identity would
+    have drawn twenty seven different rooms in one colour and said they
+    were the same room.
+
+    The prefix comes off here, at the one function that turns a path into
+    an identity, rather than in the twenty places that ask for one. There
+    used to be a "/rationale": "method" row in the table above instead,
+    and it was worse than useless: the exact match caught the desk's
+    explanation and the prefix pass caught all twenty six others, so the
+    entire mode rendered in one colour and looked deliberate.
+  */
+  const stripped = rawPathname.replace(/^\/rationale(?=\/|$)/, "") || "/";
+  const pathname = normalisePath(stripped);
   const exact = BY_PATH[pathname];
   if (exact) return exact;
 

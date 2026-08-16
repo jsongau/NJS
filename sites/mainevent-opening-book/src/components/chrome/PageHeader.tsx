@@ -129,6 +129,15 @@ const SCREENS: Record<string, ScreenNode> = {
     groupTo: "/partners",
   },
   "/spend": { group: "Spend and support", label: "Budget", groupTo: "/partners" },
+  /* The sell-through statement is filed where the rail files it, beside
+     the budget that bought the stock. This row exists because the drift
+     check below is a real check: a screen in the rail and missing from
+     this table is a screen whose trail says "This screen". */
+  "/sellthrough": {
+    group: "Spend and support",
+    label: "Sell-through",
+    groupTo: "/partners",
+  },
   /* The cup is filed under the book beside the leagues it is played for,
      which is where the rail files it. The drift check below is why this
      row exists at all: the rail and the trail have to agree about which

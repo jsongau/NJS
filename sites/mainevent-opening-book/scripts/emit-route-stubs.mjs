@@ -80,6 +80,30 @@ function leagueIds() {
   return ids;
 }
 
+/**
+ * The console paths that have an explanation written against them, read
+ * out of src/data/rationale rather than listed again here. A regex over
+ * the source is crude, and the guard below turns a silent miss into a
+ * failed build.
+ */
+function rationalePaths() {
+  const dir = path.join(here, "..", "src", "data", "rationale");
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".ts") && f !== "types.ts" && f !== "index.ts");
+  const paths = new Set();
+  for (const f of files) {
+    const src = fs.readFileSync(path.join(dir, f), "utf8");
+    for (const m of src.matchAll(/^\s*path:\s*"([^"]+)",$/gm)) paths.add(m[1]);
+  }
+  if (paths.size < 20) {
+    console.error(
+      `Only ${paths.size} rationale screens matched. The shape changed; fix this before shipping links that will 404.`,
+    );
+    process.exit(1);
+  }
+  // "/" is explained at "/rationale" itself, everything else gets a child.
+  return [...paths].map((p) => (p === "/" ? "rationale" : `rationale${p}`));
+}
+
 const ROUTES = [
   "today",
   "leagues",
@@ -94,6 +118,10 @@ const ROUTES = [
   "partners",
   "promo",
   "spend",
+  // The licensor statement. It is the one URL in this group that could
+  // be sent to somebody outside the building, so a cold open on it has
+  // to serve the screen rather than a 404.
+  "sellthrough",
   "book",
   "book/week",
   "book/accounts",
@@ -109,9 +137,15 @@ const ROUTES = [
   "sent",
   "coaching",
   "method",
-  // Why the console is shaped the way it is. Outside the shell, and the
-  // URL that goes in a cover letter, so it must resolve on a cold open.
-  "rationale",
+  // Rationale is a second reading of every screen above, at the same
+  // address with a prefix, so its stubs are derived from the console
+  // routes rather than typed again. Read out of the same file the
+  // application reads, so a screen added to one mode cannot be missing
+  // from the other. That includes "rationale" itself, which is how the
+  // home board is explained, so it is NOT typed here as well: it was,
+  // once, and the emitted count then disagreed with the file count on
+  // disk by one for no reason a reader could see.
+  ...rationalePaths(),
   // The quote pages are the URLs that go in emails, so they must resolve
   // on a cold open with no client-side routing. One stub per prospect.
   ...prospectIds().map((id) => `quote/${id}`),
@@ -119,6 +153,21 @@ const ROUTES = [
   // and see the Tuesday night" email and it has to resolve cold.
   ...leagueIds().map((id) => `leagues/${id}`),
 ];
+
+/**
+ * A route listed twice writes the same file twice and reports a count
+ * nobody can reconcile against `find dist -name index.html`. Two sources
+ * feed this list now, a typed one and a derived one, so the overlap is a
+ * standing hazard rather than a one off. Fail the build instead.
+ */
+const seen = new Set();
+const duplicates = ROUTES.filter((r) => (seen.has(r) ? true : (seen.add(r), false)));
+if (duplicates.length > 0) {
+  console.error(
+    `Route listed more than once: ${duplicates.join(", ")}. Remove the typed entry; the derived list already covers it.`,
+  );
+  process.exit(1);
+}
 
 const dist = path.resolve(process.argv[2] ?? "dist");
 const source = path.join(dist, "index.html");

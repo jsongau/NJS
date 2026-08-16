@@ -1,5 +1,5 @@
 /*
-  RATIONALE. The page about the console, rendered outside it.
+  RATIONALE. The page about the console, rendered inside it.
 
   IT IS A DOCUMENT, NOT AN INSTRUMENT. Every internal screen here is dense
   on purpose: small type, several columns, a lot of state visible at once,
@@ -9,11 +9,13 @@
   justify.
 
   IT IS ALSO NOT THE QUOTE. The customer facing quote is a letter on white
-  paper, because a school activities director is holding a document
-  addressed to them. This reader is a hiring manager looking at somebody's
-  system, so it stays on the application's own ground and keeps the
-  monospace numerals. Sitting it on a white sheet would dress an argument
-  up as correspondence.
+  paper rendered outside the shell, because a school activities director
+  is holding a document addressed to them and must never see the venue's
+  call sheet. This reader is a hiring manager looking at the instrument
+  and asking why it is built like this, so the instrument stays around
+  them: same rail, same mega nav, same ground, same monospace numerals.
+  A bare column of prose would read as a different website rather than as
+  this one explaining itself.
 
   SECTION IDENTITY IS METHOD'S. The page carries data-sec="method" rather
   than a token set of its own, on the same precedent that puts Segments
@@ -29,16 +31,37 @@
   it is a different kind of object rather than to decorate a paragraph.
 */
 
+/*
+  The scroll container for one screen inside the shell, in the shape every
+  other page here uses: take the space the shell gives, own the scrolling,
+  and paint the ground so a short page does not show the frame through it.
+*/
 .page {
-  min-height: 100vh;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   background: var(--surface-0);
   color: var(--text-1);
 }
 
+/*
+  A READING MEASURE RATHER THAN THE SHELL WIDTH, and it is the one place
+  this page departs from its neighbours. Method and the boards run to
+  --shell-max because they are instruments and a table wants the room.
+  This is prose, and prose set to 1440px is prose nobody finishes.
+
+  IT IS RAGGED RIGHT RATHER THAN CENTRED, which took seeing it to get
+  right. Centring a 74ch column inside a main this wide leaves a hand's
+  width of empty ground between the rail and the first word, and the text
+  reads as floating rather than as belonging to the screen it is on. The
+  rail is a hard left edge and every other page starts against it, so
+  this one does too. The padding is --shell-pad for the same reason: the
+  first character lands on the same line it lands on everywhere else.
+*/
 .wrap {
   max-width: 74ch;
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-4) var(--space-8);
+  margin: 0;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
 }
 
 /* ---- masthead ---- */
@@ -313,10 +336,6 @@ a.mode:hover {
 }
 
 @media (max-width: 380px) {
-  .wrap {
-    padding-left: var(--space-3);
-    padding-right: var(--space-3);
-  }
 
   .title {
     font-size: var(--step-3);

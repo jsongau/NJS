@@ -88,6 +88,71 @@ export interface Licence {
 }
 
 // ---------------------------------------------------------------
+// The gap between a published licence list and a particular floor
+// ---------------------------------------------------------------
+
+/**
+ * One move in an argument about what a licence list does and does not
+ * reach.
+ *
+ * THIS IS NOT A LICENCE AND IT DELIBERATELY DOES NOT LOOK LIKE ONE. It
+ * carries no id that any selector joins on, no source URL and no
+ * approval state, because every one of those fields would make an
+ * opinion render with the furniture of a sourced fact. What it carries
+ * is a heading, a paragraph and a provenance, which is the shape of a
+ * claim somebody is making rather than a row somebody read.
+ */
+export interface GapPoint {
+  id: string;
+  /** The claim in one line, as a buyer would say it out loud. */
+  heading: string;
+  /** Why it holds, or why it does not reach far enough. */
+  body: string;
+  provenance: Provenance;
+}
+
+/**
+ * The argument a register makes about its own shortfall.
+ *
+ * A posting asks for a category. A published list does not carry it.
+ * There are three honest things to say about that and one dishonest one,
+ * and the dishonest one is the easiest to write, so the shape below has
+ * nowhere to put it. There is no `available`, no `sourceable`, no
+ * `inDiscussion` and no list of candidate properties on this type. The
+ * only licence it can point at is one already on the published register,
+ * named by id so it cannot be a property nobody published.
+ */
+export interface LicenceGap {
+  /** The posting line this answers, quoted exactly as it is printed. */
+  postingLine: string;
+  postingCite: string;
+  /**
+   * The one published licence the bridge argument rests on, by id. An id
+   * rather than a name, so the spelling on screen stays the spelling the
+   * source page carries and the bridge cannot be a property that is not
+   * on the register at all.
+   */
+  bridgeLicenceId: string;
+  /** Published ids whose property is owned by a Japanese company. */
+  japaneseLicenceIds: string[];
+  /**
+   * Published ids carrying an anime or game property. Empty, and the
+   * emptiness is the finding rather than a to-do. It is a field so that
+   * the count on screen is read off the data rather than typed into the
+   * markup as a nine or a zero somebody has to keep true by hand.
+   */
+  animeOrGameLicenceIds: string[];
+  /** What the list does reach, including the bridge and its limit. */
+  reach: GapPoint[];
+  /** What it does not reach, said plainly. */
+  shortfall: GapPoint[];
+  /** What closing the gap would actually require. */
+  route: GapPoint[];
+  /** Sentences stating what is not being claimed. Plain strings. */
+  notClaimed: string[];
+}
+
+// ---------------------------------------------------------------
 // Partners
 // ---------------------------------------------------------------
 

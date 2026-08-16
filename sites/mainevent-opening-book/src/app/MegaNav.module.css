@@ -1049,3 +1049,96 @@
     transition: none;
   }
 }
+
+/*
+  THE MODE SWITCH.
+
+  Two readings of one body of work, not two destinations, so it is set
+  apart from the queue keys by a rule and a gap in the same way the
+  featured key is set apart at the other end of the bar. The pill shape
+  says the two are alternatives to each other; the queue keys are not
+  alternatives to anything, which is why they are not drawn this way.
+
+  THE CURRENT MODE CARRIES aria-current AS WELL AS THE WASH, because the
+  wash is a reinforcement. Same rule as every section in this app: colour
+  is never the only thing saying which one you are in.
+*/
+.modes {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  margin-right: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  flex: 0 0 auto;
+  /* Without these the pill stretches to the height of the bar and every
+     size set below is decoration. It was 49px tall while claiming 28. */
+  align-items: center;
+  align-self: center;
+}
+
+/*
+  SMALLER THAN THE QUEUE KEYS, ON PURPOSE.
+
+  It was the same height as Today and Inbox at first, which made three
+  equals on the bar: two modes and five destinations all shouting at the
+  same volume. The mode switch is pressed once at the start of a visit
+  and then not again, and the queues are read continuously, so the thing
+  that is read more often gets the larger target.
+
+  It stays a 28px pill with real padding rather than shrinking to text,
+  because the pair still has to read as two alternatives to each other.
+  On touch it grows back to 44px in the query at the foot of this file:
+  small is a desktop affordance and a thumb does not care about
+  hierarchy.
+*/
+.mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font: 600 var(--step--2) / 1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--text-2);
+}
+
+.mode:hover {
+  color: var(--text-0);
+  background: var(--surface-2);
+}
+
+.modeCurrent {
+  background: var(--accent-tint);
+  color: var(--accent-600);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+
+.modeCurrent:hover {
+  background: var(--accent-tint);
+  color: var(--accent-600);
+}
+
+/*
+  On a narrow bar the words are the last thing to go, not the first. The
+  hamburger already hides the queue keys behind the rail there, and a
+  mode switch reduced to two initials would be a puzzle rather than a
+  control.
+*/
+/*
+  A thumb does not care that the modes rank below the queues. Below the
+  pointer breakpoint the pair goes back to the 44px this application uses
+  everywhere else it expects a finger.
+*/
+@media (pointer: coarse) {
+  .mode {
+    height: 44px;
+    padding: 0 var(--space-4);
+    font-size: var(--step--1);
+  }
+}

@@ -68,6 +68,63 @@
      is standing in, so the head and the marquee above it light together
      rather than one of them holding a house colour the other has left. */
   box-shadow: inset 0 -3px 0 -2px var(--sec, var(--signal));
+
+  /* ── THE HEM. WHY THE BAR LOOKED LIKE IT HAD CUT THE RAIL OFF ─────
+
+     The mega nav is a housing, and its background is a gradient that
+     runs --surface-2 to --surface-1 to --surface-0 down its fifty six
+     pixels so the strip reads as a moulded object. Under it it draws two
+     hairlines across the FULL width of the application: the section
+     colour at --sec, then --line-2.
+
+     Over the content column that lands on --surface-0, the same colour
+     the gradient just finished on, so the hairlines read as the
+     underside of the bar and the surface carries straight through.
+
+     Over the first 252 pixels it lands on the rail, and the rail's
+     ground is --surface-2, two steps away. Sampled at 1440 in the light
+     ground the seam was four bands in four pixels: 249,247,253 for the
+     bar, then the section colour at full saturation, then 154,150,166
+     for --line-2, then a step down to 225,222,233 for the rail. The dark
+     ground does the same thing in the other direction, 23,21,29 stepping
+     UP to 45,43,54. Either way the eye reads a saturated rule dividing
+     two different materials, which is a cut, not a join.
+
+     This is the fix, and it is the ground rather than the rule. The head
+     starts on the colour the bar's gradient finished on and settles into
+     the rail's own ground over sixteen pixels, so the hairlines now sit
+     on one continuous surface and read as the bar's own lit edge.
+
+     WHAT WAS REJECTED. Deleting the section rule: it is the one thing on
+     screen that says which of twenty places you are standing in, and the
+     head repeats it deliberately three lines above this comment.
+     Painting something over the bar from the shell: the bar belongs to
+     MegaNav and a shell that reaches up into its box to erase part of a
+     border is a rule nobody will find when the bar next changes.
+     Repainting the rail in --surface-0 throughout: the rail is a paler
+     ground than the content ON PURPOSE, and levelling the two would cost
+     the whole column its separation to save four pixels of seam.
+
+     Eighteen pixels, and stated in the same tokens the bar's own
+     gradient uses, so it is right in both grounds without a second rule
+     and cannot drift if a palette is retuned.
+
+     THE FIRST THREE PIXELS HOLD --surface-0 FLAT, and that is not a
+     rounding of the curve. The shell paints a two pixel seam in --sec
+     across the top of this column, matching the one it paints across the
+     content column, so the hem's own first two pixels are never seen. If
+     the gradient began falling at zero, the first row of it visible
+     below that seam would already be off --surface-0 while the content
+     column beside it was still exactly on it, and the join this hem
+     exists to make would be out by four units of grey. */
+  background-image: linear-gradient(
+    to bottom,
+    var(--surface-0) 0,
+    var(--surface-0) 3px,
+    var(--surface-1) 10px,
+    var(--surface-2) 18px
+  );
+  background-repeat: no-repeat;
 }
 
 .brand {
@@ -230,12 +287,157 @@
    The groups
    --------------------------------------------------------------- */
 
+/*
+  ── THE SHEET SAYS THAT IT CONTINUES ───────────────────────────────
+  This well is 596 pixels tall at 1440 by 900 and the sheet inside it is
+  1942, so two thirds of the destinations are below the fold. Scrolling
+  always worked; nothing here was ever unreachable. What was missing was
+  any sign that it existed. The scrollbar this application draws is a one
+  pixel hairline in --line-2, the last row that fits happens to land
+  flush against the foot's border, and the two together read as a list
+  that has finished under a heading, with the foot's controls sitting
+  directly beneath the amputation.
+
+  THE FADE IS CONDITIONAL AND THAT IS THE WHOLE POINT. --fade-top and
+  --fade-bottom are zero by default and are opened only by the data
+  attributes SideRail.tsx writes when there is actually more content in
+  that direction. A permanent gradient at the foot of a scroller is worse
+  than no gradient at all: it is present on the screen where the list has
+  ended as loudly as on the screen where it has not, so it stops being
+  information and becomes a stain, and by the time a reader has learned
+  to ignore it there is nothing left to tell them anything.
+
+  WHY A MASK AND NOT A GRADIENT PAINTED OVER THE TOP. Three other
+  versions were tried and each one failed on this rail specifically.
+
+  An absolutely positioned overlay inside the scroller SCROLLS WITH THE
+  CONTENT: a scroll container is the containing block for its absolute
+  children, but the origin it positions them from is the unscrolled
+  padding box, so the fade would travel off the top on the first flick.
+
+  A sticky child would hold its place, but it needs real elements in the
+  list, and elements inside a <div> full of <section>s are elements a
+  screen reader has to walk past on the way to the destinations.
+
+  A solid scrim in --surface-2 over the rows, wherever it was anchored,
+  cannot fade a row that is being hovered, because the hover ground is
+  --surface-3 and the scrim is mixed for --surface-2. Half a row would
+  dissolve and the other half would sit there at full strength. The mask
+  takes the alpha of whatever is underneath it, hover ground and section
+  colour and figures alike, so there is one behaviour and not two.
+
+  The two stops are written in surface tokens rather than in black,
+  because a mask reads the alpha channel of its image and every surface
+  token is fully opaque in both grounds. A literal colour would say
+  nothing about which surface is being dissolved into, and the next
+  person to read this line has to be able to tell.
+*/
 .groups {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  /* Stated rather than left to the browser. Declaring overflow on one
+     axis alone computes the other to auto, which is a horizontal
+     scrollbar waiting for the first row label that does not fit, and a
+     horizontal scrollbar in a 252 pixel navigation column is never the
+     right answer: the labels ellipsize instead. */
+  overflow-x: hidden;
   overscroll-behavior: contain;
   padding: var(--space-3) 0 var(--space-4);
+
+  --fade-top: 0px;
+  --fade-bottom: 0px;
+
+  /* TWO LAYERS, AND THE SECOND ONE IS THE RAIL'S RIGHT EDGE.
+
+     A mask covers the border box, so the first layer on its own would
+     have dissolved the top and bottom twenty eight pixels of the one
+     pixel border-right that `.rail > *` puts on every child of this
+     column. The head above and the foot below keep theirs at full
+     strength, so the rail's right edge would have gained two notches,
+     which is a worse cut than the one this rule was written to remove.
+
+     The second layer is that one pixel column, opaque from top to
+     bottom. Mask layers composite with `add` by default, which is a
+     union, so the edge is held at full alpha while everything to the
+     left of it still fades. No mask-composite declaration is needed and
+     none is written: stating the initial value invites the next reader
+     to think something unusual is happening here.
+
+     -webkit- is listed first for Safari, which still needs the prefix on
+     masks of this shape, and both lists carry both layers so neither
+     engine gets half the rule. */
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      var(--surface-2) var(--fade-top),
+      var(--surface-2) calc(100% - var(--fade-bottom)),
+      transparent 100%
+    ),
+    linear-gradient(to left, var(--surface-2) 1px, transparent 1px);
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      var(--surface-2) var(--fade-top),
+      var(--surface-2) calc(100% - var(--fade-bottom)),
+      transparent 100%
+    ),
+    linear-gradient(to left, var(--surface-2) 1px, transparent 1px);
+
+  /* THE COMPANION TO THE FADE, AND THE REASON IT IS SAFE FOR A KEYBOARD.
+     Arrow keys walk this rail, and a browser scrolling a focused row
+     just barely into view would park it in the dissolving band, where
+     the row a reader is standing on is the one they cannot read. The
+     padding pushes the resting place clear of both bands by the height
+     of a row. It is stated in the same figures as the fades rather than
+     in a custom property, because scroll-padding has to hold even on the
+     screens where the fade in that direction is shut. */
+  scroll-padding-top: 28px;
+  scroll-padding-bottom: 28px;
+}
+
+/*
+  Twenty eight pixels: three quarters of a 38 pixel row. Shorter than
+  that and the fade looks like a printing fault rather than an edge;
+  taller and it eats a whole row of names at the bottom of a column that
+  exists to be scanned.
+*/
+.groups[data-more-above="true"] {
+  --fade-top: 28px;
+}
+
+.groups[data-more-below="true"] {
+  --fade-bottom: 28px;
+}
+
+/*
+  A COLLAPSED RAIL FADES SOONER. Seventy two pixels of column holds
+  marks and figures with no words beside them, so the same twenty eight
+  pixels would dissolve most of a mark and leave a reader guessing at a
+  silhouette. Sixteen is enough to say "more" against a stack of marks
+  and not enough to make any one of them ambiguous.
+
+  The hovered and focused states are not listed, because the rail widens
+  back to its full width there and the full width figure is right again.
+*/
+.rail[data-collapsed="true"] .groups[data-more-above="true"] {
+  --fade-top: 16px;
+}
+
+.rail[data-collapsed="true"] .groups[data-more-below="true"] {
+  --fade-bottom: 16px;
+}
+
+.rail[data-collapsed="true"]:hover .groups[data-more-above="true"],
+.rail[data-collapsed="true"]:focus-within .groups[data-more-above="true"] {
+  --fade-top: 28px;
+}
+
+.rail[data-collapsed="true"]:hover .groups[data-more-below="true"],
+.rail[data-collapsed="true"]:focus-within .groups[data-more-below="true"] {
+  --fade-bottom: 28px;
 }
 
 .group + .group {

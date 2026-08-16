@@ -64,9 +64,67 @@
 .drawer {
   grid-row: 2;
   grid-column: 1;
+  /* The containing block for the seam below. It is stated here rather
+     than on the seam itself because an absolutely positioned child of a
+     flex container is not a flex item, so this costs the drawer nothing
+     and buys the seam somewhere to hang. */
+  position: relative;
   display: flex;
   min-height: 0;
   min-width: 0;
+}
+
+/*
+  ── THE SEAM'S OTHER HALF, AND WHY IT HAD TO BE WRITTEN ────────────
+
+  The rule under the mega nav used to change weight halfway across the
+  screen, which is what the owner photographed. Sampled at 1440 on four
+  routes in both grounds, at x=120 and x=240 over the rail and at x=260,
+  600, 1200 and 1430 over the content, the bands were:
+
+    over the rail      y54  --sec        1px
+                       y55  --line-2     1px
+                       y56  the rail
+    over the content   y54  --sec        1px
+                       y55  --line-2     1px
+                       y56  --sec        2px
+                       y57  --sec
+                       y58  --surface-0
+
+  One pixel of section colour on the left, three on the right with a grey
+  hairline running through the middle of them, and the change of weight
+  landed exactly on x=252, which is the rail's own width. The first two
+  bands are the mega nav's and it draws them across the whole
+  application. The third was .main::before below, and .main is the
+  content column only, so half the width never got it.
+
+  This is the missing half. The same two pixels, the same --sec, the same
+  absence of a transition, sitting on the rail's track so it takes the
+  rail's width from the grid and is still right the moment the rail
+  collapses to seventy two.
+
+  WHAT WAS REJECTED. Deleting .main::before and letting the mega nav's
+  own hairline be the whole rule: that is one weight everywhere, and it
+  is also the section signal reduced to a single pixel on the one edge of
+  the screen whose whole job is to announce which of twenty places you
+  have arrived in. Hanging one full width seam off .shell instead of two
+  half width ones: .shell is not a stacking context, .main is a scrolling
+  column whose sticky page headers paint at z-index 6, and a seam on the
+  grandparent would have had to out-stack all of them from outside, which
+  is the kind of z-index nobody can safely touch afterwards.
+
+  The z-index is one above the rail's own. The rail is position: relative
+  with z-index --z-rail, which makes it a stacking context, so a seam
+  that merely came later in the source would paint underneath it.
+*/
+.drawer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: calc(var(--z-rail) + 1);
+  height: 2px;
+  background: var(--sec, var(--signal));
+  pointer-events: none;
 }
 
 /*
@@ -178,6 +236,18 @@
 
   .main {
     grid-column: 1;
+  }
+
+  /*
+    The seam is a property of the rail's COLUMN, and below this width
+    there is no column: the rail is a sheet that slides over the page and
+    .main has taken the whole grid, so .main::before is already drawing
+    the rule from edge to edge on its own. Left in place this would ride
+    down the drawer as a second bar of section colour across the top of
+    a lockup, two pixels from the one the mega nav is already drawing.
+  */
+  .drawer::before {
+    display: none;
   }
 
   .drawer {

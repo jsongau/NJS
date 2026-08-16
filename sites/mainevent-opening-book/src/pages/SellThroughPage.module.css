@@ -1,0 +1,1106 @@
+/*
+  SELL-THROUGH.
+
+  TWO DOCUMENTS IN ONE FILE, and the one at the bottom is the point.
+
+  On screen this is a page in an application: a control strip, a ranking
+  of nine properties, a statement under it, all on whichever ground the
+  reader has chosen. On paper it is a sell-through statement a licensor
+  reads at their own desk, and the @media print block at the foot of this
+  file is the layout the statement was actually designed for.
+
+  It prints under the same three rules the district report and the week
+  sheet print under, and they are worth restating because this sheet
+  leaves the building:
+
+  1. NO FILLED PANELS. Every tinted block becomes white with a hairline
+     rule on paper. Toner goes on letterforms and hairlines and nowhere
+     else.
+
+  2. NOTHING IS SIGNALLED BY COLOUR ALONE. Every channel, every band and
+     every provenance is a glyph and a word before it is a hue, and the
+     one drawn figure on the page splits solid against HATCHED rather
+     than one colour against another. The owner of this codebase is
+     colourblind and a mono laser printer is colourblind too.
+
+  3. NOTHING BREAKS ACROSS A PAGE THAT A PERSON READS AS ONE THING. The
+     position block, the rates, the drawn figure and the reorder band all
+     carry the shared avoid-break class from print.css.
+
+  Below 780px every table becomes a stack of labelled rows rather than a
+  sideways scroll. A seven column table inside a 360px viewport that
+  scrolls the document sideways is a broken layout wearing a table's
+  clothes.
+
+  Tokens by name only. The two raw values in this file are the 16px on
+  the selects, which is commented where it sits, and the black in the
+  print block, which is the standing exception in this codebase because
+  paper is neither ground and ink is black.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-4);
+}
+
+/* The eyebrow wears the section's own ink. This screen takes the Budget
+   section's identity rather than a hue of its own, because it is an
+   output of the same supply side rather than a new place. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-4);
+}
+
+.posting {
+  margin: 0 0 var(--space-4);
+  padding: 0 0 0 var(--space-4);
+  border-left: 3px solid var(--brand-gold);
+  max-width: 74ch;
+}
+
+.posting p {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.posting cite {
+  display: block;
+  font-style: normal;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.framing {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 82ch;
+}
+
+.framingGlyph {
+  color: var(--prov-public);
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------
+   Controls
+   --------------------------------------------------------------- */
+
+.controls {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: var(--space-5) 0 var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line-2);
+}
+
+.pick {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.pickLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+/*
+  44px tall and 16px of type, and the second one is not a style choice.
+  Mobile Safari zooms the whole viewport when a control under 16px takes
+  focus, which on a page holding a printable document means the reader
+  lands on a sideways sheet they then have to pinch back. The scale token
+  one rung down is 0.833rem, so this is the one place in the file where a
+  raw pixel value is the correct value.
+*/
+.select {
+  min-height: 44px;
+  max-width: 100%;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.controlsAction {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.printNote {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.section {
+  margin-bottom: var(--space-7);
+  border-top: 1px solid var(--line-2);
+  padding-top: var(--space-5);
+}
+
+.internalNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-2);
+  max-width: 82ch;
+}
+
+.link {
+  color: var(--accent-700);
+  text-underline-offset: 2px;
+  word-break: break-word;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.empty,
+.quietBlock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Tables
+   --------------------------------------------------------------- */
+
+.tableWrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.table,
+.docTable,
+.ruleTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.table th,
+.table td,
+.docTable th,
+.docTable td,
+.ruleTable th,
+.ruleTable td {
+  text-align: left;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--line-2);
+  vertical-align: top;
+}
+
+.table thead th,
+.docTable thead th,
+.ruleTable thead th {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--line-strong);
+  white-space: nowrap;
+}
+
+.table tfoot th,
+.table tfoot td,
+.docTable tfoot th,
+.docTable tfoot td {
+  border-top: 1px solid var(--line-strong);
+  border-bottom: none;
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.numCol {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.wideCol {
+  min-width: 170px;
+}
+
+.nameCell {
+  min-width: 170px;
+}
+
+/*
+  The property name is the control that changes the statement, so it is a
+  real button with a real target rather than a row that happens to be
+  clickable. 44px of height comes from the padding plus the line box, and
+  the pressed state is a weight and a rule as well as a tint.
+*/
+.nameButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  margin: calc(var(--space-2) * -1) calc(var(--space-3) * -1) 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--text-0);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nameButton:hover {
+  border-color: var(--line-strong);
+}
+
+.nameButton[aria-pressed="true"] {
+  border-color: var(--sec, var(--brand-gold));
+  background: var(--surface-2);
+}
+
+.nameButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.nameMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: 4px;
+}
+
+.nameSub,
+.sub {
+  display: block;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.quiet {
+  display: inline-block;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: normal;
+  text-align: right;
+}
+
+.lineCell {
+  min-width: 190px;
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.evidence {
+  display: block;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 46ch;
+}
+
+/* ---------------------------------------------------------------
+   The statement itself, set as a sheet rather than as a card
+   --------------------------------------------------------------- */
+
+.doc {
+  padding: var(--space-5);
+  border: 1px solid var(--line-strong);
+  border-top: 3px solid var(--sec, var(--brand-gold));
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.docHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 260px);
+  gap: var(--space-4);
+  align-items: start;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line-strong);
+  margin-bottom: var(--space-5);
+}
+
+.docHeadMain {
+  min-width: 0;
+}
+
+.docKicker {
+  margin: 0 0 4px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+}
+
+.docTitle {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.2;
+  color: var(--text-0);
+}
+
+.docMeta {
+  margin: 0 0 4px;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.docStamp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  text-align: right;
+}
+
+.docStampNote {
+  font-size: var(--step--2);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.docSubhead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 var(--space-3);
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-1);
+}
+
+.docRule {
+  flex: 1;
+  height: 1px;
+  background: var(--line-2);
+}
+
+/* ---------------------------------------------------------------
+   Position figures
+   --------------------------------------------------------------- */
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+}
+
+.figure {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.figure dt {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.figure dd {
+  margin: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.figureValue {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-0);
+}
+
+.figureNote {
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The drawn figure
+   --------------------------------------------------------------- */
+
+.markBlock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+/* Scales uniformly with its own box, so the hatch never skews. */
+.mark {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+}
+
+.markMoved {
+  fill: var(--sec, var(--brand-gold));
+}
+
+.markHatch {
+  stroke: var(--text-2);
+}
+
+.markFrame {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.markTick {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.markKey {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--step--2);
+  color: var(--text-1);
+  min-width: 0;
+}
+
+.markKey li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.keySolid,
+.keyHatch {
+  flex: none;
+  width: 18px;
+  height: 12px;
+  border: 1px solid var(--line-strong);
+}
+
+.keySolid {
+  background: var(--sec, var(--brand-gold));
+}
+
+/* The hatch, repeated in CSS so the key reads the same as the mark. */
+.keyHatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--text-2) 0,
+    var(--text-2) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+}
+
+.keyTotal {
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------
+   Rates
+   --------------------------------------------------------------- */
+
+.rates {
+  margin: 0 0 var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+}
+
+.rate {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line-2);
+}
+
+.rate:last-child {
+  border-bottom: none;
+}
+
+.rate dt {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  padding-top: 2px;
+}
+
+.rate dd {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.rateValue {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-0);
+}
+
+.rateDiv {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The reorder band and the rule behind it
+   --------------------------------------------------------------- */
+
+.band {
+  padding: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  margin-bottom: var(--space-4);
+}
+
+.bandHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.bandTest {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.bandImplication {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+  max-width: 78ch;
+}
+
+.bandHorizon {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-2);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.ruleTable {
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.ruleCaption {
+  padding: var(--space-3);
+  text-align: left;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--line-2);
+}
+
+.ruleTable td {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* The row the statement landed on carries a rule and a weight, never a
+   tint alone. */
+.ruleOn {
+  background: var(--surface-2);
+  box-shadow: inset 3px 0 0 0 var(--sec, var(--brand-gold));
+}
+
+.ruleOn td {
+  color: var(--text-0);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------
+   Provenance footer
+   --------------------------------------------------------------- */
+
+.docFoot {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line-strong);
+}
+
+.provList {
+  margin: 0 0 var(--space-4);
+}
+
+.provRow {
+  display: grid;
+  grid-template-columns: minmax(120px, 160px) minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--line-2);
+}
+
+.provRow:last-child {
+  border-bottom: none;
+}
+
+.provRow dt {
+  margin: 0;
+}
+
+.provRow dd {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.provAbsent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.docLinks {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Narrow. 360px is the floor this application holds itself to.
+   --------------------------------------------------------------- */
+
+@media (max-width: 780px) {
+  .table,
+  .table tbody,
+  .table tfoot,
+  .table tr,
+  .table td,
+  .table th,
+  .docTable,
+  .docTable tbody,
+  .docTable tfoot,
+  .docTable tr,
+  .docTable td,
+  .docTable th,
+  .ruleTable,
+  .ruleTable tbody,
+  .ruleTable tr,
+  .ruleTable td,
+  .ruleTable th {
+    display: block;
+  }
+
+  .table thead,
+  .docTable thead,
+  .ruleTable thead {
+    display: none;
+  }
+
+  .table tbody tr,
+  .table tfoot tr,
+  .docTable tbody tr,
+  .docTable tfoot tr,
+  .ruleTable tbody tr {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .table td,
+  .table th,
+  .docTable td,
+  .docTable th,
+  .ruleTable td,
+  .ruleTable th {
+    border-bottom: none;
+    padding: 3px 0;
+    text-align: left;
+  }
+
+  .numCol {
+    display: flex !important;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+    text-align: right;
+  }
+
+  .table td::before,
+  .docTable td::before,
+  .ruleTable td::before {
+    content: attr(data-label);
+    flex: none;
+    font-size: var(--step--2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-2);
+  }
+
+  .wideCol,
+  .nameCell,
+  .lineCell {
+    min-width: 0;
+  }
+
+  .nameButton {
+    margin: 0 0 var(--space-2);
+  }
+
+  .sub,
+  .nameSub {
+    display: inline;
+    margin-left: var(--space-2);
+  }
+
+  .quiet {
+    text-align: left;
+  }
+
+  .docHead,
+  .rate,
+  .provRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .docStamp {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .doc {
+    padding: var(--space-4);
+  }
+
+  .controlsAction {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .h1 {
+    font-size: var(--step-3);
+  }
+
+  .docTitle {
+    font-size: var(--step-1);
+  }
+}
+
+/*
+  Nothing on this screen moves on its own, and the only transitions are
+  the hover and focus states inherited from the shared primitives. This
+  block exists so that stays true if somebody adds one later.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .nameButton,
+  .select {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ===============================================================
+   PRINT. The layout the statement was designed for.
+
+   Raw black on white, deliberately, and this is the one place in this
+   file where a hex literal is correct: paper is neither ground and ink
+   is black.
+   =============================================================== */
+
+@media print {
+  /*
+    The shell's chrome is not this page's to edit, so these rules are
+    scoped to a class the component puts on the body while it is mounted
+    and takes off again on unmount. Same mechanism the district report
+    uses, and for the same reason: a print rule that hid every
+    application header would sit in the shared stylesheet and fire on
+    screens that want theirs printed.
+  */
+  :global(body.sellthrough-report-print header),
+  :global(body.sellthrough-report-print footer),
+  :global(body.sellthrough-report-print [role="status"]) {
+    display: none !important;
+  }
+
+  /*
+    Everything the shell draws around the document, hidden by position
+    rather than by class name, because those class names are hashed
+    inside a CSS module this page does not own. Inside the shell,
+    everything that is not the main content column comes off. The week
+    sheet and the district report already assume this shape, so it is the
+    existing contract rather than a new one.
+  */
+  :global(body.sellthrough-report-print #root > div > *:not(main)) {
+    display: none !important;
+  }
+
+  /* The section seam the shell paints across the head of the working
+     area is right on a monitor and is a coloured hairline across the top
+     of side one on paper. */
+  :global(body.sellthrough-report-print main)::before {
+    display: none !important;
+  }
+
+  /* The shell is one viewport tall with an inner scroller, which is
+     right on a monitor and would print one screenful and bin the rest. */
+  :global(body.sellthrough-report-print #root),
+  :global(body.sellthrough-report-print #root > div),
+  :global(body.sellthrough-report-print main) {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .page {
+    overflow: visible;
+    background: transparent;
+  }
+
+  .inner {
+    max-width: none;
+    padding: 0;
+  }
+
+  .section {
+    margin: 0;
+    border-top: none;
+    padding-top: 0;
+  }
+
+  /* No filled panels, no rounded cards, no shadows. The colour is
+     !important because any selector carrying two classes beats this one
+     on specificity and would keep the screen's mid grey on paper. */
+  .doc,
+  .figure,
+  .markBlock,
+  .band,
+  .check,
+  .tableWrap,
+  .rates,
+  .ruleTable {
+    background: #fff !important;
+    border-color: #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .doc {
+    padding: 0;
+    border: none;
+  }
+
+  .docHead {
+    border-bottom: 1pt solid #000;
+  }
+
+  .docKicker,
+  .docMeta,
+  .docStampNote,
+  .figure dt,
+  .figureNote,
+  .rate dt,
+  .rateDiv,
+  .sub,
+  .nameSub,
+  .quiet,
+  .evidence,
+  .keyTotal,
+  .bandHorizon,
+  .ruleCaption,
+  .provRow dd,
+  .provAbsent {
+    color: #000 !important;
+  }
+
+  .docTitle,
+  .docSubhead,
+  .figureValue,
+  .rateValue,
+  .bandTest,
+  .bandImplication,
+  .lineCell {
+    color: #000 !important;
+  }
+
+  .docRule {
+    background: #000;
+  }
+
+  /* The mark keeps its shape and loses its fill. Solid becomes black,
+     the remainder stays hatched, and the two are still told apart with
+     no colour at all. */
+  .markMoved {
+    fill: #000;
+  }
+
+  .markHatch,
+  .markFrame,
+  .markTick {
+    stroke: #000;
+  }
+
+  .keySolid {
+    background: #000;
+  }
+
+  .keyHatch {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #000 0,
+      #000 1px,
+      transparent 1px,
+      transparent 5px
+    );
+  }
+
+  .ruleOn {
+    background: #fff !important;
+    box-shadow: inset 3px 0 0 0 #000;
+  }
+
+  /* A statement is read as one thing per property, so the blocks that
+     make up an argument stay together on one side. */
+  .figures,
+  .markBlock,
+  .rates,
+  .band,
+  .check,
+  .provRow {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

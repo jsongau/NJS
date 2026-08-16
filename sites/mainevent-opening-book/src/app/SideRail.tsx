@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { PERIODS, PERIOD_BY_ID, VENUE } from "@/data/venue";
 import { PROSPECTS } from "@/data/prospects";
@@ -49,7 +49,8 @@ import { PinMark } from "@/components/primitives/PinMark";
 import { ResetControl } from "@/components/primitives/ResetControl";
 import { SectionMark } from "@/components/play/SectionMark";
 import { Readout } from "@/components/play/Readout";
-import { FEATURED_KEY, type SectionId } from "./sections";
+import { FEATURED_KEY, normalisePath, type SectionId } from "./sections";
+import { isRationalePath, toConsole, toRationale } from "@/data/rationale";
 import styles from "./SideRail.module.css";
 
 /**
@@ -559,6 +560,16 @@ const GROUPS: RailGroup[] = [
         sec: "spend",
         hint: "What the outbound work costs, against what was set aside",
       },
+      /* The one row in this group that is read by somebody who does not
+         work here. It wears the Budget colour rather than one of its own,
+         which sections.ts explains, and it sits last because it is the
+         output of the three above it. */
+      {
+        to: "/sellthrough",
+        label: "Sell-through",
+        sec: "spend",
+        hint: "The statement a licensor receives, printable, per property",
+      },
     ],
   },
 ];
@@ -857,6 +868,43 @@ export function SideRail() {
   const dispatch = usePipelineDispatch();
   const location = useLocation();
 
+  /*
+    THE RAIL IS THE SAME RAIL IN BOTH MODES.
+
+    Same groups, same order, same labels, same counts, same section
+    colours. The ONLY thing the mode changes is where a row points: in
+    Rationale every destination gets /rationale in front of it, so
+    pressing Lanes takes you to how Lanes was built rather than to Lanes.
+
+    It is done here, at the point of rendering a link, rather than by
+    keeping a second table. A second table is a second thing to forget to
+    update, and the whole argument of this mode is that a screen and its
+    explanation are one destination addressed twice.
+  */
+  const onRationale = isRationalePath(normalisePath(location.pathname));
+  const railHref = (to: string) => (onRationale ? toRationale(to) : to);
+
+  /**
+   * WHICH SCREEN THE READER IS STANDING ON, WITHOUT THE MODE.
+   *
+   * Everything below that asks "which screen is open" has to ask it in
+   * console terms, because the rail is one rail and its second level is
+   * part of the rail. Reading location.pathname raw means the queue
+   * buckets under Requests and the facet lists under the desk appear in
+   * Console and silently vanish in Rationale, which is precisely the
+   * claim this mode makes about itself, broken.
+   *
+   * It shipped that way until a walk of all twenty seven screens in both
+   * modes compared the two rails row by row and found Today and Requests
+   * five rows shorter on the explanation side. Worth stating plainly:
+   * the design was right and the reading of the address was wrong, and a
+   * count is what told the difference. sectionFor solves the same problem
+   * the same way one file over, which is the pattern to follow rather
+   * than a new one to invent.
+   */
+  const here = normalisePath(location.pathname);
+  const consoleHere = toConsole(here);
+
   /* Every figure in the chrome, from the one hook the mega nav also
      reads. The rail keeps the intermediates because its second level and
      its facet lists are built out of the same walks. */
@@ -902,7 +950,7 @@ export function SideRail() {
     () => new URLSearchParams(location.search),
     [location.search],
   );
-  const onInbox = location.pathname === INBOX_PATH;
+  const onInbox = consoleHere === INBOX_PATH;
 
   /**
    * The second level for the screen currently open.
@@ -913,7 +961,7 @@ export function SideRail() {
    * links, because the partition belongs to the queue page.
    */
   const subFilters = useMemo<SubFilter[]>(() => {
-    const path = location.pathname;
+    const path = consoleHere;
 
     if (path === "/today" || path === "/requests") {
       /* The four buckets plus the whole list. All five come off
@@ -1013,7 +1061,7 @@ export function SideRail() {
     }
 
     return [];
-  }, [location.pathname, queue, lanes, pipeline, dispatch]);
+  }, [consoleHere, queue, lanes, pipeline, dispatch]);
 
   // -------------------------------------------------------------
   // Keyboard
@@ -1067,6 +1115,86 @@ export function SideRail() {
     e.preventDefault();
     items[next]?.focus();
   }, []);
+
+  // -------------------------------------------------------------
+  // The scroll affordance
+  // -------------------------------------------------------------
+
+  const groupsRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * ── THE LIST HAS TO SAY THAT IT CONTINUES ─────────────────────────
+   * At 1440 by 900 the sheet of destinations is 1942 pixels tall in a
+   * 596 pixel well, so two thirds of it is below the fold. The overflow
+   * was already `auto` and the wheel already worked, but the scrollbar
+   * this application draws is a one pixel hairline and the last visible
+   * row happened to land flush against the foot's border. The result was
+   * a list that stopped dead under a heading with nothing on screen
+   * saying there was more, which is the bug the owner photographed. The
+   * content was never unreachable. It was unannounced.
+   *
+   * This marks the scroller with `data-more-above` and `data-more-below`
+   * and the stylesheet turns those into a soft fade at whichever end
+   * still has content. Two attributes rather than one, because a fade at
+   * the bottom that is still there when you have reached the bottom is a
+   * permanent smudge that teaches the reader to ignore it, and then it
+   * cannot tell them anything on the screen where it matters.
+   *
+   * IT WRITES THE ATTRIBUTES BY HAND INSTEAD OF THROUGH STATE. A
+   * setState in a scroll handler would re-render twenty destinations,
+   * their counts and their marks on every frame of every flick. Nothing
+   * else in the tree reads these two values, so nothing is served by
+   * putting them in React's model; the DOM is the model here.
+   */
+  const markScrollEnds = useCallback(() => {
+    const el = groupsRef.current;
+    if (!el) return;
+
+    /* A pixel of slack at each end. Fractional scroll positions are
+       ordinary on a trackpad and at a device pixel ratio that is not a
+       whole number, and an exact comparison would leave a one hair fade
+       hanging at the bottom of a list that has finished. */
+    const slack = 1;
+    const room = el.scrollHeight - el.clientHeight;
+    const above = el.scrollTop > slack;
+    const below = room > slack && el.scrollTop < room - slack;
+
+    el.setAttribute("data-more-above", above ? "true" : "false");
+    el.setAttribute("data-more-below", below ? "true" : "false");
+  }, []);
+
+  /* Runs after every render, with no dependency list on purpose. The
+     height of this sheet is not a constant: the second level opens and
+     closes with the route, the facet blocks appear on some screens only,
+     and the counts can rewrap a row. Every one of those arrives as a
+     render, so a render is the cheapest reliable moment to re-measure,
+     and the two writes above are idempotent. */
+  useEffect(markScrollEnds);
+
+  /* The other three moments, none of which is a render: the reader
+     scrolls, the window changes shape, or the well itself is resized by
+     something outside this component, which is what the collapse does. */
+  useEffect(() => {
+    const el = groupsRef.current;
+    if (!el) return;
+
+    el.addEventListener("scroll", markScrollEnds, { passive: true });
+    window.addEventListener("resize", markScrollEnds);
+
+    /* Guarded, because jsdom and older Safari have no ResizeObserver and
+       a rail that throws on mount would take the whole shell with it. */
+    const observer =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(markScrollEnds);
+    observer?.observe(el);
+
+    return () => {
+      el.removeEventListener("scroll", markScrollEnds);
+      window.removeEventListener("resize", markScrollEnds);
+      observer?.disconnect();
+    };
+  }, [markScrollEnds]);
 
   /**
    * ── WHERE THE NARROW LAYOUT WENT ──────────────────────────────────
@@ -1188,7 +1316,21 @@ export function SideRail() {
         </div>
       </div>
 
-      <div className={styles.groups} id="rail-groups">
+      {/*
+        The two data attributes start as "false" and are corrected by
+        markScrollEnds in the layout that follows this render. Declaring
+        them here rather than leaving them absent means the first paint
+        already matches the resting shape of the rule in the stylesheet,
+        so a reader who lands on a short list never sees a fade flash on
+        and off before the measurement catches up.
+      */}
+      <div
+        ref={groupsRef}
+        className={styles.groups}
+        id="rail-groups"
+        data-more-above="false"
+        data-more-below="false"
+      >
         {/*
           THE ADD CONTROL SITS AT THE TOP OF THE RAIL, NOT IN ITS FOOT.
           The foot is dropped entirely below 1024px, and a phone is
@@ -1213,11 +1355,15 @@ export function SideRail() {
 
             <ul className={styles.list}>
               {group.items.map((item) => {
+                const href = railHref(item.to);
+                /* `here` is the one computed at the top of the component.
+                   It used to be recomputed inside this map, shadowing it,
+                   which is how the mode aware reading above could be
+                   correct and this row still be wrong. */
                 const active =
                   item.to === "/leagues"
-                    ? location.pathname === item.to ||
-                      location.pathname.startsWith("/leagues/")
-                    : location.pathname === item.to;
+                    ? here === href || here.startsWith(`${href}/`)
+                    : here === href;
                 const count = counts[item.to];
                 return (
                   <li
@@ -1242,7 +1388,7 @@ export function SideRail() {
                     data-featured={item.featured ? "key" : undefined}
                   >
                     <NavLink
-                      to={item.to}
+                      to={href}
                       /* Exact everywhere except leagues, the one
                          destination in this rail with a child route
                          under it. */
@@ -1334,7 +1480,11 @@ export function SideRail() {
                           <li key={sub.id}>
                             {sub.to ? (
                               <Link
-                                to={sub.to}
+                                /* Through railHref like every other row.
+                                   A second level row that jumps out of
+                                   Rationale back into Console is a rail
+                                   that is not the same rail. */
+                                to={railHref(sub.to)}
                                 data-rail-item=""
                                 className={styles.sub}
                               >

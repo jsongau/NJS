@@ -1,0 +1,6 @@
+# This is an independent work sample, written to be opened from a link in a
+# job application. It names a real company and deliberately resembles internal
+# tooling, so it should not sit in search results. The pages carry a noindex
+# meta tag as well; this file is the second lock on the same door.
+User-agent: *
+Disallow: /

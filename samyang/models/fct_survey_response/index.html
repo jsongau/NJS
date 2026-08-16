@@ -1,0 +1,271 @@
+<!doctype html>
+<!--
+  The ground is declared here as well as set below, so that a browser
+  with JavaScript off gets the dark palette from the attribute rather
+  than from the absence of one. Both routes land on dark; this one says
+  so out loud.
+-->
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <!--
+      noindex is deliberate and is the one mitigation worth spending on
+      here. This is an independent work sample that names a real company
+      and deliberately resembles internal tooling; it is meant to be
+      opened from a link in a job application, not to sit in search
+      results.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <title>The Grain: a data architecture for Samyang America</title>
+    <meta
+      name="description"
+      content="An independent data architecture work sample for Samyang America: a dbt warehouse of fifty models with its bus matrix, lineage, contracts, standards and decision records. Not affiliated with, commissioned by or endorsed by Samyang America Inc or Samyang Foods Co Ltd. Every figure in the warehouse is synthetic."
+    />
+    <link rel="icon" href="data:," />
+
+    <!--
+      THE GROUND HAS TO BE ON THE PAGE BEFORE THE FIRST PAINT.
+
+      React mounts after that paint. A theme applied from a component or
+      an effect therefore means a dark page flashing white, or a white
+      page flashing dark, on every single load, for every reader, forever.
+      It is the one bug in a theme toggle that nobody can talk themselves
+      out of noticing.
+
+      So the attribute is written here, synchronously, before the bundle
+      is even requested. This reads the same storage key state/persist.ts
+      writes and the same media query state/ThemeProvider.tsx subscribes
+      to, and resolves them the same way: a stored choice wins, and only
+      a reader who has never chosen gets asked what their machine
+      prefers. The two must agree or the page changes ground a few
+      hundred milliseconds after it opens, which is the same bug wearing
+      a delay.
+
+      The key, the schema version and the two words are literals because
+      this script cannot import anything. It runs before the module
+      graph exists, which is the whole point of it, and a module it could
+      import would be a module that had to load first.
+
+      IT IS IN THE HEAD RATHER THAN BESIDE THE FAILURE REPORTER BELOW,
+      and that is measured rather than assumed. Written in the body, in
+      the same plain style and immediately before the module script, it
+      passed on one run and failed on the next: the browser is entitled
+      to paint once the stylesheet has arrived and the parser has yielded,
+      which on a slow load happens before the parser has reached the foot
+      of the body. The captured frame was a flat dark page with no content
+      on it, which is exactly the flash this script exists to prevent,
+      arriving from the one direction nobody looks. In the head there is
+      no frame it can lose. See scripts/proof-ground.mjs, which parks the
+      tab on a colour no ground in this application contains and then
+      classifies every frame of the navigation.
+
+      NOTHING IN HERE MAY THROW. Storage access alone throws in an
+      embedded frame with third-party storage blocked, before any key is
+      read, and a throw in the head takes the whole page with it. Every
+      step that can fail is wrapped, and every failure lands on dark,
+      which is the ground this application renders anyway when it is told
+      nothing at all.
+    -->
+    <script>
+      (function () {
+        var DARK = "dark";
+        var LIGHT = "light";
+        var ground = null;
+
+        try {
+          /* Mirrors STORAGE_KEY and SCHEMA_VERSION in src/state/persist.ts. */
+          var raw = window.localStorage.getItem("the-grain.v1");
+          if (raw) {
+            var envelope = JSON.parse(raw);
+            if (envelope && envelope.v === 1 && envelope.slices) {
+              var slice = envelope.slices.theme;
+              /*
+                THE SIGNATURE IS CHECKED HERE FOR THE SAME REASON THE
+                PROVIDER CHECKS IT.
+
+                persist.ts stamps every slice with a hash of the schema it
+                was written against, and on hydration a slice whose hash
+                does not match is discarded. This script used to read the
+                ground without looking at that stamp, which meant a stale
+                or hand-edited payload was trusted here and thrown away a
+                few hundred milliseconds later: the page opened light and
+                then turned dark on its own, which is the exact flash this
+                whole script exists to prevent, arriving by the one route
+                nobody was watching. Two readers of one key have to agree
+                about what makes it valid, or they will disagree in front
+                of somebody.
+
+                The literal mirrors signatureOf("theme.ground.v1") in
+                ThemeProvider.tsx, which is FNV-1a over the stable
+                stringify of that one seed. It cannot be imported: this
+                runs before the module graph exists, which is the point of
+                it. If the codec's seed string ever changes, this changes
+                with it, and the cost of forgetting is one flip on one
+                load, not a broken page.
+              */
+              var saved =
+                slice && slice.sig === "v4rsmo" && slice.data
+                  ? slice.data.ground
+                  : null;
+              if (saved === LIGHT || saved === DARK) ground = saved;
+            }
+          }
+        } catch (e) {
+          /* Blocked, full, or hand-edited into nonsense. All three mean
+             the reader has no stored choice as far as this page is
+             concerned, and the machine gets asked instead. */
+          ground = null;
+        }
+
+        if (!ground) {
+          try {
+            ground =
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: light)").matches
+                ? LIGHT
+                : DARK;
+          } catch (e) {
+            ground = DARK;
+          }
+        }
+
+        document.documentElement.setAttribute("data-theme", ground);
+      })();
+    </script>
+    <script type="module" crossorigin src="/samyang/assets/index-ENzMYng2.js"></script>
+    <link rel="stylesheet" crossorigin href="/samyang/assets/index-Ba-HZCuv.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      The Grain is an interactive work sample and needs JavaScript
+      enabled. Every screen in it is read out of a generated dbt build;
+      there is no server to fall back to.
+    </noscript>
+    <!--
+      A WHITE SCREEN MUST NEVER BE THE WHOLE ERROR MESSAGE.
+
+      This is a work sample. The worst thing it can do is open blank in
+      front of somebody, because a blank page is unreportable: the person
+      looking at it can only say "I cannot see anything", and whoever has
+      to fix it starts from nothing. It has already happened once, in a
+      browser that could not be reproduced on the machine that built the
+      file, and the whole debugging session was guesswork against a
+      screenshot of a dark rectangle.
+
+      So this listens for the two failures that happen before React can
+      catch anything, a parse or evaluation error in the bundle and a
+      rejected promise, and it also checks after three seconds whether
+      anything ever mounted. Any of those and it writes what it knows
+      into the page: the message, the file, the line, and the browser
+      string. Nothing here depends on the bundle having loaded, which is
+      the entire point, so it is deliberately plain script with no
+      imports, no framework and no optional chaining.
+    -->
+    <script>
+      (function () {
+        var told = false;
+        function tell(kind, detail) {
+          if (told) return;
+          told = true;
+          var root = document.getElementById("root");
+          if (!root) return;
+          root.innerHTML = "";
+          var box = document.createElement("div");
+          box.setAttribute("role", "alert");
+          /* The panel reads the ground the head script already resolved.
+             Hardcoding the dark values made the one screen a reader sees
+             when everything else has failed an inverted block on the
+             light theme, which is a second thing wrong on a screen that
+             exists to report the first. These six literals are the only
+             raw colours outside tokens.css, and they are here because
+             this markup is built without a stylesheet on purpose. */
+          var lit = document.documentElement.getAttribute("data-theme") === "light";
+          var paper = lit ? "#fbfaFC" : "#16141c";
+          var ink = lit ? "#16141c" : "#f7f6fb";
+          var well = lit ? "#efecf3" : "#201e28";
+          var rule = lit ? "#8b8496" : "#837a72";
+          var lead = lit ? "#5d5766" : "#cbbda9";
+          box.style.cssText =
+            "margin:0;padding:24px;font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;" +
+            "background:" + paper + ";color:" + ink + ";min-height:100vh";
+          var h = document.createElement("p");
+          h.style.cssText =
+            "margin:0 0 12px;font-size:18px;font-weight:700;color:" +
+            (lit ? "#8f4300" : "#ff8e26");
+          h.textContent = "This prototype did not start in this browser.";
+          var p = document.createElement("p");
+          p.style.cssText = "margin:0 0 16px;color:" + lead + ";max-width:70ch";
+          p.textContent =
+            "Copy everything below and send it to whoever built this. It names the fault exactly.";
+          var pre = document.createElement("pre");
+          pre.style.cssText =
+            "margin:0;padding:16px;background:" + well + ";border:1px solid " + rule + ";" +
+            "border-radius:8px;white-space:pre-wrap;word-break:break-word;color:" + ink;
+          pre.textContent =
+            kind + "\n" + detail + "\n\n" + navigator.userAgent;
+          box.appendChild(h);
+          box.appendChild(p);
+          box.appendChild(pre);
+          root.appendChild(box);
+        }
+
+        window.addEventListener("error", function (e) {
+          var where = e.filename
+            ? e.filename + " line " + e.lineno + " column " + e.colno
+            : "no file reported";
+          tell("Script error", (e.message || "no message") + "\n" + where);
+        });
+
+        window.addEventListener("unhandledrejection", function (e) {
+          var r = e.reason;
+          tell(
+            "Unhandled promise rejection",
+            (r && (r.stack || r.message)) || String(r),
+          );
+        });
+
+        /*
+          The silent case. No error fires when a bundle evaluates cleanly
+          and simply renders nothing, which is what a failed mount looks
+          like from out here.
+
+          IT USED TO FIRE AFTER THREE SECONDS AND THAT WAS A BUG IN THE
+          BUG REPORTER. Measured against this bundle on a throttled
+          connection, 0.8 Mbps with 300ms of latency, the alarm went off
+          at 5.7 seconds and the application mounted normally at 8.2.
+          Anybody on hotel wifi was told their browser could not run the
+          prototype, in a panel that invited them to report it. A false
+          accusation from a diagnostic is worse than no diagnostic,
+          because it sends the reader away from a page that was about to
+          work.
+
+          So there are two conditions now and both must hold. The window
+          load event has to have fired, which means the bundle has
+          finished arriving and executing however long that took, and a
+          further four seconds has to pass after it with nothing mounted.
+          A slow network can no longer trip this; only a bundle that
+          genuinely ran and genuinely rendered nothing can.
+        */
+        function watchForSilence() {
+          window.setTimeout(function () {
+            var root = document.getElementById("root");
+            if (root && root.childNodes.length === 0) {
+              tell(
+                "Nothing mounted",
+                "The bundle finished loading and threw no error, and four seconds later the page is still empty.",
+              );
+            }
+          }, 4000);
+        }
+
+        if (document.readyState === "complete") watchForSilence();
+        else window.addEventListener("load", watchForSilence);
+      })();
+    </script>
+
+  </body>
+</html>

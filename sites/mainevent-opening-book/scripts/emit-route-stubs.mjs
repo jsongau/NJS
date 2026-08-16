@@ -137,6 +137,9 @@ const ROUTES = [
   "sent",
   "coaching",
   "method",
+  // The door. The address that goes in a job application, so it has to
+  // resolve on a cold open before anything else here does.
+  "start",
   // Rationale is a second reading of every screen above, at the same
   // address with a prefix, so its stubs are derived from the console
   // routes rather than typed again. Read out of the same file the

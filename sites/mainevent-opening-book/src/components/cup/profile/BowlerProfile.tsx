@@ -232,7 +232,7 @@ export function BowlerProfile({
 
         <NotEstablishedLine
           label="Record"
-          because="Nobody has bowled a competitive game in this building. A record here would be a season that did not happen, printed next to a hundred and two verified organisations, and it would cost more than it is worth."
+          because="Nobody has bowled a competitive game in this building. A record here would be a season that did not happen, printed next to two hundred and eleven verified organisations, and it would cost more than it is worth."
         />
 
         <EstablishedFigure

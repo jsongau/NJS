@@ -193,7 +193,7 @@ export interface MapLegendProps {
    * the right count for every filter this card owns. It is the wrong
    * count for a filter it does not: taking a go-see run narrows the
    * board to a handful of stops, and this card went on printing
-   * "102 of 102 organisations on the map" into a polite live region
+   * "211 of 211 organisations on the map" into a polite live region
    * over a map drawing six pins. A card that announces a number the
    * screen contradicts is worse than a card with no number.
    */
@@ -448,11 +448,11 @@ export function MapLegend({
             SHUT, ON A PHONE, THE CARD IS THE WORD "KEY" AND NOTHING ELSE.
 
             It shares the top edge of the map with the hide list control,
-            which on a phone reads "Show the list of 102" and is the wider
+            which on a phone reads "Show the list of 211" and is the wider
             and the more important of the two. At 380px the pair did not
             fit across the screen and the count on that button disappeared
             underneath this card, which is how a reader ends up looking at
-            a control that says "Show the list of 10". So this card gives
+            a control that says "Show the list of 21". So this card gives
             up two words while it is shut and while the map is narrow, and
             it keeps them everywhere else.
 

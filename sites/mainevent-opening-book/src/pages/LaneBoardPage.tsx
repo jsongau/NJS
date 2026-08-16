@@ -23,7 +23,7 @@ import styles from "./LaneBoardPage.module.css";
  * ── WHY THIS SCREEN IS NOT A LIST OF CATEGORIES ────────────────────
  * A board that says "Schools, Colleges, Corporate, Healthcare" is a
  * taxonomy, and a taxonomy is worth nothing to a person with one week and
- * a hundred organisations. What makes a lane useful is the four things
+ * two hundred organisations. What makes a lane useful is the four things
  * printed on every card here: who exactly the buyer is, how they trade,
  * what Main Event actually sells into them, and the single hardest thing
  * about reaching them before the doors open. That last one is the field
@@ -227,7 +227,7 @@ function LaneCard({
           value={count(rollup.prospects)}
           label={rollup.prospects === 1 ? "organisation" : "organisations"}
           provenance="public"
-          title="Real organisations inside the trade area, each carrying the Google place id it came from."
+          title="Real organisations inside the trade area. Sixty nine of the two hundred and eleven on the board carry the Google place id they came from; the other hundred and forty two carry no place id and were geocoded with the US Census Bureau geocoder."
         />
         <Stat
           value={count(rollup.emailable)}

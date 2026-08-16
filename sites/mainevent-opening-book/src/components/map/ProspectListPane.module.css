@@ -41,7 +41,7 @@
    THE HEAD IS A BUDGET AND THE LIST IS WHAT IT IS SPENT ON. This head
    once stood five hundred pixels tall over a list of three hundred and
    sixty, which at 1440 by 900 left exactly one organisation fully
-   visible out of a hundred and two. Everything in here now is either a
+   visible out of two hundred and eleven. Everything in here now is either a
    control that changes the working set or the count that says what the
    controls did.
    --------------------------------------------------------------- */
@@ -248,8 +248,8 @@
   ONE CAPTION LINE FOR THE WHOLE COLUMN. The count sits at the start of
   the line and the name of the figure at the end of it, which is the
   only place the word "Score" is printed on this screen now. It used to
-  be set in capitals under every one of a hundred and two rows, labelling
-  a column that has only ever held one kind of number.
+  be set in capitals under every one of two hundred and eleven rows,
+  labelling a column that has only ever held one kind of number.
 
   The label is a sibling of the count rather than a child of it, because
   the count is an `aria-live` region: anything inside it is read out
@@ -291,8 +291,8 @@
 
 /*
   THE GAP AND THE PADDING WERE PART OF THE CARD COUNT, SO BOTH OF THEM
-  WENT. This list used to be a hundred and two cards floating six pixels
-  apart on a well, which is six hundred pixels of nothing between the
+  WENT. This list used to be two hundred and eleven cards floating six
+  pixels apart on a well, which is six hundred pixels of nothing between the
   first row and the last, and at this row height it is a full visible
   organisation given away for a look every generated dashboard ships.
 

@@ -71,8 +71,8 @@ let warned = false;
  * What a preview control does with no provider above it.
  *
  * It warns once and does nothing. A missing provider should not take
- * down a board of a hundred and two organisations, and the warning names
- * the fix.
+ * down a board of two hundred and eleven organisations, and the warning
+ * names the fix.
  */
 const FALLBACK: QuotePreviewController = {
   openId: null,

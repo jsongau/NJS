@@ -104,10 +104,10 @@ import styles from "./MapStatBar.module.css";
  * a grid of equal columns: five across a desk, three on a tablet, two on a
  * phone, where the strip stops being a row and becomes a block of tiles.
  * Equal columns are also what makes the geometry still: a count going from
- * a hundred and two to two changes no track width, so nothing beside it
- * shifts. Labels reserve two lines whether they need them or not, for the
- * same reason and for the reader who runs their browser at a larger type
- * size.
+ * two hundred and eleven to two changes no track width, so nothing beside
+ * it shifts. Labels reserve two lines whether they need them or not, for
+ * the same reason and for the reader who runs their browser at a larger
+ * type size.
  */
 
 export interface MapStatBarProps {

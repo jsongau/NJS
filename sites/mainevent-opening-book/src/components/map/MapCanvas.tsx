@@ -696,13 +696,13 @@ export interface MapCanvasProps {
    * ── A FILTERED OUT ORGANISATION IS NOT DRAWN AT ALL ─────────────
    * The marker contract carries a `muted` flag for exactly this decision,
    * and this pane deliberately never sets it. Two reasons, and the first
-   * is arithmetic: the strip says "31 of 102 on the board" and the list
-   * shows thirty one cards, so a map showing a hundred and two marks with
-   * seventy one of them greyed is a third pane disagreeing with the other
-   * two about what the reader is looking at. The second is that a muted
-   * mark is still a mark. It takes room in the cluster grid, it can be
-   * clicked, and clicking it would open a panel for an organisation the
-   * board has just said is not on the board.
+   * is arithmetic: the strip says "31 of 211 on the board" and the list
+   * shows thirty one cards, so a map showing two hundred and eleven marks
+   * with a hundred and eighty of them greyed is a third pane disagreeing
+   * with the other two about what the reader is looking at. The second is
+   * that a muted mark is still a mark. It takes room in the cluster grid,
+   * it can be clicked, and clicking it would open a panel for an
+   * organisation the board has just said is not on the board.
    *
    * `muted` earns its place on `/field`, where the run is a route through
    * a chosen few and the rest of the trade area is genuine context for it.
@@ -1120,8 +1120,8 @@ export function MapCanvas({
     selected tab of the detail panel, whether the key is open, which of
     the four offers is showing. Changing any of them re-renders the
     board, which re-renders this pane, which until now re-rendered the
-    cluster layer, which rebuilds a `divIcon` for each of up to a hundred
-    and two organisations and hands every one of them to Leaflet's
+    cluster layer, which rebuilds a `divIcon` for each of up to two hundred
+    and eleven organisations and hands every one of them to Leaflet's
     `setIcon`. `setIcon` replaces the marker's element in the document.
     So pressing "next offer" on a card in the corner tore down and rebuilt
     every pin on the map, and the reader saw the whole board flicker for

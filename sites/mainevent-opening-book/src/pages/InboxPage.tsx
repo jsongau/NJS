@@ -38,7 +38,7 @@ import styles from "./InboxPage.module.css";
  * IS WAITING ON THIS DESK.
  *
  * ── WHY THIS SCREEN EXISTS ────────────────────────────────────────
- * The application could already say where a hundred and two
+ * The application could already say where two hundred and eleven
  * organisations stood and what had gone out of the outbox. What it could
  * not do was show a message that came back next to the message that
  * caused it. An outbox is a record of effort. An inbox is a record of the
@@ -74,8 +74,8 @@ import styles from "./InboxPage.module.css";
  * view survives a reload, can be pasted to somebody, and can be reached
  * cold from the rail. The rail's status, type, stale and awaiting
  * filters all land here, and they land here because this is the surface
- * that can show a hundred and two organisations and the last thing said
- * to each of them in the same list.
+ * that can show two hundred and eleven organisations and the last thing
+ * said to each of them in the same list.
  *
  * ── WHAT THIS SCREEN CANNOT DO, SAID ONCE ──────────────────────────
  * It cannot send anything, and it says so in the one place a reader is
@@ -178,7 +178,8 @@ export const CATEGORY_ORDER: InboxCategory[] = [
  * still drawn on the row, so nothing is lost by not giving it a bucket.
  *
  * Returns null for an organisation that has never exchanged a message,
- * which is forty-two of the hundred and two and is not a thread.
+ * which is a hundred and fifty-one of the two hundred and eleven and is
+ * not a thread.
  */
 export function categoriseThread(record: ProspectRecord): InboxCategory | null {
   const last = record.lastMessage;
@@ -403,8 +404,9 @@ function recordMatches(
   }
   /* WITH NOTHING ASKED FOR, THIS IS AN INBOX AND NOT A DIRECTORY. The
      resting state is the sixty organisations that have said or been said
-     something, newest first. The other forty-two are one rail filter
-     away and the filter says how many there are before it is pressed. */
+     something, newest first. The other hundred and fifty-one are one rail
+     filter away and the filter says how many there are before it is
+     pressed. */
   if (!anyFilterOn(f) && category === null) return false;
   return true;
 }
@@ -562,7 +564,7 @@ export function InboxPage() {
    * this screen that made the tiles lie in a quiet way: with "In
    * conversation" on, the working set read twenty eight and the seven
    * tiles above the list still added up to sixty, so a tile promising
-   * nine threads produced two when it was pressed. A facet count that
+   * nine threads produced one when it was pressed. A facet count that
    * does not respect the other facets is the same class of defect as a
    * summary panel that does not respect the filter under it.
    *
@@ -721,10 +723,10 @@ export function InboxPage() {
       </header>
 
       {/*
-        THE FILTER BAR. At a hundred and two records the common failure is
-        not an empty result, it is not noticing a filter is on, so every
-        active facet is a chip that removes itself and the figure beside
-        them is live.
+        THE FILTER BAR. At two hundred and eleven records the common
+        failure is not an empty result, it is not noticing a filter is on,
+        so every active facet is a chip that removes itself and the figure
+        beside them is live.
       */}
       <div className={styles.bar}>
         <div className={styles.search}>

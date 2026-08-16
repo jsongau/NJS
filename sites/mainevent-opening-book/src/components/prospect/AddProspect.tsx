@@ -32,18 +32,18 @@ import styles from "./AddProspect.module.css";
  * THE CAR.
  *
  * ── WHY THIS EXISTS ───────────────────────────────────────────────
- * The hundred and two organisations in data/prospects.ts were researched
- * at a desk. The job they support is not done at a desk: it is tabling,
- * networking and go-sees, and the whole point of walking a trade area is
- * that you find things the desk research missed. A prospecting tool with
- * no way to add a prospect asks the one person using it to remember the
- * unit next to the tyre shop until he gets home, which is the same as
+ * The two hundred and eleven organisations in data/prospects.ts were
+ * researched at a desk. The job they support is not done at a desk: it is
+ * tabling, networking and go-sees, and the whole point of walking a trade
+ * area is that you find things the desk research missed. A prospecting tool
+ * with no way to add a prospect asks the one person using it to remember
+ * the unit next to the tyre shop until he gets home, which is the same as
  * asking him to lose it.
  *
  * ── THE ADDED ROWS ARE MARKED FOR LIFE, AND THAT IS THE POINT ──────
  * Every row written here carries `provenance: "user_input"` and is drawn
- * with the badge that goes with it, everywhere it appears. The hundred
- * and two researched rows each carry a source: a Google Places id, or a
+ * with the badge that goes with it, everywhere it appears. The two hundred
+ * and eleven researched rows each carry a source: a Google Places id, or a
  * page on the organisation's own site that somebody read. A row typed on
  * a pavement carries neither, and the credibility of the whole data set
  * rests on those two kinds of row never being confusable. So they are
@@ -207,9 +207,9 @@ export function useAddedProspectsDispatch(): Dispatch<AddedAction> {
 // ---------------------------------------------------------------
 
 /**
- * The most likely data error in a hundred and two record territory is a
- * solo rep re-adding a business he contacted in March, so the name field
- * checks itself as it is typed.
+ * The most likely data error in a two hundred and eleven record territory
+ * is a solo rep re-adding a business he contacted in March, so the name
+ * field checks itself as it is typed.
  *
  * It warns and never blocks. Two branches of the same franchise are two
  * organisations with nearly the same name and both belong on the board,

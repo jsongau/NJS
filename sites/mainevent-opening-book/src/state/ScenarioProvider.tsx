@@ -30,7 +30,7 @@ import { RECORD_AS_OF } from "@/domain/selectors/record";
  * `accountBoard(asOf)`, `dailyRings({ now })` and `prospectRecord(id,
  * { now })` all derive from a clock rather than reading one. So moving
  * the clock produces every one of those states out of the SAME two
- * signed contracts and the SAME hundred and two rows. Nothing is
+ * signed contracts and the SAME two hundred and eleven rows. Nothing is
  * injected, nothing is invented, and a reader can check any state
  * against the seed by hand.
  *

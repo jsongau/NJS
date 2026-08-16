@@ -23,6 +23,7 @@ import { SentPage } from "@/pages/SentPage";
 import { CoachingPage } from "@/pages/CoachingPage";
 import { MethodPage } from "@/pages/MethodPage";
 import { QuotePage } from "@/pages/QuotePage";
+import { StartPage } from "@/pages/StartPage";
 import { RationalePage } from "@/pages/RationalePage";
 import { TodayPage } from "@/pages/TodayPage";
 import { RequestsPage } from "@/pages/RequestsPage";
@@ -108,6 +109,17 @@ export function App() {
               <Routes>
                 {/* Prospect facing. No internal chrome. */}
                 <Route path="/quote/:prospectId" element={<QuotePage />} />
+
+                {/*
+                  Visitor facing, and outside the shell for the same
+                  reason the quote is: it is addressed to somebody who did
+                  not come here to work a desk. This is the address that
+                  goes in a job application, so a person arriving cold
+                  gets a sentence about what they are looking at before
+                  they get a rail of twenty destinations. StartPage.tsx
+                  has the full argument.
+                */}
+                <Route path="/start" element={<StartPage />} />
 
 
                 {/* Everything the sales manager uses. */}

@@ -341,7 +341,7 @@ const ROLLING = /^year[\s-]?round\b/i;
  * `buyingWindow` into dated occasions. Total by construction.
  *
  * THIS FUNCTION IS THE HEART OF THE BOARD AND IT IS ALSO THE PLACE IT
- * COULD MOST EASILY START LYING. One hundred and two rows carry a
+ * COULD MOST EASILY START LYING. Two hundred and eleven rows carry a
  * `buyingWindow` and they were written as prose for a human: "Jun +
  * Dec", "Nov-Dec, with a second window in Jan when their hall is booked
  * out", "Jan-Feb, their Nov-Dec being peak trading". The third of those

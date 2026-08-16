@@ -14,7 +14,7 @@ import styles from "./ProspectListCard.module.css";
  * A LINE IN A BOOK
  * ---------------------------------------------------------------
  *
- * The build before last carried, on every one of a hundred and two
+ * The build before last carried, on every one of two hundred and eleven
  * rows: an initials plate, a rank, a name, three chips, a city, a
  * straight line distance, a four cell figure grid with its own
  * provenance badge, a "Showing" flag on the chosen row, and two compose
@@ -23,7 +23,7 @@ import styles from "./ProspectListCard.module.css";
  * argument is the comparison down the page.
  *
  * The density pass fixed that and took it to ten. What it left behind
- * was a hundred and two identical white pills, each one repeating the
+ * was two hundred and eleven identical white pills, each one repeating the
  * word "SCORE" beside an amber triangle, with nothing happening under
  * the cursor until a click had already been committed. Correct, dense,
  * and completely inert. The owner read it in one sentence: it looks
@@ -32,7 +32,7 @@ import styles from "./ProspectListCard.module.css";
  * So the box went. The list is now a ruled ledger rather than a stack of
  * cards, which is where the last visible organisation came from: a row
  * separated by a hairline costs a hairline, and a card separated by a
- * gap costs six pixels a hundred and two times.
+ * gap costs six pixels two hundred and eleven times.
  *
  * ---------------------------------------------------------------
  * THE FIVE THINGS, AND WHY THE NUMBER IS THE DESK SCORE
@@ -78,7 +78,7 @@ import styles from "./ProspectListCard.module.css";
  *
  * It used to sit as a bare numeral under the shouted word "SCORE",
  * which meant that reading the column meant reading digits, one row at
- * a time, a hundred and two times. Two channels replaced the word.
+ * a time, two hundred and eleven times. Two channels replaced the word.
  *
  * A METER. `scoreProspect` is bounded by construction: forty points of
  * reachability, twenty five of occasion class, twenty of buying window
@@ -155,8 +155,8 @@ const SCORE_CEILING = 100;
 
 /**
  * Three bands, set where the board actually divides rather than at
- * tidy thirds. The hundred and two organisations run from twenty one to
- * ninety: seventy and over is the morning's work, forty five to sixty
+ * tidy thirds. The two hundred and eleven organisations run from twenty one
+ * to ninety: seventy and over is the morning's work, forty five to sixty
  * nine is the rest of the week, and under forty five is the part of the
  * book that is on it for completeness. The band drives weight, never
  * hue, so it survives greyscale and it survives the owner's eyes.
@@ -211,7 +211,7 @@ export function ProspectListCard({
       className={styles.item}
       data-selected={selected || undefined}
       /*
-        RHYTHM, AND IT COSTS NOTHING IN HEIGHT. A hundred and two
+        RHYTHM, AND IT COSTS NOTHING IN HEIGHT. Two hundred and eleven
         identical lines is a wall, and the usual fixes for that are
         stripes, which are a second ground fighting the selected one,
         or extra padding, which is the density this list already spent
@@ -296,8 +296,8 @@ export function ProspectListCard({
               no information the numeral does not and needs no label of
               its own. It is hidden from the accessibility tree for
               exactly that reason: a screen reader reading "eighty
-              nine, eighty nine per cent" twice a row down a hundred
-              and two rows is noise, not access.
+              nine, eighty nine per cent" twice a row down two hundred
+              and eleven rows is noise, not access.
             */}
             <span
               className={styles.meter}

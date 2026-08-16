@@ -518,10 +518,10 @@ export interface DailyOptions {
 /**
  * The day, in three figures and the rows behind each of them.
  *
- * One pass over the hundred and two records, because the three rings ask
- * three questions of the same population and building the records three
- * times to answer them separately is how two counts on one screen end up
- * disagreeing.
+ * One pass over the two hundred and eleven records, because the three
+ * rings ask three questions of the same population and building the
+ * records three times to answer them separately is how two counts on one
+ * screen end up disagreeing.
  */
 export function dailyReading({
   pipeline,

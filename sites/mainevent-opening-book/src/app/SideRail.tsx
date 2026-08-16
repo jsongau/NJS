@@ -433,9 +433,9 @@ const GROUPS: RailGroup[] = [
        * the choice is worth a sentence because the board was the cheap
        * place to put it.
        *
-       * Everything under THE BOARD is a view of the same hundred and
-       * two organisations: ranked on the desk, plotted on the map, cut
-       * by lane, walked in the field. A league is not one of those. It
+       * Everything under THE BOARD is a view of the same two hundred
+       * and eleven organisations: ranked on the desk, plotted on the map,
+       * cut by lane, walked in the field. A league is not one of those. It
        * is the only RECURRING product the building sells, it is sold to
        * teams rather than to organisations, and a claimed slot occupies
        * a night of the week for a whole season. That is a commitment on
@@ -685,8 +685,8 @@ export function useShellFigures(): ShellFigures {
    * The working set, counted over every organisation on the board plus
    * every one the reader has added.
    *
-   * Memoised for the same reason the inbound queue above is: this walks a
-   * hundred and two records, joining threads, offers and statuses.
+   * Memoised for the same reason the inbound queue above is: this walks
+   * two hundred and eleven records, joining threads, offers and statuses.
    */
   const working = useMemo(
     () => workingSetCounts(prospectRecords({ pipeline, book: book.book }), added),
@@ -1411,7 +1411,7 @@ export function SideRail() {
                           {/*
                             The space between the two lines is a real
                             text node, so the name this link computes is
-                            "Maps 102 organisations" rather than one run
+                            "Maps 211 organisations" rather than one run
                             of characters with a number wedged into it.
                             A whitespace only run inside a grid container
                             generates no box, so it costs nothing on
@@ -1423,8 +1423,8 @@ export function SideRail() {
                           {/*
                             THE FIGURE IS PRINTED, NOT DROPPED IN A WELL.
                             A readout is this rail's instrument for work
-                            waiting, and 102 in one beside the word Maps
-                            says a hundred and two things are owed. The
+                            waiting, and 211 in one beside the word Maps
+                            says two hundred and eleven things are owed. The
                             noun turns the same figure into the size of
                             the territory behind the key, which is what
                             it has always counted.

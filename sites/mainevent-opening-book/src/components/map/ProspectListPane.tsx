@@ -50,7 +50,7 @@ import styles from "./ProspectListPane.module.css";
  * This pane shipped with a head five hundred pixels tall above a list
  * three hundred and sixty pixels tall. At 1440 by 900, on the screen
  * this tool is actually used on, exactly ONE organisation was fully
- * visible. A ranked list of a hundred and two that shows one row is a
+ * visible. A ranked list of two hundred and eleven that shows one row is a
  * ranking nobody can read; the whole argument of the left column is the
  * comparison down the page, and there was nothing to compare against.
  *
@@ -109,7 +109,7 @@ import styles from "./ProspectListPane.module.css";
  * ---------------------------------------------------------------
  *
  * It used to be a filter on the keystroke. Two letters went in, the
- * board fell from a hundred and two rows to two, and the two survivors
+ * board fell from two hundred and eleven rows to two, and the two survivors
  * showed no sign of the letters anywhere on their faces, because the
  * predicate also read the city and the decision maker's job title. The
  * owner typed "sa", watched the board empty, and stopped trusting the
@@ -132,7 +132,7 @@ import styles from "./ProspectListPane.module.css";
  * THE COUNT IS A LIVE REGION. A filter that changes a list silently has
  * changed nothing at all for a reader using a screen reader: they press
  * a chip, the page says nothing, and the next thing they hear is a list
- * that is a different length for no stated reason. "12 of 102
+ * that is a different length for no stated reason. "12 of 211
  * organisations" read out on every change costs one element and fixes it.
  *
  * THE EMPTY STATE IS A DESIGN PROBLEM, NOT A FALLBACK. When the filters
@@ -146,8 +146,8 @@ import styles from "./ProspectListPane.module.css";
  * the props only so the board can go on passing the handler it passes
  * to three other surfaces. Writing to an organisation now happens in
  * the detail pane, in the record modal and in the map popup, which is
- * where it happened before a build put a pair of buttons under all one
- * hundred and two rows. Those buttons were a real fix for a real defect,
+ * where it happened before a build put a pair of buttons under all two
+ * hundred and eleven rows. Those buttons were a real fix for a real defect,
  * the defect being that no compose control was visible anywhere at first
  * paint, and they are not the fix any more because the detail pane and
  * the record now carry one. What they cost was a hundred pixels of every
@@ -635,8 +635,8 @@ export function ProspectListPane({
 
           The same list of active filters used to appear only once
           everything had been excluded, which is the one moment it is too
-          late to be useful. Eleven rows out of a hundred and two is just
-          as confusing as none of them, so it is printed here whenever
+          late to be useful. Eleven rows out of two hundred and eleven is
+          just as confusing as none of them, so it is printed here whenever
           anything is on, each filter carrying the control that drops it.
         */}
         {filtered ? (

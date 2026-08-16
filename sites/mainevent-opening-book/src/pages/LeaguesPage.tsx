@@ -70,7 +70,7 @@ import styles from "./LeaguesPage.module.css";
  * ── THE JUDGEMENT CALL, MADE IN PUBLIC ────────────────────────────
  * MAIN EVENT BREA HAS NOT OPENED. Nothing has bowled a frame. So there
  * are no standings on this page, because standings would be a season that
- * did not happen, rendered next to a hundred and two real organisations
+ * did not happen, rendered next to two hundred and eleven real organisations
  * and a licence table that is scrupulous about what it does and does not
  * claim. One invented scoreboard would cost more credibility than the
  * whole leagues surface is worth.

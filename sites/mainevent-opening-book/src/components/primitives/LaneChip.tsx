@@ -7,7 +7,7 @@ import styles from "./LaneChip.module.css";
  *
  * Three signals, and the chip is still readable if any two of them fail.
  * The lane GLYPH carries the identity, the SHORT LABEL spells it out, and
- * the colour is third. That ordering is not a preference: eight lanes is
+ * the colour is third. That ordering is not a preference: nine lanes is
  * exactly the count at which hand-picked hues produce a green and an
  * orange that are the same colour to eight percent of men, which in this
  * case would be the owner of the site. The palette in tokens.css is

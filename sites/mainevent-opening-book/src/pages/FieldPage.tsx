@@ -62,9 +62,9 @@ import styles from "./FieldPage.module.css";
  * cannot be reached by a sequence, and cannot be reached by anything a
  * person does sitting down. The size of the run is read off the data on
  * every line that states it, because the board grew from sixty-nine
- * organisations to a hundred and two in one research pass and any figure
- * typed into this prose would have been wrong the same afternoon. They
- * are sorted by straight-line distance from 245 W Birch
+ * organisations to two hundred and eleven across three research passes
+ * and any figure typed into this prose would have been wrong the same
+ * afternoon. They are sorted by straight-line distance from 245 W Birch
  * Street because that is literally the order somebody drives them, and
  * the distance is on every row so a reader can see what an afternoon
  * costs.
@@ -1425,8 +1425,8 @@ export function FieldPage() {
           </form>
 
           <p className={styles.sectionFoot}>
-            {PROSPECTS.length} organisations sit within 6.6 miles of a building
-            that has not opened, and{" "}
+            {PROSPECTS.length} organisations sit within seven miles of a
+            building that has not opened, and{" "}
             <strong className="num">
               {PROSPECTS.filter((p) => furthestStatus(pipeline, p.id) === "unworked").length}
             </strong>{" "}

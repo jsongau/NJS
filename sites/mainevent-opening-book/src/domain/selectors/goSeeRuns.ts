@@ -4,29 +4,29 @@ import { headcountMidpoint } from "@/domain/selectors/mapBoard";
 /**
  * GO-SEE RUNS. The one thing a map knows that a ranked list cannot.
  *
- * WHY THIS FILE EXISTS. The desk ranks a hundred and two organisations by
- * what each one is worth on its own, and it is right to. What it cannot
- * see is that four of the organisations sitting at ranks 31, 47, 58 and
- * 74 are three hundred yards apart on the same road, and that the
- * afternoon which visits one of them can visit all four for the cost of
- * parking once. That is not a refinement of the ranking. It is a
+ * WHY THIS FILE EXISTS. The desk ranks two hundred and eleven
+ * organisations by what each one is worth on its own, and it is right to.
+ * What it cannot see is that four of the organisations sitting at ranks
+ * 31, 47, 58 and 74 are three hundred yards apart on the same road, and
+ * that the afternoon which visits one of them can visit all four for the
+ * cost of parking once. That is not a refinement of the ranking. It is a
  * different resource being spent: the desk spends attention, and a run
  * spends hours outside the building, which is the only genuinely scarce
  * thing a pre-opening sales manager has.
  *
- * Without this, the board is a prettier list. A hundred pins scattered
+ * Without this, the board is a prettier list. Two hundred pins scattered
  * over a basemap tell a reader where things are, which they already knew,
  * and the geography does no work at all.
  *
  * ── WHO IS IN A RUN, AND WHY IT IS NOT EVERYBODY ──────────────────
- * Only organisations with no published email address. Thirty five of the
- * hundred and two publish one, and those cost two minutes from a desk
- * wherever they happen to sit, so putting them in a driving route spends
- * an hour buying something a keystroke already bought. The other sixty
- * seven are reachable through a form or through a front desk, and for
- * those the trip IS the channel. That rule is the same one the desk
- * scores on, read the other way round, rather than a second opinion about
- * reachability.
+ * Only organisations with no published email address. Ninety three of the
+ * two hundred and eleven publish one, and those cost two minutes from a
+ * desk wherever they happen to sit, so putting them in a driving route
+ * spends an hour buying something a keystroke already bought. The other
+ * hundred and eighteen are reachable through a form or through a front
+ * desk, and for those the trip IS the channel. That rule is the same one
+ * the desk scores on, read the other way round, rather than a second
+ * opinion about reachability.
  *
  * Anything already booked or already lost is out. Neither is work to be
  * done, and a route sheet that sends somebody to a party they have

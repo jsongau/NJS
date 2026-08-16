@@ -711,7 +711,7 @@ export const CONTRACTS: Contract[] = [
     noticePeriodDays: 30,
     renewal: "auto",
     provenance: "illustrative",
-    note: "The nearest renewal on the register, and the one with the shortest notice period behind it.",
+    note: "The nearest renewal on the register. It auto-renews on thirty days' notice, so the decision is due a month before the end date rather than on it.",
   },
   {
     id: "c-lane-six",

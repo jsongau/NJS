@@ -185,9 +185,9 @@ export function orgTypeCounts(prospects: Prospect[] = PROSPECTS): Record<
  * Pipedrive calls this Rotting and configures it per stage in days,
  * resetting the clock on any real activity: an activity completed, a
  * note added, an email sent or received. It is the highest leverage
- * mechanic available to a hundred and two record territory worked by one
- * person, because the failure mode of a solo rep is not losing deals, it
- * is forgetting them.
+ * mechanic available to a two hundred and eleven record territory worked
+ * by one person, because the failure mode of a solo rep is not losing
+ * deals, it is forgetting them.
  *
  * THE THRESHOLDS ARE DIFFERENT PER STATUS BECAUSE THE COST OF SILENCE
  * IS DIFFERENT PER STATUS. A held date is the urgent one: it blocks an
@@ -788,10 +788,10 @@ export interface RecordOptions {
  * Everything known about one organisation.
  *
  * Returns null for an id that is not on the board, and a complete object
- * for every id that is, including the forty-two with no history at all.
- * An organisation with nothing recorded against it is not an error case
- * to be guarded against by four different callers; it is the majority of
- * this trade area, and it gets the same shape as the rest.
+ * for every id that is, including the hundred and fifty-one with no
+ * history at all. An organisation with nothing recorded against it is not
+ * an error case to be guarded against by four different callers; it is
+ * the majority of this trade area, and it gets the same shape as the rest.
  */
 export function prospectRecord(
   prospectId: string,
@@ -893,8 +893,8 @@ export function prospectRecord(
  * Built in one pass for the surfaces that need to rank or count across
  * the whole board: the stale count on the daily rings, the organisation
  * type filter's live counts, the queue. Callers that want one record
- * should call `prospectRecord` rather than building all hundred and two
- * and picking one out.
+ * should call `prospectRecord` rather than building all two hundred and
+ * eleven and picking one out.
  */
 export function prospectRecords(options: RecordOptions): ProspectRecord[] {
   return PROSPECTS.map((p) => prospectRecord(p.id, options)).filter(

@@ -3,7 +3,7 @@ import type { Lane, Provenance } from "@/domain/types";
 /**
  * THE INBOUND HALF.
  *
- * Everything else in this application is outbound. A hundred and two
+ * Everything else in this application is outbound. Two hundred and eleven
  * organisations, nine lanes, a desk that decides who to write to on a
  * Tuesday morning. That half of the job is a search problem: the work
  * only exists once somebody goes and finds it.

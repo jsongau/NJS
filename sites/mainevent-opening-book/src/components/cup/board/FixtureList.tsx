@@ -58,10 +58,10 @@ import styles from "./FixtureList.module.css";
  * ── AND THERE IS NO WIN PROBABILITY ON THIS SURFACE ───────────────
  * Nothing has been bowled in this building. A percentage fitted to a
  * simulated exhibition is a number about a simulation wearing the clothes
- * of a number about a team, and a precise looking figure next to a
- * hundred and two verified organisations costs more than it buys. Seed
- * difference does the same job, carries its own uncertainty and cannot be
- * wrong. An upset is counted only after the fact, against a stated rule.
+ * of a number about a team, and a precise looking figure next to
+ * two hundred and eleven verified organisations costs more than it buys.
+ * Seed difference does the same job, carries its own uncertainty and cannot
+ * be wrong. An upset is counted only after the fact, against a stated rule.
  */
 
 export const ANY_STATE = "any";

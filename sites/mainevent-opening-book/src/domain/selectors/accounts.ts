@@ -1088,13 +1088,13 @@ export interface BuyingWindowAuditRow {
 /**
  * Every `buyingWindow` in the trade area, read and reported.
  *
- * One hundred and two rows carry one of these strings and the board only
- * uses two of them today. The audit exists because the other hundred are
- * the moment this model meets data it was not designed against, and the
- * right time to find out that a string does not parse is now, in a
- * script, rather than on the day somebody signs a boba franchise. Every
- * row comes back either as occasions or as a stated reason, and nothing
- * throws.
+ * Two hundred and eleven rows carry one of these strings and the board
+ * only uses two of them today. The audit exists because the other two
+ * hundred and nine are the moment this model meets data it was not
+ * designed against, and the right time to find out that a string does not
+ * parse is now, in a script, rather than on the day somebody signs a boba
+ * franchise. Every row comes back either as occasions or as a stated
+ * reason, and nothing throws.
  */
 export function buyingWindowAudit(): BuyingWindowAuditRow[] {
   return PROSPECTS.map<BuyingWindowAuditRow>((prospect: Prospect) => {

@@ -75,9 +75,10 @@ export function StatusChip({
  *
  * THIS IS THE HIGHEST-WEIGHTED CRITERION ON THE DESK and the least
  * romantic one. An organisation that publishes the decision maker's
- * address costs two minutes a touch. An organisation that does not costs
- * a forty minute round trip, and there are sixty-nine of them and one
- * person. So the chip is loud enough to be scanned down a column.
+ * address costs two minutes a touch. An organisation that publishes
+ * neither an address nor a form costs a forty minute round trip, and
+ * there are sixty-eight of them and one person. So the chip is loud
+ * enough to be scanned down a column.
  *
  * Every "Published email" chip in this app is backed by a URL on the
  * prospect row, which a reader can click and check. Nothing here was

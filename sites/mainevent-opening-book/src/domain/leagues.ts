@@ -352,7 +352,7 @@ export interface League {
  *
  * The captain is a title rather than a name for the same reason every
  * decision maker in `prospects.ts` is a title: a plausible invented name
- * on a screen next to a hundred and two real organisations is the single
+ * on a screen next to two hundred and eleven real organisations is the single
  * fastest way to make a reader doubt the real rows too.
  */
 export interface LeagueTeam {

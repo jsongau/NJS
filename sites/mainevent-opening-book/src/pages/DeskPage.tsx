@@ -36,12 +36,13 @@ import styles from "./DeskPage.module.css";
  * that one. Everything else in this app is evidence for the answer.
  *
  * ── WHY THE ORDER IS THE PRODUCT ───────────────────────────────────
- * A pre-opening trade area has a hundred-odd organisations in it and one
- * person working them. Alphabetical, by distance, or by Google rating all
- * produce a list that looks organised and wastes the week. The ranking in
- * domain/selectors/desk.ts weights reachability heaviest, then whether
- * the buyer's event exists without us, then whether the window is open,
- * and only then size, because size is the softest figure on every row.
+ * A pre-opening trade area has two hundred and eleven organisations in it
+ * and one person working them. Alphabetical, by distance, or by Google
+ * rating all produce a list that looks organised and wastes the week. The
+ * ranking in domain/selectors/desk.ts weights reachability heaviest, then
+ * whether the buyer's event exists without us, then whether the window is
+ * open, and only then size, because size is the softest figure on every
+ * row.
  *
  * ── EVERY ROW OPENS ITS OWN SCORE ──────────────────────────────────
  * A ranking a reader cannot interrogate is a ranking they are being asked
@@ -766,7 +767,7 @@ export function DeskPage() {
             RATHER THAN A FLOURISH. These sentences carried the totals as
             words: "sixty-nine" in the lede, "All eight lanes" on the
             first filter, "of the sixty-nine" in the result line. A ninth
-            lane landed and a third research pass took the board to 102,
+            lane landed and a third research pass took the board to 211,
             and the prose stayed where it was, so the first sentence on
             the front door disagreed with the stat card directly beneath
             it. On an application whose whole argument is that its numbers
@@ -999,8 +1000,8 @@ export function DeskPage() {
             in the position a reader looks to for the answer to the thing
             they just pressed, and three of the five do not narrow with a
             lane at all. So choosing Schools left the top of the screen
-            reading 102, 35 and 42 while the board underneath showed
-            twenty six rows.
+            reading 211, 93 and 151 while the board underneath showed
+            twenty two rows.
 
             Standing facts belong under the rows they describe. The
             figures, the notes and the provenance badges are exactly as
@@ -1014,7 +1015,7 @@ export function DeskPage() {
           <Kpi
             value={PROSPECTS.length}
             label="Organisations on the board"
-            note="Real, inside 6.6 miles of 245 W Birch Street, each carrying the Google place id it came from."
+            note="Real, inside seven miles of 245 W Birch Street. Sixty nine carry the Google place id they came from; the other hundred and forty two carry no place id and were geocoded with the US Census Bureau geocoder."
             provenance="public"
           />
           <Kpi

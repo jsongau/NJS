@@ -350,11 +350,11 @@ export interface MapBoardTotals {
    * The three written doors, and they are three rather than two.
    *
    * These used to be a pair, "Written door" against "No written door",
-   * and the strip showed 35 and 45 over a total of 102. Two figures
+   * and the strip showed 93 and 68 over a total of 211. Two figures
    * presented side by side, one named as the negation of the other, read
-   * as a partition, so a reader does the arithmetic, gets 80, and spends
+   * as a partition, so a reader does the arithmetic, gets 161, and spends
    * a minute deciding whether the numbers are wrong or they are. Neither:
-   * `EmailConfidence` has a third member, `form_only`, and the twenty-two
+   * `EmailConfidence` has a third member, `form_only`, and the fifty
    * organisations reachable only through a contact form were counted
    * nowhere and shown nowhere. A pair that reads as an opposition has to
    * actually be one. These three sum to `plotted`, by construction.
@@ -590,7 +590,7 @@ export function mapSummarySentence(totals: MapBoardTotals): string {
 /**
  * The count line above the list, as a sentence a person can read.
  *
- * "12 of 102" beats "12", every time. A reader who cannot see how much
+ * "12 of 211" beats "12", every time. A reader who cannot see how much
  * they have filtered away has no way to know whether the board is empty
  * because the territory is thin or because they ticked something four
  * clicks ago.

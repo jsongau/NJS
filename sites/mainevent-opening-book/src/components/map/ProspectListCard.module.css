@@ -13,7 +13,7 @@
   in this file is drawn with paint and with transform. No state changes a
   width, a height, a padding, a margin or a border thickness.
 
-  THE BOX IS GONE AND THE RULE REPLACED IT. This was a hundred and two
+  THE BOX IS GONE AND THE RULE REPLACED IT. This was two hundred and eleven
   white pills floating six pixels apart on a well, which is the shape
   every generated dashboard ships and which the owner read as plain on
   sight. Structure now comes from alignment and from hairlines, the way
@@ -90,8 +90,8 @@
   text-align: left;
   cursor: pointer;
   /*
-    MOTION IS TRANSFORM AND NOTHING ELSE, AND IT IS SHORT. A hundred and
-    two rows go past under a cursor that is moving, so anything longer
+    MOTION IS TRANSFORM AND NOTHING ELSE, AND IT IS SHORT. Two hundred and
+    eleven rows go past under a cursor that is moving, so anything longer
     than about a tenth of a second stops reading as response and starts
     reading as lag on the way down and as nausea on the way back up.
     120ms is the token the rest of the app uses for exactly this, and
@@ -295,9 +295,9 @@
 /*
   THE UNDERLINE IS THE THING THAT MOVES UNDER THE CURSOR.
 
-  `RecordName` paints its underline at `--line-2` at rest, which over a
-  hundred and two rows is a column of underlined names, and a page where
-  everything is underlined is a page where the underline has stopped
+  `RecordName` paints its underline at `--line-2` at rest, which over
+  two hundred and eleven rows is a column of underlined names, and a page
+  where everything is underlined is a page where the underline has stopped
   meaning anything. Held down to the palest rule at rest, it reads as
   the faint pencil line under an entry in a book.
 
@@ -325,8 +325,8 @@
 /*
   THE LANE MARK AND THE STATUS, AND NOTHING ELSE ON THIS LINE. The
   occasion class chip came off with the figure grid: the segment at the
-  top of the pane now filters by exactly that, so a chip repeating it a
-  hundred and two times down the column was answering a question the
+  top of the pane now filters by exactly that, so a chip repeating it
+  two hundred and eleven times down the column was answering a question the
   reader had already answered for themselves.
 
   The row does not wrap. Two chips at the small size fit the desktop
@@ -348,7 +348,7 @@
 
    The word "SCORE" used to be printed under every one of these in
    nine pixel capitals beside an amber triangle, which is a caption
-   repeated a hundred and two times for a column that only ever holds
+   repeated two hundred and eleven times for a column that only ever holds
    one kind of number. It is printed once now, in the pane's caption,
    and the space it freed went to the meter.
    --------------------------------------------------------------- */

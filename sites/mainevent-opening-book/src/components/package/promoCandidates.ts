@@ -11,7 +11,7 @@ import { sentTo, type OutboxState } from "@/state/OutboxProvider";
  * Everywhere else in this application a rep starts from an organisation
  * and chooses what to say. On the packages screen the direction is
  * reversed: the package is in hand and the question is who gets it. A
- * picker that answered that with a hundred and two organisations in
+ * picker that answered that with two hundred and eleven organisations in
  * alphabetical order would be a contact list, and a contact list is
  * exactly the thing this whole prototype exists to be better than.
  *

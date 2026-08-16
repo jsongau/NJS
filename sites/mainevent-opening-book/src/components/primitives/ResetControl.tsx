@@ -33,9 +33,9 @@ const idOf = (row: { id: string }) => row.id;
  *
  * ── THE COUNT ON THE BUTTON IS THE INTERESTING PART ───────────────
  * It counts what the READER has changed, not how much data exists. The
- * seeded pipeline has a hundred and two organisations, two contracts and
- * six replies in it before anybody touches anything, so a badge showing
- * the size of the data set would read "110" on a screen where nothing has
+ * seeded pipeline has two hundred and eleven organisations, two contracts
+ * and six replies in it before anybody touches anything, so a badge showing
+ * the size of the data set would read "219" on a screen where nothing has
  * happened, which tells nobody anything and makes the reset look
  * dangerous.
  *

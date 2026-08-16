@@ -18,8 +18,8 @@ import { PROSPECTS } from "@/data/prospects";
  * marker cannot disagree.
  *
  * WHAT CHANGED IN THIS PASS, AND WHY IT WAS WORTH THE WORK. The map used
- * to plot a hundred and two real organisations as a coloured body with a
- * single geometric character inside it. A reader could tell the two
+ * to plot two hundred and eleven real organisations as a coloured body with
+ * a single geometric character inside it. A reader could tell the two
  * occasion classes apart at a glance and could tell the lanes apart only
  * by consulting the key, because a diamond and a lozenge are not a
  * hospital and a car showroom, they are two lozenges. So each lane now
@@ -549,13 +549,13 @@ export function prospectMarkScene(v: ProspectMarkerVisual): MarkScene {
   }
 
   /*
-    THE PAPER OUTLINE IS NOT DECORATION. A hundred and two organisations
-    sit inside six and a half miles of Birch Street and a good number of
-    them share a shopping centre, so at any useful zoom the marks overlap.
-    Drawn without it they merge into one continuous shape and the reader
-    loses the count, which is the one thing a map of a trade area is for.
-    A ring of the page's own paper under each body separates them without
-    adding a colour to the key.
+    THE PAPER OUTLINE IS NOT DECORATION. Two hundred and eleven
+    organisations sit inside six and a half miles of Birch Street and a good number
+    of them share a shopping centre, so at any useful zoom the marks
+    overlap. Drawn without it they merge into one continuous shape and the
+    reader loses the count, which is the one thing a map of a trade area is
+    for. A ring of the page's own paper under each body separates them
+    without adding a colour to the key.
   */
   shapes.push(
     { k: "path", d, fill: "none", stroke: "var(--surface-1)", sw: sw + 2.4, join: "round" },

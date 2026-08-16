@@ -9,7 +9,8 @@
   It is a modal dialog and it says so: a scrim, aria-modal, Escape to
   close, and focus returned to the row that opened it. The alternative was
   a non-modal side panel, which reads as lighter and quietly leaves a
-  keyboard reader tabbing through sixty-nine rows behind the panel.
+  keyboard reader tabbing through two hundred and eleven rows behind the
+  panel.
 */
 
 .scrim {

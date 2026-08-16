@@ -171,9 +171,9 @@ export const LANE_META: Record<Lane, LaneMeta> = {
     occasionClass: "discretionary",
     doorName: "Owner or store manager",
     doorNoun: "counter",
-    note: "Eight to sixty staff, and the person who decides is standing behind the counter. Boba shops, small food franchises, mall tenants and independent restaurants have no HR department, no committee and no procurement process; the owner hears the ask, does the arithmetic in their head and answers the same afternoon. Every booking is small and there are more of them within half a mile of the venue than any other lane has within six, which is what makes this a route rather than a set of accounts.",
+    note: "Six to seventy staff, and the person who decides is standing behind the counter. Boba shops, small food franchises, mall tenants and independent restaurants have no HR department, no committee and no procurement process; the owner hears the ask, does the arithmetic in their head and answers the same afternoon. Every booking is small and fourteen of the fifteen sit within a mile of the venue, which is a tighter cluster than any other lane on the board and what makes this a route rather than a set of accounts.",
     preOpeningProblem:
-      "They do not publish an email. Of the forty two local retail, food and auto organisations researched for this trade area, five published an address that could be read off their own page; franchise retail routes everything through a corporate form and a chain store number has no inbox behind it at all. So this is a go-see lane by nature rather than by preference. The only door is the door, and the crews who work it are on shift in the evening, which is the one time a rep is not.",
+      "They do not publish an email. Of the forty five local retail, food and auto organisations researched for this trade area, eight published an email address that could be read off their own page; franchise retail routes everything through a corporate form and a chain store number has no inbox behind it at all. So this is a go-see lane by nature rather than by preference. The only door is the door, and the crews who work it are on shift in the evening, which is the one time a rep is not.",
     cssVar: "var(--lane-local-retail-food)",
     tintVar: "var(--lane-local-retail-food-tint)",
   },

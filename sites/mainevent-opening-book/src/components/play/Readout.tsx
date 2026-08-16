@@ -21,7 +21,7 @@ import styles from "./Readout.module.css";
  * for existing rather than a screen reporting a change.
  *
  * The animation is TRANSFORM AND COLOUR ONLY, and it is confined to the
- * chrome. Nothing on a data surface does this: a hundred and two rows
+ * chrome. Nothing on a data surface does this: two hundred and eleven rows
  * that shimmered as a filter landed would be unreadable at exactly the
  * moment somebody was reading them.
  *

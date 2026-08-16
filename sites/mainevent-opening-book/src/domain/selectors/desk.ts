@@ -16,8 +16,8 @@ import {
  * below is the most opinionated thing in it. Everything else displays
  * facts; this decides what matters.
  *
- * A pre-opening trade area has one hundred and two organisations in it
- * and one person working them. Sorting alphabetically, or by distance,
+ * A pre-opening trade area has two hundred and eleven organisations in
+ * it and one person working them. Sorting alphabetically, or by distance,
  * or by Google rating, all produce a list that looks organised and
  * wastes the week. The four things that actually decide what to do
  * first are:

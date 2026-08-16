@@ -70,9 +70,9 @@ import styles from "./RequestsPage.module.css";
  * THE INBOUND QUEUE. Everything that has arrived on its own, the clock
  * on each one, and the next move in plain words.
  *
- * Every other screen in this application is outbound. A hundred and two
- * organisations, nine lanes, a desk that decides who to write to on a
- * Tuesday. That half of the job only produces work when somebody goes
+ * Every other screen in this application is outbound. Two hundred and
+ * eleven organisations, nine lanes, a desk that decides who to write to
+ * on a Tuesday. That half of the job only produces work when somebody goes
  * looking for it, which makes it easy to measure and easy to feel busy
  * inside.
  *

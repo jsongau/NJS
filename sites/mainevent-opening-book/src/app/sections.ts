@@ -78,8 +78,8 @@ export type SectionId =
  * THE UNIT IS THE ONLY WORD IN THE APPLICATION THAT TURNS A COUNT INTO A
  * PROMISE. Every other figure in the chrome is spoken rather than shown,
  * because "18" beside Today is work waiting and the word for it belongs
- * to a listener. This one is printed, because 102 next to Maps reads as
- * a backlog and "102 organisations" reads as what is behind the door.
+ * to a listener. This one is printed, because 211 next to Maps reads as
+ * a backlog and "211 organisations" reads as what is behind the door.
  */
 export const FEATURED_KEY = {
   to: "/map",

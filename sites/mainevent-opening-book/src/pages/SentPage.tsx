@@ -56,8 +56,8 @@ import styles from "./SentPage.module.css";
  * between a policy and a guarantee.
  *
  * ── WHY THIS PAGE HAS TWO LISTS ───────────────────────────────────
- * Five messages are seeded so the log has a pattern in it: five lanes,
- * three kinds of message, five different outcomes and only one of them
+ * Five messages are seeded so the log has a pattern in it: four lanes,
+ * two kinds of message, four different outcomes and only one of them
  * good, which is the honest ratio for cold outreach from a building
  * nobody has heard of. But a seeded log and a log the reader wrote are
  * not the same evidence, and merging them would quietly take credit for

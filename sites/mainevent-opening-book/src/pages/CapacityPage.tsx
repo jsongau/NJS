@@ -1186,10 +1186,11 @@ export function CapacityPage() {
               {/*
                 DRAWN AS EVENINGS RATHER THAN AS ONE LONG BAR, because the
                 reading that matters is the last line of the selector's own
-                note. A single bar 43 lanes long against a floor of 26 looks
-                like a building that is 65 percent too small. Two evenings,
-                one full and one two thirds full, is what the number actually
-                describes, and it is a spread problem rather than a size one.
+                note. A single bar 121 lanes long against a floor of 26 looks
+                like a building that is 365 percent too small. Five evenings,
+                four of them full and one part full, is what the number
+                actually describes, and it is a spread problem rather than a
+                size one.
               */}
               <ol className={styles.evenings}>
                 {evenings.map((lanes, i) => (

@@ -1484,18 +1484,20 @@ export const ProspectDetailPane = memo(function ProspectDetailPane({
               It sits directly under the phone and in the same shape,
               because these are the two ways into an organisation and a
               reader is choosing between them rather than reading a
-              field. The phone keeps the amber edge: forty five of the
-              hundred and two publish no address at all, so the handset
-              is the route that works everywhere and the one he asked for
-              by name.
+              field. The phone keeps the amber edge: it is published on
+              two hundred and three of the two hundred and eleven, which
+              is more than any written door, and it is the route he asked
+              for by name.
 
-              THREE STATES AND ALL THREE ARE SAID OUT LOUD. Thirty five
-              publish an address, twenty two publish only a form, and
-              forty five publish neither. That last group is the largest
-              on the board, so the branch that renders it is not an edge
-              case to be guarded against; it is the commonest thing this
-              row has to say, and it says it as a fact with the reason
-              attached rather than as a blank.
+              THREE STATES AND ALL THREE ARE SAID OUT LOUD. Ninety three
+              publish an address, fifty publish only a form, and sixty
+              eight publish neither. The published address is the largest
+              of the three and it is still short of half the board: a
+              hundred and eighteen organisations have no address to write
+              to at all. So neither the form branch nor the empty branch
+              is an edge case to be guarded against. Between them they
+              are the majority of the board, and each one says what it is
+              with the reason attached rather than rendering as a blank.
             */}
             {verified && p.email ? (
               <a

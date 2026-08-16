@@ -116,10 +116,10 @@ export interface SentMessage {
  * interesting thing about a log is the PATTERN across it: which openers
  * got answered, which got a wrong-person bounce, which got silence.
  *
- * FIVE SEEDS, FIVE DIFFERENT OUTCOMES, AND ONLY ONE OF THEM IS GOOD.
+ * FIVE SEEDS, FOUR DIFFERENT OUTCOMES, AND ONLY ONE OF THEM IS GOOD.
  * That ratio is the honest one for cold outreach from a building nobody
  * has heard of, and a demonstration where every message gets a yes is a
- * demonstration nobody believes. The five also cover five lanes and three
+ * demonstration nobody believes. The five also cover four lanes and two
  * kinds of message, so the log reads as a week of work rather than as a
  * fixture list.
  *

@@ -216,10 +216,10 @@ export interface LaneGlyphProps {
  * calendar-locked: the date buys, not the buyer, and a graduating class
  * graduates whether or not anybody calls it. A square body means
  * discretionary: somebody has to decide there will be an event at all.
- * A reader learns that pair once on a chip and reads it for free on a
- * hundred and two pins, which only holds while the two agree. Both take
- * the class from `LANE_META[lane].occasionClass` and neither writes down
- * which lanes are which.
+ * A reader learns that pair once on a chip and reads it for free on
+ * two hundred and eleven pins, which only holds while the two agree. Both
+ * take the class from `LANE_META[lane].occasionClass` and neither writes
+ * down which lanes are which.
  */
 export function LaneGlyph({
   lane,

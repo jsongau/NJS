@@ -24,9 +24,13 @@ import { LANE_META } from "@/domain/lanes";
  *
  * THE EMAILS ARE THE PART WORTH BEING CAREFUL ABOUT.
  *
- * Thirty-five of these organisations publish a real email address on
- * their own website, and every one of the thirty-five carries the URL of
- * the page it was read off. Nothing here was pattern-guessed from a
+ * Ninety-three of these organisations publish a real email address on a
+ * page anybody can open, and every one of the ninety-three carries the
+ * URL of the page it was read off. Most of those pages are the
+ * organisation's own site; eleven school rows cite the state school
+ * directory and two police rows cite a recruiting portal, and the row
+ * says so rather than implying a first-party source it does not have.
+ * Nothing here was pattern-guessed from a
  * domain name. There is no info@ in this file that was not actually seen
  * on an actual page, because one invented address is enough to make a
  * reader reasonably distrust every other figure on the screen, and the
@@ -38,8 +42,9 @@ import { LANE_META } from "@/domain/lanes";
  * first pass published thirty addresses across sixty-nine
  * organisations, because institutions publish staff directories either
  * because they are obliged to or because it wins them business. The
- * second pass found five published addresses across forty-two
- * researched organisations. Franchise retail and chain auto service do
+ * second pass found five published addresses across the thirty-three
+ * researched organisations that made it onto the board, out of
+ * forty-two researched. Franchise retail and chain auto service do
  * not publish a store-level email at all: a Crumbl franchisee routes
  * everything through a corporate form, and a Firestone store number has
  * no inbox behind it. So the entire local-retail-food lane is a go-see
@@ -54,15 +59,16 @@ import { LANE_META } from "@/domain/lanes";
  *
  * THE ORGANISATION TYPE ON EVERY ROW WAS READ OFF THE ROW ITSELF.
  *
- * `orgType` is a second cut across the same hundred and two, and it is
+ * `orgType` is a second cut across all two hundred and eleven, and it is
  * not a synonym for the lane. The lane says how you reach them; the type
- * says where the yes lives. Seventeen are schools and colleges, which
- * buy on a published calendar and a purchase order. Twenty-eight are
+ * says where the yes lives. Thirty-four are schools and colleges, which
+ * buy on a published calendar and a purchase order. Sixty-one are
  * branches, stores, franchised units or flagged properties, where the
- * person in the building cannot approve a party alone. Fifty-five are
- * single sites whose decision maker works in them, which includes both
- * a boba counter and a world headquarters, because in both cases the
- * approval chain tops out on the premises.
+ * person in the building cannot approve a party alone. A hundred and
+ * fourteen are single sites whose decision maker works in them, which
+ * includes both a boba counter and a world headquarters, because in
+ * both cases the approval chain tops out on the premises. Two are
+ * unknown and say so.
  *
  * Each row carries `orgTypeBasis`, a sentence naming the evidence that
  * put it where it is, and every one of those sentences was drawn from
@@ -96,7 +102,7 @@ import { LANE_META } from "@/domain/lanes";
  * pass and they are listed by name in EXCLUDED_FROM_BOARD at the foot of
  * this file, each with the reason. They are real, they were researched,
  * and they are not on the board. Publishing the list of what was thrown
- * away is the only thing that makes the ninety-three per cent that
+ * away is the only thing that makes the eighty-nine per cent that
  * stayed worth anything. Sixteen more joined that list in the third
  * pass, which is twenty-five names published as removed against two
  * hundred and eleven published as real.
@@ -9386,20 +9392,21 @@ export const DOOR_ONLY = PROSPECTS.filter((p) => p.emailConfidence === "none");
 /**
  * RESEARCHED, FOUND REAL, AND NOT ON THE BOARD.
  *
- * Nine organisations from the local retail and auto pass that are on
- * nobody's map here, and the reason for each. Seven of them the US
- * Census geocoder could not match at all, which is a statement about the
- * Census address file rather than about the business: its ranges lag new
- * construction, which is why the Village at La Floresta and the newer
- * Imperial Highway centres failed while every older Brea Boulevard
- * address matched first time. Two are worse than that, and more
- * interesting: the geocoder came back with a DIFFERENT STREET from the
- * one the research pass had read, which is exactly the disagreement that
- * took Round One Entertainment off this file.
+ * Twenty five organisations that are on nobody's map here, and the reason
+ * for each. Fifteen of them the US Census geocoder could not match at
+ * all, which is a statement about the Census address file rather than
+ * about the business: its ranges lag new construction, which is why the
+ * Village at La Floresta and the newer Imperial Highway centres failed
+ * while every older Brea Boulevard address matched first time. Eight are
+ * worse than that, and more interesting: the geocoder came back with a
+ * DIFFERENT STREET from the one the research pass had read, which is
+ * exactly the disagreement that took Round One Entertainment off this
+ * file. The last two are real and have nothing loadable behind them that
+ * proves the address or that they still trade.
  *
  * The alternative was to nudge a nearby pin, and that is the one thing
- * that would discredit the other hundred and two. An unmatched row is a
- * fact somebody can act on. A fabricated pin is not.
+ * that would discredit the other two hundred and eleven. An unmatched row
+ * is a fact somebody can act on. A fabricated pin is not.
  *
  * The Method page renders this list, so the removal is visible rather
  * than silent.

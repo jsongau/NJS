@@ -631,10 +631,10 @@ export interface BallPreferences {
  *
  * THIS APPLICATION HAS NEVER INVENTED A PERSON AND A ROSTER IS NOT WHERE
  * IT STARTS. Every organisation on the prospecting board is real, every
- * contact on it is a role and a title, and nine organisations were
+ * contact on it is a role and a title, and twenty five organisations were
  * excluded rather than guessed at. A plausible invented name sitting next
- * to a hundred and two verified organisations is the fastest way to make
- * a reader doubt the verified ones.
+ * to two hundred and eleven verified organisations is the fastest way to
+ * make a reader doubt the verified ones.
  *
  * A handle is not that. Bowling leagues, darts leagues, pool leagues and
  * every fantasy sport on earth run on handles, and nobody reads "Gutter

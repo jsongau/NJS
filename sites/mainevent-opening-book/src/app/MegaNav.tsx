@@ -535,7 +535,7 @@ export function MegaNav({
           are queues counted in work waiting, this one is a place counted
           in territory. A reader running an eye along six figures looking
           for the biggest is asking a question the trade area board does
-          not answer, so putting it in the row would have made its 102 a
+          not answer, so putting it in the row would have made its 211 a
           wrong answer to the right question. The divider and the gap are
           drawn by the slot, and everything else about how it is set
           apart is at the top of this file.
@@ -559,7 +559,7 @@ export function MegaNav({
             {/*
               Spelled out rather than dropped into a readout well, which
               is the instrument the six queue keys use and the one thing
-              on this strip that means "work waiting". 102 on its own
+              on this strip that means "work waiting". 211 on its own
               beside the word Maps reads as a backlog. With the noun on
               it, it reads as the size of the territory behind the door,
               which is what it is.

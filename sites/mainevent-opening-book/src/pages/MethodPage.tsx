@@ -59,7 +59,7 @@ import styles from "./MethodPage.module.css";
  * cannot check because nobody published them. So this page carries every
  * formula, every source, every assumption and every invention, in the
  * order a sceptical reader would ask for them, and it links out to the
- * actual pages the real numbers were read off on 11 August 2026.
+ * actual pages the real numbers were read off on 11 and 14 August 2026.
  *
  * ── THE SECTION THAT DOES THE MOST WORK IS THE SECOND ONE ──────────
  * Section two is about the prospects that are NOT in this application.
@@ -73,7 +73,7 @@ import styles from "./MethodPage.module.css";
  * One deleted row is an anecdote, though, and an anecdote is the easiest
  * thing in the world to pick because it flatters the person telling it.
  * So the section now renders EXCLUDED_FROM_BOARD in full underneath it:
- * every organisation the second research pass found, verified as real,
+ * every organisation the research passes found, verified as real,
  * and still refused. A rule that was applied once is a story. A rule
  * that was applied every time it fired is a standard, and the difference
  * between the two is the entire argument this page makes.
@@ -111,7 +111,7 @@ const SECTIONS: SectionRef[] = [
     id: "real",
     ordinal: "01",
     title: "What is real",
-    gist: "Two research passes, two email ratios",
+    gist: "Three research passes, three email ratios",
   },
   {
     id: "left-out",
@@ -284,7 +284,7 @@ const WEIGHTS: WeightRow[] = [
   {
     criterion: "Can I reach them at all",
     cases: [
-      { when: "Publishes an email, read off their own page", points: 40 },
+      { when: "Publishes an email, read off a cited page", points: 40 },
       { when: "Contact form only", points: 15 },
       { when: "No written door at all", points: 8 },
     ],
@@ -326,31 +326,32 @@ const ALREADY_WORKED_PENALTY = -10;
 const ALREADY_WORKED_AT = 3;
 
 // ---------------------------------------------------------------
-// THE TWO KINDS OF REMOVAL IN SECTION TWO
+// THE KINDS OF REMOVAL IN SECTION TWO
 //
 // Every row in EXCLUDED_FROM_BOARD came off the board for a coordinate
-// reason, and they are not all the same reason. Most of them the US
+// reason, and they are not all the same reason. Fifteen of them the US
 // Census geocoder simply could not match, which is a statement about the
 // Census address file lagging new construction rather than about the
-// business. Two are worse and much more interesting: the geocoder came
-// back with a DIFFERENT STREET from the one the research pass had read
-// off a first-party page, which is precisely the disagreement that took
-// Round One Entertainment out.
+// business. Two more are real and have nothing loadable behind them that
+// proves the address at all. Eight are worse and much more interesting:
+// the geocoder came back with a DIFFERENT STREET from the one the
+// research pass had read off a first-party page, which is precisely the
+// disagreement that took Round One Entertainment out.
 //
-// The two are named here rather than sniffed out of the reason prose,
-// because a regular expression run over a paragraph of English is a
-// classifier that works until somebody rewrites a sentence. Naming them
-// is a small duplication with a loud failure mode: rename a row in the
-// data and it falls into the larger group, where its own reason is still
-// printed in full underneath it and nothing on screen becomes untrue.
+// THE KIND IS READ OFF THE ROW. Every removal carries a `kind` field and
+// this page groups on it. It is not inferred from the organisation's
+// name and it is not sniffed out of the reason prose, because a list of
+// names typed into a screen is a classifier that works until somebody
+// adds a row, and a regular expression run over a paragraph of English
+// is one that works until somebody rewrites a sentence. See
+// ExclusionKind in data/prospects.ts.
+//
+// The page renders two headings rather than three. The disagreements get
+// one, and the other two kinds share the second, because both of those
+// are "there is nothing here to pin" and only a disagreement is "two
+// sources contradict each other". The note under that heading counts
+// each kind separately rather than blurring them.
 // ---------------------------------------------------------------
-
-/* This used to be a list of two organisation names matched with
-   startsWith. It was correct for the nine rows that existed when it was
-   written and it quietly mislabelled six of the sixteen added after,
-   because a removal's kind is a property of the removal and was being
-   inferred from its name. The row now carries `kind` and this page reads
-   it. See ExclusionKind in data/prospects.ts. */
 
 // ---------------------------------------------------------------
 // THE CONTRAST TABLE, AND WHY IT IS TRANSCRIBED RATHER THAN
@@ -700,33 +701,65 @@ export function MethodPage() {
 
   /* Everything countable on this page, counted off the data it describes.
      Cheap enough to do on every render; these are single passes over an
-     array of about a hundred items and another of twenty-odd. */
+     array of two hundred-odd items and another of twenty-odd. */
   const total = PROSPECTS.length;
   const emailable = EMAILABLE.length;
   const doorOnly = DOOR_ONLY.length;
   const formOnly = total - emailable - doorOnly;
   const withEmailSource = EMAILABLE.filter((p) => p.emailSourceUrl).length;
+  /* Published addresses that were NOT read off the organisation's own site.
+     A California district's administrator addresses sit on the state school
+     directory, and for these rows that was the page carrying one, so that is
+     where they were read and that is where they link. Counted rather than
+     typed, because the number moves whenever a school row is added. */
+  const stateDirectoryEmails = EMAILABLE.filter((p) =>
+    (p.emailSourceUrl ?? "").includes("cde.ca.gov"),
+  ).length;
   const withRating = PROSPECTS.filter((p) => typeof p.rating === "number").length;
 
   /*
-    THE TWO RESEARCH PASSES, TOLD APART BY THE ONE FIELD ONLY THE FIRST
-    OF THEM COULD CARRY.
+    THE THREE RESEARCH PASSES, EACH TOLD APART BY SOMETHING THE ROW
+    ITSELF CARRIES.
 
     A place id comes back from the Google Places API and from nothing
     else, so its presence is a fact about where a row came from rather
-    than a flag somebody set. The second pass had no Places call
-    available, so those rows carry a Census coordinate and no id at all,
-    and the field is absent rather than filled with something that looks
-    like one. Splitting on it here means these two cohorts can never
-    drift apart from the file that defines them.
+    than a flag somebody set. That is the whole of the first pass, and
+    nothing outside it carries one.
+
+    The second and third passes both had no Places call available, both
+    took their coordinate from the US Census Bureau geocoder and both
+    leave the id absent rather than filled with something that looks
+    like one. So the id cannot tell those two apart. What can is the
+    date each row states in its own `addressSource`: the second pass was
+    read and geocoded on 11 August 2026 alongside the first, the third
+    on 14 August 2026. Every one of the rows names one of those two
+    dates, none names both, and the 14 August rows are exactly the block
+    that sits below the WAVE 3 banner in data/prospects.ts. The date is
+    a stated fact on the row rather than a position in the array, so a
+    row can move and stay in its own pass.
+
+    The failure mode is loud on purpose. A row with no place id that
+    named neither date would fall out of all three cohorts, and the
+    paragraph under these figures prints the three counts added together
+    beside the board total, so a reader who sees those two disagree is
+    looking at a page that has fallen out of step with the file it
+    describes.
   */
+  const PASS_TWO_DATE = /\b11 Aug(ust)? 2026\b/;
+  const PASS_THREE_DATE = /\b14 Aug(ust)? 2026\b/;
   const placesPass = PROSPECTS.filter((p) => p.placeId);
   const censusPass = PROSPECTS.filter((p) => !p.placeId);
+  const handPass = censusPass.filter((p) => PASS_TWO_DATE.test(p.addressSource));
+  const industryPass = censusPass.filter((p) =>
+    PASS_THREE_DATE.test(p.addressSource),
+  );
+  const passTotal = placesPass.length + handPass.length + industryPass.length;
   const withPlaceId = placesPass.length;
   const isEmailable = (p: (typeof PROSPECTS)[number]) =>
     p.emailConfidence === "verified_public";
   const placesEmails = placesPass.filter(isEmailable).length;
-  const censusEmails = censusPass.filter(isEmailable).length;
+  const handEmails = handPass.filter(isEmailable).length;
+  const industryEmails = industryPass.filter(isEmailable).length;
   const share = (n: number, of: number) =>
     of === 0 ? 0 : Math.round((n / of) * 100);
 
@@ -779,6 +812,10 @@ export function MethodPage() {
      disagreements are "two sources contradict each other", and that is
      the distinction the section is actually about. */
   const unmatched = EXCLUDED_FROM_BOARD.filter((e) => e.kind !== "disagreement");
+  /* Both kinds inside that group, counted, because the heading covers two
+     different failures and the note names each one. */
+  const unmatchedOnly = unmatched.filter((e) => e.kind === "unmatched").length;
+  const unverifiable = unmatched.filter((e) => e.kind === "unverifiable").length;
 
   const maxScore = WEIGHTS.reduce((n, w) => n + w.best, 0);
 
@@ -799,11 +836,12 @@ export function MethodPage() {
             The published figures were read off mainevent.com on 11 August
             2026 and link back to the page they came from. The organisations
             came out of three research passes, the first two on that day
-            through the Google Places API and off the businesses' own pages,
-            and a third that named nine industries first and then went
-            looking for organisations inside them. Every row says which pass
-            it came from and every coordinate outside the first sixty-nine
-            was set by the US Census Bureau geocoder.
+            through the Google Places API and off first-party pages and
+            landlord directories, and a third on 14 August 2026 that named
+            nine industries first and then went looking for organisations
+            inside them. Every row says which pass it came from and every
+            coordinate outside the first sixty-nine was set by the US Census
+            Bureau geocoder.
             Everything else is labelled as modeled, illustrative, entered or
             withheld, and the labels are enforced by the components rather
             than by good intentions.
@@ -881,7 +919,7 @@ export function MethodPage() {
                   value={String(total)}
                   label="organisations"
                   provenance="public"
-                  title="Every one inside the trade area around 245 W Birch Street, gathered in two research passes on 11 August 2026."
+                  title="Every one inside the trade area around 245 W Birch Street, gathered in three research passes: two on 11 August 2026 and a third on 14 August 2026."
                 />
                 <Tally
                   value={String(withPlaceId)}
@@ -893,13 +931,13 @@ export function MethodPage() {
                   value={String(censusPass.length)}
                   label="researched by hand, geocoded by the Census"
                   provenance="public"
-                  title="Read off the organisation's own page or its landlord's tenant directory, then run through the US Census Bureau geocoder for a coordinate. No place id, because there was no Places call in that pass."
+                  title="The second and third passes together. Read off first-party pages, landlord tenant directories and published registers, then run through the US Census Bureau geocoder for a coordinate. No place id, because there was no Places call in either pass."
                 />
                 <Tally
                   value={String(emailable)}
                   label="publish an email"
                   provenance="public"
-                  title="Read off the organisation's own website. Every one carries the URL of the page it was read from."
+                  title="Read off a published page and never guessed from a domain name. Most are the organisation's own site; the school rows were read off the state school directory. Every one carries the URL it was read from."
                 />
                 <Tally
                   value={String(withEmailSource)}
@@ -910,8 +948,8 @@ export function MethodPage() {
               </div>
 
               <p className={styles.p}>
-                The board was gathered in two passes and the rows say which
-                one they came from.{" "}
+                The board was gathered in three passes and every row says which
+                one it came from.{" "}
                 <strong className="num">{withPlaceId}</strong> of them came out
                 of the Google Places API on 11 August 2026, searched around the
                 published address of the venue at {VENUE.address}, {VENUE.city},
@@ -924,19 +962,44 @@ export function MethodPage() {
               </p>
 
               <p className={styles.p}>
-                The other <strong className="num">{censusPass.length}</strong>{" "}
-                are the local retail, food, auto service and small employers the
-                first pass never reached, and they were found by reading each
-                organisation's own published page or its landlord's tenant
-                directory, then run through the US Census Bureau geocoder for a
-                coordinate. THOSE ROWS CARRY NO PLACE ID AND THE FIELD IS ABSENT
-                RATHER THAN FILLED. There was no Places call available in that
-                pass, and an identifier that looks exactly like the real ones on
-                a row a reader might click is worse than no identifier at all.
-                The coordinate provenance is different too, and it is stated on
-                every row: Google for the first{" "}
-                <strong className="num">{withPlaceId}</strong>, the Census
-                Bureau for the next{" "}
+                The second pass ran the same day and added{" "}
+                <strong className="num">{handPass.length}</strong>: the local
+                retail, food, auto service and small employers the Places sweep
+                never reached. Each one was found by reading the organisation's
+                own published page or its landlord's tenant directory, and then
+                run through the US Census Bureau geocoder, benchmark 2020, for a
+                coordinate.
+              </p>
+
+              <p className={styles.p}>
+                The third pass added{" "}
+                <strong className="num">{industryPass.length}</strong> on 14
+                August 2026, and it ran the other way round. The first two
+                passes swept the trade area and took what was there, which finds
+                shopfronts and clinics. This one named nine sectors first,
+                because the board was thin in them and the occasion is real, and
+                then went looking for the organisations inside each one. Those
+                rows were geocoded through the same Census benchmark, one call
+                per address.{" "}
+                <strong className="num">{withPlaceId}</strong> and{" "}
+                <strong className="num">{handPass.length}</strong> and{" "}
+                <strong className="num">{industryPass.length}</strong> is{" "}
+                <strong className="num">{passTotal}</strong>, and the board
+                above is <strong className="num">{total}</strong>. Those two
+                figures are counted separately, and a reader who ever sees them
+                disagree is looking at a page that has fallen out of step with
+                the file it describes.
+              </p>
+
+              <p className={styles.p}>
+                NEITHER OF THE LATER TWO PASSES CARRIES A PLACE ID AND THE FIELD
+                IS ABSENT RATHER THAN FILLED. There was no Places call available
+                in either of them, and an identifier that looks exactly like the
+                real ones on a row a reader might click is worse than no
+                identifier at all. The coordinate provenance is different too,
+                and it is stated on every row: Google for the first{" "}
+                <strong className="num">{withPlaceId}</strong>, the US Census
+                Bureau for the other{" "}
                 <strong className="num">{censusPass.length}</strong>.
               </p>
 
@@ -945,11 +1008,19 @@ export function MethodPage() {
                 publish an email address, and this is the part worth being
                 careful about. Every one of those{" "}
                 <strong className="num">{emailable}</strong> addresses was read
-                off the organisation's own website, and every one carries the
-                URL of the page it was read from, which is printed beside it on
-                the prospect drawer and linked from the map. Nothing in this
-                data set was pattern-guessed from a domain name. There is no
-                info@ in this application that was not actually seen on an
+                off a page anybody can open, and every one carries the URL of
+                the page it was read from, which is printed beside it on the
+                prospect drawer and linked from the map. Most of those pages are
+                the organisation's own site.{" "}
+                <strong className="num">{stateDirectoryEmails}</strong> of the
+                school rows link to the California Department of Education's
+                public school directory instead, because that is where a
+                California district publishes an administrator's address, and
+                two police rows link to the recruiting page the department
+                points applicants at. Every one of those exceptions is on the
+                row, so a reader opens the same page the research read. Nothing
+                in this data set was pattern-guessed from a domain name. There
+                is no info@ in this application that was not actually seen on an
                 actual page.
               </p>
 
@@ -977,7 +1048,7 @@ export function MethodPage() {
               </div>
 
               <h3 className={styles.h3}>
-                The two passes returned very different ratios, and that is
+                The three passes returned very different ratios, and that is
                 the finding
               </h3>
 
@@ -986,13 +1057,19 @@ export function MethodPage() {
                   value={`${placesEmails} of ${withPlaceId}`}
                   label={`published an email, first pass, ${share(placesEmails, withPlaceId)} per cent`}
                   provenance="public"
-                  title="Schools, colleges, churches and professional practices. Institutions publish staff directories."
+                  title="A sweep of the trade area, eight lanes at once. The published addresses are concentrated in the institutional rows, because institutions publish staff directories."
                 />
                 <Tally
-                  value={`${censusEmails} of ${censusPass.length}`}
-                  label={`published an email, second pass, ${share(censusEmails, censusPass.length)} per cent`}
+                  value={`${handEmails} of ${handPass.length}`}
+                  label={`published an email, second pass, ${share(handEmails, handPass.length)} per cent`}
                   provenance="public"
                   title="Franchise retail, mall tenants and chain auto service. They deliberately publish nothing at store level."
+                />
+                <Tally
+                  value={`${industryEmails} of ${industryPass.length}`}
+                  label={`published an email, third pass, ${share(industryEmails, industryPass.length)} per cent`}
+                  provenance="public"
+                  title="Districts, city halls, congregations, professional practices and industrial employers. The sectors were named first, and they are sectors that publish."
                 />
                 <Tally
                   value={String(doorOnly)}
@@ -1007,14 +1084,15 @@ export function MethodPage() {
                 <strong className="num">{placesEmails}</strong> published
                 addresses across <strong className="num">{withPlaceId}</strong>{" "}
                 organisations. The second found{" "}
-                <strong className="num">{censusEmails}</strong> across{" "}
-                <strong className="num">{censusPass.length}</strong>. That is
-                not the same search done worse. The first pass was schools,
-                colleges, churches and professional practices, and institutions
-                like those publish a staff directory either because they are
-                obliged to or because it wins them business, so the buyer's
-                title and inbox are sitting on a public page waiting to be read.
-                The second pass was franchise retail, mall tenants and chain
+                <strong className="num">{handEmails}</strong> across{" "}
+                <strong className="num">{handPass.length}</strong>. That is not
+                the same search done worse. The first pass swept the trade area
+                and came back with eight lanes at once, and its published
+                addresses sit in the institutional ones: a school, a college, a
+                church or a professional practice publishes a staff directory
+                either because it is obliged to or because it wins it business,
+                so the buyer's title and inbox are on a public page waiting to
+                be read. The second pass was franchise retail, mall tenants and chain
                 auto service, and those organisations publish nothing at store
                 level on purpose. A cookie franchisee routes every enquiry
                 through a corporate form. A tyre shop's store number has no
@@ -1046,6 +1124,23 @@ export function MethodPage() {
                   the field board.
                 </p>
               </div>
+
+              <p className={styles.p}>
+                The third pass found{" "}
+                <strong className="num">{industryEmails}</strong> published
+                addresses across{" "}
+                <strong className="num">{industryPass.length}</strong>{" "}
+                organisations, the highest ratio of the three, and it is the
+                same mechanism read the other way. That pass chose its sectors
+                before it chose its organisations, and the sectors it chose were
+                school districts, city halls, congregations, senior care,
+                professional services and the industrial belt. Those are the
+                kinds of organisation that publish a named address, so naming
+                them first is the reason the ratio moved. It says nothing about
+                one pass being run better than another. Where you look decides
+                what you can reach in writing, and that is the argument for
+                choosing an industry rather than sweeping a map.
+              </p>
 
               <h3 className={styles.h3}>Every lane, and how it is reached</h3>
               <p className={styles.pTight}>
@@ -1227,7 +1322,7 @@ export function MethodPage() {
               <h3 className={styles.h3}>
                 The same rule fired{" "}
                 <span className="num">{EXCLUDED_FROM_BOARD.length}</span> more
-                times across the two research passes after it
+                times across the second and third passes
               </h3>
 
               <p className={styles.p}>
@@ -1273,16 +1368,22 @@ export function MethodPage() {
                   <span aria-hidden="true" className={styles.excludedGlyph}>
                     ▨
                   </span>
-                  The geocoder could not match the address at all
+                  There was nothing to pin
                   <span className={`${styles.excludedCount} num`}>
                     {unmatched.length}
                   </span>
                 </h4>
                 <p className={styles.excludedGroupNote}>
-                  A softer failure and still a failure. The Census address file
-                  lags new construction, which is why the newer Imperial Highway
-                  centres and the Village at La Floresta returned nothing while
-                  every older Brea Boulevard address matched first time. The
+                  A softer failure and still a failure, in two kinds.{" "}
+                  <span className="num">{unmatchedOnly}</span> of them the
+                  Census geocoder could not match at all, which is the Census
+                  address file lagging new construction rather than a statement
+                  about the business: the newer Imperial Highway centres and the
+                  Village at La Floresta returned nothing while every older Brea
+                  Boulevard address matched first time. The other{" "}
+                  <span className="num">{unverifiable}</span> never got that
+                  far, because no page publishes a street address for them, or
+                  because nothing loadable proves the one on record. The
                   businesses are real. The pin is what is missing, and the
                   alternative was to nudge a nearby coordinate until it looked
                   right.
@@ -2096,9 +2197,9 @@ export function MethodPage() {
                 Dense data on dark is not a compromise. It is what every
                 trading terminal and every scoreboard in the building already
                 does, and this tool is used in a car, in a school car park and
-                on a phone at 380 pixels between go-sees. The hundred and two
-                row table did not get quieter. It got a ground that stops
-                competing with it.
+                on a phone at 380 pixels between go-sees. The{" "}
+                <strong className="num">{total}</strong> row table did not get
+                quieter. It got a ground that stops competing with it.
               </p>
 
               <h3 className={styles.h3}>
@@ -2632,9 +2733,9 @@ export function MethodPage() {
                   organisations came out of the Google Places API on the same
                   day and carry the place id they came with, and the other{" "}
                   <strong className="num">{censusPass.length}</strong> were read
-                  off their own published pages and geocoded by the US Census
-                  Bureau, with the place id field left absent rather than
-                  invented. Everything else is labelled as modeled,
+                  off first-party pages and published directories, on that day
+                  and on 14 August 2026, then geocoded by the US Census Bureau,
+                  with the place id field left absent rather than invented. Everything else is labelled as modeled,
                   illustrative, observed, entered or not published, and those
                   labels are the most important thing on any screen they appear
                   on.

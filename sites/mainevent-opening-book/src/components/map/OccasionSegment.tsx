@@ -32,7 +32,7 @@ import styles from "./OccasionSegment.module.css";
  * The rejected alternative was a local piece of state in the map page,
  * which is less code and reads fine on one screen. It fails the moment
  * the reader leaves: the map would be showing three lanes while the desk
- * behind it still showed eight, and two screens disagreeing about what
+ * behind it still showed nine, and two screens disagreeing about what
  * is being looked at is exactly the failure a shared filter exists to
  * prevent. Filter to the schools here and the desk is filtered to the
  * schools when the reader gets back to it. That is not a convenience, it

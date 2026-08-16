@@ -69,9 +69,9 @@ import styles from "./BookPage.module.css";
  *    than being found.
  *
  * 3. HOURS PLANNED PER LANE. A week can hit its hours target and still
- *    have a hole in it. Eight lanes with the hours drawn against each
- *    one shows a plan with nothing against healthcare in about a second,
- *    which no total ever will.
+ *    have a hole in it. Nine lanes with the hours drawn against each
+ *    one shows a plan with nothing against local retail and food in
+ *    about a second, which no total ever will.
  *
  * --- WHAT IS EDITABLE AND WHY ---------------------------------------
  * Guests, on every booked line. Change one and the contract value, the
@@ -460,7 +460,7 @@ function ActivityRow({ line }: { line: ActivityLine }) {
 // ---------------------------------------------------------------
 
 /**
- * Hours planned against each of the eight lanes.
+ * Hours planned against each of the nine lanes.
  *
  * THESE SUM TO MORE THAN THE HOURS IN THE PLAN, on purpose, and the
  * panel says so on screen. A chamber mixer is three hours worked against
@@ -472,7 +472,7 @@ function ActivityRow({ line }: { line: ActivityLine }) {
  *
  * The reason it is worth a panel at all: a week can hit its hours target
  * and still have a lane with nothing against it. A total cannot show
- * that and eight bars can.
+ * that and nine bars can.
  */
 function LaneCoverage({
   coverage,

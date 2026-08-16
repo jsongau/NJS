@@ -32,7 +32,8 @@ import styles from "./TradeAreaPage.module.css";
  * a rail. This one is a working surface, and it was being asked to be both
  * at once. The arithmetic of that was plain enough to measure: the rail
  * took 252 pixels, the page header another 105, and what was left for a
- * list of a hundred and two organisations, a map and a panel was a strip.
+ * list of two hundred and eleven organisations, a map and a panel was a
+ * strip.
  * Three panes in a column that is already 252 pixels short is not three
  * panes; it is three things that do not fit.
  *

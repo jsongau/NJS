@@ -331,7 +331,7 @@
   its neighbours and an outward ring would be clipped by the row above.
 */
 /* The edge is the section's, and only the edge. One row at a time wears
-   it, so the board never reads as a hundred and two rows striped in a
+   it, so the board never reads as two hundred and eleven rows striped in a
    colour, and the washed ground and the heavier type carry the same
    signal for anybody who cannot separate the two hues. */
 .row[data-current="true"] {

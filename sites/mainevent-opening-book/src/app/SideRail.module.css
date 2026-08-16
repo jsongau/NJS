@@ -26,7 +26,7 @@
   first and never the only one.
 
   ── THE READOUTS RESERVE THEIR SPACE ───────────────────────────────
-  Every well is the same width whether it holds nothing, a 4 or a 102,
+  Every well is the same width whether it holds nothing, a 4 or a 211,
   because these figures move while a person is looking at them. A rail
   whose rows twitch sideways when a status changes cannot be scanned, and
   scanning is the only reason it exists.
@@ -611,9 +611,9 @@
 
 /*
   The figure, printed with its noun instead of dropped into a readout
-  well. The well is this rail's instrument for work waiting, and 102 in
-  one of them beside the word Maps would say a hundred and two things are
-  owed.
+  well. The well is this rail's instrument for work waiting, and 211 in
+  one of them beside the word Maps would say two hundred and eleven
+  things are owed.
 */
 .featureFigure {
   font-family: var(--font-ui);

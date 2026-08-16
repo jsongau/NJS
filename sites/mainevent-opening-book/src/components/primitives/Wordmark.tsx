@@ -8,8 +8,9 @@ import styles from "./Wordmark.module.css";
  *
  * THIS IS THE DESIGN, NOT A FALLBACK. There are no rights to the marks of
  * Brea Olinda Unified, Cal State Fullerton, Fairway Ford or any of the
- * other sixty-nine organisations in this data set, and the obvious source
- * for storefront photography prohibits this use. A well-set name on a
+ * other two hundred and eight organisations in this data set, and the
+ * obvious source for storefront photography prohibits this use. A
+ * well-set name on a
  * lane-keyed card looks deliberate; scraped logos at mismatched
  * resolutions look scraped. The legally safe option here is also the
  * better looking one.

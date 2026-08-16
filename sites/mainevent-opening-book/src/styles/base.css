@@ -34,7 +34,7 @@ html {
 
   DARK INK ON A LIGHT GROUND DOES THE OPPOSITE: it thins, so the same
   correction applied there costs weight instead of giving it back and the
-  102 row table goes grey. So both halves of the correction are tokens.
+  211 row table goes grey. So both halves of the correction are tokens.
   --type-track is 0.004em on the dark ground and 0 on the light one, and
   the smoothing hints go back to the platform's own on light, which is the
   right answer for dark ink and the wrong one for lit type.

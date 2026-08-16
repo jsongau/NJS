@@ -12,10 +12,10 @@
   is ever off the right hand edge.
 
   EQUAL COLUMNS ARE ALSO THE STILLNESS. Every track is `1fr`, so a count
-  falling from a hundred and two to two changes no width and moves nothing
-  beside it. Labels reserve their second line whether they use it or not,
-  which costs fourteen pixels once and buys a bar that never jumps, at any
-  type size the reader chooses.
+  falling from two hundred and eleven to two changes no width and moves
+  nothing beside it. Labels reserve their second line whether they use it or
+  not, which costs fourteen pixels once and buys a bar that never jumps, at
+  any type size the reader chooses.
 */
 
 .bar {
@@ -240,7 +240,7 @@
 }
 
 /* The denominator is quieter than the figure but it is never dropped.
-   "12 of 102" beats "12", every time. */
+   "12 of 211" beats "12", every time. */
 .kpiOutOf {
   font-size: var(--step--1);
   color: var(--text-3);

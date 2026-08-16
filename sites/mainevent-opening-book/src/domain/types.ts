@@ -304,7 +304,7 @@ export interface Prospect {
   /**
    * WHERE THE APPROVAL SITS. See `OrgType` below.
    *
-   * Optional on the interface and present on all one hundred and two
+   * Optional on the interface and present on all two hundred and eleven
    * seeded rows. It is optional because another surface in this app
    * lets a rep add an organisation from the pavement with a name and a
    * pin, and a row typed on a phone outside a shop should not be

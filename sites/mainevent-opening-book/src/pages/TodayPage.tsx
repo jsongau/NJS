@@ -860,7 +860,7 @@ export function TodayPage() {
                   Main Event Brea opens with no client base, no walk-in habit
                   and no list, and the only way to fill the lanes on a Tuesday
                   is to go out and find the schools, offices and teams that
-                  will book them. So I built the list first: 102 real
+                  will book them. So I built the list first: 211 real
                   organisations in the trade area, what each one said, and when
                   to go back.
                 </p>

@@ -32,11 +32,12 @@ import styles from "./ProspectDrawer.module.css";
  * asserting confidence.
  *
  * ── THE SOURCE LINK ON THE EMAIL IS THE POINT OF THIS COMPONENT ────
- * Thirty of the sixty-nine organisations in this data set publish an
- * email address on their own website. Every one of those thirty carries
- * the URL of the page it was read off, and this drawer prints that URL as
- * a link a reader can click and check in about fifteen seconds. Nothing
- * in the set was pattern-guessed from a domain name.
+ * Ninety-three of the two hundred and eleven organisations in this data
+ * set publish an email address on their own website. Every one of those
+ * ninety-three carries the URL of the page it was read off, and this
+ * drawer prints that URL as a link a reader can click and check in about
+ * fifteen seconds. Nothing in the set was pattern-guessed from a domain
+ * name.
  *
  * That is a small feature and it is doing an enormous amount of work,
  * because the alternative is indistinguishable from the thing every
@@ -574,8 +575,8 @@ export function ProspectDrawer({
 
           {/* ---------------------------------------------------------
               PRIOR CORRESPONDENCE. Shown only where there is any, because
-              an empty log on sixty-nine drawers is sixty-nine empty
-              boxes teaching nobody anything.
+              an empty log on two hundred and eleven drawers is two
+              hundred and eleven empty boxes teaching nobody anything.
               --------------------------------------------------------- */}
           {sent.length > 0 ? (
             <section className={styles.section} aria-labelledby="sec-sent">

@@ -1,0 +1,261 @@
+/*
+  START. The door.
+
+  IT IS A LETTER, NOT AN INSTRUMENT, and it is the second page in this
+  application that is: the other is the customer facing quote. Both are
+  read once, by somebody who did not ask for a tool, and both are set
+  accordingly. One column at a reading measure, a step up in type size,
+  and more air than any board in here would ever justify.
+
+  IT IS ALSO NOT DRAWN LIKE THE QUOTE. The quote is a letter on white
+  paper because a school activities director is holding a document
+  addressed to them. This reader is about to walk into the console, so
+  the page keeps the console's ground, its type and its ink. It should
+  feel like the front of the building rather than like a different
+  building.
+
+  NO SECTION IDENTITY, BUT THE ATTRIBUTE IS STILL THERE. Every screen
+  inside the shell declares data-sec and wears one of twenty three hues.
+  A door is not one of the places in this product, so it declares
+  data-sec="none" and takes the editorial signal colour from the base
+  block. The attribute is not optional: sections.css scopes --sec,
+  --sec-ink and --sec-glow to [data-sec], so a page without it has no
+  section tokens at all and every rule below that reads var(--sec)
+  renders as nothing. See the note in StartPage.tsx.
+*/
+
+.page {
+  min-height: 100dvh;
+  background: var(--surface-0);
+  color: var(--text-1);
+  overflow-y: auto;
+}
+
+/*
+  Centred, unlike the rationale column, and the difference is deliberate.
+  Rationale sits inside the shell with a rail forming a hard left edge,
+  so a centred column there floats. This page has no rail and no edge to
+  belong to, and a 68ch measure pinned left on a 1440px screen reads as a
+  layout that broke.
+*/
+.wrap {
+  max-width: 68ch;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5) var(--space-8);
+}
+
+/* ---- masthead ---- */
+
+.kicker {
+  font: 500 var(--step--2) / 1.4 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 var(--space-3);
+}
+
+.title {
+  font: 700 var(--step-5) / 1.05 var(--font-display);
+  color: var(--text-0);
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--space-4);
+}
+
+.standfirst {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text-2);
+  margin: 0 0 var(--space-6);
+}
+
+/*
+  The disclaimer. A flagged panel rather than fine print, because fine
+  print is the visual language of something the writer hopes you will not
+  read, and this is the opposite of that.
+*/
+.flag {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sec);
+  border-radius: var(--radius-l);
+  padding: var(--space-5);
+  margin: 0 0 var(--space-7);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* ---- structure ---- */
+
+.block {
+  margin-bottom: var(--space-7);
+}
+
+.h2 {
+  font: 700 var(--step-3) / 1.2 var(--font-display);
+  color: var(--text-0);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 2px solid var(--sec);
+}
+
+.block p {
+  margin: 0 0 var(--space-4);
+}
+
+.lede {
+  font-size: var(--step-0);
+  color: var(--text-3);
+}
+
+.last {
+  margin-bottom: 0;
+}
+
+.code {
+  font: 500 0.9em / 1 var(--font-mono);
+  background: var(--surface-2);
+  border-radius: var(--radius-s);
+  padding: 0.15em 0.4em;
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.15em;
+}
+
+.list li {
+  margin-bottom: var(--space-3);
+}
+
+.list li:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- the three doors ---- */
+
+/*
+  AN ORDERED LIST, AND THE ORDER IS THE ADVICE. The page says to open the
+  first one if you only open one, so the markup has to agree: a reader on
+  a screen reader hears "one of three" and gets the same ranking a sighted
+  reader gets from the numeral.
+
+  The counter is drawn rather than left to the browser, because the
+  default marker sits outside the card and the number belongs to the card.
+*/
+.doors {
+  list-style: none;
+  counter-reset: door;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.doors li {
+  counter-increment: door;
+}
+
+.door {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  align-items: baseline;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  padding: var(--space-5);
+  text-decoration: none;
+  color: inherit;
+}
+
+.door::before {
+  content: counter(door);
+  grid-row: 1 / span 2;
+  font: 600 var(--step-2) / 1 var(--font-mono);
+  color: var(--sec-ink);
+  letter-spacing: -0.02em;
+}
+
+.door:hover {
+  border-color: var(--sec);
+  background: var(--surface-2);
+}
+
+.doorLabel {
+  font: 700 var(--step-2) / 1.15 var(--font-display);
+  color: var(--text-0);
+  letter-spacing: -0.02em;
+}
+
+.doorNote {
+  grid-column: 2;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---- the way in ---- */
+
+.go {
+  margin: var(--space-8) 0 var(--space-7);
+  text-align: center;
+}
+
+/*
+  The one control on the page, and it is 56px rather than the 44px
+  minimum. Everything above it is prose; this is the thing the page is
+  for, and a reader should not have to look for it.
+*/
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  background: var(--sec);
+  color: var(--surface-0);
+  font: 700 var(--step-1) / 1 var(--font-display);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.cta:hover {
+  filter: brightness(1.08);
+}
+
+.goNote {
+  font-size: var(--step--1);
+  color: var(--text-3);
+  margin: var(--space-4) auto 0;
+  max-width: 46ch;
+}
+
+/* ---- foot ---- */
+
+.foot {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  color: var(--text-3);
+}
+
+.foot p {
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding-top: var(--space-6);
+  }
+
+  .title {
+    font-size: var(--step-4);
+  }
+
+  .cta {
+    width: 100%;
+  }
+}

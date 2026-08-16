@@ -267,9 +267,9 @@ function reducer(state: PipelineState, action: PipelineAction): PipelineState {
  * do NOT survive, and that is a decision rather than an oversight. Those
  * four fields describe WHERE SOMEBODY IS LOOKING, not what they did. A
  * reader who filtered to two lanes on Friday, came back on Monday and
- * found ninety of a hundred and two organisations missing from the desk
- * with no memory of having hidden them would conclude the data had gone,
- * not that a filter was still on. Restoring a query is a saved search
+ * found ninety of two hundred and eleven organisations missing from the
+ * desk with no memory of having hidden them would conclude the data had
+ * gone, not that a filter was still on. Restoring a query is a saved search
  * pretending to be a saved session.
  *
  * The rows written out are exactly the ones carrying "user_input"

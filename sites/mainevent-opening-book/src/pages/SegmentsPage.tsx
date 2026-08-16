@@ -42,7 +42,7 @@ import styles from "./SegmentsPage.module.css";
  * and print their own numbers next to the answer they produce. A reader
  * who thinks certainty matters more than volume before a venue opens
  * does not have to take my word for the consequence; they press
- * "Pre-opening" and watch nine sectors move.
+ * "Pre-opening" and watch thirteen sectors move.
  *
  * ── WHY THE RE-RANK IS COMPUTED HERE AND NOT IN THE SELECTOR ──────
  * `segmentBoard()` already returns the three normalised components, so
@@ -57,7 +57,7 @@ import styles from "./SegmentsPage.module.css";
  * ── A CONTROL THAT SILENTLY REORDERS A LONG LIST READS AS BROKEN ──
  * This build has been burned once already by tabs that changed nothing
  * above the fold. Sixteen rows are taller than a viewport, so pressing
- * "Reach" can move six sectors and a reader watching the top three sees
+ * "Reach" can move twelve sectors and a reader watching the top three sees
  * a page that did nothing. Every row therefore carries how far it moved
  * against the default weighting, as an arrow AND a word AND a number,
  * and the status line under the presets says how many rows changed place
@@ -573,7 +573,7 @@ export function SegmentsPage() {
           <p className={styles.presetNote}>{preset.note}</p>
 
           {/* The polite region. It is what makes the control honest on a
-              list taller than the viewport: pressing "Reach" can move six
+              list taller than the viewport: pressing "Reach" can move twelve
               sectors below the fold and a reader watching the top three
               would otherwise see a page that did nothing. */}
           <p className={styles.rerankState} role="status" aria-live="polite">

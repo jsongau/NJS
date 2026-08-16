@@ -6,8 +6,8 @@ import type { ProspectPackageStatus } from "@/domain/types";
  * One row per prospect against the package this app would lead with,
  * for the period twelve to nine weeks before the doors open.
  *
- * FORTY-TWO OF THE HUNDRED AND TWO STILL SAY "unworked", AND THAT IS
- * STILL THE MOST IMPORTANT NUMBER IN THE FILE.
+ * A HUNDRED AND FIFTY-ONE OF THE TWO HUNDRED AND ELEVEN STILL SAY
+ * "unworked", AND THAT IS STILL THE MOST IMPORTANT NUMBER IN THE FILE.
  *
  * An earlier version of this table said eighty-six, because nothing had
  * been worked at all. This one describes the same trade area three and a
@@ -19,8 +19,8 @@ import type { ProspectPackageStatus } from "@/domain/types";
  *
  * READ THE SHAPE BEFORE READING ANY ROW. Twenty-eight in conversation,
  * twenty-two reached out and silent, five dates held against no deposit,
- * two booked, three lost, forty-two never touched. That is not a
- * flattering distribution and it is not meant to be. Fifty-two inbound
+ * two booked, three lost, a hundred and fifty-one never touched. That is
+ * not a flattering distribution and it is not meant to be. Fifty-two inbound
  * messages against a hundred and four outbound is a reply rate a real
  * territory produces; anything better would be a claim about outreach
  * that nobody in this trade area has made.

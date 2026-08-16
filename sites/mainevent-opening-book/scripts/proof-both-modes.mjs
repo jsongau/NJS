@@ -139,7 +139,19 @@ const stripMode = (href) => stripBase(href).replace(/^\/rationale(?=\/|$)/, "") 
 
 await new Promise((r) => server.listen(PORT, r));
 
-const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium" });
+/**
+ * The browser, found two different ways on purpose.
+ *
+ * The machine this was written on ships a Chromium at a fixed path and
+ * forbids downloading another. CI installs one through Playwright and
+ * puts it where Playwright expects. Hardcoding either makes this file
+ * run in exactly one of those two places, and a check that only runs on
+ * the author's machine is not a check.
+ */
+const CHROMIUM = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium";
+const browser = await chromium.launch(
+  fs.existsSync(CHROMIUM) ? { executablePath: CHROMIUM } : {},
+);
 const failures = [];
 const rows = [];
 

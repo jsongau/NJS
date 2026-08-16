@@ -9,7 +9,7 @@
   THE WIDTH IS RESERVED AND THAT IS NOT NEGOTIABLE. These figures move
   while somebody is looking at them, and a rail whose rows twitch
   sideways as a status changes cannot be scanned. Every well is the same
-  rectangle whether it holds nothing, a 4 or a 102.
+  rectangle whether it holds nothing, a 4 or a 211.
 */
 
 .readout {
@@ -20,7 +20,7 @@
   min-width: 3.6ch;
   /* Stated, because an empty well holds no line box and would otherwise
      collapse to a hairline. A destination with no figure has to leave
-     the same rectangle as one with a 102 in it, or the rail stops being
+     the same rectangle as one with a 211 in it, or the rail stops being
      a column of slots and becomes a column of accidents. */
   min-height: 20px;
   padding: 1px 5px;

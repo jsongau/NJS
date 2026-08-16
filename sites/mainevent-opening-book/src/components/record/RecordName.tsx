@@ -18,7 +18,7 @@ import styles from "./RecordName.module.css";
  * the focus ring the rest of the app already defines. Everything an
  * imitation would have to be given back one property at a time, badly.
  *
- * IT LOOKS LIKE TEXT UNTIL IT IS TOUCHED. A table of a hundred and two
+ * IT LOOKS LIKE TEXT UNTIL IT IS TOUCHED. A table of two hundred and eleven
  * rows where every name is painted as a link is a page of blue, and the
  * colour stops meaning anything. So the name inherits the type, the
  * weight and the colour of whatever cell, card title or popup heading it

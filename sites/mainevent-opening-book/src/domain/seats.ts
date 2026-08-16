@@ -181,7 +181,7 @@ export const HOLD_GATE_STEP: RampStep =
 /**
  * Ten working days, because /coaching's ramp is two weeks.
  *
- * It is a COMPETENCE ramp for a territory of 102 organisations and 18
+ * It is a COMPETENCE ramp for a territory of 211 organisations and 18
  * packages, not the ninety day productivity ramp the sales onboarding
  * literature describes. The two are different objects and a person
  * signed off as competent on day ten is not expected to be productive on

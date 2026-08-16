@@ -76,9 +76,9 @@ export type ObjectionAction =
  * EVERYTHING STARTS OPEN, AND THAT IS THE HONEST OPENING STATE.
  *
  * The alternative was to seed three as answered so the screen looks
- * worked. Twelve weeks before a building opens, with sixty-nine
- * organisations in the trade area and two contracts in the book, nothing
- * has been answered enough times to call it settled. A register that
+ * worked. Twelve weeks before a building opens, with two hundred and
+ * eleven organisations in the trade area and two contracts in the book,
+ * nothing has been answered enough times to call it settled. A register that
  * opens already half ticked is a register describing a week that did not
  * happen.
  */

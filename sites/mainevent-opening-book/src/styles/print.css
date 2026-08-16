@@ -78,8 +78,9 @@
     page-break-before: always;
   }
 
-  /* The disclaimer is a running element so it appears on every printed
-     page, not only the first. */
+  /* The disclaimer is a plain paragraph at the end of the article, so it
+     prints once, at the end. Nothing here makes it a running element:
+     there is no position: running() and no @page margin box. */
   .print-disclaimer {
     display: block !important;
     font-size: 7.5pt;

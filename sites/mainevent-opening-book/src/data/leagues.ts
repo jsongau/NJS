@@ -91,13 +91,13 @@ import { ESTABLISHED_AVERAGE_GAMES } from "@/domain/cup";
  * no first name, no surname, no initial and nowhere to put one, because
  * `Bowler` in `domain/cup.ts` has no field for it.
  *
- * This is the same discipline that put nine verified real organisations
- * on the exclusion list rather than on the board. A plausible invented
- * name next to a hundred and two real organisations is the fastest way
- * to make a reader doubt the real rows, and a handle is not that: nobody
- * reads "Gutter Therapy" and believes a specific human is described. The
- * captain's JOB TITLE stays on the team, because a title is a role and a
- * role is not a person either.
+ * This is the same discipline that put twenty five verified real
+ * organisations on the exclusion list rather than on the board. A
+ * plausible invented name next to two hundred and eleven real
+ * organisations is the fastest way to make a reader doubt the real rows,
+ * and a handle is not that: nobody reads "Gutter Therapy" and believes a
+ * specific human is described. The captain's JOB TITLE stays on the team,
+ * because a title is a role and a role is not a person either.
  *
  * ---------------------------------------------------------------
  * THE ROSTER IS THE REGISTER AND THE COUNTS ARE DERIVED FROM IT

@@ -101,8 +101,9 @@ export function lossRows(): LossRow[] {
         : "buyer-wrote-it";
 
     /* The objection the reply file already pinned to this organisation,
-       where one did. Two of the three losses have one and the third
-       does not, and the row says so rather than borrowing one. */
+       where one did. Only one of the three losses has one, the other two
+       having no reply on file at all, and the row says so rather than
+       borrowing one. */
     const objectionId = SEED_REPLIES.find(
       (r) => r.prospectId === message.prospectId && r.objectionId,
     )?.objectionId;

@@ -26,8 +26,8 @@ import {
  * throws.
  *
  * ── WHAT IS PERSISTED, AND WHY IT IS ONLY THE DELTAS ──────────────
- * The one hundred and two prospects, the packages, the venue, the eight
- * lanes and the seeded objection register are CODE. They ship in the
+ * The two hundred and eleven prospects, the packages, the venue, the
+ * nine lanes and the seeded objection register are CODE. They ship in the
  * bundle. They are not state and they are never written here.
  *
  * What is written is what a person did on top of them: statuses they

@@ -88,22 +88,22 @@ const MAX_BUBBLE_PX = Math.max(...CLUSTER_STEPS.map((s) => (s.r + 3) * 2));
 /**
  * ── EVERY ICON IS BUILT ONCE AND THEN HANDED OUT ──────────────────
  *
- * This is the change that makes a hundred and two organisations feel like
- * a map rather than like a prototype, so it is worth being precise about
- * what was wrong.
+ * This is the change that makes two hundred and eleven organisations feel
+ * like a map rather than like a prototype, so it is worth being precise
+ * about what was wrong.
  *
  * React Leaflet compares the `icon` prop by IDENTITY and calls Leaflet's
  * `setIcon` whenever it differs. `setIcon` does not repaint an element,
  * it REPLACES it: the old icon is removed from the marker pane, a new div
  * is built from the HTML string, and it is inserted and positioned again.
  * Both builders below construct a fresh `L.DivIcon` on every call, so
- * every single render of this layer replaced a hundred and two elements
- * in the document to arrive at exactly the same pixels.
+ * every single render of this layer replaced two hundred and eleven
+ * elements in the document to arrive at exactly the same pixels.
  *
  * The renders were not rare. This layer re-renders on every zoom, on
  * every change to the filtered rows, and on every selection, and a
  * selection is a click on a pin. So clicking one organisation rebuilt the
- * other hundred and one, which is why the board flickered under a popup
+ * other two hundred and ten, which is why the board flickered under a popup
  * that had just opened, and why a zoom felt heavier than the animation
  * running underneath it.
  *
@@ -116,8 +116,8 @@ const MAX_BUBBLE_PX = Math.max(...CLUSTER_STEPS.map((s) => (s.r + 3) * 2));
  * instance is a recipe rather than a node.
  *
  * The cache is bounded and cleared wholesale rather than evicted one
- * entry at a time. The keys are drawn from a fixed book of a hundred and
- * two organisations and a handful of cluster counts, so it settles at a
+ * entry at a time. The keys are drawn from a fixed book of two hundred and
+ * eleven organisations and a handful of cluster counts, so it settles at a
  * few hundred entries and never grows; the ceiling exists so that a
  * future page plotting something unbounded degrades into rebuilding
  * icons rather than into a leak.

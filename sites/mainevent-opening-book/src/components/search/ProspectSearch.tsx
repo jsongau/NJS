@@ -26,10 +26,10 @@ import styles from "./ProspectSearch.module.css";
  * ---------------------------------------------------------------
  *
  * The box on the left of the board used to be a filter and nothing else.
- * Two letters went in, the board dropped from a hundred and two rows to
- * two, and neither of the survivors had those letters anywhere a reader
+ * Two letters went in, the board dropped from two hundred and eleven rows
+ * to two, and neither of the survivors had those letters anywhere a reader
  * could see, because the predicate also searched the city and the job
- * title of the decision maker. A control that removes ninety eight
+ * title of the decision maker. A control that removes two hundred and nine
  * things without saying which rule it applied is not a search. It is a
  * trapdoor, and the reasonable response to it is to stop typing.
  *
@@ -110,8 +110,8 @@ import styles from "./ProspectSearch.module.css";
  *
  * THE FILTERING IS DEBOUNCED AND THE LETTERS ARE NOT. The value on
  * screen is the state, updated on the keystroke; the suggestion list is
- * computed from a copy that settles a frame or two later. A hundred and
- * two records is small enough that this is about steadiness rather than
+ * computed from a copy that settles a frame or two later. Two hundred and
+ * eleven records is small enough that this is about steadiness rather than
  * speed: without it the list reorders under the reader between the
  * pressing of two keys.
  */
@@ -554,8 +554,8 @@ export function ProspectSearch({
           /*
             THE BOX EMPTIES ITSELF ON A JUMP, and that is the point of
             the whole component. The reader asked for one organisation,
-            not for a board with ninety eight rows removed from it, so
-            the selection lands and the board stays whole around it.
+            not for a board with two hundred and nine rows removed from it,
+            so the selection lands and the board stays whole around it.
           */
           setText("");
           setSettled("");

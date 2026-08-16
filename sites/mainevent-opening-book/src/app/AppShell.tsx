@@ -312,9 +312,9 @@ export function AppShell({ children }: { children: ReactNode }) {
    * THE READER'S PLACE ON EACH SCREEN.
    *
    * Leaving a takeover is supposed to put somebody back where they were,
-   * and "where they were" on a list of a hundred and two organisations is
-   * a scroll offset, not a path. The browser cannot help: it restores the
-   * document scroll, and in this shell the document never scrolls, the
+   * and "where they were" on a list of two hundred and eleven organisations
+   * is a scroll offset, not a path. The browser cannot help: it restores
+   * the document scroll, and in this shell the document never scrolls, the
    * page root does.
    *
    * The offsets are keyed by path, so this also does the obvious right

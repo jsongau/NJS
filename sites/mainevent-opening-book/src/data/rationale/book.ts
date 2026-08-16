@@ -25,8 +25,8 @@ export const BOOK_RATIONALE: ScreenRationale[] = [
       {
         heading: "What the calendar has already decided, and what is still winnable",
         body: [
-          "Executive assistants and HR research holiday venues in July and August. Decisions land from August to early October. October is the highest inquiry month of the year. Median booking to event is 36 days, and 48 per cent of bookings lock inside 30 days.",
-          "Read against those figures, a thin month four weeks out is already written. The decisions that would have filled it were taken by buyers who have moved on, and no amount of calling this week moves that number. A thin quarter is a different situation and it is still winnable, because most of the decisions that fill it have not been made yet. The two answers are patience and panic, and picking the wrong one costs a season.",
+          "A corporate holiday catering playbook sets the season out month by month: large companies begin vendor research in July and August, shortlists are finalised from September to early October, and what is left in October and November is smaller, last-minute bookings. That is a playbook written by people who sell into the cycle rather than a measurement, and it is read here as one.",
+          "Read against that season, a thin month four weeks out is already written. The decisions that would have filled it were taken by buyers who have moved on, and no amount of calling this week moves that number. A thin quarter is a different situation and it is still winnable, because most of the decisions that fill it have not been made yet. The two answers are patience and panic, and picking the wrong one costs a season.",
           "That is the whole case for keeping hours visible beside revenue rather than inside it. Hours worked today were never going to be this month's number. They are the reason next quarter has one. A page that folds them into revenue loses the ability to tell a general manager which of those two things is actually going wrong.",
         ],
       },
@@ -63,8 +63,8 @@ export const BOOK_RATIONALE: ScreenRationale[] = [
       {
         heading: "Lane hours that deliberately exceed the week",
         body: [
-          "The eight bars at the foot of the page sum to more than the hours actually planned, and the panel says so on screen. A chamber mixer is three hours worked against corporate, auto and finance, healthcare and hospitality at once, so it counts once in the hours total and four times here. This is attention per lane, not a division of the week, and a chart that quietly normalised it to a hundred per cent would be describing a plan nobody wrote.",
-          "It earns the space because a week can hit its hours target and still have a hole in it. A total cannot show a lane with nothing against it. Eight bars can, in about a second. The threshold for thin is a fifth of the busiest lane, which is this application's own line and nobody else's, so it is printed on the panel rather than hidden in the code: a reader who cannot see where a line was drawn has no way to disagree with it.",
+          "The nine bars at the foot of the page sum to more than the hours actually planned, and the panel says so on screen: sixty lane-hours against thirty one hours worked. A chamber mixer is three hours worked against corporate, auto and finance, healthcare and hospitality at once, so it counts once in the hours total and four times here. This is attention per lane, not a division of the week, and a chart that quietly normalised it to a hundred per cent would be describing a plan nobody wrote.",
+          "It earns the space because a week can hit its hours target and still have a hole in it. A total cannot show a lane with nothing against it. Nine bars can, in about a second, and in the seeded plan the empty one is local retail and food. The threshold for thin is a fifth of the busiest lane, which is this application's own line and nobody else's, so it is printed on the panel rather than hidden in the code: a reader who cannot see where a line was drawn has no way to disagree with it.",
         ],
       },
     ],
@@ -79,7 +79,7 @@ export const BOOK_RATIONALE: ScreenRationale[] = [
       {
         heading: "A week planned in hours, not in intentions",
         body: [
-          "An intention has no unit. Work the healthcare lane is an intention. Three hours on the E Imperial Hwy dental and medical corridor on Tuesday, eight target conversations, five named clinics with addresses on the paper, is a plan. One of those can be checked on Friday and the other cannot.",
+          "An intention has no unit. Work the healthcare lane is an intention. Three hours on the E Imperial Hwy dental and medical corridor in a named week, eight target conversations, three named organisations with addresses on the paper, is a plan. One of those can be checked on Friday and the other cannot.",
           "Every line on this sheet is hours against a place, a lane and a target number of conversations. That is what makes a week arguable before it is worked. A general manager can read Monday's sheet and say the corporate lane has nothing in it, or that four of these hours are at a desk, and move them while it still costs nothing. Nobody can do that to a list of good intentions.",
           "Hours also survive a bad week. A shift that produced no booking still happened, and it is still the reason a lane got touched at all. Revenue cannot say that, which is why the hours have a ledger of their own rather than a footnote under the money.",
         ],
@@ -147,7 +147,7 @@ export const BOOK_RATIONALE: ScreenRationale[] = [
       "The customer after the signature, and the date the next ask is actually due.",
     sections: [
       {
-        heading: "The next booking is won in the ninety days after the event, not in the pitch",
+        heading: "The next booking is won in the fortnight after the event, not in the pitch",
         body: [
           "The signature is the middle of the sale, not the end of it. What decides whether an organisation comes back is the run of small things around the night itself: the confirm the day before, being there when they arrive, the debrief the day after, the review ask a week later and the next date asked for a fortnight later.",
           "That is why those obligations carry dates rather than descriptions. Ask for the next placement with no day attached and it becomes a thing everybody agrees is important and nobody does, because there is always a fresh lead sitting in front of it. Plus fourteen is a day in the diary, and it falls while the customer still remembers how the night went.",
@@ -179,9 +179,9 @@ export const BOOK_RATIONALE: ScreenRationale[] = [
         ],
       },
       {
-        heading: "Two figures that are honestly not measurable",
+        heading: "Three figures that are honestly not measurable",
         body: [
-          "No window has closed and no event has been delivered, so rebooking rate and revenue retained have a denominator of zero.",
+          "Four figures sit at the top of this board and three of them have a denominator of zero. No window has closed, so there is no rebooking rate. No event has been delivered, so there is no events per account figure. No account has a prior twelve months to be compared against, so there is no revenue retained. The fourth is measured and reads two of two: both accounts are on cycle.",
           "They are modeled as a discriminated union rather than as a nullable number, because a nullable number invites a fallback to zero somewhere downstream, and a rebooking rate of nought per cent on the day the board opens is a lie with a percentage sign on it. Nought per cent would mean every window was missed, which is a much worse claim than the truth. The screen narrows on the union and prints the word, the reason, and the date the figure first has a denominator. Never a dash, never a NaN.",
         ],
       },
@@ -236,7 +236,7 @@ export const BOOK_RATIONALE: ScreenRationale[] = [
       {
         heading: "October is when a held date has to become a yes or a released evening",
         body: [
-          "Executive assistants and HR research holiday venues in July and August. The decisions land from August to early October, and October is the highest inquiry month of the year. Median booking to event is 36 days, and 48 per cent lock inside 30 days.",
+          "A corporate holiday catering playbook puts vendor research in July and August, shortlists finalised from September to early October, and what is left in October and November as smaller, last-minute bookings. It is a playbook rather than a measurement, and it is read here as one.",
           "That gives the held list a deadline of its own, and it is not the event date. A hold still unsigned at the end of October is not waiting, it is drifting, because the weeks in which that decision normally gets made have gone. The October job on this screen is not more tabling. It is turning five held dates into signatures or into evenings the venue can sell to somebody else.",
         ],
       },
@@ -276,7 +276,7 @@ export const BOOK_RATIONALE: ScreenRationale[] = [
         body: [
           "The last block takes every live conversation and converts them all at the midpoint of their modeled headcount range. That will not happen and it is not supposed to. It is a load test on the calendar: if the whole pipeline landed, would it need a bigger building or a wider spread of dates? Those are different problems with different answers, and only one of them is anybody's to solve.",
           "Signed bookings are excluded from it deliberately. A contract already sits in the dates above with its lanes counted, and adding it here as well would charge the calendar twice for the same party, which is the classic way a stress test ends up describing a busier venue than the one that exists.",
-          "It is drawn as whole evenings rather than as one long bar, because one bar 43 lanes long against a floor of 26 looks like a building that is two thirds too small, when what the number actually describes is two evenings, one full and one part full. That is a spread problem, not a size one. With no live conversations the figure is shown as absent rather than as zero pressure, because zero pressure sounds like good news and an empty pipeline is not.",
+          "It is drawn as whole evenings rather than as one long bar, because one bar 121 lanes long against a floor of 26 looks like a building several times too small, when what the number actually describes is five evenings, four full and one part full. That is a spread problem, not a size one. With no live conversations the figure is shown as absent rather than as zero pressure, because zero pressure sounds like good news and an empty pipeline is not.",
         ],
       },
     ],

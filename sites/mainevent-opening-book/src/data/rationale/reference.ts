@@ -19,8 +19,8 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
         heading: "Nobody in this category publishes a group price, and that is the opening",
         body: [
           "Main Event publishes no group price anywhere. Birthdays are published up to $29.99 a guest, the All-Access Grad Pack is $29.99, the MVP Grad Pack is $52 and the Play It Forward voucher is $19.95. Every corporate and school package on this screen ends with the same instruction, which is to contact the local sales manager. Fourteen of the eighteen rows are gated that way, and the only fully priced programme set on the site, team building, prints its two figures with a decimal fault and carries a 20 per cent facilitator fee on top.",
-          "The competition does not all sell that way. Chuck E. Cheese leads with $9.99 a child. Topgolf publishes a per head figure location by location. A parent, a PTA treasurer or an office manager with one afternoon to arrange something can price those in a minute and cannot price this venue at all.",
-          "That is a conversion gap, not a filing quirk. Every buyer who wanted a number, could not find one and did not want to make a phone call went somewhere they could see a price, and nobody at the venue ever hears from that group. The gate is where this role earns its salary. It is also where the money leaks on every day nobody is standing at it.",
+          "The competition sells the same way. Six venues were opened and read one at a time on 14 August 2026: Lucky Strike Fullerton, Lucky Strike Orange, Round1, Dave and Buster's Orange, The Phoenix Club and La Habra 300 Bowl. Six out of six publish no group price. Every one of them routes a group enquiry to a planner, a form or a telephone. A parent, a PTA treasurer or an office manager with one afternoon to arrange something cannot price any of them, and cannot price this venue either.",
+          "That is a conversion gap, not a filing quirk. Every buyer who wanted a number, could not find one and did not want to make a phone call is a buyer nobody at the venue ever hears from. When the whole category gates the price, what decides the booking is who answers first and what they can say when they do. The gate is where this role earns its salary. It is also where the money leaks on every day nobody is standing at it.",
         ],
       },
       {
@@ -57,7 +57,7 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
       {
         heading: "The day-part fence gets a block, not a footnote",
         body: [
-          "The obvious layout puts price first and everything else in small type underneath. That would have buried the field that decides more than the price does. Corporate All Access is valid Monday before 4pm, Tuesday to Thursday all day, and Friday only before 5pm. Bowl 'n Fun runs before 5pm. All Day Meeting is eight to five on a weekday. Not one published package is scoped to a weekend.",
+          "The obvious layout puts price first and everything else in small type underneath. That would have buried the field that decides more than the price does. Corporate All Access is valid Monday before 4pm, Tuesday to Thursday all day, and Friday only before 5pm. Bowl 'n Fun runs Monday to Friday before 5pm, Saturday before 11am and Sunday after 6pm. All Day Meeting is eight to five on a weekday.",
           "Main Event has already decided which hours it wants groups to fill, so the fence sits in its own block on every card with a glyph set that reads in greyscale: a solid square where there is no restriction, a partial fill where there is. A rep who reads that fence correctly is selling the hours the company is trying to sell rather than arguing for the ones it is not.",
         ],
       },
@@ -89,7 +89,7 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
         heading: "The week has a shape, and the shape is other people's calendars",
         body: [
           "A calendar-locked buyer has the event already and decides in a month you do not choose. A school books a grad night in the spring it happens, not in the October somebody felt like calling. So the week starts by reading which buying windows are open in the next four months, and the hours go there. That is why the one activity target on this page is calendar-locked organisations touched inside an open window rather than touches, because the denominator is fixed by other people's diaries and cannot be inflated by working the easy names.",
-          "The hours a rep sells matter as much as the month they call in. Main Event has already fenced its own group packages into weekday daytime and after close: Corporate All Access is Monday before 4pm, Tuesday to Thursday all day and Friday before 5pm; Bowl 'n Fun runs before 5pm; All Day Meeting is eight to five on a weekday; the lock-ins start half an hour after the building closes. A rep working those hours is selling inventory the company is trying to fill and is arguing with nobody.",
+          "The hours a rep sells matter as much as the month they call in. Main Event has already fenced its own group packages into weekday daytime and after close: Corporate All Access is Monday before 4pm, Tuesday to Thursday all day and Friday before 5pm; Bowl 'n Fun runs Monday to Friday before 5pm, Saturday before 11am and Sunday after 6pm; All Day Meeting is eight to five on a weekday; the lock-ins start half an hour after the building closes. A rep working those hours is selling inventory the company is trying to fill and is arguing with nobody.",
           "Forty calls placed in the right month against the right hours are a different business from forty calls spread evenly across the board. Order beats effort, and effort spent in the wrong month looks identical on an activity report right up to the quarter it does not close.",
         ],
       },
@@ -141,7 +141,7 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
         heading: "No invented people, and the figures move while you watch",
         body: [
           "Every person named on this screen is a role: Sales Manager, event sales representative, Assistant Principal for Activities, practice manager, youth pastor. There is no invented human being anywhere in the application, because a work sample that invents a person has invented the one kind of fact a reader has no way to check.",
-          "The measurement figures are read live off this session's state rather than typed into the prose. Advance a prospect on the desk or complete a shift on the field page and they move. They are badged illustrative, because there is no real team and no real week behind them: what is being shown is the shape of the measurement, not a claim about a result.",
+          "The measurement figures are read live off this session's state rather than typed into the prose. Advance a prospect on the desk or complete a shift on the field page and they move. The counts on both ledgers are badged illustrative, because there is no real team and no real week behind them. The dollar figures on the lagging side, contract value and deposits collected, are badged modeled instead, because each is computed from the per-guest price and the deposit percentage carried on the lines it adds up. What is being shown either way is the shape of the measurement, not a claim about a result.",
         ],
       },
     ],
@@ -158,15 +158,16 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
         heading: "A number a buyer can check is a number that survives the second meeting",
         body: [
           "Provenance reads like an academic habit. It is a commercial one. Proposals do not fail in the first meeting, because in the first meeting nobody checks anything. They fail in the second, after the buyer has forwarded the document to somebody whose job is to find the weak line. One figure that does not stand up takes the credit of every figure around it, including the true ones.",
-          "So every number in this application carries one of five classes: public, observed, modeled, illustrative, withheld. Nothing unsourced is presented as measured. A rep working off these screens can say where any figure came from without leaving the room, and can say plainly which ones are the venue's own estimate rather than a published fact. Buyers do not punish an estimate that is labelled. They punish one that was not.",
+          "So every number in this application carries one of six classes: public, observed, modeled, user input, illustrative, withheld. Nothing unsourced is presented as measured. A rep working off these screens can say where any figure came from without leaving the room, and can say plainly which ones are the venue's own estimate rather than a published fact. Buyers do not punish an estimate that is labelled. They punish one that was not.",
           "The rule protects the venue in the other direction too. A price this application refuses to print is a price nobody can later be held to, and a group buyer holding a number a rep should never have said is the most expensive kind of misunderstanding a venue has.",
         ],
       },
       {
-        heading: "Thirty eight things nobody could verify, printed rather than smoothed over",
+        heading: "Nine things nobody could verify, printed rather than smoothed over",
         body: [
-          "The research carries a 38 item could-not-verify list. The opening date of the venue is on it. So is every drive time. Three widely repeated industry statistics were taken out once they traced back to content farms rather than to anybody who had measured anything.",
-          "A general manager has heard those three statistics. Anyone who has sat through a vendor pitch has heard them. Leaving them in would have bought one nod in a first meeting and cost every figure beside them the moment somebody looked one up. Publishing the list does the opposite: it tells a buyer, in one place, which parts of a proposal they can lean their own decision on.",
+          "The local business research ends on a could-not-verify list of nine numbered items, headed with the sentence that this section is the point. Every item on it was found, opened, looked at and then refused, with the reason written down: two sources disagreeing about the name on the door, a company whose own store locator would not return an address for its own branch, a page the operator disallows in robots.txt against a single second-party listing.",
+          "Every one of those rows would have been easy to keep. A directory address reads exactly like a first-party one once it is sitting in a table, and nobody checking a work sample would have caught any of them. Publishing the refusals instead is what tells a buyer, in one place, which parts of a proposal they can lean their own decision on.",
+          "The same rule is why no drive time appears anywhere in this application. There is no routing engine in it, so the map rings are straight line miles from 245 W Birch Street and say so on the ring label, in the map legend, in the map popup and in the prospect panel. A ring drawn as a drive time would be the easiest unearned figure on any territory map to print.",
           "It matters more here than it would anywhere else, because the building at 245 W Birch St is not open. Almost every operating figure a venue would normally quote does not exist yet. Naming which parts are invented is exactly what makes the rest of it usable.",
         ],
       },
@@ -254,10 +255,11 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
         ],
       },
       {
-        heading: "One real company, and its row carries the loudest badge",
+        heading: "One real company, and the one row where the badge does not do enough",
         body: [
-          "Nature's Mark is a real company and it publishes a real list of licensed properties. Exactly two things on this screen are public: those licence names and the twenty four retailer names, both read off natures-mark.com on 13 August 2026, both carrying the URL.",
-          "Every lead time, every minimum order quantity, every date and every dollar figure is invented, including the ones on the Nature's Mark row itself. That row gets the badge treatment it does because a real company with invented commercial terms is the most dangerous shape of row in the application, and the easiest one for a reader to take at face value.",
+          "Nature's Mark is a real company and it publishes a real list of licensed properties. Three things on this screen are badged public: the licence names, the count of twenty four published retailers, and the Nature's Mark row on the register itself. The lists were read off natures-mark.com on 13 August 2026 and carry the URL.",
+          "Every lead time, every minimum order quantity, every date and every dollar figure in the supply data is invented, including the ones on the Nature's Mark row. That row is the weak point in this screen and it is worth stating plainly rather than claiming credit for. It carries one badge, on the row head, and that badge reads public, because what is public is the company and its published licence list. The 120 working day lead time and the 2,400 unit minimum print underneath it with no badge of their own, so a reader scanning the row inherits the public badge over two figures Nature's Mark has never published.",
+          "A real company with invented commercial terms under a public badge is the most dangerous shape of row in the application and the easiest one for a reader to take at face value. What holds it today is prose. The note printed on the row says there is no agreement between Main Event and Nature's Mark and none with any licensor on the list, and the framing line in the page header says the same thing in one sentence. That is prose doing a badge's job, and a per-field badge on the lead time and the minimum order is the fix.",
         ],
       },
       {
@@ -294,8 +296,8 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
       {
         heading: "The fundraiser inverts the cold call",
         body: [
-          "Twenty per cent back to the school is the category standard. Main Event is at 20, Chuck E. Cheese is at 20, Urban Air is at 20 and Sky Zone is at 20. Stars and Strikes runs 15. Chuck E. Cheese pays 25 above $2,500 and routes the whole programme through a local Field Marketing Specialist, which is this job under a different title. Whatever else that says, it says the category has already decided a person is needed to run this.",
-          "So the rate is not what wins these nights, because everybody has the same rate. What wins them is who calls first and what the call sounds like. Every other call this venue makes asks an organisation to spend money it has already committed elsewhere. This one offers a school money for a night its families were going to spend at home.",
+          "Main Event publishes a Spirit Night rate of 20 per cent of sales on the night, donated back to the nonprofit. That figure is on the company's own page, it is badged public on the package and on the offer, and it is the only donation rate in this application a rep can quote to a school without asking anybody. No rate any other operator pays is stated here, because none was read.",
+          "So the rate is not what wins these nights. What wins them is who calls first and what the call sounds like. Every other call this venue makes asks an organisation to spend money it has already committed elsewhere. This one offers a school money for a night its families were going to spend at home.",
           "That inversion is the argument. A school office that will not take a call about a group package will take a call about its own fundraising target, because the person answering the phone has that target written down in front of them and no easy way to hit it.",
         ],
       },
@@ -400,8 +402,8 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
       {
         heading: "Over budget counts money that has not been spent yet",
         body: [
-          "The simpler reading is spend against ceiling. It would have shown every line comfortably inside its budget while an order for four hundred thousand dollars sat issued and uninvoiced against it.",
-          "So committed money counts: unpaid invoices plus the uninvoiced part of every open purchase order. That is the money a manager can still act on, and it is the only version of the question worth asking before the invoice arrives. Draft and cancelled orders commit nothing, which is what makes a draft order a real state rather than a formality.",
+          "The simpler reading is spend against ceiling. Read that way, both of the lines that are actually over would have looked comfortably inside. Print, vouchers and table media has paid $3,060 against a $3,600 budget. Apparel and uniform has paid $7,680 against $14,000. Neither has spent its ceiling and both are over it, by $390 and by $108, and every dollar of the difference is money that has been committed and not yet paid.",
+          "So committed money counts: unpaid invoices plus the uninvoiced part of every open purchase order. Across the eight lines that is $76,831 committed, of which $19,025 sits in open orders nobody has invoiced yet, the largest single piece of it PO-2026-104 at $18,400 raised, $9,200 invoiced and $9,200 still to come. That is the money a manager can still act on, and it is the only version of the question worth asking before the invoice arrives. Draft and cancelled orders commit nothing, which is what makes a draft order a real state rather than a formality: the two largest orders on the register, PO-2026-101 at $46,200 and PO-2026-102 at $25,000, are both drafts and neither one moves a budget line.",
         ],
       },
       {
@@ -415,7 +417,7 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
         heading: "The notice date is derived, because no contract carries it",
         body: [
           "An auto-renewing agreement has a start date, an end date and a notice period, and none of those is the date that decides anything. The date that decides is the last day notice can be served, which appears on no contract as a field.",
-          "It is computed from the end date and the notice period, printed on every row, and flagged when it is close. The nearest renewal on the register also has the shortest notice period behind it, which is the ordinary way this goes wrong.",
+          "It is computed from the end date and the notice period, printed on every row, and flagged when it is close. The nearest renewal on the register is the Ticket Wall Supply master terms, which end on 30 September 2026 and renew themselves automatically on thirty days' notice. That puts the date that decides it at 31 August, eighteen days out from the as-at date, and it is the only row on the register the screen flags. A reader looking at the end date alone would think there was a month and a half to think about it.",
           "The one licensed agreement in the set is titled as a draft and is not executed, and both purchase orders against it sit in draft and commit nothing. That matches the register on the partners screen, which shows that relationship as in talks. Anything else here would be a claim about two real companies.",
         ],
       },
@@ -484,7 +486,7 @@ export const REFERENCE_RATIONALE: ScreenRationale[] = [
       {
         heading: "The licensor's own brand name is read off the register, never typed",
         body: [
-          "The nine property names are the only public facts on the screen, and they are not typed on it. They are read off the licence register the partners screen uses, which was read off the Nature's Mark partners page on 13 August 2026, filtered to the properties that page actually names. Copying a brand into a second file is how a full stop goes missing from a document addressed to the party who owns the trademark.",
+          "The public facts on this screen are the nine property names and the five retailers cited at the foot, and the provenance block puts both under one public badge and one URL. The property names are not typed on the screen. They are read off the licence register the partners screen uses, which was read off the Nature's Mark partners page on 13 August 2026, filtered to the properties that page actually names. Copying a brand into a second file is how a full stop goes missing from a document addressed to the party who owns the trademark.",
           "It is a small thing and it is entirely the job. A misspelled property on an internal table is a typo. The same misspelling on an outward statement is what the licensor reads first, and it is read as carelessness about their asset rather than about the file. Harry Potter is excluded by the same flag the register uses, because it is named on the Nature's Mark root page and not on the partners page, and a statement is not the place to resolve a discrepancy between two readings of two pages.",
           "The five retailers cited at the foot of the statement come off the same published page, which names twenty four. They are there because they are the part of that page a reader takes as evidence rather than as a claim: a supplier already shipping licensed product into named doors has passed those retailers' own compliance. The full list is not copied here either, and the check below refuses any name the published list does not carry.",
         ],

@@ -7,8 +7,8 @@ import type {
  * THE THREADS. What was actually said, to whom, and what it changed.
  *
  * WHY THIS FILE EXISTS. Everything else in this application could tell
- * you where a hundred and two organisations stand. None of it could tell
- * you what any of them said. A status chip that reads "In conversation"
+ * you where two hundred and eleven organisations stand. None of it could
+ * tell you what any of them said. A status chip that reads "In conversation"
  * with nothing behind it is a rep's memory written down badly, and the
  * first question anybody asks when they open a record is not "what stage
  * is this", it is "what did they say, and when".
@@ -18,12 +18,13 @@ import type {
  * and then stood in their reception" and "we emailed four times" produce
  * the same touch count and describe completely different situations.
  *
- * SIXTY OF THE HUNDRED AND TWO HAVE A THREAD. The other forty-two have
- * nothing at all, and that is the honest shape of a trade area three and
- * a half weeks into being worked by one person: a hundred and fifty-six
- * messages, a hundred and four of them outbound, fifty-two back. Every
- * screen that reads this file has to survive an organisation with no
- * history, because forty-two of them have none.
+ * SIXTY OF THE TWO HUNDRED AND ELEVEN HAVE A THREAD. The other hundred
+ * and fifty-one have nothing at all, and that is the honest shape of a
+ * trade area three and a half weeks into being worked by one person: a
+ * hundred and fifty-six messages, a hundred and four of them outbound,
+ * fifty-two back. Every screen that reads this file has to survive an
+ * organisation with no history, because a hundred and fifty-one of them
+ * have none.
  *
  * THIS IS NOT A FLATTERING PIPELINE, AND THAT IS THE ENTIRE POINT.
  *
@@ -2959,8 +2960,8 @@ export const MESSAGE_BY_ID: Record<string, ConversationMessage> =
 /**
  * The thread for each organisation, oldest first.
  *
- * Built once at module load rather than filtered per render. At a
- * hundred and two organisations either would be fine; the reason to
+ * Built once at module load rather than filtered per render. At two
+ * hundred and eleven organisations either would be fine; the reason to
  * build the index is that the record selector is called for every row of
  * a list and a filter inside it turns a list render into a quadratic
  * one.

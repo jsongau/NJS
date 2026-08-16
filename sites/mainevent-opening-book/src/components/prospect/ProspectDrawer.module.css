@@ -128,7 +128,7 @@
 .sectionTitle {
   margin: 0 0 var(--space-3);
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -161,7 +161,7 @@
 }
 
 .fact dt {
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -360,7 +360,7 @@
 }
 
 .priceLabel {
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -404,7 +404,7 @@
   color: var(--text-2);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 10px;
+  font-size: var(--step--3);
 }
 
 .sentDate {

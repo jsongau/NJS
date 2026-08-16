@@ -134,7 +134,7 @@
 .sectionTitle {
   margin: 0 0 var(--space-3);
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;

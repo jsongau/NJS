@@ -26,7 +26,7 @@
 }
 
 .sm {
-  font-size: 9.5px;
+  font-size: var(--step--3);
   padding: 1px 7px;
   gap: 4px;
 }

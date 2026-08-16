@@ -88,7 +88,7 @@
 .eyebrow {
   margin: 0 0 2px;
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -181,7 +181,7 @@
   padding: 0;
   margin-bottom: var(--space-3);
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -384,7 +384,7 @@
 }
 
 .whyLabel {
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -403,7 +403,7 @@
 .guardrailHead {
   margin: 0 0 var(--space-1);
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -497,7 +497,7 @@
 
 .fieldLabel {
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -684,7 +684,7 @@
 
 .letterToLabel {
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -707,7 +707,7 @@
 .letterFieldLabel {
   flex: none;
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -1044,7 +1044,7 @@
 }
 
 .sentFact dt {
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;

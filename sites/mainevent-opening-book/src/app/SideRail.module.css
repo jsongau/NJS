@@ -192,7 +192,7 @@
   title. It names the building the whole application is about.
 */
 .brandSub {
-  font-size: 10px;
+  font-size: var(--step--3);
   color: var(--text-2);
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -208,7 +208,7 @@
 .contextLabel {
   margin: 0;
   padding: 0 var(--space-1);
-  font-size: 9.5px;
+  font-size: var(--step--3);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -249,7 +249,7 @@
 }
 
 .countdownUnit {
-  font-size: 9.5px;
+  font-size: var(--step--3);
   text-transform: uppercase;
   letter-spacing: 0.07em;
   font-weight: 700;
@@ -266,7 +266,7 @@
 }
 
 .periodLabel {
-  font-size: 9.5px;
+  font-size: var(--step--3);
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--text-3);
@@ -454,7 +454,7 @@
   margin: 0 0 var(--space-1);
   padding: 0 var(--space-4);
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -617,7 +617,7 @@
 */
 .featureFigure {
   font-family: var(--font-ui);
-  font-size: 10.5px;
+  font-size: var(--step--3);
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.2;
@@ -1104,7 +1104,7 @@
   }
 
   .heading {
-    font-size: 10.5px;
+    font-size: var(--step--3);
     padding: 0 var(--space-4);
   }
 
@@ -1255,7 +1255,7 @@
 .facetHeading {
   margin: var(--space-2) 0 2px;
   padding: 0 var(--space-4);
-  font-size: 9px;
+  font-size: var(--step--3);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1360,7 +1360,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 10.5px;
+  font-size: var(--step--3);
   font-weight: inherit;
   line-height: 1.15;
 }
@@ -1483,7 +1483,7 @@
   }
 
   .facetHeading {
-    font-size: 10px;
+    font-size: var(--step--3);
   }
 
   .rail[data-collapsed="true"] .facetHeading,

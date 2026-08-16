@@ -33,7 +33,7 @@
    stack of named controls rather than a widget followed by a form. */
 .groupLabel {
   margin: 0;
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;

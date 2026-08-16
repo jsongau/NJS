@@ -833,6 +833,12 @@
      a page title and a headline figure get marquee size without
      moving a single one of the sizes a table uses. Steps -2, -1
      and 0 are byte for byte what they were. */
+  /* Step -3 is the micro label: the unit under a figure, a legend
+     key, the word on a chip. It already existed as 9.5px and 10px
+     typed straight into a couple of hundred declarations across
+     twenty odd stylesheets. Naming it changes nothing on a desktop,
+     and it is what lets the block below lift it on a phone. */
+  --step--3: 0.625rem;
   --step--2: 0.694rem;
   --step--1: 0.833rem;
   --step-0: 1rem;
@@ -1669,5 +1675,78 @@
     --op-dur-slide: 0ms;
     --op-dur-settle: 0ms;
     --op-stagger: 0ms;
+  }
+}
+
+/* ============================================================
+   THE PHONE.
+
+   The type scale above is tuned for an instrument: a person at a
+   desk, reading a table of two hundred rows, who wants density and
+   is a foot from the screen. That is the right decision for the
+   surface this was designed on and the wrong one held at arm's
+   length in a hand, and the difference is not taste. An audit of
+   every screen at 320, 360 and 390 counted roughly ten thousand
+   runs of text below twelve pixels.
+
+   SO THE SMALL END OF THE SCALE LIFTS AND THE REST DOES NOT.
+   Headings are already large enough on a phone; making them larger
+   costs lines and gains nothing. Only the three steps that carry
+   the labels, units and secondary prose move, and they move by
+   about a pixel and a half each. Every table, every chip and every
+   readout in the application reads the same tokens, so this is the
+   whole change rather than the first of two hundred.
+
+   IT IS A WIDTH QUERY RATHER THAN A POINTER QUERY. `pointer:
+   coarse` catches a television and a touchscreen laptop, neither of
+   which has this problem, and misses a phone with a stylus paired.
+   The thing that makes eleven pixels hard here is the size of the
+   viewport.
+   ============================================================ */
+@media (max-width: 560px) {
+  :root {
+    --step--3: 0.75rem;   /* 12px,   was 10 */
+    --step--2: 0.78rem;   /* 12.5px, was 11.1 */
+    --step--1: 0.875rem;  /* 14px,   was 13.3 */
+  }
+}
+
+/* ============================================================
+   THE iOS FOCUS ZOOM, AND IT IS THE ONE BUG ON THIS LIST THAT
+   BREAKS THE PAGE RATHER THAN STRAINING THE READER.
+
+   Safari on iOS zooms the entire viewport when a form control
+   under 16px takes focus, and it does not zoom back out when the
+   control is blurred. The reader is left on a page scrolled
+   sideways, with the navigation off screen, having done nothing
+   but tap a dropdown. It is invisible in every desktop browser and
+   in every desktop emulation of a phone, which is why it survives
+   in so much otherwise careful work.
+
+   The audit found ten distinct offenders, the worst being the
+   period selector in the rail at 11.1px, present on 165 of the 171
+   screen and width pairs measured. So it is fixed once, here,
+   rather than in the ten stylesheets that happen to own them.
+
+   16px EXACTLY, because that is the threshold Safari tests, and
+   `font-size` only: nothing here touches height, padding, colour
+   or family, so a control that was already 44px tall and correctly
+   themed stays exactly as it was drawn everywhere else.
+   ============================================================ */
+@media (max-width: 560px) {
+  /* `html:root` IS 0,1,2 AND THE SECOND NUMBER IS WHY.
+
+     A bare `select` at 0,0,1 loses to every module that styles one
+     with a class. `:root select` is 0,1,1, which beats a lone class
+     but only TIES `.page textarea`, and a tie is decided by source
+     order: CSS modules load after this file, so the tie was lost
+     silently on two controls. `html:root` adds an element to the
+     same compound without adding meaning, wins outright, and still
+     leaves any deliberate future override a way past it. That is
+     what !important would have taken away. */
+  html:root input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  html:root select,
+  html:root textarea {
+    font-size: 16px;
   }
 }

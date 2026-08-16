@@ -50,7 +50,7 @@
    outside the shell, where nothing sets --sec-ink at all. */
 .eyebrow {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -165,7 +165,7 @@
 }
 
 .numLabel {
-  font-size: 9.5px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -422,7 +422,7 @@
 
 .keyGlyph {
   color: var(--tone, var(--text-2));
-  font-size: 10px;
+  font-size: var(--step--3);
   line-height: 1;
 }
 
@@ -520,7 +520,7 @@
 
 .calloutEyebrow {
   margin: 0 0 var(--space-2);
-  font-size: 9.5px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -761,7 +761,7 @@
 .presetLabel {
   display: block;
   margin-bottom: var(--space-2);
-  font-size: 9.5px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -810,7 +810,7 @@
 }
 
 .presetNote {
-  font-size: 9.5px;
+  font-size: var(--step--3);
   line-height: 1.35;
   color: var(--text-2);
   max-width: 22ch;
@@ -1046,4 +1046,28 @@
   font-size: var(--step-0);
   font-weight: 600;
   white-space: nowrap;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
 }

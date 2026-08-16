@@ -387,7 +387,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding: 1px 6px !important;
   background: color-mix(in srgb, var(--surface-1) 76%, transparent) !important;
   border-radius: var(--radius-s) 0 0 0;
-  font-size: 9px !important;
+  font-size: var(--step--3) !important;
   line-height: 1.5 !important;
   color: var(--text-3) !important;
 }

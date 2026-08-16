@@ -65,7 +65,7 @@
    output of the same supply side rather than a new place. */
 .eyebrow {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -1102,5 +1102,32 @@
   .provRow {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+}
+
+/* ============================================================
+   TOUCH TARGET WITHOUT MOVING A PIXEL.
+
+   The published source under a section is a citation a reader may well open, and on a phone it measured 15px tall
+   against the 44px a finger is owed. The naive fix is more line
+   height or more padding, and both push everything around it down
+   on the one screen size with the least room to spare.
+
+   So the padding is added and then taken straight back out with an
+   equal negative margin. The hit box grows to 44px, the layout box
+   is exactly what it was, and nothing beside it moves. It only
+   applies below 560px, because a pointer does not need it and the
+   negative margins are not worth carrying on a desktop.
+
+   inline-block rather than inline, because vertical padding on an
+   inline element paints outside the line box and is not counted in
+   the hit area at all, which would have made this look fixed while
+   changing nothing.
+   ============================================================ */
+@media (max-width: 560px) {
+  .link {
+    display: inline-block;
+    padding-block: 15px;
+    margin-block: -15px;
   }
 }

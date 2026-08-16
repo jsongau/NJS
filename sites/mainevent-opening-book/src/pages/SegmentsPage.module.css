@@ -58,7 +58,7 @@
 .eyebrow,
 .sectionEyebrow {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -210,7 +210,7 @@
 
 .headlineLabel {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -387,7 +387,7 @@
 }
 
 .rerankLabel {
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -685,7 +685,7 @@
   align-items: baseline;
   gap: var(--space-2);
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -716,7 +716,7 @@
 
 .factLabel {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -937,7 +937,7 @@
 .gapOccasionLabel {
   display: block;
   margin-bottom: var(--space-1);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1051,7 +1051,7 @@
 
 .moveEntryLabel {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;

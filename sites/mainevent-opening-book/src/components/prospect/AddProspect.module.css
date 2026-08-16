@@ -168,7 +168,7 @@
 }
 
 .required {
-  font-size: 9.5px;
+  font-size: var(--step--3);
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--risk);
@@ -287,7 +287,7 @@
 }
 
 .tileLabel {
-  font-size: 10.5px;
+  font-size: var(--step--3);
   font-weight: inherit;
   line-height: 1.15;
   text-align: center;

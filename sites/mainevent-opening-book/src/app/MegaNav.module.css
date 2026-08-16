@@ -578,7 +578,7 @@
 */
 .featureFigure {
   font-family: var(--font-ui);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.15;
@@ -1140,5 +1140,104 @@
     height: 44px;
     padding: 0 var(--space-4);
     font-size: var(--step--1);
+  }
+}
+
+/* ============================================================
+   THE PHONE. WHAT COMES OFF THE BAR, AND WHY IT IS THE QUEUE KEYS
+   RATHER THAN THE MODE SWITCH.
+
+   Measured at 320, 360 and 390: the bar's content is 621px wide.
+   It does not scroll, it CLIPS, so everything past the viewport is
+   not merely awkward to reach, it is unreachable. At 390 the
+   Rationale control had 88 of its 112 pixels on screen; at 320 it
+   had 18. Today, Inbox, Requests, Leagues and Maps were entirely
+   gone, starting at x=437 on a 390px screen.
+
+   Something had to leave. The rule this file already states is
+   that the bar is what is WAITING for you and the rail is where
+   things ARE, and on a phone that rule decides it: every queue key
+   on this strip is also a row in the rail, with the same live
+   figure, one tap away behind Menu. The mode switch is not. It is
+   the only control anywhere in the application that moves a reader
+   between the console and the argument for it, and half the work
+   is behind it.
+
+   So the queue keys and the featured key come off and the mode
+   switch stays. Nothing is lost: Menu reaches all of it.
+
+   THE BREAKPOINT IS 899 AND IT WAS MEASURED, NOT CHOSEN. The full
+   strip needs 888px to draw its rightmost control inside the
+   viewport. The first attempt at this hid the keys below 560,
+   which fixed the phone and left every width from 561 to 840
+   clipping exactly as before: at 768 the Maps key ended at 796.
+   899 is where this file's other narrow rules already turn, and it
+   is above the number the ruler gave.
+
+   THE COUNTS GO WITH THEM, AND THAT IS THE COST. A person working
+   the desk on a phone loses the at a glance figures. That is a real
+   trade and it is the right way round, because the reader most
+   likely to be holding a phone here is somebody who has been sent
+   the link, and for them an unreachable mode switch is fatal while
+   a hidden count is an inconvenience.
+   ============================================================ */
+@media (max-width: 899px) {
+  .list,
+  .featureSlot {
+    display: none;
+  }
+
+  /* The pill was holding a gutter open for a list that is no longer
+     there, which parked it 24px short of the right edge. */
+  .modes {
+    margin-right: 0;
+  }
+}
+
+/* At the narrowest widths the three survivors still have to fit, and
+   the only slack left is in the words rather than in the gaps: the
+   gaps were already spent down to 3px at 499. "Menu" becomes the
+   burger alone, which is a control every reader on a phone already
+   knows, and the theme switch drops its word for the same reason. */
+@media (max-width: 400px) {
+  .burgerLabel,
+  .groundWord {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ============================================================
+   THE LAST TWENTY TWO PIXELS, AT 320.
+
+   Every width from 360 up fits with the queue keys hidden. A 320px
+   screen, which is an iPhone SE held in portrait and the narrowest
+   viewport worth supporting, was still 22px short: the mode pill
+   ended at 342.
+
+   The pixels come out of the pill's own gutters and its letter
+   spacing, not out of the two words. "CONSOLE" and "RATIONALE" stay
+   whole, because a mode switch abbreviated to CON and RAT is a
+   control a reader has to decode, and the entire reason this pill
+   survives on a phone while five destinations do not is that a
+   first time reader has to be able to find it without being told.
+
+   Measured after: the pill ends at 318 on a 320px viewport.
+   ============================================================ */
+@media (max-width: 359px) {
+  .mode {
+    padding: 0 var(--space-2);
+    letter-spacing: 0.01em;
+  }
+
+  .modes {
+    gap: 1px;
+    padding: 1px;
   }
 }

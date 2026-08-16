@@ -149,7 +149,7 @@
 }
 
 .occasionGlyph {
-  font-size: 9px;
+  font-size: var(--step--3);
   letter-spacing: 1px;
   color: var(--text-2);
 }
@@ -182,7 +182,7 @@
 
 .filterLabel {
   margin: 0;
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -272,7 +272,7 @@
 }
 
 .columnLabel {
-  font-size: 9px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -345,7 +345,7 @@
 
 .emptyLabel {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;

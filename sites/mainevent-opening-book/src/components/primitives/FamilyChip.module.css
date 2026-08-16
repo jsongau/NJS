@@ -12,7 +12,7 @@
   vertical-align: middle;
 }
 
-.sm { font-size: 9.5px; padding: 1px 7px 1px 5px; gap: 5px; }
+.sm { font-size: var(--step--3); padding: 1px 7px 1px 5px; gap: 5px; }
 .md { font-size: var(--step--2); }
 
 /* The patterned square. Lose the hue and this is still a distinct shape

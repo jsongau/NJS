@@ -402,7 +402,7 @@
 .rowCountWord {
   min-height: 1.1em;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--step--3);
   line-height: 1.1;
   letter-spacing: 0.02em;
   color: var(--text-2);

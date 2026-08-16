@@ -55,7 +55,7 @@
    outside the shell, where nothing sets --sec-ink at all. */
 .eyebrow {
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -651,7 +651,7 @@
   align-items: center;
   gap: var(--space-2);
   margin: 0 0 var(--space-2);
-  font-size: 10px;
+  font-size: var(--step--3);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.11em;
@@ -942,4 +942,28 @@
   color: var(--text-2);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
 }

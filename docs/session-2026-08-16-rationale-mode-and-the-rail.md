@@ -253,3 +253,102 @@ and would have passed screens that were not.
    can differ from a recomputation by up to about 0.2 miles.
 5. The Grain source is still committed nowhere. Agreed destination is its
    own public repo, `jsongau/samyang-grain`.
+
+---
+
+# 2026-08-16, part three — mobile
+
+Every screen at 320, 360 and 390, in both modes. `scripts/audit-mobile.mjs`.
+
+## The defect no overflow check could have found
+
+The mega nav does not scroll. It **clips**. Content 621px wide inside a
+390px bar, and `document.scrollWidth` reads a clean 390 the whole time,
+because an element can overflow its container without the document
+overflowing.
+
+| Viewport | Of the Rationale control's 112px |
+|---|---|
+| 320 | 18px on screen |
+| 360 | 58px on screen |
+| 390 | 88px on screen |
+
+Today, Inbox, Requests, Leagues and Maps were gone outright from x=437.
+The Console/Rationale pair is the only control in the application that
+moves a reader between the console and the argument behind it, so on a
+phone half the work sat behind a button nobody could press.
+
+**Fixed by the bar's own rule**: the bar is what is waiting for you, the
+rail is where things are. Every queue key is also a rail row with the same
+live figure, one tap behind Menu. The mode switch is not. Keys off, switch
+stays.
+
+**The breakpoint was measured.** First attempt hid the keys below 560,
+which fixed the phone and left 561 to 840 clipping exactly as before: at
+768 the Maps key still ended at 796. The strip needs 888px. Breakpoint
+899, which is a number this codebase already turns on.
+
+## The type scale lives in two places
+
+`tokens.css` has eight steps. Fourteen page stylesheets **re-declare a
+denser scale at the page root**, which shadows anything `:root` does. So
+the phone lift had to be written twice, once globally and once per page.
+A scoped override has to be undone in the same scope that made it.
+
+Separately, 240 micro labels were typed straight into stylesheets as 9px,
+9.5px, 10px and 10.5px. Four sizes within a pixel and a half of each
+other, all doing the same job. They are one token, `--step--3`, now.
+
+Desktop verified unchanged: smallest text on eight screens at 1440 is
+10px before and after.
+
+## The iOS focus zoom, and losing a specificity tie
+
+Safari zooms the viewport when a control under 16px takes focus and does
+not zoom back. Ten offenders, worst the rail's period selector at 11.1px
+on 165 of 171 pairs.
+
+`:root select` is 0,1,1. That beats a lone class but only **ties**
+`.page textarea`, and a tie is decided by source order, which CSS modules
+win because they load after the token sheet. Two controls stayed broken
+through a full rebuild. `html:root` is 0,1,2 and wins outright, and unlike
+`!important` it still leaves a deliberate future override a way past.
+
+## Touch targets without moving the layout
+
+Five links under 44px got `padding-block` and an equal negative
+`margin-block`. The hit box grows, the layout box does not change, nothing
+beside them moves. `inline-block` is required: vertical padding on an
+inline element paints outside the line box and is not counted in the hit
+area at all, which would have looked fixed and changed nothing.
+
+## What was deliberately not fixed
+
+**Map pins stay at 36 and 38px.** Clears WCAG 2.5.8 at AA (24px), misses
+Apple's 44, which is written for controls that stand alone. A pin does
+not: 211 of them over six miles, colliding ones already clustered under a
+label reading "zoom in to separate", and enlarging them makes a tap meant
+for one land on its neighbour, worst where they are most crowded. Exempted
+**by name** in the audit rather than by size, so a real control that
+happens to be 38px still fails.
+
+## The audit lied twice before it was right
+
+First run: 168 screens with "clipped text", 64 undersized tap targets.
+
+- **Visually hidden text is supposed to be clipped.** The 1px overflow
+  hidden box is how a screen reader hears "twelve late or due today" where
+  a sighted reader sees 12 beside an icon. All 168 were this.
+- **An inline link in a sentence is not a tap target.** WCAG 2.5.8 exempts
+  links sized by the line they sit in; the alternative is 44px line height
+  on every paragraph containing a link. 64 to zero.
+
+Both exemptions are written into the file with the reasoning. A check that
+reports defects the code does not have is worse than no check, because it
+trains you to skim past it.
+
+## Standing checks
+
+`scripts/audit-mobile.mjs` now also asserts that no control on the
+navigation bar is clipped off screen, which is the check that would have
+caught the defect at the top of this note.

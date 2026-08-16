@@ -2,6 +2,20 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-08-16 (3)
+
+- `me` — mobile, measured at 320/360/390 in both modes. The mega nav was
+  not scrolling on a phone, it was clipping: content 621px wide in a 390px
+  bar, so the Rationale control had 88 of its 112 pixels on screen and at
+  320 it had 18, while the document width read a clean 390 the whole time.
+  Queue keys come off the bar below 899px (measured: the full strip needs
+  888) and the mode switch stays, because every key is also a rail row and
+  the switch is not. Type scale lifted at the small end below 560px in both
+  places it is declared, root and the fourteen page stylesheets that shadow
+  it; 240 hardcoded micro sizes collapsed to one named token. iOS focus
+  zoom fixed globally. Desktop unchanged, verified at 1440. Details in
+  `docs/session-2026-08-16-rationale-mode-and-the-rail.md`.
+
 ## 2026-08-16 (2)
 
 - `me` — fact-checked all 27 explanation screens against the code and data

@@ -2,6 +2,19 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-08-16
+
+- `me` — Rationale shipped as a mode rather than a page: every screen explained
+  at its own address with a `/rationale` prefix, one rail in both readings. A
+  walk of all 28 screens in both modes found three real defects (the rail's
+  queue buckets keyed on the raw path and vanished in Rationale; those bucket
+  links jumped back to Console; the Maps takeover could not reach its own
+  explanation) and one lying measurement. Added `/sellthrough`, extended
+  `/spend` with order control and term checks, wrote the anime gap onto
+  `/partners`. Deployed build and new build served side by side and walked
+  screen for screen: nothing lost, nothing broken. Details in
+  `docs/session-2026-08-16-rationale-mode-and-the-rail.md`.
+
 ## 2026-08-09
 
 - `olesmoky` — mobile audit and repair. An unterminated `padding:8px 13` in the

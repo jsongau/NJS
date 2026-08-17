@@ -23,23 +23,34 @@ import {
  * was missing was the half of that experience your hands do not do. This
  * file is that half.
  *
- * ── SILENT UNTIL ARMED, AND THAT IS NOT TIMIDITY ──────────────────
- * The reader this is built for is a hiring manager opening a link, quite
- * possibly at a desk with other people around them, quite possibly in an
- * interview with the screen shared. Sound that arrives unasked at that
- * moment does not read as craft, it reads as a person who has never
- * watched somebody else open their work. So the default is off, the
- * choice is theirs, and the control that makes it says so in a word.
+ * ── ON BY DEFAULT, WHICH IS THE OWNER'S CALL AND NOT A DEFAULT I
+ *    WOULD HAVE PICKED ─────────────────────────────────────────────
+ * It shipped silent until armed, on the argument that a hiring manager
+ * may be opening this at a desk with other people around them or in an
+ * interview with the screen shared, and audio nobody asked for closes a
+ * tab. That argument was made twice and the owner has decided the other
+ * way. It is his application and the cabinet is louder for it. The
+ * argument is left here rather than deleted, because a decision with its
+ * reasoning still attached can be reversed by one word in SEED, and one
+ * that has been tidied away has to be rediscovered.
  *
- * Browsers agree, for their own reasons. Every one of them refuses to
- * start an AudioContext that was not created inside a user gesture, so a
- * design that played on load would be silent on the first screen and
- * loud on the second, which is worse than either.
+ * ── AND WHAT "ON BY DEFAULT" CAN ACTUALLY MEAN ────────────────────
+ * Not "plays on load", because no browser permits that. Every one of
+ * them refuses to start an AudioContext outside a user gesture, and one
+ * created on load starts suspended and stays that way.
  *
- * The upside of arming is real, though, and it is why this exists rather
- * than being talked about: the reader has to press something to turn it
- * on, and a press is exactly when the first sound should happen. The
- * control demonstrates itself.
+ * So the honest reading, and the one implemented here: the cabinet
+ * arrives ARMED, and the first sound is the first press. Nothing plays
+ * while a reader is looking at the front door, nothing plays while a page
+ * is loading, and the moment they touch anything it answers. The
+ * AudioContext is created lazily inside whatever click happens first,
+ * which is exactly where a browser will allow it, so the arrangement that
+ * satisfies the platform and the arrangement that satisfies the owner are
+ * the same arrangement.
+ *
+ * The control still exists and it now works the other way round: it is
+ * how a reader in a quiet office turns the thing OFF, in one press, and
+ * that choice is what gets written down.
  *
  * ── NOTHING IS A FILE ─────────────────────────────────────────────
  * Every sound here is synthesised in the Web Audio API from an
@@ -60,6 +71,32 @@ import {
  *   send    a rising pair, because something has left the building
  *   land    a small major third, the only cue that is allowed to be nice
  *   refuse  a low flat thud for a send the guards would not let through
+ *   pin     the map only: a struck bell with air around it
+ *   sweep   the map only: a low rise under a cluster opening
+ *
+ * ── THE MAP IS A DIFFERENT ROOM AND IT SOUNDS LIKE ONE ────────────
+ * Every other screen in this application is a desk: paper, keys, a
+ * drawer. The map is the only screen that is a PLACE, drawn as a trade
+ * area with distance rings on it, and a wooden desk click over the top of
+ * a map is the sound of the furniture rather than the sound of the thing
+ * you just touched.
+ *
+ * So the map has its own two voices and they are built to be recognisable
+ * as not-the-desk in the first fifty milliseconds. Where `press` is a
+ * triangle wave falling from 210 to 150 in 42ms, dry and short, `pin` is
+ * a sine an octave and a half above it that rings for 260ms and is
+ * allowed to hang. That is the difference between a key bottoming out and
+ * something being struck in a room with air in it, and it is carried by
+ * three separate properties rather than by pitch alone: the waveform, the
+ * length, and whether it decays or stops.
+ *
+ * They are routed by ZONE and not by call site. The map surface carries
+ * data-sound-zone="map" and the delegated listener reads the nearest zone
+ * above whatever was clicked, so every marker, every cluster, every popup
+ * control and every filter chip inside that surface speaks in the map's
+ * voice without a single component knowing that sound exists. The rail
+ * and the strip are outside the zone, so pressing Maps to GET there is a
+ * desk click and everything you do once you are there is not.
  *
  * ── THE REPEAT GUARD IS NOT AN OPTIMISATION ───────────────────────
  * A reader who double presses a key gets one click, not two, because two
@@ -73,23 +110,32 @@ import {
  * is not exposed as a slider: a control nobody moves is a control that
  * should have been a decision.
  *
- * ── WHAT IS PERSISTED ─────────────────────────────────────────────
- * The armed state, and only when it is on, as a slice inside the one
- * storage key state/persist.ts already owns, the same shape the ground
- * uses. An absent slice means off, which is the default, which is what a
- * first visit and a blocked storage both resolve to.
+ * ── WHAT IS PERSISTED, AND IT IS NOW THE SILENCE ──────────────────
+ * The absent slice always means the default, and the default is now on,
+ * so what gets written down is a reader choosing to SILENCE it. That
+ * inversion is deliberate and it is the same rule the ground follows:
+ * store the departure from the default, never the default itself. A
+ * first visit, a blocked storage and a cleared browser all resolve to the
+ * same place, and there is only ever one way to say each state.
  */
 
-export type SoundCue = "press" | "throw" | "send" | "land" | "refuse";
+export type SoundCue =
+  | "press"
+  | "throw"
+  | "send"
+  | "land"
+  | "refuse"
+  | "pin"
+  | "sweep";
 
 interface SoundState {
-  /** Off until the reader arms it. Never on by default, in any path. */
+  /** Armed on arrival. The first press is the first sound. */
   on: boolean;
 }
 
 type SoundAction = { type: "SET"; on: boolean } | { type: "TOGGLE" };
 
-const SEED: SoundState = { on: false };
+const SEED: SoundState = { on: true };
 
 function reducer(state: SoundState, action: SoundAction): SoundState {
   switch (action.type) {
@@ -103,21 +149,30 @@ function reducer(state: SoundState, action: SoundAction): SoundState {
 }
 
 /**
- * `encode` returns null while sound is off, which removes the slice
- * rather than storing a false. Same reasoning as the theme's: the absence
- * IS the default state, and writing it down would only create a second
- * way to say the same thing.
+ * `encode` returns null while sound is ON, because on is the default and
+ * the absence of a slice is how this codebase says "still at the
+ * default". What is stored is the silence: a reader who pressed the
+ * control to shut the cabinet up, whose choice must survive every later
+ * visit rather than being undone by the default they already rejected.
+ *
+ * THE SIGNATURE IS BUMPED TO v2 ON PURPOSE. The v1 slice meant "armed"
+ * and stored true; this one means "silenced" and stores false, so a v1
+ * payload read under v2 rules would say the opposite of what its writer
+ * meant. Bumping the version drops those cleanly, which costs an early
+ * reader their stored preference exactly once and never says the wrong
+ * thing about it.
  */
 const SOUND_CODEC: SliceCodec<SoundState> = {
   slice: "sound",
-  signature: signatureOf("sound.armed.v1"),
-  encode: (state) => (state.on ? { armed: true } : null),
+  signature: signatureOf("sound.silenced.v2"),
+  encode: (state) => (state.on ? null : { armed: false }),
   decode: (raw, seed) => {
     if (!isRecord(raw)) return seed;
-    /* Only the literal true arms it. A corrupt payload, a hand edited
-       "yes", a number, all resolve to silence, because the failure mode
-       of guessing wrong here is noise in somebody's open plan office. */
-    return raw.armed === true ? { on: true } : seed;
+    /* Only the literal false silences it. Anything else, a corrupt
+       payload, a hand edited "no", a number, resolves to the default,
+       because a broken value should land a reader where a new one lands
+       and not somewhere only a bug can reach. */
+    return raw.armed === false ? { on: false } : seed;
   },
 };
 
@@ -166,6 +221,17 @@ const PALETTE: Record<SoundCue, Note[]> = {
     { wave: "triangle", from: 784, to: 784, ms: 190, gain: 0.22, delay: 80 },
   ],
   refuse: [{ wave: "sine", from: 150, to: 96, ms: 150, gain: 0.4 }],
+  /* Struck rather than pressed, and left to ring. The second note is a
+     fifth above and a third of the gain, which is the overtone a small
+     bell would have given for free and a single oscillator will not. */
+  pin: [
+    { wave: "sine", from: 880, to: 872, ms: 260, gain: 0.34 },
+    { wave: "sine", from: 1320, to: 1310, ms: 190, gain: 0.11, delay: 8 },
+  ],
+  /* A cluster opening is several things arriving at once, so it rises
+     rather than lands, and it sits low enough that it never competes with
+     the pin that usually follows it. */
+  sweep: [{ wave: "triangle", from: 180, to: 320, ms: 200, gain: 0.3 }],
 };
 
 const MASTER_GAIN = 0.05;
@@ -300,9 +366,38 @@ export function SoundProvider({ children }: { children: ReactNode }) {
       const target = event.target;
       if (!(target instanceof Element)) return;
       if (target.closest("input, textarea, select, [data-sound='off']")) return;
-      const hit = target.closest("button, a[href], [role='button']");
+
+      /*
+        THE ZONE DECIDES THE VOICE. One attribute on the map surface, read
+        from whatever was clicked upwards, rather than a prop threaded
+        through MapBoard, MapCanvas, ClusterLayer, the popup and the
+        legend. A screen that wants its own sound announces itself in the
+        markup and this listener does the rest.
+      */
+      const zone = target.closest("[data-sound-zone]");
+      const inMap = zone?.getAttribute("data-sound-zone") === "map";
+
+      /*
+        Inside the map the hit set is wider, because a Leaflet marker is a
+        div with a click handler rather than a button, and refusing to
+        make a sound for the single most touched object on the screen
+        would be the strictness winning over the point.
+      */
+      const hit = inMap
+        ? target.closest(
+            "button, a[href], [role='button'], .leaflet-marker-icon, .leaflet-interactive",
+          )
+        : target.closest("button, a[href], [role='button']");
       if (!hit) return;
-      play("press");
+
+      if (!inMap) {
+        play("press");
+        return;
+      }
+      /* A cluster is several organisations under one mark, so it gets the
+         rise. A single organisation is one thing, struck once. */
+      const cluster = hit.classList.contains("ob-marker--cluster");
+      play(cluster ? "sweep" : "pin");
     };
     document.addEventListener("click", listener, { capture: true });
     return () =>
@@ -312,11 +407,11 @@ export function SoundProvider({ children }: { children: ReactNode }) {
   const toggle = useCallback(() => {
     const next = !onRef.current;
     dispatch({ type: "TOGGLE" });
-    /* The arming press is inside a user gesture, which is the only moment
-       a browser will let the context start, and it is also the moment the
-       reader most wants to hear what they just switched on. Silencing it
-       makes no sound, obviously, because the point of silencing it is
-       silence. */
+    /* Turning it back ON plays the chord, inside the gesture that did it,
+       which is both the only moment a browser will let the context start
+       and the moment the reader most wants to hear what they just chose.
+       Silencing it makes no sound, obviously, because the point of
+       silencing it is silence. */
     if (next) {
       onRef.current = true;
       const ac = audio();

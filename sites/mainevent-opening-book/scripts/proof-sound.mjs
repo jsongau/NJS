@@ -11,24 +11,35 @@
  *
  * WHAT IT ASSERTS, in the order the risk runs:
  *
- *   1. NOTHING SOUNDS BEFORE ARMING. This is the one that matters. A
- *      hiring manager opening this at a desk with other people around
- *      them must get silence, and "we set a default to false" is a claim
- *      about source code rather than about behaviour.
- *   2. Nothing is written to storage before arming either, so a reader
- *      who never touches it leaves no trace and gets the default forever.
+ * THE CONTRACT CHANGED ON 17 AUGUST 2026 and this file changed with it.
+ * Sound used to be silent until armed; the owner decided it should be on
+ * by default. The assertions below are the NEW contract. Running the old
+ * ones against this build would report a defect on a working application,
+ * which is the failure this project has hit seven times.
+ *
+ *   1. NOTHING SOUNDS BEFORE THE FIRST PRESS. This is still the one that
+ *      matters and it is still true: on by default cannot mean playing on
+ *      load, because no browser starts an AudioContext outside a gesture.
+ *      The page loads, sits there, and is silent.
+ *   2. Nothing is written to storage on arrival either. The absent slice
+ *      IS the default now, and the default is on.
  *   3. The control is found by its ARIA state and its title rather than
- *      by a hashed class, and it says "Sound off" in words.
- *   4. Arming plays its own cue, inside the gesture, which is the only
- *      moment a browser will let an AudioContext start at all.
+ *      by a hashed class, and it reads "Sound on" on a first visit.
+ *   4. The FIRST press makes a sound, without anything being armed first.
  *   5. One key press is one note. The delegated listener does not stack.
  *   6. The ground switch plays its two note cue and NOT the generic
  *      press on top of it, which is what data-sound="off" is for. Two,
  *      not three, is the whole assertion.
  *   7. Clicking into a text field and typing four characters plays
  *      nothing. Typing is not a percussion instrument.
- *   8. The choice survives a reload, the same way the ground does.
- *   9. Silencing it actually silences it.
+ *   8. THE MAP HAS ITS OWN VOICE. A click inside the map surface plays
+ *      the bell rather than the desk click, and it is checked by
+ *      FREQUENCY rather than by counting notes, because two cues that
+ *      both play one note are indistinguishable to a counter. 880Hz is
+ *      the map; 210Hz is everywhere else.
+ *   9. Silencing it actually silences it, and THAT choice is what
+ *      survives a reload, because the stored slice is now the departure
+ *      from the default rather than the default itself.
  *  10. The collapsed rail drops the control, which is the rule that had
  *      to move out of SideRail.module.css because a class name in a CSS
  *      module is hashed per file and the rule matched nothing where it
@@ -65,8 +76,29 @@ await p.addInitScript(() => {
   const realOsc = proto.createOscillator;
   proto.createOscillator = function () {
     const osc = realOsc.call(this);
+    /*
+      READ THE SCHEDULED FREQUENCY, NOT THE CURRENT ONE.
+
+      The first version of this recorded osc.frequency.value at the moment
+      start() was called and every note came back as 440Hz, which is the
+      AudioParam default. Nothing was wrong with the application: the real
+      value is SCHEDULED with setValueAtTime for a moment that has not
+      happened yet, so reading .value reports what the parameter is now
+      rather than what the note will be. A harness that reports 440 for
+      every cue would have said the map sounds exactly like the desk,
+      which is the assertion this file exists to make.
+    */
+    let scheduled = null;
+    const realSet = osc.frequency.setValueAtTime.bind(osc.frequency);
+    osc.frequency.setValueAtTime = (v, t) => {
+      if (scheduled === null) scheduled = v;
+      return realSet(v, t);
+    };
     const realStart = osc.start.bind(osc);
-    osc.start = (t) => { window.__notes.push({ type: osc.type, freq: osc.frequency.value, at: t }); return realStart(t); };
+    osc.start = (t) => {
+      window.__notes.push({ type: osc.type, freq: scheduled ?? osc.frequency.value, at: t });
+      return realStart(t);
+    };
     return osc;
   };
 });
@@ -75,60 +107,73 @@ await p.goto('http://localhost:4198/me/',{waitUntil:'networkidle'});
 await p.waitForTimeout(500);
 
 const read = async () => p.evaluate(() => window.__notes.length);
+const notes = async () => p.evaluate(() => window.__notes.slice());
 
-// 1. Silent by default: press things, nothing should sound.
-await p.click('a[href="/me/today"]').catch(()=>{});
-await p.waitForTimeout(200);
-await p.click('#ground-switch');
-await p.waitForTimeout(300);
-console.log('notes before arming (must be 0):', await read());
+// 1. Nothing on load. The page has been sitting here since goto.
+console.log('notes on arrival, before any press (must be 0):', await read());
 
-// 2. Storage before arming: no sound slice.
+// 2. Nothing written to storage either: absent slice IS the default.
 const before = await p.evaluate(() => localStorage.getItem('opening-book.v1'));
-console.log('sound slice before arming:', /sound/.test(before||'') ? 'PRESENT (wrong)' : 'absent (correct)');
+console.log('sound slice on arrival:', /sound/.test(before||'') ? 'PRESENT (wrong)' : 'absent (correct)');
 
-// 3. Arm it.
+// 3. The control reads "Sound on" without anybody having pressed it.
 const btn = await p.$('button[aria-pressed][title*="Sound"]');
-console.log('control found:', Boolean(btn), await btn.evaluate(e=>e.innerText.replace(/\s+/g,' ')));
-await btn.click();
-await p.waitForTimeout(400);
-const armed = await read();
-console.log('notes from the arming cue (expect 3):', armed);
-console.log('label after arming:', await btn.evaluate(e=>e.innerText.replace(/\s+/g,' ')), 'aria-pressed:', await btn.getAttribute('aria-pressed'));
+console.log('control on a first visit:', await btn.evaluate(e=>e.innerText.replace(/\s+/g,' ')), 'aria-pressed:', await btn.getAttribute('aria-pressed'));
 
-// 4. A queue key press.
-await p.click('a[href="/me/inbox"]');
+// 4. The FIRST press makes a sound, with nothing armed beforehand.
+await p.click('a[href="/me/today"]');
 await p.waitForTimeout(300);
-console.log('notes after one key press (expect +1):', (await read()) - armed);
-const afterKey = await read();
+const first = await notes();
+console.log('notes from the very first press (expect 1):', first.length, first.map(n=>Math.round(n.freq)+'Hz').join(','));
 
-// 5. The ground switch plays its own two note cue, not the press.
-await p.click('#ground-switch');
-await p.waitForTimeout(300);
-console.log('notes from the ground switch (expect exactly 2, not 3):', (await read()) - afterKey);
-const afterThrow = await read();
+// 5 and 6. Another key, then the ground switch's own two note cue.
+await p.click('a[href="/me/inbox"]'); await p.waitForTimeout(250);
+const afterKey = (await notes()).length;
+console.log('notes after a second key press (expect +1):', afterKey - first.length);
+await p.click('#ground-switch'); await p.waitForTimeout(300);
+const afterThrow = await notes();
+console.log('notes from the ground switch (expect exactly 2):', afterThrow.length - afterKey);
 
-// 6. Typing is not an instrument.
+// 7. Typing is not an instrument.
 const field = await p.$('input[type="search"], input[placeholder*="Name"]');
-if (field) { await field.click(); await field.type('brea'); await p.waitForTimeout(200); }
-console.log('notes from clicking and typing in a text field (expect 0):', (await read()) - afterThrow);
-const afterType = await read();
+if (field) { await field.click(); await field.type('brea'); await p.waitForTimeout(250); }
+console.log('notes from clicking and typing in a text field (expect 0):', (await notes()).length - afterThrow.length);
 
-// 7. It survives a reload, because the choice is stored.
-await p.reload({waitUntil:'networkidle'});
-await p.waitForTimeout(500);
-const stored = await p.evaluate(() => localStorage.getItem('opening-book.v1'));
-console.log('sound slice after arming:', /sound/.test(stored||'') ? 'present (correct)' : 'ABSENT (wrong)');
+// 8. THE MAP HAS ITS OWN VOICE, checked by frequency and not by count.
+await p.goto(`http://localhost:4198${BASE}/map`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(1200);
+const beforeMap = (await notes()).length;
+const zone = await p.$('[data-sound-zone="map"]');
+console.log('map surface declares its zone:', Boolean(zone));
+const anyMarker = await p.$('.leaflet-marker-icon, .ob-marker');
+if (anyMarker) { await anyMarker.click({force:true}); await p.waitForTimeout(350); }
+const mapNotes = (await notes()).slice(beforeMap);
+const desk = mapNotes.filter(n => n.freq < 400).length;
+const bell = mapNotes.filter(n => n.freq >= 800).length;
+console.log('notes from a click inside the map:', mapNotes.length, mapNotes.map(n=>Math.round(n.freq)+'Hz').join(','));
+console.log('  desk-voice notes under 400Hz (expect 0):', desk, '  map-voice notes at or above 800Hz (expect 1 or more):', bell);
+
+// 9. Silencing survives a reload, because the stored slice is the
+//    departure from the default.
+//
+// BACK TO A CONSOLE SCREEN FIRST. /map is the takeover and the rail is
+// not on it, so looking for the control here would report it missing on
+// an application where it is exactly where it should be.
+await p.goto(`http://localhost:4198${BASE}/`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(600);
 const btn2 = await p.$('button[aria-pressed][title*="Sound"]');
-console.log('still armed after reload:', await btn2.getAttribute('aria-pressed'), await btn2.evaluate(e=>e.innerText.replace(/\s+/g,' ')));
-
-// 8. And it can be silenced again.
 await btn2.click(); await p.waitForTimeout(200);
-const base = await read();
+const quiet = (await notes()).length;
 await p.click('a[href="/me/today"]'); await p.waitForTimeout(300);
-console.log('notes after silencing, then pressing a key (expect 0):', (await read()) - base);
+console.log('notes after silencing, then pressing a key (expect 0):', (await notes()).length - quiet);
+const stored = await p.evaluate(() => localStorage.getItem('opening-book.v1'));
+console.log('the silence is stored:', /sound/.test(stored||'') ? 'yes (correct)' : 'NO (wrong)');
+await p.reload({waitUntil:'networkidle'});
+await p.waitForTimeout(600);
+const btn3 = await p.$('button[aria-pressed][title*="Sound"]');
+console.log('still silent after a reload:', await btn3.evaluate(e=>e.innerText.replace(/\s+/g,' ')), 'aria-pressed:', await btn3.getAttribute('aria-pressed'));
 
-// 9. Collapsed rail drops it, per the rule that had to move files.
+// 10. Collapsed rail drops the control.
 await p.click('button[title*="Collapse the rail"]');
 await p.waitForTimeout(300);
 console.log('control visible when the rail is collapsed (expect false):', await (await p.$('button[aria-pressed][title*="Sound"]')).isVisible());

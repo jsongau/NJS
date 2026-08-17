@@ -214,14 +214,17 @@ export function StartPage() {
         )}
 
         <section className={styles.block}>
-          <h2 className={styles.h2}>It has a sound, and it is off</h2>
+          <h2 className={styles.h2}>It has a sound, and one press turns
+            it off</h2>
           <p className={styles.last}>
-            The console makes a noise when you press things, and it makes
-            none until you ask it to. The control is at the foot of the
-            rail on the left and it reads "Sound off" until it does not.
-            Nothing plays on load, nothing loops, and nothing plays while
-            you are typing, because you may be reading this somewhere that
-            a page making a noise at you would be unwelcome.
+            The console answers when you press things. Nothing plays while
+            you are reading this, nothing plays on load and nothing loops,
+            because the first sound is the first press and never before
+            it. The map has its own two voices, which is the fastest way
+            to hear that it is a different kind of screen. If you are
+            somewhere this is unwelcome, the control at the foot of the
+            rail on the left silences the whole thing in one press and
+            remembers that you did.
           </p>
         </section>
 

@@ -1032,8 +1032,23 @@ export function MapBoard({
         </p>
       ) : null}
 
+      {/*
+        ONE ATTRIBUTE, AND IT IS THE WHOLE OF THE MAP'S SOUND.
+
+        state/SoundProvider.tsx reads the nearest data-sound-zone above
+        whatever was clicked and picks the voice from it, so everything
+        inside this board, the markers, the clusters, the popup, the
+        legend and the filters, speaks in the map's two cues rather than
+        in the desk's click. Nothing in this file, in MapCanvas or in
+        ClusterLayer needs to know that sound exists.
+
+        The zone starts HERE and not on the page, so the rail and the
+        strip stay outside it: pressing Maps to arrive is a desk click and
+        everything done after arriving is not.
+      */}
       <div
         className={styles.board}
+        data-sound-zone="map"
         data-mode={mode}
         data-list={listHidden ? "off" : "on"}
       >

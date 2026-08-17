@@ -214,6 +214,18 @@ export function StartPage() {
         )}
 
         <section className={styles.block}>
+          <h2 className={styles.h2}>It has a sound, and it is off</h2>
+          <p className={styles.last}>
+            The console makes a noise when you press things, and it makes
+            none until you ask it to. The control is at the foot of the
+            rail on the left and it reads "Sound off" until it does not.
+            Nothing plays on load, nothing loops, and nothing plays while
+            you are typing, because you may be reading this somewhere that
+            a page making a noise at you would be unwelcome.
+          </p>
+        </section>
+
+        <section className={styles.block}>
           <h2 className={styles.h2}>What it is not</h2>
           <ul className={styles.list}>
             <li>

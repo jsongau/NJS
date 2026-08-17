@@ -15,26 +15,47 @@
   be able to forget.
 */
 
+/*
+  IT HAS TO LOOK PRESSABLE AT REST, AND THE FIRST VERSION DID NOT.
+
+  This was drawn as the width control is drawn: no border, no fill, muted
+  ink, and a hairline that only appears under a pointer. That is the right
+  costume for a control a reader already knows is there, and the wrong one
+  for the only feature in this application nobody expects. The owner
+  looked straight at it twice, in two screenshots, and read it as a label.
+  Reset sits six pixels below it wearing a real plate and reads as a
+  button immediately, which is the comparison that settles it.
+
+  So it takes the plate. Same border, same radius, same surface as Reset,
+  which also makes the foot read as two controls and one word rather than
+  as three lines of text with a button at the bottom.
+
+  This is the same failure the ground switch had, one commit earlier: the
+  signal was present, measurable and correct, and the eye did not pick it
+  up. A control nobody presses is a feature nobody has.
+*/
 .sound {
   display: flex;
   align-items: center;
   gap: var(--space-2);
   width: 100%;
-  min-height: 32px;
-  padding: 5px var(--space-2);
-  border: 1px solid transparent;
+  min-height: 34px;
+  padding: 6px var(--space-2);
+  border: 1px solid var(--line-2);
   border-radius: var(--radius-s);
-  background: none;
-  color: var(--text-2);
+  background: var(--surface-1);
+  color: var(--text-1);
   font-size: var(--step--2);
   font-weight: 600;
   text-align: left;
   cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
 }
 
 .sound:hover {
   background: var(--surface-3);
-  border-color: var(--line-2);
+  border-color: var(--brand-gold);
   color: var(--text-0);
 }
 

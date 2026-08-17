@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { RATIONALE_AVAILABLE } from "@/data/rationale";
 import type { Lane } from "@/domain/types";
 import {
   DOOR_ONLY,
@@ -861,9 +862,14 @@ export function MethodPage() {
             thirty first row in the rail.
           */}
           <p className={styles.subLede}>
-            This page answers whether a figure is right.{" "}
-            <Link to="/rationale">Rationale</Link> answers why the thing is
-            shaped this way at all, and how it was built.
+            This page answers whether a figure is right.
+            {RATIONALE_AVAILABLE ? (
+              <>
+                {" "}
+                <Link to="/rationale">Rationale</Link> answers why the thing
+                is shaped this way at all, and how it was built.
+              </>
+            ) : null}
           </p>
         </header>
 

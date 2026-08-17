@@ -39,10 +39,30 @@ for (const w of widths) {
     let bar = feat;
     while (bar && !(bar.querySelector("nav") && bar.querySelector("button"))) bar = bar.parentElement;
     const items = [...bar.querySelectorAll("nav ul li a")];
-    const boxes = items.map((a) => {
-      const rr = a.getBoundingClientRect();
-      return { t: a.innerText.replace(/\s+/g, " ").trim(), x: rr.x, r: rr.right, w: rr.width, h: rr.height };
-    });
+    /*
+      HIDDEN KEYS ARE NOT NARROW KEYS, THEY ARE ABSENT ONES.
+
+      The strip drops one queue key at a time as the window narrows,
+      through display:none on the row: rank 6 at 1425, rank 5 at 1266,
+      rank 4 at 1133, rank 3 at 1001. A row hidden that way is still in
+      the DOM and its rect reads 0,0,0,0.
+
+      The overlap test below is arithmetic on adjacent boxes, so a zero
+      box turns the previous key's right edge into the overlap: at 1130
+      this reported "Requests overlaps Leagues by 939px" on a bar 1130
+      wide, which is not a possible overlap and was not a defect. It was
+      the measurement counting a key that is not on screen.
+
+      So the boxes are filtered to the ones that are actually painted,
+      and the count of visible keys, which is reported anyway, is what
+      catches a key disappearing when it should not.
+    */
+    const boxes = items
+      .map((a) => {
+        const rr = a.getBoundingClientRect();
+        return { t: a.innerText.replace(/\s+/g, " ").trim(), x: rr.x, r: rr.right, w: rr.width, h: rr.height };
+      })
+      .filter((b) => b.w > 0 && b.h > 0);
     let overlap = 0, worst = 0, pair = "";
     for (let i = 0; i < boxes.length - 1; i++) {
       const o = boxes[i].r - boxes[i + 1].x;

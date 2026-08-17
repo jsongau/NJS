@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { PipelineProvider } from "@/state/PipelineProvider";
 import { BookProvider } from "@/state/BookProvider";
 import { OutboxProvider } from "@/state/OutboxProvider";
@@ -25,6 +25,8 @@ import { MethodPage } from "@/pages/MethodPage";
 import { QuotePage } from "@/pages/QuotePage";
 import { StartPage } from "@/pages/StartPage";
 import { RationalePage } from "@/pages/RationalePage";
+import { RATIONALE_AVAILABLE, toConsole } from "@/data/rationale";
+import { normalisePath } from "./sections";
 import { TodayPage } from "@/pages/TodayPage";
 import { RequestsPage } from "@/pages/RequestsPage";
 import { InboxPage } from "@/pages/InboxPage";
@@ -99,6 +101,24 @@ import { SellThroughPage } from "@/pages/SellThroughPage";
  * copies of a persisted reducer would be two lists overwriting each other
  * in one storage slice.
  */
+/**
+ * WHERE A RATIONALE URL GOES WHILE THE SECOND READING IS CLOSED.
+ *
+ * To the console screen at the same address, replacing the history entry
+ * rather than pushing one, because a reader who presses back after an
+ * automatic redirect and lands on the thing that just redirected them is
+ * in a loop they did not ask for.
+ *
+ * The stubs for all 28 rationale routes are still emitted, so these URLs
+ * are real files that load the app and resolve here. Deleting the stubs
+ * instead would turn every link somebody already holds into a 404, and a
+ * closed door is not the same as a missing building.
+ */
+function RationaleClosed() {
+  const { pathname } = useLocation();
+  return <Navigate to={toConsole(normalisePath(pathname))} replace />;
+}
+
 export function App() {
   return (
     <PipelineProvider>
@@ -285,7 +305,13 @@ export function App() {
                             */}
                             <Route
                               path="/rationale/*"
-                              element={<RationalePage />}
+                              element={
+                                RATIONALE_AVAILABLE ? (
+                                  <RationalePage />
+                                ) : (
+                                  <RationaleClosed />
+                                )
+                              }
                             />
                             {/* Method settles whether a figure is right.
                             This settles why the thing is shaped this way
@@ -304,7 +330,13 @@ export function App() {
                             the evidence belong on one screen. */}
                             <Route
                               path="/rationale"
-                              element={<RationalePage />}
+                              element={
+                                RATIONALE_AVAILABLE ? (
+                                  <RationalePage />
+                                ) : (
+                                  <RationaleClosed />
+                                )
+                              }
                             />
                             <Route
                               path="*"

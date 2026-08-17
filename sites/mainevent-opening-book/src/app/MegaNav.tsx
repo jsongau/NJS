@@ -10,7 +10,12 @@ import { useTheme } from "@/state/ThemeProvider";
 import { INBOX_PATH } from "@/pages/InboxPage";
 import { useShellFigures } from "./SideRail";
 import { FEATURED_KEY, normalisePath, type SectionId } from "./sections";
-import { isRationalePath, toConsole, toRationale } from "@/data/rationale";
+import {
+  RATIONALE_AVAILABLE,
+  isRationalePath,
+  toConsole,
+  toRationale,
+} from "@/data/rationale";
 import styles from "./MegaNav.module.css";
 
 /**
@@ -453,6 +458,12 @@ export function MegaNav({
         {/* Modes first, then what is waiting. The divider is drawn by
             the slot rather than by a character, for the same reason the
             featured key's is. */}
+        {/* The pair is behind RATIONALE_AVAILABLE. When the second
+            reading is closed there is nothing here at all rather than a
+            disabled control: a greyed out key still says "there is a
+            place you cannot go", which is a worse answer than silence
+            for the one reader this strip is built for. */}
+        {RATIONALE_AVAILABLE && (
         <div className={styles.modes} role="group" aria-label="Mode">
           {(() => {
             const here = normalisePath(pathname);
@@ -480,6 +491,7 @@ export function MegaNav({
             ));
           })()}
         </div>
+        )}
         <ul className={styles.list}>
           {ITEMS.map((item) => {
             const count = counts[item.to];

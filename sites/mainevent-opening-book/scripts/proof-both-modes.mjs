@@ -27,6 +27,24 @@
  *
  * It also walks a sample of the deep link routes, the quote letters and
  * the league pages, because those are the URLs that go in emails.
+ *
+ * ── AND WHAT IT ASSERTS WHEN THE SECOND READING IS CLOSED ─────────
+ * src/data/rationale/index.ts carries RATIONALE_AVAILABLE. When it is
+ * false the mode is deliberately switched off, and every assertion in
+ * the list above is a claim about a thing that is no longer supposed to
+ * be there. Running them anyway would report six defects per screen on
+ * a working application, which is this project's oldest failure and the
+ * reason five earlier checks had to be thrown away.
+ *
+ * So the file reads the flag and proves the OTHER contract instead:
+ *
+ *   1. The console route still loads clean, which is the half that has
+ *      to keep working either way.
+ *   2. There is no Console or Rationale key anywhere on the page.
+ *   3. Nothing on any screen links to a /rationale address.
+ *   4. Every rationale URL still RESOLVES, and lands on the console
+ *      screen at the same address. A stub that 404s would mean somebody
+ *      holding an old link gets an error instead of the instrument.
  */
 import { chromium } from "playwright";
 import fs from "node:fs";
@@ -93,6 +111,22 @@ function consolePaths() {
 }
 
 const toRationale = (p) => (p === "/" ? "/rationale" : `/rationale${p}`);
+
+/**
+ * The flag, read from the source rather than from the built bundle,
+ * because the bundle is minified and a regex over minified output is a
+ * guess. This is the one place the two files have to agree and it is
+ * asserted rather than assumed: if the export is renamed or deleted,
+ * this throws instead of quietly defaulting to the open contract.
+ */
+function rationaleAvailable() {
+  const file = path.join(path.dirname(new URL(import.meta.url).pathname), "..", "src", "data", "rationale", "index.ts");
+  const src = fs.readFileSync(file, "utf8");
+  const m = src.match(/export const RATIONALE_AVAILABLE\s*=\s*(true|false)\s*;/);
+  if (!m) throw new Error("RATIONALE_AVAILABLE is not declared in src/data/rationale/index.ts. This proof cannot tell which contract to assert.");
+  return m[1] === "true";
+}
+const OPEN = rationaleAvailable();
 
 /** Everything the page can tell us about itself, in one evaluate. */
 const READ = () => {
@@ -172,6 +206,48 @@ async function visit(route) {
 }
 
 const paths = consolePaths();
+
+if (!OPEN) {
+  console.log(`RATIONALE_AVAILABLE is false. Proving the closed contract across ${paths.length} screens.\n`);
+  for (const p of paths) {
+    const v = await visit(p);
+    const problems = [];
+    if (v.status !== 200) problems.push(`console route returned ${v.status}`);
+    if (v.errors.length) problems.push(...v.errors);
+    if (v.bad.length) problems.push(...v.bad);
+    if (v.modes.length) problems.push(`a mode key is still on the page: ${JSON.stringify(v.modes)}`);
+    if (v.modeLinkHref) problems.push(`something still links to ${v.modeLinkHref}`);
+
+    /* The URL has to resolve and land on the console screen at the same
+       address. Both halves matter: a 404 strands an old link, and a
+       redirect to the desk loses the reader's place. */
+    const r = toRationale(p);
+    const res = await page.goto(`http://localhost:${PORT}${BASE}${r}`, { waitUntil: "networkidle" });
+    const landed = await page.evaluate(() => window.location.pathname);
+    const want = `${BASE}${p === "/" ? "/" : p}`;
+    if (res.status() !== 200) problems.push(`${r} returned ${res.status()} rather than resolving`);
+    if (stripBase(landed).replace(/\/$/, "") !== (p === "/" ? "" : p)) {
+      problems.push(`${r} landed on ${landed} rather than ${want}`);
+    }
+
+    console.log(`  ${problems.length ? "FAIL" : "ok  "} ${p.padEnd(28)} ${r} redirects to ${landed}`);
+    if (problems.length) failures.push({ path: p, problems });
+  }
+  const ghost = await page.goto(`http://localhost:${PORT}${BASE}/this-route-does-not-exist`);
+  console.log(`\nUnknown route returns ${ghost.status()} ${ghost.status() === 404 ? "(correct: no silent fallback)" : "(WRONG)"}`);
+  if (ghost.status() !== 404) failures.push({ path: "/this-route-does-not-exist", problems: ["served the app instead of 404ing"] });
+
+  await browser.close();
+  server.close();
+  if (failures.length) {
+    console.log(`\n${failures.length} FAILING:\n`);
+    for (const f of failures) console.log(`  ${f.path}\n    ${f.problems.join("\n    ")}`);
+    process.exit(1);
+  }
+  console.log(`\nClosed contract holds on all ${paths.length} screens: no mode keys, no rationale links, every rationale URL redirects to its console screen.`);
+  process.exit(0);
+}
+
 console.log(`Walking ${paths.length} screens in two modes.\n`);
 
 for (const p of paths) {

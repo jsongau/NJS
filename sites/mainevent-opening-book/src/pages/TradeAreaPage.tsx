@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { RATIONALE_AVAILABLE } from "@/data/rationale";
 import { FullBleedRoute, useFullBleedExit } from "@/app/AppShell";
 import { ProvenanceBadge } from "@/components/primitives/ProvenanceBadge";
 import { MapBoard } from "@/components/map/MapBoard";
@@ -129,9 +130,15 @@ export function TradeAreaPage() {
           cannot occur.
         */
         modeLink={
-          <Link className={styles.modeLink} to="/rationale/map">
-            Rationale
-          </Link>
+          /* Dropped entirely while the second reading is closed. The
+             prop is optional, so the takeover simply has one control
+             fewer rather than an empty slot with a gap where a link
+             used to be. */
+          RATIONALE_AVAILABLE ? (
+            <Link className={styles.modeLink} to="/rationale/map">
+              Rationale
+            </Link>
+          ) : undefined
         }
         note={
           <details className={styles.rings}>

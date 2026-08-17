@@ -16,6 +16,17 @@ control: it took the cap as the track's last child, and it read the value
 distance off two ends that no longer carry a fill. Both now work by name
 rather than by position. Full note in `docs/2026-08-17-ground-switch-cap.md`.
 
+Later the same day, Rationale was switched off. It is a mode rather than a
+page, so it had five doors: the pair on the mega nav, a section of the
+front door, a sentence on Method, a link on the Maps takeover and the URLs
+themselves. `RATIONALE_AVAILABLE` in `src/data/rationale/index.ts` closes
+all five, and turning it back on is one word. Nothing is deleted: all 28
+screens still build and still emit stubs, so every `/rationale` URL
+redirects to its console screen rather than 404ing. Two proofs were
+corrected on the way, `proof-both-modes.mjs` to assert the closed contract
+instead of the open one, and `audit-strip-fit.mjs` which had been counting
+a `display: none` queue key as a 939px overlap.
+
 ## 2026-08-14
 
 A hundred and nine more organisations, found by industry rather than by map.

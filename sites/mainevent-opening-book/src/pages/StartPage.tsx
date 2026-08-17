@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { PROSPECTS } from "@/data/prospects";
-import { SCREEN_RATIONALE } from "@/data/rationale";
+import { RATIONALE_AVAILABLE, SCREEN_RATIONALE } from "@/data/rationale";
 import { VENUE } from "@/data/venue";
 import styles from "./StartPage.module.css";
 
@@ -187,6 +187,11 @@ export function StartPage() {
           </ol>
         </section>
 
+        {/* Only while the second reading is open. This section is the
+            only place on the front door that promises it, and a promise
+            the application will not keep is the one thing a work sample
+            cannot afford. */}
+        {RATIONALE_AVAILABLE && (
         <section className={styles.block}>
           <h2 className={styles.h2}>There are two ways to read it</h2>
           <p>
@@ -204,6 +209,7 @@ export function StartPage() {
             is the half to read.
           </p>
         </section>
+        )}
 
         <section className={styles.block}>
           <h2 className={styles.h2}>What it is not</h2>

@@ -217,9 +217,12 @@
 
 .context {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-3);
+  /* Stacked, not side by side. The reasoning and the measurements are
+     with the select rule below, because that is the control the shape
+     exists to serve. */
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
   padding: var(--space-1) var(--space-1) 0;
 }
 
@@ -262,6 +265,10 @@
   display: flex;
   flex-direction: column;
   gap: 1px;
+  /* Takes the width the countdown does not want. min-width: 0 is what
+     lets it shrink below the select's intrinsic size on a narrow rail
+     rather than pushing the head wider than the column. */
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -273,6 +280,33 @@
   font-weight: 700;
 }
 
+/*
+  THE PERIOD CONTROL HAS TO FIT ITS LONGEST LABEL, AND SIDE BY SIDE IT
+  NEVER COULD.
+
+  It was capped at 13ch, which cut the selected label to "12 to 9 weel".
+  A reader could not tell which period the whole board was standing in
+  without opening the list, and that control is the one thing in the head
+  that changes what every screen behind it is counting.
+
+  Shortening the labels is the wrong fix. The same four strings are
+  printed as prose on eight other screens, "Stage one, 12 to 9 weeks out"
+  on the desk and "No tabling or networking shift is planned in 12 to 9
+  weeks out" on the field, so a label written to fit a control would read
+  as an abbreviation everywhere else it appears.
+
+  Widening it in place was the wrong fix too, and this was measured
+  rather than guessed: the rail is 252px, the row inside it is 227, the
+  countdown wants 109 of that, and the longest label, "4 weeks out to
+  open", is 128px of text before the chevron's 24px gutter. There is no
+  arrangement of a row that holds 109 and 159 inside 227.
+
+  So the head stacks. The countdown keeps the first line to itself and
+  the period takes the full width of the second: the control measures 219
+  with 186 of text room inside its padding, against the 128 the longest
+  label needs, at 1440, 1280, 1100 and 1024. The cost is about thirty
+  five pixels of head height, paid out of a list that scrolls anyway.
+*/
 .select {
   padding: 2px 24px 2px 7px;
   font-size: var(--step--2);
@@ -280,7 +314,7 @@
   box-shadow: none;
   background-size: 10px 7px;
   background-position: right 7px center;
-  max-width: 13ch;
+  width: 100%;
 }
 
 /* ---------------------------------------------------------------

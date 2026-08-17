@@ -27,6 +27,18 @@ corrected on the way, `proof-both-modes.mjs` to assert the closed contract
 instead of the open one, and `audit-strip-fit.mjs` which had been counting
 a `display: none` queue key as a 939px overlap.
 
+Third pass the same day. The period control in the rail head was cut to
+"12 to 9 weel" by a 13ch cap; the head now stacks so the control has 186px
+of text room against the 128 its longest label needs, and the labels were
+left alone because they print as prose on eight other screens. The Main
+Event logo now stands in the mega nav lockup at Jay's direction, which
+retired the worked-fraction dial from the strip (it lives in the rail
+head, once, rather than in two places that could disagree) and forced two
+on-screen sentences to be rewritten: /method claimed no logo or trade
+dress appeared anywhere, and the /start disclaimer now names the trademark
+and its owner. The strip was re-measured at all 115 widths after the
+change.
+
 ## 2026-08-14
 
 A hundred and nine more organisations, found by industry rather than by map.

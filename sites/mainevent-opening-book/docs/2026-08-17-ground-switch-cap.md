@@ -168,3 +168,58 @@ the rail. A rect that assumed the element was painted.
 - `check-post-build.mjs dist 297`, 298 index.html files.
 - `check-build-is-committed.mjs`, 302 files byte for byte, and the copy
   onto the Mac verified again by sha256 manifest, 302 of 302.
+
+---
+
+# Third pass. The period control, and the venue's mark on the strip.
+
+## The period control was cut to "12 to 9 weel"
+
+Measured before changing anything: the rail is 252px, the row inside it is 227, the countdown wants
+109 of that, and the longest label, "4 weeks out to open", is 128px of text before the chevron's
+24px gutter. There is no arrangement of a row that holds 109 and 159 inside 227, which is what the
+old `max-width: 13ch` was hiding.
+
+Shortening the labels was rejected: the same four strings print as prose on eight other screens,
+"Stage one, 12 to 9 weeks out" on the desk and "No tabling or networking shift is planned in 12 to
+9 weeks out" on the field. A label written to fit a control reads as an abbreviation everywhere
+else it appears.
+
+So the head stacks. The countdown keeps the first line and the period takes the full width of the
+second: 219 wide with 186 of text room against the 128 the longest label needs, verified at 1440,
+1280, 1100 and 1024. Cost is about 35px of head height out of a list that scrolls anyway.
+
+## The Main Event logo is now in the lockup, and three things had to move with it
+
+Jay asked for it twice. The case against was made once and is recorded here for whoever reads this
+next: the mark sits where a licensee's logo would sit, and the rest of this application earns trust
+by being scrupulous about what is and is not Main Event's. His call, and it is his application.
+
+**The dial left the strip.** What stood in the lockup was `PinMark` drawing `fill`, the fraction of
+the 211 organisations worked, with the sentence naming what it counted in its `title`. That readout
+now lives in one place, the rail's head, rather than two. Keeping a second copy that could disagree
+with the first was worse than dropping it, so `MegaNav` stopped computing `worked`, `fill`,
+`workedPct` and `markLabel` entirely rather than computing them and drawing them somewhere quieter.
+**The rail keeps the drawn mark, as asked.**
+
+**Two on-screen sentences became false and were rewritten.** `/method` said "No Main Event logo,
+wordmark, typeface or trade dress appears anywhere in it." It now names the trademark, says the logo
+appears once in the lockup to identify the venue, and keeps the true half: the typeface is not
+theirs and no colour was sampled from their site. The disclaimer above the fold on `/start` gained
+one sentence naming the trademark and its owner. This is not politeness, it is the same rule as
+every figure on every screen: **this application does not state things that are not true**, and
+adding the logo without fixing those two paragraphs would have left a lie on a live page.
+
+**The mark is set in height, not width.** The file is 332 by 98, so a fixed width would decide the
+height by division and land the wordmark on a fractional pixel. 24px of height puts it at 81 wide,
+55 more than the mark it replaced. `audit-strip-fit` was then run across all 115 widths from 1440
+down to 360: no overlaps, no document overflow, the featured plate still inside the bar.
+
+## Proof
+
+- `audit-strip-fit.mjs`, 115 widths, all clean, after the logo went in.
+- `proof-ground.mjs`, 37 of 37.
+- `proof-both-modes.mjs`, closed contract, 28 of 28.
+- `check-post-build.mjs dist 297`, 298 index.html files.
+- `check-build-is-committed.mjs`, 303 files byte for byte, and the copy onto the Mac verified again
+  by sha256 manifest, 303 of 303.

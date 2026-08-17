@@ -1,11 +1,8 @@
 import type { RefObject } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { PinMark } from "@/components/primitives/PinMark";
 import { SectionMark } from "@/components/play/SectionMark";
 import { Readout } from "@/components/play/Readout";
 import { PROSPECTS } from "@/data/prospects";
-import { unworkedCount } from "@/domain/selectors/desk";
-import { usePipeline } from "@/state/PipelineProvider";
 import { useTheme } from "@/state/ThemeProvider";
 import { INBOX_PATH } from "@/pages/InboxPage";
 import { useShellFigures } from "./SideRail";
@@ -348,24 +345,13 @@ export function MegaNav({
   burgerRef,
   drawerId,
 }: MegaNavProps) {
-  const pipeline = usePipeline();
   const { counts } = useShellFigures();
   const { pathname } = useLocation();
 
-  /* The same fraction the rail's mark draws, so the two marks on screen
-     at once cannot show different fills. */
-  const worked = PROSPECTS.length - unworkedCount(pipeline);
-  const fill = PROSPECTS.length > 0 ? worked / PROSPECTS.length : 0;
-  const workedPct = Math.round(fill * 100);
 
   /* The featured key's figure, out of the same record every other figure
      on this strip comes from, keyed by the route it links to. */
   const mapped = counts[FEATURED_KEY.to]?.value ?? PROSPECTS.length;
-  const markLabel =
-    `The Opening Book. The dial and the pin both show how far the trade ` +
-    `area has been worked: ${worked} of ${PROSPECTS.length} organisations ` +
-    `worked so far, ${workedPct} per cent.`;
-
   return (
     <div className={styles.bar}>
       {/*
@@ -416,13 +402,40 @@ export function MegaNav({
       </button>
 
       {/*
-        THE MARK IS A SIBLING OF THE LINK, NOT ITS CHILD. A link computes
-        its accessible name from its own aria-label first, so the
-        sentence the mark carries about the fraction it draws would be
-        swallowed if it sat inside one. Same arrangement as the rail.
+        THE VENUE'S OWN MARK STANDS HERE, AND THREE THINGS FOLLOW FROM IT.
+
+        FIRST, THE DIAL LEFT THE STRIP. What stood here was PinMark
+        drawing `fill`, the fraction of the 211 organisations worked, with
+        the sentence naming what it counted in its title. That readout now
+        lives in ONE place, the rail's head, rather than two. It was worth
+        having in both and it is not worth keeping a second copy that
+        could disagree with the first, so the strip stopped computing it
+        rather than computing it and drawing it somewhere quieter.
+
+        SECOND, IT IS A SIBLING OF THE LINK AND NOT ITS CHILD. A link
+        takes its accessible name from its own aria-label first, so
+        anything the mark says would be swallowed inside one. The
+        arrangement is the same as the rail's for that reason.
+
+        THIRD, IT IS SET IN HEIGHT AND NOT IN WIDTH. The file is
+        332 by 98, so a fixed width would decide the height by division
+        and land the wordmark on a fractional pixel at some of them. 24px
+        of height puts it at 81 wide, which is 55 more than the mark it
+        replaced, and the strip was measured at every width from 1440 to
+        360 after the change rather than before it.
+
+        The lockup is the ONLY place this appears. The rail keeps the
+        drawn mark, the favicon is unchanged, and the disclaimer above the
+        fold on /start names the trademark and its owner.
       */}
       <div className={styles.brand}>
-        <PinMark size={26} fill={fill} title={markLabel} />
+        <img
+          className={styles.venueMark}
+          src="/me/brand/main-event-logo.svg"
+          alt="Main Event"
+          width={81}
+          height={24}
+        />
         <Link
           to="/"
           className={styles.brandLink}

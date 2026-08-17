@@ -93,7 +93,9 @@ export function StartPage() {
           endorsed by, or connected to Main Event Entertainment, and no
           part of it was built with access to their systems, their data or
           their people. Everything in it was assembled from published
-          sources by one person from outside the company.
+          sources by one person from outside the company. The Main Event
+          name and logo are their trademarks and appear here only to
+          identify the venue this was built for.
         </p>
 
         <section className={styles.block}>

@@ -144,6 +144,22 @@
   min-width: 0;
 }
 
+/*
+  The venue's mark. Height is the fixed dimension and width follows the
+  file's own ratio, so the wordmark never lands on a fractional pixel and
+  never needs a second number kept in step with the first.
+
+  flex: none because it is the one thing on this strip that must not be
+  squeezed: a logo compressed by a flex row is somebody else's trademark
+  drawn wrong.
+*/
+.venueMark {
+  flex: none;
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
 .brandLink {
   display: flex;
   align-items: center;

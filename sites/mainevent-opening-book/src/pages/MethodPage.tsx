@@ -2726,11 +2726,13 @@ export function MethodPage() {
                   Main Event Entertainment in any way.
                 </p>
                 <p className={styles.disclaimerP}>
-                  No Main Event logo, wordmark, typeface or trade dress appears
-                  anywhere in it. The colours here were chosen for the work they
-                  do on a screen and none of them was sampled from Main Event's
-                  site. A hue is not a mark; a lockup is, and there is no lockup
-                  here.
+                  The Main Event name and logo are trademarks of Main Event
+                  Entertainment. The logo appears once, in the lockup at the top
+                  of the screen, to identify the venue this application was
+                  built for, and it is used for that and nothing else. Nothing
+                  else here is theirs: the typeface is not, and the colours were
+                  chosen for the work they do on a screen rather than sampled
+                  from Main Event's site.
                 </p>
                 <p className={styles.disclaimerP}>
                   Every published figure in this application was read off

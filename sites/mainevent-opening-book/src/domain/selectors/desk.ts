@@ -81,37 +81,72 @@ export function milesFromVenue(lat: number, lng: number): number {
   return 2 * R * Math.asin(Math.sqrt(a));
 }
 
+
 /**
- * Months in which a buying window is open, parsed out of the window
- * string on the prospect.
- *
- * The strings are things like "May-Jun (grad night), Nov + Mar" and they
- * were written by the research pass rather than picked from a dropdown.
- * Parsing prose is ugly. The alternative was to throw away the reasoning
- * attached to each window and keep a bare month number, and the
- * reasoning is the part a reader can argue with.
+ * The month words, in the spellings a buying window is actually written
+ * in. Both the abbreviation and the full name, because the board carries
+ * "Jan-Mar" on one row and "September" on another.
  */
-const MONTHS = [
-  "jan",
-  "feb",
-  "mar",
-  "apr",
-  "may",
-  "jun",
-  "jul",
-  "aug",
-  "sep",
-  "oct",
-  "nov",
-  "dec",
+const MONTH_WORDS: string[][] = [
+  ["january", "jan"],
+  ["february", "feb"],
+  ["march", "mar"],
+  ["april", "apr"],
+  ["may"],
+  ["june", "jun"],
+  ["july", "jul"],
+  ["august", "aug"],
+  ["september", "sept", "sep"],
+  ["october", "oct"],
+  ["november", "nov"],
+  ["december", "dec"],
 ];
+
+/**
+ * A WORD BOUNDARY, AND THE TWO ROWS THAT PROVE IT HAS TO BE THERE.
+ *
+ * This read `s.includes(m)` against three letter stems, which is a
+ * substring match, and a substring match finds months inside words that
+ * are not months. Two rows in the 211 were wrong because of it, and both
+ * were found by running the matcher over the whole board rather than by
+ * reading it:
+ *
+ *   24-hour-fitness-brea  "...when a gym's whole MARketing year turns
+ *                          over" took March.
+ *   rotary-club-of-brea   "Jan-Mar (MAYor's Cup build-up)..." took May.
+ *
+ * Neither is a typo in the data. The data is right and the reader was
+ * wrong, which is the worse of the two because it is invisible: the row
+ * still looked correct on screen, and the false month fed
+ * `windowOpensWithin`, which feeds a twenty point criterion in
+ * `scoreProspect`, which is the order the board is sorted in. A scoring
+ * input that is wrong on two rows out of two hundred and eleven is not a
+ * disaster and it is exactly the kind of thing that never gets found,
+ * because nothing about it looks broken.
+ *
+ * The fix is a boundary on both ends. "Mayor" no longer contains May
+ * because the letter after it is a word character; "Jan-Mar" still yields
+ * both because a hyphen is not.
+ *
+ * WHAT THIS DELIBERATELY STILL DOES NOT DO. It does not parse ranges. A
+ * window of "Jan-Mar" yields January and March and not February, which is
+ * the behaviour that shipped and the behaviour every figure on the board
+ * was computed against. Widening it to fill ranges would change counts on
+ * six screens, and that is a separate decision with its own before and
+ * after, not a bug fix riding along inside one.
+ */
+const MONTH_PATTERN = new RegExp(
+  `\\b(?:${MONTH_WORDS.flat().join("|")})\\b`,
+  "g",
+);
 
 export function windowMonths(buyingWindow: string): number[] {
   const s = buyingWindow.toLowerCase();
   const hits = new Set<number>();
-  MONTHS.forEach((m, i) => {
-    if (s.includes(m)) hits.add(i);
-  });
+  for (const word of s.match(MONTH_PATTERN) ?? []) {
+    const i = MONTH_WORDS.findIndex((names) => names.includes(word));
+    if (i >= 0) hits.add(i);
+  }
   return [...hits].sort((a, b) => a - b);
 }
 

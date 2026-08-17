@@ -179,8 +179,14 @@ const plural = (n: number, one: string, many: string) =>
  * the answer is informed rather than brave.
  */
 export function lostSentence(ledger: EditLedger, storedHere: boolean): string {
+  /* The two settings live in the same storage key as the work, so a
+     reset takes them with it. That was true before this sentence said so,
+     which is the part worth fixing: a reader who has chosen the light
+     ground and armed the sound gets both silently undone by a control
+     they pressed to throw away a pipeline. Naming them costs six words
+     and makes the confirmation honest about its own blast radius. */
   const where = storedHere
-    ? " It also clears what this browser has saved."
+    ? " It also clears what this browser has saved, including the ground you are on and whether sound is armed."
     : "";
   if (ledger.total === 0) {
     return `Nothing has been changed yet. Reset puts every screen back to the seeded pipeline.${where}`;

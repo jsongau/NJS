@@ -11,6 +11,7 @@ import type { Prospect } from "@/domain/types";
 import { LANE_META, lanesForGuests, GUESTS_PER_BOWLING_LANE } from "@/domain/lanes";
 import { PACKAGE_BY_ID } from "@/data/packages";
 import { DEMO_RECIPIENT, PERIOD_BY_ID, VENUE, OFFER_BY_ID } from "@/data/venue";
+import { useSound } from "@/state/SoundProvider";
 import { quoteLink } from "@/lib/links";
 import {
   isSendable,
@@ -385,6 +386,7 @@ function ComposeDialog({
   const pipelineDispatch = usePipelineDispatch();
   const outbox = useOutbox();
   const outboxDispatch = useOutboxDispatch();
+  const { play } = useSound();
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -799,7 +801,19 @@ function ComposeDialog({
   // Sending
   // -------------------------------------------------------------
 
+  /**
+   * Every refusal in this modal goes through here, which is why the
+   * refuse cue is wired here and not at the five call sites. One function
+   * is one sound; five call sites is four chances to forget.
+   *
+   * The cue exists because a refusal in this modal is deliberately NOT a
+   * disabled button: the reader presses, and the application answers with
+   * a sentence about their draft or about this organisation. A quiet
+   * downward thud under that sentence is the difference between a
+   * refusal that was heard and one that scrolled past.
+   */
   function fail(reason: string) {
+    play("refuse");
     setFailure(reason);
     setState("failed");
   }
@@ -860,6 +874,12 @@ function ComposeDialog({
     */
     timerRef.current = window.setTimeout(
       () => {
+        /* The one cue in the palette that reports something LEAVING. It
+           fires here, on the dispatch, rather than on the button, because
+           the button press is the request and this is the event: a send
+           that was refused by one of the four guards above never reaches
+           this line and must not make the sound of a send. */
+        play("send");
         outboxDispatch({
           type: "SEND",
           message: {

@@ -400,6 +400,20 @@ export function QuoteDocument({
   function requestHold() {
     if (!prospect || !pkg || guests === null) return;
 
+    /*
+      NO SOUND HERE, AND THAT IS A DECISION RATHER THAN AN OVERSIGHT.
+
+      The compose modal plays the send cue when a message leaves, and this
+      dispatches the same SEND. The difference is who is holding the
+      mouse. Every other screen in this application is the operator's
+      console; this page is the letter the PROSPECT reads, rendered at
+      their own address, outside the shell, with no rail and no strip.
+      There is no sound control on it because there is no chrome on it,
+      so a cue fired here would be a noise a stranger cannot switch off.
+
+      If a sound is ever wanted on this page, the control has to arrive
+      first.
+    */
     dispatch({
       type: "SEND",
       message: {

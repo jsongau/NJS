@@ -59,7 +59,7 @@ import {
  *   throw   the ground switch, two notes because it is a two state thing
  *   send    a rising pair, because something has left the building
  *   land    a small major third, the only cue that is allowed to be nice
- *   refuse  a low flat thud for a control that would not do the thing
+ *   refuse  a low flat thud for a send the guards would not let through
  *
  * ── THE REPEAT GUARD IS NOT AN OPTIMISATION ───────────────────────
  * A reader who double presses a key gets one click, not two, because two

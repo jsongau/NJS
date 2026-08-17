@@ -467,9 +467,18 @@ for (const [name, raw] of CORRUPT) {
     AND WHAT A COLOURBLIND READER IS HANDED, WHICH IS THE HARDER TEST
     BECAUSE THIS CONTROL IS ABOUT COLOUR. Four signals and not one of
     them is a hue: the printed word, two different silhouettes, the
-    knob's position, and two ends painted at opposite ends of the value
-    ramp. The last of those is measured in greyscale here rather than
-    described, in both grounds.
+    cap's position, and the cap and the slot painted at opposite ends of
+    the value ramp. The last of those is measured in greyscale here
+    rather than described, in both grounds.
+
+    THE VALUE DISTANCE MOVED WHEN THE SWITCH WAS REDRAWN and this check
+    moved with it. It used to read the background of the two ends, which
+    were painted blocks. The ends now carry ink and no fill: the slot is
+    the other ground end to end and the cap is the page over the half
+    the reader is standing on. So the pair to measure is the cap against
+    the slot. Reading the ends today would report two transparent boxes
+    and call a working control broken, which is the failure this project
+    has had five times and does not need a sixth.
   */
   for (const want of ["dark", "light"]) {
     const at = await themeOf(page);
@@ -486,13 +495,16 @@ for (const [name, raw] of CORRUPT) {
       const track = btn.querySelector("[data-ground]");
       const dark = btn.querySelector('[data-end="dark"]');
       const light = btn.querySelector('[data-end="light"]');
-      const knob = track.lastElementChild;
+      /* By name, not by position. See the note above the markup in
+         MegaNav.tsx: the cap moved to the front of the track and a
+         proof that took the last child would have measured a glyph. */
+      const cap = track.querySelector("[data-cap]");
       return {
         ground: track.getAttribute("data-ground"),
         word: btn.lastElementChild.textContent.trim(),
-        darkGrey: grey(getComputedStyle(dark).backgroundColor),
-        lightGrey: grey(getComputedStyle(light).backgroundColor),
-        knobShift: getComputedStyle(knob).transform,
+        capGrey: grey(getComputedStyle(cap).backgroundColor),
+        slotGrey: grey(getComputedStyle(track).backgroundColor),
+        capShift: getComputedStyle(cap).transform,
         glyphs: [
           dark.querySelector("svg").innerHTML.length,
           light.querySelector("svg").innerHTML.length,
@@ -504,9 +516,9 @@ for (const [name, raw] of CORRUPT) {
       };
     });
     check(
-      `${want}: the two ends are a near black and a near white in greyscale`,
-      read.lightGrey - read.darkGrey > 120,
-      `dark end ${read.darkGrey.toFixed(0)}, light end ${read.lightGrey.toFixed(0)}, difference ${(read.lightGrey - read.darkGrey).toFixed(0)} of 255`,
+      `${want}: the cap and the slot are a near black and a near white in greyscale`,
+      Math.abs(read.capGrey - read.slotGrey) > 120,
+      `cap ${read.capGrey.toFixed(0)}, slot ${read.slotGrey.toFixed(0)}, difference ${Math.abs(read.capGrey - read.slotGrey).toFixed(0)} of 255`,
     );
     check(
       `${want}: the word on the switch is the ground on the page`,
@@ -519,12 +531,12 @@ for (const [name, raw] of CORRUPT) {
       `crescent ${read.paths[0]} shape, sun ${read.paths[1]} shapes`,
     );
     check(
-      `${want}: the knob is at the ${want} end`,
+      `${want}: the cap is at the ${want} end`,
       want === "dark"
-        ? read.knobShift === "none" || /matrix\(1, 0, 0, 1, 0, 0\)/.test(read.knobShift)
-        : /matrix\(1, 0, 0, 1, (\d|[1-9]\d)/.test(read.knobShift) &&
-          !/matrix\(1, 0, 0, 1, 0, 0\)/.test(read.knobShift),
-      read.knobShift,
+        ? read.capShift === "none" || /matrix\(1, 0, 0, 1, 0, 0\)/.test(read.capShift)
+        : /matrix\(1, 0, 0, 1, (\d|[1-9]\d)/.test(read.capShift) &&
+          !/matrix\(1, 0, 0, 1, 0, 0\)/.test(read.capShift),
+      read.capShift,
     );
   }
 
@@ -607,7 +619,12 @@ for (const [name, raw] of CORRUPT) {
     for (const sel of [
       "#ground-switch",
       "#ground-switch [data-ground]",
-      "#ground-switch [data-ground] > :last-child",
+      /* The cap, by its name. This used to say :last-child, which was
+         the cap only while the cap happened to be last in the markup.
+         It is now first, and a selector that reads a glyph while
+         reporting the cap is the quiet kind of wrong this project has
+         paid for before. */
+      "#ground-switch [data-cap]",
     ]) {
       const el = document.querySelector(sel);
       if (!el) continue;

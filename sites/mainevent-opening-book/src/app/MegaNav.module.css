@@ -195,42 +195,57 @@
   reasoning about the accessibility model is in MegaNav.tsx beside the
   markup; this file owns the object.
 
-  ── IT IS BUILT OUT OF THE STRIP'S OWN PRESS LANGUAGE ──────────────
+  ── IT IS BUILT OUT OF THE STRIP'S OWN PRESS LANGUAGE ──────────
   The housing is the hamburger's: a plate on the surface ramp, a hairline
   border and a two pixel edge underneath it that the plate drops onto
   when it is pressed. So the switch is recognisably a control on this
   strip rather than a widget that arrived from somewhere else, and the
   travel it has is the travel every other pressable thing here has.
 
-  Inside that plate is a recessed track with two ends, a moon and a sun,
-  and a knob that sits over the end that is live. Pressing throws the
-  knob to the other end. It is the only thing on this strip that moves
-  without a press, and it moves for a sixth of a second, once, because
-  somebody asked it to.
+  Inside that plate is a slot painted as the ground the reader is NOT on,
+  with both glyphs cut into it, and a solid cap of the page's own paint
+  sitting over the ground they are. Pressing throws the cap to the other
+  end. It is the only thing on this strip that moves without a press, and
+  it moves for a sixth of a second, once, because somebody asked it to.
 
-  ── THE TWO ENDS ARE PAINTED WITHOUT THIS FILE KNOWING THE GROUND ──
-  The end the reader is standing on takes --surface-0 and --text-0. The
-  other end takes --surface-inverse and --text-inverse, which mean the
-  inverted panel and the ink that sits on it, NOT "dark panel" and "light
-  ink". That is the whole trick and it is worth reading twice.
+  ── THE CAP, AND WHY IT IS SOLID RATHER THAN A FRAME ───────────
+  The first version of this painted the two ends as two blocks and put a
+  hollow ring over the live one. It measured correctly and it read badly.
+  At the size this actually ships, a two pixel frame in the rule ink,
+  carrying the same corner radius as the plate around it and as the six
+  destination keys beside it, is a rectangle parked on two blocks rather
+  than a piece that moves. The signal was present and the eye did not
+  pick it up, which is the only test a state indicator has to pass.
 
-  On the dark ground, --surface-0 is the near black page and
-  --surface-inverse is the lit cream, so the moon end is dark and the sun
-  end is light. On the light ground both flip, and the reader is now
-  standing on the sun end: --surface-0 is the near white page and
-  --surface-inverse is the near black panel, so the moon end is dark and
-  the sun end is light AGAIN. The ends keep their values in both grounds
-  out of two token pairs, with no [data-theme] rule in this file and no
-  colour of its own. Both pairs are the ones the contrast tables in
-  tokens.css are written against: 16.97 and 13.86 on dark, 16.24 and
-  15.47 on light.
+  A solid cap passes it by having a silhouette. It is the only object in
+  the control with an outline of its own, it is the lightest or the
+  darkest thing in the control depending on the ground, and it carries a
+  foot the way every pressable thing on this strip does. The slot is a
+  pill, a radius nothing else on the strip has, so the shape says
+  "switch" before any glyph gets a chance to.
 
-  ── AND WHAT IS LEFT WHEN THE COLOUR GOES ──────────────────────────
-  Everything. The two ends are a near black block beside a near white one
-  at both grounds, which is a value distance greyscale cannot collapse
-  and no dichromacy touches. The glyphs are a solid crescent against a
-  radiating disc, two silhouettes rather than two hues. The knob is a
-  position. The word is a word.
+  ── THE PAINT IS TWO TOKEN PAIRS AND NO KNOWLEDGE OF THE GROUND ──
+  The slot takes --surface-inverse and the cap takes --surface-0, which
+  mean "the inverted panel" and "the page", NOT "dark block" and "light
+  block". On the dark ground the slot is the lit cream and the cap is the
+  near black page. On the light ground both flip and the cap is the near
+  white page over a near black slot. The reader is standing on the cap in
+  both grounds, out of two tokens, with no [data-theme] rule in this file
+  and no colour of its own.
+
+  The glyphs sit ABOVE the cap rather than under it, and that is the
+  whole reason nothing is drawn twice. The live glyph is --text-0 on
+  --surface-0 and the dead glyph is --text-inverse on --surface-inverse,
+  which are exactly the two pairs the contrast tables in tokens.css are
+  written against: 16.97 and 13.86 on dark, 16.24 and 15.47 on light.
+
+  ── AND WHAT IS LEFT WHEN THE COLOUR GOES ──────────────────
+  Everything. The cap and the slot are a near black block beside a near
+  white one at both grounds, which is a value distance greyscale cannot
+  collapse and no dichromacy touches. The glyphs are a solid crescent
+  against a radiating disc, two silhouettes rather than two hues. The cap
+  is a position. The word is a word, and below 400px where the word is
+  dropped, the other three still carry it on their own.
 */
 
 .ground {
@@ -263,9 +278,12 @@
 }
 
 /*
-  The track is a slot cut into the plate, which is what the inset shadow
-  is for: the knob has to look like it is sitting IN something, or its
-  travel reads as a highlight moving rather than as an object sliding.
+  The slot is cut into the plate, which is what the inset shadow is for:
+  the cap has to look like it is sitting IN something, or its travel
+  reads as a highlight moving rather than as an object sliding. It is
+  painted as the other ground end to end and the cap covers the half the
+  reader is standing on, so at rest the control is one block of each
+  value with a piece of hardware on one of them.
 */
 .groundTrack {
   position: relative;
@@ -274,59 +292,61 @@
   align-items: stretch;
   height: 28px;
   border: 1px solid var(--line-2);
-  border-radius: var(--radius-s);
+  border-radius: 999px;
   overflow: hidden;
+  background: var(--surface-inverse);
   box-shadow: var(--well-inset);
 }
 
+/*
+  The glyphs ride above the cap, so each is ink on the surface its
+  contrast was measured against and neither has to be drawn twice.
+*/
 .groundEnd {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 21px;
-}
-
-/* The end being stood on is the page's own paint. See the note above. */
-.groundTrack[data-ground="dark"] .groundEnd[data-end="dark"],
-.groundTrack[data-ground="light"] .groundEnd[data-end="light"] {
-  background: var(--surface-0);
-  color: var(--text-0);
-}
-
-/* The other end is the inverted panel, which is the other ground. */
-.groundTrack[data-ground="dark"] .groundEnd[data-end="light"],
-.groundTrack[data-ground="light"] .groundEnd[data-end="dark"] {
-  background: var(--surface-inverse);
   color: var(--text-inverse);
 }
 
-/*
-  THE KNOB IS A BEZEL AND NOT A LID, and that is a contrast decision
-  before it is a drawing one. A filled knob would put a third surface
-  over one of the two glyphs and the glyph would have to be legible on
-  whichever fill happened to be underneath it. A frame leaves both ends
-  painted exactly as the tables say they are and still reads as the piece
-  that moves, because it is the only thing on the switch with a foot: the
-  bottom edge is three pixels against two, which is the same weight the
-  active queue key carries along its own bottom.
+/* The end being stood on is the one under the cap, so it is page ink. */
+.groundTrack[data-ground="dark"] .groundEnd[data-end="dark"],
+.groundTrack[data-ground="light"] .groundEnd[data-end="light"] {
+  color: var(--text-0);
+}
 
-  --line-strong is the rule ink and it only ever sits on --surface-0,
-  which is the easiest surface it is painted on in either ground.
+/*
+  THE CAP IS THE PIECE THAT MOVES, and it is held two pixels clear of the
+  walls on every side. That gap is not decoration: a cap flush to the
+  slot is half of a rectangle, and a cap inside a channel is a switch.
+  The foot underneath it is the same weight the plate's own edge carries,
+  which is what ties it to the press language of this strip rather than
+  to a toggle out of a component library.
+
+  --line-strong is the rule ink and --line-2 is the divider, and both are
+  read here against --surface-0, which is the easiest surface either is
+  painted on in either ground.
 */
-.groundKnob {
+.groundCap {
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 50%;
-  border: 2px solid var(--line-strong);
-  border-bottom-width: 3px;
-  border-radius: var(--radius-s);
+  z-index: 1;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  background: var(--surface-0);
+  border-radius: 999px;
+  box-shadow:
+    0 1px 0 var(--line-strong),
+    inset 0 0 0 1px var(--line-2);
   pointer-events: none;
   transition: transform var(--dur-1) var(--ease-out);
 }
 
-.groundTrack[data-ground="light"] .groundKnob {
+.groundTrack[data-ground="light"] .groundCap {
   transform: translateX(100%);
 }
 
@@ -847,8 +867,8 @@
     can break. Eight pixels of padding and track buys it back with room
     over.
 
-    Nothing else on this control moves. Both ends stay painted, both
-    glyphs stay drawn, the knob keeps its travel and the word stays
+    Nothing else on this control moves. The slot and the cap stay
+    painted, both glyphs stay drawn, the cap keeps its travel and the word stays
     printed, because this is the one control on the strip that changes
     how the whole screen looks and a handset is where a reader is most
     likely to be fighting the light.
@@ -1036,8 +1056,8 @@
 
   The PRESS STATE ITSELF SURVIVES. Only the travel between the two
   states is removed; the key still bottoms out, it simply arrives there
-  in one frame. THE SAME GOES FOR THE GROUND SWITCH: the knob is still at
-  the end it belongs to, it simply gets there without crossing the track,
+  in one frame. THE SAME GOES FOR THE GROUND SWITCH: the cap is still at
+  the end it belongs to, it simply gets there without crossing the slot,
   and the ground itself arrives in one repaint either way.
 */
 @media (prefers-reduced-motion: reduce) {
@@ -1045,7 +1065,7 @@
   .burger,
   .feature,
   .ground,
-  .groundKnob {
+  .groundCap {
     transition: none;
   }
 }

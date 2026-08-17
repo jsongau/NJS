@@ -234,17 +234,19 @@ const ITEMS: MegaItem[] = [
  * The owner is colourblind and this is the one control in the product
  * that is about colour, so it is built to be read with none.
  *
- *   POSITION  The knob is at the moon end or the sun end. A switch that
- *             has travelled is the oldest state indicator there is.
- *   FILL      The two ends are painted permanently, one near black and
- *             one near white, out of the palette the reader is on. A lit
- *             side and a dark side, at a value distance no dichromacy
- *             and no greyscale can collapse.
+ *   POSITION  The cap is at the moon end or the sun end. A switch that
+ *             has travelled is the oldest state indicator there is, and
+ *             a solid cap is the version of it the eye actually catches
+ *             at this size. A hollow frame was tried first and did not.
+ *   FILL      The cap is the page's own paint and the slot behind it is
+ *             the other ground, one near black and one near white out of
+ *             the palette the reader is on, at a value distance no
+ *             dichromacy and no greyscale can collapse.
  *   GLYPH     A solid crescent against a radiating disc. Two different
  *             silhouettes, not two colours of the same shape.
  *   WORD      The ground is printed beside the switch, in words.
  *
- * The knob travels over a duration token, which the query at the foot of
+ * The cap travels over a duration token, which the query at the foot of
  * tokens.css zeroes for a reader who has asked their system to stop
  * moving things. Nothing else on the page animates on a press: repainting
  * every surface through a cross fade is a second of a product looking
@@ -267,6 +269,20 @@ function GroundSwitch() {
       }
     >
       <span className={styles.groundTrack} data-ground={theme}>
+        {/* The cap, and it is FIRST in the markup on purpose: it sits
+            under both glyphs, which is what lets the live glyph be page
+            ink on page paint and the dead one be panel ink on panel,
+            with neither drawn twice. Decorative, because everything it
+            says is said by the word beside it and by the name on the
+            button.
+
+            IT CARRIES data-cap AND scripts/proof-ground.mjs FINDS IT BY
+            THAT NAME. The proof used to take the track's last child,
+            which was true only while the cap happened to be last in the
+            markup, and this change moved it first. A hook a proof
+            depends on is part of the component, so it is written down
+            rather than inferred from an ordering. */}
+        <span className={styles.groundCap} data-cap="" aria-hidden="true" />
         <span className={styles.groundEnd} data-end="dark">
           <svg
             viewBox="0 0 16 16"
@@ -297,13 +313,10 @@ function GroundSwitch() {
             </g>
           </svg>
         </span>
-        {/* The knob. Decorative: everything it says is said by the word
-            beside it and by the name on the button. */}
-        <span className={styles.groundKnob} aria-hidden="true" />
       </span>
       {/*
         The word is the switch's readout and it is the current ground, not
-        the destination, because it belongs to the knob rather than to the
+        the destination, because it belongs to the cap rather than to the
         press. Its box is reserved for the longer of the two words: a
         control that changes width under the finger that just pressed it
         shifts the whole strip to the right of it.

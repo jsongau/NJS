@@ -2,6 +2,20 @@
 
 One line per working day. Longer notes live in `docs/` as dated session files.
 
+## 2026-08-17
+
+The ground switch is redrawn. It kept every signal it was designed to carry
+and none of them had a silhouette, so at the size it ships the eye did not
+pick out the piece that moves. It is now a slot painted as the other ground
+with both glyphs cut into it and a solid cap of the page's own paint sliding
+over the ground you are on, in the same 99px by 44px footprint, because the
+strip needs 888px against a breakpoint of 899 and twelve more pixels would
+have broken the mega nav at one width. Moving the cap to the front of the
+markup broke two measurements in `proof-ground.mjs` without breaking the
+control: it took the cap as the track's last child, and it read the value
+distance off two ends that no longer carry a fill. Both now work by name
+rather than by position. Full note in `docs/2026-08-17-ground-switch-cap.md`.
+
 ## 2026-08-14
 
 A hundred and nine more organisations, found by industry rather than by map.

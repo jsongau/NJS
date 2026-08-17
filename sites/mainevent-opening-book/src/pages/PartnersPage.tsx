@@ -347,6 +347,56 @@ export function PartnersPage() {
               </p>
             </div>
           </div>
+
+          {/*
+            WHAT THE TWO LISTS ARE ACTUALLY WORTH, AND WHOSE IT IS.
+
+            The screen above this block is careful and quiet, and a reader
+            scanning it in ten seconds could take away "here are two lists
+            off a website". The thing that makes it a sales asset rather
+            than research is not on either page: the relationship is the
+            applicant's own, and a hiring manager cannot know that unless
+            it is said.
+
+            SO IT IS SAID IN TWO HALVES, AND THEY CARRY DIFFERENT BADGES,
+            because they are different kinds of fact. The retailer list is
+            public and sourced and does the heavy lifting on its own. The
+            relationship is stated by the applicant and sourced nowhere,
+            and it is badged user_input for exactly that reason. Putting
+            the second half under the first half's badge is the shape of
+            claim this application exists to avoid.
+          */}
+          <div className={styles.nmClaim}>
+            <h3 className={styles.nmTitle}>What that is worth to a venue</h3>
+            <p className={styles.nmClaimP}>
+              <ProvenanceBadge provenance="public" compact /> The retailer
+              list is the half that carries itself. A supplier already
+              shipping licensed product into Costco, Target and Walmart has
+              passed those retailers' own compliance, packaging and volume
+              requirements, and that is a harder test than anything a
+              candidate can assert about themselves. The nine properties on
+              the other card are what that supplier is licensed to print on
+              it.
+            </p>
+            <p className={styles.nmClaimP}>
+              <ProvenanceBadge provenance="user_input" compact /> The
+              connection is Nathan J. Song's, personally, and the
+              introduction is his to make. He states they produce licensed
+              goods in bulk and could quote a venue order. That sentence is
+              his word and nothing on their site says it, which is why it
+              carries the badge it does rather than sitting under the one
+              above.
+            </p>
+            <p className={styles.nmClaimP}>
+              <ProvenanceBadge provenance="withheld" compact /> What this is
+              not: a deal. Main Event holds no agreement with Nature's Mark
+              or with any licensor on this register, no price has been
+              quoted, no lead time has been confirmed and nothing here has
+              been put to anybody. What is on offer is a first call with a
+              supplier of licensed goods at retail volume, on day one,
+              through somebody who can pick up the phone.
+            </p>
+          </div>
         </section>
 
         {/* ===========================================================
@@ -575,7 +625,18 @@ export function PartnersPage() {
             {visible.map((r) => (
               <li key={r.partner.id} className={styles.row}>
                 <div className={styles.rowHead}>
-                  <h3 className={styles.rowName}>{r.partner.name}</h3>
+                  {/*
+                    The note is ALSO the hover text, and it is printed on
+                    the row rather than only being hovered. A fact that
+                    exists only in a title attribute does not exist on a
+                    phone, does not exist for a keyboard and does not
+                    exist for a screen reader; a pointer getting a second
+                    route to the same sentence costs nothing and hides
+                    nothing.
+                  */}
+                  <h3 className={styles.rowName} title={r.partner.note}>
+                    {r.partner.name}
+                  </h3>
                   <TokenMark token={PARTNER_KIND[r.partner.kind]} small />
                   <TokenMark token={RELATIONSHIP_STATE[r.partner.state]} />
                   <ProvenanceBadge provenance={r.partner.provenance} compact />

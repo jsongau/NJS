@@ -4,6 +4,7 @@ import { SectionMark } from "@/components/play/SectionMark";
 import { Readout } from "@/components/play/Readout";
 import { PROSPECTS } from "@/data/prospects";
 import { useTheme } from "@/state/ThemeProvider";
+import { useSound } from "@/state/SoundProvider";
 import { INBOX_PATH } from "@/pages/InboxPage";
 import { useShellFigures } from "./SideRail";
 import { FEATURED_KEY, normalisePath, type SectionId } from "./sections";
@@ -256,6 +257,10 @@ const ITEMS: MegaItem[] = [
  */
 function GroundSwitch() {
   const { theme, toggle } = useTheme();
+  /* Its own cue, two notes for a two state control, and data-sound="off"
+     on the button so the delegated press listener does not fire a click
+     on top of it. One control, one sound. */
+  const { play } = useSound();
   const lit = theme === "light";
 
   return (
@@ -265,7 +270,11 @@ function GroundSwitch() {
          name. A hook a proof depends on is part of the component. */
       id="ground-switch"
       className={styles.ground}
-      onClick={toggle}
+      data-sound="off"
+      onClick={() => {
+        play("throw");
+        toggle();
+      }}
       aria-label={
         lit ? "Ground light, switch to dark" : "Ground dark, switch to light"
       }

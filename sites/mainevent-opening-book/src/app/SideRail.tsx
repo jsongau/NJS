@@ -47,6 +47,7 @@ import {
 } from "@/state/persist";
 import { PinMark } from "@/components/primitives/PinMark";
 import { ResetControl } from "@/components/primitives/ResetControl";
+import { SoundControlButton } from "@/components/primitives/SoundControl";
 import { SectionMark } from "@/components/play/SectionMark";
 import { Readout } from "@/components/play/Readout";
 import { FEATURED_KEY, normalisePath, type SectionId } from "./sections";
@@ -1750,6 +1751,17 @@ export function SideRail() {
             {collapsed ? "Widen the rail" : "Collapse the rail"}
           </span>
         </button>
+
+        {/*
+          The sound control lives in the foot rather than on the strip for
+          one measured reason: the strip needs 888px against a breakpoint
+          of 899, so there are eleven pixels of width up there and this
+          button is not worth the mega nav breaking at one window size.
+          The foot is also where the other two settings already are, which
+          is the shelf a reader looks at when they want to change how the
+          thing behaves rather than where they are.
+        */}
+        <SoundControlButton />
 
         <div className={styles.reset}>
           <ResetControl />

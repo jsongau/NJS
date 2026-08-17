@@ -39,6 +39,30 @@ dress appeared anywhere, and the /start disclaimer now names the trademark
 and its owner. The strip was re-measured at all 115 widths after the
 change.
 
+Fourth pass the same day. The cabinet can make a noise now, and it is
+silent until somebody arms it: five synthesised cues, no audio files, no
+new dependency, a control in the rail foot that says "Sound on" or "Sound
+off" in words as well as in a glyph, and the choice stored the way the
+ground is. `scripts/proof-sound.mjs` replaces createOscillator before the
+bundle boots and counts the notes the application actually starts, because
+no screenshot can hear a defect: it proves silence before arming, one note
+per key press, exactly two for the ground switch rather than three, none
+for typing, survival across a reload, and that the collapsed rail drops the
+control. That last rule had to move files: a class name in a CSS module is
+hashed per file, so the version written in SideRail.module.css compiled to
+a class no element carried and would have matched nothing forever.
+
+The Nature's Mark row now says what it is worth and whose it is, in three
+paragraphs under three different badges. Public: the retailer list carries
+itself, since a supplier already shipping licensed product into Costco,
+Target and Walmart has passed those retailers' compliance. User input: the
+connection is Nathan J. Song's personally and the bulk production claim is
+his word, sourced nowhere on their site, which is exactly why it is not
+under the public badge. Withheld: there is no deal, no price and no lead
+time. The short version is printed on the register row and is also its
+hover text, rather than living only in a title attribute where a phone, a
+keyboard and a screen reader would never find it.
+
 ## 2026-08-14
 
 A hundred and nine more organisations, found by industry rather than by map.

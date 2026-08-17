@@ -759,3 +759,37 @@
     margin-block: -15px;
   }
 }
+
+/*
+  THE CLAIM BLOCK. It sits under the two source cards rather than above
+  them, which is the order the argument actually runs in: here is what the
+  page publishes, here is what that is worth, here is what it is not. A
+  claim printed before its evidence is a boast; printed after it, it is a
+  conclusion.
+
+  It is drawn as one panel rather than as three cards because the three
+  paragraphs are one argument and the badges are what separate them. The
+  left rule is the same device the quoted requirement uses at the top of
+  every screen in this application: a thing being asserted rather than a
+  thing being listed.
+*/
+.nmClaim {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--sec, var(--signal));
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.nmClaimP {
+  margin: var(--space-2) 0 0;
+  max-width: 74ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.nmClaimP:first-of-type {
+  margin-top: var(--space-2);
+}

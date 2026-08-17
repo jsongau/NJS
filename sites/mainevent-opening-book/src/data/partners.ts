@@ -357,7 +357,7 @@ export const PARTNERS: Partner[] = [
     region: "Not published. Their pages name no facility and no country.",
     source: NATURES_MARK_SOURCE,
     provenance: "public",
-    note: "A connection Jay holds. There is no agreement between Main Event and Nature's Mark, and none between Main Event and any licensor on this list. Capability, not a deal.",
+    note: "A supplier connection Nathan J. Song holds personally, and the introduction is his to make. Their own page names nine licensed properties and twenty four retailers they supply, Costco, Target and Walmart among them. There is no agreement between Main Event and Nature's Mark, and none between Main Event and any licensor on this list. An introduction, not a deal.",
   },
   {
     id: "pacific-rim-plush",

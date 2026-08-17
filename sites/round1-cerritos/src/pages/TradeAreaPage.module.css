@@ -1,0 +1,271 @@
+/*
+  THIS PAGE HAS ALMOST NO CSS, AND THAT IS THE POINT.
+
+  The route is a takeover: `FullBleedRoute` is already a flex column
+  filling the viewport with no rail beside it and no padding around it,
+  and `MapBoard` below it owns the chrome band, the figure strip and the
+  three panes. What is left for this file is the one piece of the screen
+  the page itself supplies, which is the disclosure holding the argument
+  about the rings.
+
+  Everything here is therefore scoped to that disclosure, and it has two
+  jobs. It has to be legible sitting in an inverted band, and it has to
+  cost the board no height at all, because the height is the entire reason
+  this screen became a takeover in the first place.
+*/
+
+/* ---------------------------------------------------------------
+   The straight line note
+   --------------------------------------------------------------- */
+
+/*
+  A disclosure rather than a panel, and an OVERLAY rather than a row.
+
+  The argument underneath it is the single most important sentence on the
+  page and it is also four hundred words, which is four hundred words the
+  board does not have room for. In the previous layout it lived in a
+  header band and the band took a hundred and five pixels off a screen
+  that is permanently short of them. Here the shut state is one control in
+  a row that already exists, and the open state is a panel drawn over the
+  board rather than a block pushing the board down. Opening a note is not
+  a reason to relayout a map.
+*/
+.rings {
+  position: relative;
+  flex: none;
+  min-width: 0;
+}
+
+.ringsSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  /* Every wash and rule on this control is mixed from the ink of the
+     band it sits on rather than typed as a white. The band inverts with
+     the ground, so a literal white was a control on one and a ghost on
+     the other. */
+  background: color-mix(in srgb, var(--text-inverse) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-inverse) 42%, transparent);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-inverse);
+  cursor: pointer;
+  white-space: nowrap;
+  list-style: none;
+}
+
+.ringsSummary::-webkit-details-marker {
+  display: none;
+}
+
+.ringsSummary:hover {
+  background: color-mix(in srgb, var(--text-inverse) 16%, transparent);
+}
+
+/* THE RING ON THIS BAND IS THE BAND'S OWN INK. The note that used to sit
+   here said the band was dark and that gold cleared it, and the first
+   half stopped being true the moment there were two grounds: the band is
+   whatever --surface-inverse is, a lit cream on one and the housing on
+   the other. Gold measures 2.03:1 and 2.14:1 on those two, so it never
+   cleared the 3:1 a focus indicator owes. --text-inverse is the ink the
+   band carries by construction, and it measures 13.78 and 15.47. */
+.ringsSummary:focus-visible {
+  outline: 2px solid var(--text-inverse);
+  outline-offset: 2px;
+}
+
+/*
+  The word after the label is the state, not an icon rotating. A triangle
+  turning ninety degrees is a convention; "Open" and "Close" are an
+  instruction, and this one survives a greyscale filter and a screen
+  reader both.
+*/
+.ringsSummary::after {
+  content: "Open";
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-inverse-2);
+}
+
+.rings[open] .ringsSummary::after {
+  content: "Close";
+}
+
+.rings[open] .ringsSummary {
+  background: color-mix(in srgb, var(--text-inverse) 16%, transparent);
+}
+
+/*
+  The short label is the one that survives on a handset, where this
+  control shares a 380 pixel row with the way out and the list toggle.
+  Both labels are real text and one of them is display: none, rather than
+  one being clipped to a pixel, because a clipped span inside a row that
+  can scroll is how a screen ends up scrolling sideways.
+*/
+.ringsShort {
+  display: none;
+}
+
+/*
+  The panel. Anchored to the right hand end of the band, because that is
+  where the control sits and a panel that opens away from its own control
+  makes a reader hunt for what they just pressed.
+
+  It is capped and scrolls inside itself. Four hundred words at 62
+  characters a line is taller than a laptop, and a note that runs off the
+  bottom of the viewport with no scrollbar of its own is a note whose last
+  paragraph nobody reads.
+*/
+/*
+  FIXED TO THE VIEWPORT, NOT TO THE CONTROL, and the reason is a measured
+  one. Anchored to the disclosure with `right: 0`, a 64 character panel
+  opening from a control that sits 630 pixels along a 900 pixel band
+  starts at minus twenty: the first inch of every line is off the left
+  edge of the screen. Fixed to the viewport's right margin instead, the
+  panel is inside the screen at every width, and `top: auto` still leaves
+  it hanging directly under the control that opened it.
+*/
+.ringsBody {
+  position: fixed;
+  top: auto;
+  right: var(--space-3);
+  /*
+    One above the tray, which is where the list sheet sits. A phone
+    arrives on this screen with the sheet open, so a note at the tray's
+    own level opened underneath it and showed the reader two lines of a
+    four hundred word argument. It stays below the compose window and its
+    scrim at 49 and 50, because a dialog somebody is typing into outranks
+    a note somebody can close.
+  */
+  z-index: calc(var(--z-tray) + 1);
+  width: min(64ch, calc(100vw - var(--space-5)));
+  max-height: min(60vh, 520px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-3);
+}
+
+.ringsBody p {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/*
+  The badge and its sentence wrap rather than holding one line. The badge
+  itself does not break, so on a 380 pixel panel an unwrapped row put the
+  end of the sentence past the right edge of the screen, which is the
+  quiet way a phone grows a horizontal scrollbar.
+*/
+.ringsProv {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0 !important;
+  font-size: var(--step--2) !important;
+  color: var(--text-3) !important;
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+/*
+  The long label goes at 1280 rather than at this codebase's usual 1024,
+  and the number is measured rather than chosen. The band holds a 195
+  pixel way out, the screen name, this control and a 110 pixel list
+  toggle beside a 130 pixel hint, and the whole sentence is 460 pixels of
+  it. Below 1280 the sum runs past the viewport, and what gives way then
+  is the label rather than the screen name, because the name says where
+  the reader is standing.
+*/
+@media (max-width: 1280px) {
+  .ringsLong {
+    display: none;
+  }
+
+  .ringsShort {
+    display: inline;
+  }
+}
+
+@media (max-width: 768px) {
+  /*
+    The state word goes at the width where the band is carrying a Back
+    control, a screen name, a list toggle and this. The disclosure still
+    says whether it is open, because an open one is a panel covering half
+    the map and there is no mistaking it.
+  */
+  .ringsSummary::after {
+    content: none;
+  }
+
+  .ringsSummary {
+    padding: 0 var(--space-2);
+  }
+
+  /*
+    Edge to edge, less a hairline of margin. At this width the panel is
+    the screen, so it stops pretending to hang off one control.
+  */
+  .ringsBody {
+    left: var(--space-2);
+    right: var(--space-2);
+    width: auto;
+    max-height: 62dvh;
+  }
+}
+/*
+  THE MODE SWITCH ON A TAKEOVER.
+
+  Same box as Back because the two are peers: both leave this surface,
+  one to where you came from and one to the argument for why this
+  surface is shaped like a takeover in the first place. It is drawn
+  quieter, without the outline, because Back is the control a reader on
+  a full screen board is hunting for and two identical outlines side by
+  side would make them read the wrong one.
+
+  It is a link and not a button. It goes to an address, that address is
+  worth copying out of the bar, and a button that navigates is a link
+  that has thrown away the middle click.
+*/
+.modeLink {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-m);
+  color: var(--text-inverse);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0.82;
+}
+
+.modeLink:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--text-inverse) 14%, transparent);
+}
+
+/* Below the width where Back itself drops to one word, the band is four
+   controls in 380 pixels and this is the one that can wait. It is not
+   deleted from the application: the rail carries the same destination,
+   and a reader on a handset reaches it from there. */
+@media (max-width: 560px) {
+  .modeLink {
+    display: none;
+  }
+}
+

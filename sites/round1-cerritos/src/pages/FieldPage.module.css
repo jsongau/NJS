@@ -1,0 +1,1288 @@
+/*
+  OUTSIDE THE BUILDING.
+
+  Three long sections stacked in one column, and the column is the point.
+  The desk is a board and the trade area is a map; this page is an
+  argument made in order, so nothing here is a dashboard grid competing
+  for the eye. Section one is a run list, section two is a case, section
+  three is a reckoning, and a reader who scrolls straight through gets
+  them in that order because that is the order they persuade in.
+
+  The register is inherited and unchanged: cool paper ground, hairline
+  rules, one hot amber doing the editorial work, no gradients and no
+  shadows carrying structure. Every status on this page is a glyph and a
+  word before it is a colour, because the owner of this site is
+  colourblind and a legend keyed only by swatch is a bug.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-5);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-4);
+}
+
+/*
+  The posting quote is the one piece of borrowed voice on the page, so it
+  gets the amber rule and nothing else does. A box, a tint and a rule
+  would have made it shout; a single hairline on the left makes it read as
+  something quoted rather than something claimed.
+*/
+.posting {
+  margin: 0 0 var(--space-4);
+  padding: 0 0 0 var(--space-4);
+  border-left: 3px solid var(--brand-gold);
+  max-width: 74ch;
+}
+
+.posting p {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.posting cite {
+  display: block;
+  font-style: normal;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.subLede {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 82ch;
+}
+
+/* ---------------------------------------------------------------
+   KPI strip
+   --------------------------------------------------------------- */
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-bottom: var(--space-6);
+  /* Hairlines between the tiles rather than four bordered cards, so the
+     strip reads as one instrument, which is what it is. */
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: var(--space-4);
+  background: var(--surface-1);
+}
+
+.kpiValue {
+  font-size: var(--step-4);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text-0);
+}
+
+.kpiUnit {
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-2);
+  margin-left: 2px;
+}
+
+.kpiLabel {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+  line-height: 1.3;
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.section {
+  margin-bottom: var(--space-7);
+  border-top: 1px solid var(--line-2);
+  padding-top: var(--space-5);
+}
+
+.sectionHead {
+  max-width: 86ch;
+  margin-bottom: var(--space-5);
+}
+
+.sectionEyebrow {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-gold-600);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-3);
+}
+
+.sectionLede {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.sectionMeta {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.sectionMetaNote {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.sectionFoot {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 82ch;
+}
+
+.empty {
+  margin: 0;
+  padding: var(--space-5);
+  background: var(--surface-3);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   1. The go-see run
+   --------------------------------------------------------------- */
+
+.run {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.stop {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: var(--space-4);
+}
+
+/*
+  A visited stop gets an amber left edge and it also gets the word
+  "Visited" on a row inside it. The edge is the scanning aid; the word is
+  the signal. Remove all colour from this page and the run still reads.
+*/
+.stop[data-done="yes"] {
+  border-left: 3px solid var(--brand-gold);
+}
+
+.stopHead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.stopIndex {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+}
+
+.stopTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.stopName {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+.stopChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.stopMiles {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  max-width: 15ch;
+}
+
+.stopMilesValue {
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.stopMilesUnit {
+  font-size: var(--step--2);
+  line-height: 1.35;
+  color: var(--text-3);
+}
+
+.stopFacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border-radius: var(--radius-s);
+}
+
+.stopFact dt {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+
+.stopFact dd {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.stopWhy {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+  max-width: 78ch;
+}
+
+.visits {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.visit {
+  padding: var(--space-3);
+  background: var(--brand-gold-tint);
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-s);
+}
+
+.visitHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--brand-gold-600);
+  margin-bottom: var(--space-1);
+}
+
+.visitNote {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.stopActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.stopTouches {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.visitForm {
+  margin-top: var(--space-3);
+  padding: var(--space-4);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+}
+
+.visitFormLede {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 76ch;
+}
+
+.visitField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.visitField label {
+  font-size: var(--step--2);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.visitField select,
+.visitField textarea {
+  width: 100%;
+  max-width: 62ch;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.visitField textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.visitHint {
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-3);
+  max-width: 62ch;
+}
+
+.visitSubmit {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.visitStamp {
+  font-size: var(--step--2);
+  color: var(--text-3);
+  max-width: 52ch;
+}
+
+/* ---------------------------------------------------------------
+   2. Tabling, and the Kraemer Boulevard case
+   --------------------------------------------------------------- */
+
+/*
+  The one panel on the page that is allowed to look like an argument
+  rather than a record. It gets the ink surface because it is the single
+  claim this section is making, and because a reader who skims everything
+  else should still stop on this one.
+*/
+.kraemer {
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
+  background: var(--surface-inverse);
+  border-radius: var(--radius-l);
+  color: var(--text-inverse);
+}
+
+.kraemerEyebrow {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-gold-line);
+}
+
+.kraemerTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+  color: var(--text-inverse);
+}
+
+.kraemerLede {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-inverse-2);
+  max-width: 74ch;
+}
+
+.kraemerLede strong {
+  color: var(--brand-gold-line);
+}
+
+.kraemerPair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.kraemerCard {
+  background: var(--surface-1);
+  border-radius: var(--radius-m);
+  padding: var(--space-4);
+  color: var(--text-0);
+}
+
+.kraemerCardHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.kraemerName {
+  margin: 0;
+  font-size: var(--step-0);
+  flex: 1 1 100%;
+}
+
+.kraemerFacts {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+}
+
+.kraemerFacts dt {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+
+.kraemerFacts dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.kraemerWhy {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.kraemerPoint {
+  border-top: 1px solid var(--line-inverse);
+  padding-top: var(--space-4);
+  max-width: 78ch;
+}
+
+.kraemerPoint p {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-inverse-2);
+}
+
+.kraemerPoint p:last-child {
+  margin-bottom: 0;
+}
+
+.kraemerEvidence {
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--brand-gold);
+}
+
+.kraemerEvidence a {
+  color: var(--brand-gold-line);
+}
+
+.kraemerEvidence a:hover {
+  color: var(--text-inverse);
+}
+
+.planList {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.planLine {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: var(--space-4);
+}
+
+.planHead {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.planWhere {
+  flex: 1 1 260px;
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+.planHours {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.planHoursValue {
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.planHoursUnit {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.planFacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border-radius: var(--radius-s);
+}
+
+.planFact dt {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+
+.planFact dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.planLanes {
+  gap: var(--space-1);
+}
+
+.planWhy {
+  margin: 0 0 var(--space-3);
+  padding: 0 0 0 var(--space-3);
+  border-left: 2px solid var(--ledger-activity);
+  max-width: 80ch;
+}
+
+.planWhyLabel {
+  display: block;
+  font-size: var(--step--2);
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 2px;
+}
+
+.planWhy p {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.planNoWhy {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  font-style: italic;
+}
+
+.planAnchor {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.planFoot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.planDone,
+.planPlanned {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 650;
+}
+
+.planDone {
+  color: var(--ok);
+}
+
+.planPlanned {
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   3. The hours ledger
+   --------------------------------------------------------------- */
+
+.split {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.splitFigures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.splitFigure {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--neutral);
+}
+
+.splitFigure[data-side="outside"] {
+  border-left-color: var(--ledger-activity);
+}
+
+.splitFigure[data-side="desk"] {
+  border-left-color: var(--neutral);
+}
+
+.splitGlyph {
+  font-size: var(--step-0);
+  line-height: 1;
+  color: var(--text-2);
+}
+
+.splitValue {
+  font-size: var(--step-5);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.splitLabel {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.splitShare {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* Decoration only. Both segments are already a figure, a share and a
+   word above this bar, so it can be lost entirely without losing the
+   reading. That is why it is aria-hidden in the markup. */
+.bar {
+  display: flex;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--surface-3);
+  margin-bottom: var(--space-4);
+}
+
+.barOutside {
+  background: var(--ledger-activity);
+}
+
+.barDesk {
+  background: var(--neutral);
+  /* A hairline between the two, so the boundary survives a greyscale
+     print where the two fills sit close in value. */
+  box-shadow: inset 1px 0 0 var(--surface-1);
+}
+
+.verdict {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  color: var(--text-1);
+}
+
+.verdict[data-meets="yes"] {
+  border-color: var(--ok);
+  background: var(--ok-tint);
+}
+
+.verdict[data-meets="no"] {
+  border-color: var(--warn);
+  background: var(--warn-tint);
+}
+
+.verdictGlyph {
+  flex: none;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+.verdict[data-meets="yes"] .verdictGlyph {
+  color: var(--ok);
+}
+
+.verdict[data-meets="no"] .verdictGlyph {
+  color: var(--warn);
+}
+
+.byType {
+  width: 100%;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+  font-size: var(--step--1);
+}
+
+.tableCaption {
+  caption-side: top;
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.byType thead th {
+  text-align: left;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--step--2);
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.byType tbody th,
+.byType tbody td,
+.byType tfoot th,
+.byType tfoot td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-weight: 400;
+  vertical-align: middle;
+  color: var(--text-1);
+}
+
+.byType tfoot th,
+.byType tfoot td {
+  border-bottom: 0;
+  border-top: 1px solid var(--line-2);
+  font-weight: 650;
+  color: var(--text-0);
+  background: var(--surface-2);
+}
+
+/* A zero row is dimmed and it still shows its zero. Hiding empty rows
+   would make "no tabling at all this period" invisible, which is the one
+   reading this table exists to make possible. */
+.byType tbody tr[data-zero="yes"] {
+  color: var(--text-3);
+}
+
+.byType tbody tr[data-zero="yes"] td,
+.byType tbody tr[data-zero="yes"] th {
+  color: var(--text-3);
+}
+
+.numCol {
+  text-align: right;
+  width: 10ch;
+  white-space: nowrap;
+}
+
+.byType thead th.numCol {
+  text-align: right;
+}
+
+.whereCell {
+  width: 40%;
+}
+
+.where {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 650;
+}
+
+.where[data-outside="yes"] {
+  color: var(--ledger-activity);
+}
+
+.where[data-outside="no"] {
+  color: var(--text-2);
+}
+
+.ledgerNotes {
+  max-width: 82ch;
+}
+
+.ledgerNotes p {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.ledgerNotes p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------
+   4. The form
+   --------------------------------------------------------------- */
+
+.form {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: var(--space-5);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* The lane picker is the widest control and it wraps badly beside a
+   number input, so it takes the whole row wherever there is more than
+   one column. */
+.field:last-child {
+  grid-column: 1 / -1;
+}
+
+.field label,
+.fieldLabel {
+  font-size: var(--step--2);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.field input:hover,
+.field select:hover {
+  border-color: var(--line-strong);
+}
+
+.fieldHint {
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-3);
+}
+
+.lanePicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-1) 0;
+}
+
+.lanePick {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease-out);
+}
+
+.lanePick:hover {
+  border-color: var(--line-strong);
+}
+
+/*
+  A selected lane is marked by a TICK and a heavier rule, never by colour
+  alone. The chip inside already carries the lane's own hue and glyph, so
+  if selection were also a hue the two would compete and neither would be
+  legible to a colourblind reader.
+*/
+.lanePick[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+  background: var(--accent-tint);
+}
+
+.lanePickMark {
+  font-size: var(--step--2);
+  font-weight: 700;
+  width: 1em;
+  text-align: center;
+  color: var(--text-3);
+}
+
+.lanePick[aria-pressed="true"] .lanePickMark {
+  color: var(--accent);
+}
+
+.formFoot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.formOwner {
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-3);
+  max-width: 52ch;
+}
+
+.formError,
+.formDone {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-s);
+  font-size: var(--step--1);
+  line-height: 1.5;
+}
+
+.formError {
+  border: 1px solid var(--risk);
+  background: var(--risk-tint);
+  color: var(--text-0);
+}
+
+.formDone {
+  border: 1px solid var(--ok);
+  background: var(--ok-tint);
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   Responsive. The floor is 380px, which is a phone held in a lobby,
+   which is exactly where this page gets read.
+   --------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .inner {
+    padding: var(--space-4) var(--space-3) var(--space-7);
+  }
+
+  .h1 {
+    font-size: var(--step-3);
+  }
+
+  .sectionTitle {
+    font-size: var(--step-2);
+  }
+
+  .stopHead {
+    flex-wrap: wrap;
+  }
+
+  /* The distance drops under the name rather than shrinking beside it.
+     It is the number this list is sorted by, so it keeps its size. */
+  .stopMiles {
+    text-align: left;
+    max-width: none;
+    flex-basis: 100%;
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .kraemer {
+    padding: var(--space-4);
+  }
+
+  .split {
+    padding: var(--space-4);
+  }
+
+  .form {
+    padding: var(--space-4);
+  }
+
+  .whereCell {
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .stopFacts,
+  .planFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .splitValue {
+    font-size: var(--step-4);
+  }
+
+  /* The table goes to two columns on a narrow phone. The "where it
+     happens" cell moves under the row it belongs to rather than being
+     dropped, because that column is the entire point of the table. */
+  .byType thead th:last-child {
+    display: none;
+  }
+
+  .byType tbody td.whereCell {
+    display: block;
+    padding-top: 0;
+    border-bottom: 0;
+  }
+
+  .byType tbody th,
+  .byType tbody td.numCol {
+    border-bottom: 0;
+    padding-bottom: var(--space-1);
+  }
+
+  .byType tbody tr {
+    display: block;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .byType tbody th {
+    display: inline-block;
+  }
+
+  .byType tbody td.numCol {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
+}

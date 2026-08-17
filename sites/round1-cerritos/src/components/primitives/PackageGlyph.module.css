@@ -1,0 +1,22 @@
+/*
+  Flat fills, no gradients. These are drawn at twenty four pixels and a
+  gradient under thirty pixels turns to mud, which is the whole reason
+  enterprise iconography is flat and brand iconography is not.
+*/
+.glyph {
+  flex: none;
+  display: block;
+}
+
+.solid { fill: var(--fam, var(--text-1)); }
+
+/* The last element of each mark is lighter, which gives the shape a
+   reading order at a glance: what is certain, and what is still open. */
+.soft { fill: var(--fam, var(--text-1)); opacity: 0.42; }
+
+/* A hole, not a shape. Filled with the card ground so the eyelet reads as
+   punched through the tag rather than printed on it. */
+.punch { fill: var(--surface-1); }
+
+.ring { stroke: var(--fam, var(--text-1)); opacity: 0.3; }
+.ringGiven { stroke: var(--fam, var(--text-1)); }

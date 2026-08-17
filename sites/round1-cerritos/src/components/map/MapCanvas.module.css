@@ -1,0 +1,803 @@
+/*
+  THE CENTRE PANE.
+
+  Two rules do most of the work here. The Leaflet container fills the pane
+  it is given rather than setting a height of its own, because the board
+  owns the grid and a map that sets its own height fights the layout it
+  sits in. And every floating thing sits in one inert overlay above the
+  container, so a legend or an offers card is never a hole in the middle of
+  the map that a drag cannot cross.
+*/
+
+.canvas {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  width: 100%;
+  /*
+    The ground under the tiles. When CARTO is unreachable this is what the
+    reader sees, and it is the page's own inset surface rather than the
+    Leaflet default grey, so a failed basemap looks like a deliberate plain
+    ground with marks on it rather than like a broken image.
+  */
+  background: var(--surface-3);
+  overflow: hidden;
+  /*
+    Belt and braces behind the wheel guard in `MapCanvas.tsx`. If a future
+    card in the overlay ever becomes a scroll container, this stops its
+    scroll chaining into whatever is behind the takeover once it reaches
+    its own end. The guard handles the case where nothing can scroll at
+    all; this handles the case where something can and then runs out.
+  */
+  overscroll-behavior: contain;
+}
+
+.overlay,
+.overlay * {
+  overscroll-behavior: contain;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+  background: var(--surface-3);
+  font-family: var(--font-ui);
+  /*
+    The cursor is the only thing on a map that tells a person the surface
+    is draggable before they drag it. Leaflet ships `grab` on the
+    container and `grabbing` while a drag is running, and both are lost
+    the moment anything else sets a cursor on `.leaflet-container`, so
+    they are restated here where they cannot be quietly overridden.
+  */
+  cursor: grab;
+}
+
+.canvas :global(.leaflet-container.leaflet-drag-target),
+.canvas :global(.leaflet-dragging .leaflet-grab) {
+  cursor: grabbing;
+}
+
+/*
+  Leaflet frames every divIcon in a white box with a grey border. Every
+  mark on this map is an SVG that already draws its own edges, so the frame
+  has to go or each pin arrives in a little envelope.
+
+  One class, not two. There used to be a second selector for `.ob-cluster`,
+  which no builder in `lib/map/markerIcons.ts` has ever emitted: a bubble
+  carries `ob-marker ob-marker--cluster`, so it was already covered by the
+  first selector and the second was a dead rule that read as though cluster
+  bubbles needed special handling.
+*/
+.canvas :global(.ob-marker) {
+  background: none;
+  border: 0;
+}
+
+/*
+  FOCUS HAS TO BE VISIBLE ON A MAP TOO.
+
+  Leaflet makes the container and every marker focusable and then leaves
+  the ring to the browser, which on a pale basemap is very close to
+  invisible. These two rules are the only reason keyboard navigation of the
+  marks is usable rather than merely possible.
+*/
+.canvas :global(.leaflet-container:focus-visible) {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.canvas :global(.leaflet-marker-icon:focus-visible) {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+/*
+  ── A MARK ANSWERS THE POINTER, AND IT DOES IT ON THE DRAWING ─────
+
+  Before this two hundred and eleven pins were completely inert: nothing
+  under the cursor moved, so the only way to find out whether a mark was
+  clickable was to click it. The cursor was already a pointer and the
+  title already appeared, but a tooltip arrives after a second, which is
+  a second of a reader wondering whether the map is a picture.
+
+  THE TRANSFORM GOES ON THE SVG INSIDE THE MARKER, NEVER ON THE MARKER.
+  Leaflet positions every icon by writing `transform: translate3d(...)`
+  on the icon element itself, on every pan, so anything of ours written
+  to that property is overwritten within a frame and takes the pin's
+  position with it while it lasts. The `svg` the icon contains is ours
+  and Leaflet never touches it.
+
+  Scoped to `.leaflet-interactive`, which is the class Leaflet adds to
+  the marks a reader can actually press. The ring label is not
+  interactive and must not appear to be.
+
+  THE PRESSED STATE IS THE ONE THAT WAS MISSING. Hover said "this can be
+  pressed" and then nothing at all happened between the press and the
+  popup, which on a slow frame is long enough to press twice. Coming back
+  under the resting size on `:active` is the smallest possible
+  acknowledgement and it is instant, because it is a transform on an
+  element nobody else is writing to.
+
+  The duration is a token, so `prefers-reduced-motion` collapses it to
+  zero and the state change lands instantly rather than being animated.
+  The state itself stays, because losing it would leave a reader who
+  asked for less movement with no hover feedback at all.
+*/
+.canvas :global(.ob-marker) > svg {
+  transform-origin: 50% 50%;
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.canvas :global(.ob-marker.leaflet-interactive:hover) > svg,
+.canvas :global(.ob-marker.leaflet-interactive:focus-visible) > svg {
+  transform: scale(1.12);
+}
+
+.canvas :global(.ob-marker.leaflet-interactive:active) > svg {
+  transform: scale(0.96);
+  transition-duration: 0ms;
+}
+
+/* No cursor rule here on purpose. Leaflet's own stylesheet already puts a
+   pointer on `.leaflet-interactive`, and the cluster layer deliberately
+   overrides it with `zoom-in` on a bubble, which promises a different
+   thing. A rule at this specificity would silently win that argument. */
+
+/*
+  THE RING AND THE OUTLINE ARE STYLED IN CSS, NOT PASSED AS pathOptions.
+
+  Leaflet writes its stroke and fill as SVG presentation attributes, which
+  means a colour handed to it has to be a literal. Styling the same paths
+  from here instead lets them read the design tokens like everything else
+  on the page, and a CSS declaration beats a presentation attribute, so the
+  override is reliable rather than a race.
+*/
+.ring {
+  stroke: var(--brand-gold);
+  stroke-width: 1.3;
+  stroke-dasharray: 7 7;
+  stroke-opacity: 0.72;
+  fill: none;
+}
+
+.outline {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  fill: var(--accent);
+  fill-opacity: 0.035;
+}
+
+/*
+  THE GO-SEE RUN, DRAWN AS TWO STROKES ON ONE SET OF POINTS.
+
+  The halo goes down first, wide and quiet, and does one job: it lifts the
+  path off whatever the basemap happens to be drawing underneath. Without
+  it a single stroke either vanishes into a road of similar weight or has
+  to be drawn heavy enough that it reads as a road itself.
+
+  The path over it is dashed. A dash is the vocabulary this map already
+  uses for "this is a claim, not a thing on the ground", exactly as the
+  three rings and the venue mark are dashed, and the run is a claim: it is
+  straight lines between published coordinates rather than a route
+  anything drove. A solid line between four pins would be a road that does
+  not exist.
+
+  Neither stroke carries information by hue alone. The path is the only
+  continuous line on this map, at a weight nothing else uses, and the card
+  in the right pane names its stops in words.
+
+  ROUND JOINS AND CAPS, because the walk turns corners and a mitred join
+  at a sharp turn throws a spike several times the stroke width off the
+  end of the corner, which reads as an error rather than a line.
+*/
+.runHalo {
+  stroke: var(--surface-0);
+  stroke-width: 8;
+  stroke-opacity: 0.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/*
+  THE RUN WEARS THE SAME INK AS THE KEY THAT LED HERE.
+
+  It was drawn in --accent, which this system reserves in writing for
+  interactive affordances and forbids from encoding data. This polyline
+  is `interactive={false}`; it is data, and it was quietly spending the
+  one colour that is supposed to mean "you can press this".
+
+  --feature is the right answer rather than merely an available one. It
+  is the warm ink on the featured Maps key in the strip, so the colour a
+  person pressed to get here is the colour of the thing that made the
+  press worth it. Nothing else on the map uses it.
+
+  THE PATH DOES NOT RELY ON THE COLOUR. It is the only heavy dashed line
+  on the board, drawn over a dark halo at a weight nothing else uses, and
+  every stop on it is separately numbered, glyphed and worded in the list
+  beside the map. Take the hue out entirely and the run still reads.
+*/
+.runPath {
+  stroke: var(--feature);
+  stroke-width: 3;
+  stroke-dasharray: 9 6;
+  stroke-opacity: 0.95;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/* --- The overlay layer -------------------------------------------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-map-overlay);
+  /* Inert by default. Each card switches itself back on. */
+  pointer-events: none;
+}
+
+.overlay > * {
+  pointer-events: auto;
+}
+
+/* --- Zoom, in explicit controls ------------------------------------ */
+
+/*
+  These are no longer the ONLY way to zoom, and they are still here.
+
+  The wheel zooms now, and the plus and minus keys always did, but a
+  visible control is what tells a person the map can be zoomed at all, and
+  it is the only route for a reader working by touch on a device where a
+  pinch is awkward. Three real buttons at a real hit target size with real
+  names, bottom right, clear of the credits affordance underneath them.
+*/
+.zoomBar {
+  position: absolute;
+  right: var(--space-3);
+  bottom: calc(var(--space-3) + 36px);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--line-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+}
+
+.zoomButton {
+  min-width: 44px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: var(--surface-1);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.zoomButton:hover {
+  background: var(--surface-2);
+}
+
+.zoomButton:active {
+  background: var(--accent-tint);
+}
+
+.zoomButton:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+  background: var(--accent-tint);
+}
+
+/* --- The credits ---------------------------------------------------- */
+
+/*
+  ── COMPACTED, NOT DELETED ────────────────────────────────────────
+
+  The OpenStreetMap ODbL and the CARTO basemap terms both require this
+  credit, so the only question was how much of the map it costs. Leaflet's
+  own control draws a 250 pixel strip across the bottom edge, and on this
+  screen it also carried a "Leaflet" plug that no licence requires.
+
+  What is here instead is the affordance every mapping product uses: a
+  small round "i" that expands to the full credit on hover, on press and
+  on focus. Collapsed it is 28 pixels in the corner. Expanded it is one
+  line with both source links live.
+
+  THE SENTENCE IS ALWAYS IN THE DOCUMENT. Collapsed, it is clipped rather
+  than removed, which is the same visually-hidden pattern the rest of this
+  application uses for text a screen reader must still hear. Nothing about
+  the credit depends on a pointer, on a hover, or on anybody pressing
+  anything.
+*/
+.credits {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: calc(100% - var(--space-6));
+}
+
+.creditsText {
+  /*
+    The collapsed state. Clipped to a single pixel rather than hidden, so
+    the credit stays in the document and in the accessibility tree, and
+    the two links stay focusable. Focus reaching either of them opens the
+    strip, which is wired in the component.
+  */
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.credits[data-open="yes"] .creditsText {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  padding: 3px var(--space-2);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-1);
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+  white-space: normal;
+}
+
+.creditsText a {
+  color: var(--text-1);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.creditsText a:hover {
+  color: var(--text-0);
+}
+
+/*
+  A 28 pixel disc under a mouse, and a full 44 under a finger.
+
+  The size is split rather than fixed because the two pointers want
+  opposite things from it. A mouse is precise and the strip opens on hover
+  before anything is pressed, so 28 pixels is plenty and it keeps the
+  corner of the map free. A finger has neither of those, so the coarse
+  pointer rule in `base.css` applies its 44 pixel floor and this rule
+  widens the box to match it. Without the width the floor alone would
+  stretch a 28 pixel circle into a 28 by 44 ellipse, which is the shape
+  that gives away a control nobody checked on a phone.
+*/
+.creditsButton {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  box-shadow: var(--shadow-1);
+  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.creditsButton:hover {
+  background: var(--surface-2);
+  color: var(--text-0);
+}
+
+.creditsButton:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  color: var(--text-0);
+}
+
+@media (pointer: coarse) {
+  .creditsButton {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* --- The ring note -------------------------------------------------- */
+
+/*
+  THIS LINE IS THE RING KEY, and it is the reason two of the three labels
+  could be taken off the marks without taking the argument with them.
+
+  It sits in the top left corner, which is the one corner of this pane
+  that holds nothing else: the key is pinned top right, the zoom column
+  and the credits bottom right, and the offers card bottom left. It is a
+  paragraph, not a control: nothing to press, nothing to open, no state to
+  be in. Two lines of plain words cost less map than three unreadable
+  pills did and they say the part that decides how a morning is planned.
+*/
+.ringNote {
+  position: absolute;
+  top: calc(var(--space-2) + 44px + var(--space-1));
+  left: var(--space-2);
+  right: var(--space-2);
+  /* Wide enough for the two sentences, never wider. On a desk the note is
+     one line beside a lot of map and has no business spanning the pane. */
+  max-width: 56ch;
+  margin: 0;
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-1) var(--space-2);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-1);
+  font-size: var(--step--2);
+  line-height: 1.35;
+  color: var(--text-1);
+}
+
+.ringNoteGlyph {
+  flex: none;
+  color: var(--brand-gold-600);
+  line-height: 1.35;
+}
+
+/* --- When the tiles do not arrive ---------------------------------- */
+
+.tileNote {
+  position: absolute;
+  top: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(420px, 68%);
+  margin: 0;
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-1);
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-1);
+}
+
+.tileNoteGlyph {
+  color: var(--warn);
+  font-size: var(--step-0);
+  line-height: 1.2;
+}
+
+/* --- Popups -------------------------------------------------------- */
+
+/*
+  A POPUP CANNOT BE LIFTED OVER OUR OWN FLOATING CARDS, SO IT IS PANNED
+  CLEAR OF THEM INSTEAD.
+
+  Worth writing down, because raising the popup pane is the obvious move
+  and it cannot work. `tokens.css` pins every Leaflet pane to one z-index
+  with an `!important`, which includes `.leaflet-map-pane`, and a
+  positioned element with a z-index opens a stacking context. Every pane
+  inside it, popups included, is therefore trapped at that one number, and
+  the overlay layer below is a later sibling at the same number, so the
+  overlay always wins no matter what the popup pane is set to.
+
+  The answer is to stop the popup landing underneath the cards in the
+  first place. Leaflet already pans an opening popup into view, and
+  `autoPanPadding` is how it is told which parts of the container are not
+  really free. `ClusterLayer` is given the measurements of the corners
+  this pane keeps for its own controls, and the popup arrives between
+  them.
+*/
+
+.canvas :global(.leaflet-popup-content-wrapper) {
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-3);
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+}
+
+/*
+  ── A POPUP ARRIVES, IT DOES NOT APPEAR ───────────────────────────
+
+  Leaflet's own fade is an opacity ramp on `.leaflet-popup`, and a card
+  the size of this one fading in from nothing over a moving map reads as
+  a rendering glitch rather than as an answer to a click. What it needs
+  is a direction: it comes up out of the pin it belongs to.
+
+  IT IS AN ANIMATION RATHER THAN A TRANSITION, and that is forced by how
+  Leaflet works. The popup's DOM is created fresh on every open and
+  destroyed on every close, so there is no before state for a transition
+  to run from. A `both` filled animation on a freshly created element
+  runs exactly once, at the moment it belongs.
+
+  IT IS ON THE WRAPPER AND THE TIP, NOT ON `.leaflet-popup`. That outer
+  element is the one Leaflet writes `transform: translate3d(...)` to as
+  it pans a popup into view, and a transform of ours on it would fight
+  the pan and drop the card in the wrong place.
+*/
+@keyframes popupIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.canvas :global(.leaflet-popup-content-wrapper),
+.canvas :global(.leaflet-popup-tip-container) {
+  transform-origin: 50% 100%;
+  animation: popupIn var(--dur-2) var(--ease-out) both;
+}
+
+/*
+  ── EVERY MOVING THING LEAFLET OWNS, STOPPED IN ONE PLACE ─────────
+
+  The duration tokens are already zero under this query, so our own
+  animations need nothing here. What does need it is everything Leaflet
+  animates from its OWN stylesheet, with durations hardcoded in the
+  library that no token of ours can reach: the popup's 200ms departure
+  fade, the tile fade on every pan, the zoom animation on the whole map
+  pane, and the marker translate that rides along with it.
+
+  The JavaScript side of the same decision is in `MapCanvas.tsx`, where
+  the inertia, the zoom animation and the fly move a cluster runs are all
+  switched off. Both halves are needed: switching the option off stops
+  Leaflet STARTING an animation, and these rules stop the browser
+  finishing one that is already in flight when the setting changes.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .canvas :global(.leaflet-popup-content-wrapper),
+  .canvas :global(.leaflet-popup-tip-container) {
+    animation: none;
+  }
+
+  .canvas :global(.leaflet-fade-anim .leaflet-popup),
+  .canvas :global(.leaflet-fade-anim .leaflet-tile),
+  .canvas :global(.leaflet-zoom-anim .leaflet-zoom-animated),
+  .canvas :global(.leaflet-pan-anim .leaflet-map-pane) {
+    transition: none !important;
+  }
+
+  .canvas :global(.ob-marker) > svg {
+    transition: none;
+  }
+}
+
+.canvas :global(.leaflet-popup-content) {
+  margin: var(--space-4);
+  width: 268px !important;
+  font-family: var(--font-ui);
+  line-height: 1.5;
+}
+
+/*
+  ON A NARROW MAP THE POPUP IS CAPPED AND SCROLLS INSIDE ITSELF.
+
+  The card an organisation opens is around 500 pixels tall, which is more
+  than a phone map has to give it. Left alone, Leaflet drew it from above
+  the top edge of the pane to below the bottom one, so the organisation's
+  name was clipped off the top and the one button on the card, the button
+  that opens the full panel, was clipped off the bottom. A popup whose
+  action cannot be reached is a dead end at the end of a tap.
+
+  Capped, the card is about 290 pixels including its own frame, which
+  leaves Leaflet room to pan it into view, and the rest of the card is one
+  scroll away inside the box. The cap is on the container rather than on
+  the card, because the card belongs to another component and the size of
+  the hole it is drawn in is this pane's business.
+
+  `overscroll-behavior: contain` is what stops a wheel that reaches the
+  bottom of this box turning into a zoom of the map underneath it, which
+  is the version of scroll chaining that only exists once the wheel zooms.
+*/
+.canvas[data-narrow="yes"] :global(.leaflet-popup-content) {
+  max-height: min(210px, 30dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.canvas :global(.leaflet-popup-tip) {
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+}
+
+/*
+  The one control on a popup that a reader presses without reading it, so
+  it gets a real hit area, a real hover and the same focus ring as
+  everything else on this pane. Leaflet ships it at 18 pixels with the
+  browser's default outline, which on a pale card is close to invisible.
+*/
+.canvas :global(.leaflet-container a.leaflet-popup-close-button) {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-size: var(--step-0);
+  color: var(--text-2);
+  border-radius: var(--radius-s);
+  transition:
+    background var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.canvas :global(.leaflet-container a.leaflet-popup-close-button:hover) {
+  background: var(--surface-2);
+  color: var(--text-0);
+}
+
+.canvas :global(.leaflet-container a.leaflet-popup-close-button:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  color: var(--text-0);
+}
+
+.popup {
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The promo, under the card
+   --------------------------------------------------------------- */
+
+/*
+  A hairline and one quiet button. It is quiet on purpose: the card above
+  it already carries the filled action, which is the first touch, and two
+  equally loud buttons is a choice where there was a recommendation. What
+  it is not is small. It is a real button, full width, with its own name
+  and a 40 pixel target that the coarse pointer rule in base.css lifts to
+  44 on a handset, because before this the promo could be sent from the
+  panel and from nowhere on the map at all.
+*/
+.popupIntents {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+/*
+  Full width rather than sharing a row with anything. A 268 pixel popup
+  splits into two 130 pixel buttons, which fits "Promo" and truncates
+  everything longer, and a control whose label has been cut in half is a
+  control a reader has to guess at.
+*/
+.popupIntent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  color: var(--text-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.popupIntent:hover {
+  background: var(--surface-1);
+  border-color: var(--line-strong);
+  color: var(--text-0);
+}
+
+.popupIntent:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.popupKicker {
+  margin: 0 0 var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--brand-gold);
+}
+
+.popupName {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--text-0);
+}
+
+.popupLine {
+  margin: 0 0 var(--space-1);
+  color: var(--text-1);
+}
+
+/*
+  The one sentence on this map that the whole application rests on. It is
+  set apart with a rule and a glyph rather than with a colour, because the
+  reader who most needs to see it may not be reading the colour.
+*/
+.popupNotOpen {
+  margin: var(--space-2) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  line-height: 1.5;
+}
+
+.popupProv {
+  margin: var(--space-3) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+}
+
+.popupProv a {
+  color: var(--text-2);
+}
+
+@media (max-width: 768px) {
+  /*
+    On a phone the map is the whole board and the legend has already
+    collapsed to a single row, so the notice goes to the bottom rather
+    than fighting the top corner for room. It is lifted clear of the
+    offers card's own collapsed header, which is pinned to the same
+    corner, and it stops short of the zoom column on the right.
+  */
+  .tileNote {
+    top: auto;
+    bottom: calc(var(--space-2) + 44px + var(--space-2) + 36px);
+    left: var(--space-2);
+    right: calc(var(--space-2) + 52px);
+    transform: none;
+    max-width: none;
+  }
+
+  /*
+    The credit strip, expanded on a phone, would run off the left edge of
+    a 380 pixel map if it stayed on one line. It wraps instead and it is
+    capped, so it stays a note in a corner rather than a band across the
+    bottom of the map.
+  */
+  .credits[data-open="yes"] .creditsText {
+    max-width: 58vw;
+  }
+}

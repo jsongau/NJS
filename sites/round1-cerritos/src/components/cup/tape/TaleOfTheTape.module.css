@@ -1,0 +1,437 @@
+/*
+  THE TALE OF THE TAPE.
+
+  PAIRED HORIZONTAL BARS GROWING OUTWARD FROM A CENTRE LINE. One team on
+  the left, one on the right, the row name and the direction of good on
+  the spine between them.
+
+  THE ENCODING CARRIES NOTHING IN COLOUR. Length is the primary signal,
+  the two sides are told apart by direction, which is geometry, the
+  favoured value is bold and carries a mark and the word "Edge", and both
+  fills differ by LUMINANCE rather than hue: the favoured side is drawn
+  in the strongest text token and the other in a weaker one. That pairing
+  is legible in greyscale, on a printout, and to a reader who sees no
+  hue difference at all.
+
+  380 IS A REAL LAYOUT. Below 720 the three columns become one stack: the
+  row name and the direction first, then each side with its own name, its
+  value and a bar that grows from the left. The centre line is a desktop
+  affordance and a stack is the honest phone version of it.
+
+  Tokens by name only. No hex, no [data-theme].
+*/
+
+/* ---------------------------------------------------------------
+   Head of the dialog
+   --------------------------------------------------------------- */
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.titleTeam {
+  overflow-wrap: break-word;
+}
+
+.titleAgainst {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The decider and the key
+   --------------------------------------------------------------- */
+
+.decider {
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+}
+
+.deciderNote,
+.key,
+.h2h,
+.formNote {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.h2h {
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.formNote {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.formSide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.formName {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+/* ---------------------------------------------------------------
+   The rows
+   --------------------------------------------------------------- */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rowsHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(120px, 190px) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-3);
+  padding: 0 var(--space-3) var(--space-2);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.rowsHeadA,
+.rowsHeadB {
+  min-width: 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.rowsHeadA {
+  text-align: right;
+}
+
+.rowsHeadSpine {
+  text-align: center;
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(120px, 190px) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.rowEmphasis {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.sideA {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.sideB {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/*
+  The side name is clipped on a desk because the two names are printed
+  once above the rows, and a card that repeats them twelve times is a
+  card of names. It comes back at phone widths where the rows stack and
+  there is no column to read them from.
+*/
+.sideName {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.rowEmphasis .sideName {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  overflow-wrap: break-word;
+}
+
+.value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+  overflow-wrap: break-word;
+}
+
+.sideA .value {
+  justify-content: flex-end;
+}
+
+.rowEmphasis .value {
+  font-size: var(--step-1);
+}
+
+/* The favoured value. Bold, and it carries the mark and the word as
+   well, so the weight is never the only thing saying so. */
+.valueEdge {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.edgeMark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-gold-600);
+}
+
+.track {
+  display: flex;
+  width: 100%;
+  height: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.sideA .track {
+  justify-content: flex-end;
+}
+
+.sideB .track {
+  justify-content: flex-start;
+}
+
+.fill {
+  height: 100%;
+  min-width: 2px;
+  background: var(--text-3);
+}
+
+/* Luminance, not hue. The favoured fill is the strongest ink token and
+   the other is a weak one, which is a difference a greyscale render
+   keeps and a colourblind reader keeps. */
+.fillEdge {
+  background: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   The spine
+   --------------------------------------------------------------- */
+
+.spine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  padding: 0 var(--space-2);
+  border-left: 1px solid var(--line-strong);
+  border-right: 1px solid var(--line-strong);
+  text-align: center;
+}
+
+.rowLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.direction {
+  font-size: var(--step--2);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.rowSimulated {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--warn);
+}
+
+.rowNote {
+  grid-column: 1 / -1;
+  margin: var(--space-2) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   A fixture with one side still being bowled for
+   --------------------------------------------------------------- */
+
+.pending {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pendingSide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.pendingLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.pendingRule {
+  color: var(--text-2);
+  overflow-wrap: break-word;
+}
+
+/* ---------------------------------------------------------------
+   The phone. The centre line becomes a stack.
+   --------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .rowsHead {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .rowEmphasis {
+    padding: 0;
+  }
+
+  .spine {
+    order: -1;
+    align-items: flex-start;
+    padding: 0;
+    border-left: 0;
+    border-right: 0;
+    text-align: left;
+  }
+
+  .sideA,
+  .sideB {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .sideA .value,
+  .sideB .value {
+    justify-content: flex-start;
+  }
+
+  .sideA .track,
+  .sideB .track {
+    justify-content: flex-start;
+  }
+
+  /* The name comes back, because a stacked row has no column to read
+     it from. */
+  .sideName,
+  .rowEmphasis .sideName {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    font-size: var(--step--2);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    overflow-wrap: break-word;
+  }
+
+  .rowEmphasis .value {
+    font-size: var(--step-0);
+  }
+
+  .forms {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

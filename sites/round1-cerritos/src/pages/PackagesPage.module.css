@@ -1,0 +1,1206 @@
+/*
+  The packages page.
+
+  ONE STRUCTURAL IDEA CARRIES THIS WHOLE FILE: the page is split into a
+  priced half and an unpriced half, and the reader has to feel that split
+  before they read a heading. The priced group sits on the page ground
+  with a hairline; the gated group sits inside a tinted well with a heavy
+  left rule, because it is the half this application exists for.
+
+  Neither half is identified by colour. Every group heading carries its
+  glyph and its word, every card carries the family chip and the family
+  glyph, and every withheld price is a full sentence rather than a
+  coloured cell. Strip the colour out of this file and the page still
+  reads correctly, which is the requirement everywhere in this codebase.
+
+  The two marks used for priced and gated are the PROVENANCE marks from
+  ProvenanceBadge, and their colours are the provenance colours, because
+  the split between these two groups is a provenance split: public on one
+  side, withheld on the other. Inventing a third vocabulary for the same
+  distinction would have been the easy thing and the wrong one.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-6);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+.subLede {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 82ch;
+}
+
+/* ---------------------------------------------------------------
+   The line through the range
+   --------------------------------------------------------------- */
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* A grid child defaults to a min-content floor, and one long URL in the
+   argument would otherwise push the tally cards off the right edge. */
+.splitIntro { min-width: 0; }
+
+.splitTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+}
+
+.splitText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.splitText:last-child { margin-bottom: 0; }
+
+.splitCards {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+}
+
+.bar {
+  display: flex;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+}
+
+.barSeg { display: block; }
+
+/* The gated segment is hatched as well as coloured. Two segments in one
+   bar is exactly where a reader who cannot separate the hues loses the
+   boundary, and a diagonal hatch survives greyscale and a photocopier. */
+.barSeg[data-kind="priced"] { background: var(--prov-public); }
+
+.barSeg[data-kind="gated"] {
+  background: var(--prov-withheld);
+  /* --hatch-ink rather than a white, because the bar underneath is a
+     bright ink on one ground and a deep one on the other, and a hatch
+     that cannot be seen is not a second signal. */
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--hatch-ink) 0 3px,
+    transparent 3px 7px
+  );
+}
+
+.tally {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.tally[data-kind="priced"] { border-left-color: var(--prov-public); }
+
+.tally[data-kind="gated"] {
+  border-left-color: var(--prov-withheld);
+  background: var(--surface-3);
+}
+
+.tallyGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.tallyCount {
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.tallyLabel {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.tallyFams {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.tallyNote {
+  grid-column: 1 / -1;
+  margin: var(--space-1) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The weekday lever
+   --------------------------------------------------------------- */
+
+.lever {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.leverIntro { max-width: 92ch; }
+
+.leverTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+}
+
+.leverText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.leverText:last-child { margin-bottom: 0; }
+
+.dayPartGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dayPartCard {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.dayPartCardHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+
+.dayPartCardGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.dayPartCardLabel {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.dayPartCardCount {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.dayPartCardNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Controls
+   --------------------------------------------------------------- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.toggle:hover { border-color: var(--line-strong); }
+
+.toggle:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.toggle input { accent-color: var(--accent); }
+
+.toggle span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.toggleCount {
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.laneBanner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1);
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-s);
+  background: var(--brand-gold-tint);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.laneBannerGlyph { color: var(--brand-gold-600); }
+
+.clearLanes {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.clearLanes:hover { color: var(--accent-600); }
+
+/* ---------------------------------------------------------------
+   Groups
+   --------------------------------------------------------------- */
+
+.group { margin-bottom: var(--space-6); }
+
+.groupHead {
+  max-width: 82ch;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.group[data-kind="priced"] .groupHead { border-left-color: var(--prov-public); }
+
+.group[data-kind="gated"] .groupHead {
+  border-left-color: var(--prov-withheld);
+  background: var(--surface-3);
+}
+
+.groupTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-2);
+}
+
+.groupGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.groupCount {
+  margin-left: auto;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.groupNote {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.empty {
+  padding: var(--space-5);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ---------------------------------------------------------------
+   Package card
+   --------------------------------------------------------------- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--fam, var(--line-2));
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.cardHeadText { min-width: 0; }
+
+.cardTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+  line-height: 1.25;
+}
+
+.cardChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.leverTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-pill);
+  background: var(--brand-gold-tint);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--brand-gold-600);
+  white-space: nowrap;
+}
+
+/* The price is the loudest thing on the card whether it exists or not.
+   A withheld price gets the same well and the same weight as a published
+   one, because the absence is the finding and a quiet absence reads as
+   an oversight. */
+.price {
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.card[data-priced="no"] .price {
+  border-color: var(--line-2);
+  background: var(--surface-3);
+}
+
+.priceLabel {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.priceValue {
+  display: block;
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.priceNote {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* The day-part fence. Its own block, and an amber rule when the package
+   has been fenced out of peak, because that fence is the single most
+   sellable published fact about a package with no published price. */
+.dayParts {
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  border-left: 3px solid var(--line-2);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-2);
+}
+
+.dayParts[data-fenced="yes"] {
+  border-left-color: var(--brand-gold);
+  background: var(--brand-gold-tint);
+}
+
+.dayPartsLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.dayPartList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dayPartItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.dayPartGlyph {
+  font-size: var(--step-0);
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.dayPartNote {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.subhead {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.inclusions {
+  margin: 0 0 var(--space-4);
+  padding-left: 1.1em;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.inclusions li { margin-bottom: 2px; }
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.fact { min-width: 0; }
+
+.factTerm {
+  margin: 0 0 2px;
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.factValue {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.quiet {
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.derived {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.laneFit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.laneFitLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.laneFitChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* The one control on a card. It sits above the source line and below
+   everything published, because a reader decides to act after reading
+   the facts and checks the source when they doubt one. `margin-top:
+   auto` pushes it to the foot of a card whatever the inclusions list
+   did to the height, so the row of controls lines up across a grid of
+   cards of different lengths. */
+.sendRow {
+  display: flex;
+  margin-top: auto;
+  padding-top: var(--space-4);
+}
+
+.sendRow button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Two automatic top margins in one column would split the slack between
+   them and leave a hole between the control and the line that backs the
+   card up. The control takes the slack; the source follows it. */
+.sendRow + .source {
+  margin-top: 0;
+}
+
+/* The source link sits at the foot of every card and is the reason a
+   reader can trust the rest of it. It is quiet, and it is always there. */
+.source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 400;
+  color: var(--text-2);
+  overflow-wrap: anywhere;
+}
+
+.source:hover { color: var(--accent); }
+
+.sourceGlyph { color: var(--prov-public); }
+
+.sourceUrl { min-width: 0; }
+
+/* ---------------------------------------------------------------
+   Terms panels
+   --------------------------------------------------------------- */
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.panel[data-emphasis="figure"] { border-top: 2px solid var(--brand-gold); }
+
+.panelTitle {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-1);
+}
+
+.termFigures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.termFigure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.termValue {
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.termLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.panelText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The decimal fault
+   --------------------------------------------------------------- */
+
+.fault {
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.faultTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-2);
+}
+
+.faultGlyph { color: var(--brand-gold-600); }
+
+.faultBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.faultText {
+  min-width: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.faultText p { margin: 0 0 var(--space-3); }
+
+.faultQuotes {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  list-style: none;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+}
+
+.faultQuotes li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.faultName { font-weight: 600; color: var(--text-0); }
+
+.faultQuote {
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--risk);
+}
+
+.faultAside {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.faultRule {
+  align-self: start;
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.faultRuleLabel {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.faultRuleText {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Fundraisers and the chain-wide lists
+   --------------------------------------------------------------- */
+
+.sectionTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+}
+
+.sectionLede {
+  max-width: 82ch;
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.fundraisers { margin-bottom: var(--space-6); }
+
+.fundGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-4);
+}
+
+.fundCard {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--fam-fundraiser);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.fundHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.fundTitle { margin: 0; font-size: var(--step-1); }
+
+.fundMechanic {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.3;
+  color: var(--brand-gold-600);
+}
+
+.fundFigure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.fundValue {
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.fundValueLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.fundText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.fundGap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.chain { margin-bottom: var(--space-6); }
+
+.chainGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.chainCol {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.chainCol[data-kind="published"] { border-left-color: var(--prov-public); }
+
+.chainCol[data-kind="absent"] {
+  border-left-color: var(--prov-withheld);
+  background: var(--surface-2);
+}
+
+.chainColTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+.chainGlyph { color: var(--text-1); }
+
+.chainCount {
+  margin-left: auto;
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.chainColNote {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.chainList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chainList li {
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--line);
+}
+
+.chainItem {
+  display: block;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.chainItemNote {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* The collision check between the two published lists. */
+.clash {
+  padding: var(--space-5);
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-m);
+  background: var(--brand-gold-tint);
+}
+
+.clashTitle {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-1);
+}
+
+.clashLede {
+  max-width: 82ch;
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.clashList {
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--brand-gold-line);
+}
+
+.clashRow {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--brand-gold-line);
+}
+
+.clashName {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.clashPkgs {
+  min-width: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.clashOut {
+  max-width: 82ch;
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .split,
+  .faultBody {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .inner { padding: var(--space-4) var(--space-4) var(--space-7); }
+  .h1 { font-size: var(--step-3); }
+  .split,
+  .lever,
+  .panel,
+  .fault,
+  .fundCard,
+  .chainCol,
+  .clash {
+    padding: var(--space-4);
+  }
+  .cards,
+  .fundGrid,
+  .chainGrid,
+  .panels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .clashRow { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* 380px is the floor this app is built to. Below the card gutter the
+   facts grid has to collapse to a single column or the mono figures
+   start wrapping mid-number, which is worse than a taller card. */
+@media (max-width: 420px) {
+  .facts { grid-template-columns: minmax(0, 1fr); }
+  .termFigures { gap: var(--space-4); }
+  .groupTitle { flex-wrap: wrap; }
+  .groupCount { margin-left: 0; }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
+}

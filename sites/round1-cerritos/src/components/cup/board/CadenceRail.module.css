@@ -1,0 +1,128 @@
+/*
+  THE QUARTERLY CADENCE.
+
+  Four cards in a row at 1440, one column at 380. The state of each cup
+  is a token with a glyph and a word inside the card, and the card's own
+  edge repeats it as a weight and a colour, which is the third signal
+  rather than the first.
+
+  Tokens by name only. No hex, and no [data-theme] selector.
+*/
+
+.rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.card[data-state="exhibition"] {
+  border-top-color: var(--warn);
+  background: var(--warn-tint);
+}
+
+.card[data-state="enrolling"] {
+  border-top-color: var(--ok);
+  background: var(--ok-tint);
+}
+
+.card[data-state="scheduled"] {
+  border-top-style: dashed;
+  border-top-color: var(--neutral);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.quarter {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.name {
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: 1.2;
+}
+
+.strapline {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.facts {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 0;
+}
+
+.facts dt {
+  margin: 0 0 2px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.facts dd {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-0);
+}
+
+.sub {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.badge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.asOf {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  max-width: 88ch;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}

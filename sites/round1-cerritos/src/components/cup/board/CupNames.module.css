@@ -1,0 +1,86 @@
+/*
+  A NAME THAT OPENS SOMETHING.
+
+  It inherits the type, the weight and the colour of whatever cell, cap
+  or heading it sits in, and earns an underline on hover and on focus.
+  The affordance is the underline plus the pointer plus the accessible
+  name, and none of the three is a colour.
+
+  It wraps. Bowling teams pick long names on purpose and the whole board
+  is sized for the two line case, so there is no ellipsis anywhere in
+  this file and there is not going to be one.
+
+  Tokens by name only. No hex in here.
+*/
+
+.name {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-s);
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+.label {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur-1) var(--ease-out);
+}
+
+.name:hover .label,
+.name:focus-visible .label {
+  text-decoration-color: currentColor;
+}
+
+/* A handle is not a name and the face says so before the tooltip does:
+   the operator face is what this application uses everywhere a string is
+   a label somebody chose rather than a fact somebody published. */
+.handle {
+  font-family: var(--font-operator, var(--font-mono));
+  letter-spacing: 0.01em;
+}
+
+/* ---------------------------------------------------------------
+   The matchup press
+   --------------------------------------------------------------- */
+
+.press {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 32px;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out);
+}
+
+.press:hover {
+  background: var(--surface-3);
+  border-color: var(--sec-leagues);
+  color: var(--text-0);
+}
+
+.pressGlyph {
+  color: var(--sec-ink, var(--sec-leagues-ink));
+}

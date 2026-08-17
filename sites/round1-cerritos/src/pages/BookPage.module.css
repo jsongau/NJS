@@ -1,0 +1,1007 @@
+/*
+  The Book.
+
+  ONE VISUAL IDEA CARRIES THIS WHOLE FILE: the two ledgers must not be
+  mistakable for each other at a glance, and the difference must not be
+  hue.
+
+  BOOKED REVENUE gets the INK treatment. Its heading sits on a dark
+  panel, its rules are heavier, its figures are the largest type on the
+  page. It is the column that carries money and it looks like a
+  statement.
+
+  OUTBOUND ACTIVITY gets the LIGHT treatment. Tinted heading rather than
+  a filled one, hairline rules, figures a step smaller, rows on the
+  quieter surface. It is the column that carries hours and it looks like
+  a plan.
+
+  That difference survives greyscale, a photocopier and a colourblind
+  reader, which is the requirement. It is also never the only signal:
+  each column names its ledger in the heading, in the toggle and in the
+  sentence underneath, and every status inside them carries a glyph and a
+  word.
+
+  Below 1080px the two cannot sit beside each other honestly, so one is
+  hidden and the toggle above chooses. Squeezing both into 380px would
+  produce two columns of wrapped fragments, and a layout that technically
+  shows everything while making none of it readable is worse than a
+  choice.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head { margin-bottom: var(--space-5); }
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--step-2);
+}
+
+.subLede {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 84ch;
+}
+
+/* --- The two jump cards ----------------------------------------- */
+
+.jump {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+.jumpCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font-weight: 400;
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
+}
+
+.jumpCard:hover {
+  border-color: var(--line-strong);
+  border-left-color: var(--brand-gold);
+  box-shadow: var(--shadow-2);
+  text-decoration: none;
+}
+
+.jumpCard strong {
+  display: block;
+  font-size: var(--step-0);
+  color: var(--accent);
+}
+
+.jumpGlyph {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-s);
+  background: var(--brand-gold-tint);
+  color: var(--brand-gold-600);
+  line-height: 1;
+}
+
+.jumpNote {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The narrow-screen ledger toggle
+   --------------------------------------------------------------- */
+
+.toggle {
+  display: none;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.toggleBtn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+/* The pressed state is a filled panel plus a heavier weight, not a hue.
+   A segmented control that signals its selection with colour alone is
+   the single most common accessibility failure in this pattern. */
+.toggleBtn[aria-pressed="true"] {
+  border-color: var(--ledger-revenue);
+  background: var(--ledger-revenue);
+  color: var(--text-inverse);
+}
+
+/* ---------------------------------------------------------------
+   The two columns
+   --------------------------------------------------------------- */
+
+.ledgers {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  align-items: start;
+}
+
+.col {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  overflow: hidden;
+}
+
+.colHead {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+/* INK. The column that carries money. */
+.revenueCol { border-top: 3px solid var(--ledger-revenue); }
+
+.revenueCol .colHead {
+  background: var(--ledger-revenue);
+  color: var(--text-inverse);
+  border-bottom-color: var(--ledger-revenue);
+}
+
+.revenueCol .colTitle { color: var(--text-inverse); }
+/* The head of this column is a bright fill, so its ink is the inverse
+   ramp rather than the page's. A white at 82 percent was a near white on
+   a near white peach. */
+.revenueCol .colNote { color: var(--text-inverse-2); }
+
+/* LIGHT. The column that carries hours and no money. */
+.activityCol { border-top: 3px solid var(--ledger-activity); }
+
+.activityCol .colHead {
+  background: var(--ledger-activity-tint);
+  border-bottom-color: var(--line-2);
+}
+
+.activityCol .colTitle { color: var(--text-0); }
+
+.colTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-2);
+}
+
+.colGlyph {
+  font-size: 0.72em;
+  line-height: 1;
+}
+
+.colNote {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 60ch;
+}
+
+.colFoot {
+  margin: 0;
+  padding: var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* --- Totals ------------------------------------------------------ */
+
+.totals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.totalValue {
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+/* The activity column's figures are deliberately a step smaller than the
+   revenue column's. Same information hierarchy, different weight: hours
+   are the input and dollars are the outcome, and the type says so. */
+.activityCol .totalValue { font-size: var(--step-2); }
+
+.totalLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--3);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+/* One figure per column is the one worth reading first. */
+.totalKey .totalValue { color: var(--ledger-activity); }
+
+.outsideNote {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.outsideNote strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   The typed-price panel. The most important block on the page.
+   --------------------------------------------------------------- */
+
+.typed {
+  margin: 0;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  background: var(--brand-gold-tint);
+}
+
+.typedEyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--brand-gold-600);
+}
+
+.typedTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+  line-height: 1.25;
+  color: var(--text-0);
+}
+
+.typedBody {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 62ch;
+}
+
+.typedFoot {
+  margin: 0;
+  font-size: var(--step--2);
+}
+
+/* --- The split bar ----------------------------------------------- */
+
+.split {
+  display: flex;
+  height: 12px;
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  overflow: hidden;
+}
+
+.splitSeg {
+  display: block;
+  height: 100%;
+  background: var(--tone);
+  border-right: 1px solid var(--surface-1);
+}
+
+.splitSeg:last-child { border-right: none; }
+
+.splitKey {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.splitKeyItem {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.splitSwatch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-s);
+  color: var(--tone);
+  font-size: var(--step--2);
+  line-height: 1;
+}
+
+.splitKeyLabel { min-width: 0; }
+.splitKeyValue { font-weight: 600; color: var(--text-0); }
+.splitKeyPct { color: var(--text-2); }
+
+/* ---------------------------------------------------------------
+   Lines, both ledgers
+   --------------------------------------------------------------- */
+
+.lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bookLine {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  border-left: 3px solid var(--ledger-revenue);
+}
+
+.bookLine:last-child { border-bottom: none; }
+
+.bookHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.lineValue {
+  flex: none;
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ledger-revenue);
+}
+
+.pkgRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.pkgName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.cellLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.cellValue {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.guestInput {
+  width: 88px;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.guestInput:hover { border-color: var(--brand-gold-line); }
+
+.guestInput:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+/* --- The published-range check ---------------------------------- */
+
+.check {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+}
+
+.checkOk { color: var(--ok); }
+.checkWarn { color: var(--warn); font-weight: 600; }
+
+.gated {
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--prov-withheld);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+}
+
+.lineNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 66ch;
+}
+
+.empty {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-5) var(--space-4);
+  background: var(--surface-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+/* --- Activity weeks --------------------------------------------- */
+
+.week { border-bottom: 1px solid var(--line-2); }
+
+.weekHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-3);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-1);
+}
+
+.weekHours { color: var(--text-0); }
+
+.actLine {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  border-left: 3px solid var(--ledger-activity);
+  background: var(--surface-1);
+}
+
+.actLine:last-child { border-bottom: none; }
+
+.actHead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.actGlyph {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--tone);
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+.actHeadText {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.actType {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.actWhere {
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--text-0);
+}
+
+.actHours {
+  flex: none;
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--ledger-activity);
+}
+
+.actMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-2);
+}
+
+.actMetaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.actLanes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: var(--space-2);
+}
+
+.done,
+.planned {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--step--2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.done {
+  border-color: var(--ok);
+  background: var(--ok-tint);
+  color: var(--ok);
+}
+
+.planned {
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The ratio. The one place hours and dollars share a sentence.
+   --------------------------------------------------------------- */
+
+.ratio {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.ratioFigure {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.ratioValue {
+  font-size: var(--step-5);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text-0);
+}
+
+.ratioUnit {
+  font-size: var(--step--1);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.ratioNone {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.ratioBody { min-width: 0; }
+
+.ratioText {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 78ch;
+}
+
+/* ---------------------------------------------------------------
+   Lane coverage
+   --------------------------------------------------------------- */
+
+.coverage {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.coverageHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.coverageNote,
+.coverageVerdict {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 84ch;
+}
+
+.coverageVerdict {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  color: var(--text-1);
+}
+
+.coverageList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.coverageRow {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr) 64px 150px;
+  align-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.coverageRow:last-child { border-bottom: none; }
+
+.coverageLane { min-width: 0; }
+
+.track {
+  position: relative;
+  display: block;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--lane);
+}
+
+/* A lane with nothing against it gets a dashed empty track, so the hole
+   is a SHAPE before it is an absence of colour. */
+.coverageRow[data-state="none"] .track {
+  background: transparent;
+  border: 1px dashed var(--risk);
+}
+
+.coverageHours {
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-align: right;
+  color: var(--text-0);
+}
+
+.coverageState {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.coverageRow[data-state="none"] .coverageState { color: var(--risk); }
+.coverageRow[data-state="thin"] .coverageState { color: var(--warn); }
+.coverageRow[data-state="covered"] .coverageState { color: var(--ok); }
+
+/* ---------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  .ratio { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* One ledger at a time below this width, chosen by the toggle. */
+@media (max-width: 1079px) {
+  .toggle { display: flex; }
+  .ledgers { grid-template-columns: minmax(0, 1fr); }
+  .ledgers[data-view="booked-revenue"] .activityCol { display: none; }
+  .ledgers[data-view="outbound-activity"] .revenueCol { display: none; }
+}
+
+@media (max-width: 860px) {
+  .coverageRow {
+    grid-template-columns: minmax(0, 1fr) 56px;
+    grid-template-areas:
+      "lane hours"
+      "track track"
+      "state state";
+    row-gap: var(--space-2);
+  }
+  .coverageLane { grid-area: lane; }
+  .track { grid-area: track; }
+  .coverageHours { grid-area: hours; }
+  .coverageState { grid-area: state; }
+}
+
+@media (max-width: 560px) {
+  .inner { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .h1 { font-size: var(--step-3); }
+  .totals { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  .bookHead { flex-direction: column; align-items: flex-start; }
+  .ratio { padding: var(--space-4); }
+  .ratioValue { font-size: var(--step-4); }
+  .coverage { padding: var(--space-4); }
+}
+
+/* At the narrowest supported width the split key drops its percentage
+   column rather than wrapping four fields onto three lines. The figure
+   beside it is the same fact in dollars, so nothing is lost. */
+@media (max-width: 400px) {
+  .splitKeyItem { grid-template-columns: 18px minmax(0, 1fr) auto; }
+  .splitKeyPct { display: none; }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------------
+   THE IDENTITY BLOCK, WRITTEN OUT RATHER THAN TAKEN FROM `Wordmark`
+
+   `Wordmark` prints the organisation as plain text, and the name has to
+   be the control that opens the record: that is the one thing the owner
+   asked for by name. The primitive takes a string, not a node, and it is
+   not this file's to change while other agents are in the tree, so the
+   three parts of it are composed here instead and the type below is
+   copied from `Wordmark.module.css` exactly so the two cannot be told
+   apart on screen.
+   --------------------------------------------------------------- */
+
+.ident {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.identText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.identName {
+  font-size: var(--step-0);
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.identMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.identSub {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
+}

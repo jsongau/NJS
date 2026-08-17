@@ -1,0 +1,31 @@
+{
+  "name": "me-scout",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "An independent pre-opening prospecting prototype built for a Main Event Brea Sales Manager application",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build && node scripts/emit-route-stubs.mjs dist",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --pretty"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^7.18.2"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^22.20.1",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "playwright": "^1.62.1",
+    "tsx": "^4.23.8",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
+  }
+}

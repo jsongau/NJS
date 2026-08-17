@@ -1,0 +1,405 @@
+/*
+  THE FIXTURES LIST.
+
+  A night is a section, a round is a section inside it, a fixture is a
+  row, and a row is two sides. Nothing here is a table, because the thing
+  a reader wants from this list is one fixture at a time rather than a
+  column of pinfall, and because a row that wraps on a phone beats a
+  table that scrolls sideways.
+
+  EVERY SIDE IS SEED, NAME, SCORE. The name column is the flexible one
+  and it wraps to as many lines as it needs. There is no ellipsis in this
+  file. The row is sized so that a two line name does not move anything
+  around it.
+
+  Tokens by name only. No hex, and no [data-theme] selector.
+*/
+
+.list {
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* ---------------------------------------------------------------
+   A night
+   --------------------------------------------------------------- */
+
+.night {
+  border-top: 2px solid var(--sec-leagues);
+  padding-top: var(--space-3);
+}
+
+.nightHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.nightName {
+  margin: 0;
+  font-size: var(--step-2);
+  letter-spacing: -0.01em;
+}
+
+.nightDate {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.nightFacts {
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.nightWhen {
+  margin-left: auto;
+  padding: 2px var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   A round
+   --------------------------------------------------------------- */
+
+.round {
+  margin-bottom: var(--space-5);
+}
+
+.roundHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.roundName {
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+.roundFacts {
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.roundWhat {
+  margin: 0 0 var(--space-3);
+  max-width: 84ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.squad {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+  max-width: 84ch;
+}
+
+.none {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   A fixture
+   --------------------------------------------------------------- */
+
+.rows {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* The state is the leading edge of the row as a WIDTH and a COLOUR, and
+   the word is already in the row above it. A reader in greyscale still
+   has the glyph and the word; a reader in colour gets the edge as a
+   third signal and never as the only one. */
+.row[data-state="live"] {
+  border-left-color: var(--warn);
+  border-left-width: 5px;
+  background: var(--warn-tint);
+}
+
+.row[data-state="scheduled"] {
+  border-left-color: var(--info);
+  border-left-width: 5px;
+}
+
+.row[data-state="final"] {
+  border-left-color: var(--ok);
+}
+
+.row[data-state="awaiting-opponent"] {
+  border-left-color: var(--neutral);
+  border-left-style: dashed;
+}
+
+.row[data-state="bye"] {
+  border-left-color: var(--neutral);
+}
+
+.row[data-state="withdrawn"] {
+  border-left-color: var(--risk);
+}
+
+.rowHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.lanes,
+.when {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.when {
+  margin-left: auto;
+}
+
+.sides {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* THE ONE GRID EVERY SIDE IS DRAWN ON.
+
+   Seed is fixed at three characters on the mono face so nothing shifts
+   between a one and a sixteen. The name takes the rest and wraps. The
+   score, the outcome word and the upset mark are auto and sit to the
+   right, and they hold their columns whether or not there is anything in
+   them, which is why the empty spans in the markup are not an oversight. */
+.side {
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr) auto auto auto;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-s);
+}
+
+.side[data-won="yes"] {
+  background: var(--ok-tint);
+}
+
+.side[data-open="yes"] {
+  border: 1px dashed var(--line-strong);
+}
+
+.seed {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-2);
+  text-align: right;
+}
+
+.sideName {
+  font-size: var(--step-0);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.side[data-won="yes"] .sideName {
+  font-weight: 800;
+}
+
+.rule {
+  grid-column: 2 / -1;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-2);
+  font-style: normal;
+}
+
+.score {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 8ch;
+}
+
+.games {
+  font-family: var(--font-mono);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.pins {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.won,
+.lost {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 6ch;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.won {
+  color: var(--ok);
+}
+
+.lost {
+  color: var(--text-3);
+}
+
+.won[data-empty="yes"] {
+  min-height: 1px;
+}
+
+.upset {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px var(--space-2);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-pill);
+  background: var(--warn-tint);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+
+.rowFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.simulated {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--prov-illustrative);
+}
+
+.note {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The legend
+   --------------------------------------------------------------- */
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  list-style: none;
+}
+
+.legendItem {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2px var(--space-2);
+  align-items: baseline;
+}
+
+.legendCount {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.legendNote {
+  grid-column: 1 / -1;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   380 is a real layout
+   --------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .side {
+    grid-template-columns: 3ch minmax(0, 1fr);
+  }
+
+  .score,
+  .won,
+  .lost,
+  .upset {
+    grid-column: 2;
+  }
+
+  .won[data-empty="yes"] {
+    display: none;
+  }
+
+  .when {
+    margin-left: 0;
+  }
+
+  .nightWhen {
+    margin-left: 0;
+  }
+}

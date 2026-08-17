@@ -1,0 +1,174 @@
+/*
+  THE CUP BOARD.
+
+  The page furniture only. Every block on it draws its own module: the
+  lead, the enrollment panel, the fixtures list, the bracket, the field
+  table and the quarterly rail. What is here is the column, the head, the
+  section rhythm and the two or three lines of type that belong to the
+  page rather than to a block inside it.
+
+  The Cup wears the leagues section's identity on purpose. It is not a
+  seventh navigation colour: a cup is what the leagues play for, it sits
+  beside Leagues in the rail, and giving it its own hue would make one
+  product look like two.
+
+  Tokens by name only. There is no hex value in this file and no
+  [data-theme] selector.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--sec-leagues-ink));
+}
+
+.h1 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-5);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+/* The one sentence that says why a cup board belongs in a prospecting
+   tool. It is set in the section's own glow with a rule in the section's
+   mark colour, so it is findable in one glance and skippable in two. */
+.thesis {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--sec-leagues);
+  border-radius: var(--radius-s);
+  background: var(--sec-leagues-glow);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 76ch;
+}
+
+.thesisGlyph {
+  color: var(--sec-leagues-ink);
+  line-height: 1.4;
+}
+
+.framing {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 82ch;
+}
+
+.framingGlyph {
+  color: var(--prov-public);
+  line-height: 1.4;
+}
+
+/* The handle disclosure. Said once, on the board where a roster first
+   appears, and it is true: a handle is what a bowler is called on the
+   lanes and this application has never invented a person. */
+.handles {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+  max-width: 82ch;
+}
+
+.handlesGlyph {
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.section {
+  margin-bottom: var(--space-8);
+}
+
+.countLine {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  color: var(--text-1);
+}
+
+.legendTitle {
+  margin: var(--space-6) 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+.legendLede {
+  margin: 0;
+  max-width: 84ch;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.sectionFoot {
+  margin: var(--space-5) 0 0;
+  max-width: 84ch;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   380 is a real layout
+   --------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .inner {
+    padding-top: var(--space-4);
+  }
+
+  .h1 {
+    font-size: var(--step-4);
+  }
+
+  .section {
+    margin-bottom: var(--space-7);
+  }
+}

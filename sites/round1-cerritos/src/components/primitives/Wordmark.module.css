@@ -1,0 +1,103 @@
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.plate {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--lane, var(--line-2));
+  background: var(--laneTint, var(--surface-2));
+  color: var(--lane, var(--text-1));
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  overflow: hidden;
+  /* Its own metric, for the same reason the lane chip states one: the
+     plate clips, so a host page that zeroes a line-height above it
+     collapses the initials inside it. The plate is a fixed square, so
+     pinning this changes no geometry at all. */
+  line-height: 1;
+}
+
+.sm { width: 28px; height: 28px; font-size: var(--step--2); }
+.md { width: 38px; height: 38px; font-size: 14px; }
+.lg { width: 56px; height: 56px; font-size: 20px; }
+
+.initials { position: relative; z-index: 1; }
+
+/* The lane glyph sits behind the initials as a quiet watermark, so a row
+   is identifiable by class at a glance without the label being read. */
+.watermark {
+  position: absolute;
+  right: -3px;
+  bottom: -5px;
+  font-size: 1.5em;
+  opacity: 0.18;
+  line-height: 1;
+}
+
+/*
+  A CORNER FLAG ON EVERY CALENDAR-LOCKED PLATE.
+
+  The same rule the lane chips follow, for the same reason: which class a
+  prospect belongs to is the biggest distinction in this application, and
+  it must survive greyscale. A pointed corner on the plate means a reader
+  scanning the left edge of the desk can see the split without reading a
+  single chip.
+*/
+.plate[data-occasion="calendar-locked"]::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto auto;
+  width: 0;
+  height: 0;
+  border-right: 10px solid currentColor;
+  border-bottom: 10px solid transparent;
+  opacity: 0.6;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mark-sm .name { font-size: var(--step--1); }
+.mark-md .name { font-size: var(--step-0); }
+.mark-lg .name { font-size: var(--step-2); font-family: var(--font-display); }
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.subtitle {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+  .mark { gap: var(--space-2); }
+  .lg { width: 44px; height: 44px; font-size: 16px; }
+}

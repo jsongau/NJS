@@ -1,0 +1,221 @@
+/*
+  SECTION IDENTITY, RESOLVED ONCE.
+
+  Twenty rules, one attribute, and nothing else in this application ever
+  writes a --sec-<name> token by hand again. The reasoning for the
+  attribute is at the top of sections.ts; this file is the machine.
+
+  Each block turns `data-sec="<id>"` into three local names on the
+  element that carries it:
+
+    --sec        the mark. Rail bars, active edges, page rules, the solid
+                 part of a drawn mark. Clears 3:1 on every paper as an
+                 essential graphic, which is what an edge and a mark are.
+    --sec-ink    the text. The only one of the three that may carry
+                 words, because it is the only one measured at 4.5:1 on
+                 every paper and on its own glow.
+    --sec-glow   the wash behind an active thing. Darker than
+                 --surface-3, so nothing painted on it becomes the new
+                 floor for the text ramp.
+
+  Custom properties inherit, so the shell setting this on its root paints
+  the section a reader is standing in through the whole screen, and the
+  rail setting it on a row paints that row with the section it leads to.
+  One mechanism, two jobs, no per section code anywhere else.
+
+  IT IS A PLAIN STYLESHEET RATHER THAN A MODULE, and deliberately. A CSS
+  module hashes its class names, and the whole value here is that any
+  component in the application can read var(--sec-ink) without importing
+  anything or knowing this file exists.
+
+  THE FALLBACK IS THE SIGNAL COLOUR. A screen with no section, which
+  today is only an unknown path on its way to a redirect, gets the
+  editorial magenta rather than nothing, so a rule declared as
+  var(--sec) never renders as a transparent gap.
+*/
+
+[data-sec] {
+  --sec: var(--signal);
+  --sec-ink: var(--signal-600);
+  --sec-glow: var(--signal-tint);
+}
+
+[data-sec="today"] {
+  --sec: var(--sec-today);
+  --sec-ink: var(--sec-today-ink);
+  --sec-glow: var(--sec-today-glow);
+}
+
+[data-sec="requests"] {
+  --sec: var(--sec-requests);
+  --sec-ink: var(--sec-requests-ink);
+  --sec-glow: var(--sec-requests-glow);
+}
+
+[data-sec="desk"] {
+  --sec: var(--sec-desk);
+  --sec-ink: var(--sec-desk-ink);
+  --sec-glow: var(--sec-desk-glow);
+}
+
+[data-sec="maps"] {
+  --sec: var(--sec-maps);
+  --sec-ink: var(--sec-maps-ink);
+  --sec-glow: var(--sec-maps-glow);
+}
+
+[data-sec="lanes"] {
+  --sec: var(--sec-lanes);
+  --sec-ink: var(--sec-lanes-ink);
+  --sec-glow: var(--sec-lanes-glow);
+}
+
+[data-sec="field"] {
+  --sec: var(--sec-field);
+  --sec-ink: var(--sec-field-ink);
+  --sec-glow: var(--sec-field-glow);
+}
+
+[data-sec="leagues"] {
+  --sec: var(--sec-leagues);
+  --sec-ink: var(--sec-leagues-ink);
+  --sec-glow: var(--sec-leagues-glow);
+}
+
+[data-sec="inbox"] {
+  --sec: var(--sec-inbox);
+  --sec-ink: var(--sec-inbox-ink);
+  --sec-glow: var(--sec-inbox-glow);
+}
+
+[data-sec="sent"] {
+  --sec: var(--sec-sent);
+  --sec-ink: var(--sec-sent-ink);
+  --sec-glow: var(--sec-sent-glow);
+}
+
+[data-sec="replies"] {
+  --sec: var(--sec-replies);
+  --sec-ink: var(--sec-replies-ink);
+  --sec-glow: var(--sec-replies-glow);
+}
+
+[data-sec="objections"] {
+  --sec: var(--sec-objections);
+  --sec-ink: var(--sec-objections-ink);
+  --sec-glow: var(--sec-objections-glow);
+}
+
+[data-sec="book"] {
+  --sec: var(--sec-book);
+  --sec-ink: var(--sec-book-ink);
+  --sec-glow: var(--sec-book-glow);
+}
+
+[data-sec="week"] {
+  --sec: var(--sec-week);
+  --sec-ink: var(--sec-week-ink);
+  --sec-glow: var(--sec-week-glow);
+}
+
+[data-sec="capacity"] {
+  --sec: var(--sec-capacity);
+  --sec-ink: var(--sec-capacity-ink);
+  --sec-glow: var(--sec-capacity-glow);
+}
+
+[data-sec="packages"] {
+  --sec: var(--sec-packages);
+  --sec-ink: var(--sec-packages-ink);
+  --sec-glow: var(--sec-packages-glow);
+}
+
+[data-sec="coaching"] {
+  --sec: var(--sec-coaching);
+  --sec-ink: var(--sec-coaching-ink);
+  --sec-glow: var(--sec-coaching-glow);
+}
+
+[data-sec="method"] {
+  --sec: var(--sec-method);
+  --sec-ink: var(--sec-method-ink);
+  --sec-glow: var(--sec-method-glow);
+}
+
+[data-sec="partners"] {
+  --sec: var(--sec-partners);
+  --sec-ink: var(--sec-partners-ink);
+  --sec-glow: var(--sec-partners-glow);
+}
+
+[data-sec="promo"] {
+  --sec: var(--sec-promo);
+  --sec-ink: var(--sec-promo-ink);
+  --sec-glow: var(--sec-promo-glow);
+}
+
+[data-sec="spend"] {
+  --sec: var(--sec-spend);
+  --sec-ink: var(--sec-spend-ink);
+  --sec-glow: var(--sec-spend-glow);
+}
+
+/*
+  THE FEATURED KEY, AND WHY IT REDIRECTS THE SAME THREE NAMES.
+
+  One control in this application is ranked above the twenty places: the
+  key that opens the trade area board, on the strip and again on the
+  rail. It is drawn as a filled plate in the marquee orange with dark ink
+  on it, which inverts the value relationship every other key on the
+  screen has, and that inversion is the signal that survives with no
+  colour vision at all.
+
+  A filled plate breaks one assumption the twenty rules above make. The
+  solid shape inside a SectionMark is painted var(--sec) so that a mark
+  wears the identity of the place it names, and on a light face a bright
+  section colour is a shape that disappears. So the featured element
+  redirects the three locals rather than declaring a fourth name: the
+  mark's solid shape becomes the dark ink the plate already carries, and
+  the mark reads as one silhouette printed on a key cap.
+
+  IT IS AN ATTRIBUTE FOR THE SAME REASON data-sec IS. Both navigations
+  set data-featured on the element they feature and neither one repeats a
+  colour, and the day a second control earns this rank it wears the same
+  attribute rather than a copy of this block. It is declared last so that
+  it wins over the section rule on the element that carries both, which
+  is every featured element, since a featured key still names a section.
+*/
+[data-featured="key"] {
+  --sec: var(--text-inverse);
+  --sec-ink: var(--text-inverse);
+  --sec-glow: var(--feature);
+}
+
+/*
+  THREE FAMILIES ADDED WITH THE FLOOR, THE ACCOUNTS BOARD AND THE
+  COMPETITIVE SET.
+
+  Pay and the district report deliberately have no family of their own.
+  Twenty five sections do not clear the adjacency floor on one hue wheel,
+  measured, and the precedent for sharing already exists: the cup wears
+  the leagues identity because a cup is what the leagues play for. Pay and
+  the report are both outputs of the floor, so they wear the floor's.
+*/
+[data-sec="accounts"] {
+  --sec: var(--sec-accounts);
+  --sec-ink: var(--sec-accounts-ink);
+  --sec-glow: var(--sec-accounts-glow);
+}
+
+[data-sec="team"] {
+  --sec: var(--sec-team);
+  --sec-ink: var(--sec-team-ink);
+  --sec-glow: var(--sec-team-glow);
+}
+
+[data-sec="rivals"] {
+  --sec: var(--sec-rivals);
+  --sec-ink: var(--sec-rivals-ink);
+  --sec-glow: var(--sec-rivals-glow);
+}
+

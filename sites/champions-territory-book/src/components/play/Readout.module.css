@@ -1,0 +1,94 @@
+/*
+  THE READOUT WELL.
+
+  A recessed slot with a hairline, the figure set in the readout face on
+  a reserved character width. It is inset rather than raised, because a
+  number on this product is something the machine reports and not
+  something a person presses.
+
+  THE WIDTH IS RESERVED AND THAT IS NOT NEGOTIABLE. These figures move
+  while somebody is looking at them, and a rail whose rows twitch
+  sideways as a status changes cannot be scanned. Every well is the same
+  rectangle whether it holds nothing, a 4 or a 211.
+*/
+
+.readout {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 3.6ch;
+  /* Stated, because an empty well holds no line box and would otherwise
+     collapse to a hairline. A destination with no figure has to leave
+     the same rectangle as one with a 211 in it, or the rail stops being
+     a column of slots and becomes a column of accidents. */
+  min-height: 20px;
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-0);
+  /* The recess is a token because a well is only recessed relative to
+     the ground around it. A black at 0.45 reads as a slot cut into a
+     near black rail and as a thumbprint on a pale one. */
+  box-shadow: var(--well-inset);
+}
+
+.digits {
+  font-size: var(--step--2);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  /* The transform origin is the right edge because the well is right
+     aligned, so a figure growing on a tick pushes into its own padding
+     rather than across the label beside it. */
+  transform-origin: 100% 50%;
+}
+
+/*
+  The lead figure in a group. The strip's active destination and the
+  rail's active row both use it, so the one number that matters on the
+  chrome is the one wearing the section's ink.
+*/
+.readout[data-lead="yes"] {
+  border-color: var(--sec);
+  background: var(--surface-0);
+}
+
+.readout[data-lead="yes"] .digits {
+  color: var(--sec-ink, var(--text-0));
+}
+
+/*
+  THE TICK. One scale up and settle, in the section ink, over a duration
+  token so the reduced motion query at the foot of tokens.css flattens it
+  to nothing without this file having to know.
+*/
+@keyframes readout-tick {
+  0% {
+    transform: scale(1);
+    color: var(--sec-ink, var(--text-0));
+  }
+  35% {
+    transform: scale(1.42);
+    color: var(--sec-ink, var(--text-0));
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.digits[data-tick="yes"] {
+  animation: readout-tick var(--dur-3) var(--ease-out);
+}
+
+/*
+  Belt and braces. The tokens already collapse to zero here, and this
+  states the rule where the animation is declared so it cannot be lost
+  the next time the tokens are rewritten.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .digits[data-tick="yes"] {
+    animation: none;
+  }
+}

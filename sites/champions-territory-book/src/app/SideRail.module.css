@@ -1,0 +1,1647 @@
+/*
+  THE RAIL.
+
+  A column that is always there, on a paler ground than the content, with
+  every screen in the application named and counted inside it. It replaces
+  a horizontal bar whose second level opened on hover, so the first rule
+  of this file is that NOTHING HERE APPEARS ONLY ON HOVER. Hover widens
+  the collapsed rail and hover paints a row; hover never reveals a
+  destination that was not already on the page.
+
+  ── FOUR SIGNALS FOR THE ACTIVE ROW, NEVER ONE ─────────────────────
+  The owner is colourblind, so the row you are standing on carries a left
+  edge bar four pixels wide, a washed ground, heavier type and its own
+  mark lit. Any one of those would do the job on its own for most
+  readers; all four together do it for every reader, and the edge bar in
+  particular survives greyscale, a bad projector and a photograph of a
+  screen.
+
+  ── AND EVERY ROW WEARS ITS OWN SECTION ────────────────────────────
+  The colour of all four signals is the section's own, taken from the
+  data-sec attribute the row carries and resolved by sections.css. Twenty
+  destinations, twenty identities, and the solid shape inside each mark
+  is lit in that colour whether or not you are standing on it, so the
+  column reads as twenty places rather than as twenty rows of one place.
+  Colour is the third signal after the name and the silhouette, never the
+  first and never the only one.
+
+  ── THE READOUTS RESERVE THEIR SPACE ───────────────────────────────
+  Every well is the same width whether it holds nothing, a 4 or a 211,
+  because these figures move while a person is looking at them. A rail
+  whose rows twitch sideways when a status changes cannot be scanned, and
+  scanning is the only reason it exists.
+*/
+
+.rail {
+  position: relative;
+  z-index: var(--z-rail);
+  display: flex;
+  flex-direction: column;
+  width: var(--rail-w, 252px);
+  height: 100%;
+  min-height: 0;
+  /* Visible, so the collapsed rail can widen over the content on hover
+     and on focus without the row labels being clipped by anything. */
+  overflow: visible;
+  transition: width var(--dur-2) var(--ease-out);
+}
+
+.rail > * {
+  width: 100%;
+  background: var(--surface-2);
+  border-right: 1px solid var(--line);
+  transition: width var(--dur-2) var(--ease-out);
+}
+
+/* ---------------------------------------------------------------
+   The head: the mark, the lockup, who you are, and the countdown
+   --------------------------------------------------------------- */
+
+.head {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-3) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  /* A lit rule under the head, in the colour of the section the reader
+     is standing in, so the head and the marquee above it light together
+     rather than one of them holding a house colour the other has left. */
+  box-shadow: inset 0 -3px 0 -2px var(--sec, var(--signal));
+
+  /* ── THE HEM. WHY THE BAR LOOKED LIKE IT HAD CUT THE RAIL OFF ─────
+
+     The mega nav is a housing, and its background is a gradient that
+     runs --surface-2 to --surface-1 to --surface-0 down its fifty six
+     pixels so the strip reads as a moulded object. Under it it draws two
+     hairlines across the FULL width of the application: the section
+     colour at --sec, then --line-2.
+
+     Over the content column that lands on --surface-0, the same colour
+     the gradient just finished on, so the hairlines read as the
+     underside of the bar and the surface carries straight through.
+
+     Over the first 252 pixels it lands on the rail, and the rail's
+     ground is --surface-2, two steps away. Sampled at 1440 in the light
+     ground the seam was four bands in four pixels: 249,247,253 for the
+     bar, then the section colour at full saturation, then 154,150,166
+     for --line-2, then a step down to 225,222,233 for the rail. The dark
+     ground does the same thing in the other direction, 23,21,29 stepping
+     UP to 45,43,54. Either way the eye reads a saturated rule dividing
+     two different materials, which is a cut, not a join.
+
+     This is the fix, and it is the ground rather than the rule. The head
+     starts on the colour the bar's gradient finished on and settles into
+     the rail's own ground over sixteen pixels, so the hairlines now sit
+     on one continuous surface and read as the bar's own lit edge.
+
+     WHAT WAS REJECTED. Deleting the section rule: it is the one thing on
+     screen that says which of twenty places you are standing in, and the
+     head repeats it deliberately three lines above this comment.
+     Painting something over the bar from the shell: the bar belongs to
+     MegaNav and a shell that reaches up into its box to erase part of a
+     border is a rule nobody will find when the bar next changes.
+     Repainting the rail in --surface-0 throughout: the rail is a paler
+     ground than the content ON PURPOSE, and levelling the two would cost
+     the whole column its separation to save four pixels of seam.
+
+     Eighteen pixels, and stated in the same tokens the bar's own
+     gradient uses, so it is right in both grounds without a second rule
+     and cannot drift if a palette is retuned.
+
+     THE FIRST THREE PIXELS HOLD --surface-0 FLAT, and that is not a
+     rounding of the curve. The shell paints a two pixel seam in --sec
+     across the top of this column, matching the one it paints across the
+     content column, so the hem's own first two pixels are never seen. If
+     the gradient began falling at zero, the first row of it visible
+     below that seam would already be off --surface-0 while the content
+     column beside it was still exactly on it, and the join this hem
+     exists to make would be out by four units of grey. */
+  background-image: linear-gradient(
+    to bottom,
+    var(--surface-0) 0,
+    var(--surface-0) 3px,
+    var(--surface-1) 10px,
+    var(--surface-2) 18px
+  );
+  background-repeat: no-repeat;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 2px 6px;
+  border-radius: var(--radius-s);
+  text-decoration: none;
+  color: inherit;
+}
+
+.brandLink:hover {
+  background: var(--surface-3);
+  text-decoration: none;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  line-height: 1.1;
+}
+
+.brandText strong {
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+/*
+  ── THE NAME IS SAID ONCE ──────────────────────────────────────────
+  While the rail is a column the mega nav sits directly above it, fifty
+  pixels away, carrying the same words in the same display face. Two
+  lockups that close together read as a mistake rather than as a brand,
+  so at that width this one keeps its mark and its address and drops the
+  name. Inside the drawer the name comes back, because below 430px the
+  strip has no room for a lockup at all and this is the only one left.
+*/
+@media (min-width: 900px) {
+  .brandText strong {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/*
+  The sub-line is the address, set as a caption rather than as a second
+  title. It names the building the whole application is about.
+*/
+.brandSub {
+  font-size: var(--step--3);
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+  THE CONTEXT LABEL. Who you are and what you are looking at, in four
+  words. Where another tool would put a role switcher, this puts a
+  statement of fact, because there is one user and nothing to switch to.
+*/
+.contextLabel {
+  margin: 0;
+  padding: 0 var(--space-1);
+  font-size: var(--step--3);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.context {
+  display: flex;
+  /* Stacked, not side by side. The reasoning and the measurements are
+     with the select rule below, because that is the control the shape
+     exists to serve. */
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-1) 0;
+}
+
+/*
+  THE COUNTDOWN. The only large figure in the chrome, so it gets the only
+  signal colour and the only large type. It is deliberately NOT a section
+  colour: the days to offer expiry are a fact about the whole division
+  rather than about the screen a reader happens to be on, and painting it
+  in the section would make the one permanent figure in the chrome change
+  colour every time somebody moved.
+*/
+.countdown {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex: none;
+  min-width: 0;
+}
+
+.countdownValue {
+  font-family: var(--font-display);
+  font-size: var(--step-4);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--signal-600);
+}
+
+/*
+  EIGHT CHARACTERS IS THE RESERVATION, AND IT IS RESERVED FOR A PHRASE
+  THAT WRAPS.
+
+  The unit this instrument prints is one of three: "days to expiry",
+  "day to expiry" on the last day, and "offers expired" once 31 August
+  has passed. Fourteen characters at the longest, and every one of them
+  breaks into two runs that each fit inside eight: "days to" over
+  "expiry", "offers" over "expired". That is what the cap is sized for.
+
+  A single unbroken word longer than eight characters would overflow it,
+  so a future unit has to be a phrase rather than a noun, and the rule
+  above the collapsed state depends on the same property.
+*/
+.countdownUnit {
+  font-size: var(--step--3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--text-2);
+  max-width: 8ch;
+  line-height: 1.15;
+}
+
+.contextItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  /* Takes the width the countdown does not want. min-width: 0 is what
+     lets it shrink below the select's intrinsic size on a narrow rail
+     rather than pushing the head wider than the column. */
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.periodLabel {
+  font-size: var(--step--3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  font-weight: 700;
+}
+
+/*
+  THE PERIOD CONTROL HAS TO FIT ITS LONGEST LABEL, AND SIDE BY SIDE IT
+  NEVER COULD.
+
+  It was capped at 13ch, which cut the selected label to a fragment
+  ending mid-word. A reader could not tell which period the whole board
+  was standing in without opening the list, and that control is the one
+  thing in the head that changes what every screen behind it is counting.
+
+  Shortening the labels is the wrong fix. The same four strings are
+  printed as prose on eight other screens, "Stage one, September, heating
+  launch" on the desk and "No tabling or networking shift is planned in
+  September, heating launch" on the field, so a label written to fit a
+  control would read as an abbreviation everywhere else it appears.
+
+  Widening it in place was the wrong fix too, and this was measured
+  rather than guessed: the rail is 252px, the row inside it is 227, the
+  countdown wants 109 of that, and the label the shape was measured
+  against, at nineteen characters, was 128px of text before the chevron's
+  24px gutter. There is no arrangement of a row that holds 109 and 159
+  inside 227.
+
+  So the head stacks. The countdown keeps the first line to itself and
+  the period takes the full width of the second: the control measures 219
+  with 186 of text room inside its padding, at 1440, 1280, 1100 and 1024.
+  The longest label is now "November, membership push" at twenty five
+  characters, which is about 168px at the same rate, so it still clears
+  the 186 with room. That figure is scaled from the original measurement
+  rather than freshly measured, and it is the number to check first if a
+  label is ever lengthened again. The cost is about thirty five pixels of
+  head height, paid out of a list that scrolls anyway.
+*/
+.select {
+  padding: 2px 24px 2px 7px;
+  font-size: var(--step--2);
+  font-weight: 550;
+  box-shadow: none;
+  background-size: 10px 7px;
+  background-position: right 7px center;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------
+   The groups
+   --------------------------------------------------------------- */
+
+/*
+  ── THE SHEET SAYS THAT IT CONTINUES ───────────────────────────────
+  This well is 596 pixels tall at 1440 by 900 and the sheet inside it is
+  1942, so two thirds of the destinations are below the fold. Scrolling
+  always worked; nothing here was ever unreachable. What was missing was
+  any sign that it existed. The scrollbar this application draws is a one
+  pixel hairline in --line-2, the last row that fits happens to land
+  flush against the foot's border, and the two together read as a list
+  that has finished under a heading, with the foot's controls sitting
+  directly beneath the amputation.
+
+  THE FADE IS CONDITIONAL AND THAT IS THE WHOLE POINT. --fade-top and
+  --fade-bottom are zero by default and are opened only by the data
+  attributes SideRail.tsx writes when there is actually more content in
+  that direction. A permanent gradient at the foot of a scroller is worse
+  than no gradient at all: it is present on the screen where the list has
+  ended as loudly as on the screen where it has not, so it stops being
+  information and becomes a stain, and by the time a reader has learned
+  to ignore it there is nothing left to tell them anything.
+
+  WHY A MASK AND NOT A GRADIENT PAINTED OVER THE TOP. Three other
+  versions were tried and each one failed on this rail specifically.
+
+  An absolutely positioned overlay inside the scroller SCROLLS WITH THE
+  CONTENT: a scroll container is the containing block for its absolute
+  children, but the origin it positions them from is the unscrolled
+  padding box, so the fade would travel off the top on the first flick.
+
+  A sticky child would hold its place, but it needs real elements in the
+  list, and elements inside a <div> full of <section>s are elements a
+  screen reader has to walk past on the way to the destinations.
+
+  A solid scrim in --surface-2 over the rows, wherever it was anchored,
+  cannot fade a row that is being hovered, because the hover ground is
+  --surface-3 and the scrim is mixed for --surface-2. Half a row would
+  dissolve and the other half would sit there at full strength. The mask
+  takes the alpha of whatever is underneath it, hover ground and section
+  colour and figures alike, so there is one behaviour and not two.
+
+  The two stops are written in surface tokens rather than in black,
+  because a mask reads the alpha channel of its image and every surface
+  token is fully opaque in both grounds. A literal colour would say
+  nothing about which surface is being dissolved into, and the next
+  person to read this line has to be able to tell.
+*/
+.groups {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  /* Stated rather than left to the browser. Declaring overflow on one
+     axis alone computes the other to auto, which is a horizontal
+     scrollbar waiting for the first row label that does not fit, and a
+     horizontal scrollbar in a 252 pixel navigation column is never the
+     right answer: the labels ellipsize instead. */
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: var(--space-3) 0 var(--space-4);
+
+  --fade-top: 0px;
+  --fade-bottom: 0px;
+
+  /* TWO LAYERS, AND THE SECOND ONE IS THE RAIL'S RIGHT EDGE.
+
+     A mask covers the border box, so the first layer on its own would
+     have dissolved the top and bottom twenty eight pixels of the one
+     pixel border-right that `.rail > *` puts on every child of this
+     column. The head above and the foot below keep theirs at full
+     strength, so the rail's right edge would have gained two notches,
+     which is a worse cut than the one this rule was written to remove.
+
+     The second layer is that one pixel column, opaque from top to
+     bottom. Mask layers composite with `add` by default, which is a
+     union, so the edge is held at full alpha while everything to the
+     left of it still fades. No mask-composite declaration is needed and
+     none is written: stating the initial value invites the next reader
+     to think something unusual is happening here.
+
+     -webkit- is listed first for Safari, which still needs the prefix on
+     masks of this shape, and both lists carry both layers so neither
+     engine gets half the rule. */
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      var(--surface-2) var(--fade-top),
+      var(--surface-2) calc(100% - var(--fade-bottom)),
+      transparent 100%
+    ),
+    linear-gradient(to left, var(--surface-2) 1px, transparent 1px);
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      var(--surface-2) var(--fade-top),
+      var(--surface-2) calc(100% - var(--fade-bottom)),
+      transparent 100%
+    ),
+    linear-gradient(to left, var(--surface-2) 1px, transparent 1px);
+
+  /* THE COMPANION TO THE FADE, AND THE REASON IT IS SAFE FOR A KEYBOARD.
+     Arrow keys walk this rail, and a browser scrolling a focused row
+     just barely into view would park it in the dissolving band, where
+     the row a reader is standing on is the one they cannot read. The
+     padding pushes the resting place clear of both bands by the height
+     of a row. It is stated in the same figures as the fades rather than
+     in a custom property, because scroll-padding has to hold even on the
+     screens where the fade in that direction is shut. */
+  scroll-padding-top: 28px;
+  scroll-padding-bottom: 28px;
+}
+
+/*
+  Twenty eight pixels: three quarters of a 38 pixel row. Shorter than
+  that and the fade looks like a printing fault rather than an edge;
+  taller and it eats a whole row of names at the bottom of a column that
+  exists to be scanned.
+*/
+.groups[data-more-above="true"] {
+  --fade-top: 28px;
+}
+
+.groups[data-more-below="true"] {
+  --fade-bottom: 28px;
+}
+
+/*
+  A COLLAPSED RAIL FADES SOONER. Seventy two pixels of column holds
+  marks and figures with no words beside them, so the same twenty eight
+  pixels would dissolve most of a mark and leave a reader guessing at a
+  silhouette. Sixteen is enough to say "more" against a stack of marks
+  and not enough to make any one of them ambiguous.
+
+  The hovered and focused states are not listed, because the rail widens
+  back to its full width there and the full width figure is right again.
+*/
+.rail[data-collapsed="true"] .groups[data-more-above="true"] {
+  --fade-top: 16px;
+}
+
+.rail[data-collapsed="true"] .groups[data-more-below="true"] {
+  --fade-bottom: 16px;
+}
+
+.rail[data-collapsed="true"]:hover .groups[data-more-above="true"],
+.rail[data-collapsed="true"]:focus-within .groups[data-more-above="true"] {
+  --fade-top: 28px;
+}
+
+.rail[data-collapsed="true"]:hover .groups[data-more-below="true"],
+.rail[data-collapsed="true"]:focus-within .groups[data-more-below="true"] {
+  --fade-bottom: 28px;
+}
+
+.group + .group {
+  margin-top: var(--space-4);
+}
+
+/*
+  THE GROUP HEADINGS ARE REAL HEADINGS and each list is associated with
+  its own by aria-labelledby. A rail of five uppercase captions that a
+  screen reader announces as five stray paragraphs has drawn the
+  structure without building it.
+*/
+.heading {
+  margin: 0 0 var(--space-1);
+  padding: 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--step--3);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  position: relative;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 38px;
+  padding: 6px var(--space-3) 6px calc(var(--space-4) - 4px);
+  border-left: 4px solid transparent;
+  color: var(--text-1);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.item:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+/*
+  THE PRESS. Two pixels along the rail's own axis, transform only, so
+  twenty rows cost one composited layer between them and no paint at all.
+  A row that moved vertically would push the rows under it about.
+*/
+.item:active,
+.sub:active,
+.filter:active,
+.tile:active,
+.collapse:active {
+  transform: translateX(2px);
+}
+
+/*
+  THE ACTIVE ROW: an edge bar, a wash, a weight and a lit mark, all four
+  in the section's own colour. The reading survives greyscale and colour
+  blindness both, because the edge and the silhouette carry it before the
+  hue does.
+*/
+.itemActive,
+.itemActive:hover {
+  background: var(--sec-glow, var(--signal-tint));
+  border-left-color: var(--sec, var(--signal));
+  color: var(--sec-ink, var(--text-0));
+  font-weight: 800;
+}
+
+/* ---------------------------------------------------------------
+   The featured row
+   --------------------------------------------------------------- */
+
+/*
+  ONE ROW IN TWENTY IS DRAWN AS A KEY, AND IT IS THE SAME KEY THE STRIP
+  ABOVE CARRIES.
+
+  Nineteen of these rows are the same object: a mark, a name and a figure
+  of work waiting, all alike on purpose so an eye can run down them. The
+  trade area board is not that. Its figure is the whole territory rather
+  than a backlog, and pressing it takes the entire screen, which is the
+  property that got it taken off the strip and then earned it a rank of
+  its own. The reasoning is at the head of MegaNav.tsx and it is not
+  repeated here; what matters in this file is that the two navigations
+  draw the same object, so that the feature reads as a decision rather
+  than as an accident of which one you were looking at.
+
+  ── WHAT SETS IT APART WITH THE COLOUR SWITCHED OFF ────────────────
+  The owner is colourblind, so the orange is the last signal rather than
+  the first. Position: it is inset from the column with air around it
+  while every other row runs the full width. Value: it is a filled face
+  with dark type, and every other row in this rail is light type on a
+  dark column, which is an inversion rather than a hue. Shape: rounded on
+  all four corners, standing on a moulded shoulder, where the rest are
+  flat rows with a four pixel edge. Size: taller, and two lines where the
+  rest carry one. Weight: the label at 800 against 600.
+
+  Nothing here moves on a loop. The only motion is the press, three
+  pixels, onto the shoulder the key was already standing on.
+*/
+
+.itemFeature {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  /* The two lines are one block rather than two rows sharing the plate,
+     so the slack goes round the pair instead of between them. */
+  align-content: center;
+  column-gap: var(--space-3);
+  row-gap: 0;
+  /* Inset from the column, which is the position half of the signal. The
+     extra three pixels at the foot are the shoulder, so two plates in a
+     row would still sit on an even rhythm. */
+  margin: var(--space-2) var(--space-3) calc(var(--space-2) + 3px);
+  padding: 6px var(--space-3);
+  min-height: 46px;
+  border-left: 0;
+  border-radius: var(--radius-s);
+  background: var(--feature);
+  color: var(--text-inverse);
+  box-shadow: 0 3px 0 var(--feature-edge);
+}
+
+.itemFeature svg {
+  grid-row: 1 / span 2;
+}
+
+/*
+  Declared after .item:hover and .itemActive, which are the two rules it
+  has to beat and which it ties with on specificity. Source order is the
+  whole of the reason this block sits here rather than higher up.
+*/
+.itemFeature:hover {
+  background: var(--feature-600);
+  color: var(--text-inverse);
+}
+
+/*
+  THE PRESS IS ALONG A DIFFERENT AXIS TO EVERY OTHER ROW, and that is
+  the point. The rows slide two pixels along the rail because they are
+  rows. This one drops onto its shoulder because it is a key.
+*/
+.itemFeature:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--feature-edge);
+}
+
+.featureLabel {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 800;
+  /* Tracked out where the rows are tracked in. */
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/*
+  The figure, printed with its noun instead of dropped into a readout
+  well. The well is this rail's instrument for work waiting, and 211 in
+  one of them beside the word Maps would say two hundred and eleven
+  things are owed.
+*/
+.featureFigure {
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.icon {
+  flex: none;
+  color: var(--text-2);
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   The second level
+   --------------------------------------------------------------- */
+
+/*
+  Indented under the row it refines, with a hairline running down the
+  indent so the eye reads it as belonging to the row above rather than as
+  four more destinations.
+*/
+.subList {
+  list-style: none;
+  margin: 2px 0 var(--space-2);
+  padding: 0 0 0 calc(var(--space-4) + 16px);
+  border-left: 4px solid var(--sec, var(--signal));
+}
+
+.sub {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 30px;
+  padding: 4px var(--space-3) 4px var(--space-2);
+  border: 0;
+  border-left: 1px solid var(--line-2);
+  background: none;
+  color: var(--text-2);
+  font-size: var(--step--2);
+  font-weight: 550;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sub:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+/*
+  A chosen filter is marked with a solid left rule and heavier type as
+  well as its aria-pressed state. Colour alone would say nothing to the
+  person this application was drawn for.
+*/
+.sub[aria-pressed="true"] {
+  border-left: 3px solid var(--accent);
+  padding-left: calc(var(--space-2) - 2px);
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.subLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   The foot
+   --------------------------------------------------------------- */
+
+.foot {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.collapse {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 32px;
+  padding: 5px var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--text-2);
+  font-size: var(--step--2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.collapse:hover {
+  background: var(--surface-3);
+  border-color: var(--line-2);
+  color: var(--text-0);
+}
+
+.rail[data-collapsed="true"] .collapse .icon {
+  transform: scaleX(-1);
+}
+
+/*
+  COLLAPSED, THE WIDTH CONTROL IS THE ONLY THING LEFT IN THE FOOT, so it
+  gets the whole shelf and a finger sized target on any pointer. It is the
+  one control a reader in a narrow rail is most likely to want, and it is
+  the way back to everything the collapse took away.
+*/
+.rail[data-collapsed="true"] .collapse {
+  justify-content: center;
+  min-height: 44px;
+  padding: 5px 4px;
+}
+
+.rail[data-collapsed="true"]:hover .collapse,
+.rail[data-collapsed="true"]:focus-within .collapse {
+  justify-content: flex-start;
+  min-height: 32px;
+  padding: 5px var(--space-2);
+}
+
+/*
+  The reset control's confirmation panel is drawn to open downward and to
+  the right, which is correct in a top bar and wrong at the bottom of a
+  left rail: it would open off the bottom of the viewport and off the left
+  edge of the screen. It is turned to open upward and rightward here. The
+  panel is selected by the ARIA label it already carries rather than by a
+  class name, because the class names in that module are hashed and not
+  ours to reach for.
+*/
+.reset [aria-label="Confirm reset"] {
+  top: auto;
+  right: auto;
+  bottom: calc(100% + 6px);
+  left: 0;
+  width: min(34ch, calc(100vw - var(--space-6)));
+}
+
+.reset > div {
+  align-items: stretch;
+}
+
+/* ---------------------------------------------------------------
+   Collapsed
+   --------------------------------------------------------------- */
+
+/*
+  ── WHAT COLLAPSING ACTUALLY DOES ──────────────────────────────────
+  It leaves a column of marks and figures. Every destination keeps its
+  mark and its readout, so the rail still says how much work is waiting
+  behind each one, which is most of what it is for, and it gives back 180
+  pixels to the screen. What the words leave behind, and what leaves with
+  them, is set out at the head of the two lists below.
+
+  The words come back on hover and on focus, and they come back by
+  WIDENING THE WHOLE RAIL OVER THE CONTENT rather than by floating a
+  tooltip out of a scrolling box. A scroller cannot let a child paint
+  outside it horizontally while still scrolling vertically, so the tooltip
+  version of this would be clipped to a 72 pixel sliver on every row. The
+  rail itself has no overflow, so its children are free to be wider than
+  it is, and the grid column stays 72 pixels wide the whole time, which
+  means the page behind never reflows.
+*/
+.rail[data-collapsed="true"] {
+  width: var(--rail-w-collapsed, 72px);
+}
+
+.rail[data-collapsed="true"] > * {
+  width: var(--rail-w-collapsed, 72px);
+}
+
+.rail[data-collapsed="true"]:hover > *,
+.rail[data-collapsed="true"]:focus-within > * {
+  width: var(--rail-w, 252px);
+  box-shadow: var(--shadow-2);
+}
+
+/*
+  ── WHAT A COLLAPSED RAIL IS FOR, AND WHAT IT THEREFORE DROPS ──────
+  It is a column of marks and figures. That one sentence decides
+  everything below it, and it produces two lists rather than one.
+
+  THINGS WHOSE WORDS ARE THEIR NAME ARE CLIPPED, NOT DROPPED. A row's
+  label, the key's label and its figure, the countdown's unit: each one
+  leaves the layout and stays in the accessibility tree, so a destination
+  is still called Today and a figure is still counted in something. The
+  alternative was setting them at eight pixels in a seventy two pixel
+  column, which is not a label, it is the smudge that was printing over
+  the page.
+
+  THINGS THAT CANNOT SURVIVE WITHOUT THEIR WORDS ARE ABSENT. The add
+  control, the lockup link, the period select and the reset are each a
+  verb or a value with nothing left to hang it on once the words go, and
+  squeezing them is exactly how the head came to overflow. Every one of
+  them returns the moment the rail is hovered or focused, and every one of
+  them is in the drawer at narrow widths, so nothing has been taken away.
+  It has been moved out of a column it does not fit.
+
+  ABSENT RATHER THAN MERELY INVISIBLE MATTERS FOR THE KEYBOARD. Display
+  none takes them out of the tab order while the rail rests, and the first
+  press of Tab onto any row lights :focus-within, which puts them all back
+  before a reader can arrive at one.
+*/
+.rail[data-collapsed="true"] .brandLink,
+.rail[data-collapsed="true"] .contextLabel,
+.rail[data-collapsed="true"] .contextItem,
+.rail[data-collapsed="true"] .add,
+.rail[data-collapsed="true"] .reset,
+.rail[data-collapsed="true"] .subList {
+  display: none;
+}
+
+.rail[data-collapsed="true"] .label,
+.rail[data-collapsed="true"] .countdownUnit,
+.rail[data-collapsed="true"] .featureLabel,
+.rail[data-collapsed="true"] .featureFigure {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.rail[data-collapsed="true"]:hover .brandLink,
+.rail[data-collapsed="true"]:hover .contextLabel,
+.rail[data-collapsed="true"]:hover .contextItem,
+.rail[data-collapsed="true"]:hover .add,
+.rail[data-collapsed="true"]:hover .reset,
+.rail[data-collapsed="true"]:hover .subList,
+.rail[data-collapsed="true"]:focus-within .brandLink,
+.rail[data-collapsed="true"]:focus-within .contextLabel,
+.rail[data-collapsed="true"]:focus-within .contextItem,
+.rail[data-collapsed="true"]:focus-within .add,
+.rail[data-collapsed="true"]:focus-within .reset,
+.rail[data-collapsed="true"]:focus-within .subList {
+  display: revert;
+}
+
+/* The two that are flex containers rather than blocks, stated because
+   revert would hand them back their author level display and these two
+   have none of their own. */
+.rail[data-collapsed="true"]:hover .brandLink,
+.rail[data-collapsed="true"]:focus-within .brandLink,
+.rail[data-collapsed="true"]:hover .contextItem,
+.rail[data-collapsed="true"]:focus-within .contextItem {
+  display: flex;
+}
+
+.rail[data-collapsed="true"]:hover .label,
+.rail[data-collapsed="true"]:hover .countdownUnit,
+.rail[data-collapsed="true"]:hover .featureLabel,
+.rail[data-collapsed="true"]:hover .featureFigure,
+.rail[data-collapsed="true"]:focus-within .label,
+.rail[data-collapsed="true"]:focus-within .countdownUnit,
+.rail[data-collapsed="true"]:focus-within .featureLabel,
+.rail[data-collapsed="true"]:focus-within .featureFigure {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  clip: auto;
+}
+
+/*
+  The unit is the one clipped run that WRAPS rather than truncating. The
+  recipe above holds every hidden run on a single line, which is right for
+  a row label that ellipsises and wrong for a two part phrase in an eight
+  character column: inheriting it printed the whole unit, thirteen
+  characters at the time and fourteen now, ninety seven pixels wide inside
+  a fifty three pixel box, straight across the period select beside it.
+*/
+.rail[data-collapsed="true"]:hover .countdownUnit,
+.rail[data-collapsed="true"]:focus-within .countdownUnit {
+  white-space: normal;
+}
+
+/*
+  THE MARK STANDS ALONE AND IT IS DRAWN AT TWENTY FOUR PIXELS. The lockup
+  beside it is one of the things that went, so the head is the mark, the
+  figure under it, and nothing else. Twenty four is the size the mark was
+  redrawn for and it sets the scale for the eighteen pixel section marks
+  running down the column underneath it.
+*/
+.rail[data-collapsed="true"] .brand {
+  justify-content: center;
+}
+
+.rail[data-collapsed="true"] .brand svg {
+  width: 24px;
+  height: 24px;
+}
+
+.rail[data-collapsed="true"]:hover .brand svg,
+.rail[data-collapsed="true"]:focus-within .brand svg {
+  width: 34px;
+  height: 34px;
+}
+
+/*
+  The figure comes down two steps. At the display size it was set for a
+  252 pixel column it fills four fifths of a collapsed one, which reads as
+  a number that has escaped rather than as an instrument.
+*/
+.rail[data-collapsed="true"] .countdownValue {
+  font-size: var(--step-2);
+}
+
+.rail[data-collapsed="true"]:hover .countdownValue,
+.rail[data-collapsed="true"]:focus-within .countdownValue {
+  font-size: var(--step-4);
+}
+
+.rail[data-collapsed="true"] .head {
+  align-items: center;
+  padding-left: var(--space-2);
+  padding-right: var(--space-2);
+}
+
+.rail[data-collapsed="true"]:hover .head,
+.rail[data-collapsed="true"]:focus-within .head {
+  align-items: stretch;
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+}
+
+.rail[data-collapsed="true"] .context {
+  justify-content: center;
+}
+
+/*
+  THE GROUP HEADINGS GO, AND A HAIRLINE TAKES THEIR PLACE. A five letter
+  word set at nine pixels in a 72 pixel column is unreadable, and leaving
+  it there would be decoration. The grouping is still carried, by a rule
+  between the groups and by the heading itself, which stays in the
+  accessibility tree for anyone listening rather than looking.
+*/
+.rail[data-collapsed="true"] .heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.rail[data-collapsed="true"] .group + .group {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.rail[data-collapsed="true"]:hover .heading,
+.rail[data-collapsed="true"]:focus-within .heading {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0 0 var(--space-1);
+  padding: 0 var(--space-4);
+  overflow: visible;
+  clip: auto;
+}
+
+.rail[data-collapsed="true"] .item {
+  gap: 2px;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 44px;
+  padding: 4px 2px;
+}
+
+.rail[data-collapsed="true"]:hover .item,
+.rail[data-collapsed="true"]:focus-within .item {
+  flex-direction: row;
+  gap: var(--space-3);
+  min-height: 36px;
+  padding: 6px var(--space-3) 6px calc(var(--space-4) - 3px);
+}
+
+/*
+  COLLAPSED, THE KEY BECOMES A KEY CAP. The words go with every other
+  word in the column and the plate stays, because the plate is the
+  signal: a lit face among nineteen flat rows is exactly as legible at 72
+  pixels as at 252, and a featured control that turns back into an
+  ordinary row the moment the rail narrows was never featured.
+*/
+.rail[data-collapsed="true"] .itemFeature {
+  grid-template-columns: auto;
+  justify-items: center;
+  margin: var(--space-2) 10px calc(var(--space-2) + 3px);
+  padding: 6px 4px;
+}
+
+.rail[data-collapsed="true"]:hover .itemFeature,
+.rail[data-collapsed="true"]:focus-within .itemFeature {
+  grid-template-columns: auto 1fr;
+  justify-items: start;
+  margin: var(--space-2) var(--space-3) calc(var(--space-2) + 3px);
+  padding: 6px var(--space-3);
+}
+
+/* ===============================================================
+   BELOW 900px THE RAIL IS THE CONTENTS OF A DRAWER
+
+   It used to grow its own phone chrome here: a fixed strip along the
+   top holding the lockup, a fixed bar along the bottom naming the
+   screen, and a sheet raised by pressing that bar. All three are gone.
+   The mega nav across the top of the shell now carries the lockup and
+   the six destinations pressed all day, at every width, and below this
+   breakpoint it also carries the hamburger that opens this rail as a
+   drawer over the route.
+
+   That is one navigation with two levels instead of two navigations
+   arguing about which of them a reader should believe, and the strip
+   already marks the screen you are standing on, which is the only job
+   the bottom bar was doing.
+
+   So there is very little to do at this width. The rail goes back to
+   being an ordinary column, at the drawer's width rather than its own,
+   and every target in it grows to a finger. The drawer itself, its
+   scrim, its focus trap and its Escape key belong to AppShell.
+
+   The breakpoint is repeated in AppShell.module.css and in the NARROW
+   constant in AppShell.tsx. A media query cannot read a custom
+   property, and all three say 900.
+   =============================================================== */
+
+@media (max-width: 899px) {
+  .rail {
+    width: 100%;
+    transition: none;
+  }
+
+  .rail > * {
+    width: 100%;
+    border-right: 0;
+  }
+
+  /* Everything in the drawer is a finger target, at full width. */
+  .item {
+    min-height: 48px;
+    font-size: var(--step-0);
+  }
+
+  .sub {
+    min-height: 44px;
+    font-size: var(--step--1);
+  }
+
+  /* The key grows with the rows around it, so a drawer on a handset has
+     one finger sized plate rather than a small one among tall rows. */
+  .itemFeature {
+    min-height: 52px;
+  }
+
+  .featureLabel {
+    font-size: var(--step-0);
+  }
+
+  .featureFigure {
+    font-size: var(--step--2);
+  }
+
+  .heading {
+    font-size: var(--step--3);
+    padding: 0 var(--space-4);
+  }
+
+  /*
+    The collapse control is dropped and the reset is kept. Narrowing a
+    column that is not a column is a control with nothing behind it;
+    clearing the session is as useful on a phone as anywhere.
+  */
+  .collapse {
+    display: none;
+  }
+}
+
+/*
+  THE COLLAPSED STATE HAS NO MEANING INSIDE A DRAWER, so every one of its
+  rules is undone here explicitly rather than left to luck. A reader who
+  collapsed the rail on a laptop and then opened the same URL on a phone
+  would otherwise get a drawer with no words in it, which is the kind of
+  bug that only shows up in the one session that matters.
+*/
+@media (max-width: 899px) {
+  .rail[data-collapsed="true"],
+  .rail[data-collapsed="true"] > *,
+  .rail[data-collapsed="true"]:hover > *,
+  .rail[data-collapsed="true"]:focus-within > * {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .rail[data-collapsed="true"] .subLabel,
+  .rail[data-collapsed="true"] .subList,
+  .rail[data-collapsed="true"] .add,
+  .rail[data-collapsed="true"] .reset {
+    display: block;
+  }
+
+  /* The four that are clipped in a collapsed column are printed again in
+     a drawer, because a drawer is three hundred pixels wide and has room
+     for every word in them. */
+  .rail[data-collapsed="true"] .label,
+  .rail[data-collapsed="true"] .countdownUnit,
+  .rail[data-collapsed="true"] .featureLabel,
+  .rail[data-collapsed="true"] .featureFigure {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: hidden;
+    clip: auto;
+  }
+
+  .rail[data-collapsed="true"] .countdownUnit {
+    white-space: normal;
+  }
+
+  /* The mark keeps its full size in the drawer, and the lockup beside it
+     is the only one left below 430px. */
+  .rail[data-collapsed="true"] .brand svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .rail[data-collapsed="true"] .countdownValue {
+    font-size: var(--step-4);
+  }
+
+  .rail[data-collapsed="true"] .itemFeature,
+  .rail[data-collapsed="true"]:hover .itemFeature,
+  .rail[data-collapsed="true"]:focus-within .itemFeature {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    margin: var(--space-2) var(--space-3) calc(var(--space-2) + 3px);
+    padding: 6px var(--space-3);
+  }
+
+  .rail[data-collapsed="true"] .brandLink,
+  .rail[data-collapsed="true"] .contextItem {
+    display: flex;
+  }
+
+  .rail[data-collapsed="true"] .contextLabel {
+    display: block;
+  }
+
+  .rail[data-collapsed="true"] .heading {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0 0 var(--space-1);
+    padding: 0 var(--space-4);
+    overflow: visible;
+    clip: auto;
+  }
+
+  .rail[data-collapsed="true"] .item,
+  .rail[data-collapsed="true"]:hover .item,
+  .rail[data-collapsed="true"]:focus-within .item {
+    flex-direction: row;
+    gap: var(--space-3);
+    min-height: 48px;
+    padding: 6px var(--space-3) 6px calc(var(--space-4) - 3px);
+  }
+
+  .rail[data-collapsed="true"] .group + .group {
+    border-top: 0;
+    padding-top: 0;
+    margin-top: var(--space-4);
+  }
+
+  .rail[data-collapsed="true"] .head,
+  .rail[data-collapsed="true"]:hover .head,
+  .rail[data-collapsed="true"]:focus-within .head {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-3);
+  }
+
+  .rail[data-collapsed="true"] .context {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 420px) {
+  .brandText strong {
+    font-size: var(--step--1);
+  }
+}
+
+/* ---------------------------------------------------------------
+   The working set filters
+   --------------------------------------------------------------- */
+
+/*
+  These are links rather than buttons, so they are marked with
+  aria-current and styled off that attribute. The chosen row carries a
+  left rule, a tint and heavier type, exactly as the destination rows do,
+  because a reader should not have to learn a second visual language for
+  the second half of the same column.
+*/
+
+.facets {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--space-2);
+}
+
+.facetHeading {
+  margin: var(--space-2) 0 2px;
+  padding: 0 var(--space-4);
+  font-size: var(--step--3);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.filterList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 36px;
+  padding: 5px var(--space-3) 5px calc(var(--space-4) - 3px);
+  border-left: 3px solid transparent;
+  color: var(--text-1);
+  font-size: var(--step--2);
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.filter:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+.filter[aria-current="true"] {
+  background: var(--accent-tint);
+  border-left-color: var(--accent);
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.filterGlyph {
+  flex: none;
+  width: 16px;
+  text-align: center;
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+/*
+  THE TYPE FILTER IS A GRID OF FOUR TILES, NOT FOUR MORE ROWS.
+  It is the one facet the owner asked for as icons, and four full width
+  rows would have cost the same vertical space as the whole status list
+  for a question with four answers. Each tile still carries the word and
+  the figure; the glyph is the fastest of the three to find and the least
+  trustworthy on its own.
+*/
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-3) 0 calc(var(--space-4) - 3px);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1px;
+  min-height: 46px;
+  padding: 5px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  text-decoration: none;
+}
+
+.tile:hover {
+  background: var(--surface-0);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+.tile[aria-current="true"] {
+  border: 2px solid var(--text-0);
+  padding: 4px calc(var(--space-2) - 1px);
+  background: var(--surface-0);
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.tileGlyph {
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.tileLabel {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--step--3);
+  font-weight: inherit;
+  line-height: 1.15;
+}
+
+.tileCount {
+  font-size: var(--step--2);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.tile[aria-current="true"] .tileCount {
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   Add a prospect
+   --------------------------------------------------------------- */
+
+.add {
+  padding: 0 var(--space-3) var(--space-3);
+}
+
+/* ---------------------------------------------------------------
+   The collapsed and narrow behaviour of everything above
+   --------------------------------------------------------------- */
+
+/*
+  Collapsed, the filters keep their glyph and their figure and drop their
+  words, exactly as the destinations above them do. The facet headings go
+  the same way the group headings do: out of sight and still in the
+  accessibility tree.
+*/
+.rail[data-collapsed="true"] .facetHeading,
+.rail[data-collapsed="true"] .tileLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.rail[data-collapsed="true"] .filter {
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 44px;
+  padding: 4px 2px;
+}
+
+.rail[data-collapsed="true"] .tiles {
+  grid-template-columns: 1fr;
+  padding: 0 6px;
+}
+
+.rail[data-collapsed="true"] .tile {
+  align-items: center;
+  min-height: 44px;
+}
+
+.rail[data-collapsed="true"] .add {
+  padding: 0 6px var(--space-2);
+}
+
+.rail[data-collapsed="true"]:hover .facetHeading,
+.rail[data-collapsed="true"]:focus-within .facetHeading {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: var(--space-2) 0 2px;
+  padding: 0 var(--space-4);
+  overflow: visible;
+  clip: auto;
+}
+
+.rail[data-collapsed="true"]:hover .tileLabel,
+.rail[data-collapsed="true"]:focus-within .tileLabel {
+  position: static;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  clip: auto;
+}
+
+.rail[data-collapsed="true"]:hover .filter,
+.rail[data-collapsed="true"]:focus-within .filter {
+  flex-direction: row;
+  gap: var(--space-3);
+  min-height: 36px;
+  padding: 5px var(--space-3) 5px calc(var(--space-4) - 3px);
+}
+
+.rail[data-collapsed="true"]:hover .tiles,
+.rail[data-collapsed="true"]:focus-within .tiles {
+  grid-template-columns: 1fr 1fr;
+  padding: 0 var(--space-3) 0 calc(var(--space-4) - 3px);
+}
+
+.rail[data-collapsed="true"]:hover .tile,
+.rail[data-collapsed="true"]:focus-within .tile {
+  align-items: flex-start;
+}
+
+/*
+  In the sheet every filter is a finger target, at the same 44 pixels the
+  queue filters already use there.
+*/
+@media (max-width: 899px) {
+  .filter {
+    min-height: 44px;
+    font-size: var(--step--1);
+  }
+
+  .tile {
+    min-height: 56px;
+  }
+
+  .facetHeading {
+    font-size: var(--step--3);
+  }
+
+  .rail[data-collapsed="true"] .facetHeading,
+  .rail[data-collapsed="true"] .tileLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: var(--space-2) 0 2px;
+    overflow: visible;
+    clip: auto;
+  }
+
+  .rail[data-collapsed="true"] .tileLabel {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .rail[data-collapsed="true"] .filter {
+    flex-direction: row;
+    gap: var(--space-3);
+    min-height: 44px;
+    padding: 5px var(--space-3) 5px calc(var(--space-4) - 3px);
+  }
+
+  .rail[data-collapsed="true"] .tiles {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 var(--space-3) 0 calc(var(--space-4) - 3px);
+  }
+
+  .rail[data-collapsed="true"] .tile {
+    align-items: flex-start;
+  }
+}
+
+/*
+  On a pointer that cannot hover precisely, every filter is 44 pixels
+  whatever the width of the window.
+*/
+@media (pointer: coarse) {
+  /*
+    The destination rows sit at 38 pixels on a mouse, which is right for
+    a column of twenty and wrong for a thumb. The base stylesheet already
+    carries a 44 pixel floor for `nav a`, and this rule outspecified it,
+    so nineteen rail rows measured 38 on a coarse pointer. The floor is
+    restored here rather than raised globally, because the whole reason
+    the rail can hold twenty destinations without scrolling is that a
+    mouse does not need the extra six pixels.
+  */
+  .item {
+    min-height: 44px;
+  }
+
+  /*
+    The second level under a destination sits at 30 pixels on a mouse,
+    which is what makes it read as subordinate to the row above it. On a
+    thumb that reading is not worth five targets nobody can hit, and the
+    indent and the left rule carry the subordination on their own.
+  */
+  .sub {
+    min-height: 44px;
+  }
+
+  .filter {
+    min-height: 44px;
+  }
+
+  .tile {
+    min-height: 52px;
+  }
+
+  /*
+    The width control sits at 32 pixels on a mouse, which is right for a
+    control pressed twice a week and wrong for a thumb. The two widened
+    states are named alongside it because they outspecify a bare class
+    selector, and a floor that loses to the rule it is meant to raise is
+    not a floor.
+  */
+  .collapse,
+  .rail[data-collapsed="true"]:hover .collapse,
+  .rail[data-collapsed="true"]:focus-within .collapse {
+    min-height: 44px;
+  }
+}
+
+/*
+  ── REDUCED MOTION ─────────────────────────────────────────────────
+  The duration tokens are already zero under this query, so the width
+  transition and the press travel in this file are already still. It is
+  stated here as well because a rail that slides open under somebody who
+  asked their system to stop moving things is exactly the failure this
+  rule exists to prevent, and a rule written where the animation is
+  declared cannot be lost the next time the tokens are rewritten.
+
+  THE PRESS STATE SURVIVES. Only the travel between the two states goes;
+  a pressed row still moves, it simply arrives in one frame.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .rail,
+  .rail > *,
+  .item,
+  .sub,
+  .filter,
+  .tile,
+  .collapse {
+    transition: none;
+  }
+}

@@ -1,0 +1,1015 @@
+/*
+  The inbound queue.
+
+  ONE VISUAL IDEA CARRIES THIS PAGE: the clock is the loudest thing on
+  every row, and everything the venue thinks about the enquiry is quieter
+  than the clock on it. A queue screen where the status chips shout and
+  the due moment is a grey afterthought has quietly decided that
+  administration matters more than the person waiting.
+
+  So the working set lead runs across the top with its count set large,
+  the clock cell in the table carries a glyph, a word and a figure, and
+  the status chip beside it is deliberately the same size as every other
+  chip in the application. The one hot amber on the page is spent on the
+  action a reader is meant to take and on nothing else.
+
+  WHAT SITS AT THE TOP, AND WHY IT MOVED. The order used to be identity,
+  commitment, buckets, gap, queue, and three of those five were the same
+  on every reading of the filter. Two panels of standing fact held the
+  first screenful, so pressing a bucket changed a breadcrumb word and
+  nothing else a reader could see. The order is now identity, control,
+  the current set, the queue, and then the standing facts under the rows
+  they qualify. Nothing was deleted; the commitment and the qualifying
+  gap kept every figure and every badge they had.
+
+  THE SUM LINE IS NOT DECORATION. It prints the four counts, adds them,
+  and states the total, because the first thing anybody does with a queue
+  is check whether the buckets account for everything, and a page that
+  makes that check take two seconds is making a promise it can be held
+  to.
+
+  NOTHING SIGNALS BY COLOUR ALONE. Every bucket, every clock state, every
+  channel and every qualifying field carries its glyph and its word
+  first. The two segments of the qualifying gap bar are a barred circle
+  and an open circle in the key beneath, so the bar is readable in
+  greyscale and the numbers beside it are readable without the bar.
+
+  Down to 380px the table stops being a table and becomes a stack of
+  cards, each cell labelled by the column it came from, in the order a
+  person reads a request: who, then what, then when. Nothing scrolls
+  sideways.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head { margin-bottom: var(--space-4); }
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--step-2);
+}
+
+/*
+  The whole head is three lines now. The reading moment and the
+  provenance badge share this one, because both are facts about every row
+  on the page and neither is a fact about the bucket on screen. Two
+  panels became one line, and the block underneath got the space.
+*/
+.subLede {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.provenanceInline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.provenanceNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.sectionHead { margin-bottom: var(--space-4); }
+
+.sectionNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+/* ---------------------------------------------------------------
+   The commitment
+   --------------------------------------------------------------- */
+
+.commitment {
+  margin-top: var(--space-6);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--brand-gold);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-1);
+}
+
+.commitmentHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.commitmentGrid {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.commitmentFigure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.commitmentValue {
+  font-size: var(--step-5);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.commitmentUnit {
+  font-size: var(--step--2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.commitmentText { max-width: 78ch; }
+
+/* The disclosure sits in the same block as the number, on the one
+   surface in this file that is not the page ground, so a reader cannot
+   meet the countdown without meeting the sentence that qualifies it. */
+.commitmentDisclosure {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.commitmentDisclosure strong { color: var(--text-0); }
+
+.recordRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+.recordFigure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.recordValue {
+  font-size: var(--step-2);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text-0);
+}
+
+.recordLabel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The partition check
+   --------------------------------------------------------------- */
+
+/*
+  All that survives of the four bucket cards, and it is the part that was
+  load bearing: the four counts, their sum and the total, on one line. The
+  cards themselves became a segmented control above the working set lead,
+  because four cards each carrying a count, a clock sentence, a headline
+  and a button is a lot of furniture to press one thing through.
+*/
+.sum {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 78ch;
+}
+
+/* ---------------------------------------------------------------
+   The qualifying gap
+   --------------------------------------------------------------- */
+
+.gap {
+  margin-top: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  padding: var(--space-5);
+}
+
+.gapRows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.gapRow {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.gapRow:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.gapRowHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-2);
+}
+
+.gapField {
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.gapMissing {
+  margin-left: auto;
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.gapBar {
+  display: flex;
+  width: 100%;
+  height: 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+/* The two segments are distinguishable without colour: one is solid and
+   one is striped, and the key underneath spells both out with a glyph
+   and a number. A bar is never the only reading of a figure here. */
+.gapBarNeverAsked { background: var(--risk); }
+
+.gapBarBlank {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--warn),
+    var(--warn) 3px,
+    var(--warn-tint) 3px,
+    var(--warn-tint) 6px
+  );
+}
+
+.gapSplit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.gapKey {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.gapSwatchNeverAsked { color: var(--risk); }
+.gapSwatchBlank { color: var(--warn); }
+
+.gapNote {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.gapHeadline {
+  margin: var(--space-5) 0 var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 78ch;
+}
+
+.gapHeadline strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   The queue
+   --------------------------------------------------------------- */
+
+.queue {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+  padding: var(--space-5);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.filterLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.search,
+.select {
+  min-height: 44px;
+  width: 100%;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+}
+
+.counts {
+  margin: var(--space-4) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 78ch;
+}
+
+.clearRow {
+  margin: var(--space-3) 0 0;
+}
+
+/*
+  THE SHARED BUTTON IS 26px TALL AT ITS SMALL SIZE and this is a screen
+  somebody works through on a phone with one thumb, so every control on
+  it is given a 44px hit area here rather than by editing the primitive
+  out from under thirteen other pages. The visual size of the button does
+  not change; the target around it does.
+*/
+.filter button,
+.bulkActions button,
+.clearRow button,
+.emptyChips button {
+  min-height: 44px;
+}
+
+/* --- The bulk bar, which always has a verb on it ----------------- */
+
+.bulk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-m);
+  background: var(--accent-tint);
+}
+
+.bulkCount {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.bulkValue {
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.bulkActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* --- The table --------------------------------------------------- */
+
+.tableWrap {
+  margin-top: var(--space-4);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table caption { text-align: left; }
+
+/*
+  Fixed widths, declared once, because table-layout: fixed shares the
+  width equally otherwise and the two columns that carry sentences end up
+  the same width as the one that carries a chip. The clock and the next
+  action are the two a person reads first, so neither is allowed to be
+  squeezed by an organisation name.
+*/
+@media (min-width: 781px) {
+  .table th:nth-child(2),
+  .table td:nth-child(2) { width: 16%; }
+  .table th:nth-child(3),
+  .table td:nth-child(3) { width: 12%; }
+  .table th:nth-child(4),
+  .table td:nth-child(4) { width: 9%; }
+  .table th:nth-child(5),
+  .table td:nth-child(5) { width: 19%; }
+  .table th:nth-child(6),
+  .table td:nth-child(6) { width: 15%; }
+  .table th:nth-child(7),
+  .table td:nth-child(7) { width: 11%; }
+  .table th:nth-child(8),
+  .table td:nth-child(8) { width: 18%; }
+}
+
+/* A real sticky header. The queue is the longest scroll in the app and a
+   column header that leaves the screen is a column nobody can name. */
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-1);
+  box-shadow: inset 0 -1px 0 var(--line-2);
+}
+
+.table th {
+  padding: var(--space-2) var(--space-2);
+  border-bottom: 1px solid var(--line-2);
+  text-align: left;
+  vertical-align: bottom;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.table td {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-size: var(--step--1);
+  /* Data rows, not body copy. Carbon runs 1.2 to 1.35 here and the
+     difference between that and 1.5 is what makes a table read as an
+     essay. */
+  line-height: 1.3;
+  color: var(--text-1);
+  overflow-wrap: anywhere;
+}
+
+.table tbody tr:hover { background: var(--surface-2); }
+
+/*
+  THE ROW THE PAGER IS STANDING ON.
+
+  Three signals, and the tint is the weakest of the three. A rule down
+  the leading edge holds in greyscale, the words "you are here" sit in
+  the organisation cell for anybody who is not looking for a rule, and
+  aria-current says it out loud. A row picked out by background alone is
+  invisible to the reader this application was built for.
+
+  The rule is drawn with an inset box shadow rather than a left border,
+  because a border on a table cell changes the width of the cell and the
+  whole column steps sideways every time the pager moves. Nothing moves
+  here.
+*/
+.currentRow > td {
+  background: var(--brand-gold-tint);
+}
+
+.currentRow > td:first-child {
+  box-shadow: inset 3px 0 0 0 var(--brand-gold);
+}
+
+.currentRow:hover > td { background: var(--brand-gold-tint); }
+
+.currentRow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.hereMark {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-gold-600);
+}
+
+.sortBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  padding: 0 var(--space-1);
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sortBtn:hover { color: var(--text-0); }
+
+.sortMark { color: var(--brand-gold-600); }
+
+.checkCell { width: 40px; }
+
+.checkLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/*
+  The organisation, as type. It carries what the old single button
+  carried, and `RecordName` inside it inherits every line of it, which is
+  why the name is still the biggest thing in the cell after the split.
+*/
+.orgName {
+  display: block;
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-0);
+}
+
+/*
+  THE REQUEST'S OWN CONTROL, UNDER THE NAME AND QUIETER THAN IT.
+
+  It is a real button with a real verb rather than a chevron in the
+  corner, because "open the request" is a different destination from the
+  organisation's record above it and a reader has to be able to tell the
+  two apart before pressing either. It is smaller and set in the
+  secondary colour, because on a queue of enquiries the common press is
+  the request and the loud thing on the row should still be who it is
+  from.
+*/
+.openBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 32px;
+  margin-top: var(--space-1);
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.openBtn:hover { color: var(--accent-700); }
+
+.openBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* base.css puts a 44px floor under a button on a coarse pointer, and this
+   one is a line of text in a table cell rather than a target in a bar.
+   The floor is restated rather than left to be overridden by accident. */
+@media (pointer: coarse) {
+  .openBtn {
+    min-height: 44px;
+  }
+}
+
+.role,
+.walkIn,
+.missing,
+.qualified,
+.actionText {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.walkIn { color: var(--text-3); }
+
+.channel {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.ask {
+  display: block;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-0);
+}
+
+.qualified { color: var(--ok); }
+
+/* --- The clock cell ---------------------------------------------- */
+
+.clock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  color: var(--tone, var(--text-2));
+}
+
+.clockWord {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--tone, var(--text-1));
+}
+
+.clockWhen {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.actionKind {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.actionGlyph { color: var(--tone, var(--text-2)); }
+
+/* --- Empty, with the controls that clear it ---------------------- */
+
+.empty {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.emptyHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.emptyBody {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 78ch;
+}
+
+.emptyChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.legendTitle {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.legendGlyph { color: var(--tone, var(--text-2)); }
+
+.notice {
+  margin: var(--space-4) 0 0;
+  min-height: 1.5em;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .commitmentGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+/*
+  THE TABLE STOPS BEING A TABLE.
+
+  Below 780px each row becomes a card and each cell carries the column
+  heading it came from, which is the only honest way to keep seven
+  columns on a 380px screen. The alternative was a horizontal scroller,
+  and a table a reader has to drag sideways to find the clock in is a
+  table whose most important column is the one nobody sees.
+*/
+@media (max-width: 780px) {
+  .table,
+  .table thead,
+  .table tbody,
+  .table tr,
+  .table td { display: block; }
+
+  .table thead { display: none; }
+
+  .table tr {
+    position: relative;
+    margin-bottom: var(--space-3);
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    background: var(--surface-2);
+  }
+
+  .table td {
+    display: grid;
+    width: auto;
+    /* Chips are shrink-to-fit rather than stretched, so a lane chip in a
+       stacked cell is the width of its own word and not the width of the
+       card. */
+    justify-items: start;
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+    border-bottom: 1px dotted var(--line);
+  }
+
+  .table td:last-child { border-bottom: none; }
+
+  .table td::before {
+    content: attr(data-label);
+    font-size: var(--step--2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-3);
+  }
+
+  .table td.checkCell {
+    display: block;
+    width: auto;
+    padding-bottom: var(--space-1);
+    border-bottom: none;
+  }
+
+  .table td.checkCell::before { content: none; }
+}
+
+@media (max-width: 560px) {
+  .inner { padding: var(--space-4) var(--space-4) var(--space-7); }
+  .commitment,
+  .gap,
+  .queue { padding: var(--space-4); }
+  .filters { padding: var(--space-3); }
+}
+
+@media (max-width: 400px) {
+  .h1 { font-size: var(--step-3); }
+  .commitmentValue { font-size: var(--step-4); }
+  .table td { grid-template-columns: minmax(0, 1fr); gap: var(--space-1); }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── ROW HEIGHT ───────────────────────────────────────────────────
+   The two sentence columns are what make a queue row 130px tall. They
+   clamp to two lines here and carry the full text in the tooltip and in
+   the drawer, which is where a person reads a sentence anyway. Nothing
+   is lost; it stops being the thing that sets the row height. */
+.ask,
+.actionText {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
+}

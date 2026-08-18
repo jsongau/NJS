@@ -1,0 +1,199 @@
+/*
+  The popup sits inside Leaflet's own wrapper, which the map pane styles.
+  Everything here is content and nothing here positions the card, because
+  the thing that decides where a popup goes is the marker it belongs to.
+
+  ── WHAT THIS FILE IS NOW FOR ──────────────────────────────────────
+  The card it used to paint was a panel: a stack of uppercase field
+  labels, each with its value under it, a paragraph, and a block of
+  buttons at the foot. It measured 584 pixels in a browser on a map pane
+  762 pixels tall, so opening one covered the trade area it was supposed
+  to be pointing at.
+
+  What replaced it is a place card. Four facts sit in about the room the
+  old card gave one of them, and they are told apart by type rather than
+  by a label above each: the role is set in the text colour a reader
+  looks at first, the door leads with a chip, and the two figures are
+  mono and share a line divided by a hairline. Nothing here is a
+  decoration. Every rule below either separates two facts or sets one of
+  them in the scale it belongs to.
+*/
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-1);
+}
+
+/*
+  THE NAME IS THE HEADLINE AND IT STAYED BIG. Everything else on the card
+  got smaller, which is what makes it read as a title rather than as the
+  first of five lines. It is the serif, like every other heading in the
+  application, so a card floating over a map still looks like it came out
+  of the same product as the page behind it.
+*/
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+}
+
+/*
+  ── THE ONE AFFORDANCE ON THE CARD ────────────────────────────────
+
+  With the buttons gone, the name is the only control here, and on a map
+  that is a harder thing to advertise than it sounds: the pins, the
+  tiles, the rings, the cluster bubbles and the card itself all take a
+  click, so a pointer that turns into a hand says nothing, and an
+  underline that only arrives on hover is a reward for having guessed
+  right rather than a reason to guess.
+
+  So the name carries a small record mark, always drawn, sitting inside
+  the button rather than beside it. It is a bordered box holding a glyph:
+  a shape and a rule, not a colour, which is the only kind of signal this
+  application is allowed to add. It answers the pointer and the keyboard
+  with the warm tint and the accent the rest of the app uses for the same
+  two states, so it confirms the press point before the press.
+
+  The duration is a token, and the tokens are already zero under
+  `prefers-reduced-motion`, so a reader who asked for less movement gets
+  the state change with no ramp rather than losing the state.
+*/
+.recordMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05em;
+  height: 1.05em;
+  margin-left: 0.3em;
+  border: 1px solid var(--line-2);
+  border-radius: 3px;
+  background: var(--surface-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  line-height: 1;
+  color: var(--text-2);
+  text-decoration: none;
+  vertical-align: 0.06em;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+/*
+  Reached through the element rather than through a class, because the
+  button belongs to `RecordName` and its class lives in another module.
+  A second class of equal specificity on that element would leave which
+  of the two wins to the order the bundler happened to emit them in.
+*/
+.name button:hover .recordMark {
+  border-color: var(--brand-gold-line);
+  background: var(--brand-gold-tint);
+  color: var(--brand-gold);
+}
+
+.name button:focus-visible .recordMark {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+/*
+  ONE ROW, AT EVERY LANE. Two chips rather than three is what makes that
+  true of "Faith and nonprofit" as well as of "Colleges": the occasion
+  class is a fixed function of the lane, and the lane chip already draws
+  it as a pointed or a flat cap and names it in its own tooltip.
+*/
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+/*
+  A hairline instead of a heading. The rule is doing the work four
+  uppercase labels used to do, which is to say that what is under it is a
+  different kind of thing from what is above it.
+*/
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2) 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+/*
+  The role reads as the headline's subtitle, so it takes the ink and one
+  step of the scale above the rest of the card. It is not set in bold on
+  top of that: at 600 it competed with the serif name above it, and a
+  card with two headlines has none.
+*/
+.role {
+  font-size: var(--step--1);
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--text-0);
+}
+
+.door {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+/*
+  An address wraps rather than truncating. A written door a reader can
+  only see half of is worse than a card two lines taller, and the longest
+  address in the book is 35 characters, which is one wrap at this width.
+*/
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  color: var(--text-1);
+  overflow-wrap: anywhere;
+}
+
+/*
+  THE TWO FIGURES ARE A BLOCK, NOT A SENTENCE.
+
+  They were tried on one line divided by a hairline, which is the idiom
+  the rest of the application uses, and at 268 pixels they did not fit:
+  "6.6 mi straight line" and "40 to 120 guests" run to 35 characters of
+  monospace between them before their two provenance badges. The pair
+  wrapped, the divider hung off the front of the second line, and a rule
+  that only sometimes divides anything is a mark a reader has to work
+  out.
+
+  Stacked, they read as what they are, a small mono block of the two
+  numbers a rep weighs against each other: how far to drive, and how many
+  people are at the end of it. The left rule marks the block once instead
+  of dividing it twice.
+*/
+.figures {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--line);
+  font-family: var(--font-mono);
+  color: var(--text-0);
+}
+
+.figure {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}

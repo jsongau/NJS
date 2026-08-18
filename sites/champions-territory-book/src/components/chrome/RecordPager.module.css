@@ -1,0 +1,180 @@
+/*
+  Previous, the place in the queue, Next.
+
+  THE ONE RULE THIS FILE IS BUILT AROUND IS THAT NOTHING MOVES. A pager
+  is pressed repeatedly and quickly, and a control that shifts by three
+  pixels between "9 of 19" and "10 of 19" makes a reader miss the button
+  they were already aiming at. So the figure block reserves its width in
+  ch on the mono face, the reason line reserves its height whether or not
+  it has a sentence in it, and the two buttons are sized off their labels
+  rather than off their state.
+
+  THE BOUNDARY IS SHOWN IN THREE WAYS AT ONCE, none of them colour on its
+  own: the control loses its ink, it gains a barred glyph, and the
+  sentence underneath says which end you are at. In greyscale, at a
+  glance, and read aloud, all three say the same thing.
+*/
+
+.pager {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+/* ---------------------------------------------------------------
+   The two controls
+   --------------------------------------------------------------- */
+
+.step {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    background-color var(--dur-1) var(--ease-out);
+}
+
+.step:hover {
+  border-color: var(--brand-gold-line);
+  background: var(--surface-2);
+}
+
+.step:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/*
+  aria-disabled rather than disabled, so the control keeps its place in
+  the tab order and the reason attached to it can actually be read. The
+  styling has to do the work the attribute would otherwise have done, and
+  the cursor says it before the press does.
+*/
+.step[aria-disabled="true"] {
+  color: var(--text-3);
+  background: var(--surface-2);
+  border-color: var(--line);
+  box-shadow: none;
+  cursor: default;
+}
+
+.step[aria-disabled="true"]:hover {
+  border-color: var(--line);
+  background: var(--surface-2);
+}
+
+.arrowGlyph {
+  font-size: var(--step-0);
+  line-height: 1;
+  color: var(--brand-gold);
+}
+
+.step[aria-disabled="true"] .arrowGlyph {
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   The place in the queue
+   --------------------------------------------------------------- */
+
+.place {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  min-width: 0;
+  text-align: center;
+}
+
+.position {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-2);
+  /* Ten characters holds "999 of 999" without the row ever resizing. */
+  min-width: 11ch;
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+
+.of {
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.none {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.setLine {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------------
+   The reason at the boundary
+   --------------------------------------------------------------- */
+
+.reason {
+  grid-column: 1 / -1;
+  margin: 0;
+  /* Reserved whether or not there is a sentence in it. */
+  min-height: 1.4em;
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 420px) {
+  .pager {
+    /*
+      At 380px the two controls sit side by side under the position,
+      each half the width, which puts both of them under a thumb instead
+      of squeezing three items onto one 332px line and cropping the
+      count that sits between them.
+    */
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .place {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .position {
+    min-width: 0;
+  }
+
+  .step {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,1184 @@
+/*
+  THE COMPOSE WINDOW.
+
+  A centred sheet rather than the side drawer the rest of the app uses,
+  and that is a decision rather than variety for its own sake. A drawer
+  says "here is more about the thing you were looking at". This window
+  says "stop, you are about to write something to a real organisation",
+  and the shape has to carry that difference before a word is read.
+
+  ── THE SPLIT ────────────────────────────────────────────────────
+  Controls left at a fixed 360px, letter right taking the rest. Fixed
+  rather than fractional because the left column holds radio cards whose
+  labels are known and short, and a picker that grows with the viewport
+  just spreads three words across half a screen. The letter gets every
+  pixel that is left, because it is the object.
+
+  ── THE LETTER IS THE LIT PANEL ──────────────────────────────────
+  On this theme --surface-inverse is the warm cream and --text-inverse
+  its dark ink, which is exactly what a letter wants: the one thing in
+  a dark cabinet that reads as paper under a light. Its rules are
+  --line-inverse and its meta is --text-inverse-2, so nothing on that
+  panel borrows a colour from the dark side of the file.
+
+  Focus on the letter is drawn in --text-inverse rather than --accent.
+  The accent is an electric cyan tuned to glow on a violet black; on
+  cream it is barely 2:1 and a focus ring nobody can see is not a focus
+  ring. The dark ink clears 13:1 on that panel.
+
+  ── 380 ──────────────────────────────────────────────────────────
+  A stack with the letter first, reasoned about in the component where
+  the markup is.
+
+  Every colour in here is a token.
+*/
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-modal) - 1);
+  /* THE GROUND TOKEN WAS THE WRONG TOKEN. Mixing the scrim from
+     --surface-0 followed the theme in the sense that it changed value,
+     but it changed the wrong way: on the light ground --surface-0 is a
+     near white, so seventy two percent of it over the page LIGHTENED
+     what it was meant to dim and the letter floated on a white fog. A
+     scrim is not the ground, it is a wash that is always darker than
+     what it covers, and that is its own token. */
+  background: var(--scrim-strong);
+}
+
+.sheet {
+  position: fixed;
+  z-index: var(--z-modal);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  width: min(1180px, calc(100vw - var(--space-5) * 2));
+  height: min(880px, calc(100vh - var(--space-5) * 2));
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   Head. Kept to three lines, because every pixel it takes is a
+   pixel the letter does not get.
+   --------------------------------------------------------------- */
+
+.head {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  box-shadow: inset 0 -3px 0 -2px var(--brand-gold-line);
+}
+
+.headText {
+  min-width: 0;
+  flex: 1;
+}
+
+.eyebrow {
+  margin: 0 0 2px;
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--brand-gold-600);
+}
+
+.heading {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+  line-height: 1.2;
+}
+
+.heading:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.headChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.headMeta {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  cursor: pointer;
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+.close:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   The split
+   --------------------------------------------------------------- */
+
+.split {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+}
+
+.controls {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  border-right: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-4);
+}
+
+.fieldset:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+}
+
+.count {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--text-2);
+}
+
+.hint {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.empty {
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+/* The radio itself is present, focusable and reachable, it just is not
+   drawn. Hiding it with display:none would take it out of the tab order
+   and out of the focus trap, which is the usual way a card picker stops
+   working for a keyboard. */
+.radio,
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------
+   Intent picker
+   --------------------------------------------------------------- */
+
+.intentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+
+.intentCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  cursor: pointer;
+}
+
+.intentCard:hover {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
+
+/* Selected is a heavier rule, a filled ground and a bolder label. Three
+   signals, none of them hue on its own. */
+.intentOn {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.intentCard:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.intentGlyph {
+  grid-row: 1 / 3;
+  align-self: start;
+  font-size: var(--step-0);
+  line-height: 1.3;
+  color: var(--text-1);
+}
+
+.intentOn .intentGlyph { color: var(--accent); }
+
+.intentLabel {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.intentOn .intentLabel { font-weight: 700; }
+
+.intentWhat {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------
+   Draft picker
+   --------------------------------------------------------------- */
+
+.draftList,
+.packList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.draftRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: var(--space-2);
+  align-items: start;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  cursor: pointer;
+}
+
+.draftRow:hover {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
+
+.draftOn {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.draftRow:focus-within,
+.packRow:focus-within,
+.toggle:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.draftMark {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.draftOn .draftMark { color: var(--accent); }
+
+.draftText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.draftLabel {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.draftBlurb {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.draftFlag {
+  margin-top: 2px;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--warn);
+  line-height: 1.4;
+}
+
+.why {
+  display: block;
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.whyLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.guardrail {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--brand-gold-line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  background: var(--brand-gold-tint);
+}
+
+.guardrailHead {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--brand-gold-600);
+}
+
+.guardrailText {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------
+   Package picker
+   --------------------------------------------------------------- */
+
+.packRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: var(--space-3);
+  align-items: start;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  cursor: pointer;
+}
+
+.packRow:hover {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
+
+.packOn {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.packText {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.packName {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.packPrice {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+}
+
+.mismatch,
+.lanesWarn {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-s);
+  background: var(--warn-tint);
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------
+   The hold
+   --------------------------------------------------------------- */
+
+.holdGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.fieldLabel {
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font-size: var(--step--1);
+}
+
+.input:hover { border-color: var(--line-strong); }
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+.input:disabled {
+  background: var(--surface-3);
+  color: var(--text-2);
+}
+
+.lanesBox {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.lanesLead {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------
+   Quote link
+   --------------------------------------------------------------- */
+
+.toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: var(--space-3);
+  align-items: start;
+  min-height: 44px;
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  cursor: pointer;
+}
+
+.toggle::before {
+  content: "□";
+  font-size: var(--step-0);
+  line-height: 1.2;
+  color: var(--text-2);
+}
+
+/* The mark changes SHAPE, not just colour, so the state survives
+   greyscale and a colourblind reader. */
+.toggle:has(.checkbox:checked)::before {
+  content: "▣";
+  color: var(--accent);
+}
+
+.toggle:hover {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
+
+.toggleText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.toggleLabel {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.url {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.postscript {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* ---------------------------------------------------------------
+   Disclosures. The essay lives in here so the working surface
+   keeps the fact and loses the paragraph.
+   --------------------------------------------------------------- */
+
+.disclosure {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.disclosureHead {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.disclosureHead:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.disclosureAddress {
+  color: var(--text-0);
+  word-break: break-all;
+}
+
+.disclosureBody {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------
+   THE LETTER. The lit panel.
+   --------------------------------------------------------------- */
+
+.letter {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.letterHead {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line-inverse);
+}
+
+.letterToLabel {
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-inverse-2);
+}
+
+.letterTo {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-inverse);
+  word-break: break-all;
+}
+
+.letterToNone {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-inverse);
+}
+
+.letterFieldLabel {
+  flex: none;
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-inverse-2);
+}
+
+/*
+  Set as a subject line rather than as a form field. It is the largest
+  type on the panel because it is the first thing anybody reads in an
+  inbox, and it carries no box because a box would make the letter look
+  like a form again, which is the whole defect this window was rebuilt
+  to fix. The rule underneath is the affordance.
+*/
+.letterSubject {
+  flex: none;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-bottom: 1px solid var(--line-inverse);
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-inverse);
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.letterBody {
+  flex: 1;
+  width: 100%;
+  min-height: 200px;
+  max-width: 68ch;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-inverse);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  resize: none;
+}
+
+.letterSubject:hover,
+.letterBody:hover {
+  background: color-mix(in srgb, var(--text-inverse) 5%, transparent);
+}
+
+/* Dark ink on the lit panel, because the accent is tuned to glow on a
+   violet black and all but vanishes on cream. */
+.letterSubject:focus-visible,
+.letterBody:focus-visible {
+  outline: 2px solid var(--text-inverse);
+  outline-offset: 2px;
+  background: color-mix(in srgb, var(--text-inverse) 6%, transparent);
+}
+
+.letterSubject:disabled,
+.letterBody:disabled {
+  color: var(--text-inverse-2);
+}
+
+.letterPostscript {
+  flex: none;
+  margin: 0;
+  padding: var(--space-2);
+  max-width: 68ch;
+  border-left: 3px solid var(--line-inverse);
+  font-size: var(--step--2);
+  color: var(--text-inverse-2);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.letterFoot {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line-inverse);
+}
+
+.letterMeta {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-inverse-2);
+  line-height: 1.45;
+}
+
+.letterActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/*
+  The actions sit ON the letter, so they are drawn in the letter's own
+  ink rather than in the app's controls palette. A cyan button on cream
+  would be the one thing on this panel that had borrowed a colour from
+  the other side of the window.
+*/
+.letterAction {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--text-inverse);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--text-inverse);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.letterAction:hover:not(:disabled) {
+  background: var(--text-inverse);
+  color: var(--surface-inverse);
+}
+
+.letterAction:focus-visible {
+  outline: 2px solid var(--text-inverse);
+  outline-offset: 2px;
+}
+
+/* Disabled is a dashed rule and a dimmer ink, so the state is a shape
+   and a weight before it is a colour. */
+.letterAction:disabled {
+  border-style: dashed;
+  border-color: var(--text-inverse-2);
+  color: var(--text-inverse-2);
+  cursor: not-allowed;
+}
+
+.letterActionOff {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 1px dashed var(--text-inverse-2);
+  border-radius: var(--radius-s);
+  color: var(--text-inverse-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 650;
+}
+
+.resendWhy {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-inverse-2);
+  line-height: 1.45;
+}
+
+.resendShape {
+  font-size: var(--step--2);
+  color: var(--text-inverse-2);
+}
+
+.resendShape .disclosureHead {
+  color: var(--text-inverse);
+}
+
+.resendShape .disclosureHead:focus-visible {
+  outline-color: var(--text-inverse);
+}
+
+.resendPre {
+  margin: 0 0 var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line-inverse);
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, var(--text-inverse) 6%, transparent);
+  color: var(--text-inverse);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 240px;
+  overflow: auto;
+}
+
+.liveRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+
+.live {
+  margin: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-inverse);
+  line-height: 1.45;
+}
+
+/* The draft announcement is the quieter of the two. It reports what the
+   reader just did on purpose; the other one reports what a control did
+   on their behalf, which is the surprising half. */
+.liveQuiet {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-inverse-2);
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------
+   Confirm, fail, sent
+   --------------------------------------------------------------- */
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--accent-line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--accent-tint);
+}
+
+.confirmText {
+  margin: 0;
+  flex: 1;
+  min-width: 20ch;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  line-height: 1.45;
+}
+
+.confirmActions,
+.failActions,
+.sentActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.failPanel {
+  padding: var(--space-3);
+  border: 1px solid var(--risk);
+  border-left: 3px solid var(--risk);
+  border-radius: var(--radius-s);
+  background: var(--risk-tint);
+}
+
+.failHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--risk);
+}
+
+.failGlyph { font-size: var(--step-0); line-height: 1; }
+
+.failWhy {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.55;
+}
+
+.sentWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+
+.sentPanel {
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.sentMark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+
+.sentGlyph {
+  font-size: var(--step-0);
+  line-height: 1;
+  color: var(--ok);
+}
+
+.sentWord {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ok);
+}
+
+.sentLead {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-0);
+  color: var(--text-0);
+  line-height: 1.5;
+}
+
+.sentFacts {
+  margin: 0 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sentFact {
+  display: grid;
+  grid-template-columns: 11ch 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.sentFact dt {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.sentFact dd {
+  margin: 0;
+  min-width: 0;
+  font-size: var(--step--1);
+  color: var(--text-0);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.sentLink {
+  font-size: var(--step--1);
+  font-weight: 650;
+}
+
+/* ---------------------------------------------------------------
+   Foot
+   --------------------------------------------------------------- */
+
+.foot {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line-2);
+  background: var(--surface-2);
+}
+
+.footStatus {
+  margin: 0;
+  flex: 1;
+  min-width: 18ch;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.footActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.linkButton:hover { color: var(--accent-600); }
+
+/* ---------------------------------------------------------------
+   Narrow. The split becomes one column and the letter goes first.
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .sheet {
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* One scroller, not two, and the letter first in it. The controls
+     keep their source order for a screen reader only because order is
+     a visual reordering; the markup is already letter-second and the
+     reading order that matters is the tab order, which follows the
+     DOM. So the letter is moved with order and the controls follow it
+     visually, while Tab still walks the picker before the letter,
+     which is the order somebody works in. */
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .letter {
+    order: -1;
+    overflow: visible;
+    min-height: 52vh;
+    padding: var(--space-3);
+  }
+
+  .controls {
+    overflow: visible;
+    border-right: 0;
+    border-top: 1px solid var(--line);
+    padding: var(--space-3);
+  }
+
+  .head { padding: var(--space-3); }
+  .foot { padding: var(--space-3); }
+
+  /* The lane chip already says what this line says. At 380 it is three
+     lines of head bought at the letter's expense. */
+  .headMeta { display: none; }
+
+  .letterBody { min-height: 180px; }
+}
+
+@media (max-width: 640px) {
+  .holdGrid { grid-template-columns: minmax(0, 1fr); }
+
+  .footActions { width: 100%; }
+  .footActions > * { flex: 1; }
+
+  .sentFact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
+
+@media (max-width: 400px) {
+  .letterActions > * { flex: 1; }
+}

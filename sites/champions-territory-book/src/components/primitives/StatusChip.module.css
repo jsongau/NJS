@@ -1,0 +1,44 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--tone, var(--line-2));
+  color: var(--tone, var(--text-1));
+  font-weight: 650;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  /*
+    Plain surface first, then a tint mixed from the status colour.
+
+    The tint is written with color-mix rather than as ten more tokens in
+    tokens.css because a status tint is always the same ten percent of
+    the same hue, and ten hand-mixed hex values are ten opportunities for
+    one of them to drift. A browser that does not understand color-mix
+    keeps the first declaration and loses nothing that matters: the
+    glyph, the word and the border are all still there, which is the
+    whole point of never letting colour carry a signal alone.
+  */
+  background: var(--surface-1);
+  background: color-mix(in srgb, var(--tone, var(--neutral)) 9%, var(--surface-1));
+}
+
+.sm {
+  font-size: var(--step--3);
+  padding: 1px 7px;
+  gap: 4px;
+}
+
+.md { font-size: var(--step--2); }
+
+/* The glyph runs slightly larger than the text. At matched size the
+   filling circles read as punctuation rather than as a state. */
+.glyph {
+  font-size: 1.15em;
+  line-height: 1;
+  flex: none;
+}
+
+.label { letter-spacing: 0.01em; }

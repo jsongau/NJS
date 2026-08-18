@@ -2,6 +2,31 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-08-18
+
+- `champ` — new. The Territory Book at `nathanjsong.com/champ`, a local
+  marketing and market prospecting console for the Champions Group
+  Holdings Marketing Manager, West Division posting. Copied from `me`,
+  then rebuilt from the inside: 329 organisations against 211, the
+  anchor moved to Service Champions Brea, and every rendered string in
+  the application rewritten from venue vocabulary to home services
+  marketing. Five agents scraped the published Champions surface on
+  18 August and every fact in the console traces to one of them with a
+  URL and a read date. 58 files deleted rather than hidden, being the
+  transitive closure of what the entry point can no longer reach, and
+  the bundle fell from 2.14 MB to 1.79 MB. Three things worth naming:
+  the offer countdown is now computed from one published date and one
+  clock rather than stored, after it printed "14 days to expiry" on a
+  board dated three weeks past that date; 146 partner rows were
+  recommending a competitor's membership plan because the package shelf
+  had been repurposed underneath them; and 52 named individuals' work
+  email addresses now carry the domain with the local part withheld,
+  where the map panel had been rendering them as live mailto links.
+  Source in `sites/champions-territory-book`. Detail in
+  `docs/2026-08-18-champ-console.md`.
+- `me` — the same 52 addresses are still live at `/me` in full. Fix
+  pending a decision.
+
 ## 2026-08-16 (3)
 
 - `me` — mobile, measured at 320/360/390 in both modes. The mega nav was

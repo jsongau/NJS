@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["vite.config.ts", "scripts"],
+  /*
+    THE SEED PROOF IS RUN, NOT TYPE CHECKED WITH THE BUILD TOOLING.
+
+    scripts/proof-cup.ts imports application source so it can validate the
+    bracket against the real seed, which is exactly what makes it worth
+    keeping and exactly what makes it dangerous here. This project is for
+    vite.config.ts and the build scripts; it has no jsx setting, because
+    nothing in it should ever reach a component. Pulling app source in
+    means one later import of a provider turns `tsc -b` red for a reason
+    that has nothing to do with the application, which has already
+    happened once and cost a debugging session.
+
+    So it is excluded from the project and run on its own with tsx, as its
+    own header says. The proof keeps its teeth and the build keeps its
+    footing.
+  */
+  "exclude": ["scripts/proof-cup.ts", "scripts/proof-accounts.ts"]
+}

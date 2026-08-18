@@ -1,0 +1,1073 @@
+/*
+  Lane capacity.
+
+  ONE VISUAL IDEA CARRIES THIS FILE: the page is a single argument made
+  of multiplications, so it is set as a stack of full-width panels read
+  top to bottom rather than as a dashboard of tiles. A dashboard invites
+  the eye to graze; this page needs to be read in order, because the
+  third panel only means anything once the first one has established
+  whose arithmetic it is.
+
+  THE BARS ARE THE ONLY PICTURE HERE AND THEY ARE DELIBERATELY PLAIN.
+  A flat track, a hairline border, one fill, and a key underneath that
+  spells out every segment in a glyph, a word and a figure. Strip the
+  colour out of this file entirely and not one number on the page
+  disappears, which is the requirement: the owner of this site is
+  colourblind, and a bar that signals by hue alone would be worse than
+  useless on the one screen whose whole subject is quantity.
+
+  The published floor of 26 lanes is drawn as a marked rule rather than
+  as the end of the track, because several real packages are bigger than
+  the building and clipping them would hide the most interesting fact in
+  the row.
+
+  Down to 380px every grid collapses to a stack in reading order: what
+  it is, then how big it is, then what that costs.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head { margin-bottom: var(--space-6); }
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--step-2);
+}
+
+.h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-0);
+}
+
+.subLede {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+
+/* The one shortcut on the page. A sales manager mid-call does not want
+   to scroll past the reasoning to reach the tool. */
+.jump { margin: 0; }
+
+.jumpLink {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+  max-width: 60ch;
+}
+
+.jumpLink:hover {
+  border-color: var(--line-strong);
+  border-left-color: var(--brand-gold);
+  text-decoration: none;
+  background: var(--surface-2);
+}
+
+/* ---------------------------------------------------------------
+   Shared panel furniture
+   --------------------------------------------------------------- */
+
+.terms,
+.twoFigures,
+.pressure,
+.dates,
+.fit,
+.stress {
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--surface-1);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.note {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+
+.empty {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+
+/* A figure and the word for it, used in every dense row on the page. */
+.numCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: var(--step--1);
+  color: var(--text-0);
+}
+
+.numLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   The three terms
+   --------------------------------------------------------------- */
+
+.terms { border-top: 3px solid var(--brand-gold); }
+
+.terms > .h2 { margin-bottom: var(--space-4); }
+
+.termList {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.term {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+/* The third term is the judgement rather than a published figure, so it
+   is marked as a different kind of statement. The badge on it says
+   "modeled" as well; this is the reinforcement, never the signal. */
+.term:last-child {
+  border-style: dashed;
+  border-color: var(--line-2);
+}
+
+.termIndex {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.termValue {
+  font-size: var(--step-1);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-0);
+}
+
+.termLabel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.termNote {
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.equals {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.equalsSum {
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.equalsValue {
+  font-size: var(--step-5);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--brand-gold-600);
+}
+
+.equalsLabel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   520 and 800
+   --------------------------------------------------------------- */
+
+.twoFigures {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.bothBody { min-width: 0; }
+
+.bothBody > .h2 { margin-bottom: var(--space-3); }
+
+.bothText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.bothText:last-child { margin-bottom: 0; }
+.bothText strong { color: var(--text-0); }
+
+.bothFigures,
+.stressFigures {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
+.stressFigures {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: var(--space-4);
+}
+
+.bigFig {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.bigValue {
+  font-size: var(--step-4);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.bigLabel {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The bar
+   --------------------------------------------------------------- */
+
+.barBlock { margin: 0 0 var(--space-2); }
+
+.track {
+  position: relative;
+  display: flex;
+  height: 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  overflow: hidden;
+}
+
+/* No published maximum, so there is nothing to draw. A dashed empty
+   track makes the absence a SHAPE rather than a blank space a reader
+   has to interpret as either zero or missing. */
+.trackEmpty {
+  border-style: dashed;
+  background: var(--surface-2);
+}
+
+.seg {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  background: var(--tone);
+  border-right: 1px solid var(--surface-1);
+}
+
+/* What is still free is drawn as an outline rather than a fill, because
+   free capacity is the absence of a booking and should not weigh the
+   same on the page as a booking. */
+.segHollow {
+  display: block;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 3px,
+    var(--surface-3) 3px,
+    var(--surface-3) 6px
+  );
+}
+
+.seg:last-child { border-right: none; }
+
+/* The published floor, marked on the track rather than assumed to be
+   the end of it. Only drawn when something runs past it. */
+.marker {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: var(--markerAt, 100%);
+  width: 2px;
+  background: var(--text-0);
+}
+
+.markerNote {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin: var(--space-1) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+
+.barKey {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+}
+
+.barKeyItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.keyGlyph {
+  color: var(--tone, var(--text-2));
+  font-size: var(--step--3);
+  line-height: 1;
+}
+
+.keyValue {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.keyLabel { color: var(--text-2); }
+
+/* ---------------------------------------------------------------
+   Package pressure
+   --------------------------------------------------------------- */
+
+.pressureList {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pressureRow {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pressureRow:first-child { padding-top: 0; }
+.pressureRow:last-child { border-bottom: none; }
+
+.pkgHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.pkgName {
+  font-size: var(--step-0);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.pressureNums {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.pressureNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-1);
+  max-width: 80ch;
+}
+
+.pressureNote[data-heavy="true"] {
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--brand-gold-tint);
+  color: var(--text-0);
+}
+
+.noMax {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* Direct children only. A descendant selector here would reach inside
+   the provenance badge and pull its glyph away from its word. */
+.noMax > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.callout {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--brand-gold-line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--brand-gold-tint);
+}
+
+.calloutEyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-gold-600);
+}
+
+.calloutText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-0);
+  max-width: 80ch;
+}
+
+.calloutText:last-child { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------
+   Dates
+   --------------------------------------------------------------- */
+
+.dateList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dateRow {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.dateHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.dateTitle {
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+.dateState {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--ok);
+}
+
+.dateState[data-full="true"] {
+  border-color: var(--risk);
+  color: var(--risk);
+  background: var(--risk-tint);
+}
+
+.dateStats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.lineList {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.line,
+.liveRow,
+.holdRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.lineWho {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.lineName {
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.linePkg {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  min-width: 0;
+}
+
+.lineGuests,
+.liveGuests,
+.holdGuests {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.lineLanes,
+.liveLanes {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+
+.dateAside {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--line-2);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+
+.holds {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.holdList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.holdRow {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  padding: var(--space-2) var(--space-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.holdDate {
+  font-weight: 700;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   The fit checker
+   --------------------------------------------------------------- */
+
+.fit {
+  border-top: 3px solid var(--brand-gold);
+  box-shadow: var(--shadow-1);
+  scroll-margin-top: calc(var(--sticky-h) + var(--space-4));
+}
+
+.fitForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--text-0);
+  box-shadow: var(--shadow-1);
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
+}
+
+.input:hover { border-color: var(--brand-gold-line); }
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px var(--brand-gold-tint);
+}
+
+.presets { margin-top: var(--space-1); }
+
+.presetLabel {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.presetRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.preset {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out);
+}
+
+.preset:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-1);
+}
+
+/* The chosen preset is marked by a solid rule and by aria-pressed, so
+   it survives both greyscale and a screen reader. */
+.preset[aria-pressed="true"] {
+  border-color: var(--brand-gold);
+  border-left-width: 3px;
+  background: var(--brand-gold-tint);
+}
+
+.presetValue {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.presetNote {
+  font-size: var(--step--3);
+  line-height: 1.35;
+  color: var(--text-2);
+  max-width: 22ch;
+}
+
+.fitOut { min-height: 120px; }
+
+.fitPrompt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+
+.fitVerdict {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin: 0 0 var(--space-2);
+}
+
+.fitGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--ok);
+}
+
+.fitWord {
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-0);
+}
+
+.fitVerdict[data-fits="false"] .fitGlyph { color: var(--risk); }
+
+.fitOn {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.fitMessage {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-0);
+  max-width: 80ch;
+}
+
+.fitAside {
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+
+.fitAside strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   The stress test
+   --------------------------------------------------------------- */
+
+.stressRead {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+  max-width: 80ch;
+}
+
+.stressRead strong { color: var(--text-0); }
+
+.evenings {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.evening {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+}
+
+.eveningLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  padding-top: 1px;
+}
+
+.liveList {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) 0 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.liveRow {
+  grid-template-columns: minmax(0, 1.3fr) auto minmax(0, 1fr) auto;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.stressFoot,
+.foot {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 88ch;
+}
+
+.foot { padding-top: var(--space-4); }
+
+/* ---------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .termList { grid-template-columns: 1fr; }
+  .twoFigures { grid-template-columns: 1fr; }
+  .bothFigures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 820px) {
+  .fitForm { grid-template-columns: 1fr; gap: var(--space-4); }
+  .pressureNums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dateStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* The rows stop being tables and become stacks in reading order:
+     who, what, how many, what it costs in lanes. */
+  .line,
+  .liveRow,
+  .holdRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lineLanes,
+  .liveLanes { justify-self: start; }
+}
+
+@media (max-width: 560px) {
+  .inner { padding: var(--space-4) var(--space-4) var(--space-7); }
+  .terms,
+  .twoFigures,
+  .pressure,
+  .dates,
+  .fit,
+  .stress { padding: var(--space-4); }
+  .h1 { font-size: var(--step-3); }
+  .equalsValue { font-size: var(--step-4); }
+  .bigValue { font-size: var(--step-3); }
+  .bothFigures { grid-template-columns: 1fr; }
+  .evening { grid-template-columns: 1fr; gap: var(--space-1); }
+}
+
+@media (max-width: 380px) {
+  .inner { padding: var(--space-3) var(--space-3) var(--space-7); }
+  .pressureNums { grid-template-columns: 1fr; }
+  .dateStats { grid-template-columns: 1fr; }
+  .barKey { gap: var(--space-1) var(--space-3); }
+  .preset { flex: 1 1 100%; }
+  .presetNote { max-width: none; }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
+}

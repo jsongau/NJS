@@ -1,0 +1,758 @@
+/*
+  How I would run the week.
+
+  THIS IS THE ONE PROSE-HEAVY SCREEN IN THE APPLICATION and the type has
+  to carry it, because there is no table here to give the eye somewhere to
+  land. Three things do that work.
+
+  MEASURE. Body prose is capped at 68 characters. Every other page in this
+  build runs to 82 or 92 because the text there sits beside a figure or a
+  chip and is read in fragments. This page is read in paragraphs, and a
+  paragraph at 92 characters loses the reader at the line return.
+
+  A SKIM LAYER AND A READ LAYER. Section headings, the numbered ramp
+  markers, the two frame columns and the metric values are all sized so
+  that a reader who only scans them gets the argument. Everything below
+  them is the detail, set smaller and quieter, for the one section they
+  stop on.
+
+  PULL QUOTES IN THE OPERATOR SERIF. --font-operator is the fourth wall
+  face in this codebase, used where somebody steps out of the product to
+  say what they think. A pull quote is exactly that, so it borrows the
+  same voice rather than inventing a fifth typographic register.
+
+  Colour is never load bearing. The two call frame columns carry their
+  class glyph, their class name and their lanes spelled out in chips; the
+  temperature is the third signal, matching the lane board so a reader who
+  learned it there reads it here for free. The two ledgers carry glyph and
+  word from the vocabulary. Strip every colour and this page still reads.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-6);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+.lede {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-1);
+  max-width: 74ch;
+}
+
+.subLede {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 74ch;
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.section {
+  margin-bottom: var(--space-8);
+}
+
+.sectionHead {
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--brand-gold);
+}
+
+.h2 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--step-3);
+}
+
+.sectionKicker {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 74ch;
+}
+
+/*
+  THE MEASURE. 68 characters, and it is the only width in this file that
+  is a judgement rather than a fit. Long-form argument read at 92
+  characters loses the line return; read at 68 it does not.
+*/
+.prose {
+  max-width: 68ch;
+  margin-bottom: var(--space-4);
+}
+
+.prose p {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+.prose p:last-child { margin-bottom: 0; }
+
+.prose strong { color: var(--text-0); }
+
+/* --- Pull quote -------------------------------------------------
+   The operator serif, one hairline rule, no quotation marks. A pull
+   quote with curly quotes on it reads as a testimonial; this is the
+   author raising their voice for one sentence. */
+
+.pull {
+  max-width: 46ch;
+  margin: var(--space-5) 0;
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--brand-gold);
+  font-family: var(--font-operator);
+  font-size: var(--step-2);
+  font-style: italic;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   The ramp
+   --------------------------------------------------------------- */
+
+.ramp {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.rampStep {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/*
+  The number is the skim layer. It is set in the mono face at display
+  size because a reader scanning this section is counting steps, and a
+  serif numeral at that weight competes with the step title beside it.
+*/
+.rampNumber {
+  font-family: var(--font-mono);
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--brand-gold);
+  text-align: right;
+  padding-top: 2px;
+}
+
+.rampBody { min-width: 0; }
+
+.rampWhen {
+  margin: 0 0 var(--space-1);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.rampTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-2);
+}
+
+.rampWhat {
+  max-width: 68ch;
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.rampWhat strong { color: var(--text-0); }
+
+.inlineProv {
+  display: inline-flex;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* The reason for the position. It is the point of the section, so it is
+   given a ground of its own rather than a third paragraph of the same
+   grey. */
+.rampWhy {
+  max-width: 68ch;
+  margin: 0;
+  padding: var(--space-3);
+  border-left: 3px solid var(--line-2);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.rampWhyLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-1);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-gold-600);
+}
+
+.rampWhyGlyph { font-size: 12px; line-height: 1; }
+
+/* --- The gate box ----------------------------------------------- */
+
+.gateBox {
+  max-width: 74ch;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--prov-withheld);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.gateLabel {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.gateLabel strong { color: var(--text-1); letter-spacing: 0; }
+
+.gateNote {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The call frame
+   --------------------------------------------------------------- */
+
+.frames {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.frame {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* The temperature, matching the lane board exactly. Cool for the buyers
+   whose date is fixed, warm for the buyers who have to be persuaded. It
+   is the third signal here and nothing depends on it: the glyph, the
+   class name and eight lane chips all say the same thing in words. */
+.frame[data-occasion="calendar-locked"] {
+  border-top: 3px solid var(--lane-hvac);
+}
+
+.frame[data-occasion="calendar-locked"] .frameHead {
+  background: var(--accent-tint);
+}
+
+.frame[data-occasion="discretionary"] {
+  border-top: 3px solid var(--lane-multi-service);
+}
+
+.frame[data-occasion="discretionary"] .frameHead {
+  background: var(--brand-gold-tint);
+}
+
+.frameHead {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+}
+
+.frameClass {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.frameGlyph {
+  font-size: var(--step-0);
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.frameTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-2);
+}
+
+.frameWhat {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.frameWhen {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.microLabel {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.frameLanes {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- The five rows, identical in both columns so they read across --- */
+
+.frameRows {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.frameRow {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.frameRow:last-child { border-bottom: none; }
+
+.frameRowLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.frameRowValue { margin: 0; }
+
+/* The question a rep actually asks, in the operator serif, because it is
+   the only text in the column that is spoken out loud. */
+.frameQuote {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-operator);
+  font-size: var(--step-1);
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--text-0);
+}
+
+.frameText {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.frameSmall {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.frameFail {
+  background: var(--risk-tint);
+}
+
+.frameFail .frameRowLabel { color: var(--risk); }
+
+.failGlyph { font-size: var(--step--2); line-height: 1; }
+
+.frameFoot {
+  max-width: 68ch;
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   What gets measured
+   --------------------------------------------------------------- */
+
+.ledgers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.ledger {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* The two ledgers read as different places, which is the point. Booked
+   revenue gets the ink treatment, outbound activity the lighter one. Both
+   carry their glyph and their name in the heading. */
+.ledger[data-ledger="booked-revenue"] {
+  border-top: 3px solid var(--ledger-revenue);
+}
+
+.ledger[data-ledger="outbound-activity"] {
+  border-top: 3px solid var(--ledger-activity);
+}
+
+.ledgerHead {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.ledgerTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+.ledgerGlyph {
+  font-size: 0.85em;
+  color: var(--text-1);
+}
+
+.ledgerNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.metrics {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.metric {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.metric:last-child { border-bottom: none; }
+
+.metricValue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-1);
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.metricOf {
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-2);
+}
+
+.metricAbsent {
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-2);
+}
+
+.metricLabel {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.4;
+  color: var(--text-0);
+}
+
+.metricNote {
+  max-width: 60ch;
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* --- The three rules -------------------------------------------- */
+
+.rules {
+  max-width: 74ch;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.rulesTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-1);
+}
+
+.rulesList {
+  margin: 0;
+  padding-left: var(--space-5);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.rulesList li { margin-bottom: var(--space-3); }
+.rulesList li:last-child { margin-bottom: 0; }
+
+.rulesList li::marker {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--brand-gold-600);
+}
+
+/* ---------------------------------------------------------------
+   The one-to-one
+   --------------------------------------------------------------- */
+
+.agenda {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.agendaItem {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.agendaWhen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 3px;
+}
+
+.agendaMinutes {
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--text-0);
+}
+
+.agendaMinutesLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.agendaBody { min-width: 0; }
+
+.agendaTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+/* The question, in the operator serif, for the same reason the opening
+   questions in the call frame are. It is the sentence said out loud. */
+.agendaAsk {
+  max-width: 68ch;
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-operator);
+  font-size: var(--step-0);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.agendaBad {
+  max-width: 68ch;
+  margin: 0 0 var(--space-2);
+  padding: var(--space-3);
+  border-left: 3px solid var(--line-2);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.agendaLink {
+  margin: 0;
+  font-size: var(--step--1);
+}
+
+/* --- What this meeting is not ----------------------------------- */
+
+.notThis {
+  max-width: 74ch;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.notThisTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-1);
+}
+
+.notThisText {
+  max-width: 68ch;
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+.notThisText:last-child { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------
+   Foot
+   --------------------------------------------------------------- */
+
+.foot {
+  max-width: 88ch;
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.foot strong { color: var(--text-1); }
+
+/* ---------------------------------------------------------------
+   Responsive. The two-column blocks stack first, then the numbered
+   gutters collapse so the ramp and the agenda keep their measure on a
+   narrow phone instead of losing half the line to a marker.
+   --------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .frames,
+  .ledgers {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .inner { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .h1 { font-size: var(--step-3); }
+  .h2 { font-size: var(--step-2); }
+  .pull { font-size: var(--step-1); }
+  .rampStep { grid-template-columns: 40px minmax(0, 1fr); gap: var(--space-3); }
+  .rampNumber { font-size: var(--step-2); }
+  .rampTitle { font-size: var(--step-1); }
+  .agendaItem { grid-template-columns: 44px minmax(0, 1fr); gap: var(--space-3); }
+  .agendaMinutes { font-size: var(--step-2); }
+  .frameHead,
+  .ledgerHead,
+  .metric,
+  .frameRow { padding: var(--space-3); }
+}
+
+@media (max-width: 400px) {
+  .inner { padding: var(--space-3) var(--space-2) var(--space-7); }
+  /* Below this the number gutter costs more line than it earns, so the
+     step marker moves inline above its own heading. */
+  .rampStep,
+  .agendaItem {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .rampNumber { text-align: left; }
+  .agendaWhen { flex-direction: row; align-items: baseline; gap: 5px; }
+  .metricValue { font-size: var(--step-2); }
+  .gateBox,
+  .rules,
+  .notThis { padding: var(--space-3); }
+}

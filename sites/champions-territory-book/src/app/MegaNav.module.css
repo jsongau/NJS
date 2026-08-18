@@ -1,0 +1,1279 @@
+/*
+  THE MARQUEE.
+
+  A strip across the top of every railed screen holding the lockup, the
+  hamburger, the ground switch and the six destinations pressed all day,
+  each with its own drawn mark and its live figure in a readout.
+
+  ── WHY IT IS DRAWN AS A MARQUEE AND NOT AS A TOOLBAR ──────────────
+  The reference is an arcade cabinet: a dark housing, a bright screen and
+  a lit board across the top of it naming what the machine is. This strip
+  is the only piece of chrome on the page that is present on every screen
+  at every width, so it is the piece that decides whether the product
+  reads as a cabinet or as a settings panel. It gets the display face at
+  marquee weight, a lit top edge, and destinations that light up in their
+  own colour rather than in one house colour six times.
+
+  THE FIRST RULE OF THIS FILE IS THE RULE THE OLD TOP BAR BROKE: nothing
+  in here appears on hover. There is no panel, no flyout and no second
+  level. Hover paints an item; hover never reveals a destination that was
+  not already on the strip.
+
+  ── FOUR SIGNALS ON THE ACTIVE ITEM, NEVER ONE ─────────────────────
+  A rule along the bottom edge, a washed ground, heavier type and the
+  section mark lit. The owner is colourblind, so the rule and the mark
+  are the two that have to work alone, and they do: both survive
+  greyscale, a projector and a photograph.
+
+  ── AND ONE RULE ABOUT MOTION ──────────────────────────────────────
+  Everything that moves in here moves by transform or opacity only, over
+  a duration token, which the query at the foot of tokens.css collapses
+  to zero for a reader who has asked their system to stop moving things.
+  Nothing loops, nothing pulses and nothing asks to be looked at while it
+  is not being used.
+*/
+
+.bar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  position: relative;
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+  height: var(--mega-h, 56px);
+  padding: 0 var(--space-3);
+  /* The housing. Darker than the page it sits over rather than lighter,
+     because a cabinet's marquee is mounted on the case and the case is
+     the darkest thing in the room. */
+  background: linear-gradient(
+    180deg,
+    var(--surface-2) 0%,
+    var(--surface-1) 62%,
+    var(--surface-0) 100%
+  );
+  border-bottom: 1px solid var(--line-2);
+  /* Light along the top edge, ink along the bottom. Two hairlines is the
+     whole of the bevel, and it is what makes fifty six pixels of strip
+     read as an object rather than as a band of colour. */
+  box-shadow:
+    inset 0 1px 0 var(--rim-top),
+    inset 0 -3px 0 -2px var(--sec, var(--signal));
+}
+
+/* ---------------------------------------------------------------
+   The hamburger
+   --------------------------------------------------------------- */
+
+/*
+  Hidden while the rail is a column, because the rail it opens is already
+  on the page and a control that opens something already open is a lie. It
+  appears at the same breakpoint the rail leaves the layout, so there is
+  never a width at which the twenty destinations have no door.
+*/
+.burger {
+  display: none;
+  align-self: center;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.burger:hover {
+  background: var(--surface-3);
+}
+
+/*
+  THE PRESS IS A REAL PRESS. A chunky bottom edge at rest, and pressing
+  drops the control onto it. The shadow itself is not transitioned, only
+  the transform, so this costs one composited layer and no paint.
+*/
+.burger {
+  box-shadow: 0 2px 0 var(--line-strong);
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.burger:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 var(--line-strong);
+}
+
+.burger[aria-expanded="true"] {
+  background: var(--sec-glow, var(--signal-tint));
+  border-color: var(--sec, var(--signal));
+  color: var(--text-0);
+}
+
+.burgerGlyph {
+  flex: none;
+}
+
+/*
+  The word swaps between "Menu" and "Close" as the drawer opens, so its
+  box is reserved for the longer of the two. A control that changes width
+  under the finger that just pressed it shifts everything to the right of
+  it, which on this strip is the whole navigation.
+*/
+.burgerLabel {
+  min-width: 5ch;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   The lockup
+   --------------------------------------------------------------- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  min-width: 0;
+}
+
+/*
+  The venue's mark. Height is the fixed dimension and width follows the
+  file's own ratio, so the wordmark never lands on a fractional pixel and
+  never needs a second number kept in step with the first.
+
+  flex: none because it is the one thing on this strip that must not be
+  squeezed: a logo compressed by a flex row is somebody else's trademark
+  drawn wrong.
+*/
+.venueMark {
+  flex: none;
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 4px 6px;
+  border-radius: var(--radius-s);
+  color: inherit;
+  text-decoration: none;
+}
+
+.brandLink:hover {
+  background: var(--surface-3);
+  text-decoration: none;
+}
+
+/*
+  THE MARQUEE WORDMARK. The display face at its heaviest, tracked in
+  rather than out, on a lit underline in the section's own colour. It is
+  the one piece of type on the strip that is allowed to be big, and it is
+  the piece that names the machine.
+
+  The underline is drawn as a background rather than as a border so it
+  hugs the letters rather than the link's padding box, which is the
+  difference between a marquee and an underlined word.
+*/
+.brandText {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--text-0);
+  background-image: linear-gradient(var(--sec, var(--signal)), var(--sec, var(--signal)));
+  background-repeat: no-repeat;
+  background-size: 100% 3px;
+  background-position: 0 100%;
+  padding-bottom: 3px;
+}
+
+/* ---------------------------------------------------------------
+   The ground switch
+   --------------------------------------------------------------- */
+
+/*
+  A SWITCH ON THE HOUSING, AND ONE PRESS THROWS IT.
+
+  It replaces a fieldset of two radios that stood in the rail foot. The
+  reasoning about the accessibility model is in MegaNav.tsx beside the
+  markup; this file owns the object.
+
+  ── IT IS BUILT OUT OF THE STRIP'S OWN PRESS LANGUAGE ──────────
+  The housing is the hamburger's: a plate on the surface ramp, a hairline
+  border and a two pixel edge underneath it that the plate drops onto
+  when it is pressed. So the switch is recognisably a control on this
+  strip rather than a widget that arrived from somewhere else, and the
+  travel it has is the travel every other pressable thing here has.
+
+  Inside that plate is a slot painted as the ground the reader is NOT on,
+  with both glyphs cut into it, and a solid cap of the page's own paint
+  sitting over the ground they are. Pressing throws the cap to the other
+  end. It is the only thing on this strip that moves without a press, and
+  it moves for a sixth of a second, once, because somebody asked it to.
+
+  ── THE CAP, AND WHY IT IS SOLID RATHER THAN A FRAME ───────────
+  The first version of this painted the two ends as two blocks and put a
+  hollow ring over the live one. It measured correctly and it read badly.
+  At the size this actually ships, a two pixel frame in the rule ink,
+  carrying the same corner radius as the plate around it and as the six
+  destination keys beside it, is a rectangle parked on two blocks rather
+  than a piece that moves. The signal was present and the eye did not
+  pick it up, which is the only test a state indicator has to pass.
+
+  A solid cap passes it by having a silhouette. It is the only object in
+  the control with an outline of its own, it is the lightest or the
+  darkest thing in the control depending on the ground, and it carries a
+  foot the way every pressable thing on this strip does. The slot is a
+  pill, a radius nothing else on the strip has, so the shape says
+  "switch" before any glyph gets a chance to.
+
+  ── THE PAINT IS TWO TOKEN PAIRS AND NO KNOWLEDGE OF THE GROUND ──
+  The slot takes --surface-inverse and the cap takes --surface-0, which
+  mean "the inverted panel" and "the page", NOT "dark block" and "light
+  block". On the dark ground the slot is the lit cream and the cap is the
+  near black page. On the light ground both flip and the cap is the near
+  white page over a near black slot. The reader is standing on the cap in
+  both grounds, out of two tokens, with no [data-theme] rule in this file
+  and no colour of its own.
+
+  The glyphs sit ABOVE the cap rather than under it, and that is the
+  whole reason nothing is drawn twice. The live glyph is --text-0 on
+  --surface-0 and the dead glyph is --text-inverse on --surface-inverse,
+  which are exactly the two pairs the contrast tables in tokens.css are
+  written against: 16.97 and 13.86 on dark, 16.24 and 15.47 on light.
+
+  ── AND WHAT IS LEFT WHEN THE COLOUR GOES ──────────────────
+  Everything. The cap and the slot are a near black block beside a near
+  white one at both grounds, which is a value distance greyscale cannot
+  collapse and no dichromacy touches. The glyphs are a solid crescent
+  against a radiating disc, two silhouettes rather than two hues. The cap
+  is a position. The word is a word, and below 400px where the word is
+  dropped, the other three still carry it on their own.
+*/
+
+.ground {
+  align-self: center;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 6px 0 4px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--text-0);
+  cursor: pointer;
+  /* The hamburger's edge, to the pixel. Two controls on one strip with
+     two different depths is a strip that was assembled rather than
+     drawn. */
+  box-shadow: 0 2px 0 var(--line-strong);
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.ground:hover {
+  background: var(--surface-3);
+}
+
+.ground:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 var(--line-strong);
+}
+
+/*
+  The slot is cut into the plate, which is what the inset shadow is for:
+  the cap has to look like it is sitting IN something, or its travel
+  reads as a highlight moving rather than as an object sliding. It is
+  painted as the other ground end to end and the cap covers the half the
+  reader is standing on, so at rest the control is one block of each
+  value with a piece of hardware on one of them.
+*/
+.groundTrack {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  height: 28px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface-inverse);
+  box-shadow: var(--well-inset);
+}
+
+/*
+  The glyphs ride above the cap, so each is ink on the surface its
+  contrast was measured against and neither has to be drawn twice.
+*/
+.groundEnd {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  color: var(--text-inverse);
+}
+
+/* The end being stood on is the one under the cap, so it is page ink. */
+.groundTrack[data-ground="dark"] .groundEnd[data-end="dark"],
+.groundTrack[data-ground="light"] .groundEnd[data-end="light"] {
+  color: var(--text-0);
+}
+
+/*
+  THE CAP IS THE PIECE THAT MOVES, and it is held two pixels clear of the
+  walls on every side. That gap is not decoration: a cap flush to the
+  slot is half of a rectangle, and a cap inside a channel is a switch.
+  The foot underneath it is the same weight the plate's own edge carries,
+  which is what ties it to the press language of this strip rather than
+  to a toggle out of a component library.
+
+  --line-strong is the rule ink and --line-2 is the divider, and both are
+  read here against --surface-0, which is the easiest surface either is
+  painted on in either ground.
+*/
+.groundCap {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  background: var(--surface-0);
+  border-radius: 999px;
+  box-shadow:
+    0 1px 0 var(--line-strong),
+    inset 0 0 0 1px var(--line-2);
+  pointer-events: none;
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.groundTrack[data-ground="light"] .groundCap {
+  transform: translateX(100%);
+}
+
+/*
+  The word swaps between "Dark" and "Light", so its box is reserved for
+  the longer of the two for the same reason the hamburger's is: this
+  control sits to the LEFT of every destination on the strip, and a
+  control that changes width under the finger that just pressed it moves
+  all seven of them.
+*/
+.groundWord {
+  min-width: 4.8ch;
+  font-family: var(--font-display);
+  font-size: var(--step--2);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   The six
+   --------------------------------------------------------------- */
+
+/*
+  The strip pushes its destinations to the right, away from the lockup, so
+  the six sit as one block the eye can measure rather than as a tail on
+  the brand. On a narrow screen the same rule keeps the three that survive
+  hard against the right edge, under the thumb rather than under the
+  hamburger.
+*/
+.nav {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  margin-left: auto;
+  gap: var(--space-3);
+}
+
+.list {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/*
+  A ROW NEVER SHRINKS.
+
+  It carried `min-width: 0` so that a long label could compress, which is
+  the right instinct on a flex child in almost every other context and is
+  exactly wrong here. The label inside is `white-space: nowrap`, so a row
+  given permission to shrink does not wrap or ellipsis; it simply lets its
+  own text run out past its box and print over the key beside it. Measured
+  before this rule went in: 20 pixels of overlap at 1200, 54 at 1024 and 77
+  at 900, at which point the centre of a key's own count belonged, on a hit
+  test, to the next destination along. A count a reader cannot trust to
+  belong to the label beside it is worse than no count.
+
+  The strip pays for this honestly instead, by standing keys down at the
+  width where they genuinely stop fitting. That width is measured, not
+  guessed, and it is written up at the media query below.
+*/
+.row {
+  display: flex;
+  align-items: stretch;
+  flex: none;
+}
+
+/*
+  A DESTINATION AS A CABINET BUTTON.
+
+  Rounded at the top and square at the foot, so the six read as keys set
+  into the housing rather than as words with padding. The bottom edge is
+  a three pixel rule that is transparent at rest and the section's colour
+  when you are standing on it, which is the signal that survives every
+  form of colour blindness because it is a position and a thickness
+  before it is a hue.
+*/
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+  border-bottom: 3px solid transparent;
+  color: var(--text-1);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.item:hover {
+  background: var(--surface-2);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+/*
+  THE PRESS. One pixel of travel is enough on a target this size, and it
+  is transform only so a strip of six keys costs nothing to animate.
+*/
+.item:active {
+  transform: translateY(1px);
+}
+
+/*
+  THE ACTIVE ITEM: a rule, a washed ground, heavier type and a lit mark,
+  every one of them in the section's own colour. Four signals, so the
+  reading survives greyscale and colour blindness both.
+*/
+.itemActive,
+.itemActive:hover {
+  background: var(--sec-glow, var(--signal-tint));
+  border-bottom-color: var(--sec, var(--signal));
+  color: var(--sec-ink, var(--text-0));
+  font-weight: 800;
+}
+
+.label {
+  min-width: 0;
+}
+
+/*
+  The figure is a Readout, which reserves its own width, carries its own
+  well and is told by the component whether it is the lead figure on the
+  strip. Nothing in this file reaches into it: those class names are
+  hashed and they are not ours.
+*/
+
+/* ---------------------------------------------------------------
+   The featured key
+   --------------------------------------------------------------- */
+
+/*
+  THE LIT BUTTON ON THE CABINET.
+
+  Six keys set into the housing, then a rule, then one key that is not
+  set into anything: it sits on top of the housing on a moulded shoulder,
+  it is the only lit face on the strip, and it is the only control here
+  with dark type on it. On an arcade cabinet nobody is told which button
+  starts the game and nobody needs to be.
+
+  ── SIX SIGNALS, AND FIVE OF THEM ARE NOT COLOUR ───────────────────
+  The owner is colourblind, so the orange is the last of the signals
+  rather than the first, and the feature has to survive being switched
+  off entirely.
+
+    POSITION  Outside the list, past a divider and a gap.
+    VALUE     A filled face. Every queue key is light type on a near
+              black housing; this is dark type on a light face, which is
+              a value inversion and survives any dichromacy and full
+              greyscale, where the face is a 67 per cent grey against a
+              housing at 8 per cent.
+    SHAPE     Rounded on all four corners and standing on a shoulder,
+              against tabs that are rounded at the top and square at the
+              foot. It is a button; they are tabs.
+    SIZE      Wider and taller, and two lines of type where every queue
+              key carries one.
+    WEIGHT    The label at 800 against 600, tracked out rather than in.
+    COLOUR    The marquee orange, last.
+
+  ── AND IT DOES NOT MOVE ───────────────────────────────────────────
+  There is no pulse, no breathing shadow and no shimmer, and that is a
+  decision rather than an omission. A control that nags is a control a
+  person learns to resent, and the lure here is meant to be
+  distinctiveness rather than motion. The only thing that moves is the
+  press, three pixels, onto the shoulder it was already standing on.
+*/
+
+.featureSlot {
+  display: flex;
+  align-items: center;
+  flex: none;
+  padding-left: var(--space-3);
+  /* The divider is the structural half of the separation and the gap is
+     the other half. One without the other reads as a wider gutter. */
+  border-left: 1px solid var(--line-2);
+}
+
+.feature {
+  /* Two rows of type beside one mark, so the mark spans both rather than
+     sitting against the middle of a stack. */
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  /* The two lines are one block rather than two rows sharing the face,
+     so the slack goes round the pair instead of between them. */
+  align-content: center;
+  column-gap: var(--space-2);
+  row-gap: 0;
+  min-height: 44px;
+  padding: 4px var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--feature);
+  color: var(--text-inverse);
+  text-decoration: none;
+  /* The shoulder. Three pixels of it, and the press below drops the face
+     onto it, so the travel and the depth are the same three pixels
+     rather than two numbers that have to be kept in step. */
+  margin-bottom: 3px;
+  box-shadow: 0 3px 0 var(--feature-edge);
+  transition: transform var(--dur-1) var(--ease-out);
+}
+
+.feature svg {
+  grid-row: 1 / span 2;
+}
+
+.feature:hover {
+  background: var(--feature-600);
+  color: var(--text-inverse);
+  text-decoration: none;
+}
+
+.feature:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--feature-edge);
+}
+
+.featureLabel {
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 800;
+  /* Tracked OUT where the queue keys are tracked in. A marquee word is
+     wider than the words around it, which is most of why it reads as a
+     marquee word. */
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+/*
+  The second line, and the reason the key needs two. A figure on its own
+  in a well is what the six queue keys use to say "this much work is
+  waiting". This figure is the size of the territory, so it is printed
+  with its noun on it and it is not a Readout.
+*/
+.featureFigure {
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+/* ===============================================================
+   NARROW: THE HAMBURGER APPEARS AND THE RAIL BECOMES A DRAWER
+
+   Below 900px a 252 pixel column is a third of the screen spent on
+   chrome, so the rail moves into a drawer and this strip grows the
+   control that opens it. The strip itself does not go anywhere: the
+   whole point of it is that the destinations pressed all day are on
+   screen at every width, on a phone most of all.
+   =============================================================== */
+
+@media (max-width: 899px) {
+  .bar {
+    gap: var(--space-2);
+    padding: 0 var(--space-2);
+  }
+
+  .burger {
+    display: inline-flex;
+  }
+
+  /*
+    THE WORDMARK GOES AND THE MARK STAYS, AT EXACTLY THE WIDTH THE RAIL
+    BECOMES A DRAWER.
+
+    Fifteen letters of display type, a hamburger and three counted
+    destinations do not share a handset, and the two obvious ways to
+    keep the words are both wrong. Ship them small enough to fit and the
+    lockup is decoration nobody reads. Let the link shrink and it ends
+    up four pixels wide, measured, which is a tap target that cannot be
+    hit and a stop in the tab order that says nothing when it is
+    reached. Letting it merely overflow was worse again: at 430 and at
+    560 it pushed the last destination clean off the right edge of the
+    strip, where the shell's overflow rule quietly ate it.
+
+    So below this width the strip carries the mark alone, which still
+    draws the dial and still says in its title how far the trade area
+    has been worked, and the words move into the drawer, where the
+    rail's own head carries the full lockup and the address with it.
+    Exactly one wordmark is on screen at every width.
+  */
+  .brandLink {
+    display: none;
+  }
+}
+
+/* ===============================================================
+   THE KEYS STAND DOWN ONE AT A TIME, AT THE WIDTH EACH ONE ACTUALLY
+   STOPS FITTING, AND EVERY ONE OF THOSE WIDTHS IS MEASURED
+
+   This block used to drop all three of Desk, Book and Leagues together
+   at 899, on the argument that one breakpoint is easier to hold in the
+   head than three. That argument was correct on the strip it was
+   written for and it stopped being correct the moment the featured
+   Maps key arrived, because the plate takes roughly 250 pixels off the
+   right hand end and the six keys had nowhere to go.
+
+   WHAT THAT COST, BEFORE IT WAS FOUND. The row carried `min-width: 0`
+   and the label inside carries `white-space: nowrap`, so between 1300
+   and 900 the keys did not wrap, ellipsis or drop. They printed over
+   each other: 20 pixels of overlap at 1200, 54 at 1024, 77 at 900, at
+   which point a hit test on the centre of a key's own count returned
+   the next destination along. Taking the shrink away turned the
+   overprint into a silent clip, which is not better, it is only
+   quieter. A 1280 laptop is not an edge case; it is the most common
+   screen this will ever be opened on after a phone.
+
+   THE WIDTHS. Measured in a browser rather than reasoned about: the
+   six keys are 137, 135, 163, 130, 131 and 156 pixels wide with two
+   pixel gaps, and the strip clips its last key the moment the total
+   crosses the featured plate's left edge. That happened at 1300 with
+   six, at 1142 with five and at 1009 with four, and three keys cleared
+   900 with 23 pixels to spare.
+
+   ── AND THEN THE GROUND SWITCH ARRIVED AND ALL FOUR MOVED ────────
+   The switch is 99 pixels and a 12 pixel gutter, so every one of those
+   numbers went up by about 125 and every one of them was measured
+   again rather than adjusted by arithmetic. Re-measured, one pixel at
+   a time from 1600 down to 360, watching the list's natural width
+   against the box it is given: six keys clip at 1425, five at 1266,
+   four at 1133 and three at 1001. The rules below sit one pixel above
+   each. A control that changes what fits and does not move the widths
+   that say what fits is a control that ships a silent clip.
+
+   THE THIRD KEY IS THE ONE THAT REALLY PAID. It used to stand down at
+   767 and it now stands down at 1001, which is 234 pixels earlier
+   rather than 125, and the extra is not the switch. Below 900 the
+   wordmark leaves this strip and the hamburger arrives, which is a net
+   50 pixels back, so three keys WOULD fit again from 899 downwards. A
+   destination that disappears at 1001 and returns at 899 is a strip
+   that looks broken while somebody drags a window, so rank three
+   stands down once, at the width it stops fitting, and stays down.
+   Requests keeps its row and its live figure in the drawer.
+
+   NOTHING ABOUT A KEY STANDING DOWN IS SILENT. The hamburger is
+   immediately to its left, always visible, carries the word "Menu",
+   and one press puts the whole rail on screen with all twenty
+   destinations and every figure intact. A reader who has lost a
+   destination is one press from it, and the press does not have to be
+   hunted for.
+   =============================================================== */
+
+@media (max-width: 1425px) {
+  .row[data-rank="6"] {
+    display: none;
+  }
+}
+
+@media (max-width: 1266px) {
+  .row[data-rank="5"] {
+    display: none;
+  }
+}
+
+@media (max-width: 1133px) {
+  .row[data-rank="4"] {
+    display: none;
+  }
+}
+
+@media (max-width: 1001px) {
+  .row[data-rank="3"] {
+    display: none;
+  }
+}
+
+/*
+  AND THE SECOND KEY, WHICH IS THE ONE THIS FILE HAS NEVER HAD TO DROP
+  BEFORE.
+
+  Measured with the switch in place: the strip's smallest possible width
+  is 455 pixels with two keys on it, and below that the bar is wider than
+  the window. The shell clips it rather than scrolling, so what a reader
+  sees is the right hand end of the featured plate simply missing, with
+  nothing on the strip to say a control is off the edge. That is the
+  worst of the failures in this file because it is the only silent one.
+
+  It was already true before this control arrived, at 371 rather than
+  455, and nobody had measured below 380. The switch made the number big
+  enough to matter and the honest fix is the same one the other four keys
+  get: the lowest ranked thing standing down at the width it stops
+  fitting. Inbox keeps its row, its label and its live figure in the
+  drawer, one press of a hamburger that is right beside it.
+
+  WHY THE KEY AND NOT THE SWITCH. The keys are ranked against each other
+  and there are two of them left, so there is something to rank. The
+  switch is not a destination and has no drawer row: taking it out would
+  not free a slot, it would delete the one control that changes how the
+  whole screen looks at the width where a reader is most likely to be
+  outdoors, in the sun, fighting the ground they are on.
+*/
+@media (max-width: 454px) {
+  .row[data-rank="2"] {
+    display: none;
+  }
+}
+
+@media (max-width: 899px) {
+  /*
+    Ranks four, five and six are already down by this width, each at the
+    point it stopped fitting, which is the block above. Nothing about
+    the drawer changes that; by the time the rail folds the strip has
+    been carrying three keys and the plate for a hundred pixels.
+
+    THE FEATURED KEY SURVIVES THE DROP, AND IT IS THE ONE THING ON THIS
+    STRIP THAT HAD TO.
+
+    A featured control that vanishes on a phone was never featured. The
+    keys that stand down here are ranked against each other and the loser
+    goes in the drawer with its figure intact, which is a trade between
+    six things of one kind. The featured key is not one of the six and
+    there is nothing to rank it against: taking it out would not free a
+    slot for a queue, it would simply delete the feature at the width
+    where a person has the least screen and the most reason to want a
+    map. So it keeps its plate, its shoulder, its mark and its label at
+    every width down to 380, and it pays for the room by giving up
+    gutters and, below 768, its printed figure.
+
+    The gap shrinks and the divider stays, because the divider is the
+    structural half of the separation and it costs one pixel.
+  */
+  .nav {
+    gap: var(--space-2);
+  }
+
+  .featureSlot {
+    padding-left: var(--space-2);
+  }
+}
+
+/* ===============================================================
+   768: THE FEATURED KEY GIVES UP ITS PRINTED FIGURE
+
+   This used to be where the third queue stood down as well. It is not
+   any more: with the ground switch on the strip the third key stops
+   fitting at 1001, which is where it now goes, and by 768 the strip has
+   been carrying two keys and the plate for two hundred pixels.
+
+   WHAT IS SPENT HERE IS THE FIGURE, AND IT IS SPENT ON THE FEATURE
+   RATHER THAN INSTEAD OF IT. Below 900 the strip carries the hamburger
+   at 83 pixels, the pin mark at 26, the ground switch at 99, two
+   counted queue keys at 272 between them and the featured key at 167.
+   That is 647 pixels of content plus gutters inside a 768 pixel bar,
+   and the plate is the one piece of it with something left to give.
+   Dropping the plate instead would not free a slot for a queue, it
+   would delete the feature at the width where a person has the least
+   screen and the most reason to want a board they can see.
+
+   THE PRINTED FIGURE BECOMES A SPOKEN ONE. It is the only part of the
+   key that can be spent without spending the feature: the plate, the
+   value inversion, the shape, the size, the weight, the mark and the
+   word all survive, and every one of those reads with no colour vision
+   at all. The figure stays in the accessible name, so a reader
+   listening rather than looking still gets "Maps, 211 organisations" at
+   380 exactly as at 1440.
+   =============================================================== */
+
+@media (max-width: 767px) {
+  /*
+    Rank three is already down by this width, at 1001, and the note in
+    the block above says why it went that early and why it does not come
+    back. What is left at 768 is the featured key's printed figure.
+  */
+
+  /* Two pixels of gutter, measured: with the switch on the strip and
+     these at their wider setting the bar ran past the window from 617
+     down, where the queue keys are still at full size and the plate has
+     only just given up its figure. */
+  .bar {
+    gap: 6px;
+    padding: 0 6px;
+  }
+
+  /*
+    Hidden in the same way base.css hides anything else that has to stay
+    in the accessibility tree, rather than by display: none, which would
+    take it out of the name as well.
+  */
+  .featureFigure {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .feature {
+    padding: 0 var(--space-2);
+  }
+
+  /*
+    AND THE SWITCH GIVES UP GUTTER, WHICH IS ALL IT HAS TO GIVE.
+
+    Measured with the switch on the strip and this rule off: the bar ran
+    one and a bit pixels wider than the window from 625 down, and the
+    shell's overflow rule ate the right hand end of the featured plate
+    rather than showing a scrollbar, which is the quietest way a strip
+    can break. Eight pixels of padding and track buys it back with room
+    over.
+
+    Nothing else on this control moves. The slot and the cap stay
+    painted, both glyphs stay drawn, the cap keeps its travel and the word stays
+    printed, because this is the one control on the strip that changes
+    how the whole screen looks and a handset is where a reader is most
+    likely to be fighting the light.
+  */
+  .ground {
+    gap: 4px;
+    padding: 0 5px 0 3px;
+  }
+
+  .groundTrack {
+    height: 26px;
+  }
+
+  .groundEnd {
+    width: 19px;
+  }
+}
+
+/*
+  ── AT HANDSET WIDTH THE MARKS GO AND THE WORDS STAY ───────────────
+  A mark is the fastest of the signals to find and the least trustworthy
+  on its own, so it is the one that can be spent; a label, a readout and
+  the active rule still say what the destination is, how much is waiting
+  behind it and which one you are standing on.
+
+  RE-MEASURED AT 380 WITH THE MARQUEE TYPE. The display face at 800 is
+  wider per character than the UI face it replaced, and three labelled
+  readouts, a hamburger with a word on it and the pin mark do not share
+  380 pixels at the old sizes. So at this width the labels drop a step
+  and the strip loses its gutters, which is what buys the marquee back.
+  Measured at 380: no horizontal overflow on any route, and every target
+  still 44 pixels tall.
+
+  AND RE-MEASURED AGAIN WITH THE GROUND SWITCH ON THE STRIP, which is
+  why this block starts at 607 rather than at 559. With the switch in
+  place and the old number, the bar ran wider than the window from 607
+  down and the shell clipped the right hand end of the featured plate
+  without a scrollbar to say so. 607 is where that starts, measured one
+  pixel at a time, and it is the width the queue keys' marks now buy
+  their way out of trouble at. Nothing about the trade changed, only
+  where it falls: a mark is still the signal that can be spent, and the
+  label, the readout and the active rule still say what the destination
+  is, how much is waiting and which one is under the reader.
+*/
+@media (max-width: 607px) {
+  .bar {
+    gap: 6px;
+    padding: 0 6px;
+  }
+
+  .item {
+    gap: 5px;
+    margin-top: 4px;
+    padding: 0 7px;
+    font-size: var(--step--2);
+    letter-spacing: -0.005em;
+  }
+
+  /*
+    THE QUEUE KEYS GIVE UP THEIR MARKS AND THE FEATURED KEY KEEPS ITS
+    OWN, which is not an oversight and is worth stating where it happens.
+    A mark is the fastest signal to find and the least trustworthy alone,
+    so on six keys that already carry a word and a figure it is the one
+    that can be spent. On the featured key it is the last piece of the
+    silhouette that says button rather than word, and at this width the
+    silhouette is doing more work than anywhere else.
+  */
+  .item svg {
+    display: none;
+  }
+
+  .list {
+    gap: 0;
+  }
+
+  .feature {
+    column-gap: 6px;
+    padding: 0 var(--space-2);
+  }
+
+  /* A step down with the queue keys, so the strip still reads as one
+     size of type with one thing set louder inside it. */
+  .featureLabel {
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+  }
+
+  /* The wordmark is already out of the strip at this width, so the pin
+     mark is the whole lockup and it stays at full size. */
+  .brand {
+    gap: 0;
+  }
+}
+
+/*
+  380 IS A REAL LAYOUT AND IT IS THE TIGHTEST ONE. The burger keeps its
+  word, because "Menu" is the control that reaches the other seventeen
+  screens, and everything else gives up a pixel or two of padding first.
+
+  THIS BLOCK STARTED AT 400 AND IT STARTS AT 499 NOW, because the ground
+  switch moved the width at which the strip runs out. Measured with the
+  switch in place and the old number: the bar was wider than the window
+  from 494 down and the shell quietly clipped the right hand end of it.
+  These are gutters rather than content, so the strip loses nothing by
+  spending them a hundred pixels earlier, and every destination, figure,
+  mark and word on it survives to 360.
+*/
+@media (max-width: 499px) {
+  .bar {
+    gap: 3px;
+    padding: 0 3px;
+  }
+
+  .burger {
+    padding: 0 5px;
+    gap: 3px;
+  }
+
+  .burgerLabel {
+    min-width: 4.4ch;
+  }
+
+  .item {
+    gap: 3px;
+    padding: 0 3px;
+  }
+
+  .nav {
+    gap: 4px;
+  }
+
+  .featureSlot {
+    padding-left: 4px;
+  }
+
+  .feature {
+    column-gap: 4px;
+    padding: 4px 5px;
+  }
+
+  /* The switch spends gutter here for the third and last time. Twenty
+     one pixels was what stood between the strip and 360, and every one
+     of them came out of space between things rather than out of a thing:
+     nothing on this strip is smaller at 360 than it is at 500 except the
+     gaps. */
+  .ground {
+    gap: 3px;
+    padding: 0 4px 0 3px;
+  }
+
+  .groundEnd {
+    width: 18px;
+  }
+
+  .groundWord {
+    min-width: 4.5ch;
+  }
+}
+
+
+/*
+  On a pointer that cannot hover precisely, every target on this strip is
+  44 pixels whatever the width of the window. base.css sets that floor for
+  buttons and for links inside a nav landmark; the lockup is neither, so
+  it is stated here.
+*/
+@media (pointer: coarse) {
+  .item,
+  .brandLink,
+  .burger,
+  .feature,
+  .ground {
+    min-height: 44px;
+  }
+}
+
+/*
+  ── REDUCED MOTION ─────────────────────────────────────────────────
+  The duration tokens are already zero under this query, so the two
+  transitions in this file are already still. This block says so where
+  they are declared, for the same reason AppShell.module.css does: a
+  press that travels is the most likely thing on this strip to bother
+  somebody who has asked their system to stop moving things, and the
+  rule should not depend on a token file staying the way it is.
+
+  The PRESS STATE ITSELF SURVIVES. Only the travel between the two
+  states is removed; the key still bottoms out, it simply arrives there
+  in one frame. THE SAME GOES FOR THE GROUND SWITCH: the cap is still at
+  the end it belongs to, it simply gets there without crossing the slot,
+  and the ground itself arrives in one repaint either way.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .burger,
+  .feature,
+  .ground,
+  .groundCap {
+    transition: none;
+  }
+}
+
+/*
+  THE MODE SWITCH.
+
+  Two readings of one body of work, not two destinations, so it is set
+  apart from the queue keys by a rule and a gap in the same way the
+  featured key is set apart at the other end of the bar. The pill shape
+  says the two are alternatives to each other; the queue keys are not
+  alternatives to anything, which is why they are not drawn this way.
+
+  THE CURRENT MODE CARRIES aria-current AS WELL AS THE WASH, because the
+  wash is a reinforcement. Same rule as every section in this app: colour
+  is never the only thing saying which one you are in.
+*/
+.modes {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  margin-right: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  flex: 0 0 auto;
+  /* Without these the pill stretches to the height of the bar and every
+     size set below is decoration. It was 49px tall while claiming 28. */
+  align-items: center;
+  align-self: center;
+}
+
+/*
+  SMALLER THAN THE QUEUE KEYS, ON PURPOSE.
+
+  It was the same height as Today and Inbox at first, which made three
+  equals on the bar: two modes and five destinations all shouting at the
+  same volume. The mode switch is pressed once at the start of a visit
+  and then not again, and the queues are read continuously, so the thing
+  that is read more often gets the larger target.
+
+  It stays a 28px pill with real padding rather than shrinking to text,
+  because the pair still has to read as two alternatives to each other.
+  On touch it grows back to 44px in the query at the foot of this file:
+  small is a desktop affordance and a thumb does not care about
+  hierarchy.
+*/
+.mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font: 600 var(--step--2) / 1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--text-2);
+}
+
+.mode:hover {
+  color: var(--text-0);
+  background: var(--surface-2);
+}
+
+.modeCurrent {
+  background: var(--accent-tint);
+  color: var(--accent-600);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+
+.modeCurrent:hover {
+  background: var(--accent-tint);
+  color: var(--accent-600);
+}
+
+/*
+  On a narrow bar the words are the last thing to go, not the first. The
+  hamburger already hides the queue keys behind the rail there, and a
+  mode switch reduced to two initials would be a puzzle rather than a
+  control.
+*/
+/*
+  A thumb does not care that the modes rank below the queues. Below the
+  pointer breakpoint the pair goes back to the 44px this application uses
+  everywhere else it expects a finger.
+*/
+@media (pointer: coarse) {
+  .mode {
+    height: 44px;
+    padding: 0 var(--space-4);
+    font-size: var(--step--1);
+  }
+}
+
+/* ============================================================
+   THE PHONE. WHAT COMES OFF THE BAR, AND WHY IT IS THE QUEUE KEYS
+   RATHER THAN THE MODE SWITCH.
+
+   Measured at 320, 360 and 390: the bar's content is 621px wide.
+   It does not scroll, it CLIPS, so everything past the viewport is
+   not merely awkward to reach, it is unreachable. At 390 the
+   Rationale control had 88 of its 112 pixels on screen; at 320 it
+   had 18. Today, Inbox, Requests, Leagues and Maps were entirely
+   gone, starting at x=437 on a 390px screen.
+
+   Something had to leave. The rule this file already states is
+   that the bar is what is WAITING for you and the rail is where
+   things ARE, and on a phone that rule decides it: every queue key
+   on this strip is also a row in the rail, with the same live
+   figure, one tap away behind Menu. The mode switch is not. It is
+   the only control anywhere in the application that moves a reader
+   between the console and the argument for it, and half the work
+   is behind it.
+
+   So the queue keys and the featured key come off and the mode
+   switch stays. Nothing is lost: Menu reaches all of it.
+
+   THE BREAKPOINT IS 899 AND IT WAS MEASURED, NOT CHOSEN. The full
+   strip needs 888px to draw its rightmost control inside the
+   viewport. The first attempt at this hid the keys below 560,
+   which fixed the phone and left every width from 561 to 840
+   clipping exactly as before: at 768 the Maps key ended at 796.
+   899 is where this file's other narrow rules already turn, and it
+   is above the number the ruler gave.
+
+   THE COUNTS GO WITH THEM, AND THAT IS THE COST. A person working
+   the desk on a phone loses the at a glance figures. That is a real
+   trade and it is the right way round, because the reader most
+   likely to be holding a phone here is somebody who has been sent
+   the link, and for them an unreachable mode switch is fatal while
+   a hidden count is an inconvenience.
+   ============================================================ */
+@media (max-width: 899px) {
+  .list,
+  .featureSlot {
+    display: none;
+  }
+
+  /* The pill was holding a gutter open for a list that is no longer
+     there, which parked it 24px short of the right edge. */
+  .modes {
+    margin-right: 0;
+  }
+}
+
+/* At the narrowest widths the three survivors still have to fit, and
+   the only slack left is in the words rather than in the gaps: the
+   gaps were already spent down to 3px at 499. "Menu" becomes the
+   burger alone, which is a control every reader on a phone already
+   knows, and the theme switch drops its word for the same reason. */
+@media (max-width: 400px) {
+  .burgerLabel,
+  .groundWord {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* ============================================================
+   THE LAST TWENTY TWO PIXELS, AT 320.
+
+   Every width from 360 up fits with the queue keys hidden. A 320px
+   screen, which is an iPhone SE held in portrait and the narrowest
+   viewport worth supporting, was still 22px short: the mode pill
+   ended at 342.
+
+   The pixels come out of the pill's own gutters and its letter
+   spacing, not out of the two words. "CONSOLE" and "RATIONALE" stay
+   whole, because a mode switch abbreviated to CON and RAT is a
+   control a reader has to decode, and the entire reason this pill
+   survives on a phone while five destinations do not is that a
+   first time reader has to be able to find it without being told.
+
+   Measured after: the pill ends at 318 on a 320px viewport.
+   ============================================================ */
+@media (max-width: 359px) {
+  .mode {
+    padding: 0 var(--space-2);
+    letter-spacing: 0.01em;
+  }
+
+  .modes {
+    gap: 1px;
+    padding: 1px;
+  }
+}

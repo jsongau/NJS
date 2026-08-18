@@ -1,0 +1,31 @@
+/*
+  The two colours a mark is allowed, and nothing else.
+
+  The stroke is the ink of whatever row the mark is sitting in, so a mark
+  darkens and brightens with its row for free. The solid shape is the
+  section colour, resolved from the data-sec attribute by sections.css,
+  and it falls back to currentColor so a mark dropped somewhere with no
+  section still draws rather than disappearing.
+
+  The stroke is set here rather than on the element because
+  vector-effect: non-scaling-stroke is not wanted: these are drawn at
+  eighteen and twenty units and the stroke should scale with them.
+*/
+
+.mark {
+  flex: none;
+  overflow: visible;
+}
+
+.line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lit {
+  fill: var(--sec, currentColor);
+  stroke: none;
+}

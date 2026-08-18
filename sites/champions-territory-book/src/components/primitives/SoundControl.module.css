@@ -1,0 +1,112 @@
+/*
+  THE SOUND CONTROL WEARS THE FOOT'S OWN CLOTHES.
+
+  It sits between the width control and the reset, and the three of them
+  are the only settings in the application, so they read as one shelf or
+  they read as three widgets that arrived separately. This file is the
+  first of those: the same height, the same padding, the same hairline
+  that only appears under a pointer, the same muted ink that lifts to
+  full ink on hover.
+
+  What it does NOT borrow is the press. The keys on the strip and the
+  rows in the rail drop onto a two pixel edge, because those are things
+  you hit all day. A setting is pressed twice in a session and a control
+  that moves under the finger draws the eye to a shelf the reader should
+  be able to forget.
+*/
+
+/*
+  IT HAS TO LOOK PRESSABLE AT REST, AND THE FIRST VERSION DID NOT.
+
+  This was drawn as the width control is drawn: no border, no fill, muted
+  ink, and a hairline that only appears under a pointer. That is the right
+  costume for a control a reader already knows is there, and the wrong one
+  for the only feature in this application nobody expects. The owner
+  looked straight at it twice, in two screenshots, and read it as a label.
+  Reset sits six pixels below it wearing a real plate and reads as a
+  button immediately, which is the comparison that settles it.
+
+  So it takes the plate. Same border, same radius, same surface as Reset,
+  which also makes the foot read as two controls and one word rather than
+  as three lines of text with a button at the bottom.
+
+  This is the same failure the ground switch had, one commit earlier: the
+  signal was present, measurable and correct, and the eye did not pick it
+  up. A control nobody presses is a feature nobody has.
+*/
+.sound {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 34px;
+  padding: 6px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
+}
+
+.sound:hover {
+  background: var(--surface-3);
+  border-color: var(--brand-gold);
+  color: var(--text-0);
+}
+
+/*
+  ARMED, IT IS LIT, AND THE WASH IS THE THIRD SIGNAL RATHER THAN THE
+  FIRST. The word already says on or off and the glyph already gains its
+  waves; this is the thing a reader catches out of the corner of an eye
+  from across the rail, which is exactly the job a colour should be doing
+  and exactly the job it should never be doing alone.
+*/
+.sound[aria-pressed="true"] {
+  background: var(--signal-tint);
+  border-color: var(--signal-line);
+  color: var(--text-0);
+}
+
+.glyph {
+  flex: none;
+}
+
+.label {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+/*
+  The state word is the load bearing half of the label, so it carries the
+  weight. "Sound on" and "Sound off" are the same length to within a
+  character, which is why this control needs no reserved width the way the
+  ground switch and the hamburger do.
+*/
+.state {
+  font-weight: 800;
+}
+
+/*
+  COLLAPSED, THE RAIL DROPS ITS SETTINGS ENTIRELY. SideRail.module.css
+  hides .contextItem, .add and .reset at that width, on the grounds that a
+  verb with no room for its word is not a control. This is the same class
+  of thing and takes the same answer.
+
+  THE RULE HAS TO LIVE IN THIS FILE, and the first version of it did not,
+  which is a bug worth writing down because it fails silently. Class names
+  in CSS modules are hashed PER FILE, so `.rail[data-collapsed] .sound`
+  written over in SideRail.module.css compiles to that file's hash of
+  .sound, which is a class no element on the page carries. It would have
+  looked like a rule and matched nothing forever.
+
+  The attribute selector is global and the class is local, so writing it
+  from this side is the arrangement where both halves mean what they say.
+*/
+[data-collapsed="true"] .sound {
+  display: none;
+}

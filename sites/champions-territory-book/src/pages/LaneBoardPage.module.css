@@ -1,0 +1,627 @@
+/*
+  The lane board.
+
+  Two things are doing the structural work here and neither of them is a
+  colour. The first is TEMPERATURE AT THE GROUP LEVEL: the calendar-locked
+  half of the board sits on a cool ground and the discretionary half on a
+  warm one, so a reader scrolling past feels the change before they read
+  the heading. The second is a HAIRLINE GRID of cards with one lane-
+  coloured rule along the top edge of each.
+
+  Neither is ever the only signal. Every group heading carries its class
+  glyph and the class name, every card carries the occasion chip with its
+  pointed or square cap, and the lane's own glyph is set large in the top
+  left corner of the card. Strip every colour out of this file and the
+  board still reads correctly, which is the requirement.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-5);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+/* ---------------------------------------------------------------
+   The fork panel
+   --------------------------------------------------------------- */
+
+.fork {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+/* min-width: 0 rather than nothing at all. A grid child defaults to a
+   min-content floor, and one long word in the argument below would
+   otherwise push the two summary cards off the right edge. */
+.forkIntro { min-width: 0; }
+
+.forkTitle {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-2);
+}
+
+.forkText {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.forkText:last-child { margin-bottom: 0; }
+
+.forkCards {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
+.forkCard {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+/* The temperature, declared once for the whole page. Cool for the buyers
+   whose date is fixed, warm for the buyers who have to be persuaded. */
+.forkCard[data-occasion="calendar-locked"],
+.group[data-occasion="calendar-locked"] .groupHead {
+  border-left: 3px solid var(--lane-hvac);
+  background: var(--accent-tint);
+}
+
+.forkCard[data-occasion="discretionary"],
+.group[data-occasion="discretionary"] .groupHead {
+  border-left: 3px solid var(--lane-multi-service);
+  background: var(--brand-gold-tint);
+}
+
+.forkCardHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+
+.forkGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.forkCardTitle {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.forkWhat {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.forkWhen {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.forkWhenLabel {
+  display: block;
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.forkTally {
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.forkTally strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   Groups
+   --------------------------------------------------------------- */
+
+.group { margin-bottom: var(--space-6); }
+
+.groupHead {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.groupTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-1);
+  font-size: var(--step-2);
+}
+
+.groupGlyph {
+  font-size: 0.8em;
+  color: var(--text-1);
+}
+
+.groupSummary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.groupSummary strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   The cards
+   --------------------------------------------------------------- */
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: var(--space-3);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  /* The lane's own hue, on one edge, at three pixels. It identifies the
+     card from across the room and carries nothing that is not also
+     written in words inside it. */
+  border-top: 3px solid var(--lane);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  transition: border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  border-top-color: var(--lane);
+  box-shadow: var(--shadow-2);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.laneGlyph {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--lane);
+  border-radius: var(--radius-s);
+  background: var(--laneTint);
+  color: var(--lane);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.cardHeadText { min-width: 0; }
+
+.cardTitle {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+/*
+  The heading is the control, and its stretched pseudo element makes the
+  whole card the hit area. Nothing else inside the card is interactive,
+  so nothing has to be lifted above it.
+*/
+.laneBtn {
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.25;
+  color: var(--text-0);
+  cursor: pointer;
+}
+
+.laneBtn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-m);
+}
+
+.laneBtn:hover { color: var(--accent); }
+
+.laneBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.cardChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* --- The door --------------------------------------------------- */
+
+.door {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.doorLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.doorName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+/* --- The four figures ------------------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.statValue {
+  font-size: var(--step-1);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.statLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--3);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+/* --- How the lane trades ---------------------------------------- */
+
+.note {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+/* --- The pre-opening problem ------------------------------------ */
+
+.problem {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-2);
+}
+
+.problemLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 var(--space-1);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-gold-600);
+}
+
+.problemGlyph { font-size: 12px; line-height: 1; }
+
+.problemText {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+/* --- Packages --------------------------------------------------- */
+
+.packages {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.packagesTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.packagesCount {
+  padding: 1px 6px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--step--3);
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0;
+}
+
+.packageList {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.packageRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 4px var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.packageRow:last-child { border-bottom: none; }
+
+.packageName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+  line-height: 1.35;
+}
+
+/*
+  The price sits under the name rather than beside it, because a withheld
+  price is a sentence and a sentence in a narrow right-hand column wraps
+  to four lines. The family chip keeps the top right corner.
+*/
+.packagePrice {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--step--2);
+  color: var(--text-1);
+}
+
+.perGuest {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.gated {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.gated strong { color: var(--text-0); }
+
+/* --- The call to action ----------------------------------------- */
+
+/*
+  A cue rather than a control. The heading above is the real button and
+  the whole card is its hit area, so a second focusable element here
+  would put two tab stops on one destination.
+*/
+.cta {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--line-2);
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--accent);
+}
+
+.card:hover .cta { color: var(--accent-600); }
+
+/* ---------------------------------------------------------------
+   Foot
+   --------------------------------------------------------------- */
+
+.foot {
+  max-width: 88ch;
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Responsive. The fork panel stacks first, then the card grid drops
+   to one column, then the four figures on each card go to a single
+   column so a summed range never wraps mid-number.
+   --------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .fork { grid-template-columns: 1fr; gap: var(--space-4); }
+  .forkCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .forkCards { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .inner { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .h1 { font-size: var(--step-3); }
+  .fork { padding: var(--space-4); }
+  .card { padding: var(--space-3); }
+}
+
+@media (max-width: 380px) {
+  .inner { padding: var(--space-3) var(--space-2) var(--space-7); }
+  .stats { grid-template-columns: 1fr; gap: var(--space-2); }
+  .statValue { font-size: var(--step-0); }
+  .cardHead { gap: var(--space-2); }
+}
+
+/* ── WORKING DENSITY ──────────────────────────────────────────────
+   The type scale is re-declared at the page root rather than in
+   tokens.css, because /method and /coaching are documents and are
+   written for the longer scale. Everything a person operates gets
+   14px rows, 12px meta and a 1.4 line height instead of 1.55.
+
+   Steps 4 and 5 are untouched on purpose. The figures stay large;
+   this is a tightening, not a flattening. */
+.page {
+  --step--2: 0.6875rem;
+  --step--1: 0.75rem;
+  --step-0: 0.875rem;
+  --step-1: 1rem;
+  --step-2: 1.125rem;
+  --step-3: 1.375rem;
+  font-size: var(--step-0);
+  line-height: 1.4;
+}
+
+/* Section headings are labels here, not voice. The serif display face
+   is what makes a working screen read as an essay, so it stays on the
+   two document pages and comes off everything else. */
+.page :is(h1, h2, h3, h4) {
+  font-family: var(--font-ui);
+  letter-spacing: -0.004em;
+  line-height: 1.25;
+}
+
+/* Tables read as tables: one column of aligned figures, one sticky
+   header, one divider. */
+.page th,
+.page td {
+  line-height: 1.3;
+}
+.page thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface-1);
+  font-size: var(--step-0);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   THE SAME TIGHTENING, LOOSENED FOR A PHONE.
+
+   The block above re-declares the scale at the page root because
+   this is a screen somebody OPERATES: 14px rows and 12px meta,
+   held a foot away on a desk. That is the right density there and
+   it is unreadable in a hand, and because these tokens are set
+   here rather than in :root, the phone lift in tokens.css never
+   reaches this page. A scoped override has to be undone in the
+   same scope that made it.
+
+   The desktop values above are untouched. This only moves the
+   three steps that carry labels, meta and rows, and only below
+   560px. Steps 1 through 3 stay as the block above set them: a
+   heading is already big enough on a phone.
+   ============================================================ */
+@media (max-width: 560px) {
+  .page {
+    --step--2: 0.78rem;
+    --step--1: 0.85rem;
+    --step-0: 0.94rem;
+  }
+}

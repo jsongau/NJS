@@ -1,0 +1,26 @@
+/*
+  LAYOUT ONLY, AND THAT IS THE POINT.
+
+  Every colour in these marks travels inside the scene as a CSS custom
+  property reference, applied to the shape itself, so this stylesheet has
+  no business naming a hue and does not. What it owns is the one thing an
+  inline SVG gets wrong by default: it is an inline element, so it sits on
+  the text baseline and drags a descender gap under every row it appears
+  in, and inside a flex row it is happy to be squashed to nothing by a
+  long label beside it. Both of those are invisible in a component test
+  and obvious on a legend with nine rows in it.
+*/
+
+.mark {
+  /*
+    `inline-block` with a middle alignment rather than `block`, so one
+    rule serves both call sites: inside a flex legend row it behaves
+    exactly as a block would, and dropped next to a word in running text
+    it sits on the word's optical centre instead of its baseline.
+  */
+  display: inline-block;
+  vertical-align: middle;
+  flex: none;
+  /* The selection halo reaches the edge of the box and must not clip. */
+  overflow: visible;
+}

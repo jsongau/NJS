@@ -1,0 +1,601 @@
+/*
+  The key floats over the map rather than sitting under it, which buys the
+  map its full height and costs this card the right to be careless about
+  space. Three rules follow from that and all three are load bearing.
+
+  ONE, IT NEVER SITS ON A MAP CONTROL. Leaflet puts attribution at the
+  bottom right and this application puts its own zoom pair there too. This
+  card is pinned top right and the offers card is pinned bottom left, so
+  neither of the two controls a reader needs is ever underneath a panel of
+  ours, at any width.
+
+  TWO, IT IS THE ONLY THING IN THE OVERLAY THAT TAKES A CLICK. The canvas
+  sets the overlay layer to `pointer-events: none` and switches each card
+  back on individually, so this card catches presses on itself and on
+  nothing else. There is no invisible margin around it and no full width
+  wrapper, which is what stops a floating panel from becoming a hole in the
+  middle of the map that a drag cannot cross or a marker click cannot
+  reach.
+
+  THREE, IT COLLAPSES RATHER THAN SHRINKS. On a phone the card is a single
+  header row until somebody asks for it, and opened it is capped at half
+  the map with its own scroll. A key that stays open and gets narrower ends
+  up as a column of two word fragments over the one thing it was drawn to
+  explain, and a key that covers a phone's whole map has filtered a board
+  the reader can no longer see.
+*/
+
+.card {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: var(--z-map-overlay);
+  width: 320px;
+  max-width: calc(100% - var(--space-6));
+  max-height: calc(100% - var(--space-6));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+}
+
+/* Collapsed, the card is only as wide as the words on its own button. */
+.card[data-open="no"] {
+  width: auto;
+}
+
+/* --- The header ---------------------------------------------------- */
+
+.head {
+  margin: 0;
+  font-size: var(--step--1);
+  border-bottom: 1px solid var(--line);
+}
+
+.card[data-open="no"] .head {
+  border-bottom: 0;
+}
+
+.headToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-2);
+  border: 0;
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-0);
+}
+
+.card[data-open="no"] .headToggle {
+  border-radius: var(--radius-m);
+}
+
+.headToggle:hover {
+  background: var(--surface-3);
+}
+
+.headToggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.headGlyph {
+  color: var(--brand-gold);
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+.headLabel {
+  flex: 1 1 auto;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.headBadge {
+  flex: none;
+  padding: 2px var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--brand-gold-600);
+  background: var(--brand-gold-tint);
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-s);
+}
+
+.headHint {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+/* --- The body ------------------------------------------------------ */
+
+.body {
+  overflow-y: auto;
+  padding: var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/* `hidden` has to beat the flow display above or the attribute does nothing. */
+.body[hidden] {
+  display: none;
+}
+
+.lead {
+  margin: 0 0 var(--space-3);
+  color: var(--text-1);
+}
+
+.subhead {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+/* --- The filter head ----------------------------------------------- */
+
+.filterHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+/*
+  THE WAY BACK TO EVERYTHING, AND IT IS A TOGGLE RATHER THAN A LINK.
+
+  It carries `aria-pressed`, so a reader arriving on an unfiltered board
+  hears that everything is already showing rather than being offered a
+  control whose effect they cannot predict. The tick beside it is the same
+  tick every lane row uses, which is what makes the row and this button
+  read as one system.
+*/
+.allButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 32px;
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-1);
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+}
+
+.allButton[aria-pressed="true"] {
+  color: var(--text-0);
+  background: var(--accent-tint);
+  border-color: var(--accent-line);
+}
+
+.allButton:hover {
+  border-color: var(--line-strong);
+}
+
+.allButton:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/*
+  THE TICK IS A SHAPE IN A BOX, NOT A COLOUR IN A SWATCH.
+
+  The owner of this site is colourblind, so the state of a row travels on
+  four channels at once: this box either holds a tick or is empty, the word
+  beside it says "Showing" or "Hidden", the label changes weight, and the
+  mark fades. Take every hue out of the card and all four survive.
+*/
+.tick {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: var(--step--2);
+  line-height: 1;
+  color: var(--text-inverse);
+  background: var(--surface-1);
+  border: 1.5px solid var(--line-strong);
+  border-radius: 3px;
+}
+
+.tick[data-on="yes"] {
+  color: var(--text-inverse);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --- The live count ------------------------------------------------ */
+
+/*
+  ONE POLITE REGION, ON THE FIGURE THAT MOVED.
+
+  The height is reserved rather than allowed to follow the words, because
+  this line sits directly above nine rows and a wrap appearing under a
+  filter press would shove all nine down by a line at the moment the reader
+  is looking at them.
+*/
+.result {
+  margin: var(--space-2) 0 var(--space-3);
+  min-height: calc(2 * 1.5em);
+  color: var(--text-1);
+}
+
+.resultFigure {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+/* --- The lane rows -------------------------------------------------- */
+
+.groups {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.group {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.groupHead {
+  margin: 0;
+  padding: var(--space-2);
+  background: var(--surface-2);
+  border-left: 2px solid var(--line-strong);
+  color: var(--text-1);
+}
+
+.groupHead strong {
+  color: var(--text-0);
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+}
+
+/*
+  ONE ROW, TWO BUTTONS, AND THEY CANNOT BE NESTED.
+
+  A button inside a button is invalid markup and browsers resolve it by
+  throwing one of them away, so the row is a flex container holding the
+  toggle and the "only" control side by side. Both are real buttons with
+  real names, which is what makes them reachable by keyboard, announceable
+  by a screen reader and addressable by voice.
+*/
+.rowToggle {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 16px 28px 1fr 46px;
+  grid-template-areas:
+    "tick mark label count"
+    "meta meta meta  meta";
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2);
+  text-align: left;
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.rowToggle:hover {
+  background: var(--surface-2);
+  border-color: var(--line-2);
+}
+
+.rowToggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.rowToggle .tick {
+  grid-area: tick;
+}
+
+.rowMark {
+  grid-area: mark;
+  justify-self: center;
+}
+
+.rowLabel {
+  grid-area: label;
+  min-width: 0;
+  font-size: var(--step--2);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-0);
+}
+
+.rowMeta {
+  grid-area: meta;
+  min-width: 0;
+  color: var(--text-2);
+}
+
+/*
+  HIDDEN IS A WEIGHT CHANGE AND A FADE, ON TOP OF THE EMPTY BOX AND THE
+  WORD. The mark keeps its own drawing rather than going grey, so a reader
+  can still tell which lane a hidden row belongs to.
+*/
+.rowToggle[data-on="no"] {
+  background: var(--surface-2);
+}
+
+.rowToggle[data-on="no"] .rowLabel {
+  font-weight: 400;
+  color: var(--text-2);
+}
+
+.rowToggle[data-on="no"] .rowMark {
+  opacity: 0.45;
+}
+
+/*
+  THE COUNT COLUMN IS A FIXED WIDTH AND A FIXED HEIGHT.
+
+  Three digits fit, which is every count this board can produce, and the
+  second line is drawn whether or not there is a word in it. So a lane
+  going from thirty one to nought, or back, moves nothing on the card.
+*/
+.rowCount {
+  grid-area: count;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1px;
+}
+
+.rowCountFigure {
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text-0);
+}
+
+.rowCount[data-zero="yes"] .rowCountFigure {
+  color: var(--text-2);
+}
+
+.rowCountWord {
+  min-height: 1.1em;
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+/*
+  "ONLY", AS A CONTROL RATHER THAN AS A MODIFIER KEY. It is 44 pixels wide,
+  which is the target size a thumb needs, and it is always drawn rather
+  than appearing on hover, because a control that only exists under a
+  pointer does not exist on a phone and is not discoverable anywhere.
+*/
+.rowOnly {
+  flex: none;
+  width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.rowOnly:hover {
+  color: var(--text-0);
+  border-color: var(--line-strong);
+}
+
+.rowOnly:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.rowOnly[aria-pressed="true"] {
+  color: var(--text-inverse);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --- The marks that are not filters --------------------------------- */
+
+.entries,
+.states {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+
+.entry,
+.state {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/*
+  The venue mark carries its own "Not open yet" plate and is 104px wide.
+  Clipping it to fit a column would cut the words off the one mark on this
+  map whose words are the whole point, so that row stacks instead.
+*/
+.entryStacked {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.entryMark,
+.stateMark {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+}
+
+.entryWide {
+  flex: none;
+}
+
+.entryText {
+  min-width: 0;
+}
+
+.entryText strong {
+  color: var(--text-0);
+}
+
+.stateGlyph {
+  font-family: var(--font-mono);
+}
+
+/*
+  THE TWO COSMETIC SWATCHES ARE STYLED HERE RATHER THAN GIVEN ATTRIBUTES,
+  for the same reason the map's own rings are: a fill written as an SVG
+  presentation attribute has to be a literal, and this codebase does not
+  write colour literals. Styled from a module, a swatch reads the same
+  tokens as every chip on the page.
+*/
+.ringSwatch {
+  fill: none;
+  stroke: var(--brand-gold);
+  stroke-width: 1.3;
+  stroke-dasharray: 4 4;
+  stroke-opacity: 0.8;
+}
+
+.outlineSwatch {
+  fill: var(--accent-tint);
+  stroke: var(--line-strong);
+  stroke-width: 1.2;
+  fill-opacity: 0.7;
+}
+
+.note {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-2);
+  background: var(--surface-2);
+  border-left: 2px solid var(--brand-gold);
+  color: var(--text-2);
+}
+
+/* --- Motion --------------------------------------------------------- */
+
+/*
+  base.css already flattens every duration under this query. It is repeated
+  here because the two rules above are the only motion this card has, and a
+  component that relies on a global to be honest about motion is a
+  component that stops being honest the day it is used somewhere else.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .rowToggle,
+  .rowOnly {
+    transition: none;
+  }
+}
+
+/* --- Narrow ---------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  /*
+    ON A PHONE THIS IS A PILL THAT OPENS INTO HALF THE MAP, AND NO MORE.
+
+    Shut, it is the word "Key" beside the hide list control. Opened, it is
+    capped at half the height of the map and pinned to the top edge, so the
+    board it is filtering stays visible underneath it while the reader
+    presses lanes and watches the marks go. A key that covers a phone's
+    whole map has filtered a board nobody can see, which is a worse failure
+    than a key that has to be scrolled.
+  */
+  .card {
+    top: var(--space-2);
+    right: var(--space-2);
+    width: min(300px, calc(100% - var(--space-5)));
+    max-height: calc(100% - var(--space-4));
+  }
+
+  .card[data-open="yes"] {
+    max-height: 50%;
+  }
+
+  /*
+    The two words after "Key" go to the screen reader only while the card
+    is shut. They are what pushed this pill into the hide list control
+    beside it at 380px, and a control with its own label covered is worse
+    than a key with a shorter one. They come back the moment the card is
+    opened, and they never left the accessible name.
+  */
+  .card[data-open="no"] .headLabelRest {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (pointer: coarse) {
+  /* A thumb needs the whole row, not the words in it. */
+  .rowToggle {
+    min-height: 48px;
+  }
+}

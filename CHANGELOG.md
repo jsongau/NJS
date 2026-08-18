@@ -4,6 +4,18 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-18
 
+- `me` — the add-a-prospect dialog is portalled to `document.body`. It
+  rendered inside the side rail, where `position: fixed; inset: 0` on the
+  scrim is only true while no ancestor carries a transform. Measured on
+  the shipped build: put a transform on one rail ancestor and the scrim
+  collapses from 1300x844 to 251x451 and the panel is squeezed to 219px
+  and clipped, which on screen is the page going grey with no dialog and
+  nothing in the console. The rail is full of transforms already, all of
+  them on sibling rows rather than ancestors, so the defect was one
+  refactor away rather than live. The portal removes the class: verified
+  1300x844 scrim and a 560px dialog with and without an ancestor
+  transform, where the old build fails the second case.
+
 - `champ` — new. The Territory Book at `nathanjsong.com/champ`, a local
   marketing and market prospecting console for the Champions Group
   Holdings Marketing Manager, West Division posting. Copied from `me`,

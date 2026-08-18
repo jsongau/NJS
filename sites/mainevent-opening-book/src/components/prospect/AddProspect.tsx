@@ -10,6 +10,7 @@ import {
   type Dispatch,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 import type { Lane, OrgType } from "@/domain/types";
 import { LANE_META, LANE_ORDER } from "@/domain/lanes";
 import { PROSPECTS } from "@/data/prospects";
@@ -424,7 +425,41 @@ export function AddProspectButton({
         </p>
       ) : null}
 
-      {open ? (
+      {/*
+        THE DIALOG IS PORTALLED TO THE BODY, AND THAT IS A BUG FIX
+        RATHER THAN A TIDY-UP.
+
+        This markup lives inside the side rail. The scrim is
+        `position: fixed; inset: 0`, which everybody reads as "covers the
+        viewport", and it is only true while no ancestor creates a
+        containing block. Any ancestor carrying a `transform`, a
+        `filter`, a `perspective`, `backdrop-filter`, `will-change:
+        transform` or `contain: paint` silently re-points every fixed
+        descendant at THAT box instead of the viewport, and the rail is
+        full of transforms: every row presses two pixels along its axis
+        on :active, the featured key drops three, the collapse chevron
+        flips on scaleX.
+
+        None of those is an ancestor of this wrapper today, so the
+        dialog is correct today. It is one refactor away from not being:
+        move the add control inside a pressable group, add a slide
+        transition to the rail, put `will-change` on a scroll container
+        for smoothness, and the scrim collapses into a 252 pixel column
+        while the panel gets clipped by the rail's own `overflow: hidden
+        auto`. What a reader sees then is the screen going grey with no
+        dialog on it, and nothing in the console to explain it.
+
+        A portal to the body removes the whole class. The dialog is a
+        sibling of the application root, so no rail style can reach it,
+        and `position: fixed` means what it says forever.
+
+        The React tree is unchanged: this still renders inside the
+        provider, still reads the same state and still bubbles its
+        events through the React tree rather than the DOM one, so the
+        backdrop handler and the focus trap behave exactly as before.
+      */}
+      {open
+        ? createPortal(
         <div
           className={styles.scrim}
           onMouseDown={(e) => {
@@ -647,8 +682,10 @@ export function AddProspectButton({
               </div>
             </div>
           </div>
-        </div>
-      ) : null}
+        </div>,
+        document.body,
+          )
+        : null}
     </div>
   );
 }

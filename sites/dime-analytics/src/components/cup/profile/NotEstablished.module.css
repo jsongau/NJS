@@ -1,0 +1,109 @@
+/*
+  A FIGURE NOBODY HAS EARNED YET.
+
+  Drawn as a starting line rather than a gap: a count, a threshold, an
+  empty track and the distance printed beside it. The word "Not yet
+  established" carries a glyph as well as a colour, and the two numbers
+  carry the whole meaning on their own, so the block reads correctly in
+  greyscale and on a printout.
+
+  Tokens by name only.
+*/
+
+.wrap,
+.line {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-m);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin: 0;
+}
+
+.label {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--warn);
+}
+
+.value {
+  font-family: var(--font-display, var(--font-ui));
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.counter {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.track {
+  height: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--ok);
+}
+
+.toGo {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.because,
+.starts,
+.note {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.starts {
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+/* A paragraph rather than a flex row, so a long rule wraps as prose and
+   the badge sits at the end of the sentence instead of on a line of its
+   own under it. */
+.rule {
+  display: block;
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}

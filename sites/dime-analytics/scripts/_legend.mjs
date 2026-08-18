@@ -1,0 +1,31 @@
+import { chromium } from "playwright";
+import http from "node:http"; import fs from "node:fs"; import path from "node:path";
+const ROOT="/tmp/work/me-prospecting/dist", BASE="/me";
+const MIME={".html":"text/html",".js":"text/javascript",".css":"text/css",".png":"image/png",".svg":"image/svg+xml",".json":"application/json"};
+const server=http.createServer((req,res)=>{let p=decodeURIComponent(req.url.split("?")[0]);if(p.startsWith(BASE))p=p.slice(BASE.length)||"/";let f=path.join(ROOT,p);if(!fs.existsSync(f)||fs.statSync(f).isDirectory()){const n=path.join(f,"index.html");f=fs.existsSync(n)?n:path.join(ROOT,"index.html");}res.writeHead(200,{"Content-Type":MIME[path.extname(f)]||"application/octet-stream"});fs.createReadStream(f).pipe(res);});
+await new Promise(r=>server.listen(4191,r));
+const TILE=fs.readFileSync("/tmp/work/me-prospecting/scripts/_tile.png");
+const b=await chromium.launch({executablePath:"/opt/pw-browsers/chromium-1194/chrome-linux/chrome"});
+const ctx=await b.newContext({viewport:{width:1700,height:1000}});
+await ctx.route(/cartocdn/,r=>r.fulfill({status:200,contentType:"image/png",body:TILE}));
+const p=await ctx.newPage();
+await p.goto("http://localhost:4191/me/map",{waitUntil:"networkidle"});
+await p.waitForTimeout(1600);
+const read=async(tag)=>{
+  const r=await p.evaluate(()=>{
+    const legend=[...document.querySelectorAll("p[role='status']")].map(e=>e.innerText.replace(/\s+/g," ").trim()).filter(t=>/organisations on the map/.test(t));
+    const dl=document.querySelector("dl[aria-live]");
+    const org=dl?dl.innerText.replace(/\s+/g," ").match(/Organisations[^0-9]*([0-9]+) of ([0-9]+)/):null;
+    const pins=document.querySelectorAll(".leaflet-marker-icon").length;
+    return {legend:legend[0]||"(closed)", strip:org?`${org[1]} of ${org[2]}`:"?", pins};
+  });
+  console.log(tag, JSON.stringify(r));
+};
+await read("baseline      ");
+await p.locator("input[type=search], input[placeholder*='Name, city']").first().fill("brea");
+await p.waitForTimeout(700); await read("after search  ");
+await p.locator("input[type=search], input[placeholder*='Name, city']").first().fill("");
+await p.waitForTimeout(700);
+await p.getByRole("button",{name:/Put the run on the board/i}).first().click();
+await p.waitForTimeout(1400); await read("after take run");
+await b.close(); server.close();

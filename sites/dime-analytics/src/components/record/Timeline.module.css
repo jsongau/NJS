@@ -1,0 +1,316 @@
+/*
+  THE THREAD.
+
+  Dense by construction: 14px body text, a hairline between rows, and no
+  card chrome around individual messages. A conversation is a list, and a
+  list of cards is a list that has been made harder to scan.
+
+  Direction survives greyscale three times over: the glyph, the word, and
+  the left rule, which is solid for what came in and dashed for what went
+  out. The tint on the rule is the fourth signal and never the first.
+*/
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ---------------------------------------------------------------
+   Filters
+   --------------------------------------------------------------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+}
+
+.facet {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.facetLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--text-0);
+  /* Pressed is carried by the inset rule as well as the fill, so the
+     state is legible with the colour removed. */
+  box-shadow: inset 2px 0 0 var(--tone, var(--accent));
+}
+
+.chipGlyph {
+  color: var(--tone, var(--text-2));
+}
+
+.chipCount {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.count {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.clear {
+  min-height: 32px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------
+   Rows
+   --------------------------------------------------------------- */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.row {
+  position: relative;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+}
+
+.row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: var(--space-2);
+  bottom: var(--space-2);
+  width: 3px;
+  border-radius: var(--radius-pill);
+}
+
+.inbound::before {
+  background: var(--ok);
+}
+
+/* Dashed rather than solid, so the two directions differ in shape and
+   not only in hue. */
+.outbound::before {
+  background: repeating-linear-gradient(
+    var(--accent-line) 0 4px,
+    transparent 4px 8px
+  );
+}
+
+.rowHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+}
+
+.dir {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--tone, var(--text-0));
+}
+
+.dirGlyph {
+  font-size: var(--step--2);
+}
+
+.chan {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+.when {
+  margin-left: auto;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.role {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.subject {
+  display: block;
+  font-weight: 400;
+  color: var(--text-2);
+}
+
+.body {
+  margin: var(--space-2) 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.summarised {
+  display: block;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.more {
+  margin-top: var(--space-1);
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.effect {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-1);
+}
+
+.effectLabel {
+  display: inline-block;
+  margin-right: var(--space-2);
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-3);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.tags {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border: 1px solid var(--tone, var(--line-2));
+  border-radius: var(--radius-pill);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--tone, var(--text-1));
+  background: var(--surface-2);
+}
+
+.prov {
+  margin-top: var(--space-2);
+}
+
+/* ---------------------------------------------------------------
+   Empty
+   --------------------------------------------------------------- */
+
+.empty {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--surface-3);
+  border-radius: var(--radius-m);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+/*
+  NOT A CLEARED BOARD, AND NOT AN ERROR EITHER.
+
+  Both empty states this glyph marks are honest absences: a thread where
+  nothing has been said in either direction, and a filter that matched
+  none of the messages in one. Neither is work somebody finished, so
+  neither gets the strike. What they were getting instead was the dimmest
+  ink in the ramp, which is how this application draws a value that
+  failed to arrive. One step up the ramp is enough to say "there is
+  nothing here" without saying "something went wrong".
+*/
+.emptyGlyph {
+  color: var(--text-2);
+}
+
+@media (pointer: coarse) {
+  .chip,
+  .clear,
+  .more {
+    min-height: 44px;
+  }
+}

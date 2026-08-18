@@ -1,0 +1,481 @@
+/*
+  The bar is hairline separated cells on the board's own surface. No fill,
+  no card, no shadow, one rule underneath it, because a row of boxed tiles
+  across the top of a three pane screen reads as a second navigation and
+  this is not one.
+
+  IT FITS. There is no scroller in this file and no paging control, at any
+  width down to 380px. The figures are a grid of equal columns that drops
+  from five to three to two, and the whole top line is a wrapping flex row,
+  so the segment control keeps the figures company while there is room for
+  them beside it and hands them their own line when there is not. Nothing
+  is ever off the right hand edge.
+
+  EQUAL COLUMNS ARE ALSO THE STILLNESS. Every track is `1fr`, so a count
+  falling from two hundred and eleven to two changes no width and moves
+  nothing beside it. Labels reserve their second line whether they use it or
+  not, which costs fourteen pixels once and buys a bar that never jumps, at
+  any type size the reader chooses.
+*/
+
+.bar {
+  /* The board below is the only thing that is ever short of space, so the
+     bar never gives up a pixel of its own height to it. */
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 76px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--line);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* ---------------------------------------------------------------
+   The board segment
+   --------------------------------------------------------------- */
+
+.segment {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 1px;
+  align-self: center;
+  padding: 2px;
+  background: var(--line-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+}
+
+.segmentButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  background: var(--surface-1);
+  border: 0;
+  color: var(--text-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.segmentButton:first-child {
+  border-top-left-radius: calc(var(--radius-m) - 2px);
+  border-bottom-left-radius: calc(var(--radius-m) - 2px);
+}
+
+.segmentButton:last-child {
+  border-top-right-radius: calc(var(--radius-m) - 2px);
+  border-bottom-right-radius: calc(var(--radius-m) - 2px);
+}
+
+.segmentButton:hover {
+  color: var(--text-0);
+}
+
+/*
+  The pressed position is an inverted cell, not a tinted one. Hue is the
+  third signal here at most: the glyph in front of the label changes with
+  the position, the count is beside it, and the inversion is a value
+  difference that survives a greyscale filter.
+*/
+.segmentButton[data-on="yes"] {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+/*
+  The full label and the short one are both in the markup and CSS chooses
+  between them. The full sentence stays on the button's accessible name and
+  in its title at every width, so nothing is lost to a reader who needs it.
+*/
+.segmentLabel {
+  letter-spacing: 0.01em;
+}
+
+.segmentShort {
+  display: none;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 1500px) {
+  .segmentLabel { display: none; }
+  .segmentShort { display: inline; }
+}
+
+.segmentGlyph {
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+.segmentCount {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.segmentButton[data-on="yes"] .segmentCount {
+  color: var(--text-inverse);
+  opacity: 0.75;
+}
+
+/* ---------------------------------------------------------------
+   The five figures
+   --------------------------------------------------------------- */
+
+/*
+  `flex: 1 1 340px` is the whole responsive story of the top line. While
+  there are three hundred and forty pixels going spare beside the segment
+  control the figures sit next to it; below that they take a line of their
+  own, in the same DOM order, so the reading order and the tab order still
+  agree with the picture. No media query decides that, because the width
+  the segment control needs depends on the reader's font size and a
+  breakpoint cannot see it.
+*/
+.figures {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  flex: 1 1 340px;
+  min-width: 0;
+  margin: 0;
+}
+
+/*
+  POSITIONED, AND THE REASON IS NOT COSMETIC.
+
+  Every figure carries a `ProvenanceBadge`, and the badge carries a
+  visually hidden span for the reader who cannot see the mark. That span is
+  absolutely positioned, so without a positioned ancestor its containing
+  block is the page itself, which means a hidden span sitting at x=1573
+  makes the whole DOCUMENT scroll sideways. It cost an afternoon to find
+  once. One line fixes it and it must not be deleted as decoration.
+*/
+.kpi {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  align-content: center;
+  min-width: 0;
+  padding: var(--space-1) var(--space-3);
+  border-left: 1px solid var(--line);
+}
+
+.kpi:first-child {
+  border-left: 0;
+  padding-left: var(--space-2);
+}
+
+/*
+  SENTENCE CASE, AND SMALLER LETTERING IS NOT WHY.
+
+  The label was set in eleven point capitals with a tenth of an em of
+  tracking, which is the single most expensive way to write "Live
+  conversations": capitals cost about a fifth more width than lower case
+  before the tracking is counted, and the tracking adds another eighteen
+  pixels to that label alone. Sentence case at the same size gives the
+  width back to the number, which is the thing on this bar that is supposed
+  to be loud.
+
+  Two lines are reserved here rather than allowed to happen. A label that
+  wraps only at some widths is a bar whose height depends on the viewport,
+  and a label that wraps only for a reader running 20px text is a bar that
+  breaks for exactly the reader who needed it not to.
+*/
+.kpiLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-1);
+  min-height: 2.6em;
+  font-size: var(--step--2);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.005em;
+  color: var(--text-2);
+}
+
+.kpiLabelText {
+  min-width: 0;
+}
+
+.kpiValue {
+  margin: 0;
+  font-size: var(--step-2);
+  line-height: 1.1;
+  color: var(--text-0);
+  white-space: nowrap;
+}
+
+/*
+  THE ONE FIGURE THE ROW ARRIVES AT.
+
+  Five numerals at one size give the eye nowhere to land, so a reader cold
+  on this board parses all five and takes an answer from none of them. The
+  lead cell is set one step larger and heavier, which is a difference in
+  value rather than in hue: it reads the same with every drop of colour
+  stripped out, which on this application is the constraint rather than the
+  nicety.
+
+  The cell keeps its track width, so nothing beside it moves. Only the type
+  inside it changes, and the label above it is untouched, so the two line
+  reserve that keeps this bar from jumping still holds.
+*/
+.kpi[data-lead="yes"] .kpiValue {
+  font-size: var(--step-3);
+  font-weight: 600;
+}
+
+.kpi[data-lead="yes"] .kpiLabelText {
+  color: var(--text-1);
+}
+
+/* The denominator is quieter than the figure but it is never dropped.
+   "12 of 211" beats "12", every time. */
+.kpiOutOf {
+  font-size: var(--step--1);
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   The disclosure
+   --------------------------------------------------------------- */
+
+.more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  flex: none;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  color: var(--text-2);
+  font-size: var(--step--2);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.more:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+}
+
+.moreShort {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .moreLabel { display: none; }
+  .moreShort { display: inline; }
+}
+
+.moreCount {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.moreGlyph {
+  font-size: var(--step--2);
+  line-height: 1;
+  color: var(--text-3);
+}
+
+/* The `hidden` attribute loses to any display declaration, so the closed
+   panel says so twice. */
+.panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-3) var(--space-5);
+  padding: var(--space-3) var(--space-2) var(--space-1);
+  border-top: 1px solid var(--line);
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.panelFigures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3) var(--space-5);
+  flex: 1 1 100%;
+  margin: 0;
+  min-width: 0;
+}
+
+/* Positioned for the same reason `.kpi` is: the badges in here carry
+   absolutely positioned hidden spans. */
+.panelRow {
+  position: relative;
+  min-width: 0;
+}
+
+.panelTerm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.panelValue {
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--text-0);
+}
+
+.panelNote {
+  margin: 2px 0 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+/*
+  The key. The marks on the strip are shapes with a word in a tooltip and
+  in the accessibility tree, which covers a pointer and a screen reader and
+  leaves out the reader who is sighted, on a keyboard, and cannot hover
+  anything. Here the word is simply printed beside the shape.
+*/
+.key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  flex: 1 1 100%;
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+}
+
+.keyLabel {
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+/*
+  THE BAR STAYS ONE LINE FOR AS LONG AS IT POSSIBLY CAN, and the reason is
+  height rather than looks. Below 1024px this application's own navigation
+  wraps to two rows and takes ninety more pixels off the top of the board,
+  so a stat bar that grew a line early would leave a list column with a
+  header and no list under it. The flex basis above lets it stay on one
+  line for as long as the arithmetic allows, and the rules below only take
+  over once the layout underneath has already changed shape.
+*/
+
+@media (max-width: 900px) {
+  /* Three across, five figures, so the second row carries two. A tile at
+     roughly a third of a tablet is wide enough for the longest label on one
+     line, which is where the reserved second line stops being spent. */
+  .figures {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-1) 0;
+  }
+
+  /* The hairline separates figures along a line. Once the grid wraps, the
+     cell that starts a row has nothing to its left to be separated from,
+     and a rule hanging off the left margin reads as a table gone wrong. */
+  .kpi:nth-child(3n + 1) {
+    border-left: 0;
+    padding-left: var(--space-2);
+  }
+}
+
+@media (max-width: 768px) {
+  /*
+    ON A PHONE THIS IS NOT A ROW AND IT SHOULD STOP PRETENDING. The segment
+    control takes the whole width and the figures become a block of tiles.
+    A strip is read along a line; a block is read down a column; a strip
+    squeezed to a phone is read by nobody.
+  */
+  .bar {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .segment {
+    flex: 1 1 100%;
+    align-self: stretch;
+  }
+
+  .segmentButton {
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .kpi {
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .kpi:first-child {
+    padding-left: var(--space-2);
+  }
+}
+
+@media (max-width: 560px) {
+  .bar {
+    min-height: 0;
+  }
+
+  .figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Two columns now, so the rule belongs to every second cell and the
+     three across rule above has to be undone rather than left to fight
+     with this one. */
+  .kpi {
+    border-left: 1px solid var(--line);
+    padding-left: var(--space-3);
+  }
+
+  .kpi:nth-child(odd) {
+    border-left: 0;
+    padding-left: var(--space-2);
+  }
+
+  .segmentButton {
+    gap: var(--space-1);
+    padding: 0 var(--space-2);
+    font-size: var(--step--2);
+    min-height: 38px;
+  }
+
+  .segmentGlyph {
+    font-size: var(--step--2);
+  }
+
+  .kpiValue {
+    font-size: var(--step-1);
+  }
+
+  /* The whole width, because a 44px control floating at the end of a tile
+     row on a phone looks like a mistake and is easy to miss. */
+  .more {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+}

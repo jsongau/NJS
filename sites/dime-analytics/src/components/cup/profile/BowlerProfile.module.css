@@ -1,0 +1,155 @@
+/*
+  THE BOWLER PROFILE.
+
+  The handle is set in the operator face, which is what this application
+  uses everywhere a string is a label somebody chose rather than a fact
+  somebody published. That difference is the whole point of a handle and
+  the type says it before the disclosure line does.
+
+  Tokens by name only. No hex, no [data-theme].
+*/
+
+.handle,
+.handleInline {
+  font-family: var(--font-operator, var(--font-mono));
+  letter-spacing: 0.01em;
+}
+
+.handleInline {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.position {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+
+.captain {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.seed {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+
+.sub {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.none {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  color: var(--text-2);
+}
+
+.yes {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.no {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  color: var(--text-2);
+}
+
+.nickname {
+  font-family: var(--font-operator, var(--font-mono));
+  font-weight: 700;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.quote {
+  display: block;
+  font-size: var(--step-0);
+  line-height: 1.5;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.blank {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The exhibition figures
+   --------------------------------------------------------------- */
+
+.rates {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.rate {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-m);
+}
+
+.rateValue {
+  font-family: var(--font-display, var(--font-ui));
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-0);
+}
+
+.rateLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+
+.rateNote {
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+.rateMark {
+  margin-top: var(--space-1);
+}
+
+@media (max-width: 720px) {
+  .rates {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

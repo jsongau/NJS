@@ -1,0 +1,358 @@
+/*
+  ADD A PROSPECT.
+
+  Drawn for one hand, outdoors, at 380px, and then allowed to look like
+  the rest of the application on a laptop. Every control in here is at
+  least 44 pixels tall for that reason and not as a concession: a rep
+  typing a shop name while standing outside it is the primary case, and
+  the desk is the secondary one.
+*/
+
+.wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.trigger {
+  width: 100%;
+  min-height: 44px;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------
+   The line that says it saved
+   --------------------------------------------------------------- */
+
+.saved {
+  margin: 0;
+  padding: 6px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  line-height: 1.35;
+}
+
+.savedName {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.undo {
+  min-height: 24px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--text-0);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------
+   The dialog
+   --------------------------------------------------------------- */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  /* The strong wash, because this dialog owns the screen while it is
+     open. It is a token rather than an rgba because a scrim has to be
+     darker than whatever it covers, and on two grounds that is two
+     values: the near black this used to be was a proper dim over paper
+     and nothing at all over the dark ground it shipped on. */
+  background: var(--scrim-strong);
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(560px, 100%);
+  max-height: min(88vh, 780px);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-0);
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+}
+
+.head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+.title {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-0);
+}
+
+.close {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: -6px -8px -6px 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--text-2);
+  font-size: var(--step-0);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/*
+  Two fields side by side on a laptop and stacked on a phone. The pair is
+  lane and role, which are the two a rep answers from memory rather than
+  by reading a sign.
+*/
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: 0;
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.required {
+  font-size: var(--step--3);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--risk);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-0);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+}
+
+.textarea {
+  min-height: 72px;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.hint {
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.dupe,
+.error {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 2px 0 0;
+  font-size: var(--step--2);
+  line-height: 1.35;
+  color: var(--text-1);
+}
+
+.dupe {
+  padding: 5px var(--space-2);
+  border-left: 3px solid var(--warn);
+  background: var(--warn-tint);
+}
+
+.dupeGlyph {
+  color: var(--warn);
+  font-weight: 700;
+}
+
+.error {
+  padding: 5px var(--space-2);
+  border-left: 3px solid var(--risk);
+  background: var(--risk-tint);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------
+   The type tiles
+   --------------------------------------------------------------- */
+
+.tiles {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tileRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin-top: 4px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 62px;
+  padding: 6px 4px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+
+.tile:hover {
+  background: var(--surface-2);
+  color: var(--text-0);
+}
+
+/*
+  A chosen tile carries a heavier border, a tinted ground and bolder
+  type, so the choice survives greyscale. The glyph is already different
+  per type, which is the second signal after the word.
+*/
+.tile[aria-pressed="true"] {
+  border: 2px solid var(--text-0);
+  padding: 5px 3px;
+  background: var(--surface-0);
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.tileGlyph {
+  font-size: var(--step-1);
+  line-height: 1;
+}
+
+.tileLabel {
+  font-size: var(--step--3);
+  font-weight: inherit;
+  line-height: 1.15;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------
+   The foot
+   --------------------------------------------------------------- */
+
+.foot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+.footNote {
+  flex: 1;
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.actions {
+  flex: none;
+  display: flex;
+  gap: var(--space-2);
+}
+
+.actions button {
+  min-height: 44px;
+}
+
+@media (max-width: 560px) {
+  .scrim {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .dialog {
+    width: 100%;
+    max-height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .pair {
+    grid-template-columns: 1fr;
+  }
+
+  .tileRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

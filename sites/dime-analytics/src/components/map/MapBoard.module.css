@@ -1,0 +1,637 @@
+/*
+  THE GRID.
+
+  Four layouts and one set of rules. The columns are the tokens
+  `--col-list` and `--col-drawer` and nothing here sets a pane width by
+  any other means: if a pane needs to be wider the token changes, once,
+  and the desk drawer changes with it.
+
+  The collapse animates the COLUMN to zero rather than putting the pane
+  into `display: none`. Two things follow from that and both are the
+  reason for it. The transition is possible at all, and the pane's own
+  scroll position survives being reopened, so a reader who collapsed the
+  list sixty cards down finds it sixty cards down when they bring it
+  back. `prefers-reduced-motion` already zeroes `--dur-2`, so the
+  transition disappears for free on a machine that asked for that.
+*/
+
+/*
+  A flex column rather than a grid with named rows, because the rows this
+  shell holds are conditional: the phone switcher exists in one layout of
+  the four, and a fixed `grid-template-rows` would leave the board sitting
+  in the wrong row the moment one of them was absent. The bar and the
+  switcher take their own height, the board takes the rest, and the board
+  is the only thing that is ever short of space.
+*/
+.shell {
+  /*
+    How tall the switcher row is, declared once so the board can subtract
+    it. Zero in every layout that has no switcher, which is every layout
+    above 380px.
+  */
+  --switcher-h: 0px;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background: var(--surface-0);
+}
+
+.shell[data-mode="single"] {
+  --switcher-h: 53px;
+}
+
+/*
+  The shell takes its height from AppShell's flex column rather than from
+  `calc(100vh - var(--nav-h))`. The viewport arithmetic looks tidier and
+  is wrong: the shell also carries a footer, so a page sized against the
+  nav alone is taller than the space it is given and pushes the footer
+  off the bottom of the screen.
+*/
+
+.board {
+  display: grid;
+  grid-template-columns: var(--col-list) minmax(0, 1fr) var(--col-drawer);
+  flex: 1;
+  min-height: 0;
+  transition: grid-template-columns var(--dur-2) var(--ease-out);
+}
+
+.board[data-list="off"] {
+  grid-template-columns: 0 minmax(0, 1fr) var(--col-drawer);
+}
+
+.listCol {
+  min-width: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+/* ---------------------------------------------------------------
+   ARRIVAL
+
+   Every other route in this application is a document that swaps into a
+   column. This one takes the whole viewport, and it was doing it with no
+   transition at all: the console vanished and a wall of three panes was
+   simply there, which reads as a page break rather than as a screen
+   being entered.
+
+   The rule this obeys is that it must not cost anybody a millisecond.
+   Nothing here delays a press: the panes are in the document, hit
+   testable and keyboard reachable from the first frame, and what moves
+   is a compositor transform and an opacity. No layout property is
+   animated, nothing shifts under a pointer, and the map column is left
+   out of it entirely, because sliding a Leaflet container is how a tile
+   grid arrives torn.
+
+   The stagger is the whole effect: the strip, then the list, then the
+   panel, seventy milliseconds apart, so the eye is walked left to right
+   across the board once and then left alone. It runs on mount and never
+   again, so collapsing the list or taking a run does not replay it.
+   --------------------------------------------------------------- */
+
+/*
+  THE LAST FRAME IS `transform: none`, NOT `translate3d(0, 0, 0)`.
+
+  With `both` the element keeps the closing frame for the life of the
+  page, and an element holding any transform at all becomes the
+  containing block for every `position: fixed` descendant under it. The
+  detail pane is fixed below 1024px and the compose modal is fixed at
+  every width, so an identity transform left behind here would have
+  anchored a full screen dialog to a grid column. `none` is the same
+  pixels and leaves nothing behind.
+*/
+@keyframes boardArrive {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
+  The board itself is excluded, deliberately. It holds the map column,
+  and a Leaflet container that arrives on a moving transform paints its
+  tile grid torn and then has to be told its size again. The two panes
+  either side of the map animate; the map is simply there.
+*/
+.body > *:not(.board),
+.listCol,
+.detailCol {
+  animation: boardArrive 240ms var(--ease-out) both;
+}
+
+.listCol {
+  animation-delay: 70ms;
+}
+
+.detailCol {
+  animation-delay: 140ms;
+}
+
+/*
+  REMOVED, NOT SHORTENED, when the reader has asked for that. `both` on
+  the shorthand above means the element would otherwise hold the opening
+  frame of an animation that never plays, which is a board that never
+  appears at all, so the property is dropped rather than given a zero
+  duration.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .body > *:not(.board),
+  .listCol,
+  .detailCol {
+    animation: none;
+  }
+}
+
+/*
+  Each pane scrolls inside itself. The board never scrolls, and the page
+  never scrolls sideways: the columns are `minmax(0, 1fr)` and every pane
+  carries `min-width: 0`, which is what stops a long organisation name
+  from widening a column past the viewport.
+*/
+.detailCol {
+  min-width: 0;
+  overflow: hidden;
+  border-left: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+.mapCol {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   The chrome band
+   --------------------------------------------------------------- */
+
+/*
+  ONE DARK ROW ACROSS THE TOP, AND IT IS THE ONLY DARK THING HERE.
+
+  A takeover has no rail, no breadcrumb and no page chrome around it, so
+  the band has to do three jobs at once: say where the reader is, give
+  them the way back, and hold the one control that changes the shape of
+  the board. It is inverted rather than papered because it is the only
+  band on the screen that is not part of the working surface, and a
+  reader has to be able to tell in one glance which pixels are the screen
+  and which are the frame around it.
+
+  It never scrolls and it never collapses. Everything below it can move,
+  reflow or turn into a sheet; this row is fixed at the top of the
+  takeover at every width, because it holds the only way out.
+*/
+.chrome {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 56px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+/*
+  THE RIGHT HAND GROUP NEVER SHRINKS AND THE LEFT ALWAYS DOES.
+
+  Both sides were shrinkable once and the result was the Escape hint
+  sliced in half by the right edge of a 1440px screen, because a flex row
+  with `min-width: 0` on both children will happily push the second one
+  past the viewport rather than truncate the first. The controls are worth
+  more than the prose: the way out, the list toggle and the hint keep
+  their whole width at every size, and the screen name and its note give
+  up characters to an ellipsis instead.
+*/
+.chromeLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.chromeRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: none;
+}
+
+/*
+  The way out, and it is the most prominent control in the band on
+  purpose. Escape does the same thing, and Escape is a keyboard secret: a
+  touch reader has no Escape key at all, and a reader who arrived here by
+  clicking a link in a rail that is now unmounted has no browser affordance
+  either that says this screen has a back. So the button carries a word,
+  not a glyph, at a real target size.
+*/
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  background: transparent;
+  border: 1px solid var(--text-inverse);
+  border-radius: var(--radius-m);
+  color: var(--text-inverse);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Mixed from the ink of the inverted band rather than typed as a white.
+   The band is a lit cream on one ground and the housing on the other, so
+   a literal white wash is a hover on one of them and a smear on the
+   other. --text-inverse is whichever ink that band takes. */
+.back:hover {
+  background: color-mix(in srgb, var(--text-inverse) 14%, transparent);
+}
+
+.backShort {
+  display: none;
+}
+
+/* THE RING ON THIS BAND IS THE BAND'S OWN INK, and it is measured. The
+   signal magenta clears 2.03:1 on the lit cream and 2.14:1 on the
+   housing, so it failed the 3:1 a focus indicator owes on BOTH grounds,
+   not just the new one. --text-inverse is 13.78 and 15.47 on the same
+   two, because it is the ink this band was built to carry. Same reasoning
+   as the ring inside the letter in EmailComposeModal. */
+.back:focus-visible,
+.listToggle:focus-visible {
+  outline: 2px solid var(--text-inverse);
+  outline-offset: 2px;
+}
+
+.chromeTitle {
+  min-width: 0;
+}
+
+.chromeName {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-inverse);
+}
+
+.chromeNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.3;
+  color: var(--text-inverse-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+  The hide list control. It is a button with a word in it, not an icon:
+  "Hide list" and "Show list" say what pressing it will do, which is the
+  only thing a label on a toggle is for, and below 768px it says how many
+  organisations are waiting behind it as well.
+*/
+.listToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  background: color-mix(in srgb, var(--text-inverse) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-inverse) 42%, transparent);
+  border-radius: var(--radius-m);
+  color: var(--text-inverse);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.listToggle:hover {
+  background: color-mix(in srgb, var(--text-inverse) 16%, transparent);
+}
+
+.escHint {
+  flex: none;
+  font-size: var(--step--2);
+  color: var(--text-inverse-2);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   The body
+   --------------------------------------------------------------- */
+
+/*
+  Everything under the chrome band: the figure strip, the switcher where
+  there is one, and the board. It is a separate box from the shell for
+  one reason, and the reason only shows up on a phone: below 768px this
+  is the element that scrolls, and the band above it does not go with it.
+*/
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------------------------------------------------------------
+   The phone switcher
+   --------------------------------------------------------------- */
+
+/*
+  Fifty three pixels, exactly: a 44px hit target, four above and four
+  below, and the hairline. It is written into `--switcher-h` above so the
+  board can take the rest of the screen to the pixel rather than to the
+  nearest guess, and the padding is deliberately tight because every row
+  of chrome on this layout is paid for out of the map.
+*/
+.switcher {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  height: var(--switcher-h);
+  padding: var(--space-1) var(--space-3);
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--line);
+}
+
+.switcherButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  color: var(--text-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switcherButton:first-child {
+  border-top-left-radius: var(--radius-m);
+  border-bottom-left-radius: var(--radius-m);
+}
+
+.switcherButton:last-child {
+  border-top-right-radius: var(--radius-m);
+  border-bottom-right-radius: var(--radius-m);
+}
+
+/* Inverted, not tinted. A pressed position that differs from an unpressed
+   one only in hue is a position the owner of this site cannot read. */
+.switcherButton[data-on="yes"] {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.switcherButton:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---------------------------------------------------------------
+   The sheet
+   --------------------------------------------------------------- */
+
+.sheetScrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-tray);
+  /* The lighter wash, as a token, for the same reason as every other
+     scrim in the application: it has to darken both grounds. */
+  background: var(--scrim);
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-tray);
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  max-height: 85dvh;
+  background: var(--surface-0);
+  border-top: 1px solid var(--line-2);
+  border-top-left-radius: var(--radius-l);
+  border-top-right-radius: var(--radius-l);
+  box-shadow: var(--shadow-3);
+}
+
+.sheetHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex: none;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+  border-top-left-radius: var(--radius-l);
+  border-top-right-radius: var(--radius-l);
+}
+
+.sheetTitle {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.sheetClose {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  color: var(--text-1);
+  font-size: var(--step--1);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sheetBody {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   1024 and below. The panel leaves the grid.
+   --------------------------------------------------------------- */
+
+/*
+  The panel becomes an overlay anchored right, and it positions itself:
+  `ProspectDetailPane` switches to `position: fixed` off its own
+  `asOverlay` prop and draws its own scrim. So the wrapper stops being a
+  column and stops being a box, which is exactly what `display: contents`
+  is for. The board is two columns from here down.
+*/
+@media (max-width: 1024px) {
+  .board {
+    grid-template-columns: var(--col-list) minmax(0, 1fr);
+  }
+
+  .board[data-list="off"] {
+    grid-template-columns: 0 minmax(0, 1fr);
+  }
+
+  .detailCol {
+    display: contents;
+  }
+}
+
+/* ---------------------------------------------------------------
+   768 and below. The list leaves the grid too.
+   --------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .board,
+  .board[data-list="off"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /*
+    THE MAP GETS THE SCREEN AND THE FIGURES GET A FLICK.
+
+    From here down the shell is the scroll region and the board is sized
+    to the visible part of it, so the map is the first thing under the
+    page header and it ends exactly at the fold. That last part is not a
+    nicety: the zoom buttons, the offers card and the CARTO attribution
+    are all pinned to the bottom edge of the map pane, and a board that
+    ran past the fold would push the licence line off the screen.
+
+    `height: 100%` resolves against the shell's own box, which is
+    definite because AppShell is one viewport tall and every wrapper
+    between here and it carries `min-height: 0`. The `dvh` floor under it
+    only bites on a viewport too short for the arithmetic above to leave
+    anything worth drawing, such as a handset held sideways, and there it
+    chooses a scrollbar over a fifty pixel map.
+  */
+  .body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+  }
+
+  /*
+    The band gives up its second line before the map gives up a pixel.
+    The note under the screen name is a nicety; the way out is not.
+
+    The Escape hint goes with it, and that one is not a compromise. A
+    handset has no Escape key, so the sentence was telling a phone reader
+    about a control they do not have while taking room from the map. The
+    Back button beside it does the same job with a thumb.
+  */
+  .chrome {
+    min-height: 52px;
+    padding: var(--space-1) var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .chromeNote,
+  .escHint,
+  .backLong {
+    display: none;
+  }
+
+  .backShort {
+    display: inline;
+  }
+
+  /* The name stays. A takeover with no name on it is a screen a reader
+     has arrived at rather than one they chose. It only gets smaller. */
+  .chromeName {
+    font-size: var(--step--1);
+  }
+
+  .board {
+    flex: none;
+    height: calc(100% - var(--switcher-h));
+    min-height: 46dvh;
+  }
+
+  /*
+    The switcher is the way back to the other two panes, so it stays
+    against the top of the scroll region while the map slides under it.
+  */
+  .switcher {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-rail);
+  }
+}
+
+/* ---------------------------------------------------------------
+   380 and below. One pane and a switcher.
+   --------------------------------------------------------------- */
+
+/*
+  Three panes never coexist on a phone, and neither do two. The board
+  holds the map, the switcher under the stat bar names the three things a
+  reader can look at, and the two that are not the map come up over it:
+  the list as a sheet, the panel as a full screen overlay.
+
+  Why the list is not simply the pane at this width is arithmetic rather
+  than preference, and it is written out in `MapBoard.tsx` beside the
+  state that decides it. Briefly: the chrome, the header, the strip and
+  the switcher leave under three hundred pixels of board, and the list
+  pane's own sticky header is three hundred and ten on its own. A column
+  here would be a header with no list under it.
+
+  THE MAP IS NEVER UNMOUNTED. It is the one child of the board at this
+  width and it simply gets covered. Unmounting it would cost the zoom,
+  the pan and every marker, which is a reader's place on the screen.
+*/
+@media (max-width: 380px) {
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /*
+    THE BAND'S LIST TOGGLE COMES OFF, AND ONLY HERE.
+
+    At this width the switcher sits directly under the band and already
+    names all three panes, with radio semantics and a count announced in
+    the live region beside it. Two controls for one job in a 380 pixel row
+    is how the screen name gets pushed off the end of it, and the name is
+    the thing that says which screen a reader is standing on. The sheet's
+    own close control returns focus to the switcher's list position rather
+    than to a button that is not drawn.
+  */
+  .listToggle {
+    display: none;
+  }
+
+  /* The sheet takes the screen it needs. The switcher underneath it is
+     still the way back, so the sheet stops short of the very top. */
+  .sheet {
+    height: 88vh;
+    max-height: 88dvh;
+  }
+}

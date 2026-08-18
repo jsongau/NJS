@@ -1,0 +1,1054 @@
+/*
+  Method.
+
+  THIS IS THE ONE PAGE IN THE APPLICATION THAT IS PRIMARILY PROSE, and it
+  is styled as a document rather than as a dashboard. Everything here
+  serves one requirement: a careful reader has to be able to get through
+  two thousand words without losing their place or their patience.
+
+  Three decisions carry it.
+
+  THE MEASURE IS 68 CHARACTERS. Not 78, which is what the working screens
+  use, because those columns are read in glances beside a table and this
+  one is read continuously. A line longer than about seventy characters
+  makes the eye lose the start of the next one, and on a page whose whole
+  argument is "this is worth reading properly" that is not a cosmetic
+  problem.
+
+  THE INDEX IS PINNED AND TRACKS POSITION. A long page with no visible
+  shape gets abandoned at the first scroll. The rail carries the ordinal,
+  the section name and a one-line gist, so it doubles as a summary for a
+  reader who never scrolls at all. It highlights the section they are in
+  with a rule, a shift in weight and a filled ordinal, so the current
+  position never depends on colour alone.
+
+  THE SECOND SECTION LOOKS DIFFERENT FROM EVERY OTHER SECTION. The
+  removed prospect is the most persuasive paragraph on the page, so it is
+  set on an inverted ground with a struck-through name and the serif
+  face. It should be the thing a reader remembers a week later, and a
+  reader remembers what looked different.
+
+  Colour does nothing structural anywhere below. Strip it out and the
+  hierarchy, the rules, the ordinals and the glyphs still carry the page.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 78ch;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--line);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--brand-gold-600));
+}
+
+.h1 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-4);
+}
+
+.lede {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-1);
+  max-width: 72ch;
+}
+
+.subLede {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: 72ch;
+}
+
+/* ---------------------------------------------------------------
+   The board: rail plus prose
+   --------------------------------------------------------------- */
+
+.board {
+  display: grid;
+  grid-template-columns: 244px minmax(0, 1fr);
+  gap: var(--space-7);
+  align-items: start;
+}
+
+/* --- The rail --------------------------------------------------- */
+
+/*
+  Sticky inside the scrolling page region rather than fixed to the
+  viewport, so it sits under the app chrome and scrolls away at the
+  bottom of the document instead of hovering over the footer.
+*/
+.rail {
+  position: sticky;
+  top: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.railTitle {
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+}
+
+.railList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.railLink {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-2);
+  /* The left rule is the affordance the active state thickens. It is
+     always present so nothing shifts when a section becomes current. */
+  border-left: 2px solid transparent;
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  font-weight: 500;
+  color: var(--text-1);
+  text-decoration: none;
+}
+
+.railLink:hover {
+  background: var(--surface-2);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+/* Three signals at once: the rule, the weight and the filled ordinal.
+   None of them is a colour on its own. */
+.railLink[data-active="true"] {
+  border-left-color: var(--brand-gold);
+  background: var(--brand-gold-tint);
+}
+
+.railLink[data-active="true"] .railLabel {
+  color: var(--text-0);
+  font-weight: 700;
+}
+
+.railLink[data-active="true"] .railOrdinal {
+  background: var(--brand-gold);
+  border-color: var(--brand-gold);
+  color: var(--surface-1);
+}
+
+.railLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.railOrdinal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--3);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.railText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.railLabel {
+  font-size: var(--step--1);
+  line-height: 1.3;
+}
+
+.railGist {
+  font-size: var(--step--3);
+  line-height: 1.35;
+  color: var(--text-3);
+}
+
+/* --- The prose column -------------------------------------------- */
+
+.prose {
+  min-width: 0;
+  /* 68 characters. See the note at the top of this file. */
+  max-width: 68ch;
+}
+
+.section {
+  margin-bottom: var(--space-8);
+  /* The nav is sticky and 56px tall, so an anchor jump has to clear it
+     or every section lands with its heading behind the chrome. */
+  scroll-margin-top: calc(var(--sticky-h) + var(--space-4));
+}
+
+.section:last-child { margin-bottom: var(--space-5); }
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--text-0);
+}
+
+/* The section numbers run the length of a very long document, so they
+   are the one mark a reader passes over and over. They take the section
+   ink, which makes them the same colour as the eyebrow at the top and
+   the crumb in the band above it. */
+.ordinal {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--sec-ink, var(--brand-gold-600));
+  letter-spacing: 0.04em;
+}
+
+.h2 {
+  margin: 0;
+  font-size: var(--step-3);
+}
+
+.h3 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-size: var(--step-1);
+}
+
+/*
+  THE SECTION LEAD IS THE SERIF OPERATOR FACE. Serif for voice, sans for
+  work, which is the rule the whole application follows. The lead is the
+  sentence a reader hears rather than operates, so it gets Spectral, a
+  size above the body, and a slightly looser measure than the paragraphs
+  under it.
+*/
+.lead {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-operator);
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.p {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+.p strong { color: var(--text-0); }
+
+.pTight {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Figure strips
+   --------------------------------------------------------------- */
+
+.tallies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--brand-gold);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.tally {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tallyValue {
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-0);
+}
+
+.tallyLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--3);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Callouts
+   --------------------------------------------------------------- */
+
+.callout {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border-left: 3px solid var(--brand-gold);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-2);
+}
+
+.calloutLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-gold-600);
+}
+
+.calloutGlyph { font-size: 12px; line-height: 1; }
+
+.calloutText {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-0);
+}
+
+.calloutText strong { font-weight: 700; }
+
+/* ---------------------------------------------------------------
+   Source links
+   --------------------------------------------------------------- */
+
+.src {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 0;
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.srcGlyph { color: var(--prov-public); }
+
+.srcLabel {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.srcList {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.srcRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.srcRow:last-child { border-bottom: none; }
+
+.srcRowName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--text-0);
+}
+
+.srcRowEmail {
+  font-size: var(--step--2);
+  color: var(--text-2);
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------------
+   The excision. Section two, and the only inverted block on the page.
+   --------------------------------------------------------------- */
+
+.excision {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-m);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.excisionLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--brand-gold-line);
+}
+
+.excisionGlyph { font-size: 12px; line-height: 1; }
+
+/*
+  The struck-through name is the whole idea of the block in one line, and
+  the rule is drawn rather than typed so it cannot be mistaken for
+  punctuation by a screen reader or by a reader of the source.
+*/
+.excisionName {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text-inverse);
+}
+
+.excisionName::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 52%;
+  height: 2px;
+  /* The line weight of the signal rather than the fill weight, which is
+     the same distinction the label above this rule already makes. The
+     fill measures 2.03:1 on the lit cream and 2.14:1 on the housing, so
+     the rule was under the 3:1 a graphical mark owes on BOTH grounds;
+     the line weight is 4.73 and 4.72 on the same two. */
+  background: var(--brand-gold-line);
+}
+
+.excisionBody {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  /* The second rung of the inverted panel's own ramp. It was a white at
+     82 percent, which is second rung ink only while the panel is dark,
+     and the panel is a lit cream on this ground. */
+  color: var(--text-inverse-2);
+}
+
+.excisionKicker {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-inverse);
+  font-family: var(--font-operator);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--text-inverse);
+}
+
+/* ---------------------------------------------------------------
+   The rest of what was refused.
+
+   Deliberately NOT the inverted treatment above. One removed row gets
+   the dramatic block because it is an argument; the other nine are a
+   record, and a record that shouts loses the thing that makes it
+   convincing. So this is the plainest list on the page: a name, an
+   address, a reason, and a hairline between each one.
+   --------------------------------------------------------------- */
+
+.excluded {
+  margin: 0 0 var(--space-5);
+}
+
+.excludedGroupTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-0);
+}
+
+.excludedGlyph {
+  font-size: 12px;
+  line-height: 1;
+  color: var(--risk);
+}
+
+.excludedCount {
+  margin-left: auto;
+  padding: 2px 8px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-2);
+  background: var(--surface-2);
+}
+
+.excludedGroupNote {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.excludedList {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.excludedList:last-child { margin-bottom: 0; }
+
+.excludedRow {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  border-left: 3px solid var(--risk-tint);
+}
+
+.excludedRow:last-child { border-bottom: none; }
+
+.excludedName {
+  margin: 0 0 2px;
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--text-0);
+}
+
+.excludedAddress {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+  overflow-wrap: anywhere;
+}
+
+.excludedReason {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The provenance legend
+   --------------------------------------------------------------- */
+
+.legend {
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.legendRow {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.legendRow:last-child { border-bottom: none; }
+
+/* The withheld row is the one the section is about, so it gets the only
+   emphasis in the list. */
+.legendRow:last-child { background: var(--surface-2); }
+
+.legendTerm { margin: 0; }
+
+.legendDesc {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.withheldDemo {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+/* ---------------------------------------------------------------
+   The score table
+   --------------------------------------------------------------- */
+
+.tableWrap {
+  margin: 0 0 var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.tableCaption {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+  background: var(--surface-2);
+}
+
+.table thead th {
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--line-2);
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.table td,
+.table tbody th {
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.45;
+  color: var(--text-1);
+}
+
+.table tbody tr:last-child td,
+.table tbody tr:last-child th { border-bottom: none; }
+
+/* A criterion spans its own cases, so the rule that separates criteria
+   is heavier than the one that separates the cases inside one. */
+.table tbody tr[data-first="true"] th,
+.table tbody tr[data-first="true"] td {
+  border-top: 1px solid var(--line-2);
+}
+
+.rowHead {
+  width: 40%;
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+  border-right: 1px solid var(--line);
+}
+
+.rowHeadOrder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  color: var(--text-2);
+  vertical-align: 1px;
+}
+
+.numCol {
+  width: 84px;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--text-0);
+  font-weight: 600;
+}
+
+.penaltyRow td,
+.penaltyRow th {
+  background: var(--surface-2);
+  border-top: 1px solid var(--line-2);
+}
+
+/* The lane rollup. The chip carries the glyph and the occasion class cap,
+   the name carries the word, and the colour is the third signal as it is
+   everywhere else. */
+
+/*
+  Four columns is one more than the desk weights table carries, and three
+  of them are headed by a phrase rather than a word. Left to size itself
+  the header row will not go narrower than its longest heading, and a
+  table that cannot go narrower than 500px inside a 364px column pushes
+  the whole page sideways rather than scrolling inside its own wrapper.
+  So the headings here are allowed to wrap onto two lines, which costs a
+  few pixels of height and keeps the page in its gutters at 380. The
+  first column is headed "On the board" rather than "Organisations" for
+  the same reason: one unbreakable thirteen letter word set in tracked
+  uppercase is wider on a phone than the column it sits over, and it
+  reads better against the section it is in anyway.
+*/
+.laneNumHead {
+  white-space: normal;
+}
+
+.laneCell {
+  width: 42%;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-0);
+  border-right: 1px solid var(--line);
+}
+
+.laneCellName {
+  margin-left: 8px;
+  font-size: var(--step--1);
+  line-height: 1.35;
+}
+
+/* --- The reasoning under the table -------------------------------- */
+
+.reasons {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  counter-reset: reason;
+}
+
+.reason {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  background: var(--surface-1);
+}
+
+.reasonHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-1);
+}
+
+.reasonName {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.reasonPoints {
+  flex: none;
+  padding: 1px 6px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--step--3);
+  font-weight: 600;
+  color: var(--text-1);
+  background: var(--surface-2);
+  white-space: nowrap;
+}
+
+.reasonWhy {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The two ledgers
+   --------------------------------------------------------------- */
+
+.ledgers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+}
+
+.ledger {
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--ledgerTone, var(--line-strong));
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.ledger[data-ledger="booked-revenue"] {
+  --ledgerTone: var(--ledger-revenue);
+  background: var(--ledger-revenue-tint);
+}
+
+.ledger[data-ledger="outbound-activity"] {
+  --ledgerTone: var(--ledger-activity);
+  background: var(--ledger-activity-tint);
+}
+
+.ledgerHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+}
+
+.ledgerGlyph {
+  color: var(--ledgerTone);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.ledgerName {
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.ledgerNote {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--text-1);
+}
+
+.ledgerType {
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Day one
+   --------------------------------------------------------------- */
+
+.dayOne {
+  list-style: none;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  counter-reset: dayone;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dayOneItem {
+  counter-increment: dayone;
+  padding: var(--space-4);
+  padding-left: var(--space-7);
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+}
+
+.dayOneItem::before {
+  content: counter(dayone, decimal-leading-zero);
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--brand-gold-600);
+}
+
+.dayOneWhat {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-0);
+}
+
+.dayOneHow {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+.dayOneHow strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   Disclaimer
+   --------------------------------------------------------------- */
+
+.disclaimer {
+  padding: var(--space-5);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+}
+
+.disclaimerP {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: var(--text-1);
+}
+
+.disclaimerP:last-child { margin-bottom: 0; }
+
+.disclaimerP strong { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   Responsive.
+
+   The rail is the first thing to change. Below 1080px it stops being a
+   column and becomes a horizontal strip of anchors above the prose,
+   because a 244px sidebar and a 68 character measure do not both fit.
+   It stays sticky there, at the top, so the shape of the page is still
+   visible while reading.
+   --------------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  .board { grid-template-columns: 210px minmax(0, 1fr); gap: var(--space-5); }
+  .railGist { display: none; }
+}
+
+@media (max-width: 1000px) {
+  .board { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+
+  .rail {
+    position: static;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .railList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .railLink {
+    grid-template-columns: auto auto;
+    gap: 6px;
+    padding: var(--space-1) var(--space-2);
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--radius-s);
+  }
+
+  .railLink[data-active="true"] {
+    border-left-color: transparent;
+    border-bottom-color: var(--brand-gold);
+  }
+
+  .prose { max-width: 68ch; margin: 0 auto; }
+}
+
+@media (max-width: 720px) {
+  .srcRow { grid-template-columns: minmax(0, 1fr); }
+  .legendRow { grid-template-columns: minmax(0, 1fr); }
+  .rowHead { width: auto; }
+  .laneCell { width: auto; }
+
+  /* Narrow enough that fixed column widths and roomy cell padding are
+     what stops the table fitting, so both go. */
+  .laneTable th,
+  .laneTable td {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+
+  .laneTable .numCol { width: auto; }
+  .laneCellName { margin-left: 6px; }
+}
+
+@media (max-width: 520px) {
+  .inner { padding: var(--space-4) var(--space-3) var(--space-7); }
+  .h1 { font-size: var(--step-3); }
+  .h2 { font-size: var(--step-2); }
+  .lead { font-size: var(--step-0); }
+  .p, .pTight { font-size: var(--step--1); }
+  .excision { padding: var(--space-4); }
+  .excisionName { font-size: var(--step-2); }
+  .disclaimer { padding: var(--space-4); }
+  .tallies { padding: var(--space-3); gap: var(--space-3); }
+}
+
+@media (max-width: 380px) {
+  .inner { padding: var(--space-3) var(--space-2) var(--space-7); }
+  .tallies { grid-template-columns: 1fr; }
+  .tallyValue { font-size: var(--step-1); }
+  .dayOneItem { padding-left: var(--space-4); padding-top: var(--space-6); }
+  .dayOneItem::before { top: var(--space-3); }
+  .reasonHead { flex-direction: column; gap: var(--space-1); }
+}

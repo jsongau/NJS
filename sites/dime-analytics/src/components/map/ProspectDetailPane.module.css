@@ -1,0 +1,1521 @@
+/*
+  THE RIGHT HAND PANE.
+
+  It has two shapes and only two, and the board decides which by setting
+  `data-overlay`. Above 1024px it is a grid column and owns no position at
+  all: it fills whatever the board's `--col-drawer` track gives it, which
+  is why nothing in this file sets a width in that state. At 1024px and
+  below there is no room for a third column beside a usable map, so the
+  same markup becomes an overlay anchored to the right edge with a scrim
+  behind it, and the component turns on the dialog semantics to match.
+
+  THE VERTICAL ARRANGEMENT IS THE POINT OF THIS FILE. Three parts, in
+  order: a header that does not scroll, a tab bar that sticks to the top
+  of the scrolling region, and a panel under it that scrolls. The header
+  is deliberately short, because everything it costs comes straight out
+  of the space the tab bar needs to be visible without scrolling, and the
+  owner's complaint was that the tabs were buried.
+
+  Hairlines and type hierarchy carry the structure. There are no shadows
+  doing structural work here except the one that lifts the overlay off
+  the map, which is the only place a shadow describes something true.
+*/
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  background: var(--surface-1);
+}
+
+/* ---------------------------------------------------------------
+   The overlay shape
+   --------------------------------------------------------------- */
+
+.pane[data-overlay="true"] {
+  position: fixed;
+  top: var(--sticky-h);
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-drawer);
+  width: min(var(--col-drawer), 92vw);
+  border-left: 1px solid var(--line-2);
+  box-shadow: var(--shadow-3);
+}
+
+/*
+  The scrim is a sibling rather than a pseudo element on the pane.
+
+  A `::before` with a negative z-index would paint after the pane's own
+  background and tint the whole panel, which is the kind of bug that
+  looks like a design choice. Two fixed siblings at the same z-index
+  paint in source order, so the scrim goes first and the pane sits on it.
+*/
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  /* The lighter wash, as a token. The map keeps working behind this
+     pane, and the dim has to read on both grounds rather than only on
+     the one the literal was written against. */
+  background: var(--scrim);
+}
+
+/* ---------------------------------------------------------------
+   Head. Name, role, distance, phone, four chips, two actions, and
+   nothing else. It is measured: at 1440 by 900 this block plus the
+   tab bar has to fit above the fold with the panel showing under it.
+   --------------------------------------------------------------- */
+
+.head {
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  /* The one amber hairline on the pane, so the head reads as a head
+     without a heavier rule or a filled bar. */
+  box-shadow: inset 0 -3px 0 -2px var(--brand-gold-line);
+}
+
+.headTop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.headText {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: 1.2;
+}
+
+.name:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/*
+  THE ADDRESS, IN THE HEADER, ON ONE LINE.
+
+  The owner asked for it in the right hand column and a rep about to
+  drive should not have to change tabs to find it. It costs a single
+  line of 1.4 leading, which is the whole budget the header could give
+  it: everything this block takes comes straight out of the space the
+  tab bar needs to be visible at 900 pixels tall, and that was the
+  complaint this header was rebuilt to answer.
+
+  It truncates rather than wraps. A second line here would cost the same
+  again on the twelve longest addresses only, which is a header that
+  changes height depending on which pin was pressed. The full string is
+  on the tooltip, in the accessible name and set as an address on the
+  Place tab, which is one press away and already open by default.
+*/
+.headAddress {
+  margin: 3px 0 0;
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headMeta {
+  margin: 2px 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.headRole {
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+.phone {
+  white-space: nowrap;
+}
+
+.close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  cursor: pointer;
+  font-size: var(--step--1);
+  line-height: 1;
+}
+
+.close:hover {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+  color: var(--text-0);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.headChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin-top: var(--space-2);
+}
+
+/*
+  THE CLOCK. Glyph, then words, then colour, in that order and never
+  fewer. A stale record carries a filled triangle and the word "Stale"
+  as well as the red, because the owner of this application is
+  colourblind and a red pip on its own says nothing to him.
+*/
+.clock {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--neutral);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.clock[data-stale="true"] {
+  border-left-color: var(--risk);
+  background: var(--risk-tint);
+  color: var(--text-0);
+}
+
+.clockFlag {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--step--3);
+  color: var(--risk);
+}
+
+/* ---------------------------------------------------------------
+   The two header actions
+
+   THE FIRST ONE IS TINTED, NOT FILLED. A solid amber block here would
+   out-shout the organisation's own name sixty pixels above it, and the
+   name is what the header is for. The outline plus the tint is enough
+   separation to read as the primary of the two at a glance, and the
+   glyph and the words carry the difference for anybody who cannot see
+   the hue at all.
+   --------------------------------------------------------------- */
+
+.headActions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.headAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2);
+  border-radius: var(--radius-s);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 650;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.headAction:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.headWrite {
+  border: 1px solid var(--accent);
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+.headWrite:hover {
+  background: var(--accent);
+  color: var(--text-inverse);
+}
+
+.headQuote {
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+  color: var(--text-1);
+}
+
+.headQuote:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-3);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+.outOfFilter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 5px var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-s);
+  background: var(--warn-tint);
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------
+   The scrolling region and the tab bar that sticks to the top of it
+   --------------------------------------------------------------- */
+
+.scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/*
+  STICKY WITHIN THE PANE, NOT WITHIN THE PAGE. The scroller is the
+  nearest scrolling ancestor, so `top: 0` pins the bar to the top of
+  this column rather than to the top of the document, and the panel
+  runs underneath it. The z-index is above the panel's own content and
+  below the overlay, so nothing in a tab can paint over the bar.
+*/
+.tabBar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  /* Five equal tracks. A fifth tab took each one from about 108 pixels
+     to about 86, which is why the label below is allowed to wrap inside
+     its own column and the horizontal padding came down to two pixels;
+     a bar that wraps to two ROWS costs far more height than either. */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line-2);
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 52px;
+  padding: var(--space-2) 2px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 650;
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.tab + .tab {
+  border-left: 1px solid var(--line);
+}
+
+.tab:hover {
+  color: var(--text-0);
+  background: var(--surface-3);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* Ground, weight, glyph and the amber rule. Four signals, one of which
+   is a colour. */
+.tab[aria-selected="true"] {
+  color: var(--text-0);
+  background: var(--surface-1);
+  border-bottom-color: var(--brand-gold);
+}
+
+.tabTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.tabGlyph {
+  line-height: 1;
+}
+
+.tabLabel {
+  text-align: center;
+}
+
+/*
+  THE BADGE IS THE SECOND HALF OF THE LABEL. It carries the count or the
+  state, so the bar itself answers three questions before anything is
+  pressed. It never disappears: an empty tab says "None" rather than
+  going blank, because a missing badge reads as a rendering fault.
+*/
+.tabBadge {
+  font-family: var(--font-mono);
+  font-size: var(--step--3);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-2);
+  text-align: center;
+}
+
+.tab[aria-selected="true"] .tabBadge {
+  color: var(--text-0);
+}
+
+.tab[data-alert="true"] .tabBadge {
+  color: var(--risk);
+}
+
+/*
+  THE PANEL RESERVES ITS HEIGHT. Panels differ in length, and a browser
+  clamps the scroll position the moment a shorter one swaps in, which
+  moves the reader without their asking. A floor under every panel means
+  switching tabs from anywhere in the first few hundred pixels of scroll
+  leaves the scroll position exactly where it was.
+*/
+.panel {
+  padding: var(--space-4);
+  min-height: 520px;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ---------------------------------------------------------------
+   Shared blocks inside the panels
+   --------------------------------------------------------------- */
+
+.blockTitle {
+  margin: var(--space-4) 0 var(--space-2);
+  font-family: var(--font-ui);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+}
+
+.panel > .blockTitle:first-child {
+  margin-top: 0;
+}
+
+.note {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.hint {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.stageRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.stageClock {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--text-1);
+}
+
+.stageClock[data-stale="true"] {
+  color: var(--risk);
+}
+
+.score {
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--text-1);
+}
+
+/* A state that has to be read before the reader does anything else. */
+.alert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--ok-tint);
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.45;
+}
+
+.alert[data-alert="requeue"] {
+  border-left-color: var(--warn);
+  background: var(--warn-tint);
+}
+
+.nextLabel {
+  margin: 0 0 4px;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+  line-height: 1.3;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+}
+
+/*
+  The controls that move a deal are the one place on this pane where the
+  shared button primitive is given a floor. It ships at about thirty
+  pixels, which is right for a toolbar and wrong for the three controls
+  a rep presses with a thumb while standing in a car park.
+*/
+.control {
+  min-height: 44px;
+}
+
+/* Empty until something is done here, which is why it reserves no
+   height and announces politely rather than shouting. */
+.worked {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--ok);
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.worked:empty {
+  margin: 0;
+}
+
+.facts {
+  margin: var(--space-3) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 11ch 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.fact dt {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.fact dd {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.5;
+}
+
+.email {
+  word-break: break-all;
+}
+
+.sourceLink {
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+.emptyBlock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.emptyBlock p {
+  margin: 0;
+}
+
+/*
+  A fact the research does not have. It is drawn as a fact rather than
+  left blank, because a blank cell reads as a rendering fault and this
+  application would rather say "none, and here is why" than show nothing
+  and let a reader assume the field failed to load.
+*/
+.absent {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------
+   Place
+
+   THE DENSE REFERENCE TAB. Aligned facts, hairlines between the
+   blocks, one column at narrow widths and two where the pane can
+   carry them. Almost nothing here is labelled twice: an address set
+   on two lines, a phone number in mono behind a call affordance and a
+   domain in a link are all recognisable on sight, and the labels that
+   remain are on the values that genuinely need one.
+   --------------------------------------------------------------- */
+
+.placeTop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/*
+  SET AS AN ADDRESS, NOT AS A FIELD. Two lines, the street above the
+  locality, upright rather than the browser default italic, and at the
+  largest type on the panel because it is the first thing the tab
+  exists to answer.
+*/
+.address {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.addressStreet {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--text-0);
+  line-height: 1.3;
+}
+
+.addressLocality {
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.35;
+}
+
+/*
+  THE TWO THINGS A REP DOES WITH AN ADDRESS.
+
+  Two equal tracks rather than a flex row, so the pair keeps its shape
+  at every width this pane is given and neither control shrinks under
+  the 44 pixel floor. They sit under the address rather than beside it
+  because the street line is the long value on this tab and it should
+  have the whole column, not whatever is left after two buttons.
+*/
+.placeActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.placeAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 650;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+}
+
+.placeAction:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-3);
+  color: var(--text-0);
+  text-decoration: none;
+}
+
+.placeAction:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Reserves nothing until it has something to say, exactly as `.worked`
+   does on the Status panel. */
+.copied {
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  font-weight: 650;
+  color: var(--ok);
+  line-height: 1.45;
+}
+
+.copied:empty {
+  margin: 0;
+}
+
+/*
+  TWO ACROSS WHERE THERE IS ROOM, ONE WHERE THERE IS NOT.
+
+  The pane is 432 pixels wide as a grid column, which leaves about 392
+  inside the padding: two 168 pixel tracks fit and two of the eleven
+  character label gutters `.fact` uses do not, which is why these cells
+  stack their label over their value instead. Below the pane's narrow
+  breakpoint the track count drops to one and the whole tab reads as a
+  single column.
+*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+/* A grid that follows a heading already has that heading's rule above
+   it and does not need a second one four pixels under it. */
+.blockTitle + .grid {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/*
+  THE BLOCKS ARE SEPARATED BY HAIRLINES, ON THIS TAB ONLY.
+
+  Four blocks of aligned facts run together into one long list without
+  a rule between them, and this is the one panel dense enough for that
+  to matter. Elsewhere in the pane a heading has enough space around it
+  to do the work on its own.
+*/
+.panel[data-panel="place"] .blockTitle {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.cell {
+  min-width: 0;
+}
+
+.cell dt {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.cell dd {
+  margin: 2px 0 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px;
+  font-size: var(--step--2);
+  color: var(--text-0);
+  line-height: 1.5;
+}
+
+.cellHint {
+  flex-basis: 100%;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/*
+  THE PHONE IS A CONTROL, NOT A STRING.
+
+  He named the phone number explicitly, and this is the tab somebody
+  opens with a handset already in the other hand. An inline link inside a
+  paragraph is a twelve pixel target on a phone; this is a full width row
+  at the 44 pixel floor, and it is still an ordinary `tel:` anchor, so a
+  desktop browser hands it to whatever the reader has registered and a
+  handset dials it.
+*/
+.call {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  color: var(--text-0);
+  font-size: var(--step--2);
+}
+
+.call:hover {
+  border-color: var(--line-strong);
+  border-left-color: var(--accent);
+  background: var(--surface-3);
+  text-decoration: none;
+}
+
+.call:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.callNumber {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.callAbsent {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.5;
+}
+
+/*
+  THE SECOND ROUTE, IN THE SAME SHAPE AS THE FIRST.
+
+  Same box as the phone so the two read as a choice between two doors,
+  and a plain left edge rather than the amber one, because the handset
+  is the route that works for every organisation on this board and the
+  written door is the route that works for fifty seven of them.
+*/
+.door {
+  margin-top: var(--space-2);
+  border-left-color: var(--line-2);
+}
+
+.door:hover {
+  border-left-color: var(--line-strong);
+}
+
+/*
+  An address or a form path, allowed to break anywhere. These strings
+  have no spaces in them and the pane is 432 pixels wide as a grid
+  column, so without this a long departmental address pushes the row
+  sideways and takes the panel with it.
+*/
+.doorValue {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+/* The confidence reading, under the route it describes rather than
+   crowded into it. */
+.doorNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/*
+  The path is kept beside the domain rather than dropped. "bousd.us"
+  says an address came off a school district somewhere; "bousd.us/staff"
+  is a claim a reader can check in fifteen seconds, and that difference
+  is the reason the field is carried at all.
+*/
+.sourcePath {
+  color: var(--text-2);
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  word-break: break-all;
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Potential
+   --------------------------------------------------------------- */
+
+.evidence {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.evidenceRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 2px var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ok);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.45;
+}
+
+.evidenceRow[data-sign="minus"] {
+  border-left-color: var(--risk);
+}
+
+.evidenceLabel {
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.evidenceWeight {
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.evidenceRow[data-sign="minus"] .evidenceWeight {
+  color: var(--risk);
+}
+
+.evidenceWhen {
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.evidenceQuote {
+  grid-column: 1 / -1;
+  color: var(--text-2);
+  font-style: italic;
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 5px var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-2);
+  font-size: var(--step--2);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.filterBtn:hover {
+  border-color: var(--line-strong);
+  color: var(--text-0);
+}
+
+.filterBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.filterBtn[aria-pressed="true"] {
+  background: var(--surface-inverse);
+  border-color: var(--surface-inverse);
+  color: var(--text-inverse);
+}
+
+.packList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.packRow {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+}
+
+.packRow[data-lead="true"] {
+  border-color: var(--line-2);
+  border-left: 3px solid var(--brand-gold);
+  background: var(--surface-2);
+}
+
+.packHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.packName {
+  font-size: var(--step--1);
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.leadFlag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border: 1px solid var(--brand-gold-line);
+  border-radius: var(--radius-s);
+  background: var(--brand-gold-tint);
+  color: var(--brand-gold-600);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.packMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.packMetaLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   Last activity
+   --------------------------------------------------------------- */
+
+.sentList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sentRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+}
+
+.sentKind {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+}
+
+.sentDate {
+  color: var(--text-3);
+  text-align: right;
+}
+
+.sentSubject {
+  grid-column: 1 / -1;
+  color: var(--text-0);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.outcome {
+  color: var(--tone, var(--text-2));
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   Offers
+   --------------------------------------------------------------- */
+
+.offerList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.offerRow {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.offerRow[data-state="open"] {
+  border-left: 3px solid var(--info);
+}
+
+.offerHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 4px;
+}
+
+.offerName {
+  font-size: var(--step--1);
+  font-weight: 650;
+}
+
+.offerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.offerCost {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-1);
+  line-height: 1.5;
+}
+
+.offerFree {
+  font-weight: 650;
+  color: var(--ok);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------
+   Nothing selected. Short, because a permanent column with nothing in
+   it is an invitation rather than a lecture.
+   --------------------------------------------------------------- */
+
+.empty {
+  padding: var(--space-4);
+}
+
+.emptyHeading {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-0);
+  line-height: 1.25;
+}
+
+.emptyDo {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+/*
+  A SENTENCE, SET AS A SENTENCE. This was briefly a flex row so the
+  provenance badge would sit neatly on the baseline, and flex turned
+  every text node into an item of its own: the full stop after the score
+  became a box with eight pixels of gap on either side of it. The badge
+  is inline content in a paragraph, and paragraphs are laid out by the
+  text engine.
+*/
+.emptyDoLead {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.emptyDoLead strong {
+  color: var(--text-0);
+}
+
+.emptyDoNext {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+.emptyDoNote {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.emptyFoot {
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/*
+  The way out of the run when it is drawn over a handset. It is pinned
+  rather than placed in a header, because this state has no header: the
+  run is the content and a bar above it carrying one glyph would cost a
+  row of a screen that is already the whole viewport. Forty four pixels
+  square, because on a phone this is the only control between the reader
+  and the board.
+*/
+.emptyClose {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+}
+
+/* ---------------------------------------------------------------
+   THE GO-SEE RUN, which is what stands here before anything is chosen
+
+   It is the loudest thing in this pane on purpose. It is the only
+   answer this screen has that the ranked desk does not, and the pane it
+   sits in used to spend its largest type saying it had nothing to say.
+   --------------------------------------------------------------- */
+
+.run {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.runKicker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+/*
+  "On the board" is a word, not a tint. The run being applied changes
+  what the list and the map are showing, which is a large thing to have
+  happened, and a reader who cannot tell one colour from another still
+  has to be able to tell whether it happened.
+*/
+.runOn {
+  padding: 1px var(--space-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-s);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--text-0);
+}
+
+.run .emptyHeading {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step-1);
+}
+
+/*
+  Three figures across, each carrying its own mark. They do not wrap to
+  a second row at any width this pane reaches, because the pane is 432
+  pixels in its grid state and 100vw on a handset, and three short
+  values fit both.
+*/
+.runFigures {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+}
+
+.runFigure dt {
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-2);
+  line-height: 1.3;
+}
+
+.runFigure dd {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--space-1);
+  margin: 2px 0 0;
+  font-size: var(--step-0);
+  color: var(--text-0);
+}
+
+/*
+  THE STOPS ARE AN ORDERED LIST BECAUSE THE ORDER IS THE CONTENT. The
+  numeral is not decoration and it is not a rank: it is the sequence
+  somebody walks, nearest the building first, so the column is set in
+  the same tabular figures every other count in this application uses.
+*/
+.runStops {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.runStops li {
+  border-bottom: 1px solid var(--line);
+}
+
+.runStop {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  /* A coarse pointer gets a full target on every row of this list. */
+  min-height: 44px;
+  padding: var(--space-2) var(--space-1);
+  background: none;
+  border: 0;
+  text-align: left;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+/*
+  Hover and focus move colour and nothing else. The list is inside a
+  scrolling pane, so anything that changed a size or a shadow here would
+  reflow or repaint a column somebody is reading down.
+*/
+.runStop:hover {
+  background: var(--surface-3);
+  color: var(--text-0);
+}
+
+.runStop:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.runStopRank {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.runStopText {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.runStopName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.runStopMeta {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.runStopMiles {
+  flex: none;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.runActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+}
+
+.runAction {
+  min-height: 44px;
+}
+
+.runProv {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+@media (max-width: 520px) {
+  /* Below this there is no meaningful map left beside the overlay, so
+     it takes the width and behaves as a full sheet. */
+  .pane[data-overlay="true"] {
+    top: 0;
+    width: 100vw;
+    border-left: 0;
+  }
+  .head,
+  .panel,
+  .empty {
+    padding: var(--space-3);
+  }
+  .fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+  /* One column, because two 168 pixel tracks inside a 356 pixel sheet
+     leave a headcount basis wrapping to five lines to save one row. */
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* The copy control drops under the address rather than squeezing it
+     into a two word column. */
+  .placeTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 400px) {
+  /* Five columns still, because a tab bar that wraps to two rows costs
+     more height than the labels save. The type steps down instead and
+     the labels wrap inside their own column. */
+  .tab {
+    font-size: var(--step--3);
+    padding: var(--space-2) 2px;
+  }
+  .tabGlyph {
+    display: none;
+  }
+  .evidenceRow {
+    grid-template-columns: 1fr auto;
+  }
+  .evidenceWhen {
+    grid-column: 1 / -1;
+  }
+}

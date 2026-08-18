@@ -1,0 +1,1048 @@
+/*
+  THE LEAGUE BOARD.
+
+  Two cards side by side at 1440 and stacked at 380, a table of sixteen
+  that becomes sixteen stacked blocks on a phone, and a grid of team cards
+  that is a single column below 700px.
+
+  The section carries its own identity through --sec-leagues, its ink and
+  its glow, which is how every navigation section in this build is told
+  apart. Colour is never the only signal on this page: every slot state,
+  roster state and openness reading carries a glyph and a word first, and
+  every bar prints its own number.
+
+  Tokens by name only. There is no hex value in this file.
+*/
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--surface-0);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--shell-pad) var(--space-8);
+}
+
+/* ---------------------------------------------------------------
+   Head
+   --------------------------------------------------------------- */
+
+.head {
+  max-width: 92ch;
+  margin-bottom: var(--space-5);
+}
+
+/* The eyebrow is the one line of type on this page whose whole job is
+   to say which section the reader is standing in, so it wears that
+   section's own ink. The fallback keeps it right on a screen rendered
+   outside the shell, where nothing sets --sec-ink at all. */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--sec-ink, var(--sec-leagues-ink));
+}
+
+.h1 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step-4);
+}
+
+/*
+  THE ONE SENTENCE THAT SAYS WHY THIS SCREEN IS HERE.
+
+  It is set in the section's own glow with a bar in the section's mark
+  colour, because it is the only piece of argument allowed on a working
+  surface and it should be findable in one glance and skippable in two.
+*/
+.thesis {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--sec-leagues);
+  border-radius: var(--radius-s);
+  background: var(--sec-leagues-glow);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 76ch;
+}
+
+.thesisGlyph {
+  color: var(--sec-leagues-ink);
+  line-height: 1.4;
+}
+
+.framing {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-2);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 82ch;
+}
+
+.framingGlyph {
+  color: var(--prov-public);
+  line-height: 1.4;
+}
+
+.link {
+  color: var(--text-0);
+  text-underline-offset: 2px;
+}
+
+.priceLine {
+  margin: var(--space-4) 0 0;
+  max-width: 82ch;
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.section {
+  margin-bottom: var(--space-7);
+  border-top: 1px solid var(--line-2);
+  padding-top: var(--space-5);
+}
+
+.sectionFoot {
+  margin: var(--space-4) 0 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.countLine {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   The two league cards
+   --------------------------------------------------------------- */
+
+.leagueGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-top: 3px solid var(--sec-leagues);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.cardTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.cardName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.cardLink {
+  color: var(--sec-leagues-ink);
+  text-decoration: none;
+}
+
+.cardLink:hover,
+.cardLink:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cardTagline {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.cardFacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.cardFact dt,
+.teamFacts dt {
+  margin: 0 0 2px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.cardFact dd {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-0);
+}
+
+.factSub {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.cardOpenness {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.cardWho,
+.cardAnchor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.cardWhoLabel {
+  flex: none;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.anchorName {
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.anchorBasis {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-2);
+}
+
+/*
+  A standalone destination rather than a word in a sentence, so it takes
+  the 44px floor that base.css reserves for links that are controls. The
+  prose links further down this page are words in sentences and stay at
+  their line height, which is the line that file draws.
+*/
+.cardMore {
+  margin: 0;
+  font-size: var(--step--1);
+}
+
+.cardMore a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--sec-leagues-ink);
+}
+
+/* ---------------------------------------------------------------
+   Slots
+   --------------------------------------------------------------- */
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.slotCounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.slotCount {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.slotBars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ---------------------------------------------------------------
+   Actions
+   --------------------------------------------------------------- */
+
+.actionRow,
+.boardActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.boardActions {
+  margin-top: var(--space-4);
+}
+
+.boardActionsNote {
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 52ch;
+}
+
+/*
+  Forty four pixels of tap target, kept as a min-height rather than as
+  padding so the label can wrap on a narrow phone without the control
+  growing past the row it sits in.
+*/
+.action {
+  min-height: 44px;
+  white-space: normal;
+}
+
+/* ---------------------------------------------------------------
+   Openness legend
+   --------------------------------------------------------------- */
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+  padding: var(--space-3);
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}
+
+.legendItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.legendNote {
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   League switch
+   --------------------------------------------------------------- */
+
+.switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.switchBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-1);
+  cursor: pointer;
+  text-align: left;
+}
+
+.switchBtn:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-3);
+}
+
+/*
+  The pressed state is a left bar, a weight change and a colour, in that
+  order. A tint on its own would be the one signal a colourblind reader
+  cannot use, and this control decides what the rest of the section shows.
+*/
+.switchOn {
+  border-color: var(--sec-leagues);
+  border-left-width: 4px;
+  background: var(--sec-leagues-glow);
+  color: var(--text-0);
+  font-weight: 650;
+}
+
+.switchNight {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--sec-leagues-ink);
+}
+
+.switchName {
+  font-size: var(--step-0);
+}
+
+.switchCount {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   The ladder
+   --------------------------------------------------------------- */
+
+.ladderWrap {
+  min-width: 0;
+}
+
+/*
+  Block rather than flex on purpose. The glyph, the sentence and the
+  provenance badge are one line of reading, and a flex container turns the
+  bare text between two elements into an anonymous item that claims a full
+  row of its own, which broke this line into three.
+*/
+.ladderBasis {
+  display: block;
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+  max-width: 82ch;
+}
+
+.ladder {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.ladder thead th {
+  padding: var(--space-2) var(--space-2);
+  border-bottom: 2px solid var(--sec-leagues);
+  text-align: left;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.ladder tbody td,
+.ladder tbody th {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  color: var(--text-1);
+}
+
+.colRank {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.rankNum {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+/*
+  THE TOP OF THE TABLE IS THE TOP, SAID THREE WAYS.
+
+  The rank number grows, a rule in the section colour runs down the left
+  edge, and the row carries the words "Top of the field". Any two of those
+  three can fail and the reader still knows which row is first.
+*/
+.ladderLead {
+  background: var(--sec-leagues-glow);
+  box-shadow: inset 4px 0 0 0 var(--sec-leagues);
+}
+
+.ladderLead .rankNum {
+  font-size: var(--step-2);
+  color: var(--sec-leagues-ink);
+}
+
+.rankLead {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sec-leagues-ink);
+}
+
+.ladderEmpty {
+  color: var(--text-2);
+}
+
+.ladderTeam {
+  display: block;
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.ladderEmpty .ladderTeam {
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.ladderOrg {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.rosterCell {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.rosterOf {
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Teams
+   --------------------------------------------------------------- */
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.teamTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.teamName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--text-0);
+  min-width: 0;
+}
+
+/*
+  THE ROSTER ON A TEAM CARD.
+
+  Handle first, position second, and the captain marked with a glyph and
+  the word rather than a colour. Every handle is a press that opens the
+  bowler profile, and a handle never truncates: bowlers pick these on
+  purpose and the card is sized for the two line case.
+*/
+.teamRoster {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.teamRosterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+  min-height: 32px;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.teamRosterHandle {
+  font-family: var(--font-operator, var(--font-mono));
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.teamRosterPosition {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.teamRosterCaptain {
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.teamCaptainRole {
+  display: block;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* The one line that says bowlers appear as handles. */
+.handleNote {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.teamFacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.teamFacts dd {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.4;
+  color: var(--text-1);
+}
+
+.teamOpen {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.teamOrg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-size: var(--step--1);
+}
+
+.orgName {
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+.orgNone {
+  color: var(--text-2);
+}
+
+.teamBasis {
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.teamNote {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   Organisations off the board
+   --------------------------------------------------------------- */
+
+.orgList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.orgRow {
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.orgHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.orgTwo {
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--sec-leagues-ink);
+}
+
+.orgTeams {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   League asks
+   --------------------------------------------------------------- */
+
+.askList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ask {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.askHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.askRole {
+  font-weight: 650;
+  color: var(--text-0);
+  font-size: var(--step--1);
+}
+
+.askOrg {
+  font-size: var(--step--1);
+  color: var(--text-1);
+}
+
+.askOpen {
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--warn);
+}
+
+.askDone {
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.askNote {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.askFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   What a competitor publishes
+   --------------------------------------------------------------- */
+
+.pubGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.pubCard {
+  padding: var(--space-4);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.pubTitle {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--text-0);
+}
+
+.pubCount {
+  font-family: var(--font-mono);
+  color: var(--text-2);
+}
+
+.pubBanner {
+  margin: 0 0 var(--space-3);
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--sec-leagues-ink);
+}
+
+.pubFacts {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+}
+
+.pubFacts dt {
+  margin: 0;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-2);
+}
+
+.pubFacts dd {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-0);
+}
+
+.pubScope {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.unpubList {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.unpub {
+  min-width: 0;
+}
+
+.unpubTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 2px;
+}
+
+.unpubField {
+  font-weight: 650;
+  color: var(--text-0);
+  font-size: var(--step--1);
+}
+
+.unpubNote {
+  margin: 0;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   380px. The table stops being a table.
+   --------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .ladder,
+  .ladder tbody,
+  .ladder tr {
+    display: block;
+    width: 100%;
+  }
+
+  .ladder thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .ladderRow {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-1) var(--space-3);
+    margin-bottom: var(--space-2);
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-s);
+    background: var(--surface-1);
+  }
+
+  .ladder tbody th,
+  .ladder tbody td {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+
+  .ladder tbody th.colRank {
+    grid-row: span 2;
+    align-self: start;
+  }
+
+  .ladder tbody td::before {
+    content: attr(data-label) ": ";
+    font-size: var(--step--2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-2);
+  }
+
+  .ladder tbody td[data-label="Team"] {
+    grid-column: 2;
+  }
+
+  .ladder tbody td[data-label="Team"]::before {
+    content: "";
+  }
+}
+
+/*
+  The team names and the handles on a team card are inline text presses.
+  On a coarse pointer they take the 44px box, the same way the record
+  name does. The name still wraps inside it.
+*/
+@media (pointer: coarse) {
+  .teamName button,
+  .ladderTeam button,
+  .teamRosterHandle button,
+  .teamFacts button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* ============================================================
+   TOUCH TARGET WITHOUT MOVING A PIXEL.
+
+   A league name on a board card is a destination in its own right, and on a phone it measured 26px tall
+   against the 44px a finger is owed. The naive fix is more line
+   height or more padding, and both push everything around it down
+   on the one screen size with the least room to spare.
+
+   So the padding is added and then taken straight back out with an
+   equal negative margin. The hit box grows to 44px, the layout box
+   is exactly what it was, and nothing beside it moves. It only
+   applies below 560px, because a pointer does not need it and the
+   negative margins are not worth carrying on a desktop.
+
+   inline-block rather than inline, because vertical padding on an
+   inline element paints outside the line box and is not counted in
+   the hit area at all, which would have made this look fixed while
+   changing nothing.
+   ============================================================ */
+@media (max-width: 560px) {
+  .cardLink {
+    display: inline-block;
+    padding-block: 9px;
+    margin-block: -9px;
+  }
+}
+
+/* Same technique, same reason, for the source citation. */
+@media (max-width: 560px) {
+  .link {
+    display: inline-block;
+    padding-block: 15px;
+    margin-block: -15px;
+  }
+}

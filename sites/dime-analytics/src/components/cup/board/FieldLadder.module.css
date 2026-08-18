@@ -1,0 +1,202 @@
+/*
+  THE FIELD OF SIXTEEN.
+
+  A table at 1440 because the whole value of it is that nine columns can
+  be compared down the page, and sixteen stacked blocks at 380 because a
+  table that scrolls sideways on a phone has not been made responsive, it
+  has been made unusable. The stacked form keeps every column label
+  through the data-label attribute, so nothing is lost in the transition.
+
+  Tokens by name only. No hex, and no [data-theme] selector.
+*/
+
+.wrap {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.basis,
+.foot {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin: 0;
+  max-width: 88ch;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.table thead th {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 2px solid var(--line-strong);
+  text-align: left;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.table tbody th,
+.table tbody td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  text-align: left;
+}
+
+.row[data-standing="in-the-cup"] {
+  background: var(--ok-tint);
+}
+
+.row[data-standing="in-the-plate"] {
+  background: var(--accent-tint);
+}
+
+.colRank {
+  width: 4ch;
+}
+
+.rank {
+  font-family: var(--font-mono);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.team {
+  display: block;
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+}
+
+.org {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.of {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+.standing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+/* THE FORM STRIP. The letter is the primary signal and it survives
+   greyscale, a printout and a colourblind reader. The tint is the second
+   signal and the border weight is the third. */
+.form {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.formLetter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.formLetter[data-result="won"] {
+  border-color: var(--ok);
+  background: var(--ok-tint);
+}
+
+.formLetter[data-result="lost"] {
+  border-style: dashed;
+  color: var(--text-2);
+}
+
+.formNone {
+  font-size: var(--step--2);
+  color: var(--text-3);
+}
+
+/* ---------------------------------------------------------------
+   380 is a real layout
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .table,
+  .table tbody,
+  .table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .table tbody tr {
+    display: grid;
+    grid-template-columns: 4ch minmax(0, 1fr);
+    gap: var(--space-1) var(--space-3);
+    margin-bottom: var(--space-2);
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+  }
+
+  .table tbody th,
+  .table tbody td {
+    display: block;
+    padding: 0;
+    border: 0;
+    grid-column: 2;
+  }
+
+  .table tbody th.colRank {
+    grid-column: 1;
+    grid-row: span 2;
+    align-self: start;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label) ": ";
+    font-size: var(--step--2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-2);
+  }
+
+  .table tbody td[data-label="Team"]::before {
+    content: "";
+  }
+}

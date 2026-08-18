@@ -1,0 +1,44 @@
+/*
+  The cluster bubble's own presentation, and the awkward fact that shapes
+  this whole file: a Leaflet divIcon is a div Leaflet builds for itself, so
+  it never passes through this component's JSX and cannot be given a class
+  by React.
+
+  The drawing itself is no longer this file's. `clusterIcon` in
+  `lib/map/markerIcons.ts` builds the bubble, exactly as it builds every
+  other mark on this map, and it hands the div the application's public
+  marker classes: `ob-marker`, which is what the canvas resets Leaflet's
+  white box on, and `ob-marker--cluster`. The one class below is appended
+  to those in `bubbleIcon`, because what it carries is a fact about this
+  layer's behaviour rather than about the drawing, and the marker system
+  should not have to grow a `className` parameter to accommodate one
+  caller.
+
+  WHY THERE IS NO PANE HERE. There used to be. The organisations sat in a
+  Leaflet pane of their own at z-index 590, so that the venue and the ring
+  labels in the default marker pane at 600 would always draw over them.
+  `tokens.css` flattens every Leaflet pane to a single z-index with an
+  `!important`, which is the right rule for keeping a map underneath the
+  application's own drawers and is not this file's to change, and with the
+  panes all equal a pane created last simply goes on top of every pane
+  created before it. The venue disappeared under a bubble and popups opened
+  behind the pins. Ordering inside one pane is `zIndexOffset`'s job, the
+  venue already carries 1000 and the ring labels 500, and the argument is
+  written out in full beside the markup in `ClusterLayer.tsx`.
+*/
+
+/*
+  A cursor is not a signal and it is not doing any work the numeral and the
+  title are not already doing. It is here because a bubble that zooms when
+  it is pressed should look as though it will, which is the one thing a
+  shape cannot say for itself.
+
+  Focus is deliberately NOT restyled here. `MapCanvas` already draws one
+  ring on `.leaflet-marker-icon:focus-visible`, which covers every mark on
+  the map including this one, and a second rule for one mark is how a
+  keyboard reader ends up with two different focus treatments on one
+  screen.
+*/
+.bubble {
+  cursor: zoom-in;
+}

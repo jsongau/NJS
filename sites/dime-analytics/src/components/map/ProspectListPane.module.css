@@ -1,0 +1,415 @@
+/*
+  The left pane.
+
+  A column that scrolls and a header that does not. The header holds four
+  controls and a count, and it is pinned because a reader who has scrolled
+  sixty cards down should never have to scroll back up to change the
+  question. The list underneath sits in a well so the cards read as
+  objects on a surface rather than as bands of a striped table.
+
+  THE PANE IS A COLUMN AT DESKTOP AND A SHEET BELOW THE TABLET
+  BREAKPOINT. Nothing here sets a width: the board owns the grid column,
+  and the `sheet` variant only changes what the pane looks like when it
+  is the thing sliding up from the bottom of a phone, where a squeezed
+  three hundred pixel column would be unreadable. The board owns the
+  dialog semantics; this file owns the corners, the padding and the
+  larger targets.
+*/
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  border-right: 1px solid var(--line);
+  background: var(--surface-0);
+}
+
+.sheet {
+  border-right: none;
+  border-top-left-radius: var(--radius-l);
+  border-top-right-radius: var(--radius-l);
+  background: var(--surface-0);
+  box-shadow: var(--shadow-3);
+}
+
+/* ---------------------------------------------------------------
+   Head
+
+   THE HEAD IS A BUDGET AND THE LIST IS WHAT IT IS SPENT ON. This head
+   once stood five hundred pixels tall over a list of three hundred and
+   sixty, which at 1440 by 900 left exactly one organisation fully
+   visible out of two hundred and eleven. Everything in here now is either a
+   control that changes the working set or the count that says what the
+   controls did.
+   --------------------------------------------------------------- */
+
+.head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  gap: 6px;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+}
+
+/* ---------------------------------------------------------------
+   Search
+
+   The box itself lives in `components/search`, which owns its field,
+   its dropdown and every rule about them. Nothing about it is styled
+   from here: the head only has to give it a row of the grid and let it
+   be as wide as the column.
+   --------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------
+   The occasion segment, in one row
+
+   THREE ACROSS, WHICH AN EARLIER BUILD PROVED COULD NOT BE DONE, AND
+   THE DIFFERENCE IS WHERE THE WIDTH WENT. That build gave each position
+   a heading-weight word at the body size and the three collapsed to
+   "C...", "C..." and "B". This one spends the row differently: the
+   group heading is off the screen and in the accessibility tree, the
+   words run at the small label size the rest of this head uses, and the
+   count sits after the word rather than under it. "Calendar" at that
+   size is about fifty pixels inside a position of roughly ninety five,
+   so the longest word on the control fits with room left over, which is
+   the only test a label has to pass.
+
+   NOTHING SHRINKS BELOW ITS OWN WORDS. The columns are equal fractions
+   with a zero minimum only because the content sets the floor: the word
+   never wraps and never truncates, so if a fourth class ever lands in
+   `OCCASION_CLASS_META` this row will visibly overrun rather than
+   quietly clip a label, and somebody will fix it.
+   --------------------------------------------------------------- */
+
+.occasion {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--line);
+}
+
+.occasionPosition {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  /*
+    44px because a finger has to be able to hit it, and because this is
+    the shortest row in the head: making it any smaller would save eight
+    pixels of the four hundred this pass reclaimed and cost the control
+    its target.
+  */
+  min-height: 44px;
+  padding: var(--space-1) var(--space-1);
+  border: 0;
+  border-radius: 4px;
+  background: var(--surface-1);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 650;
+  line-height: 1.1;
+  color: var(--text-1);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.occasionPosition:hover {
+  background: var(--surface-2);
+  color: var(--text-0);
+}
+
+/*
+  CHECKED IS A GROUND, A WEIGHT AND A GLYPH, NEVER A COLOUR ALONE. The
+  chosen position takes the accent tint, an accent rule around it and
+  the full text colour, and it is the only one whose glyph is drawn at
+  the accent. Read with the colour gone it is still the one position
+  sitting on a different ground with darker type, and its `aria-checked`
+  says so outright.
+*/
+.occasionPosition[data-checked] {
+  box-shadow: inset 0 0 0 1px var(--accent);
+  background: var(--accent-tint);
+  color: var(--text-0);
+}
+
+.occasionPosition[data-checked] .occasionGlyph { color: var(--accent); }
+
+.occasionPosition:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.occasionGlyph {
+  font-size: var(--step--3);
+  letter-spacing: 1px;
+  color: var(--text-2);
+}
+
+.occasionWord {
+  letter-spacing: 0.01em;
+}
+
+.occasionCount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.occasionPosition[data-checked] .occasionCount { color: var(--text-0); }
+
+/* ---------------------------------------------------------------
+   What is narrowing the board
+
+   Printed while the board is narrow rather than after it has gone
+   empty. Each chip is the filter and its own undo in one 44px target,
+   with the cross set after the words so the reader reads what they are
+   dropping before they read the control that drops it.
+   --------------------------------------------------------------- */
+
+.filterBar {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.filterLabel {
+  margin: 0;
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--text-2);
+}
+
+.filterList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  max-width: 100%;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-s);
+  background: var(--accent-tint);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 600;
+  color: var(--text-0);
+  text-align: left;
+  cursor: pointer;
+}
+
+.filterChipText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filterChip:hover {
+  border-color: var(--accent-600);
+  background: var(--surface-2);
+}
+
+.filterChip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The one that drops everything reads as a plain control rather than as
+   a fourth filter sitting beside the three that are on. */
+.filterClearAll {
+  border-color: var(--line-2);
+  background: var(--surface-1);
+  color: var(--text-1);
+}
+
+/* ---------------------------------------------------------------
+   Count
+   --------------------------------------------------------------- */
+
+/*
+  ONE CAPTION LINE FOR THE WHOLE COLUMN. The count sits at the start of
+  the line and the name of the figure at the end of it, which is the
+  only place the word "Score" is printed on this screen now. It used to
+  be set in capitals under every one of two hundred and eleven rows,
+  labelling a column that has only ever held one kind of number.
+
+  The label is a sibling of the count rather than a child of it, because
+  the count is an `aria-live` region: anything inside it is read out
+  again every time the filter changes the number, and a screen reader
+  announcing "Desk score" after every keystroke in the search box is the
+  opposite of help.
+*/
+.countRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.count {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.4;
+  color: var(--text-1);
+}
+
+.columnLabel {
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.countFigure {
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+/* ---------------------------------------------------------------
+   The list
+   --------------------------------------------------------------- */
+
+/*
+  THE GAP AND THE PADDING WERE PART OF THE CARD COUNT, SO BOTH OF THEM
+  WENT. This list used to be two hundred and eleven cards floating six
+  pixels apart on a well, which is six hundred pixels of nothing between the
+  first row and the last, and at this row height it is a full visible
+  organisation given away for a look every generated dashboard ships.
+
+  The rows are now ruled entries on one sheet: no gap, no side padding
+  here, the line owns its own padding and draws its own hairline. That
+  is where the eleventh visible organisation came from, and it is also
+  the reason the hovered row can light edge to edge instead of lighting
+  a rounded tile with a margin around it.
+*/
+.list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: grid;
+  gap: 0;
+  align-content: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  scrollbar-gutter: stable;
+}
+
+/* ---------------------------------------------------------------
+   Empty state
+   --------------------------------------------------------------- */
+
+.empty {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-4) var(--space-6);
+  text-align: left;
+}
+
+.emptyLead {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--text-0);
+}
+
+.emptyBody {
+  margin: 0 0 var(--space-4);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.emptyLabel {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step--3);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--text-2);
+}
+
+.emptyList {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.dropFilter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--text-0);
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropFilter:hover {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+
+.dropFilter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------
+   Narrow
+   --------------------------------------------------------------- */
+
+/*
+  THE LIST KEEPS ITS OWN PADDING AT EVERY WIDTH, WHICH IS TO SAY NONE.
+  It used to gain side padding on the phone sheet, and the row inside it
+  drew a rounded card, so the two together read as a stack of tiles. The
+  ledger has no tiles to inset: the row runs edge to edge and owns the
+  padding that keeps its content off the sheet's own sides, so the only
+  thing a media query could do here is put a stripe of dead ground down
+  both margins of the smallest screen in the system. The trailing space
+  under the last entry went the same way; a scroll region that ends at
+  its last rule is a book that ends at its last line.
+*/
+@media (max-width: 768px) {
+  .head {
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
+@media (max-width: 380px) {
+  .head { padding: var(--space-2) var(--space-3); }
+}

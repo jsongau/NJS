@@ -1,0 +1,439 @@
+/*
+  THE BRACKET.
+
+  ── THE GEOMETRY, STATED ONCE ─────────────────────────────────────
+  Each round is a pair: a header, a column of cells, and a connector
+  column to its right. The cells column is a grid whose rows are all
+  1fr, so cell i is centred at (i + 0.5) / n of the column height. The
+  connector column is the same grid with half the rows, so connector k
+  spans exactly the two rows that feed it and its bracket shape lands on
+  the two cell centres without a pixel being measured anywhere. Change
+  the number of matches in a round and nothing here needs touching.
+
+  Every connector is one empty div and two pseudo-elements. There is no
+  extra markup for a line, which is what stops the columns drifting apart
+  the way a table with merged rows does.
+
+  ── AND AT 380 THERE ARE NO LINES AT ALL ──────────────────────────
+  The track becomes a horizontal scroll snap of round columns at 86 per
+  cent of the width, so one round is in focus and its neighbours are
+  compressed to a peek at each edge. Nothing is scaled. The connectors
+  are switched off, because a line to a column nobody can see is
+  decoration, and every unresolved side prints its rule in words instead.
+
+  Tokens by name only. No hex, and no [data-theme] selector.
+*/
+
+.wrap {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* ---------------------------------------------------------------
+   Controls
+   --------------------------------------------------------------- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3) var(--space-5);
+}
+
+.pin {
+  display: grid;
+  gap: 4px;
+}
+
+.pinLabel {
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+.pinSelect {
+  min-width: 24ch;
+  max-width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface-1);
+  color: var(--text-0);
+  font: inherit;
+  font-size: var(--step--1);
+}
+
+.roundRail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.roundJump {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 34px;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  color: var(--text-1);
+  font-size: var(--step--2);
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out);
+}
+
+.roundJump:hover {
+  background: var(--surface-3);
+  border-color: var(--sec-leagues);
+  color: var(--text-0);
+}
+
+.pinned {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--sec-leagues);
+  border-radius: var(--radius-s);
+  background: var(--sec-leagues-glow);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--text-0);
+  max-width: 84ch;
+}
+
+/* ---------------------------------------------------------------
+   The track
+   --------------------------------------------------------------- */
+
+.track {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: var(--space-3);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) 46px;
+  grid-template-rows: auto minmax(0, 1fr);
+  flex: 1 1 250px;
+  min-width: 0;
+}
+
+.columnHead {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 62px;
+  padding: 0 var(--space-3) var(--space-3) 0;
+}
+
+.columnName {
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: 1.25;
+}
+
+.columnFacts {
+  margin: 2px 0 0;
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.cells {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-auto-rows: 1fr;
+  margin: 0;
+  padding: 0 var(--space-3) 0 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.connectors {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  grid-auto-rows: 1fr;
+}
+
+/*
+  ONE CONNECTOR, TWO PSEUDO-ELEMENTS.
+
+  ::before is the bracket: a top edge at the upper feeder's centre, a
+  bottom edge at the lower feeder's centre, and the vertical rule joining
+  them, all in the left half of the column.
+  ::after is the stub from the midpoint out to the cell it feeds.
+*/
+.connector {
+  position: relative;
+}
+
+.connector::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 50%;
+  top: 25%;
+  bottom: 25%;
+  border-top: 2px solid var(--line-strong);
+  border-bottom: 2px solid var(--line-strong);
+  border-right: 2px solid var(--line-strong);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+}
+
+.connector::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 0;
+  top: 50%;
+  border-top: 2px solid var(--line-strong);
+}
+
+/* ---------------------------------------------------------------
+   A cell
+   --------------------------------------------------------------- */
+
+.cell {
+  align-self: center;
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-2) 0;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius-m);
+  background: var(--surface-1);
+  min-width: 0;
+}
+
+.cell[data-state="live"] {
+  border-left-color: var(--warn);
+  border-left-width: 5px;
+  background: var(--warn-tint);
+}
+
+.cell[data-state="scheduled"] {
+  border-left-color: var(--info);
+  border-left-width: 5px;
+}
+
+.cell[data-state="final"] {
+  border-left-color: var(--ok);
+}
+
+.cell[data-state="awaiting-opponent"] {
+  border-left-style: dashed;
+  border-left-color: var(--neutral);
+}
+
+.cell[data-state="bye"] {
+  border-left-color: var(--neutral);
+}
+
+.cell[data-state="withdrawn"] {
+  border-left-color: var(--risk);
+}
+
+/* THE PINNED PATH, AND IT IS NEVER ONLY A COLOUR. The cell gains a solid
+   outline, a wash, and the words "Pinned team" or "Would have to win"
+   printed inside it. Two of those three survive greyscale. */
+.cell[data-path="yes"] {
+  outline: 2px solid var(--sec-leagues);
+  outline-offset: 1px;
+  background: var(--sec-leagues-glow);
+}
+
+/* The round, named again on every cell. On a phone one column fills the
+   screen and the header above it can be scrolled past, so the cell says
+   which round it is in and a reader is never lost. */
+.cellRound {
+  margin: 0;
+  font-size: var(--step--2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+
+.cellTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pathMark {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--sec-ink, var(--sec-leagues-ink));
+}
+
+.cellSide {
+  display: grid;
+  grid-template-columns: 2.5ch minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-s);
+  min-width: 0;
+}
+
+.cellSide[data-won="yes"] {
+  background: var(--ok-tint);
+}
+
+.cellSide[data-open="yes"] {
+  border: 1px dashed var(--line-strong);
+}
+
+.cellSeed {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-2);
+  text-align: right;
+}
+
+/* NAMES WRAP. Two lines is the case the cell is sized for and there is no
+   ellipsis in this file. A captain chosen short name is the escape hatch
+   if one is ever genuinely too long, never an automatic truncation. */
+.cellName {
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-0);
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.cellSide[data-won="yes"] .cellName {
+  font-weight: 800;
+}
+
+.cellRule {
+  grid-column: 2 / -1;
+  font-size: var(--step--2);
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.cellScore {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  font-weight: 700;
+  color: var(--text-0);
+  min-width: 1.5ch;
+  text-align: right;
+}
+
+.cellWon {
+  color: var(--ok);
+  font-size: var(--step--2);
+}
+
+.cellFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.cellLanes {
+  font-size: var(--step--2);
+  color: var(--text-2);
+}
+
+.cellUpset {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px var(--space-2);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-pill);
+  background: var(--warn-tint);
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--text-0);
+}
+
+.cellLabel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--prov-illustrative);
+}
+
+.notDrawn {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  max-width: 84ch;
+  font-size: var(--step--2);
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* ---------------------------------------------------------------
+   380 is a real layout: one round in focus, neighbours compressed
+   --------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .track {
+    scroll-snap-type: x mandatory;
+    gap: var(--space-3);
+  }
+
+  .pair {
+    flex: 0 0 86%;
+    grid-template-columns: minmax(0, 1fr);
+    scroll-snap-align: center;
+  }
+
+  /* Removed rather than shrunk. A connector reaching a column that is off
+     screen is a line pointing at nothing. */
+  .connectors {
+    display: none;
+  }
+
+  .columnHead {
+    min-height: 0;
+  }
+
+  .cells {
+    padding-right: 0;
+    grid-auto-rows: auto;
+  }
+
+  .cell {
+    align-self: stretch;
+  }
+
+  .pinSelect {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .pin {
+    flex: 1 1 100%;
+  }
+}

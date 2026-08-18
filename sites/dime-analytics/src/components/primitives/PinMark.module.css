@@ -1,0 +1,106 @@
+/*
+  The mark, in tokens only. Not one raw hex value in this file, which
+  means the mark follows the palette rather than sitting beside it, and a
+  change to the signal colour in tokens.css changes the brand mark too.
+
+  Every value below is also chosen to survive greyscale. The track and
+  the arc are separated by lightness rather than by hue, and the ball is
+  light ink on the dark ground and dark ink on the light one, so the whole
+  mark holds through a black and white printer.
+*/
+
+.mark {
+  display: block;
+  flex: none;
+  overflow: visible;
+}
+
+/* --- The dial -------------------------------------------------------- */
+
+/*
+  The whole circle, as a band rather than a hairline. This is the distance
+  still to run. Two units, which is the weight every section mark in the
+  rail is drawn at, so the mark at the top of the column and the twenty
+  running down it share one stroke language.
+*/
+.track {
+  stroke: var(--line-2);
+  stroke-width: 2;
+}
+
+/*
+  The arc that has been covered, in the signal colour, because this is the
+  single figure in the chrome that should pull the eye first. Identical
+  width to the track, so the two read as one groove partly filled rather
+  than as two concentric rings.
+*/
+.progress {
+  stroke: var(--brand-gold);
+  stroke-width: 2;
+}
+
+/*
+  The quarter notches. Ground coloured, so they read as gaps cut clean
+  through the band on both sides of the arc's leading edge, which is what
+  turns the dial from "some colour" into a scale that can be read to the
+  nearest quarter with no colour at all.
+
+  --surface-1 rather than the rail's own surface because this is the paper
+  of the application, the difference between it and --surface-2 is a
+  fraction of a step of lightness, and a mark that had to be told which
+  panel it was standing on would need a prop for it.
+*/
+.notches {
+  stroke: var(--surface-1);
+  stroke-width: 1.1;
+  stroke-linecap: butt;
+}
+
+/* --- The ball -------------------------------------------------------- */
+
+/*
+  The one solid shape, in the identity colour, exactly as every section
+  mark carries exactly one.
+
+  The even odd rule is what drills it. The ball and its three holes are
+  four subpaths of one path, and under this rule anything enclosed by an
+  odd number of them is painted and anything enclosed by two is not, so
+  the holes are cut out of the ball with no second colour, no mask and no
+  guess about the surface behind. Take this line away and the mark is a
+  plain disc.
+*/
+.ball {
+  fill: var(--brand-gold);
+  fill-rule: evenodd;
+}
+
+/* --- Motion: once, on mount, and then never again -------------------- */
+
+/*
+  The arc sweeps in from twelve o'clock and stops. --dash is the arc's own
+  length, set on the element, so the sweep arrives at the figure rather
+  than at a round number near it.
+*/
+.progress {
+  animation: sweep 720ms var(--ease-out, cubic-bezier(0.2, 0.7, 0.2, 1)) both;
+}
+
+@keyframes sweep {
+  from {
+    stroke-dashoffset: var(--dash, 0);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/*
+  One switch for the whole file. Somebody who has asked their operating
+  system to stop things moving has asked once, and should not have to ask
+  again per component.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .progress {
+    animation: none;
+  }
+}

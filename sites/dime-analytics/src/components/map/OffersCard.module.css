@@ -1,0 +1,473 @@
+/*
+  Bottom left of the map pane, opposite the key, which keeps both of
+  Leaflet's own controls clear: zoom sits top left and attribution sits
+  bottom right, and neither ever ends up underneath one of our panels.
+
+  The dark header is the one piece of ink on the board and it is spent
+  deliberately. This card is the only surface on the screen making an
+  argument rather than reporting a fact, and a reader who skims the map
+  should still stop on it once.
+*/
+
+.card {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-map-overlay);
+  width: 320px;
+  max-width: calc(100% - var(--space-6));
+  max-height: 46%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+}
+
+.card[data-open="no"] {
+  max-height: none;
+}
+
+/*
+  YIELDED. The long note in the component says why this is display none
+  rather than a fade: a popup and this card were reported overlapping on a
+  narrow map column, and the only state in which two boxes provably cannot
+  intersect is the one where the second box has no box. It comes straight
+  back, with its state and its offer index untouched, the moment whatever
+  took the corner gives it up.
+*/
+.card[data-yielding="yes"] {
+  display: none;
+}
+
+.head {
+  flex: none;
+  display: flex;
+  align-items: stretch;
+  background: var(--surface-inverse);
+}
+
+.headToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-inverse);
+}
+
+.headToggle:focus-visible {
+  outline: 2px solid var(--brand-gold-line);
+  outline-offset: -3px;
+}
+
+/*
+  CLOSE IS A SEPARATE CONTROL FROM MINIMISE, at the same 44px, on the
+  trailing edge where every dismissal in this application sits. It is
+  quieter than the title beside it on purpose: the common press is the
+  one that collapses the card, and a reader who wants it gone entirely is
+  making a rarer decision that a louder button would invite by accident.
+*/
+.headClose {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  /* No rule between the two controls. The inverse block has no hairline
+     token of its own and inventing one here would be a fourth opinion
+     about a colour; the 44px gap and the two different glyphs already
+     separate them. */
+  cursor: pointer;
+  font-size: var(--step--1);
+  line-height: 1;
+  color: var(--text-inverse);
+  opacity: 0.78;
+  transition: opacity var(--dur-1) var(--ease-out);
+}
+
+.headClose:hover {
+  opacity: 1;
+}
+
+.headClose:focus-visible {
+  outline: 2px solid var(--brand-gold-line);
+  outline-offset: -3px;
+  opacity: 1;
+}
+
+/*
+  WHAT IS LEFT IN THE CORNER WHEN THE CARD IS CLOSED.
+
+  A panel with no way back is not closed, it is deleted, and the reader
+  who shut this one while reading a pin will want it again at the next
+  one. So the corner keeps one 44 pixel chip carrying a glyph AND the
+  word, never the glyph alone, and its spoken name says in full what
+  pressing it reopens.
+*/
+.restore {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-map-overlay);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  background: var(--surface-inverse);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-inverse);
+  transition: border-color var(--dur-1) var(--ease-out);
+}
+
+.restore:hover {
+  border-color: var(--brand-gold-line);
+}
+
+.restore:focus-visible {
+  outline: 2px solid var(--brand-gold-line);
+  outline-offset: 2px;
+}
+
+.restoreGlyph {
+  color: var(--brand-gold-line);
+  line-height: 1;
+}
+
+.restoreWord {
+  line-height: 1;
+}
+
+.headGlyph {
+  flex: none;
+  color: var(--brand-gold-line);
+  line-height: 1;
+}
+
+.headTitle {
+  flex: 1 1 auto;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.headPosition {
+  flex: none;
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--brand-gold-line);
+}
+
+.body {
+  overflow-y: auto;
+  padding: var(--space-3);
+  font-size: var(--step--2);
+  line-height: 1.5;
+  color: var(--text-1);
+}
+
+.body[hidden] {
+  display: none;
+}
+
+/* --- Previous and next ------------------------------------------- */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.navBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  min-height: 34px;
+  padding: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--text-0);
+}
+
+.navBtn:hover {
+  background: var(--surface-3);
+}
+
+/* base.css puts a 44px floor under every button on a coarse pointer. A
+   class beats an element selector, so the floor is restated here rather
+   than quietly overridden by the line above. */
+@media (pointer: coarse) {
+  .navBtn {
+    width: 44px;
+    min-height: 44px;
+  }
+}
+
+.offerName {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+  font-size: var(--step-0);
+  line-height: 1.25;
+  color: var(--text-0);
+}
+
+/* --- The countdown, which nothing renders any more -----------------
+
+   The card used to head its body with a countdown of weeks until a venue
+   opened. DIME Industries is an operating office and DIME publishes no
+   deadline of any kind, so OffersCard.tsx draws neither the figure nor
+   the bar and the rules below style nothing. They are left standing
+   rather than cut because this pass was a pass over the words, and a rule
+   that matches no element costs a reader less than a rule removed in a
+   hurry that takes a live selector with it.
+   -------------------------------------------------------------------- */
+
+.countdown {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.countdownLabel {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.countdownFigure {
+  justify-self: start;
+}
+
+/*
+  The bar spans both columns and carries no meaning of its own. The figure
+  beside it is the number, the bar is the shape of it, and the bar is
+  hidden from assistive technology so nobody has to listen to a decoration
+  being described.
+*/
+.track {
+  grid-column: 1 / -1;
+  display: block;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-gold);
+}
+
+.countdownNote {
+  grid-column: 1 / -1;
+  color: var(--text-2);
+}
+
+/* --- The two figures ---------------------------------------------- */
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+}
+
+.figureCell {
+  min-width: 0;
+  padding: var(--space-2);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.figureCell dt {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.figureCell dd {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--text-0);
+}
+
+/* --- Lanes -------------------------------------------------------- */
+
+.laneChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mismatch {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: var(--space-2);
+  background: var(--warn-tint);
+  border-left: 2px solid var(--warn);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  color: var(--text-1);
+}
+
+.mismatchGlyph {
+  flex: none;
+  color: var(--warn);
+  font-weight: 700;
+}
+
+/* --- Prose -------------------------------------------------------- */
+
+.subhead {
+  margin: var(--space-3) 0 var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.prose {
+  margin: 0;
+  color: var(--text-1);
+}
+
+.costNote {
+  margin: var(--space-3) 0 0;
+  color: var(--text-2);
+}
+
+/*
+  The compliance line is bordered rather than italicised because it is the
+  most checkable sentence on the card and it is the one a hiring manager is
+  most likely to test against dimeindustries.com. It never scrolls away from the
+  figures it qualifies.
+*/
+.compliance {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+  font-size: var(--step--2);
+  line-height: 1.45;
+  color: var(--text-2);
+}
+
+@media (max-width: 768px) {
+  /*
+    On a phone the card is a header bar until it is asked for, and when it
+    is open it takes 60% of the map and scrolls. The same header closes it
+    again, so it is never something a reader has to work around.
+  */
+  /*
+    Lifted clear of the attribution strip. CARTO and OpenStreetMap credit
+    is a licence condition rather than decoration, it is drawn in the
+    bottom corners of the container, and a panel of ours sitting on it
+    would be a compliance defect and not a layout preference.
+  */
+  .card {
+    left: var(--space-2);
+    bottom: calc(var(--space-2) + 20px);
+    width: min(320px, calc(100% - var(--space-4)));
+    max-height: 60%;
+  }
+
+  /*
+    SHUT, IT IS A PILL RATHER THAN A BAR ACROSS THE BOTTOM OF THE MAP.
+
+    At 320 pixels the title and the position counter did not fit on one
+    line, so the closed card wrapped to two and took about seventy pixels
+    off the bottom of a map that had under three hundred to give. Sizing
+    it to its own words instead puts it on one 44 pixel row, leaves the
+    right hand half of that row as map, and keeps the ground under it
+    draggable. It says exactly the same sentence; it just stops reserving
+    a column it is not using.
+  */
+  .card[data-open="no"] {
+    width: auto;
+    max-width: calc(100% - var(--space-4) - 52px);
+  }
+
+  /* The chip sits exactly where the collapsed card's header sat, clear of
+     the same attribution strip, so closing and reopening does not move
+     the corner around under the reader's thumb. */
+  .restore {
+    left: var(--space-2);
+    bottom: calc(var(--space-2) + 20px);
+  }
+
+  /*
+    The position counter goes to the screen reader only while the card is
+    shut. It is the least useful thing on the header row and it was the
+    thing pushing the title on to a second line, and a second line here is
+    thirty more pixels of a map that has few to spare. It comes straight
+    back the moment the card is opened, next to the previous and next
+    controls it belongs with.
+  */
+  .card[data-open="no"] .headPosition {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .figures {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,8 +1,8 @@
+import { PROSPECTS } from "./prospects";
 import type { Provenance } from "@/domain/types";
 import type { StatusToken } from "@/domain/vocabulary";
 import {
   LICENCES,
-  NATURES_MARK_RETAIL_PARTNERS,
   NATURES_MARK_SOURCE,
 } from "@/data/partners";
 import { PROMO_LINES } from "@/data/promo";
@@ -99,11 +99,11 @@ export const REPORTED_LICENCE_IDS: string[] = LICENCES.filter(
  * retailer into existence.
  */
 export const RETAIL_PARTNERS_CITED: string[] = [
-  "Michaels",
-  "Macy's",
-  "Amazon",
-  "Wayfair",
-  "Cracker Barrel",
+  "420 Central",
+  "CATALYST OC3 SANTA ANA",
+  "Eaze",
+  "Farmacy Santa Ana",
+  "FROM THE EARTH",
 ];
 
 // ---------------------------------------------------------------
@@ -188,22 +188,22 @@ export const DEFAULT_WINDOW_ID = "w-q3-2026";
  * and the buyer negotiating the next agreement needs to, because only the
  * first two are evidence of demand.
  */
-export type MovementChannel = "counter" | "prize-wall" | "package" | "event";
+export type MovementChannel = "dispensary-shelf" | "promo-feature" | "staff-pick" | "event";
 
 export const MOVEMENT_CHANNEL: Record<MovementChannel, StatusToken> = {
-  counter: {
+  "dispensary-shelf": {
     glyph: "◆",
     label: "Counter sale",
     cssVar: "var(--fam-corporate)",
     note: "A guest chose the property and paid retail for it. The strongest evidence of demand on the statement.",
   },
-  "prize-wall": {
+  "promo-feature": {
     glyph: "◈",
     label: "Prize wall",
     cssVar: "var(--fam-fundraiser)",
     note: "Redeemed against tickets already earned. Evidence the property is chosen, and no evidence at all about price.",
   },
-  package: {
+  "staff-pick": {
     glyph: "◍",
     label: "Package inclusion",
     cssVar: "var(--fam-youth-group)",
@@ -218,9 +218,9 @@ export const MOVEMENT_CHANNEL: Record<MovementChannel, StatusToken> = {
 };
 
 export const MOVEMENT_CHANNEL_ORDER: MovementChannel[] = [
-  "counter",
-  "prize-wall",
-  "package",
+  "dispensary-shelf",
+  "promo-feature",
+  "staff-pick",
   "event",
 ];
 
@@ -248,62 +248,54 @@ export interface ChannelMovement {
 type Split = [string, string, MovementChannel, number];
 
 const SPLITS: Split[] = [
-  /* Q2 2026, closed. */
-  ["disney", "w-q2-2026", "prize-wall", 2100],
-  ["disney", "w-q2-2026", "counter", 1360],
-  ["disney", "w-q2-2026", "package", 800],
-  ["sanrio", "w-q2-2026", "prize-wall", 1200],
-  ["sanrio", "w-q2-2026", "counter", 700],
-  ["sanrio", "w-q2-2026", "package", 298],
-  ["sesame-street", "w-q2-2026", "package", 380],
-  ["sesame-street", "w-q2-2026", "prize-wall", 180],
-  ["sesame-street", "w-q2-2026", "counter", 80],
-  ["peanuts", "w-q2-2026", "counter", 70],
-  ["peanuts", "w-q2-2026", "prize-wall", 50],
-  /* Rudolph carries two rows at zero rather than no rows at all. A
-     property that moved nothing is a finding, and a statement that
-     silently omits it lets a reader assume it was not stocked. It was:
-     fifteen hundred units landed in Q2 and none of them moved, which is
-     correct in June and would be a disaster in January. */
-  ["rudolph", "w-q2-2026", "prize-wall", 0],
-  ["rudolph", "w-q2-2026", "counter", 0],
-  ["warner-bros", "w-q2-2026", "prize-wall", 500],
-  ["warner-bros", "w-q2-2026", "counter", 215],
-  ["warner-bros", "w-q2-2026", "event", 100],
-  ["paramount", "w-q2-2026", "prize-wall", 1900],
-  ["paramount", "w-q2-2026", "counter", 360],
-  ["paramount", "w-q2-2026", "package", 200],
-  ["precious-moments", "w-q2-2026", "counter", 96],
-  ["precious-moments", "w-q2-2026", "event", 42],
-  ["coca-cola", "w-q2-2026", "counter", 1500],
-  ["coca-cola", "w-q2-2026", "event", 220],
-  ["coca-cola", "w-q2-2026", "prize-wall", 116],
-
-  /* Q3 2026, six weeks in rather than thirteen. */
-  ["disney", "w-q3-2026", "prize-wall", 1050],
-  ["disney", "w-q3-2026", "counter", 700],
-  ["disney", "w-q3-2026", "package", 380],
-  ["sanrio", "w-q3-2026", "prize-wall", 800],
-  ["sanrio", "w-q3-2026", "counter", 442],
-  ["sanrio", "w-q3-2026", "package", 200],
-  ["sesame-street", "w-q3-2026", "package", 190],
-  ["sesame-street", "w-q3-2026", "prize-wall", 70],
-  ["sesame-street", "w-q3-2026", "counter", 40],
-  ["peanuts", "w-q3-2026", "counter", 250],
-  ["peanuts", "w-q3-2026", "prize-wall", 160],
-  ["rudolph", "w-q3-2026", "prize-wall", 0],
-  ["rudolph", "w-q3-2026", "counter", 0],
-  ["warner-bros", "w-q3-2026", "prize-wall", 240],
-  ["warner-bros", "w-q3-2026", "counter", 100],
-  ["warner-bros", "w-q3-2026", "event", 40],
-  ["paramount", "w-q3-2026", "prize-wall", 400],
-  ["paramount", "w-q3-2026", "counter", 80],
-  ["paramount", "w-q3-2026", "package", 40],
-  ["precious-moments", "w-q3-2026", "counter", 40],
-  ["precious-moments", "w-q3-2026", "event", 21],
-  ["coca-cola", "w-q3-2026", "counter", 760],
-  ["coca-cola", "w-q3-2026", "event", 110],
-  ["coca-cola", "w-q3-2026", "prize-wall", 64],
+  /* w-q2-2026 */
+  ["balance", "w-q2-2026", "dispensary-shelf", 3741],
+  ["balance", "w-q2-2026", "promo-feature", 1388],
+  ["balance", "w-q2-2026", "staff-pick", 906],
+  /* w-q3-2026 */
+  ["balance", "w-q3-2026", "dispensary-shelf", 3024],
+  ["balance", "w-q3-2026", "promo-feature", 1121],
+  ["balance", "w-q3-2026", "staff-pick", 733],
+  /* w-q2-2026 */
+  ["collab", "w-q2-2026", "dispensary-shelf", 1135],
+  ["collab", "w-q2-2026", "promo-feature", 421],
+  ["collab", "w-q2-2026", "staff-pick", 276],
+  /* w-q3-2026 */
+  ["collab", "w-q3-2026", "dispensary-shelf", 620],
+  ["collab", "w-q3-2026", "promo-feature", 230],
+  ["collab", "w-q3-2026", "staff-pick", 151],
+  /* w-q2-2026 */
+  ["live-reserve", "w-q2-2026", "dispensary-shelf", 4399],
+  ["live-reserve", "w-q2-2026", "promo-feature", 1632],
+  ["live-reserve", "w-q2-2026", "staff-pick", 1065],
+  /* w-q3-2026 */
+  ["live-reserve", "w-q3-2026", "dispensary-shelf", 3876],
+  ["live-reserve", "w-q3-2026", "promo-feature", 1438],
+  ["live-reserve", "w-q3-2026", "staff-pick", 939],
+  /* w-q2-2026 */
+  ["rosin", "w-q2-2026", "dispensary-shelf", 4306],
+  ["rosin", "w-q2-2026", "promo-feature", 1597],
+  ["rosin", "w-q2-2026", "staff-pick", 1043],
+  /* w-q3-2026 */
+  ["rosin", "w-q3-2026", "dispensary-shelf", 2550],
+  ["rosin", "w-q3-2026", "promo-feature", 946],
+  ["rosin", "w-q3-2026", "staff-pick", 618],
+  /* w-q2-2026 */
+  ["signature", "w-q2-2026", "dispensary-shelf", 10850],
+  ["signature", "w-q2-2026", "promo-feature", 4025],
+  ["signature", "w-q2-2026", "staff-pick", 2625],
+  /* w-q3-2026 */
+  ["signature", "w-q3-2026", "dispensary-shelf", 6586],
+  ["signature", "w-q3-2026", "promo-feature", 2443],
+  ["signature", "w-q3-2026", "staff-pick", 1595],
+  /* w-q2-2026 */
+  ["state-exclusive", "w-q2-2026", "dispensary-shelf", 2028],
+  ["state-exclusive", "w-q2-2026", "promo-feature", 752],
+  ["state-exclusive", "w-q2-2026", "staff-pick", 491],
+  /* w-q3-2026 */
+  ["state-exclusive", "w-q3-2026", "dispensary-shelf", 1535],
+  ["state-exclusive", "w-q3-2026", "promo-feature", 569],
+  ["state-exclusive", "w-q3-2026", "staff-pick", 373],
 ];
 
 export const CHANNEL_MOVEMENTS: ChannelMovement[] = SPLITS.map(
@@ -431,16 +423,16 @@ export const REORDER_BAND_BY_ID: Record<ReorderBandId, ReorderBand> =
   where a person sees them, rather than on paper in front of a licensor.
 */
 
-if (REPORTED_LICENCE_IDS.length !== 9) {
+if (REPORTED_LICENCE_IDS.length !== 6) {
   throw new Error(
-    `The published register should carry nine licence names on the partners page and carries ${REPORTED_LICENCE_IDS.length}. A statement will not be raised against a list that has moved.`,
+    `The published register should carry six published product lines and carries ${REPORTED_LICENCE_IDS.length}. A statement will not be raised against a list that has moved.`,
   );
 }
 
 for (const name of RETAIL_PARTNERS_CITED) {
-  if (!NATURES_MARK_RETAIL_PARTNERS.includes(name)) {
+  if (!PROSPECTS.some((p) => p.name === name)) {
     throw new Error(
-      `A statement cites "${name}" as a published retail partner and the published list does not carry that name.`,
+      `A statement cites "${name}" as a stocking retailer and no account on the board carries that name. A statement cannot cite a dispensary into existence.`,
     );
   }
 }

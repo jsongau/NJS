@@ -1244,7 +1244,7 @@ export function SideRail() {
           between because there is nothing else.
         */}
         <p className={styles.contextLabel}>
-          New business development promotion planner, Irvine
+          Sales performance analyst, Irvine
         </p>
 
         <div className={styles.context}>
@@ -1253,9 +1253,9 @@ export function SideRail() {
             fork put a permanent number of weeks in the chrome because the
             single fact that made it different from a CRM was that the
             venue had not opened. That fact does not survive the move to
-            DIME: the Irvine office is open, the chain has traded in
-            the US since 2010, and the nearest store in Lakewood keeps
-            published hours seven days a week.
+            DIME: the Irvine office is open, DIME has traded since 2016,
+            and the seventy four accounts on this board are all currently
+            licensed and trading.
 
             Nothing was invented to fill the space. The period select is
             the whole of the context row now, and it names ordinary

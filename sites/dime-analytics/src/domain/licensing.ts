@@ -384,59 +384,59 @@ export interface Partner {
 // ---------------------------------------------------------------
 
 export type PromoCategory =
-  | "plush"
-  | "collectible"
-  | "apparel"
-  | "novelty"
-  | "print"
-  | "food-novelty";
+  | "cartridge"
+  | "disposable"
+  | "gummy"
+  | "softgel"
+  | "battery"
+  | "preroll";
 
 export const PROMO_CATEGORY: Record<PromoCategory, StatusToken> = {
-  plush: {
+  cartridge: {
     glyph: "◍",
-    label: "Plush",
+    label: "Cartridge",
     cssVar: "var(--fam-youth-group)",
-    note: "The top of the prize wall. Highest ticket cost, longest lead time, and the thing a child walks in for.",
+    note: "The volume format and the one every promotion is built around. DIME publishes four cartridge lines, Signature, Live Reserve, Balance and Rosin, plus state exclusives and collaborations.",
   },
-  collectible: {
-    glyph: "◈",
-    label: "Collectible",
+  disposable: {
+    glyph: "◐",
+    label: "All in one",
     cssVar: "var(--fam-corporate)",
-    note: "Figures, pins, keyrings. Sells on the property rather than on the object.",
+    note: "A sealed unit with the battery included, published in 1g and 2g. Higher ticket than a cartridge and it does not need the customer to already own hardware.",
   },
-  apparel: {
-    glyph: "◎",
-    label: "Apparel",
-    cssVar: "var(--lane-fitness)",
-    note: "Tees and caps. Sized, so the reorder never matches the first order.",
-  },
-  novelty: {
+  gummy: {
     glyph: "◆",
-    label: "Novelty",
-    cssVar: "var(--fam-self-serve)",
-    note: "Light-up, sound-making, pocket-sized. Cheap per unit and the volume driver on the wall.",
+    label: "Gummy",
+    cssVar: "var(--fam-birthday)",
+    note: "Published in the Balanced and Rosin families. An edible sells to a different shopper from a vape and moves on a different rhythm, so it is never averaged into a vape sell-through.",
   },
-  print: {
+  softgel: {
+    glyph: "◇",
+    label: "Softgel",
+    cssVar: "var(--fam-school)",
+    note: "Published as Morning, Afternoon and Evening. The only DIME format organised by time of use rather than by flavour, which makes its assortment decision a different one.",
+  },
+  battery: {
+    glyph: "▣",
+    label: "Battery and hardware",
+    cssVar: "var(--fam-community)",
+    note: "The 5th Gen Battery and 5th Gen Mini, published in 650mAh and 400mAh with USB-C and a universal 510 thread. Hardware attaches a customer to the cartridge line rather than selling once.",
+  },
+  preroll: {
     glyph: "▤",
-    label: "Print",
-    cssVar: "var(--neutral)",
-    note: "Cards, vouchers and table media. Not sold, given, and still bought with real money.",
-  },
-  "food-novelty": {
-    glyph: "◔",
-    label: "Food novelty",
-    cssVar: "var(--lane-hospitality)",
-    note: "Branded confectionery and cups. Dated stock, which makes weeks of cover the figure that matters.",
+    label: "Preroll",
+    cssVar: "var(--fam-sport)",
+    note: "DIMEPACK, Double D's and the DIME Donut. Published as coming soon rather than as live SKUs, so this category carries structure and no stock.",
   },
 };
 
 export const PROMO_CATEGORY_ORDER: PromoCategory[] = [
-  "plush",
-  "collectible",
-  "novelty",
-  "apparel",
-  "food-novelty",
-  "print",
+  "cartridge",
+  "disposable",
+  "gummy",
+  "softgel",
+  "battery",
+  "preroll",
 ];
 
 /**

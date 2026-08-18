@@ -65,94 +65,58 @@ export const NATURES_MARK_ROOT = "https://natures-mark.com/";
  */
 export const LICENCES: Licence[] = [
   {
-    id: "disney",
-    name: "Disney",
-    source: NATURES_MARK_SOURCE,
+    id: "signature",
+    name: "Signature Line",
+    source: "https://dimeindustries.com/products/",
     provenance: "public",
     onPartnersPage: true,
     fitNote:
-      "The broadest family property on the list. Works on the prize wall at every ticket tier and on a birthday package insert.",
+      "The volume line and the one every promotion is built around. DIME publishes it as its award winning distillate line.",
   },
   {
-    id: "peanuts",
-    name: "Peanuts",
-    source: NATURES_MARK_SOURCE,
+    id: "live-reserve",
+    name: "Live Reserve Line",
+    source: "https://dimeindustries.com/products/",
     provenance: "public",
     onPartnersPage: true,
     fitNote:
-      "Seasonal rather than year round. A Halloween and Christmas property, which suits a promotional calendar built around two quarters.",
+      "Liquid live resin with high terpene extracts. The premium tier, and the one a budtender recommends by name.",
   },
   {
-    id: "sanrio",
-    name: "Sanrio",
-    source: NATURES_MARK_SOURCE,
+    id: "balance",
+    name: "Balance Line",
+    source: "https://dimeindustries.com/products/",
     provenance: "public",
     onPartnersPage: true,
     fitNote:
-      "The strongest teen and young adult property on the list, and the one that moves plush at the top ticket tier.",
+      "Published as calibrated ratios across multiple cannabinoids and organised by intent rather than by flavour.",
   },
   {
-    id: "warner-bros",
-    name: "Warner Bros.",
-    source: NATURES_MARK_SOURCE,
+    id: "rosin",
+    name: "Rosin Line",
+    source: "https://dimeindustries.com/products/",
     provenance: "public",
     onPartnersPage: true,
     fitNote:
-      "A studio rather than a single property, so the usable characters depend entirely on what the agreement schedules.",
+      "Published as solventless. The smallest line by SKU count and the highest ticket per unit.",
   },
   {
-    id: "rudolph",
-    name: "Rudolph",
-    source: NATURES_MARK_SOURCE,
+    id: "state-exclusive",
+    name: "State Exclusive",
+    source: "https://dimeindustries.com/products/",
     provenance: "public",
     onPartnersPage: true,
     fitNote:
-      "One season and one season only. Ordered in spring for a December that sells out in three weeks or does not sell at all.",
+      "Five SKUs published as tied to a named state: Tropicali in California, Cactus Chill in Arizona, Bombsicle in Oklahoma, Huckleberry Jam in Montana, Zia Fresca in New Mexico.",
   },
   {
-    id: "paramount",
-    name: "Paramount",
-    source: NATURES_MARK_SOURCE,
+    id: "collab",
+    name: "Collaborations",
+    source: "https://dimeindustries.com/products/",
     provenance: "public",
     onPartnersPage: true,
     fitNote:
-      "Release driven. Value tracks the studio's calendar rather than the venue's, which makes lead time the binding constraint.",
-  },
-  {
-    id: "coca-cola",
-    name: "Coca-Cola",
-    source: NATURES_MARK_SOURCE,
-    provenance: "public",
-    onPartnersPage: true,
-    fitNote:
-      "The one property here that touches the bar and the restaurant rather than the prize wall. Glassware, cups, tin signage.",
-  },
-  {
-    id: "precious-moments",
-    name: "Precious Moments",
-    source: NATURES_MARK_SOURCE,
-    provenance: "public",
-    onPartnersPage: true,
-    fitNote:
-      "Gift rather than prize. Fits a corporate thank-you or a fundraiser raffle far better than a redemption counter.",
-  },
-  {
-    id: "sesame-street",
-    name: "Sesame Street",
-    source: NATURES_MARK_SOURCE,
-    provenance: "public",
-    onPartnersPage: true,
-    fitNote:
-      "Under sevens. The narrowest age band on the list and the one that matches a weekday morning birthday package.",
-  },
-  {
-    id: "harry-potter",
-    name: "Harry Potter",
-    source: NATURES_MARK_ROOT,
-    provenance: "public",
-    onPartnersPage: false,
-    fitNote:
-      "Named on the Nature's Mark root page and not on its partners page. Treated as a lead to confirm rather than a licence to plan against.",
+      "Limited collaboration drops. Published as a line rather than as a permanent assortment.",
   },
 ];
 
@@ -214,7 +178,7 @@ export const ANIME_GAP: LicenceGap = {
   postingLine:
     "Incorporate culturally relevant and trending anime/game properties into product offerings.",
   postingCite:
-    "DIME Industries, Irvine. New Business Development Promotion Planner Manager / Senior Manager",
+    "DIME Industries, Irvine. Sales Performance Analyst / Senior Manager",
 
   bridgeLicenceId: "sanrio",
   japaneseLicenceIds: ["sanrio"],

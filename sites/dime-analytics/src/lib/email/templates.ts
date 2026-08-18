@@ -594,75 +594,146 @@ function priceSentence(): string {
  * panel shows the same withheld price beside the words that the body
  * describes in prose.
  */
+/**
+ * THE DEAL LETTER, AND WHY A BOGO IS WRITTEN AS A DISCOUNT.
+ *
+ * This is the message a brand sends a licensed retailer to get a
+ * promotion on the shelf, and the mechanic it offers has to be lawful
+ * before it is persuasive.
+ *
+ * IN CALIFORNIA A BUY ONE GET ONE IS A DISCOUNT, NOT FREE GOODS. Giving
+ * cannabis away is restricted, so a compliant BOGO is a fifty per cent
+ * price reduction applied across two units rather than one unit at full
+ * price and one at nothing. That is not a wording preference. It changes
+ * where the deduction sits on the invoice, it changes the margin
+ * arithmetic, and because excise is computed on the discounted gross
+ * receipts it changes the tax base as well. A letter that offers "one
+ * free" is offering something the retailer cannot lawfully ring up, and
+ * the buyer on the other end knows it.
+ *
+ * So every draft below states the mechanic in the form it will actually
+ * be billed in, and the guardrail beside each one says why.
+ *
+ * NO DISCOUNT DEPTH IN THIS FILE IS A DIME FIGURE. DIME publishes no
+ * wholesale price, no case pack and no deal terms anywhere. The
+ * mechanics are real and the numbers attached to them are seeded, which
+ * is why every draft points the reader at a real number coming from the
+ * brand rather than quoting one here.
+ */
 export function promoTemplatesFor(
   prospect: Prospect,
-  ctx: TemplateContext = {},
+  _ctx: TemplateContext = {},
 ): EmailTemplate[] {
-  const status = ctx.openingStatus ?? VENUE.openingStatus;
   const lane = LANE_META[prospect.lane];
-  const cls = lane.occasionClass;
   const drafts: EmailTemplate[] = [];
-
-  /** DIME's own itemisation, written once so two drafts cannot drift. */
-  const contents =
-    "arcade time-play, bowling with shoe rental, karaoke or a party room, billiards and ping pong, pizza and soda, and a group photo";
-
-  // ---------------------------------------------------------------
-  // 1. The date exists. The package is the only open question.
-  // ---------------------------------------------------------------
-
-  if (cls === "calendar-locked") {
-    drafts.push({
-      id: "promo-all-inclusive-party-dated",
-      label: "All Inclusive Party, against their fixed date",
-      blurb: "The one package DIME itemises in public. No price on it.",
-      why: "A calendar-locked buyer already has the date. What they are choosing is the room, and this is the only DIME package published in enough detail to choose from.",
-      packageId: "all-inclusive-party",
-      subject: `${windowShort(prospect)}: what is actually in a DIME party`,
-      body: `Your date is fixed: ${prospect.buyingWindow}. So this is about what your group would get rather than about when.
-
-DIME publishes the All Inclusive Party in full: ${contents}. A VIP Immersive Lane can be added at a separate fee. ${openingSentence(status)}
-
-What DIME does not publish is the price, for this or any package, and its own booking page says to contact the venue. I am the contact, so getting you a real number for ${prospect.headcountLow} to ${prospect.headcountHigh} people is the job rather than the obstacle.
-
-Send me your headcount and the date and I will come back with the number and the room.
-
-${SIGN_OFF}`,
-      guardrail:
-        "Never estimate the price, and never quote a lane count. DIME publishes neither. If the reader pushes for a figure in writing, the honest answer is the date you will have one by.",
-    });
-  }
-
-  // ---------------------------------------------------------------
-  // 2. No occasion yet, so the letter has to make one out of a weekday.
-  // ---------------------------------------------------------------
+  const doors = prospect.headcountHigh;
+  const isChain = doors > 1;
 
   /**
-   * The published hours are doing the persuading here, and they are the
-   * only DIME figure in the letter. Lakewood Center opens at ten in the
-   * morning seven days a week, which makes a weekday sitting an ordinary
-   * request rather than a favour asked of a manager.
+   * The door count decides the letter, because it decides the offer.
+   *
+   * A nine door operator is not a bigger version of a single shop. It
+   * buys on a reset calendar, it wants the mechanic to run in every
+   * store on the same day, and it will ask who is funding it before it
+   * asks what it is. A single independent wants to know whether the
+   * thing will move before it gives up shelf.
    */
-  if (cls === "discretionary" || drafts.length === 0) {
+
+  // ---------------------------------------------------------------
+  // 1. BOGO, written the only way it can lawfully be rung up.
+  // ---------------------------------------------------------------
+
+  drafts.push({
+    id: "deal-bogo-cartridge",
+    label: "BOGO on a cartridge line, brand funded",
+    blurb: "Fifty per cent across two units, which is what a lawful BOGO is.",
+    why: isChain
+      ? `${prospect.name} runs ${doors} doors on this board, so a single yes puts the mechanic in ${doors} storefronts on the same reset.`
+      : `${prospect.name} is a single door, so the person reading this can say yes without a chain conversation.`,
+    subject: `Buy one get one on a DIME cartridge line, ${isChain ? "all " + doors + " doors" : "your shelf"}`,
+    body: `${prospect.whyTheyFit}
+
+I want to put a buy one get one on one DIME cartridge line with you. Worth being precise about what that means, because the wording matters at the register.
+
+In California this is billed as a fifty per cent reduction across two units, not as one paid and one free. Free cannabis is restricted, so the discount has to sit on the price rather than on the goods. Your point of sale rings two units at half, your excise is computed on the discounted receipts, and nothing about it needs a workaround.
+
+DIME funds the reduction off invoice, so your margin per unit holds and the cost of the promotion sits with the brand rather than with you. ${isChain ? "Because you run " + doors + " doors, I would want it live in all of them on the same date so the read is clean." : "One door means one clean read, which is honestly the easiest place to measure whether this works."}
+
+What I need back is which line you want it on and the dates. What I will bring is the funded number and the fill.
+
+${SIGN_OFF}`,
+    guardrail:
+      "Never write buy one get one free, and never offer free product. In California this is a fifty per cent reduction across two units. If the reader asks for a deeper discount in writing, the answer is the date you will have an approved number, not a figure invented on the call.",
+  });
+
+  // ---------------------------------------------------------------
+  // 2. The bundle, which is a different mechanic and a different read.
+  // ---------------------------------------------------------------
+
+  drafts.push({
+    id: "deal-bundle-cross-format",
+    label: "Cartridge and gummy bundle",
+    blurb: "Moves two formats at once. Harder to measure, worth saying so.",
+    why: "A bundle is the only mechanic here that puts a second format in a basket that was only ever going to hold one, which is what makes it worth running and what makes it hard to attribute.",
+    subject: `A cross format bundle for ${prospect.name}`,
+    body: `A straight discount moves the line it is on. A bundle moves a second one.
+
+The offer is a cartridge and a gummy at a bundled price, funded by DIME. What it is actually for is the shopper who came in for a vape and has never tried the edible, because that is the basket that grows.
+
+I will be straight about the measurement, since it is the part most brands skate over. A bundle inflates the sell-through of whichever line was the weaker of the two, and if we read it as two separate line results we will both draw the wrong conclusion. I would rather agree up front that we judge it on the basket, on whether the second format reorders on its own afterwards, and not on the headline units.
+
+${isChain ? "Across " + doors + " doors that gives a big enough sample to actually tell." : "One door is a small sample, so I would run it longer rather than call it early."}
+
+${SIGN_OFF}`,
+    guardrail:
+      "Do not quote a bundle price. DIME publishes none. The claim in this letter is about the mechanic and the measurement, and both are defensible; a number would not be.",
+  });
+
+  // ---------------------------------------------------------------
+  // 3. The opening order, for a door that has never bought.
+  // ---------------------------------------------------------------
+
+  drafts.push({
+    id: "deal-opening-order",
+    label: "Opening order for a new account",
+    blurb: "First order terms, and the reorder is the actual test.",
+    why: `${prospect.name} carries no DIME order history in this application, so the message has to buy a first order rather than defend an existing one.`,
+    subject: `Opening order terms for ${prospect.name}`,
+    body: `We have not worked together yet, so this is about the first order rather than the tenth.
+
+DIME would come in with opening order terms on a starter assortment across the cartridge lines, with the discount taken off invoice so your first margin is not the worst one you will ever get from us.
+
+The part I care about is what happens after. An opening order that never reorders is a cost, not a win, and I would rather know at eight weeks than pretend at twenty six. So I would set the read now: what sells through in the first eight weeks, which line moves fastest on your shelf specifically, and whether the second order goes in without me asking for it.
+
+${lane.doorName} is the right person for this if that is not you. Happy to be pointed.
+
+${SIGN_OFF}`,
+    guardrail:
+      "No discount depth, no case pack, no minimum. None of it is published by DIME. The offer in this letter is the structure and the measurement, and both survive a follow up question.",
+  });
+
+  // ---------------------------------------------------------------
+  // 4. Staff incentive, and the attribution problem said out loud.
+  // ---------------------------------------------------------------
+
+  if (isChain) {
     drafts.push({
-      id: "promo-weekday-party-owner-operator",
-      label: "A weekday night, and what is in it",
-      blurb: "For a team with no occasion in the diary yet. Published hours.",
-      why: `${prospect.name} has nothing scheduled, so the message has to earn the occasion before it earns the venue. The published opening hours are the only lever, and they are checkable.`,
-      packageId: "all-inclusive-party",
-      offerId: "change-notice-three-days",
-      subject: `A weeknight out for the ${prospect.name} team`,
-      body: `${prospect.whyTheyFit}
+      id: "deal-staff-incentive",
+      label: "Staff incentive across the group",
+      blurb: "Runs on people, not price. The hardest thing here to measure.",
+      why: `A ${doors} door group has enough staff for an incentive to be worth funding and enough stores for a clean holdout, which is the only way this mechanic gets measured at all.`,
+      subject: `A staff incentive across the ${prospect.name} group`,
+      body: `Different mechanic from the last one. This one does not touch the shelf price at all.
 
-${openingSentence(status)} A weekday works for a team like yours precisely because it is quieter, and DIME publishes the All Inclusive Party as ${contents}.
+DIME would fund an incentive for your staff on a nominated cartridge line for a fixed window, plus a session on the line itself so the recommendation is informed rather than paid for.
 
-Two things worth knowing before you decide. DIME publishes no price for it, so the number comes from the store and I will fetch it. And a booked party can be changed with three or more days notice, which is published, so a night put in now is not a night you are stuck with.
+Here is the honest problem with this mechanic and how I would like to solve it. A staff incentive cannot be separated from everything else happening that month, so most brands run one, see a lift, and claim it. With ${doors} doors we can do better: run it in some and hold the rest back, then compare. That gives us both a number neither of us has to take on faith.
 
-One line back with a rough headcount is enough to start.
+If holding stores back is not something you want to do, I would rather say up front that the result is directional than pretend it is measured.
 
 ${SIGN_OFF}`,
       guardrail:
-        "The three day change notice is DIME's own published term. Do not soften it into a vague few days, and do not attach a price to anything in this message.",
+        "Never attach a per unit payment to this in writing without approval. And do not claim a lift from a staff incentive that ran everywhere at once, because there is nothing to compare it against.",
     });
   }
 

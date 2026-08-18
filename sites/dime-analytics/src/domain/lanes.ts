@@ -100,15 +100,15 @@ export const LANE_META: Record<Lane, LaneMeta> = {
 
   // --- Discretionary: somebody chooses -------------------------------
   corporate: {
-    label: "Corporate and employers",
-    short: "Corporate",
+    label: "Key accounts, four or more doors",
+    short: "Key accounts",
     glyph: "■",
     occasionClass: "discretionary",
-    doorName: "HR or office manager",
-    doorNoun: "front office",
-    note: "The highest value per booking and the slowest to reach. The employer base in this trade area is concentrated on a handful of streets, which means a tabling shift in one lobby at lunchtime reaches more decision makers than a week of calls.",
+    doorName: "Category buyer or purchasing manager",
+    doorNoun: "chain buyer",
+    note: "Catalyst operates nine of the premises on this board, Haven six, Mr Nice Guy four. One conversation with a buyer at this level places product in every one of those storefronts at once, which is why a chain call is worth several independent calls and why losing one costs several at once.",
     laneProblem:
-      "The December date is spoken for years in advance and the incumbent is usually a hotel. The corporate ask is rarely this year's holiday party. It is the second occasion, which nobody is defending.",
+      "The decision sits above the store, so a good relationship with a store manager buys nothing. The buyer is often not in any of the buildings, publishes no email, and resets the assortment on a schedule the brand does not control.",
     cssVar: "var(--lane-corporate)",
     tintVar: "var(--lane-corporate-tint)",
   },
@@ -126,15 +126,15 @@ export const LANE_META: Record<Lane, LaneMeta> = {
     tintVar: "var(--lane-auto-tint)",
   },
   "hospitality-civic": {
-    label: "Hotels, chambers and civic",
-    short: "Hospitality",
-    glyph: "◍",
+    label: "Regional groups, two to three doors",
+    short: "Regional groups",
+    glyph: "◇",
     occasionClass: "discretionary",
-    doorName: "Membership or sales director",
-    doorNoun: "membership desk",
-    note: "The referral lane, and the only one that multiplies. A chamber of commerce is not a large booking; it is a room full of every other lane on this board, standing together, once a month. A hotel sales director is asked for group activity recommendations by people who have already decided to spend money.",
+    doorName: "Owner operator or buyer",
+    doorNoun: "owner",
+    note: "STIIIZY, Off The Charts, 420 Central, King's Crew and Culture Cannabis Club each run two or three of the premises here. Small enough that the person who decides still answers the phone, large enough that a yes lands in more than one door.",
     laneProblem:
-      "A referral partner will not recommend a building they have not seen. This lane converts on a visit rather than on a call, and the store is one town over, so every conversion in it costs somebody an afternoon.",
+      "They behave like independents until they do not. A group that opened its third door this year starts buying like a chain, and a rep still treating it as a single store finds the assortment decision has moved without being told.",
     cssVar: "var(--lane-hospitality)",
     tintVar: "var(--lane-hospitality-tint)",
   },
@@ -152,28 +152,28 @@ export const LANE_META: Record<Lane, LaneMeta> = {
     tintVar: "var(--lane-faith-tint)",
   },
   healthcare: {
-    label: "Healthcare and senior care",
-    short: "Healthcare",
+    label: "Microbusiness licence",
+    short: "Microbusiness",
     glyph: "◈",
     occasionClass: "discretionary",
-    doorName: "Practice or office manager",
-    doorNoun: "practice manager",
-    note: "Dense, close, and almost never prospected by entertainment venues. A clinic of forty staff who cannot all leave at once buys two smaller weekday events rather than one large one, which is exactly the midweek daytime inventory a venue struggles to fill.",
+    doorName: "Owner operator",
+    doorNoun: "owner",
+    note: "A microbusiness licence covers cultivation, manufacture and retail under one holder, so this operator is not only a customer. Anybody selling into it is selling to somebody who also makes product, and the conversation about shelf space is not the same conversation.",
     laneProblem:
-      "The practice manager is the buyer and is the hardest person in the building to get on the phone. This lane is a go-see lane, not a call lane.",
+      "One row on this board, so nothing here generalises. It is kept as its own lane rather than folded into independents because the licence class is a real commercial difference and hiding it inside a bigger group would be the tidier and less true choice.",
     cssVar: "var(--lane-healthcare)",
     tintVar: "var(--lane-healthcare-tint)",
   },
   "local-retail-food": {
-    label: "Local retail and food",
-    short: "Local retail",
-    glyph: "◫",
+    label: "Independents, single door",
+    short: "Independents",
+    glyph: "□",
     occasionClass: "discretionary",
-    doorName: "Owner or store manager",
-    doorNoun: "counter",
-    note: "Six to seventy staff, and the person who decides is standing behind the counter. Boba shops, small food franchises, mall tenants and independent restaurants have no HR department, no committee and no procurement process; the owner hears the ask, does the arithmetic in their head and answers the same afternoon. Every booking is small and fourteen of the fifteen sit within a mile of the venue, which is a tighter cluster than any other lane on the board and what makes this a route rather than a set of accounts.",
+    doorName: "Store buyer",
+    doorNoun: "store buyer",
+    note: "Forty two of the seventy four are a single premises. The person who decides what goes on the shelf is usually in the building, which makes this the only lane on the board where walking in is a genuinely efficient use of an hour.",
     laneProblem:
-      "They do not publish an email. Of the forty five local retail, food and auto organisations researched for this trade area, eight published an email address that could be read off their own page; franchise retail routes everything through a corporate form and a chain store number has no inbox behind it at all. So this is a go-see lane by nature rather than by preference. The only door is the door, and the crews who work it are on shift in the evening, which is the one time a rep is not.",
+      "Every yes is one door. Working this lane is the highest effort per unit of shelf on the board, and it is also the only lane where a brand can win placement without a chain negotiation, which is why it is worked rather than skipped.",
     cssVar: "var(--lane-local-retail-food)",
     tintVar: "var(--lane-local-retail-food-tint)",
   },
@@ -241,15 +241,19 @@ export function isCalendarLocked(lane: Lane): boolean {
  * counter while a graduating class went unclaimed.
  */
 export const LANE_ORDER: Lane[] = [
-  "schools",
-  "colleges",
-  "fitness-youth-sports",
+  /**
+   * Ordered by how much shelf one conversation buys, deepest first.
+   *
+   * Five of the nine lanes this application inherited describe occasions
+   * a venue sells to, and none of them exists in cannabis wholesale, so
+   * they are not iterated. They stay declared in LANE_META because the
+   * type demands every key, and a lane with no accounts would render as
+   * an honest zero rather than an error if one were added back.
+   */
   "corporate",
-  "auto-finance",
   "hospitality-civic",
-  "faith-nonprofit",
-  "healthcare",
   "local-retail-food",
+  "healthcare",
 ];
 
 /**

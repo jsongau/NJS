@@ -6,7 +6,7 @@ import type { Seat, SeatId } from "@/domain/seats";
  *
  * ── WHERE THE TITLES COME FROM ────────────────────────────────────
  * Both titles are published in the posting this work sample was written
- * for, whose heading is "New Business Development Promotion Planner
+ * for, whose heading is "Sales Performance Analyst
  * Manager / Senior Manager". The two grades in that heading are the two
  * titles on this floor. No title here was invented, exactly as no buyer
  * title anywhere in `prospects.ts` was invented.
@@ -46,7 +46,7 @@ import type { Seat, SeatId } from "@/domain/seats";
  */
 
 const POSTING =
-  "The DIME posting headed \"New Business Development Promotion Planner Manager / Senior Manager\", quoted in the brief this application was built against";
+  "The DIME posting headed \"Sales Performance Analyst / Senior Manager\", quoted in the brief this application was built against";
 
 /**
  * The seat this session is operated from.

@@ -99,12 +99,12 @@ export function PromoPage() {
 
   const byCategory = useMemo(() => {
     const out = {
-      plush: 0,
-      collectible: 0,
-      apparel: 0,
-      novelty: 0,
-      print: 0,
-      "food-novelty": 0,
+      cartridge: 0,
+      disposable: 0,
+      gummy: 0,
+      softgel: 0,
+      battery: 0,
+      preroll: 0,
     } satisfies Record<PromoCategory, number>;
     for (const r of rows) out[r.line.category] += 1;
     return out;

@@ -321,12 +321,12 @@ function DeskRow({
         </div>
 
         <div className={`${styles.metric} ${styles.metricSize}`}>
-          <span className={styles.colLabel}>Likely size</span>
+          <span className={styles.colLabel}>Doors</span>
           <span className={`${styles.metricValue} num`}>
             {p.headcountLow} to {p.headcountHigh}
           </span>
           <span className={styles.metricUnit}>
-            guests, modeled
+            doors, counted
             <ProvenanceBadge provenance="modeled" compact />
           </span>
         </div>

@@ -182,7 +182,7 @@ export function scoreProspect(
   const mid = (p.headcountLow + p.headcountHigh) / 2;
   const sizePoints = Math.min(15, Math.round(mid / 20));
   components.push({
-    label: "Likely size",
+    label: "Doors",
     points: sizePoints,
     why: `Modeled at ${p.headcountLow} to ${p.headcountHigh} guests. Capped at 15 points because this is the softest figure on the row.`,
   });

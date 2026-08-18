@@ -2510,7 +2510,7 @@ export function MethodPage() {
               <div className={styles.disclaimer}>
                 <p className={styles.disclaimerP}>
                   DIME is an unaffiliated work sample by Nathan J. Song, built
-                  for a New Business Development Promotion Planner application
+                  for a Sales Performance Analyst application
                   at DIME. It is not affiliated with, endorsed by or
                   connected to DIME Industries, LLC in any way.
                 </p>

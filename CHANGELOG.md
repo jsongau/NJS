@@ -4,6 +4,15 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-08-18
 
+- `r1` — the same portal fix as `me`, same file, same reasoning. `/r1` is
+  the same codebase and carried the same shape: zero portals anywhere and
+  nine components with fixed-position overlays. The add-a-prospect dialog
+  mounts inside the side rail, so it is the one genuinely exposed to an
+  ancestor transform; the other eight mount from providers or page roots.
+  Verified after the fix at 1300x844: full-viewport scrim and a 560px
+  dialog both with and without a transform injected on the rail's own
+  scroll container.
+
 - `me` — the add-a-prospect dialog is portalled to `document.body`. It
   rendered inside the side rail, where `position: fixed; inset: 0` on the
   scrim is only true while no ancestor carries a transform. Measured on

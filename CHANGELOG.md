@@ -12,6 +12,8 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   privacy control. Fictional data, noindex headers scoped to `/commerce` and
   `/commerce/:path*` only. Source and 149 headless assertions live in
   `commerce-hr/` beside the repo; only the build ships here.
+- `commerce` — phone layout: rep tables stack into cards, short banner,
+  one-row shift cards. 152 assertions.
 
 ## 2026-08-18
 

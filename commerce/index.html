@@ -7171,7 +7171,6 @@ button.cx-bar:hover{background:var(--action-soft)}
 .cx-shiftbar .n{font-family:var(--mono);font-size:var(--fs-h1);line-height:1.1}
 .cx-shiftbar .who{font-size:var(--fs-meta);color:var(--ink-muted)}
 .cx-shiftbar .card.on{border-color:var(--desk);box-shadow:inset 3px 0 0 var(--desk)}
-@media(max-width:640px){.cx-shiftbar{grid-template-columns:1fr}}
 .chip.desk{background:var(--desk-soft);color:var(--desk-deep)}
 
 /* ---- compact intake: typeahead first, departments as a narrow row ------------- */
@@ -7233,6 +7232,48 @@ button.cx-opt:hover:not(.off){border-color:var(--rule-int)}
 @media(min-width:1121px){
   #shell,#shell[data-console="cc"],#shell[data-hqrail="on"][data-rail="open"]{--rail-w:232px}
   #shell[data-rail="icons"]{--rail-w:var(--rail-w-min)}
+}
+
+/* ---- phone ---------------------------------------------------------------------
+   Below 640px the rep console tables stack: one card per row, the column
+   name printed small above each value, the employee first, the actions last
+   and full width. No horizontal scroll, no hidden columns. */
+.pb-short{display:none}
+@media(max-width:640px){
+  .pb-long{display:none}
+  .pb-short{display:inline}
+  .protobar{padding:6px 12px;font-size:12px;line-height:1.3}
+  .lg-tbl thead{display:none}
+  .lg-tbl,.lg-tbl tbody{display:block;width:100%}
+  .lg-tbl tbody tr{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;padding:12px 4px;border-bottom:1px solid var(--rule);align-items:start}
+  .lg-tbl tbody tr:last-child{border-bottom:0}
+  .lg-tbl tbody td,.lg-tbl tbody th{display:block;padding:0;border:0;min-width:0;width:auto;text-align:left}
+  .lg-tbl tbody td[data-l]::before{content:attr(data-l);display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:2px}
+  .lg-tbl tbody th[scope="row"]{grid-column:1 / -1;order:-1}
+  .lg-tbl tbody td.lg-act{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:6px;padding-top:4px}
+  .lg-tbl tbody td.lg-act::before{display:none}
+  .lg-tbl tbody td:empty{display:none}
+  .lg-tbl tbody td[data-l=""]::before{display:none}
+  .lg-tbl .lg-id{display:inline-block;margin-left:8px}
+  .lg-card .tblwrap{overflow:visible}
+  .cx-shiftbar{grid-template-columns:repeat(3,1fr);gap:6px}
+  .cx-shiftbar .card{padding:8px 10px}
+  .cx-shiftbar .sh{font-size:10px}
+  .cx-shiftbar .n{font-size:var(--fs-lead)}
+  .cx-shiftbar .who,.cx-shiftbar .hrs{display:none}
+  .lg-tbl tbody td.lg-act{justify-content:flex-start}
+  .lg-tbl tbody td.lg-act .btn{min-height:36px;padding:6px 12px;font-size:13px}
+  .cx-logtabs .pick{min-height:34px;padding:5px 10px;font-size:12.5px}
+  #drawer .cx-intake .pick{min-height:32px;padding:4px 10px;font-size:12px}
+  #drawer .cx-intake .pillbar{gap:6px}
+  #drawer header.cx-mhead .sub{display:none}
+  .cx-opts{grid-template-columns:1fr 1fr}
+  .cx-opt .n{display:none}
+  .cx-opt.on .n{display:block}
+  .cx-hist .kpis{grid-template-columns:1fr 1fr 1fr}
+  .cx-hist .kpis .kpi .v{font-size:18px}
+  .cx-hist .tbl td,.cx-hist .tbl th{padding:6px 8px;font-size:12px}
+  .cx-sh .btn.gold{width:100%}
 }
 </style>
 </head>
@@ -8101,7 +8142,7 @@ function chrome(){
       <div class="seg mobileonly" style="display:none">${personas.map(p=>`<button data-persona="${p}" aria-pressed="${S.persona===p}" aria-label="${t(p)}">${short[p]}</button>`).join('')}</div>
       <button class="bell" aria-label="Task inbox">${n?`<b>${n}</b>`:''}</button>
     </div></div>
-  <div class="protobar"><b>PROTOTYPE</b> · independent work sample by Nathan J. Song. Illustrative demo data, every person and record is fictional. Not affiliated with or endorsed by Commerce Casino.</div>`;}
+  <div class="protobar"><b>PROTOTYPE</b> <span class="pb-long">· independent work sample by Nathan J. Song. Illustrative demo data, every person and record is fictional. Not affiliated with or endorsed by Commerce Casino.</span><span class="pb-short">· fictional data · not affiliated with Commerce Casino</span></div>`;}
 
 function footer(){return `<div class="foot">Independent concept prototype by Nathan J. Song. Not affiliated with, endorsed by, or authorized by Commerce Casino.<br>All employees, cases, attendance, leave and training records are fictional. Department names, volumes and rates are illustrative. Statutory references carry a VERIFY flag and are not legal advice.</div>`;}
 
@@ -8306,11 +8347,16 @@ function focusKey(el){
     const v=el.getAttribute(a); if(v!=null)return `[${a}="${CSS.escape(v)}"]`;
   }
   return null;}
+/* Copies each table head onto its cells as data-l, so the phone layout can
+   print the column name beside the value when the row is stacked. */
+function cellLabels(root){(root||document).querySelectorAll('table.lg-tbl').forEach(t=>{const hs=[...t.querySelectorAll('thead th')].map(h=>h.textContent.trim());
+  t.querySelectorAll('tbody tr').forEach(tr=>{[...tr.children].forEach((c,i)=>{if(hs[i]&&!c.hasAttribute('data-l'))c.setAttribute('data-l',hs[i]);});});});}
 function render(){
   document.body.dataset.lang='en';
   const key=focusKey(document.activeElement);
   const v=S.module?viewModule():S.persona==='hq'?viewHQ():S.persona==='cc'?viewCC():S.persona==='mgr'?viewMgr():viewEmp();
   $('#app').innerHTML=chrome()+v;
+  cellLabels();
   intakeRepaint();
   if(key){try{const back=$('#app').querySelector(key);if(back)back.focus();}catch(err){}}
   animateBars();
@@ -12734,7 +12780,7 @@ function ccMyQueue(){
       '<td>' + esc(c.rep === (me && me.id) ? 'Me' : (empName(c.rep).split(' ')[0] || 'Unassigned')) + '</td>' +
       '<td class="lg-act">' + ccTaskBtn(task, cta) + (c.mgrInformed ? '' : '<button type="button" class="btn ghost sm" data-act="inform" data-id="' + esc(c.id) + '">Inform manager</button>') + ccOpenBtn(c.id) + '</td></tr>';
   }).join('');
-  const newBtn = '<div class="cx-sh" style="margin:0 0 12px"><div><div class="fl">The desk</div><div class="sub">Every call starts here: one form writes the event, the coverage and the case.</div></div><button type="button" class="btn gold" data-inew="1">New contact</button></div>';
+  const newBtn = '<div class="cx-sh" style="margin:0 0 12px"><div><div class="fl">The desk</div><div class="sub">Every call starts here: one form writes the event, the coverage and the case.</div></div><button type="button" class="btn gold" data-inew="1">New log</button></div>';
   return ccHead(sf) + newBtn + (mine.length ? '<div class="card lg-card"><div class="tblwrap"><table class="tbl lg-tbl"><thead><tr>' +
     '<th scope="col">SLA</th><th scope="col">Employee</th><th scope="col">Reason</th><th scope="col">Priority</th><th scope="col">Status</th><th scope="col">Rep</th><th scope="col">Action</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div><p class="hint lg-hint">' + Math.min(40, mine.length) + ' of ' + mine.length + '. New and unassigned rows sit at the top regardless of SLA, because a case nobody owns has no clock anyone is watching.</p></div>'
@@ -12988,7 +13034,7 @@ function deskLogHTML(opts){
   const what = l => l.type === 'inquiry' ? 'Inquiry<br><span class="sub">' + esc(l.reason) + '</span>' : esc(label(ATT_TYPES, l.type)) + (l.type === 'calloff' ? '' : ' <span class="mono">' + l.minutes + ' min</span>') + '<br><span class="sub">' + esc(l.reason) + '</span>';
   const cover = l => l.cover ? '<span class="mono">' + l.cover.hours.toFixed(2) + ' h</span> <span class="chip ' + (l.cover.bucket === 'unpaid' ? '' : 'ok') + '">' + esc(label(COVER_BUCKETS, l.cover.bucket)) + '</span>' : (l.type === 'inquiry' ? '<span class="sub">n/a</span>' : '<span class="sub">none</span>');
   const outcome = l => { const c = l.caseId ? CASEBY[l.caseId] : null; if(!c) return '<span class="sub">no case</span>'; return '<span class="mono">' + esc(c.id) + '</span> ' + caseStatusChip(c.status) + (l.type === 'inquiry' && l.answered ? ' <span class="chip ok">First contact</span>' : ''); };
-  const shiftBar = '<div class="cx-shiftbar">' + ['day', 'swing', 'grave'].map(k => '<button type="button" class="card' + (sh === k ? ' on' : '') + '" data-lcard="' + k + '" aria-pressed="' + (sh === k) + '" style="text-align:left"><span class="sh">' + shiftName(k) + ' shift · ' + hours[k] + '</span><span class="n">' + counts[k] + '</span><span class="who">' + esc(repsOn(k).map(r => r.name.split(' ')[0]).join(', ') || 'no rep on shift') + ' on the desk</span></button>').join('') + '</div>';
+  const shiftBar = '<div class="cx-shiftbar">' + ['day', 'swing', 'grave'].map(k => '<button type="button" class="card' + (sh === k ? ' on' : '') + '" data-lcard="' + k + '" aria-pressed="' + (sh === k) + '" style="text-align:left"><span class="sh">' + shiftName(k) + '<span class="hrs"> shift · ' + hours[k] + '</span></span><span class="n">' + counts[k] + '</span><span class="who">' + esc(repsOn(k).map(r => r.name.split(' ')[0]).join(', ') || 'no rep on shift') + ' on the desk</span></button>').join('') + '</div>';
   const tabs = '<div class="cx-logtabs" role="group" aria-label="Shift">' + [['all', 'All shifts', all.length], ['day', 'Day', counts.day], ['swing', 'Swing', counts.swing], ['grave', 'Graveyard', counts.grave]].map(([k, l, n]) => '<button type="button" class="pick" data-lshift="' + k + '" aria-pressed="' + (sh === k) + '">' + esc(l) + '<span class="n">' + n + '</span></button>').join('') + '</div>';
   const rows = list.map(l => '<tr' + (l.caseId ? ' data-case="' + esc(l.caseId) + '" tabindex="0" role="button" aria-label="Open case ' + esc(l.caseId) + '"' : '') + '><td>' + when(l.at) + '</td><td>' + rep(l.rep) + '</td>' +
     '<th scope="row">' + ccEmpCell(l.emp) + '</th><td>' + what(l) + '</td><td>' + cover(l) + '</td>' +

@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Commerce HR Operations, HR Call Center and Workforce Analytics</title>
+<title>The Commerce HR Operations, HR Call Center and Workforce Analytics</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20260%20260%22%3E%3Crect%20width=%22260%22%20height=%22260%22%20rx=%2252%22%20fill=%22#1C1C1C%22/%3E%3Cg%20transform=%22translate(0%2022)%22%3E%3Cg%20fill=%22none%22%20stroke=%22#C9A96A%22%20stroke-width=%2212%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%3E%3Ccircle%20cx=%22130%22%20cy=%2258%22%20r=%2244%22/%3E%3Ccircle%20cx=%2274%22%20cy=%2296%22%20r=%2244%22/%3E%3Ccircle%20cx=%22186%22%20cy=%2296%22%20r=%2244%22/%3E%3Cpath%20d=%22M30%20130%20L58%20186%20L202%20186%20L230%20130%22/%3E%3Cpath%20d=%22M58%20202%20H202%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
 <meta name="description" content="Prototype operating console for an HR call center, attendance, leave, HRIS reporting and workforce analytics. Work sample by Nathan J. Song. Demo data only.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -7275,6 +7276,28 @@ button.cx-opt:hover:not(.off){border-color:var(--rule-int)}
   .cx-hist .tbl td,.cx-hist .tbl th{padding:6px 8px;font-size:12px}
   .cx-sh .btn.gold{width:100%}
 }
+
+/* ---- confetti canvas: above everything, never in the way ------------------ */
+#confetti{position:fixed;inset:0;z-index:300;pointer-events:none;opacity:0;transition:opacity .4s}
+
+/* ---- reason groups, the rule card, received time --------------------------- */
+.cx-rgrp{margin-bottom:6px}
+.cx-rlab{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin:0 0 4px}
+.cx-rlab.ok{color:var(--ok)}
+.cx-rule{border-left:3px solid var(--rule);background:#F6F5F0;padding:8px 10px;border-radius:0 8px 8px 0;font-size:12.5px;margin:4px 0 8px;color:var(--ink)}
+.cx-rule b{display:block;margin-bottom:2px}
+.cx-rule.prot{border-left-color:var(--ok);background:#F1F5EF}
+.cx-rule .chip{font-size:10px;padding:0 6px;vertical-align:1px}
+.cx-recv{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;padding:8px 10px;border:1px solid var(--rule);border-radius:var(--r-ctl);background:var(--card)}
+.cx-recv .fl{margin:0}
+.cx-recv input[type="time"]{min-height:36px;padding:4px 8px;font-family:var(--mono);font-size:14px;width:150px}
+.cx-recv .hint{flex-basis:100%;margin:0}
+
+/* ---- the Commerce mark in the top bar ------------------------------------------ */
+#topbar .brand .mark.crownmark{background:transparent;width:32px;height:28px;border-radius:0;display:grid;place-items:center}
+#topbar .brand .mark.crownmark svg{display:block}
+#topbar .brand .wordmark{font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+#topbar .brand small .gold{color:#C9A96A;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 </style>
 </head>
 <body data-lang="en">
@@ -7509,12 +7532,42 @@ function _empCompliance(e){let bad=0,soon=0,tot=0;
    root cause module has a real pattern to surface rather than a sentence
    typed into it. */
 const ATT_TYPES=[['calloff','Call-off'],['late','Late arrival'],['ncns','No-call / no-show'],['early','Early out']];
-/* Reason categories the desk can record. A category, never a diagnosis or a
-   detail. FMLA is offered as a reason on every attendance type; whether it can
-   be designated depends on the leave file, which the coverage step shows. The
-   weights shape the seeded data only. */
-const ATT_REASONS=['Illness (self)','Family care','Childcare','Bereavement','Medical appointment','Transportation','Jury duty','Military duty','Weather or road closure','School or exam','Personal','No reason given'];
-const ATT_REASON_W=[30,14,12,3,9,11,1,1,3,2,14];
+/* Reason categories the desk can record, and the California rule each one
+   sits under. A category, never a diagnosis or a detail. Every protected
+   category is exempt from attendance points, because a no-fault points policy
+   that counts protected leave is the retaliation the statutes forbid. The
+   statute references are for the reader to VERIFY against current law; this
+   is a work sample, not legal advice, and nothing here is any employer's
+   policy. Sources read 2 Sep 2026: DIR paid sick leave FAQ (Lab. Code 245.5,
+   246, 246.5, 233), Gov. Code 12945.2 (CFRA), 12945.6 (SB 848), 12945.7
+   (AB 1949), 12945.8 (AB 2499), Lab. Code 230, 230.8, 1139, 1510, Elec. Code
+   14000, Mil. & Vet. Code 395.10. */
+const REASON_RULES={
+  'FMLA':                     {grp:'protected',bucket:'fmla',law:'FMLA 29 USC 2612 / CFRA Gov. Code 12945.2',note:'Approved intermittent leave. Draws the FMLA bank; job protected. No points.'},
+  'Sick, self':               {grp:'protected',bucket:'sick',law:'Lab. Code 246.5(a)(1)',note:'Own illness, injury, preventive care, diagnosis or treatment. Paid sick leave use; no doctor\'s note may be demanded as a condition of the leave. No points.'},
+  'Sick, family member':      {grp:'protected',bucket:'sick',law:'Lab. Code 246.5(a)(1), 245.5(c), 233',note:'Care of a child, parent, spouse, registered domestic partner, grandparent, grandchild, sibling, or one designated person. Same sick bank; kin care. No points.',rel:true},
+  'Medical appointment':      {grp:'protected',bucket:'sick',law:'Lab. Code 246.5(a)(1)',note:'Preventive care or diagnosis for self or a family member. Paid sick leave use. No points.'},
+  'Safe time (violence)':     {grp:'protected',bucket:'sick',law:'Lab. Code 246.5(a)(2); Gov. Code 12945.8 (AB 2499)',note:'Victim of a qualifying act of violence, or family of one: medical, relocation, court, safety planning. Category only; no detail is ever written. No points.'},
+  'Jury duty or court':       {grp:'protected',bucket:'sick',law:'Lab. Code 230; 246.5 (since 1 Jan 2025)',note:'Jury service, or appearing under subpoena or as a victim. Paid sick leave may be used since 2025. No points.'},
+  'Bereavement':              {grp:'protected',bucket:'unpaid',law:'Gov. Code 12945.7 (AB 1949)',note:'Up to 5 days per death of a spouse, child, parent, sibling, grandparent, grandchild, domestic partner or parent-in-law. Unpaid by statute; sick or PTO may be applied at the employee\'s choice. No points.'},
+  'Reproductive loss':        {grp:'protected',bucket:'unpaid',law:'Gov. Code 12945.6 (SB 848)',note:'Up to 5 days within 3 months of the event, up to 20 days a year. Unpaid unless PTO or sick applied. Category only. No points.'},
+  'Pregnancy disability':     {grp:'protected',bucket:'unpaid',law:'Gov. Code 12945 (PDL); SDI',note:'Up to 4 months. Routes to the leave desk for the PDL file and SDI. Sick or PTO may be applied. No points.'},
+  'School activity':          {grp:'protected',bucket:'unpaid',law:'Lab. Code 230.8',note:'Child\'s school or childcare activity or emergency, up to 40 hours a year, employers of 25 or more. Unpaid unless PTO applied. No points.'},
+  'Voting':                   {grp:'protected',bucket:'paid',law:'Elec. Code 14000',note:'Up to 2 hours paid at the start or end of the shift when the employee cannot vote outside working hours; 2 working days\' notice. No points.'},
+  'Emergency condition':      {grp:'protected',bucket:'unpaid',law:'Lab. Code 1139 (SB 1044)',note:'Refusing to report during a declared emergency where the employee reasonably believes the site is unsafe. Protected; no points.'},
+  'Military duty':            {grp:'protected',bucket:'unpaid',law:'USERRA; Mil. & Vet. Code 394, 395.10',note:'Service, training, or a military spouse\'s 10 days during a deployment. Unpaid unless PTO applied. No points.'},
+  'Organ or marrow donation': {grp:'protected',bucket:'paid',law:'Lab. Code 1510',note:'Up to 30 business days paid for an organ, 5 for bone marrow, in a year. Routes to the leave desk. No points.'},
+  'Childcare':                {grp:'unprotected',bucket:'sick',law:'',note:'A care gap that is not an illness or a school activity. Not a protected use; points apply. Sick or PTO may still be applied at the employee\'s choice.'},
+  'Transportation':           {grp:'unprotected',bucket:'unpaid',law:'',note:'Car, transit or ride failure. Not protected; points apply.'},
+  'Weather or road closure':  {grp:'unprotected',bucket:'unpaid',law:'',note:'Not protected unless a declared emergency (see Emergency condition). Points apply; the manager may waive under the policy.'},
+  'Personal':                 {grp:'unprotected',bucket:'pto',law:'',note:'Not protected; points apply. PTO at the employee\'s choice.'},
+  'No reason given':          {grp:'unprotected',bucket:'unpaid',law:'',note:'No-call no-show or no reason offered. Points apply at the no-call rate.'}
+};
+const ATT_REASONS=Object.keys(REASON_RULES).filter(k=>k!=='FMLA');
+const ATT_REASON_W={'Sick, self':26,'Sick, family member':9,'Medical appointment':6,'Safe time (violence)':0.4,'Jury duty or court':0.7,'Bereavement':1.6,'Reproductive loss':0.2,'Pregnancy disability':0.4,'School activity':1.4,'Voting':0.3,'Emergency condition':0.2,'Military duty':0.5,'Organ or marrow donation':0.1,'Childcare':13,'Transportation':13,'Weather or road closure':3,'Personal':17,'No reason given':0};
+const REL_OPTIONS=['Child','Parent','Spouse','Registered domestic partner','Grandparent','Grandchild','Sibling','Designated person'];
+const reasonProtected=r=>!!(REASON_RULES[r]&&REASON_RULES[r].grp==='protected');
+/* The reason list handed to the seed and to the intake: FMLA first. */
 const ATT=[];
 (function(){
   let seq=0;
@@ -7537,7 +7590,7 @@ const ATT=[];
          mostly under an hour, an early out mostly one to three. */
       const minutes=type==='late'?(r()<.7?5*(2+Math.floor(r()*10)):15*(4+Math.floor(r()*5))):type==='early'?30*(1+Math.floor(r()*6)):480;
       ATT.push({id:'ATT-'+String(++seq).padStart(5,'0'),emp:e.id,dept:e.dept,shift:e.shift,at:at,type:type,minutes:minutes,
-        reason:type==='ncns'?'No reason given':(()=>{const tot=ATT_REASON_W.reduce((a,b)=>a+b,0);let roll=r()*tot;for(let i=0;i<ATT_REASON_W.length;i++){roll-=ATT_REASON_W[i];if(roll<0)return ATT_REASONS[i];}return 'Personal';})(),
+        reason:type==='ncns'?'No reason given':(()=>{const ks=ATT_REASONS;const tot=ks.reduce((a,k)=>a+ATT_REASON_W[k],0);let roll=r()*tot;for(const k of ks){roll-=ATT_REASON_W[k];if(roll<0)return k;}return 'Personal';})(),
         documented:documented,docDue:at+2*DAY,mgrNotified:day<1?r()<.7:true,
         via:r()<.7?'call':r()<.85?'portal':'manager',rep:pick(r,REPS).id,cover:null});
     }
@@ -7552,7 +7605,8 @@ const ATT=[];
    cover time missed: a late arrival, an early out, or the whole shift. Minutes
    round UP to the next quarter hour, which is an illustrative timekeeping rule
    and is labelled configurable on the console. */
-const COVER_BUCKETS=[['fmla','FMLA'],['sick','Sick'],['pto','PTO'],['unpaid','Unpaid']];
+const COVER_BUCKETS=[['fmla','FMLA'],['sick','Sick'],['pto','PTO'],['unpaid','Unpaid'],['paid','Paid by employer']];
+const NO_BAL=b=>b==='unpaid'||b==='paid';
 /* FMLA. An approved intermittent leave gives the employee a bank of
    job-protected hours (480 in a 12 month period, illustrative) that a
    call-off can draw on. The console records the designation category (self
@@ -7594,10 +7648,10 @@ const COVERAGE=[];
    event. Returns the row so the caller can print before and after. */
 function applyCoverage(empId,att,bucket,hours,repId,note){
   const e=EMPBY[empId];if(!e)return null;e.bal=e.bal||{sick:0,pto:0};
-  const before=bucket==='unpaid'?null:e.bal[bucket];
-  if(bucket!=='unpaid')e.bal[bucket]=+Math.max(0,e.bal[bucket]-hours).toFixed(2);
+  const before=NO_BAL(bucket)?null:e.bal[bucket];
+  if(!NO_BAL(bucket))e.bal[bucket]=+Math.max(0,e.bal[bucket]-hours).toFixed(2);
   const row={id:'TC-'+String(COVERAGE.length+1).padStart(5,'0'),emp:e.id,dept:e.dept,att:att?att.id:null,type:att?att.type:'inquiry',minutes:att?att.minutes:0,
-    bucket:bucket,hours:hours,before:before,after:bucket==='unpaid'?null:e.bal[bucket],rep:repId,at:Date.now(),note:note||''};
+    bucket:bucket,hours:hours,before:before,after:NO_BAL(bucket)?null:e.bal[bucket],rep:repId,at:Date.now(),note:note||''};
   COVERAGE.push(row);if(att)att.cover={bucket:bucket,hours:hours,id:row.id};return row;}
 const coverSince=(ms,pred)=>COVERAGE.filter(c=>c.at>=ms&&(!pred||pred(c)));
 
@@ -7616,8 +7670,10 @@ const LADDER=[
  {pts:4,step:'Suspension review',who:'HR Manager',note:'Typically an unpaid suspension of one to three shifts'},
  {pts:5,step:'Final written warning',who:'HR Manager'},
  {pts:6,step:'Separation review',who:'HR Manager and department head'}];
+/* Points for one event: zero when the reason is a protected use. */
+const pointsForEvent=a=>reasonProtected(a.reason)?0:(POINTS[a.type]||0);
 function pointsFor(empId){const rows=ATT.filter(a=>a.emp===empId&&a.at>=TODAY-(POINTS_WINDOW-1)*DAY);
-  const pts=rows.reduce((a,x)=>a+(POINTS[x.type]||0),0);return{pts:+pts.toFixed(1),rows:rows};}
+  const pts=rows.reduce((a,x)=>a+pointsForEvent(x),0);return{pts:+pts.toFixed(1),rows:rows};}
 function ladderStep(pts){let cur=null,next=null;for(const l of LADDER){if(pts>=l.pts)cur=l;else if(!next)next=l;}return{cur:cur,next:next,toNext:next?+(next.pts-pts).toFixed(1):0};}
 /* Standing in words, never colour alone. */
 function pointsStanding(pts){
@@ -7936,6 +7992,8 @@ const SOPS=[
   steps:['Analyst prepares the report and runs the sensitive field check.','Any report carrying employee names or ids routes to the HR manager for approval.','Approval, recipient and fields are logged before release.']},
  {id:'SOP-09',en:'Attendance Points, Suspension and Reinstatement',owner:'Assistant HR Manager',v:'2.0',updated:TODAY-9*DAY,status:'current',
   steps:['Points are computed from the event rows, never typed in. The desk can see the standing; it cannot change it.','At 3 points the record routes to HR review with the manager. The written warning is a conversation and a signed document, not a console action.','A suspension review is opened at 4 points. HR Manager decides; the console records the decision, the dates and who made it.','Reinstatement is a record with a date, entered by HR when the employee returns. The department console shows the return date and nothing else.','Every step cites the points at the time, because the window rolls and the number tomorrow will not be the number today.']},
+ {id:'SOP-10',en:'California Leave Categories at the Desk',owner:'Assistant HR Manager',v:'1.0',updated:TODAY-1*DAY,status:'current',
+  steps:['The desk records a category, never a diagnosis or a detail. If the employee volunteers detail it is not written down.','Protected categories (paid sick leave uses under Lab. Code 246.5, CFRA/FMLA, PDL, bereavement, reproductive loss, jury or court, voting, school activity, emergency condition, military, organ donation) never accrue attendance points. The console enforces this in pointsForEvent().','Sick, self and Sick, family member draw the same sick bank. A family member is a child, parent, spouse, registered domestic partner, grandparent, grandchild, sibling, or one designated person per 12 months.','A doctor\'s note is not a condition of paid sick leave. Documentation requests go through the HR manager and only where there is information the leave is not for a valid purpose.','Bereavement, reproductive loss, PDL, school activity and military are unpaid by statute; the employee may apply sick or PTO. Voting time and organ donation are paid by the employer with no balance moved.','Statute references carry a VERIFY flag: check current law before relying on any of them.']},
  {id:'SOP-08',en:'Call Center Escalation to HR Manager',owner:'Assistant HR Manager',v:'2.3',updated:TODAY-5*DAY,status:'current',
   steps:['Urgent: same shift, by phone, then logged.','High: same day, in the case.','The HR manager records the outcome on the case before it closes.']}];
 
@@ -8134,7 +8192,7 @@ function chrome(){
   const personas=['hq','cc','mgr','emp'];
   const short={hq:'HR',cc:'Rep',mgr:'Dept',emp:'Me'};
   return `<div class="topbar" id="topbar">
-    <div class="brand"><span class="mark" aria-hidden="true">HR</span><span class="wordmark">HR Operations</span><small>Commerce, prototype</small></div>
+    <div class="brand"><span class="mark crownmark" aria-hidden="true">${crownSVG(30)}</span><span class="wordmark">The Commerce</span><small><span class="gold">Casino &amp; Hotel</span> · HR Operations, prototype</small></div>
     <div class="spacer"></div>
     <div class="chrome-ctl">
       <div class="seg desktoponly"><span class="lbl">${t('viewingAs')}</span>
@@ -8144,7 +8202,10 @@ function chrome(){
     </div></div>
   <div class="protobar"><b>PROTOTYPE</b> <span class="pb-long">· independent work sample by Nathan J. Song. Illustrative demo data, every person and record is fictional. Not affiliated with or endorsed by Commerce Casino.</span><span class="pb-short">· fictional data · not affiliated with Commerce Casino</span></div>`;}
 
-function footer(){return `<div class="foot">Independent concept prototype by Nathan J. Song. Not affiliated with, endorsed by, or authorized by Commerce Casino.<br>All employees, cases, attendance, leave and training records are fictional. Department names, volumes and rates are illustrative. Statutory references carry a VERIFY flag and are not legal advice.</div>`;}
+/* The Commerce crown, three rings over a base, drawn once and reused: the top
+   bar mark, the console badge, the favicon. Gold on the navy. */
+function crownSVG(w,cls,label){return '<svg class="'+(cls||'crown')+'" width="'+w+'" height="'+Math.round(w*0.83)+'" viewBox="0 0 260 216" '+(label?'role="img" aria-label="'+label+'"':'aria-hidden="true" focusable="false"')+'>'+'<g fill="none" stroke="#C9A96A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"><circle cx="130" cy="58" r="44"/><circle cx="74" cy="96" r="44"/><circle cx="186" cy="96" r="44"/><path d="M30 130 L58 186 L202 186 L230 130"/><path d="M58 202 H202"/></g>'+'</svg>';}
+function footer(){return `<div class="foot">Independent concept prototype by Nathan J. Song. Not affiliated with, endorsed by, or authorized by Commerce Casino. The Commerce Casino & Hotel name and crown mark identify the posting this sample was built for; they are used for identification only.<br>All employees, cases, attendance, leave and training records are fictional. Department names, volumes and rates are illustrative. Statutory references carry a VERIFY flag and are not legal advice.</div>`;}
 
 /* ---- drawers ----------------------------------------------------------- */
 let drawerOpener=null;
@@ -8270,7 +8331,7 @@ function attReviewDrawer(id){const e=EMPBY[id];if(!e)return;const a30=empAtt(e.i
     <div class="callout"><b>${esc(sd[1])}${ls.cur?', ladder step: '+esc(ls.cur.step):''}</b>${esc(st_[2])}. ${ls.cur?'The policy names '+esc(ls.cur.step.toLowerCase())+' at '+ls.cur.pts+' points, decided by '+esc(ls.cur.who)+'. ':''}The console computes the standing; the step is a decision people make and record.</div>
     <h3 style="margin:16px 0 8px">Points ladder</h3>
     <div class="tblwrap"><table class="tbl"><thead><tr><th scope="col">Points</th><th scope="col">Step</th><th scope="col">Decided by</th><th scope="col">Standing</th></tr></thead><tbody>${LADDER.map(l=>`<tr${ls.cur&&ls.cur.pts===l.pts?' style="background:var(--action-soft)"':''}><td class="mono">${l.pts}</td><td>${esc(l.step)}${l.note?`<br><span class="sub">${esc(l.note)}</span>`:''}</td><td>${esc(l.who)}</td><td>${p.pts>=l.pts?'<span class="chip alert">Reached</span>':ls.next&&ls.next.pts===l.pts?`<span class="chip warn">${ls.toNext.toFixed(1)} away</span>`:'<span class="sub">not reached</span>'}</td></tr>`).join('')}</tbody></table></div>
-    <div class="hint" style="margin:6px 0 12px">Illustrative policy: call-off 1, late 0.5, early out 0.5, no-call no-show 2, rolling ${POINTS_WINDOW} days. Configurable; not any employer's policy.</div>
+    <div class="hint" style="margin:6px 0 12px">Illustrative policy: call-off 1, late 0.5, early out 0.5, no-call no-show 2, protected leave 0 (SOP-10), rolling ${POINTS_WINDOW} days. Configurable; not any employer's policy.</div>
     ${sus.length?`<h3 style="margin:16px 0 8px">Suspensions and reinstatements</h3><dl class="dlist c3">${sus.map(x=>`<div class="dlrow"><dt><span class="mono">${esc(x.id)}</span><br><span class="sub">${x.pts.toFixed(1)} points at decision</span></dt><dd class="sub mono">${x.start?esc(fshort(x.start))+' to '+esc(fshort(x.end))+' ('+x.days+' shift'+(x.days>1?'s':'')+')':'review opened '+esc(fshort(x.opened))}</dd><dd>${x.status==='reinstated'?'<span class="chip ok">Reinstated '+esc(fshort(x.reinstated))+'</span>':x.status==='active'?'<span class="chip alert">Suspended, returns '+esc(fshort(x.end))+'</span>':'<span class="chip warn">Under review</span>'}</dd></div>`).join('')}</dl>`:''}`;})()}
     <h3 style="margin:16px 0 8px">Current attendance events</h3>
     ${a90.length?`<dl class="dlist c3">${a90.map(a=>`<div class="dlrow"><dt>${esc(label(ATT_TYPES,a.type))}<br><span class="sub">${esc(a.reason)} · via ${esc(a.via)}</span></dt><dd class="sub mono">${esc(fdt(a.at))}</dd><dd>${a.documented?'<span class="chip ok">Documented</span>':`<span class="chip warn">Due ${esc(fshort(a.docDue))}</span>`}</dd></div>`).join('')}</dl>`:'<div class="hint">No events in the rolling 90 days.</div>'}
@@ -8343,7 +8404,7 @@ function focusKey(el){
   if(el.id)return '#'+CSS.escape(el.id);
   for(const a of ['data-persona','data-filter','data-tab','data-ctab','data-cdept','data-cshift','data-crole','data-cstatus','data-ccourse','data-cfocus','data-creason','data-cart',
                   'data-case','data-emp','data-dept','data-module','data-ccreason','data-ccstatus','data-an','data-andept','data-anstatus','data-anshift','data-andays',
-                  'data-rb','data-apick','data-idept','data-adept','data-acourse','data-leave','data-dq','data-rpt','data-sop','data-attrev','data-ishift','data-ireason','data-ipick','data-itab','data-inew','data-lshift','data-lcard','data-ibucket']){
+                  'data-rb','data-apick','data-idept','data-adept','data-acourse','data-leave','data-dq','data-rpt','data-sop','data-attrev','data-ishift','data-ireason','data-ipick','data-itab','data-inew','data-lshift','data-lcard','data-ibucket','data-irel']){
     const v=el.getAttribute(a); if(v!=null)return `[${a}="${CSS.escape(v)}"]`;
   }
   return null;}
@@ -8365,6 +8426,33 @@ function render(){
 }
 window.addEventListener('resize',()=>{clearTimeout(window._rs);window._rs=setTimeout(render,200)});
 
+/* Celebration. A short burst of confetti from the control that was pressed,
+   the way a task tool marks a thing done. Brand colours only, canvas drawn,
+   no library, gone in under two seconds, and off entirely for anyone who
+   asked the OS for reduced motion. Never blocks a click: pointer-events none. */
+let _lastPt={x:innerWidth/2,y:innerHeight*0.7,t:0};
+document.addEventListener('pointerdown',e=>{_lastPt={x:e.clientX,y:e.clientY,t:Date.now()};},true);
+function celebrate(opts){
+  opts=opts||{};if(matchMedia('(prefers-reduced-motion: reduce)').matches)return false;
+  const n=opts.n||140;const x=opts.x!=null?opts.x:_lastPt.x,y=opts.y!=null?opts.y:_lastPt.y;
+  let c=document.getElementById('confetti');
+  if(!c){c=document.createElement('canvas');c.id='confetti';c.setAttribute('aria-hidden','true');document.body.appendChild(c);}
+  const dpr=Math.min(2,devicePixelRatio||1);c.width=innerWidth*dpr;c.height=innerHeight*dpr;c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';
+  const ctx=c.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  const cols=['#E0803E','#C9A227','#1E2B47','#5B6558','#FBEFE4','#B45309'];
+  const ps=[];for(let i=0;i<n;i++){const a=-Math.PI/2+(Math.random()-.5)*(opts.spread||1.6);const v=(opts.v||9)*(0.55+Math.random()*0.9);
+    ps.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,w:5+Math.random()*6,h:3+Math.random()*5,r:Math.random()*Math.PI,vr:(Math.random()-.5)*.35,c:cols[i%cols.length],life:1,round:Math.random()<.3});}
+  const t0=performance.now();c.style.opacity='1';
+  function frame(t){const dt=Math.min(32,t-(frame.last||t))/16.67;frame.last=t;ctx.clearRect(0,0,innerWidth,innerHeight);let alive=0;
+    ps.forEach(p_=>{if(p_.life<=0)return;alive++;p_.vy+=0.28*dt;p_.vx*=0.985;p_.vy*=0.985;p_.x+=p_.vx*dt;p_.y+=p_.vy*dt;p_.r+=p_.vr*dt;if(t-t0>900)p_.life-=0.03*dt;
+      ctx.save();ctx.globalAlpha=Math.max(0,p_.life);ctx.translate(p_.x,p_.y);ctx.rotate(p_.r);ctx.fillStyle=p_.c;
+      if(p_.round){ctx.beginPath();ctx.arc(0,0,p_.w/2,0,Math.PI*2);ctx.fill();}else ctx.fillRect(-p_.w/2,-p_.h/2,p_.w,p_.h*Math.abs(Math.cos(p_.r*2))+1);ctx.restore();});
+    if(alive&&t-t0<2400)requestAnimationFrame(frame);else{ctx.clearRect(0,0,innerWidth,innerHeight);c.style.opacity='0';}}
+  requestAnimationFrame(frame);_celebrated++;return true;}
+let _celebrated=0;
+/* How many entries the person typing has put on the log this shift, for the
+   toast. The count is the reward; the confetti is the punctuation. */
+function myShiftCount(me){const now=Date.now();const sh=deskShift(now);return LOG.filter(l=>l.rep===me&&l.shift===sh&&l.at>=now-8*HR).length;}
 function toast(msg){let t_=document.getElementById('toast');
   if(!t_){t_=document.createElement('div');t_.id='toast';t_.setAttribute('role','status');t_.setAttribute('aria-live','polite');document.body.appendChild(t_);}
   t_.textContent=msg;t_.classList.add('on');clearTimeout(window._tt);window._tt=setTimeout(()=>t_.classList.remove('on'),2600);}
@@ -8419,7 +8507,8 @@ document.addEventListener('click',e=>{
   if(el=T_('button[data-iinq]')){S.intake.inq=el.dataset.iinq;return render()}
   if(e.target.id==='ianswered'){S.intake.answered=!S.intake.answered;return render()}
   if(el=T_('button[data-ishift]')){S.intake.shift=el.dataset.ishift;return render()}
-  if(el=T_('button[data-ireason]')){S.intake.reason=el.dataset.ireason;const ee=EMPBY[S.intake.emp];if(S.intake.reason==='FMLA')S.intake.bucket=(ee&&ee.fmla&&ee.bal.fmla>0)?'fmla':'sick';else if(S.intake.bucket==='fmla')S.intake.bucket='sick';return render()}
+  if(el=T_('button[data-ireason]')){S.intake.reason=el.dataset.ireason;const ee=EMPBY[S.intake.emp];const rule=REASON_RULES[S.intake.reason];S.intake.rel=null;if(S.intake.reason==='FMLA')S.intake.bucket=(ee&&ee.fmla&&ee.bal.fmla>0)?'fmla':'sick';else S.intake.bucket=rule?rule.bucket:'sick';if(S.intake.bucket==='sick'&&ee&&ee.bal&&!(ee.bal.sick>0))S.intake.bucket=ee.bal.pto>0?'pto':'unpaid';return render()}
+  if(el=T_('button[data-irel]')){S.intake.rel=el.dataset.irel;return render()}
   if(e.target.id==='iverify'){S.intake.verified=!S.intake.verified;return render()}
   if(e.target.id==='inotify'){S.intake.notified=!S.intake.notified;return render()}
   if(e.target.id==='isubmit')return submitIntake();
@@ -8461,6 +8550,7 @@ document.addEventListener('input',e=>{
   if(e.target.id==='cnote'){S.campaign.notes.en=e.target.value;const pv=document.getElementById('cpreview');if(pv&&typeof campPreviewInner==='function')pv.innerHTML=campPreviewInner(campSelect());return}
   if(e.target.id==='ccq'){S.cc.q=e.target.value;const rows=document.querySelectorAll('#ccqueue tbody tr');const q=S.cc.q.toLowerCase();rows.forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q)?'':'none'});return}
   if(e.target.id==='iminutes'){const v=Math.max(15,Math.min(720,+e.target.value||0));S.intake.minutes=v;const pv=document.getElementById('icover');if(pv)pv.innerHTML=intakeCoverHTML();return}
+  if(e.target.id==='iat'){const v=e.target.value;if(/^\d{2}:\d{2}$/.test(v)){S.intake.at=ptTimeToMs(v);const lab=document.getElementById('iatlab');if(lab)lab.textContent=ptStamp(S.intake.at);}return}
   if(e.target.id==='isearch'){S.intake.q=e.target.value;S.intake.hi=0;const box=document.getElementById('isugg');if(box&&typeof intakeSuggHTML==='function')box.innerHTML=intakeSuggHTML();return}
 });
 document.addEventListener('change',e=>{
@@ -8485,7 +8575,16 @@ document.addEventListener('keydown',e=>{
    Attendance types write an ATT row, a case, and, when hours are applied, a
    time_coverage row through applyCoverage(), the only path that touches a
    balance. Inquiries write a case only and count toward today's contacts. */
-function intakeReset(){S.intake={emp:null,dept:S.intake&&S.intake.dept||null,type:'late',shift:null,reason:null,minutes:15,bucket:'sick',verified:false,notified:false,inform:false,answered:true,inq:'benefits',tab:'intake',q:'',hi:0};}
+/* Pacific time for the desk clock. The received time defaults to the moment
+   New log was pressed and can be edited; a time later than now means the call
+   came in before midnight, so it lands on yesterday. */
+const PT='America/Los_Angeles';
+const ptParts=ms=>{const o={};new Intl.DateTimeFormat('en-US',{timeZone:PT,hour:'2-digit',minute:'2-digit',hour12:false,month:'short',day:'numeric',year:'numeric'}).formatToParts(ms).forEach(x=>{o[x.type]=x.value;});if(o.hour==='24')o.hour='00';return o;};
+const ptHHMM=ms=>{const o=ptParts(ms);return o.hour+':'+o.minute;};
+const ptStamp=ms=>{const o=ptParts(ms);return o.month+' '+o.day+', '+new Date(ms).toLocaleTimeString('en-US',{timeZone:PT,hour:'numeric',minute:'2-digit'})+' PT';};
+function ptTimeToMs(hhmm){const now=Date.now();const cur=ptHHMM(now).split(':').map(Number);const want=hhmm.split(':').map(Number);
+  let delta=(want[0]*60+want[1])-(cur[0]*60+cur[1]);if(delta>2)delta-=1440;return now+delta*6e4;}
+function intakeReset(){S.intake={emp:null,dept:S.intake&&S.intake.dept||null,type:'late',shift:null,reason:null,minutes:15,bucket:'sick',verified:false,notified:false,inform:false,answered:true,inq:'benefits',tab:'intake',q:'',hi:0,at:Date.now(),rel:null};}
 /* Inform the department manager about a contact. One write path used by the
    intake and the case drawer: stamps the case, marks the manager notified on
    any linked attendance event, leaves a note, and appends the manager's
@@ -8511,27 +8610,27 @@ function intakeRepaint(){const d=$('#drawer');if(!S.intakeModal||!d.classList.co
   animateBars(d);return true;}
 function intakePlan(){const f=S.intake;const e=f.emp?EMPBY[f.emp]:null;if(!e)return null;
   const bal=e.bal||{sick:0,pto:0};const hours=roundQuarter(f.type==='calloff'?SHIFT_HOURS*60:f.minutes);
-  const avail=f.bucket==='unpaid'?Infinity:(bal[f.bucket]||0);
+  const avail=NO_BAL(f.bucket)?Infinity:(bal[f.bucket]||0);
   const applied=Math.min(hours,avail);const short=+(hours-applied).toFixed(2);
   /* Where a shortfall goes: FMLA hours run out into sick hours if there are
      any, everything else into unpaid. */
   const spill=short>0?(f.bucket==='fmla'&&(bal.sick||0)>0?'sick':'unpaid'):null;
   const spillApplied=spill==='sick'?Math.min(short,bal.sick):short;
-  return{e:e,hours:hours,bucket:f.bucket,applied:+applied.toFixed(2),short:short,spill:spill,spillApplied:+spillApplied.toFixed(2),spillShort:+(short-spillApplied).toFixed(2),before:f.bucket==='unpaid'?null:bal[f.bucket],after:f.bucket==='unpaid'?null:+((bal[f.bucket]||0)-applied).toFixed(2)};}
-function submitIntake(){const f=S.intake;const e=f.emp?EMPBY[f.emp]:null;const me=S.persona==='hq'?HR_MGR.id:(REPS[0]||{}).id;const at=Date.now();
+  return{e:e,hours:hours,bucket:f.bucket,applied:+applied.toFixed(2),short:short,spill:spill,spillApplied:+spillApplied.toFixed(2),spillShort:+(short-spillApplied).toFixed(2),before:NO_BAL(f.bucket)?null:bal[f.bucket],after:NO_BAL(f.bucket)?null:+((bal[f.bucket]||0)-applied).toFixed(2)};}
+function submitIntake(){const f=S.intake;const e=f.emp?EMPBY[f.emp]:null;const me=S.persona==='hq'?HR_MGR.id:(REPS[0]||{}).id;const typed=Date.now();const at=Math.min(typed,f.at||typed);
   if(!e||!f.verified){toast('Pick the employee and verify identity first.');return}
   const td=CONTACTS[CONTACTS.length-1];
   if(f.type==='inquiry'){
     const c={id:'HRC-'+String(1000+CASES.length+1),emp:e.id,dept:e.dept,reason:f.inq,pri:'normal',rep:me,type:'Phone',opened:at,sla:at+SLA_HRS.normal*HR,status:f.answered?'res':'prog',
       notes:[{by:me,t:at,txt:'Inquiry by phone, '+RBYC[f.inq].en.toLowerCase()+'. Identity verified.'+(f.answered?' Answered from policy or the record on this call.':' Needs follow-up; handed to the owner.')}],esc:[],att:[],leave:null,resolvedAt:f.answered?at:null,fcr:!!f.answered};
     CASES.unshift(c);CASEBY[c.id]=c;td.total++;td.by[f.inq]=(td.by[f.inq]||0)+1;
-    LOG.unshift({id:'LOG-'+String(LOG.length+1).padStart(4,'0'),at:at,shift:deskShift(at),rep:me,emp:e.id,dept:e.dept,type:'inquiry',minutes:0,reason:RBYC[f.inq].en,cover:null,mgr:!!f.inform,att:null,caseId:c.id,answered:!!f.answered});
+    LOG.unshift({id:'LOG-'+String(LOG.length+1).padStart(4,'0'),at:typed,recv:at,shift:deskShift(typed),rep:me,emp:e.id,dept:e.dept,type:'inquiry',minutes:0,reason:RBYC[f.inq].en,cover:null,mgr:!!f.inform,att:null,caseId:c.id,answered:!!f.answered});
     if(f.inform)informManager(c.id,me);if(typeof taskSyncCase==='function')taskSyncCase(c);bump();
     intakeReset();if(S.intakeModal)closeDrawer();
-    toast('Inquiry logged as '+c.id+(f.answered?', resolved on first contact.':'.')+(f.inform?' Manager informed.':''));render();return;}
+    const k1=myShiftCount(me);celebrate({n:110});toast('Inquiry logged as '+c.id+(f.answered?', resolved on first contact.':'.')+(f.inform?' Manager informed.':'')+' '+k1+' on your shift so far.');render();return;}
   if(!f.shift||!f.reason){toast('Pick the shift and the reason category first.');return}
   const minutes=f.type==='calloff'?SHIFT_HOURS*60:Math.max(1,f.minutes);
-  const row={id:'ATT-'+String(ATT.length+1).padStart(5,'0'),emp:e.id,dept:e.dept,shift:f.shift,at:at,type:f.type,minutes:minutes,reason:f.reason,documented:false,docDue:at+2*DAY,mgrNotified:f.notified,via:'call',rep:me,cover:null};
+  const row={id:'ATT-'+String(ATT.length+1).padStart(5,'0'),emp:e.id,dept:e.dept,shift:f.shift,at:at,typed:typed,type:f.type,minutes:minutes,reason:f.reason,rel:f.rel||null,documented:false,docDue:at+2*DAY,mgrNotified:f.notified,via:'call',rep:me,cover:null};
   ATT.unshift(row);
   const plan=intakePlan();let coverTxt='';
   if(plan&&plan.applied>0){const tc=applyCoverage(e.id,row,plan.bucket,plan.applied,me,'Applied at intake');coverTxt=' '+plan.applied.toFixed(2)+' '+(plan.bucket==='fmla'?'FMLA':label(COVER_BUCKETS,plan.bucket).toLowerCase())+' hours applied to '+minutes+' min ('+tc.id+').';}
@@ -8540,14 +8639,15 @@ function submitIntake(){const f=S.intake;const e=f.emp?EMPBY[f.emp]:null;const m
       if(plan.spillShort>0){applyCoverage(e.id,row,'unpaid',plan.spillShort,me,'Balance short');coverTxt+=' '+plan.spillShort.toFixed(2)+' h unpaid, balance short.';}}
     else{applyCoverage(e.id,row,'unpaid',plan.short,me,'Balance short');coverTxt+=' '+plan.short.toFixed(2)+' h unpaid, balance short.';}}
   if(plan&&plan.bucket==='unpaid'&&plan.applied>0)coverTxt=' '+plan.hours.toFixed(2)+' h recorded unpaid at the employee\'s request.';
+  if(plan&&plan.bucket==='paid'&&plan.applied>0)coverTxt=' '+plan.hours.toFixed(2)+' h paid by the employer under the rule, no balance moved.';
   const what=label(ATT_TYPES,f.type);
   const c={id:'HRC-'+String(1000+CASES.length+1),emp:e.id,dept:e.dept,reason:'attendance',pri:'normal',rep:me,type:'Phone',opened:at,sla:at+SLA_HRS.normal*HR,status:f.notified?'prog':'wmgr',
-    notes:[{by:me,t:at,txt:what+' taken by phone. Identity verified. Shift and reason category recorded.'+(f.type==='calloff'?'':' '+minutes+' minutes.')+coverTxt+(f.notified?' Department notified.':' Department notification pending.')}],esc:[],att:[row.id],leave:null,resolvedAt:null,fcr:false};
+    notes:[{by:me,t:typed,txt:what+' taken by phone, received '+ptStamp(at)+'. Identity verified. Shift and reason category recorded'+(f.rel?' (family member: '+f.rel.toLowerCase()+')':'')+(reasonProtected(f.reason)?'. Protected use, no attendance points.':'.')+(f.type==='calloff'?'':' '+minutes+' minutes.')+coverTxt+(f.notified?' Department notified.':' Department notification pending.')}],esc:[],att:[row.id],leave:null,resolvedAt:null,fcr:false};
   CASES.unshift(c);CASEBY[c.id]=c;td.total++;td.by.attendance=(td.by.attendance||0)+1;
-  LOG.unshift({id:'LOG-'+String(LOG.length+1).padStart(4,'0'),at:at,shift:deskShift(at),rep:me,emp:e.id,dept:e.dept,type:f.type,minutes:minutes,reason:f.reason,cover:row.cover?{bucket:row.cover.bucket,hours:row.cover.hours}:null,mgr:!!(f.notified||f.inform),att:row.id,caseId:c.id,answered:null});
+  LOG.unshift({id:'LOG-'+String(LOG.length+1).padStart(4,'0'),at:typed,recv:at,shift:deskShift(typed),rep:me,emp:e.id,dept:e.dept,type:f.type,minutes:minutes,reason:f.reason+(f.rel?' ('+f.rel.toLowerCase()+')':''),cover:row.cover?{bucket:row.cover.bucket,hours:row.cover.hours}:null,mgr:!!(f.notified||f.inform),att:row.id,caseId:c.id,answered:null});
   if(f.inform)informManager(c.id,me);if(typeof taskSyncCase==='function')taskSyncCase(c);bump();
   intakeReset();if(S.intakeModal)closeDrawer();
-  toast(what+' recorded as '+c.id+'.'+coverTxt+' Documentation due in 48h.');render();}
+  const k2=myShiftCount(me);celebrate({n:150});toast(what+' recorded as '+c.id+'.'+coverTxt+' Documentation due in 48h. '+k2+' logged on your shift'+(k2>=10?', strong shift.':k2>=5?', halfway to a busy one.':'.'));render();}
 
 /* The first paint is issued from emp.js.part, once every view function exists. */
 
@@ -9738,6 +9838,9 @@ function taskComplete(id, persona){
   const prev = {state:task.state, doneBy:task.doneBy, doneAt:task.doneAt};
   const restore = taskEffects(task, persona);
   task.state = 'done'; task.doneBy = persona; task.doneAt = Date.now();
+  /* A small burst when a person, not a script, closed it: the pointer was
+     down inside the last second. */
+  if(typeof celebrate === 'function' && typeof _lastPt !== 'undefined' && Date.now() - _lastPt.t < 1000) celebrate({n:45, v:6, spread:2.2});
   const n = taskNotif(persona, id);
   if(!n.read_at) n.read_at = task.doneAt;
   const token = 'U-' + id + '-' + (++_tkUndoSeq);
@@ -10672,10 +10775,10 @@ S.nav   = S.nav   || {mega:false, rail:'open', palette:false, inbox:false};
 /* The product mark. Drawn from the palette, not a logo. */
 function bmark(kind, size, decorative){
   const px = size || 28;
-  const a = decorative ? 'aria-hidden="true" focusable="false"' : 'role="img" aria-label="HR Operations mark"';
+  const a = decorative ? 'aria-hidden="true" focusable="false"' : 'role="img" aria-label="The Commerce HR Operations mark"';
   return '<svg class="bmark bmark-hr" width="' + px + '" height="' + px + '" viewBox="0 0 40 40" ' + a + '>' +
     '<rect class="bm-sq" x="0" y="0" width="40" height="40" rx="9.5" fill="var(--brand-jade)"/>' +
-    '<text x="20" y="21" text-anchor="middle" dominant-baseline="central" font-family="\'Noto Sans\',system-ui,sans-serif" font-size="15" font-weight="700" fill="#fff" letter-spacing="0.5">HR</text></svg>';
+    '<g transform="translate(6 6) scale(0.1077)" fill="none" stroke="#C9A96A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"><circle cx="130" cy="58" r="44"/><circle cx="74" cy="96" r="44"/><circle cx="186" cy="96" r="44"/><path d="M30 130 L58 186 L202 186 L230 130"/><path d="M58 202 H202"/></g></svg>';
 }
 
 const HERO_COPY = {
@@ -12803,9 +12906,11 @@ function intakeCoverHTML(){
   opts.push(opt('sick', 'Sick', bal.sick || 0, (bal.sick || 0) >= p.hours ? 'Covers this call.' : (bal.sick || 0) > 0 ? 'Covers part; the rest records unpaid.' : 'No sick hours left.', true));
   opts.push(opt('pto', 'PTO', bal.pto || 0, (bal.pto || 0) >= p.hours ? 'Covers this call, at the employee\'s choice.' : 'Covers part; the rest records unpaid.', true));
   opts.push(opt('unpaid', 'Unpaid', null, 'No balance moves. Recorded as time missed.', true));
+  if(REASON_RULES[f.reason] && REASON_RULES[f.reason].bucket === 'paid') opts.push(opt('paid', 'Paid by employer', null, 'Paid under the rule, no balance moved (' + esc(REASON_RULES[f.reason].law) + ').', true));
   let line;
   const bname = f.bucket === 'fmla' ? 'FMLA' : label(COVER_BUCKETS, f.bucket).toLowerCase();
   if(f.bucket === 'unpaid') line = '<strong>' + p.hours.toFixed(2) + ' h</strong> recorded as unpaid for ' + esc(label_) + '. No balance moves.';
+  else if(f.bucket === 'paid') line = '<strong>' + p.hours.toFixed(2) + ' h</strong> paid by the employer for ' + esc(label_) + ' under the rule. No balance moves.';
   else if(p.short > 0 && p.spill === 'sick') line = '<strong>' + p.applied.toFixed(2) + ' FMLA h</strong> covers part of ' + esc(label_) + ' and empties the bank. The remaining <strong>' + p.short.toFixed(2) + ' h</strong> draws <strong>' + p.spillApplied.toFixed(2) + ' sick h</strong> (balance ' + bal.sick.toFixed(2) + ' to ' + (bal.sick - p.spillApplied).toFixed(2) + ')' + (p.spillShort > 0 ? ' and <strong>' + p.spillShort.toFixed(2) + ' h</strong> records unpaid' : '') + '.';
   else if(p.short > 0) line = '<strong>' + p.applied.toFixed(2) + ' ' + esc(bname) + ' h</strong> covers part of ' + esc(label_) + '; balance ' + p.before.toFixed(2) + ' to <strong>' + p.after.toFixed(2) + '</strong>. The remaining <strong>' + p.short.toFixed(2) + ' h</strong> is short and records as unpaid unless the employee picks another bucket.';
   else line = 'Apply <strong>' + p.hours.toFixed(2) + ' ' + esc(bname) + ' hours</strong> to cover ' + esc(label_) + '. Balance ' + p.before.toFixed(2) + ' to <strong>' + p.after.toFixed(2) + '</strong>.' + (f.bucket === 'fmla' ? ' Job protected under the approved leave.' : '');
@@ -12843,7 +12948,7 @@ function intakeHistoryHTML(e, tab){
         a90.map(a => '<tr><td class="mono sub">' + esc(fshort(a.at)) + '</td><td>' + esc(label(ATT_TYPES, a.type)) + (a.minutes && a.type !== 'calloff' ? ' <span class="sub">' + a.minutes + ' min</span>' : '') + '</td><td>' + esc(a.reason) + '</td>' +
           '<td>' + (a.cover ? '<span class="mono">' + a.cover.hours.toFixed(2) + ' h</span> ' + esc(label(COVER_BUCKETS, a.cover.bucket)) : '<span class="sub">none</span>') + '</td>' +
           '<td>' + (a.documented ? '<span class="chip ok">On file</span>' : a.docDue < Date.now() ? '<span class="chip alert">Overdue</span>' : '<span class="chip">Due ' + esc(fshort(a.docDue)) + '</span>') + '</td>' +
-          '<td>' + (a.mgrNotified ? '<span class="chip ok">Notified</span>' : '<span class="chip warn">Pending</span>') + '</td><td class="mono">' + (POINTS[a.type] || 0) + '</td></tr>').join('') +
+          '<td>' + (a.mgrNotified ? '<span class="chip ok">Notified</span>' : '<span class="chip warn">Pending</span>') + '</td><td class="mono">' + pointsForEvent(a) + (reasonProtected(a.reason) ? ' <span class="chip ok">protected</span>' : '') + '</td></tr>').join('') +
         '</tbody></table></div></div>' : empty('No attendance events in the last 90 days.')) +
       (sus.length ? '<div class="lg-sub" style="margin-top:12px"><h3>Suspension history</h3></div><div class="card" style="padding:0"><div class="tblwrap"><table class="tbl"><thead><tr><th scope="col">Id</th><th scope="col">Points</th><th scope="col">Status</th><th scope="col">Dates</th><th scope="col">Decided by</th></tr></thead><tbody>' +
         sus.map(x => '<tr><td class="mono">' + esc(x.id) + '</td><td class="mono">' + x.pts + '</td><td><span class="chip ' + (x.status === 'active' ? 'alert' : x.status === 'review' ? 'warn' : 'ok') + '">' + esc(x.status === 'review' ? 'Under review' : x.status === 'active' ? 'Suspended' : 'Reinstated') + '</span></td><td class="sub">' + (x.start ? esc(fshort(x.start)) + ' to ' + esc(fshort(x.end)) + (x.reinstated ? ', back ' + esc(fshort(x.reinstated)) : '') : 'Opened ' + esc(fshort(x.opened))) + '</td><td>' + (x.by ? esc(empName(x.by)) : '<span class="sub">HR Manager, pending</span>') + '</td></tr>').join('') +
@@ -12900,6 +13005,21 @@ function intakeSuggHTML(){
   return '<div class="list cx-sugg" id="ilist" role="listbox" aria-label="Employee suggestions">' + (s.rows.length ? s.rows.map(row).join('') : '<div class="hint" style="padding:10px 12px">No one matches "' + esc(q) + '"' + (f.dept ? ' in ' + esc(deptName(f.dept)) : '') + '.</div>') + '</div>' +
     '<div class="hint" style="margin:4px 0 8px">' + (s.total > 8 ? '8 of ' + s.total + ' matches, keep typing.' : s.total + (s.total === 1 ? ' match.' : ' matches.')) + '</div>';
 }
+/* Reason pills in two rows: protected under California law first, then the
+   rest. The FMLA chip reads the leave file. */
+function reasonPillsHTML(e, f){
+  const pill = r => { const lab = r === 'FMLA' ? 'FMLA' + (e ? (e.fmla ? (e.bal.fmla > 0 ? ', approved leave' : ', bank exhausted') : ', none on file') : '') : r;
+    return '<button class="pick' + (r === 'FMLA' ? ' fmla' : '') + '" data-ireason="' + esc(r) + '" aria-pressed="' + (f.reason === r) + '">' + esc(lab) + '</button>'; };
+  const prot = ['FMLA'].concat(ATT_REASONS.filter(r => REASON_RULES[r].grp === 'protected'));
+  const unp = ATT_REASONS.filter(r => REASON_RULES[r].grp === 'unprotected' && r !== 'No reason given');
+  return '<div class="cx-rgrp"><span class="cx-rlab ok">Protected, no points</span><div class="pillbar">' + prot.map(pill).join('') + '</div></div>' +
+    '<div class="cx-rgrp"><span class="cx-rlab">Not protected, points apply</span><div class="pillbar" style="margin-bottom:8px">' + unp.map(pill).join('') + '</div></div>';
+}
+function reasonRuleHTML(r){
+  const rule = REASON_RULES[r]; if(!rule) return '';
+  if(r === 'FMLA') return '';
+  return '<div class="cx-rule' + (rule.grp === 'protected' ? ' prot' : '') + '"><b>' + (rule.grp === 'protected' ? 'Protected · ' + esc(rule.law) + ' <span class="chip">VERIFY</span>' : 'Not a protected use') + '</b>' + esc(rule.note) + '</div>';
+}
 /* The form itself, shared by the full surface and the New contact modal. */
 function intakeFormHTML(){
   const f = S.intake;
@@ -12917,9 +13037,10 @@ function intakeFormHTML(){
         '<button class="btn ghost sm" id="iclear">Change</button></div>' +
         '<label class="cx-check"><input type="checkbox" id="iverify" ' + (f.verified ? 'checked' : '') + '> Identity verified: employee ID plus one on-file detail</label>' +
         '<dl class="kv" style="margin-top:8px"><dt>FMLA</dt><dd class="mono">' + (e.fmla ? e.bal.fmla.toFixed(2) + ' h left <span class="chip ' + (e.bal.fmla > 0 ? 'ok' : 'alert') + '">' + (e.bal.fmla > 0 ? 'Approved, intermittent' : 'Exhausted') + '</span>' : '<span class="sub">none on file</span>') + '</dd><dt>Sick balance</dt><dd class="mono">' + (e.bal ? e.bal.sick.toFixed(2) : '0.00') + ' h</dd><dt>PTO balance</dt><dd class="mono">' + (e.bal ? e.bal.pto.toFixed(2) : '0.00') + ' h</dd><dt>Rolling 30d</dt><dd class="mono">' + a30.length + ' events</dd><dt>Rolling 90d</dt><dd class="mono">' + a90.length + ' events</dd><dt>Undocumented</dt><dd class="mono">' + a90.filter(a => !a.documented).length + '</dd></dl>' +
-        (function(){const p = pointsFor(e.id); const sd = pointsStanding(p.pts); const ls = ladderStep(p.pts); const thisPts = inq ? 0 : (POINTS[f.type] || 0); const after = +(p.pts + thisPts).toFixed(1);
+        (function(){const p = pointsFor(e.id); const sd = pointsStanding(p.pts); const ls = ladderStep(p.pts); const thisPts = inq ? 0 : (reasonProtected(f.reason) ? 0 : (POINTS[f.type] || 0)); const after = +(p.pts + thisPts).toFixed(1);
           if(inq) return '<dl class="kv"><dt>Points, ' + POINTS_WINDOW + 'd</dt><dd class="mono">' + p.pts.toFixed(1) + ' <span class="chip ' + sd[0] + '">' + esc(sd[1]) + '</span></dd></dl>';
           return '<div class="callout"><b>Points: ' + p.pts.toFixed(1) + ' now, ' + after.toFixed(1) + ' after this ' + esc(label(ATT_TYPES, f.type).toLowerCase()) + '</b>' +
+            (reasonProtected(f.reason) ? 'Protected use under California law: this event adds no points (SOP-10). ' : '') +
             (after >= 4 ? 'This event reaches the suspension review step. Take the call as normal, then route the case to the HR manager for review. Nothing is decided at the desk.'
             : after >= 3 ? 'This event puts the employee on the verge of a suspension review (written warning step). Route the case to HR review after intake.'
             : after >= 2 ? 'Coaching threshold reached; the manager conversation is due.' : 'Inside thresholds.') +
@@ -12929,6 +13050,7 @@ function intakeFormHTML(){
         '<div class="cx-deptrow"><span class="sub">Narrow</span><div class="pillbar"><button class="pick sm" data-idept="all" aria-pressed="' + (!f.dept) + '">All</button>' + DEPTS.filter(d => d.c !== 'HR').map(d => '<button class="pick sm" data-idept="' + d.c + '" aria-pressed="' + (f.dept === d.c) + '">' + esc(d.en) + '</button>').join('') + '</div></div>') +
     '</div><div class="card">' + (e ? intakeTabsHTML(e, f) : '') +
       (e && f.tab && f.tab !== 'intake' ? intakeHistoryHTML(e, f.tab) :
+      '<div class="cx-recv"><label class="fl" for="iat">Received at</label><input id="iat" type="time" step="60" value="' + esc(ptHHMM(f.at || Date.now())) + '"><span class="sub" id="iatlab">' + esc(ptStamp(f.at || Date.now())) + '</span><span class="hint">Pacific time. Defaults to when New log was pressed; edit if the call came in earlier.</span></div>' +
       '<div class="fl">2. Contact type</div><div class="pillbar" style="margin-bottom:14px">' + TYPES.map(([k, l]) => '<button class="pick" data-itype="' + k + '" aria-pressed="' + (f.type === k) + '">' + esc(l) + '</button>').join('') + '</div>' +
       (inq
         ? '<div class="fl">3. What the call is about</div><div class="pillbar" style="margin-bottom:14px">' + INQ.map(x => '<button class="pick" data-iinq="' + x.c + '" aria-pressed="' + (f.inq === x.c) + '">' + esc(x.en) + '</button>').join('') + '</div>' +
@@ -12936,7 +13058,9 @@ function intakeFormHTML(){
           '<div class="fl" style="margin-top:14px">4. Manager notification</div>' + informBlock(e, mgr, f) +
           '<div class="callout" style="margin-top:12px"><b>What logging does</b>Writes one case with no attendance event. It counts toward today\'s contacts and, if answered here, toward first contact resolution. A balance question is answered from the numbers above and never written into the note.</div>'
         : '<div class="fl">3. Shift</div><div class="pillbar" style="margin-bottom:14px">' + SHIFTS.map(s => '<button class="pick" data-ishift="' + s.c + '" aria-pressed="' + (f.shift === s.c) + '">' + esc(s.en) + '</button>').join('') + '</div>' +
-          '<div class="fl">4. Reason category</div><div class="pillbar" style="margin-bottom:10px">' + ['FMLA'].concat(ATT_REASONS.slice(0, ATT_REASONS.length - 1)).map(r => '<button class="pick' + (r === 'FMLA' ? ' fmla' : '') + '" data-ireason="' + esc(r) + '" aria-pressed="' + (f.reason === r) + '">' + esc(r === 'FMLA' ? 'FMLA' + (e ? (e.fmla ? (e.bal.fmla > 0 ? ', approved leave' : ', bank exhausted') : ', none on file') : '') : r) + '</button>').join('') + '</div>' +
+          '<div class="fl">4. Reason category</div>' + reasonPillsHTML(e, f) +
+          (f.reason && REASON_RULES[f.reason] && REASON_RULES[f.reason].rel ? '<div class="fl" style="margin-top:8px">Family member</div><div class="pillbar" style="margin-bottom:8px">' + REL_OPTIONS.map(r => '<button class="pick" data-irel="' + esc(r) + '" aria-pressed="' + (f.rel === r) + '">' + esc(r) + '</button>').join('') + '</div><div class="hint" style="margin-bottom:10px">Relationship only, no name. A designated person is named once per 12 months (Lab. Code 245.5(c)(8), VERIFY).</div>' : '') +
+          reasonRuleHTML(f.reason) +
           '<div class="hint" style="margin-bottom:14px">A category, never a diagnosis or a detail. If the employee volunteers detail, it is not written down.</div>' +
           (f.type === 'calloff' ? '<div class="fl">5. Time missed</div><div class="hint" style="margin-bottom:10px">Whole shift, ' + SHIFT_HOURS + ' hours.</div>'
             : '<div class="fl">5. Time missed</div><div class="crow" style="margin-bottom:6px"><label class="vh" for="iminutes">Minutes</label><input id="iminutes" type="number" min="15" max="720" step="15" value="' + f.minutes + '" style="width:96px" aria-describedby="iminhint"><span class="sub">minutes</span>' +
@@ -13029,14 +13153,14 @@ function deskLogHTML(opts){
   const shiftName = k => k === 'grave' ? 'Graveyard' : k === 'swing' ? 'Swing' : 'Day';
   const hours = {day:'06:00 to 14:00', swing:'14:00 to 22:00', grave:'22:00 to 06:00'};
   const todayStart = TODAY;
-  const when = ms => '<span class="mono">' + esc(ftime(ms)) + '</span><br><span class="sub">' + (ms >= todayStart ? 'today' : esc(fshort(ms))) + '</span>';
+  const when = (ms, recv) => '<span class="mono">' + esc(ftime(ms)) + '</span><br><span class="sub">' + (ms >= todayStart ? 'today' : esc(fshort(ms))) + (recv && Math.abs(recv - ms) >= 6e4 ? ' · received ' + esc(ftime(recv)) : '') + '</span>';
   const rep = id => { const r = EMPBY[id]; if(!r) return esc(id); return '<b>' + esc(r.name) + '</b><br><span class="sub">' + (r.id === HR_MGR.id ? 'HR Manager' : shiftName(r.shift) + ' shift rep') + '</span>'; };
   const what = l => l.type === 'inquiry' ? 'Inquiry<br><span class="sub">' + esc(l.reason) + '</span>' : esc(label(ATT_TYPES, l.type)) + (l.type === 'calloff' ? '' : ' <span class="mono">' + l.minutes + ' min</span>') + '<br><span class="sub">' + esc(l.reason) + '</span>';
   const cover = l => l.cover ? '<span class="mono">' + l.cover.hours.toFixed(2) + ' h</span> <span class="chip ' + (l.cover.bucket === 'unpaid' ? '' : 'ok') + '">' + esc(label(COVER_BUCKETS, l.cover.bucket)) + '</span>' : (l.type === 'inquiry' ? '<span class="sub">n/a</span>' : '<span class="sub">none</span>');
   const outcome = l => { const c = l.caseId ? CASEBY[l.caseId] : null; if(!c) return '<span class="sub">no case</span>'; return '<span class="mono">' + esc(c.id) + '</span> ' + caseStatusChip(c.status) + (l.type === 'inquiry' && l.answered ? ' <span class="chip ok">First contact</span>' : ''); };
   const shiftBar = '<div class="cx-shiftbar">' + ['day', 'swing', 'grave'].map(k => '<button type="button" class="card' + (sh === k ? ' on' : '') + '" data-lcard="' + k + '" aria-pressed="' + (sh === k) + '" style="text-align:left"><span class="sh">' + shiftName(k) + '<span class="hrs"> shift · ' + hours[k] + '</span></span><span class="n">' + counts[k] + '</span><span class="who">' + esc(repsOn(k).map(r => r.name.split(' ')[0]).join(', ') || 'no rep on shift') + ' on the desk</span></button>').join('') + '</div>';
   const tabs = '<div class="cx-logtabs" role="group" aria-label="Shift">' + [['all', 'All shifts', all.length], ['day', 'Day', counts.day], ['swing', 'Swing', counts.swing], ['grave', 'Graveyard', counts.grave]].map(([k, l, n]) => '<button type="button" class="pick" data-lshift="' + k + '" aria-pressed="' + (sh === k) + '">' + esc(l) + '<span class="n">' + n + '</span></button>').join('') + '</div>';
-  const rows = list.map(l => '<tr' + (l.caseId ? ' data-case="' + esc(l.caseId) + '" tabindex="0" role="button" aria-label="Open case ' + esc(l.caseId) + '"' : '') + '><td>' + when(l.at) + '</td><td>' + rep(l.rep) + '</td>' +
+  const rows = list.map(l => '<tr' + (l.caseId ? ' data-case="' + esc(l.caseId) + '" tabindex="0" role="button" aria-label="Open case ' + esc(l.caseId) + '"' : '') + '><td>' + when(l.at, l.recv) + '</td><td>' + rep(l.rep) + '</td>' +
     '<th scope="row">' + ccEmpCell(l.emp) + '</th><td>' + what(l) + '</td><td>' + cover(l) + '</td>' +
     '<td>' + (l.mgr ? '<span class="chip ok">Informed</span>' : (l.type === 'inquiry' ? '<span class="sub">not needed</span>' : '<span class="chip warn">Pending</span>')) + '</td>' +
     '<td>' + outcome(l) + '</td><td class="lg-act">' + (l.caseId ? ccOpenBtn(l.caseId) : '') + '</td></tr>').join('');

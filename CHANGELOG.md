@@ -14,6 +14,10 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   `commerce-hr/` beside the repo; only the build ships here.
 - `commerce` — phone layout: rep tables stack into cards, short banner,
   one-row shift cards. 152 assertions.
+- `commerce` — confetti on recorded entries; California leave categories with
+  statute cards, sick self / family member, protected reasons add no points,
+  Received-at time in Pacific; the Commerce crown mark and favicon. 164
+  assertions.
 
 ## 2026-08-18
 

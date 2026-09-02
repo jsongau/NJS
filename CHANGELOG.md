@@ -18,6 +18,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   statute cards, sick self / family member, protected reasons add no points,
   Received-at time in Pacific; the Commerce crown mark and favicon. 164
   assertions.
+- `commerce` — My benefits on the employee console: the dental module
+  ported from BenefitsFlow (PPO vs DHMO, tiers and paycheck impact, DHMO
+  dentist, CDT procedure estimator, election to HR). 176 assertions.
 
 ## 2026-08-18
 

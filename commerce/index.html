@@ -7298,6 +7298,29 @@ button.cx-opt:hover:not(.off){border-color:var(--rule-int)}
 #topbar .brand .mark.crownmark svg{display:block}
 #topbar .brand .wordmark{font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 #topbar .brand small .gold{color:#C9A96A;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+/* ---- my benefits ------------------------------------------------------------------ */
+.cx-plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+.cx-plan{text-align:left;display:flex;flex-direction:column;gap:4px;padding:var(--s4);border:1px solid var(--rule);border-radius:var(--r-box);background:var(--card);width:100%}
+.cx-plan .k{font-weight:700;font-size:var(--fs-lead)}
+.cx-plan .c{font-size:var(--fs-meta);color:var(--ink-muted)}
+.cx-plan .p{font-family:var(--mono);font-size:22px;margin:6px 0 4px}
+.cx-plan .p small{font-family:var(--sans);font-size:var(--fs-meta);color:var(--ink-muted)}
+.cx-plan ul{margin:4px 0 0;padding-left:18px;font-size:var(--fs-meta);color:var(--ink);display:grid;gap:3px}
+.cx-plan.on{border-color:var(--desk);box-shadow:inset 3px 0 0 var(--desk);background:var(--desk-soft)}
+.cx-plan.waive{opacity:.85}
+.cx-plan:hover{border-color:var(--rule-int)}
+.cx-pay{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-top:6px}
+.cx-dent{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--s2);margin-bottom:6px}
+.cx-dentist{text-align:left;display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--rule);border-radius:var(--r-ctl);background:var(--card);width:100%}
+.cx-dentist .t{font-weight:600;font-size:13.5px}
+.cx-dentist .s{font-size:12px;color:var(--ink-muted)}
+.cx-dentist.on{border-color:var(--desk);box-shadow:inset 3px 0 0 var(--desk);background:var(--desk-soft)}
+.cx-dentist.off{opacity:.6}
+.cx-est{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:12px}
+.cx-est .kpi.win{border-color:var(--ok);box-shadow:inset 3px 0 0 var(--ok)}
+@media(max-width:900px){.cx-plans,.cx-pay{grid-template-columns:1fr}.cx-est{grid-template-columns:1fr}}
+.kpi .v.txt{font-family:var(--sans);font-size:18px;letter-spacing:0;line-height:1.25}
 </style>
 </head>
 <body data-lang="en">
@@ -7655,6 +7678,102 @@ function applyCoverage(empId,att,bucket,hours,repId,note){
   COVERAGE.push(row);if(att)att.cover={bucket:bucket,hours:hours,id:row.id};return row;}
 const coverSince=(ms,pred)=>COVERAGE.filter(c=>c.at>=ms&&(!pred||pred(c)));
 
+
+
+
+/* ---- benefits, dental first ---------------------------------------------------
+   Ported from the BenefitsFlow dental module (Esign Time, June 2026): the same
+   PPO cost share, deductible, annual and orthodontia maximums, a DHMO with a
+   fixed copay per ADA CDT code and no orthodontia, the same estimator logic.
+   The plans, premiums, dentists and carriers here are ILLUSTRATIVE for this
+   work sample; none of it is any employer's plan. Fees are averages typed
+   for the demo, not a fee schedule. */
+const DENTAL_PLANS={
+  ppo:{k:'ppo',name:'Dental PPO',carrier:'PPO carrier (illustrative)',network:'Any dentist; preferred network pays best',deductible:50,famDeductible:150,annualMax:1500,orthoMax:1500,ortho:true,pick:false,
+       share:{PREV_DIAG:0,BASIC:10,MAJOR:40,ORTHO:50},waitMajor:12,
+       lines:['Preventive and diagnostic at no cost, no deductible','Basic and restorative 10 percent after the deductible','Major 40 percent after the deductible, 12 month wait','Orthodontia 50 percent, $1,500 lifetime','$1,500 calendar year maximum per person']},
+  dhmo:{k:'dhmo',name:'Dental DHMO',carrier:'DHMO carrier (illustrative)',network:'In network only; pick a primary dentist at enrollment',deductible:0,famDeductible:0,annualMax:null,orthoMax:0,ortho:false,pick:true,
+       share:null,waitMajor:0,
+       lines:['No deductible and no annual maximum','Fixed copay per procedure from the patient charge schedule','Primary dentist chosen at enrollment; referrals for specialists','Orthodontia not covered','Lowest premium']}
+};
+const DENTAL_TIERS=[['ee','Employee only'],['sp','Employee + spouse or partner'],['ch','Employee + child(ren)'],['fam','Family']];
+/* Biweekly employee premium by plan and tier, illustrative. */
+const DENTAL_PREMIUM={ppo:{ee:14.20,sp:29.60,ch:31.10,fam:48.40},dhmo:{ee:4.90,sp:9.80,ch:10.40,fam:15.90}};
+const PAY_PERIODS=26;
+const DENTAL_PROCS=[
+  {code:'D0120',desc:'Periodic oral evaluation',cat:'Preventive',cls:'PREV_DIAG',fee:70,dhmo:5,freq:'2 per year',limit:2},
+  {code:'D0150',desc:'Comprehensive oral evaluation, new patient',cat:'Diagnostic',cls:'PREV_DIAG',fee:120,dhmo:5,freq:'once per 3 years',limit:1},
+  {code:'D0210',desc:'Full mouth X-rays',cat:'Diagnostic',cls:'PREV_DIAG',fee:165,dhmo:5,freq:'once per 3 to 5 years',limit:1},
+  {code:'D0272',desc:'Bitewing X-rays, 2 images',cat:'Diagnostic',cls:'PREV_DIAG',fee:72,dhmo:5,freq:'1 per year',limit:1},
+  {code:'D0274',desc:'Bitewing X-rays, 4 images',cat:'Diagnostic',cls:'PREV_DIAG',fee:105,dhmo:5,freq:'1 per year',limit:1},
+  {code:'D0330',desc:'Panoramic X-ray',cat:'Diagnostic',cls:'PREV_DIAG',fee:152,dhmo:5,freq:'once per 3 to 5 years',limit:1},
+  {code:'D1110',desc:'Adult cleaning (prophylaxis)',cat:'Preventive',cls:'PREV_DIAG',fee:120,dhmo:5,freq:'2 per year',limit:2},
+  {code:'D1120',desc:'Child cleaning (prophylaxis)',cat:'Preventive',cls:'PREV_DIAG',fee:80,dhmo:5,freq:'2 per year',limit:2},
+  {code:'D1208',desc:'Fluoride treatment',cat:'Preventive',cls:'PREV_DIAG',fee:40,dhmo:5,freq:'1 per year',limit:1},
+  {code:'D1351',desc:'Sealant, per tooth',cat:'Preventive',cls:'PREV_DIAG',fee:50,dhmo:15,freq:'once per tooth',limit:null},
+  {code:'D2140',desc:'Amalgam filling, 1 surface',cat:'Basic',cls:'BASIC',fee:157,dhmo:25,freq:null,limit:null},
+  {code:'D2150',desc:'Amalgam filling, 2 surfaces',cat:'Basic',cls:'BASIC',fee:200,dhmo:35,freq:null,limit:null},
+  {code:'D2330',desc:'Composite filling, 1 surface, front tooth',cat:'Basic',cls:'BASIC',fee:177,dhmo:30,freq:null,limit:null},
+  {code:'D2391',desc:'Composite filling, 1 surface, back tooth',cat:'Basic',cls:'BASIC',fee:187,dhmo:30,freq:null,limit:null},
+  {code:'D2392',desc:'Composite filling, 2 surfaces, back tooth',cat:'Basic',cls:'BASIC',fee:237,dhmo:40,freq:null,limit:null},
+  {code:'D2950',desc:'Core build-up before a crown',cat:'Basic',cls:'BASIC',fee:235,dhmo:55,freq:null,limit:null},
+  {code:'D3310',desc:'Root canal, front tooth',cat:'Endodontics',cls:'BASIC',fee:875,dhmo:175,freq:null,limit:null},
+  {code:'D3330',desc:'Root canal, molar',cat:'Endodontics',cls:'BASIC',fee:1225,dhmo:250,freq:null,limit:null},
+  {code:'D4341',desc:'Scaling and root planing, 4+ teeth per quadrant',cat:'Periodontics',cls:'BASIC',fee:287,dhmo:75,freq:null,limit:null},
+  {code:'D4910',desc:'Periodontal maintenance',cat:'Periodontics',cls:'BASIC',fee:142,dhmo:30,freq:'4 per year',limit:4},
+  {code:'D2740',desc:'Crown, all ceramic',cat:'Major',cls:'MAJOR',fee:1375,dhmo:225,freq:'once per tooth per 5 years',limit:null},
+  {code:'D2750',desc:'Crown, porcelain fused to metal',cat:'Major',cls:'MAJOR',fee:1300,dhmo:200,freq:'once per tooth per 5 years',limit:null},
+  {code:'D7140',desc:'Simple extraction',cat:'Oral surgery',cls:'BASIC',fee:185,dhmo:35,freq:null,limit:null},
+  {code:'D7210',desc:'Surgical extraction',cat:'Oral surgery',cls:'BASIC',fee:317,dhmo:75,freq:null,limit:null},
+  {code:'D7240',desc:'Wisdom tooth removal, fully impacted',cat:'Oral surgery',cls:'BASIC',fee:412,dhmo:125,freq:null,limit:null},
+  {code:'D8080',desc:'Braces, adolescent comprehensive',cat:'Orthodontia',cls:'ORTHO',fee:5500,dhmo:null,freq:null,limit:null},
+  {code:'D8090',desc:'Braces, adult comprehensive',cat:'Orthodontia',cls:'ORTHO',fee:6250,dhmo:null,freq:null,limit:null},
+  {code:'D9230',desc:'Nitrous oxide sedation',cat:'Adjunctive',cls:'BASIC',fee:95,dhmo:35,freq:null,limit:null},
+  {code:'D9940',desc:'Night guard',cat:'Adjunctive',cls:'MAJOR',fee:600,dhmo:100,freq:null,limit:null}
+];
+const DENTAL_PROC_BY={};DENTAL_PROCS.forEach(x=>DENTAL_PROC_BY[x.code]=x);
+const DENTAL_SCENARIOS=[
+  {k:'healthy',l:'Healthy, preventive only',d:'Two exams, two cleanings, one bitewing',procs:['D0120','D0120','D1110','D1110','D0272']},
+  {k:'perio',l:'Gum treatment',d:'New patient exam, full X-rays, scaling all four quadrants, two maintenance visits',procs:['D0150','D0210','D4341','D4341','D4341','D4341','D4910','D4910']},
+  {k:'crown',l:'Crown and build-up',d:'Exam, bitewing, cleaning, core build-up, ceramic crown',procs:['D0120','D0272','D1110','D2950','D2740']},
+  {k:'ortho',l:'Child braces',d:'Child exam, bitewings, cleaning, comprehensive braces',procs:['D0120','D0274','D1120','D8080']}
+];
+/* Fictional DHMO primary dentists near the property. Names are invented. */
+const DHMO_DENTISTS=[
+  {id:'DN-01',name:'Atlantic Family Dental',city:'Commerce',mi:0.8,accepting:true,lang:'English, Spanish'},
+  {id:'DN-02',name:'Whittier Boulevard Dental Group',city:'Montebello',mi:2.1,accepting:true,lang:'English, Spanish, Mandarin'},
+  {id:'DN-03',name:'Garfield Smile Center',city:'Bell Gardens',mi:2.6,accepting:false,lang:'English, Spanish'},
+  {id:'DN-04',name:'Telegraph Road Dentistry',city:'Pico Rivera',mi:3.4,accepting:true,lang:'English, Spanish, Tagalog'},
+  {id:'DN-05',name:'Firestone Dental Arts',city:'Downey',mi:4.2,accepting:true,lang:'English, Korean'},
+  {id:'DN-06',name:'Eastside Dental Studio',city:'East Los Angeles',mi:3.9,accepting:true,lang:'English, Spanish'}
+];
+/* Enrollment window, illustrative: open enrollment in November for the plan
+   year starting 1 January; new hires have 30 days; a qualifying life event
+   opens a 30 day window. */
+const PLAN_YEAR=new Date(TODAY).getFullYear()+1;
+const OE_START=new Date(PLAN_YEAR-1,10,1).getTime(),OE_END=new Date(PLAN_YEAR-1,10,15,23,59).getTime();
+const oeOpen=()=>Date.now()>=OE_START&&Date.now()<=OE_END;
+const QLE_TYPES=['Marriage or domestic partnership','Birth or adoption','Divorce or legal separation','Loss of other coverage','Gain of other coverage','Death of a dependent','Dependent ages out'];
+/* Seeded elections: most enrolled in the PPO, a third in the DHMO, some waived. */
+(function(){EMP.forEach(e=>{if(e.dupOf||e.status!=='active')return;const r=rng(hash(e.id+'ben'));const roll=r();
+  const plan=roll<.52?'ppo':roll<.84?'dhmo':null;const tier=pick(r,['ee','ee','ee','sp','ch','fam']);
+  e.benefits={dental:{plan:plan,tier:plan?tier:null,dentist:plan==='dhmo'?pick(r,DHMO_DENTISTS.filter(d=>d.accepting)).id:null,since:TODAY-Math.floor(r()*300+30)*DAY,pending:null,qle:null}};});})();
+/* The estimator, the same arithmetic as the BenefitsFlow module. Deductible
+   first on basic and major, then the cost share, then the annual maximum;
+   orthodontia against its own lifetime maximum; DHMO is the copay, and the
+   full fee for orthodontia because the plan pays nothing toward it. */
+function dentalCalc(items,opts){opts=opts||{};const P=DENTAL_PLANS.ppo;let ppo=0,dhmo=0,ded=opts.dedMet?P.deductible:0,maxUsed=0,orthoUsed=opts.orthoUsed||0;const lines=[];let dhmoGap=false,warn=false;
+  Object.keys(items).forEach(code=>{const pr=DENTAL_PROC_BY[code];if(!pr)return;const qty=items[code];let ppoLine=0,dhmoLine=0;const notCovered=pr.cls==='ORTHO';
+    if(pr.limit&&qty>pr.limit)warn=true;
+    for(let i=0;i<qty;i++){const fee=pr.fee;let share=0;
+      if(pr.cls==='PREV_DIAG')share=0;
+      else if(pr.cls==='ORTHO'){const remaining=Math.max(0,P.orthoMax-orthoUsed);const covered=Math.min(fee*(1-P.share.ORTHO/100),remaining);share=fee-covered;orthoUsed+=covered;}
+      else{const pct=P.share[pr.cls]/100;if(ded<P.deductible){const d=Math.min(P.deductible-ded,fee);ded+=d;share=d+Math.max(0,fee-d)*pct;}else share=fee*pct;}
+      if(pr.cls!=='ORTHO'){const plan=fee-share;if(maxUsed+plan>P.annualMax){const can=Math.max(0,P.annualMax-maxUsed);share=fee-can;}maxUsed+=fee-share;}
+      ppoLine+=share;if(!notCovered)dhmoLine+=pr.dhmo||0;else{dhmoLine+=fee;dhmoGap=true;}}
+    ppo+=ppoLine;dhmo+=dhmoLine;lines.push({code:code,desc:pr.desc,qty:qty,fee:pr.fee*qty,ppo:ppoLine,dhmo:dhmoLine,notCovered:notCovered,over:!!(pr.limit&&qty>pr.limit)});});
+  return{ppo:+ppo.toFixed(2),dhmo:+dhmo.toFixed(2),lines:lines,maxUsed:+maxUsed.toFixed(2),ded:ded,dhmoGap:dhmoGap,warn:warn};}
+const dentalAnnualPremium=(plan,tier)=>plan&&tier?+(DENTAL_PREMIUM[plan][tier]*PAY_PERIODS).toFixed(2):0;
 
 /* ---- attendance points, the ladder, suspensions ---------------------------- */
 /* An ILLUSTRATIVE occurrence policy. Points per event, a rolling window, and a
@@ -8404,7 +8523,7 @@ function focusKey(el){
   if(el.id)return '#'+CSS.escape(el.id);
   for(const a of ['data-persona','data-filter','data-tab','data-ctab','data-cdept','data-cshift','data-crole','data-cstatus','data-ccourse','data-cfocus','data-creason','data-cart',
                   'data-case','data-emp','data-dept','data-module','data-ccreason','data-ccstatus','data-an','data-andept','data-anstatus','data-anshift','data-andays',
-                  'data-rb','data-apick','data-idept','data-adept','data-acourse','data-leave','data-dq','data-rpt','data-sop','data-attrev','data-ishift','data-ireason','data-ipick','data-itab','data-inew','data-lshift','data-lcard','data-ibucket','data-irel']){
+                  'data-rb','data-apick','data-idept','data-adept','data-acourse','data-leave','data-dq','data-rpt','data-sop','data-attrev','data-ishift','data-ireason','data-ipick','data-itab','data-inew','data-lshift','data-lcard','data-ibucket','data-irel','data-bplan','data-btier','data-bdent','data-bscen','data-bproc','data-bdel','data-bqle']){
     const v=el.getAttribute(a); if(v!=null)return `[${a}="${CSS.escape(v)}"]`;
   }
   return null;}
@@ -8500,6 +8619,18 @@ document.addEventListener('click',e=>{
   if(e.target.id==='iinform'){S.intake.inform=!S.intake.inform;if(S.intake.inform)S.intake.notified=true;return render()}
   if(e.target.id==='inew'||T_('[data-inew]')){return intakeModal()}
   if(el=T_('button[data-itab]')){S.intake.tab=el.dataset.itab;return render()}
+  /* My benefits */
+  if(el=T_('button[data-bplan]')){S.ben.plan=el.dataset.bplan==='none'?null:el.dataset.bplan;if(S.ben.plan&&!S.ben.tier)S.ben.tier='ee';return render()}
+  if(el=T_('button[data-btier]')){S.ben.tier=el.dataset.btier;return render()}
+  if(el=T_('button[data-bdent]')){if(el.getAttribute('aria-disabled')==='true'){toast('That practice is not accepting new patients.');return}S.ben.dentist=el.dataset.bdent;return render()}
+  if(el=T_('button[data-bscen]')){const k=el.dataset.bscen;S.ben.items={};S.ben.scen=k==='clear'?null:k;if(k!=='clear'){const sc=DENTAL_SCENARIOS.find(x=>x.k===k);sc.procs.forEach(c=>{S.ben.items[c]=(S.ben.items[c]||0)+1;});}return render()}
+  if(el=T_('button[data-bproc]')){const c=el.dataset.bproc;S.ben.items[c]=(S.ben.items[c]||0)+1;S.ben.scen=null;S.ben.q='';return render()}
+  if(el=T_('button[data-bdel]')){const c=el.dataset.bdel;if(S.ben.items[c]>1)S.ben.items[c]--;else delete S.ben.items[c];S.ben.scen=null;return render()}
+  if(el=T_('button[data-bqle]')){S.ben.qle=el.dataset.bqle;return render()}
+  if(e.target.id==='bqleopen'){S.ben.qle='';return render()}
+  if(e.target.id==='bded'){S.ben.dedMet=!S.ben.dedMet;return render()}
+  if(e.target.id==='belect')return benSubmit();
+  if(e.target.id==='bqle')return benQle();
   if(el=T_('button[data-lshift],button[data-lcard]')){S.logShift=el.dataset.lshift||el.dataset.lcard;return render()}
   if(el=T_('button[data-itype]')){S.intake.type=el.dataset.itype;if(S.intake.type==='calloff')S.intake.minutes=SHIFT_HOURS*60;else if(S.intake.type!=='inquiry'&&S.intake.minutes>=480)S.intake.minutes=15;return render()}
   if(el=T_('button[data-imin]')){S.intake.minutes=+el.dataset.imin;return render()}
@@ -8551,6 +8682,7 @@ document.addEventListener('input',e=>{
   if(e.target.id==='ccq'){S.cc.q=e.target.value;const rows=document.querySelectorAll('#ccqueue tbody tr');const q=S.cc.q.toLowerCase();rows.forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q)?'':'none'});return}
   if(e.target.id==='iminutes'){const v=Math.max(15,Math.min(720,+e.target.value||0));S.intake.minutes=v;const pv=document.getElementById('icover');if(pv)pv.innerHTML=intakeCoverHTML();return}
   if(e.target.id==='iat'){const v=e.target.value;if(/^\d{2}:\d{2}$/.test(v)){S.intake.at=ptTimeToMs(v);const lab=document.getElementById('iatlab');if(lab)lab.textContent=ptStamp(S.intake.at);}return}
+  if(e.target.id==='bsearch'){S.ben.q=e.target.value;const box=document.getElementById('bsugg');if(box){const tmp=document.createElement('div');tmp.innerHTML=benEstimator(S.ben);const nb=tmp.querySelector('#bsugg');if(nb)box.innerHTML=nb.innerHTML;}return}
   if(e.target.id==='isearch'){S.intake.q=e.target.value;S.intake.hi=0;const box=document.getElementById('isugg');if(box&&typeof intakeSuggHTML==='function')box.innerHTML=intakeSuggHTML();return}
 });
 document.addEventListener('change',e=>{
@@ -9293,6 +9425,114 @@ function viewMgr(){const d=dep(S.store);const tabs=[['team',t('myTeam')],['atten
   ${body}${footer()}
   <nav class="bottomnav mobileonly" style="display:none">${tabs.map(([k,l])=>`<button data-tab="${k}" aria-selected="${S.tab===k}">${esc(l)}</button>`).join('')}</nav></div>`;}
 
+/* ---- benefits ---- */
+/* ============================================================================
+   MY BENEFITS, dental enrollment for the employee console.
+   Ported from the BenefitsFlow dental module (June 2026): plan comparison,
+   coverage tier with the paycheck impact, a DHMO primary dentist pick, a
+   procedure cost estimator on ADA CDT codes, and an election that writes a
+   pending change for HR. Everything a person needs to choose is on one
+   surface; nothing about anyone else.
+   ============================================================================ */
+
+S.ben = S.ben || {plan:null, tier:null, dentist:null, items:{}, dedMet:false, q:'', scen:null, qle:null};
+/* The demo employee has a life event window open, reported five days ago, so
+   the election path can be walked outside November. */
+if(S.me && S.me.benefits && !S.me.benefits.dental.qle) S.me.benefits.dental.qle = {type:'Birth or adoption', at:Date.now() - 5 * DAY, until:Date.now() + 25 * DAY, caseId:'HRC-0991'};
+
+const money = n => '$' + (Math.round(n * 100) / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+function benState(){const e = S.me; const d = (e.benefits && e.benefits.dental) || {plan:null, tier:null};
+  const f = S.ben; if(f.plan === null && f.tier === null && !f._seeded){f.plan = d.plan || 'ppo'; f.tier = d.tier || 'ee'; f.dentist = d.dentist || null; f._seeded = true;}
+  return {e, d, f};}
+
+function benWindow(e){const d = e.benefits.dental;
+  if(d.qle && Date.now() < d.qle.until) return {open:true, why:'Life event window, ' + d.qle.type.toLowerCase() + ', closes ' + fshort(d.qle.until)};
+  if(oeOpen()) return {open:true, why:'Open enrollment through ' + fshort(OE_END)};
+  if(e.hired && Date.now() - e.hired < 30 * DAY) return {open:true, why:'New hire window, 30 days from ' + fshort(e.hired)};
+  return {open:false, why:'Open enrollment ' + fshort(OE_START) + ' to ' + fshort(OE_END) + ' for the ' + PLAN_YEAR + ' plan year. Outside it, a change needs a qualifying life event.'};}
+
+function benPlanCard(k, f){const P = DENTAL_PLANS[k]; const on = f.plan === k;
+  return '<button type="button" class="cx-plan' + (on ? ' on' : '') + '" data-bplan="' + k + '" aria-pressed="' + on + '"><span class="k">' + esc(P.name) + '</span><span class="c">' + esc(P.carrier) + '</span>' +
+    '<span class="p">' + money(DENTAL_PREMIUM[k][f.tier || 'ee']) + ' <small>per paycheck, ' + esc(label(DENTAL_TIERS, f.tier || 'ee').toLowerCase()) + '</small></span>' +
+    '<ul>' + P.lines.map(l => '<li>' + esc(l) + '</li>').join('') + '</ul></button>';}
+
+function benCompare(){const P = DENTAL_PLANS.ppo, D = DENTAL_PLANS.dhmo;
+  const row = (l, a, b) => '<tr><th scope="row">' + esc(l) + '</th><td>' + a + '</td><td>' + b + '</td></tr>';
+  return '<div class="card" style="padding:0"><div class="tblwrap"><table class="tbl"><thead><tr><th scope="col">Compare</th><th scope="col">Dental PPO</th><th scope="col">Dental DHMO</th></tr></thead><tbody>' +
+    row('Network', esc(P.network), esc(D.network)) + row('Deductible', '$' + P.deductible + ' person, $' + P.famDeductible + ' family', 'None') +
+    row('Calendar year maximum', '$' + P.annualMax.toLocaleString() + ' per person', 'None') + row('Preventive and diagnostic', 'Covered in full', 'Fixed copay, $5') +
+    row('Basic and restorative', '10% after deductible', 'Fixed copay per procedure') + row('Major', '40% after deductible, 12 month wait', 'Fixed copay per procedure') +
+    row('Orthodontia', '50%, $' + P.orthoMax.toLocaleString() + ' lifetime', '<span class="chip warn">Not covered</span>') + row('Choose a dentist', 'Any; preferred network pays best', 'Primary dentist at enrollment; referrals for specialists') +
+    '</tbody></table></div><div class="hint" style="padding:8px 16px 12px">Illustrative plans for this work sample. The real summary of benefits and coverage governs.</div></div>';}
+
+function benTiers(f){return '<div class="pillbar" style="margin-bottom:8px">' + DENTAL_TIERS.map(([k, l]) => '<button class="pick" data-btier="' + k + '" aria-pressed="' + (f.tier === k) + '">' + esc(l) + '</button>').join('') + '</div>';}
+
+function benPaycheck(f){if(!f.plan) return '<div class="hint">Waiving dental: nothing is deducted.</div>';
+  const per = DENTAL_PREMIUM[f.plan][f.tier], yr = dentalAnnualPremium(f.plan, f.tier); const other = f.plan === 'ppo' ? 'dhmo' : 'ppo'; const diff = DENTAL_PREMIUM[other][f.tier] - per;
+  return '<div class="cx-pay"><div class="kpi"><div class="v">' + money(per) + '</div><div class="k">per paycheck</div><div class="d">' + PAY_PERIODS + ' pay periods, pre-tax</div></div>' +
+    '<div class="kpi"><div class="v">' + money(yr) + '</div><div class="k">per year</div><div class="d">' + esc(DENTAL_PLANS[f.plan].name) + ', ' + esc(label(DENTAL_TIERS, f.tier).toLowerCase()) + '</div></div>' +
+    '<div class="kpi"><div class="v">' + (diff >= 0 ? '+' : '') + money(diff) + '</div><div class="k">the other plan, per paycheck</div><div class="d">' + esc(DENTAL_PLANS[other].name) + ' would cost ' + (diff >= 0 ? 'more' : 'less') + '</div></div></div>';}
+
+function benDentists(f){return '<div class="cx-dent">' + DHMO_DENTISTS.map(d => '<button type="button" class="cx-dentist' + (f.dentist === d.id ? ' on' : '') + (d.accepting ? '' : ' off') + '" data-bdent="' + d.id + '" aria-pressed="' + (f.dentist === d.id) + '"' + (d.accepting ? '' : ' aria-disabled="true"') + '><span class="t">' + esc(d.name) + '</span><span class="s">' + esc(d.city) + ' · ' + d.mi + ' mi · ' + esc(d.lang) + '</span>' + (d.accepting ? '' : '<span class="chip warn">Not accepting new patients</span>') + '</button>').join('') + '</div>' +
+  '<div class="hint">Fictional practices for the demo. A DHMO requires a primary dentist on file before the first visit; change it any month.</div>';}
+
+function benEstimator(f){const q = (f.q || '').trim().toLowerCase();
+  const hits = q ? DENTAL_PROCS.filter(p => p.code.toLowerCase().indexOf(q) >= 0 || p.desc.toLowerCase().indexOf(q) >= 0 || p.cat.toLowerCase().indexOf(q) >= 0).slice(0, 8) : [];
+  const calc = dentalCalc(f.items, {dedMet:f.dedMet}); const n = Object.keys(f.items).length;
+  const scen = '<div class="pillbar" style="margin-bottom:10px">' + DENTAL_SCENARIOS.map(s => '<button class="pick" data-bscen="' + s.k + '" aria-pressed="' + (f.scen === s.k) + '" title="' + esc(s.d) + '">' + esc(s.l) + '</button>').join('') + '<button class="pick" data-bscen="clear" aria-pressed="false">Clear</button></div>';
+  const search = '<div class="field" style="margin-bottom:6px"><label class="fl vh" for="bsearch">Add a procedure</label><input id="bsearch" type="search" placeholder="Procedure code or name, e.g. D2740 or crown" autocomplete="off" value="' + esc(f.q || '') + '"></div>' +
+    '<div id="bsugg">' + (hits.length ? '<div class="list cx-sugg">' + hits.map(p => '<button class="mrow cx-srow" data-bproc="' + p.code + '"><div class="g"><div class="t">' + esc(p.code) + ' <span class="sub">' + esc(p.desc) + '</span></div><div class="s">' + esc(p.cat) + ' · fee about $' + p.fee + (p.dhmo == null ? ' · not covered on DHMO' : ' · DHMO copay $' + p.dhmo) + '</div></div></button>').join('') + '</div>' : (q ? '<div class="hint">No procedure matches.</div>' : '')) + '</div>';
+  const table = n ? '<div class="card" style="padding:0;margin-top:8px"><div class="tblwrap"><table class="tbl"><thead><tr><th scope="col">Procedure</th><th scope="col">Qty</th><th scope="col">Fee</th><th scope="col">You pay, PPO</th><th scope="col">You pay, DHMO</th><th scope="col"></th></tr></thead><tbody>' +
+      calc.lines.map(l => '<tr><th scope="row">' + esc(l.code) + '<br><span class="sub">' + esc(l.desc) + '</span></th><td class="mono">' + l.qty + (l.over ? ' <span class="chip warn">over frequency</span>' : '') + '</td><td class="mono">' + money(l.fee) + '</td><td class="mono">' + money(l.ppo) + '</td><td class="mono">' + (money(l.dhmo) + (l.notCovered ? ' <span class="chip warn">not covered, full fee</span>' : '')) + '</td><td class="lg-act"><button class="btn ghost sm" data-bproc="' + esc(l.code) + '">+1</button><button class="btn ghost sm" data-bdel="' + esc(l.code) + '">-1</button></td></tr>').join('') +
+      '</tbody></table></div></div>' : '<div class="hint" style="margin-top:8px">Pick a scenario or add procedures to compare what you would pay on each plan.</div>';
+  const prem = f.tier ? {ppo:dentalAnnualPremium('ppo', f.tier), dhmo:dentalAnnualPremium('dhmo', f.tier)} : {ppo:0, dhmo:0};
+  const tot = {ppo:calc.ppo + prem.ppo, dhmo:calc.dhmo + prem.dhmo};
+  const winner = n ? (Math.abs(tot.ppo - tot.dhmo) < 40 ? null : tot.ppo < tot.dhmo ? 'ppo' : 'dhmo') : null;
+  const totals = n ? '<div class="cx-est"><div class="kpi' + (winner === 'ppo' ? ' win' : '') + '"><div class="v">' + money(calc.ppo) + '</div><div class="k">PPO, out of pocket</div><div class="d">plus ' + money(prem.ppo) + ' premium a year, ' + money(calc.ppo + prem.ppo) + ' total</div></div>' +
+      '<div class="kpi' + (winner === 'dhmo' ? ' win' : '') + '"><div class="v">' + money(calc.dhmo) + (calc.dhmoGap ? '<span class="chip warn" style="margin-left:6px">gap</span>' : '') + '</div><div class="k">DHMO, out of pocket</div><div class="d">plus ' + money(prem.dhmo) + ' premium a year, ' + money(calc.dhmo + prem.dhmo) + ' total' + (calc.dhmoGap ? '; includes orthodontia paid in full' : '') + '</div></div></div>' +
+      '<div class="callout"><b>What this says</b>' + (function(){const tp = calc.ppo + prem.ppo, td = calc.dhmo + prem.dhmo; if(calc.dhmoGap) return 'The DHMO does not cover orthodontia, so the braces are paid in full on it; the PPO pays up to its $' + DENTAL_PLANS.ppo.orthoMax.toLocaleString() + ' lifetime maximum, ' + (tp < td ? 'about ' + money(td - tp) + ' less this year once premiums are counted.' : 'though the DHMO still comes out about ' + money(tp - td) + ' less this year.'); if(Math.abs(tp - td) < 40) return 'Close to even for this year. Choose on the dentist you want to keep: the PPO lets you stay with any dentist, the DHMO needs one from its list.'; return (tp < td ? 'The PPO' : 'The DHMO') + ' costs about ' + money(Math.abs(tp - td)) + ' less this year once premiums are counted.' + (calc.warn ? ' One line is over the plan frequency and would not all be covered.' : '');})() + ' The estimate uses average fees and the illustrative plan rules; the dentist\'s pre-treatment estimate governs.</div>' : '';
+  return scen + search + '<label class="cx-check" style="margin:4px 0 0"><input type="checkbox" id="bded" ' + (f.dedMet ? 'checked' : '') + '> Deductible already met this year</label>' + table + totals;}
+
+function benElect(e, f, win){const d = e.benefits.dental; const changed = f.plan !== d.plan || f.tier !== d.tier || (f.plan === 'dhmo' && f.dentist !== d.dentist);
+  const need = f.plan === 'dhmo' && !f.dentist;
+  if(d.pending) return '<div class="callout"><b>Change pending with HR</b>' + esc(DENTAL_PLANS[d.pending.plan] ? DENTAL_PLANS[d.pending.plan].name : 'Waive') + (d.pending.tier ? ', ' + esc(label(DENTAL_TIERS, d.pending.tier).toLowerCase()) : '') + ', submitted ' + esc(fdt(d.pending.at)) + ' as case ' + esc(d.pending.caseId) + '. Effective the first of the month after HR confirms.</div>';
+  return '<div class="crow" style="gap:12px;flex-wrap:wrap"><div class="sub" style="flex:1;min-width:200px">' + (win.open ? esc(win.why) : esc(win.why)) + '</div>' +
+    (win.open ? '<button class="btn gold" id="belect" ' + (changed && !need ? '' : 'disabled') + '>' + (f.plan ? 'Elect ' + esc(DENTAL_PLANS[f.plan].name) : 'Waive dental') + '</button>' : '<button class="btn ghost" id="bqleopen">Report a life event</button>') + '</div>' +
+    (need ? '<div class="hint">Pick a primary dentist to elect the DHMO.</div>' : '') +
+    (!win.open && f.qle !== null ? '<div class="card" style="margin-top:10px"><div class="fl">Qualifying life event</div><div class="pillbar" style="margin-bottom:8px">' + QLE_TYPES.map(q => '<button class="pick" data-bqle="' + esc(q) + '" aria-pressed="' + (f.qle === q) + '">' + esc(q) + '</button>').join('') + '</div><div class="crow"><div class="sub" style="flex:1">Opens a 30 day window once HR confirms the event. Proof goes to HR, never into this form.</div><button class="btn" id="bqle" ' + (f.qle ? '' : 'disabled') + '>Report it</button></div></div>' : '');}
+
+function empBenefits(){const {e, d, f} = benState(); const win = benWindow(e); const cur = d.plan ? DENTAL_PLANS[d.plan].name + ', ' + label(DENTAL_TIERS, d.tier).toLowerCase() : 'Waived';
+  const dent = d.dentist ? DHMO_DENTISTS.find(x => x.id === d.dentist) : null;
+  return `<section><h2>My benefits</h2>
+    <div class="grid g4" style="margin-bottom:16px">${kpi(esc(d.plan ? DENTAL_PLANS[d.plan].name : 'Waived'), 'dental plan', d.plan ? label(DENTAL_TIERS, d.tier) + (d.since ? ', since ' + fshort(d.since) : '') : 'No dental coverage on file', 'txt')}${kpi(d.plan ? money(DENTAL_PREMIUM[d.plan][d.tier]) : '$0.00', 'per paycheck', 'Pre-tax dental premium')}${kpi(dent ? esc(dent.name) : (d.plan === 'dhmo' ? 'Not chosen' : 'Any'), 'primary dentist', dent ? dent.city + ', ' + dent.mi + ' mi' : (d.plan === 'dhmo' ? 'Required on the DHMO' : 'PPO: any dentist'), 'txt')}${kpi(win.open ? 'Open' : 'Closed', 'enrollment', win.open ? win.why : 'Next: ' + fshort(OE_START), win.open ? 'good' : '')}</div>
+    <div class="callout" style="margin-bottom:16px"><b>Current election: ${esc(cur)}</b>${win.open ? 'You can change your plan, tier or dentist below; the change goes to HR and takes effect the first of the following month.' : 'Changes outside open enrollment need a qualifying life event, reported to HR within 30 days.'} Medical, vision and FSA follow the same pattern; dental is the module built first.</div>
+  </section>
+  <section><h2>Choose a plan</h2>
+    <div class="cx-plans">${benPlanCard('ppo', f)}${benPlanCard('dhmo', f)}<button type="button" class="cx-plan waive${f.plan === null ? ' on' : ''}" data-bplan="none" aria-pressed="${f.plan === null}"><span class="k">Waive dental</span><span class="c">No coverage through work</span><span class="p">$0.00 <small>per paycheck</small></span><ul><li>Choose this only with other coverage; a waiver needs a reason on file</li></ul></button></div>
+    ${f.plan ? '<div class="fl" style="margin-top:12px">Who is covered</div>' + benTiers(f) + benPaycheck(f) : ''}
+    ${f.plan === 'dhmo' ? '<div class="fl" style="margin-top:12px">Primary dentist</div>' + benDentists(f) : ''}
+    <div style="margin-top:14px">${benElect(e, f, win)}</div>
+  </section>
+  <section><h2>Compare the plans</h2>${benCompare()}</section>
+  <section><h2>What would I pay</h2><p class="sub" style="margin-bottom:10px">Add the treatment you expect this year and see what you would pay on each plan, premiums included. Procedure codes are the ADA CDT codes your dentist bills.</p><div class="card">${benEstimator(f)}</div></section>`;}
+
+/* Write paths. An election is a pending change on the employee's benefits
+   record plus a case for HR, never a direct change to coverage. */
+function benSubmit(){const {e, d, f} = benState(); const at = Date.now();
+  const c = {id:'HRC-' + String(1000 + CASES.length + 1), emp:e.id, dept:e.dept, reason:'benefits', pri:'normal', rep:REPS[0] ? REPS[0].id : HR_MGR.id, type:'Portal', opened:at, sla:at + SLA_HRS.normal * HR, status:'new',
+    notes:[{by:e.id, t:at, txt:'Dental election from the employee portal: ' + (f.plan ? DENTAL_PLANS[f.plan].name + ', ' + label(DENTAL_TIERS, f.tier).toLowerCase() + (f.plan === 'dhmo' && f.dentist ? ', primary dentist ' + DHMO_DENTISTS.find(x => x.id === f.dentist).name : '') : 'waive dental') + '. Previous: ' + (d.plan ? DENTAL_PLANS[d.plan].name + ', ' + label(DENTAL_TIERS, d.tier).toLowerCase() : 'waived') + '. Effective the first of the month after confirmation.'}], esc:[], att:[], leave:null, mgrInformed:null, resolvedAt:null, fcr:false};
+  CASES.unshift(c); CASEBY[c.id] = c; if(typeof taskSyncCase === 'function') taskSyncCase(c);
+  d.pending = {plan:f.plan, tier:f.tier, dentist:f.dentist, at:at, caseId:c.id};
+  if(typeof celebrate === 'function') celebrate({n:120});
+  toast('Election sent to HR as ' + c.id + '. ' + (f.plan ? DENTAL_PLANS[f.plan].name + ', ' + money(DENTAL_PREMIUM[f.plan][f.tier]) + ' per paycheck from the first of next month.' : 'Dental waived.')); bump(); render();}
+function benQle(){const {e, f} = benState(); const at = Date.now();
+  const c = {id:'HRC-' + String(1000 + CASES.length + 1), emp:e.id, dept:e.dept, reason:'benefits', pri:'normal', rep:REPS[0] ? REPS[0].id : HR_MGR.id, type:'Portal', opened:at, sla:at + SLA_HRS.normal * HR, status:'new',
+    notes:[{by:e.id, t:at, txt:'Qualifying life event reported: ' + f.qle + '. Employee to bring proof to HR; a 30 day enrollment window opens on confirmation.'}], esc:[], att:[], leave:null, mgrInformed:null, resolvedAt:null, fcr:false};
+  CASES.unshift(c); CASEBY[c.id] = c; if(typeof taskSyncCase === 'function') taskSyncCase(c);
+  e.benefits.dental.qle = {type:f.qle, at:at, until:at + 30 * DAY, caseId:c.id}; f.qle = null;
+  toast('Life event reported as ' + c.id + '. Your enrollment window is open for 30 days.'); bump(); render();}
+
 /* ---- emp ---- */
 /* ============================================================================
    EMPLOYEE CONSOLE and the module player. One person, their own record, the
@@ -9329,8 +9569,8 @@ function empContact(){
     <div class="callout" style="margin-top:16px"><b>Your information</b>The desk verifies who you are before it discusses your record, and never releases your record to anyone outside HR without an approval on file.</div>
   </section>`;}
 
-function viewEmp(){const e=S.me;const tabs=[['record','My record'],['learning',t('myTraining')],['contact','Contact HR']];
-  const body=S.tab==='learning'?empLearning():S.tab==='contact'?empContact():empRecord();
+function viewEmp(){const e=S.me;const tabs=[['record','My record'],['benefits','My benefits'],['learning',t('myTraining')],['contact','Contact HR']];
+  const body=S.tab==='learning'?empLearning():S.tab==='contact'?empContact():S.tab==='benefits'?empBenefits():empRecord();
   return `<div class="wrap">
   <div class="pagehead"><div><div class="eyebrow">Employee view</div><h1>${esc(e.name)}</h1><div class="sub">${esc(e.title)} · ${esc(deptName(e.dept))} · <span class="mono">${esc(e.id)}</span></div></div><div class="spacer"></div></div>
   <div class="tabs" role="tablist" style="display:none">${tabs.map(([k,l])=>`<button role="tab" data-tab="${k}" aria-selected="${S.tab===k}">${esc(l)}</button>`).join('')}</div>
@@ -11505,6 +11745,7 @@ const NV_ICON = {
   report:    '<rect x="5.2" y="4.2" width="13.6" height="16.6" rx="2"/><path d="M9.4 4.2h5.2v2.8H9.4z"/><path d="M8.8 11.6h6.4M8.8 15.4h4.2"/>',
   learning:  '<circle cx="12" cy="12" r="8.4"/><path d="m10.3 8.9 5 3.1-5 3.1z"/>',
   record:    '<path d="M6.2 3.4h11.6v13.2L12 20.6l-5.8-4z"/><path d="M9.2 8.6h5.6M9.2 12h3.6"/>',
+  benefits:  '<path d="M12 20.4s-7.2-4.4-7.2-10A3.9 3.9 0 0 1 12 8.2a3.9 3.9 0 0 1 7.2 2.2c0 5.6-7.2 10-7.2 10z"/><path d="M10 13h4M12 11v4"/>',
   grid:      '<rect x="3.4" y="3.4" width="7" height="7" rx="1.6"/><rect x="13.6" y="3.4" width="7" height="7" rx="1.6"/><rect x="3.4" y="13.6" width="7" height="7" rx="1.6"/><rect x="13.6" y="13.6" width="7" height="7" rx="1.6"/>',
   find:      '<circle cx="10.8" cy="10.8" r="6.4"/><path d="m19.6 19.6-4.3-4.3"/>',
   panel:     '<rect x="3.4" y="4.6" width="17.2" height="14.8" rx="2"/><path d="M9.6 4.6v14.8"/>',
@@ -11587,6 +11828,8 @@ const NV_SURFACES = {
   emp: [
     {k:'record', icon:'record', sec:null, label:{en:'My record'},
      pick:() => false, rest:c => ({en:(c.me ? empAtt(c.me.id, 90).length : 0) + ' attendance events on file, 90 days'})},
+    {k:'benefits', icon:'benefits', sec:null, label:{en:'My benefits'},
+     pick:() => false, rest:c => ({en:c.me && c.me.benefits && c.me.benefits.dental.plan ? DENTAL_PLANS[c.me.benefits.dental.plan].name + ', ' + label(DENTAL_TIERS, c.me.benefits.dental.tier).toLowerCase() : 'Dental waived'})},
     {k:'learning', icon:'learning', sec:null, label:{en:'My training'},
      pick:t => t.kind==='training_overdue', rest:c => ({en:(c.me ? required(c.me).length : 0) + ' required modules, nothing due'})},
     {k:'contact', icon:'contact', sec:null, label:{en:'Contact HR'},
@@ -14732,6 +14975,7 @@ const FL_SURFACE = {
   sops:       {en:'Procedures'},
   team:       {en:'Team'},
   record:     {en:'Record'},
+  benefits:   {en:'Benefits'},
   learning:   {en:'Training'},
   contact:    {en:'Contact HR'}
 };
@@ -14824,6 +15068,7 @@ const FL_NAV = {
   ],
   emp: [
     {k:'record',     icon:'list', tab:'record',   kinds:[]},
+    {k:'benefits',   icon:'shield', tab:'benefits', kinds:[]},
     {k:'learning',   icon:'book', tab:'learning', kinds:['training_overdue']},
     {k:'contact',    icon:'bell', tab:'contact',  kinds:[]}
   ]

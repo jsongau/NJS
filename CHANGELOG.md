@@ -21,6 +21,10 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 - `commerce` — My benefits on the employee console: the dental module
   ported from BenefitsFlow (PPO vs DHMO, tiers and paycheck impact, DHMO
   dentist, CDT procedure estimator, election to HR). 176 assertions.
+- `hr` — generic HR operations prototype from the same source as /commerce
+  (build-time brand): HR Operations mark, fictional organization, HCM module
+  map, access matrix and automation list on the Approach page. noindex
+  headers scoped to `/hr` and `/hr/:path*`. 179 assertions on both builds.
 
 ## 2026-08-18
 

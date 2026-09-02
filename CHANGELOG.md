@@ -2,6 +2,17 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-09-02
+
+- `commerce` — HR call center, attendance and workforce analytics console
+  for the Commerce Casino Assistant HR Manager, Data Analyst application.
+  /tawa reskinned: four personas (HR Manager, Call Center Rep, Dept Manager,
+  Employee), New log intake with typeahead, time coverage ledger (FMLA, sick,
+  PTO, unpaid), attendance points ladder, today's log by shift, report
+  privacy control. Fictional data, noindex headers scoped to `/commerce` and
+  `/commerce/:path*` only. Source and 149 headless assertions live in
+  `commerce-hr/` beside the repo; only the build ships here.
+
 ## 2026-08-18
 
 - `r1` — the same portal fix as `me`, same file, same reasoning. `/r1` is

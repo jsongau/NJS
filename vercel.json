@@ -2,23 +2,94 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/ritual.html", "destination": "/ritual", "permanent": true }
+    {
+      "source": "/ritual.html",
+      "destination": "/ritual",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/molsoncoors/:path*", "destination": "/molsoncoors/index.html" },
-    { "source": "/405", "destination": "https://njs-405.vercel.app/405" },
-    { "source": "/405/:path*", "destination": "https://njs-405.vercel.app/405/:path*" }
+    {
+      "source": "/molsoncoors/:path*",
+      "destination": "/molsoncoors/index.html"
+    },
+    {
+      "source": "/405",
+      "destination": "https://njs-405.vercel.app/405"
+    },
+    {
+      "source": "/405/:path*",
+      "destination": "https://njs-405.vercel.app/405/:path*"
+    }
   ],
   "headers": [
-    { "source": "/tawa", "headers": [
-      { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-      { "key": "X-Content-Type-Options", "value": "nosniff" }
-    ] },
-    { "source": "/tawa/:path*", "headers": [
-      { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-      { "key": "X-Content-Type-Options", "value": "nosniff" }
-    ] }
+    {
+      "source": "/tawa",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/tawa/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/commerce",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/commerce/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
   ]
 }

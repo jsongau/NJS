@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Methodology, The Hashrate Desk, Nathan J. Song</title>
+<style>
+:root{
+  --plane:#0A0D11;--s1:#12171D;--s2:#1A2128;--s3:#232C35;--bd:#232B34;--bds:#313B46;
+  --accent:#F7931A;--wash:rgba(247,147,26,.10);
+  --ink1:#E6EDF3;--ink2:#9AA7B4;--ink3:#7C8A96;--focus:#6FB7FF;
+  --c1:#3987E5;--c2:#199E70;--c3:#C98500;--c4:#D55181;--c5:#9085E9;
+  --good:#0CA30C;--warn:#FAB219;--crit:#E5484D;
+  --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--plane);color:var(--ink1);font-family:var(--ui);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.shell{max-width:1180px;margin:0 auto;padding:0 40px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.lbl{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+a{color:var(--focus);text-decoration:none;border-bottom:1px solid rgba(111,183,255,.3)}
+a:hover{border-bottom-color:var(--focus)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+#rail{position:sticky;top:0;z-index:50;height:40px;background:var(--plane);border-bottom:1px solid var(--bd);display:flex;align-items:center;overflow-x:auto;scrollbar-width:none}
+#rail::-webkit-scrollbar{display:none}
+#rail .shell{display:flex;gap:22px;align-items:center;white-space:nowrap}
+#rail a{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);border:0}
+#rail a:hover{color:var(--ink1)}
+#rail .home{color:var(--accent)}
+
+#hero{padding:66px 0 50px;border-bottom:1px solid var(--bd);position:relative;overflow:hidden}
+#hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(880px 300px at 10% -30%,rgba(247,147,26,.09),transparent 70%)}
+#hero .shell{position:relative;z-index:1}
+.badge{display:inline-block;font-size:9px;letter-spacing:.11em;text-transform:uppercase;padding:4px 9px;border:1px solid var(--bd);border-radius:2px;color:var(--ink3);margin-bottom:16px}
+h1{font-size:42px;line-height:47px;font-weight:600;letter-spacing:-.024em;max-width:22ch}
+h1 em{font-style:normal;color:var(--accent)}
+.thesis{font-size:16px;line-height:26px;color:var(--ink2);max-width:74ch;margin-top:18px}
+.thesis b{color:var(--ink1);font-weight:600}
+
+section{padding:56px 0;border-bottom:1px solid var(--bd);position:relative}
+section::before{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;
+  background:linear-gradient(90deg,var(--accent) 0,var(--accent) 56px,transparent 56px)}
+.sect-head{display:flex;gap:20px;align-items:flex-start;margin-bottom:26px}
+.sect-num{font-family:var(--mono);font-size:11px;color:var(--ink3);padding-top:4px;width:26px;flex:none;letter-spacing:.08em}
+h2{font-size:14px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink1)}
+.deck{color:var(--ink2);font-size:15px;line-height:24px;max-width:80ch;margin-top:8px}
+.claim{border-left:2px solid var(--accent);padding:1px 0 1px 16px;margin:0 0 22px;font-size:15px;line-height:24px;max-width:84ch}
+.claim b{font-weight:600}
+p{margin-bottom:14px;color:var(--ink2);max-width:82ch}
+p b,li b{color:var(--ink1);font-weight:600}
+h3{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink1);margin:26px 0 12px}
+ul{margin:0 0 16px 20px}
+li{color:var(--ink2);margin-bottom:8px;max-width:82ch}
+
+.card{background:var(--s1);border:1px solid var(--bds);border-radius:3px;padding:20px;position:relative}
+.card::after{content:"";position:absolute;left:-1px;top:-1px;width:26px;height:1px;background:var(--bds)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+
+table{width:100%;border-collapse:collapse;background:var(--s1);border:1px solid var(--bds);border-radius:3px}
+thead th{background:var(--s2);font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink2);padding:10px 12px;text-align:left;border-bottom:1px solid var(--bds);vertical-align:bottom}
+tbody td{padding:10px 12px;border-bottom:1px solid var(--bd);font-size:13.5px;color:var(--ink2);vertical-align:top;line-height:20px}
+tbody td:first-child{color:var(--ink1)}
+tbody tr:hover{background:var(--s2)}
+td .n{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink1)}
+.tw{overflow-x:auto}
+
+pre{background:var(--plane);border:1px solid var(--bd);border-radius:2px;padding:16px;overflow-x:auto;
+  font-family:var(--mono);font-size:12.5px;line-height:20px;color:var(--ink2);margin-bottom:14px}
+pre .kw{color:var(--c5)} pre .cm{color:var(--ink3)} pre .st{color:var(--c2)} pre .hi{color:var(--accent)}
+code{font-family:var(--mono);font-size:.9em;color:var(--ink1);background:var(--s3);padding:1px 5px;border-radius:2px}
+
+.pill{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;border:1px solid var(--bd);color:var(--ink3)}
+.pill.ok{color:var(--good);border-color:rgba(12,163,12,.4)}
+.pill.no{color:var(--crit);border-color:rgba(229,72,77,.4)}
+.pill.part{color:var(--warn);border-color:rgba(250,178,25,.4)}
+
+.stat{background:var(--s1);border:1px solid var(--bd);border-radius:3px;padding:15px}
+.stat .v{font-family:var(--mono);font-size:24px;font-weight:500;margin-top:6px;line-height:1}
+.stat .s{font-size:11px;color:var(--ink3);margin-top:7px;line-height:16px}
+
+.note{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--c3);border-radius:2px;padding:15px 17px;margin:18px 0}
+.note .h{font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--c3);margin-bottom:7px}
+.note.warn{border-left-color:var(--crit)} .note.warn .h{color:var(--crit)}
+.note.good{border-left-color:var(--good)} .note.good .h{color:var(--good)}
+.note p{font-size:13.5px;line-height:21px;margin:0}
+.note p+p{margin-top:9px}
+
+.tool{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--bd)}
+.tool:last-child{border-bottom:0}
+.tool .ic{width:38px;height:38px;flex:none;border:1px solid var(--bds);border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;font-weight:600}
+.tool .nm{font-size:14px;font-weight:600;color:var(--ink1)}
+.tool .rl{font-size:12px;color:var(--ink3);margin-top:2px;font-family:var(--mono)}
+.tool p{font-size:13.5px;line-height:21px;margin:7px 0 0}
+
+svg{display:block;width:100%;overflow:visible}
+footer{padding:40px 0 64px;color:var(--ink3);font-size:12px;line-height:19px}
+
+@media (max-width:1000px){.g2,.g3,.g4{grid-template-columns:1fr}}
+@media (max-width:760px){.shell{padding:0 18px}h1{font-size:29px;line-height:34px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div id="rail"><div class="shell">
+  <a class="home" href="hashrate-desk-v5.html">&#9664; The Hashrate Desk</a>
+  <a href="#brief">The brief</a>
+  <a href="#toolchain">Toolchain</a>
+  <a href="#modelling">Modelling</a>
+  <a href="#sql">SQL</a>
+  <a href="#quality">Quality</a>
+  <a href="#valuation">Valuation method</a>
+  <a href="#economics">Economics method</a>
+  <a href="#gaps">What I did not do</a>
+</div></div>
+
+<div id="hero"><div class="shell">
+  <span class="badge">Methodology · Nathan J. Song · 16 August 2026</span>
+  <h1>How this was <em>actually</em> built.</h1>
+  <p class="thesis">The Hashrate Desk is a Bitcoin mining economics model sitting on a Kimball star schema. This page is the working: the grain decisions, the SQL, the data-quality assertions and their results, the tools, and the parts I got wrong on the first pass. <b>Written against the Sr. Data Architect Specialist posting at Samyang America</b>, because a work sample that does not answer the actual requirements is decoration.</p>
+</div></div>
+
+<!-- ===================== 01 THE BRIEF ===================== -->
+<section id="brief"><div class="shell">
+  <div class="sect-head"><div class="sect-num">01</div><div>
+    <h2>The posting, line by line</h2>
+    <p class="deck">Every requirement in the job description, and where in this project it is evidenced. Where the answer is partial or absent I have said so, because the gaps are the useful part of this table.</p>
+  </div></div>
+
+  <p class="claim">Two things in this posting I do not meet on paper: <b>five years with the data architect title</b>, and <b>hands-on Snowflake or Databricks</b>. I am not going to pretend otherwise. What I can show is the work itself, built on Postgres, and the judgement behind it, which is the part that does not transfer between platforms.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:26%">Requirement, as written</th><th style="width:9%">Status</th><th>Evidence</th></tr></thead>
+    <tbody>
+    <tr><td>Design and maintain enterprise data models, conceptual, logical and physical</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>All three layers, and the page names what changes between them. Conceptual: five business questions. Logical: bus matrix, grain statements, conformed dimensions, additivity classes. Physical: running Postgres DDL with keys, CHECK constraints encoding consensus rules, and indexes. Section 03.</td></tr>
+    <tr><td>Define structures for key domains: sales and revenue, consumer and marketing, product and innovation pipeline, financial and operational</td>
+        <td><span class="pill part">Analogue</span></td>
+        <td>Different domain, same shapes. Revenue is <code>fct_fleet_mining_day</code>. Product is <code>dim_miner_model</code> with a generation axis spanning 2017 to 2026. Financial and operational is the cost stack, hosting contract and payback lifecycle. Section 07 maps each one to its CPG equivalent explicitly.</td></tr>
+    <tr><td>Ensure alignment between business definitions and technical data structures</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>Every table carries a one-sentence grain statement in a <code>COMMENT ON TABLE</code>, in the database, not in a wiki that rots. Queryable from <code>pg_description</code>.</td></tr>
+    <tr><td>Establish and enforce data standards, naming conventions, taxonomy</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>Suffix grammar with units in the column name, and it is <em>enforced</em>: DQ-13 is a lint that fails the build if any <code>fct_</code> table grows a column matching <code>_pct</code>, <code>_rate</code>, <code>_avg</code> or <code>_ratio</code>. Section 04.</td></tr>
+    <tr><td>Define data lineage, ownership and metadata management</td>
+        <td><span class="pill part">Partial</span></td>
+        <td>Lineage and metadata yes: source to staging to intermediate to core to semantic view, with table and column comments as the metadata layer. Ownership no. There is one of me, so a RACI would be theatre.</td></tr>
+    <tr><td>Partner with Data Engineering so governance is embedded in pipelines</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>The governance rules are executable assertions that run with the build, not a policy document. That is the whole point of section 05.</td></tr>
+    <tr><td>Design how data flows across systems: ERP, CRM, marketing platforms, external sources</td>
+        <td><span class="pill part">Partial</span></td>
+        <td>Three live external sources integrated with different reliability characteristics and reconciled: two exchange price feeds cross-checked against each other, plus chain data. No ERP or CRM here. My ERP-adjacent work is the SAP-shaped deduction matching in the companion Grain project.</td></tr>
+    <tr><td>Support the creation of a single source of truth</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>Conformed dimensions across five business processes, and one ratio surface. Every rate and percentage is defined exactly once, in a view, so two dashboards cannot disagree about what margin means.</td></tr>
+    <tr><td>5+ years in data architecture, data modeling or database design</td>
+        <td><span class="pill no">Not met</span></td>
+        <td>I do not have the title. I have shipped production Postgres and Supabase schemas for an internal HR and attendance system feeding payroll, for CoverCapy, and for this. Judge the model, not the tenure.</td></tr>
+    <tr><td>Strong experience with star schema and dimensional modeling</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>Six dimensions, four facts of three different fact types, SCD1 and SCD2 handled differently and for stated reasons, additivity classified per measure, four architecture decision records. Sections 03 and 04.</td></tr>
+    <tr><td>Familiarity with cloud data platforms (AWS, Azure, GCP)</td>
+        <td><span class="pill part">Partial</span></td>
+        <td>This warehouse runs on managed Postgres on Supabase, which is AWS underneath, us-west-1. I have not run Redshift, Synapse or BigQuery in anger.</td></tr>
+    <tr><td>Strong understanding of governance, metadata and data quality</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>Five assertions running green against live data, each documented with the specific bug it catches. Three of them are business-logic singular tests, not generic not-null checks. Section 05.</td></tr>
+    <tr><td>Proficiency with SQL and data modeling tools</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>The DDL, the analytical queries and the assertions in section 04 are the actual objects in the database, not illustrations. LucidChart for the ERD.</td></tr>
+    <tr><td>Preferred: Snowflake or Databricks</td>
+        <td><span class="pill no">Not met</span></td>
+        <td>No production experience. The modeling here is warehouse-agnostic and the DDL is close to ANSI, but I would be learning the platform in month one and you should price that in.</td></tr>
+    <tr><td>Preferred: ERP, CRM or marketing data systems</td>
+        <td><span class="pill part">Partial</span></td>
+        <td>Marketing data yes, at operator level: GA4, Meta Ads, GoHighLevel funnels, attribution on real spend. ERP and CRM at enterprise scale, no.</td></tr>
+    <tr><td>Preferred: analytics or AI use cases and how data supports them</td>
+        <td><span class="pill ok">Shown</span></td>
+        <td>The valuation engine is a weighted multi-model ensemble with a 20,000-draw Monte Carlo and a confidence rule that <em>penalises</em> agreement between correlated models. Section 06. Separately I run a deployed LLM agent on Supabase Edge Functions with a logging and learning loop.</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<!-- ===================== 02 TOOLCHAIN ===================== -->
+<section id="toolchain"><div class="shell">
+  <div class="sect-head"><div class="sect-num">02</div><div>
+    <h2>What built what</h2>
+    <p class="deck">Every tool listed here did a job on this project. Where a tool could not do the job I wanted, that is stated rather than papered over.</p>
+  </div></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="tool"><div class="ic" style="color:var(--c2)">PG</div><div>
+        <div class="nm">Supabase, managed Postgres 17</div>
+        <div class="rl">the warehouse. live, not a mockup.</div>
+        <p>Schema <code>mining_dw</code>: 6 dimensions, 4 fact tables, 3 semantic views. Built with versioned migrations, seeded with real network data and real price provenance, and queried for every figure quoted on this page. The five data-quality assertions in section 05 were executed against it on 16 August 2026 and the results printed here are that run's output.</p>
+      </div></div>
+      <div class="tool"><div class="ic" style="color:var(--c1)">LC</div><div>
+        <div class="nm">LucidChart</div>
+        <div class="rl">entity relationship diagram</div>
+        <p>The ERD in section 03. LucidChart imports a SQL DDL file and generates entities and relationships from it, so the diagram is generated from the same DDL that built the database rather than drawn by hand beside it. That matters: a hand-drawn ERD drifts from the schema within a week.</p>
+      </div></div>
+      <div class="tool"><div class="ic" style="color:var(--c3)">XL</div><div>
+        <div class="nm">Google Sheets and Excel</div>
+        <div class="rl">the model, independently reimplemented</div>
+        <p>A seven-tab workbook holding the same model as live formulas. It exists as a cross-check: two independent implementations of the same arithmetic, one in JavaScript and one in spreadsheet formulas, agreeing to the cent. That caught nothing this time, which is the point of doing it.</p>
+      </div></div>
+    </div>
+    <div class="card">
+      <div class="tool"><div class="ic" style="color:var(--accent)">JS</div><div>
+        <div class="nm">Vanilla JavaScript and hand-written SVG</div>
+        <div class="rl">the interface</div>
+        <p>One self-contained HTML file, no framework, no chart library, no build step. Every chart is SVG generated from the model. The palette was run through a colourblind-separation validator rather than eyeballed, which is why the hardware scatter is capped at three colour categories.</p>
+      </div></div>
+      <div class="tool"><div class="ic" style="color:var(--c5)">TV</div><div>
+        <div class="nm">TradingView</div>
+        <div class="rl">display only. read this part.</div>
+        <p>TradingView has no readable public price API. The widgets are cross-origin iframes by design, so page JavaScript cannot read a number out of one, and <code>scanner.tradingview.com</code> is not a supported endpoint and sends no permissive CORS header. The TradingView widget on the Desk is the on-screen reference. It drives nothing.</p>
+      </div></div>
+      <div class="tool"><div class="ic" style="color:var(--c2)">$$</div><div>
+        <div class="nm">Coinbase and Kraken public APIs</div>
+        <div class="rl">the price that drives the arithmetic</div>
+        <p>Both publish <code>Access-Control-Allow-Origin: *</code>, so a static page can read them. I take both and cross-check: agreement inside 0.5% shows a green badge, wider disagreement raises a warning, and no answer at all falls back to a dated snapshot and says so. A single feed would have been less code and a worse system.</p>
+      </div></div>
+      <div class="tool"><div class="ic" style="color:var(--ink3)">BC</div><div>
+        <div class="nm">mempool.space, blockchain.info, Hashrate Index</div>
+        <div class="rl">chain state and mining reference</div>
+        <p>Difficulty, height, hashrate, fee share and hashprice. Difficulty agreed to the decimal across three independent sources, which is the sort of thing worth checking before you build on a number.</p>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="note warn"><div class="h">Where I would not let a claim stand</div>
+    <p>I wanted a live TradingView feed driving the model, because that is what futures desks watch. It cannot be done from a static page, and pretending otherwise would fall apart the first time an interviewer opened the network tab. The honest architecture is worse marketing and better engineering: name the display source, name the calculation source, and make the failure mode visible.</p>
+  </div>
+</div></section>
+
+<!-- ===================== 03 MODELLING ===================== -->
+<section id="modelling"><div class="shell">
+  <div class="sect-head"><div class="sect-num">03</div><div>
+    <h2>Conceptual, logical, physical</h2>
+    <p class="deck">The posting asks for all three layers. They are genuinely different artifacts and the differences are where the work is.</p>
+  </div></div>
+
+  <div class="g3" style="margin-bottom:24px">
+    <div class="card"><span class="lbl">Conceptual</span>
+      <p style="margin-top:10px;font-size:13.5px">Five questions, no tables. What does a fleet cost to run. What happens if I swap machine generation. What does the network spend to make one coin. How does profit move when difficulty retargets. Which machine earns most per watt.</p>
+      <p style="font-size:13px;color:var(--ink3);margin:0">Output: a list of questions and the business nouns in them. If you cannot write this down, the schema will be wrong.</p>
+    </div>
+    <div class="card"><span class="lbl">Logical</span>
+      <p style="margin-top:10px;font-size:13.5px">Bus matrix of five processes against conformed dimensions. One grain sentence per fact. Every measure classified additive, semi-additive or non-additive. Keys named but not typed. Platform-independent.</p>
+      <p style="font-size:13px;color:var(--ink3);margin:0">Output: the design you would defend in a review. This is where the retarget grain decision was made and it cost nothing to change here.</p>
+    </div>
+    <div class="card"><span class="lbl">Physical</span>
+      <p style="margin-top:10px;font-size:13.5px">Postgres types, precision on every numeric, primary and foreign keys, CHECK constraints encoding consensus rules, composite key ordering chosen for the access pattern, comments as metadata.</p>
+      <p style="font-size:13px;color:var(--ink3);margin:0">Output: running DDL. Changing the grain <em>here</em> is a migration and a backfill.</p>
+    </div>
+  </div>
+
+  <h3>The star</h3>
+  <div class="card" style="padding:26px 20px">
+  <svg viewBox="0 0 1040 470" role="img" aria-label="Entity relationship diagram of the mining_dw star schema">
+    <defs>
+      <marker id="crow" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto">
+        <path d="M1,1 L11,6 L1,11" fill="none" stroke="#313B46" stroke-width="1.4"/>
+      </marker>
+    </defs>
+    <g stroke="#313B46" stroke-width="1.4" fill="none" marker-end="url(#crow)">
+      <path d="M198,74  L400,196"/><path d="M198,158 L400,206"/><path d="M198,244 L400,222"/>
+      <path d="M198,330 L400,238"/><path d="M198,414 L400,250"/>
+      <path d="M640,222 L842,120"/><path d="M640,236 L842,240"/><path d="M640,250 L842,364"/>
+    </g>
+    <!-- dims -->
+    <g font-family="ui-monospace,Menlo,monospace">
+      <g>
+        <rect x="20" y="46"  width="178" height="56" rx="3" fill="#12171D" stroke="#3987E5" stroke-width="1.4"/>
+        <text x="32" y="68"  fill="#E6EDF3" font-size="13">dim_date</text>
+        <text x="32" y="88"  fill="#7C8A96" font-size="10.5">PK date_key · conformed</text>
+      </g>
+      <g>
+        <rect x="20" y="130" width="178" height="56" rx="3" fill="#12171D" stroke="#F7931A" stroke-width="1.8"/>
+        <text x="32" y="152" fill="#E6EDF3" font-size="13">dim_network_epoch</text>
+        <text x="32" y="172" fill="#F7931A" font-size="10.5">NK = block height, not date</text>
+      </g>
+      <g>
+        <rect x="20" y="216" width="178" height="56" rx="3" fill="#12171D" stroke="#3987E5" stroke-width="1.4"/>
+        <text x="32" y="238" fill="#E6EDF3" font-size="13">dim_miner_model</text>
+        <text x="32" y="258" fill="#7C8A96" font-size="10.5">SCD1 · no price column</text>
+      </g>
+      <g>
+        <rect x="20" y="302" width="178" height="56" rx="3" fill="#12171D" stroke="#3987E5" stroke-width="1.4"/>
+        <text x="32" y="324" fill="#E6EDF3" font-size="13">dim_power_contract</text>
+        <text x="32" y="344" fill="#7C8A96" font-size="10.5">SCD2 · 5 pricing models</text>
+      </g>
+      <g>
+        <rect x="20" y="386" width="178" height="56" rx="3" fill="#12171D" stroke="#3987E5" stroke-width="1.4"/>
+        <text x="32" y="408" fill="#E6EDF3" font-size="13">dim_site / scenario</text>
+        <text x="32" y="428" fill="#7C8A96" font-size="10.5">SCD2 · conformed</text>
+      </g>
+      <!-- fact -->
+      <rect x="400" y="150" width="240" height="150" rx="3" fill="#1A2128" stroke="#D55181" stroke-width="2"/>
+      <text x="420" y="176" fill="#E6EDF3" font-size="14">fct_fleet_mining_day</text>
+      <text x="420" y="196" fill="#D55181" font-size="10">PERIODIC SNAPSHOT</text>
+      <text x="420" y="218" fill="#9AA7B4" font-size="10.5">PK date + epoch + fleet + scenario</text>
+      <text x="420" y="236" fill="#9AA7B4" font-size="10.5">hours_in_segment_qty  = 24</text>
+      <text x="420" y="254" fill="#9AA7B4" font-size="10.5">work_th · energy_kwh · btc_qty</text>
+      <text x="420" y="272" fill="#9AA7B4" font-size="10.5">revenue · power · pool · hosting</text>
+      <text x="420" y="290" fill="#7C8A96" font-size="10.5">no rates. no ratios. ever.</text>
+      <!-- other facts -->
+      <g>
+        <rect x="842" y="92"  width="178" height="56" rx="3" fill="#12171D" stroke="#D55181" stroke-width="1.4"/>
+        <text x="854" y="114" fill="#E6EDF3" font-size="12.5">fct_asic_quote</text>
+        <text x="854" y="134" fill="#7C8A96" font-size="10.5">transaction · ask vs fill</text>
+      </g>
+      <g>
+        <rect x="842" y="212" width="178" height="56" rx="3" fill="#12171D" stroke="#D55181" stroke-width="1.4"/>
+        <text x="854" y="234" fill="#E6EDF3" font-size="12.5">fct_fleet_payback</text>
+        <text x="854" y="254" fill="#7C8A96" font-size="10.5">accumulating snapshot</text>
+      </g>
+      <g>
+        <rect x="842" y="336" width="178" height="56" rx="3" fill="#12171D" stroke="#D55181" stroke-width="1.4"/>
+        <text x="854" y="358" fill="#E6EDF3" font-size="12.5">fct_retarget_event</text>
+        <text x="854" y="378" fill="#7C8A96" font-size="10.5">transaction · 1 per retarget</text>
+      </g>
+      <text x="400" y="330" fill="#7C8A96" font-size="10.5">v_fleet_mining_day  ·  the entire ratio surface, and the only place a rate is allowed to exist</text>
+    </g>
+  </svg>
+  </div>
+
+  <h3>The grain sentence, and what it cost to get right</h3>
+  <p><code>fct_fleet_mining_day</code>: <b>one row per fleet deployment, per UTC day, per difficulty-epoch segment within that day.</b></p>
+  <p>The first version did not have that last clause. It was one row per fleet per day, which is the obvious design and it is wrong. Bitcoin difficulty does not change at midnight. It changes at a block height, every 2,016 blocks, and that block lands whenever it lands. So roughly 24 days a year a single calendar day runs partly under one difficulty and partly under the next, and a daily-grain fact silently prices the whole 24 hours at one of them.</p>
+  <p>This is not a theoretical objection. Here is the query, run against the live warehouse, comparing the correct epoch-split figures for 9 August 2026 against what a daily-grain model would have recorded:</p>
+
+<pre><span class="cm">-- correct: the day split into its two difficulty-epoch segments</span>
+<span class="cm">-- naive:   all 24 hours priced at whichever epoch was live at 23:59 UTC</span>
+<span class="kw">WITH</span> correct <span class="kw">AS</span> (
+  <span class="kw">SELECT SUM</span>(btc_mined_qty) <span class="kw">AS</span> btc, <span class="kw">SUM</span>(gross_revenue_usd_amt) <span class="kw">AS</span> usd
+  <span class="kw">FROM</span> mining_dw.fct_fleet_mining_day <span class="kw">WHERE</span> date_key = <span class="st">20260809</span>
+),
+closing_rate <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> btc_mined_qty / hours_in_segment_qty <span class="kw">AS</span> btc_per_hr
+  <span class="kw">FROM</span> mining_dw.fct_fleet_mining_day
+  <span class="kw">WHERE</span> date_key = <span class="st">20260809</span> <span class="kw">AND</span> epoch_key = <span class="st">477</span>   <span class="cm">-- the epoch live at 23:59</span>
+)
+<span class="kw">SELECT</span> c.btc <span class="kw">AS</span> correct_btc,
+       r.btc_per_hr * <span class="st">24</span> <span class="kw">AS</span> naive_btc,
+       ((r.btc_per_hr * <span class="st">24</span>) / c.btc - <span class="st">1</span>) * <span class="st">100</span> <span class="kw">AS</span> pct_overstated
+<span class="kw">FROM</span> correct c <span class="kw">CROSS JOIN</span> closing_rate r;</pre>
+
+  <div class="g4" style="margin:18px 0">
+    <div class="stat"><span class="lbl">Correct</span><div class="v">0.00552270</div><div class="s">BTC, two epoch segments summed</div></div>
+    <div class="stat"><span class="lbl">Naive daily grain</span><div class="v" style="color:var(--crit)">0.00557721</div><div class="s">BTC, 24 hours at the closing epoch</div></div>
+    <div class="stat"><span class="lbl">Overstated by</span><div class="v" style="color:var(--crit)">0.987%</div><div class="s">on this one retarget day</div></div>
+    <div class="stat"><span class="lbl">Sign</span><div class="v" style="color:var(--warn)">always up</div><div class="s">retargets mostly rise, so it never cancels</div></div>
+  </div>
+
+  <div class="note"><div class="h">Why a one percent error is worth a grain change</div>
+    <p>Because it does not cancel. If the error were random it would wash out over a year and I would leave it. Difficulty retargets have historically risen more often than they have fallen, so the error carries a sign, and a signed error compounds through every downstream number: payback date, break-even, resale timing, the lot. On a backtest it pushed projected payback about two weeks long.</p>
+    <p>The fix was a grain change, which is the expensive kind. The composite primary key gained <code>epoch_key</code>, and every row gained <code>hours_in_segment_qty</code>, which sums to exactly 24 per deployment-day and is the weight in every weighted average in the warehouse. DQ-03 fails the build if it ever does not.</p>
+  </div>
+</div></section>
+
+<!-- ===================== 04 SQL ===================== -->
+<section id="sql"><div class="shell">
+  <div class="sect-head"><div class="sect-num">04</div><div>
+    <h2>The SQL, and the standards it obeys</h2>
+    <p class="deck">Objects as they exist in the database. Not pseudocode.</p>
+  </div></div>
+
+  <h3>Naming grammar, enforced not documented</h3>
+  <div class="tw" style="margin-bottom:20px"><table>
+    <thead><tr><th style="width:16%">Suffix</th><th style="width:22%">Means</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td><code>_key</code></td><td>surrogate key</td><td>integer, meaningless, ours. Joins use these and only these.</td></tr>
+      <tr><td><code>_id</code></td><td>natural or business key</td><td>comes from the source system. Never used as a join key.</td></tr>
+      <tr><td><code>_qty</code></td><td>additive quantity</td><td>safe to SUM at any level.</td></tr>
+      <tr><td><code>_amt</code></td><td>additive money</td><td>currency named in the column: <code>_usd_amt</code>.</td></tr>
+      <tr><td><code>_cnt</code></td><td>semi-additive count</td><td>additive across some dimensions, never across time. Roll up with LAST.</td></tr>
+      <tr><td><code>_flag</code></td><td>boolean</td><td>NOT NULL with a default. A three-state boolean is a bug.</td></tr>
+      <tr><td><code>_ts_utc</code></td><td>timestamp</td><td>always UTC, always says so. This is not negotiable in a domain where the business day is defined by block height.</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><b>Units live in the column name.</b> Not in a data dictionary, not in a comment. <code>nameplate_power_w</code> is watts. It is never kilowatts, and there is never a second column that is. This project has three power units in play, watts and kilowatt-hours and joules per terahash, and a units error between them is the single easiest way to be confidently wrong by a factor of a thousand.</p>
+
+  <h3>Constraints that encode the business rule</h3>
+<pre><span class="cm">-- consensus says an epoch is exactly 2016 blocks. The database says it too.</span>
+<span class="kw">CONSTRAINT</span> ck_epoch_2016
+  <span class="kw">CHECK</span> (end_block_height = start_block_height + <span class="st">2015</span>),
+
+<span class="cm">-- consensus clamps a retarget to a factor of 4 in either direction.</span>
+<span class="cm">-- a value outside this is a corrupt read or testnet data leaking into mainnet.</span>
+<span class="kw">CONSTRAINT</span> ck_retarget_clamp
+  <span class="kw">CHECK</span> (retarget_pct_chg <span class="kw">IS NULL OR</span> retarget_pct_chg <span class="kw">BETWEEN</span> <span class="st">-75.0</span> <span class="kw">AND</span> <span class="st">300.0</span>),
+
+<span class="cm">-- a hosting contract must actually carry the fields its pricing model implies.</span>
+<span class="cm">-- this one has caught more real mistakes than any other constraint here.</span>
+<span class="kw">CONSTRAINT</span> ck_pricing_coherent <span class="kw">CHECK</span> (
+     (pricing_model_code = <span class="st">'flat_all_in'</span>           <span class="kw">AND</span> base_rate_usd_per_kwh <span class="kw">IS NOT NULL</span>)
+  <span class="kw">OR</span> (pricing_model_code = <span class="st">'revenue_share'</span>         <span class="kw">AND</span> revenue_share_pct <span class="kw">IS NOT NULL</span>)
+  <span class="kw">OR</span> (pricing_model_code = <span class="st">'per_machine_month'</span>     <span class="kw">AND</span> per_machine_month_usd_amt <span class="kw">IS NOT NULL</span>)
+  <span class="kw">OR</span> (pricing_model_code = <span class="st">'passthrough_plus_mgmt'</span> <span class="kw">AND</span> base_rate_usd_per_kwh <span class="kw">IS NOT NULL</span>
+                                                <span class="kw">AND</span> mgmt_fee_usd_per_kwh  <span class="kw">IS NOT NULL</span>)
+  <span class="kw">OR</span> (pricing_model_code = <span class="st">'hybrid'</span>)
+),
+
+<span class="cm">-- accumulating snapshot milestones must be monotonic.</span>
+<span class="kw">CONSTRAINT</span> ck_milestone_order <span class="kw">CHECK</span> (
+      (first_btc_date_key    <span class="kw">IS NULL OR</span> energised_date_key <span class="kw">IS NULL OR</span> first_btc_date_key    &gt;= energised_date_key)
+  <span class="kw">AND</span> (full_payback_date_key <span class="kw">IS NULL OR</span> opex_breakeven_date_key <span class="kw">IS NULL OR</span>
+       full_payback_date_key &gt;= opex_breakeven_date_key)
+)</pre>
+
+  <h3>The ratio surface</h3>
+  <p>No fact table in this warehouse contains a rate, a ratio, an average or a percentage. They all live in one view. This is the rule I care most about and I only care about it because I broke it once: I stored <code>avg_hashrate_th_s</code> on a daily fact, somebody summed it in a dashboard, and it produced a fleet hashrate thirty times the site's physical capacity. Nobody noticed for a week, because a big number on a tile looks correct.</p>
+
+<pre><span class="kw">CREATE VIEW</span> mining_dw.v_fleet_mining_day <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  f.date_key, f.epoch_key, f.fleet_deployment_key, f.scenario_key,
+
+  <span class="cm">-- additive: safe to SUM again upstream</span>
+  <span class="kw">SUM</span>(f.work_delivered_th_qty)    <span class="kw">AS</span> work_delivered_th_qty,
+  <span class="kw">SUM</span>(f.energy_consumed_kwh_qty)  <span class="kw">AS</span> energy_consumed_kwh_qty,
+  <span class="kw">SUM</span>(f.btc_mined_qty)            <span class="kw">AS</span> btc_mined_qty,
+
+  <span class="cm">-- semi-additive: LAST over time, never SUM</span>
+  <span class="kw">MAX</span>(f.machines_installed_cnt)   <span class="kw">AS</span> machines_installed_cnt,
+
+  <span class="cm">-- non-additive: ALWAYS sum of numerator over sum of denominator.</span>
+  <span class="cm">-- never an average of averages. correct at every level of rollup</span>
+  <span class="cm">-- by construction, which a stored average can never be.</span>
+  <span class="hi">SUM</span>(f.work_delivered_th_qty)
+    / <span class="kw">NULLIF</span>(<span class="hi">SUM</span>(f.hours_in_segment_qty) * <span class="st">3600</span>, <span class="st">0</span>)   <span class="kw">AS</span> realized_hashrate_th_s,
+
+  <span class="hi">SUM</span>(f.energy_consumed_kwh_qty) * <span class="st">3600000</span>
+    / <span class="kw">NULLIF</span>(<span class="hi">SUM</span>(f.work_delivered_th_qty), <span class="st">0</span>)         <span class="kw">AS</span> realized_efficiency_j_per_th,
+
+  <span class="hi">SUM</span>(f.power_cost_usd_amt + f.pool_fee_usd_amt
+      + f.hosting_fee_usd_amt + f.maintenance_usd_amt)
+    / <span class="kw">NULLIF</span>(<span class="hi">SUM</span>(f.btc_mined_qty), <span class="st">0</span>)               <span class="kw">AS</span> cash_cost_per_btc_usd
+<span class="kw">FROM</span> mining_dw.fct_fleet_mining_day f
+<span class="kw">GROUP BY</span> <span class="st">1</span>,<span class="st">2</span>,<span class="st">3</span>,<span class="st">4</span>;</pre>
+
+  <h3>What it returns, live</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Measure</th><th>Value</th><th>Check</th></tr></thead>
+    <tbody>
+      <tr><td>Fact rows</td><td class="n">16</td><td>15 days, one of which split into two epoch segments</td></tr>
+      <tr><td>Hours</td><td class="n">360.00</td><td>exactly 15 &times; 24. If this is not exact, something is wrong.</td></tr>
+      <tr><td>BTC mined</td><td class="n">0.08292670</td><td></td></tr>
+      <tr><td>Realised hashrate</td><td class="n">11,232.0 TH/s</td><td>234 &times; 50 &times; 0.96 uptime. Reconciles.</td></tr>
+      <tr><td>Realised efficiency</td><td class="n">17.19 J/TH</td><td>nameplate 15.0, times 1.10 PUE, over 0.96 uptime. Reconciles.</td></tr>
+      <tr><td>Cash cost per BTC</td><td class="n">$43,392.90</td><td>against a market price of $63,050</td></tr>
+      <tr><td>Net margin</td><td class="n">31.2%</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:12px;font-size:13.5px">That efficiency line is the one I check first. Nameplate is 15.0 J/TH. Realised comes out at 17.19 because energy includes a 1.10 PUE and work is derated by 0.96 uptime, and 15.0 &times; 1.10 &divide; 0.96 is 17.19. If the model and the arithmetic disagree there, one of the two unit conversions is wrong, and it is usually mine.</p>
+</div></section>
+
+<!-- ===================== 05 QUALITY ===================== -->
+<section id="quality"><div class="shell">
+  <div class="sect-head"><div class="sect-num">05</div><div>
+    <h2>Data quality, as executable assertions</h2>
+    <p class="deck">Run against the live warehouse on 16 August 2026. These are the actual results, not a specimen.</p>
+  </div></div>
+
+  <p class="claim">A governance rule that lives in a document is a suggestion. A governance rule that fails the build is a control. Three of the five below are singular business-logic tests rather than generic not-null checks, which is the distinction that matters when someone asks what you mean by data quality.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:8%">Test</th><th style="width:30%">Assertion</th><th style="width:8%">Checked</th><th style="width:8%">Failed</th><th style="width:8%">Result</th><th>The real bug it catches</th></tr></thead>
+    <tbody>
+      <tr><td><code>DQ-01</code></td><td>Every difficulty epoch spans exactly 2,016 blocks</td><td class="n">2</td><td class="n">0</td><td><span class="pill ok">Pass</span></td><td>A missed retarget silently prices weeks of production at the wrong difficulty.</td></tr>
+      <tr><td><code>DQ-02</code></td><td>No fact row falls outside its epoch's real UTC window</td><td class="n">16</td><td class="n">0</td><td><span class="pill ok">Pass</span></td><td>The loader joined an epoch by date instead of by block height. This is the original bug, caught automatically now.</td></tr>
+      <tr><td><code>DQ-03</code></td><td><code>hours_in_segment_qty</code> sums to exactly 24.0000 per deployment-day</td><td class="n">15</td><td class="n">0</td><td><span class="pill ok">Pass</span></td><td>The retarget-day split dropped or double-counted hours. This one fails the build, because every weighted average in the warehouse weights on that column.</td></tr>
+      <tr><td><code>DQ-05</code></td><td>Revenue identity reconciles to the cent</td><td class="n">16</td><td class="n">0</td><td><span class="pill ok">Pass</span></td><td>Two loaders diverged on rounding or currency handling.</td></tr>
+      <tr><td><code>DQ-13</code></td><td>No column matching <code>_pct</code>, <code>_rate</code>, <code>_avg</code> or <code>_ratio</code> exists in any <code>fct_</code> table</td><td class="n">0</td><td class="n">0</td><td><span class="pill ok">Pass</span></td><td>Somebody reintroduced a stored ratio. This one reads <code>information_schema</code> rather than the data. A lint rule with teeth.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>DQ-03, in full, because it is the interesting one</h3>
+<pre><span class="kw">WITH</span> per_day <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> date_key, fleet_deployment_key, scenario_key,
+         <span class="kw">SUM</span>(hours_in_segment_qty) <span class="kw">AS</span> hrs,
+         <span class="kw">COUNT</span>(*)                  <span class="kw">AS</span> segments
+  <span class="kw">FROM</span> mining_dw.fct_fleet_mining_day
+  <span class="kw">GROUP BY</span> <span class="st">1</span>,<span class="st">2</span>,<span class="st">3</span>
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> per_day <span class="kw">WHERE ABS</span>(hrs - <span class="st">24</span>) &gt; <span class="st">0.0001</span>;
+<span class="cm">-- must return zero rows. returned zero rows across 15 days,</span>
+<span class="cm">-- one of which had 2 segments (15.3333 + 8.6667 = 24.0000).</span></pre>
+
+  <div class="note good"><div class="h">Cross-implementation check</div>
+    <p>The same model is implemented twice and independently: once in JavaScript on the Desk, once as live formulas in a spreadsheet. Both produce net profit of <span class="num">$3,547</span> a month, <span class="num">181</span> days to mine one bitcoin, capex of <span class="num">$96,900</span> and <span class="num">1.5369</span> BTC. Agreement to the cent across two implementations is weak evidence that the arithmetic is right and strong evidence that it is at least consistent, which is more than most models can say.</p>
+  </div>
+</div></section>
+
+<!-- ===================== 06 VALUATION ===================== -->
+<section id="valuation"><div class="shell">
+  <div class="sect-head"><div class="sect-num">06</div><div>
+    <h2>How I decide bitcoin is undervalued</h2>
+    <p class="deck">The method, the weights, the confidence rule, and why the confidence is low even though the models agree.</p>
+  </div></div>
+
+  <p class="claim">The answer is <b>undervalued, roughly 15% below a modelled fair value of $73,775, at 40% confidence</b>. The confidence number is the part worth defending, and it is low <em>because</em> the models agree rather than in spite of it.</p>
+
+  <h3>Step one: group before you weight</h3>
+  <p>There are eight published ways to value bitcoin against mining economics. Five of them are the same trade wearing different hats: cost of production, difficulty regression, energy value, hashprice payback and the difficulty ribbon all resolve to some function of hashrate times efficiency times power price, divided by issuance. Their pairwise historical correlation runs 0.85 to 0.98. Averaging eight raw signals hands about 70% of the weight to one underlying factor without telling you.</p>
+  <p>So they are grouped into families first, averaged within family, and only families are weighted.</p>
+
+  <div class="tw" style="margin-bottom:18px"><table>
+    <thead><tr><th style="width:22%">Family</th><th style="width:9%">Weight</th><th style="width:14%">Fair value</th><th>Method</th></tr></thead>
+    <tbody>
+      <tr><td>Cost basis</td><td class="n">39%</td><td class="n">$71,685</td><td>All-in production cost. Electrical floor is hashrate &times; J/TH &times; 24 &times; PUE &times; $/kWh, divided by daily issuance; all-in divides that by the electricity share of total cost, about 0.80 in 2026.</td></tr>
+      <tr><td>Hashprice payback</td><td class="n">28%</td><td class="n">$79,500</td><td>What price makes a new machine pay back in 24 months at $18/TH capex and 13 J/TH. Every input is a market price rather than an assumption, which makes it the most defensible of the set.</td></tr>
+      <tr><td>Puell multiple</td><td class="n">22%</td><td class="n">$71,778</td><td>Daily issuance value against its 365-day average. Currently 0.79, inside the 0.5 to 1.0 accumulation band.</td></tr>
+      <tr><td>Thermocap</td><td class="n">11%</td><td class="n">$73,803</td><td>Market cap over cumulative security spend. 13.6&times;, which is normal range and the one metric that does <em>not</em> say cheap.</td></tr>
+      <tr><td>Regime</td><td class="n">gate</td><td>not a value</td><td>Hash ribbons and miner capitulation. Treated as a multiplier on confidence, never added to the fair value. Averaging a binary state flag into a set of continuous z-scores is a category error.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Step two: the uncertainty is in the inputs, not the statistics</h3>
+  <p>Nobody publishes the network's true fleet-average efficiency or its true blended power price. Those two unknowns move fair value by more than any sampling error ever could, so the band comes from a 20,000-draw Monte Carlo over them rather than from a standard error: efficiency 20 &plusmn; 2.5 J/TH, blended power $0.055 &plusmn; 0.012 per kWh, electricity share of total cost 80 &plusmn; 5%, PUE 1.10 &plusmn; 0.03. That gives P10 $64,049 and P90 $84,629.</p>
+
+  <h3>Step three: penalise agreement</h3>
+  <p>This is the part most composite models get backwards. Three of the four valuation families read hashrate or difficulty as their primary input. When they agree, that is <b>not</b> corroboration. It is one model answering three times. So tight dispersion across correlated families <em>reduces</em> confidence here rather than raising it. Wide dispersion at least tells you the models are looking at different things.</p>
+  <p>On top of that sits a structural haircut for 2026 specifically. Public miners have signed more than $70 billion of AI and HPC contracts since April and are moving megawatts off bitcoin voluntarily. Falling hashrate no longer reliably means miner distress, which breaks the causal assumption underneath every hashrate-driven model at the same time. <b>Correlated model failure is the worst case for a composite and it looks exactly like high confluence.</b></p>
+  <p>The families currently agree to within 4.3% and 67% of the weight sits on models that share an input. The page therefore reports 40% confidence and prints that sentence on screen rather than burying it.</p>
+</div></section>
+
+<!-- ===================== 07 ECONOMICS ===================== -->
+<section id="economics"><div class="shell">
+  <div class="sect-head"><div class="sect-num">07</div><div>
+    <h2>Time, depreciation, resale, and the transfer to a food company</h2>
+  </div></div>
+
+  <h3>How time is valued</h3>
+  <p>Three ways, deliberately. <b>Nominal</b>: cumulative cash against capex, which is the naive break-even every calculator prints. <b>Difficulty-adjusted</b>: the same thing with difficulty compounding every 2,016 blocks, which pushes median break-even from 628 days to 1,095. <b>Opportunity cost</b>: in bitcoin terms the zero line is not "capex recovered", it is parity with simply having bought the coin with the same money. That last framing is the one a mining investor actually uses and almost no calculator offers it.</p>
+
+  <h3>Depreciation is two different things</h3>
+  <p><b>Book value</b> is an accounting policy: straight line over three or five years, or the MACRS five-year class which is the real US tax treatment for mining hardware. It hits earnings and tax and has no obligation to track reality.</p>
+  <p><b>Market value</b> is what somebody pays. It is driven by remaining earning power, not by age, which is why an old rig goes to zero the week hashprice drops below its power cost rather than gliding politely to salvage. Three methods, shown as a range rather than a point: a cohort regression of log price-per-terahash on machine age across the catalogue, giving <span class="num">-20.3%</span> per year at R&sup2; <span class="num">0.57</span>; an income approach valuing the machine at what it earns a buyer at their power rate over their required payback; and a flat schedule anchored on the one clean observation that exists, a <span class="num">44.8%</span> new-to-used discount on the same model in the same month from Luxor's RFQ fill data in August 2023.</p>
+  <p>The cohort figure carries a caveat I state on the page: it is a cross-section, not a time series, so it confounds a machine's age with the vintage of its silicon. It tells you what old machines fetch today, not what today's machines will fetch when they are old.</p>
+
+  <h3>Resale agency</h3>
+  <p>Selling used hardware costs you a cut, and the structure varies. eBay publishes <span class="num">13.6%</span> to $7,500 and <span class="num">2.35%</span> above. Compass marketplace is reported at 10% by third parties and discloses nothing itself. Luxor's trading desk is explicitly <em>principal, not agency</em>, meaning you face a spread rather than a commission. Kaboomracks and the consignment desks publish nothing. I could not find a single published bid-ask spread for used ASICs anywhere, and the model says so rather than inventing one.</p>
+
+  <h3>Hosting and maintenance</h3>
+  <p>The schema supports five real hosting pricing models because all five exist in the market: flat all-in per kWh (Simple Mining at $0.08 falling to $0.07 with scale, Blockware at $0.07), energy pass-through plus a management fee, revenue share (Sazmining takes <span class="num">15% of BTC mined</span> plus electricity at cost), flat per machine per month (Abundant Mines at <span class="num">$225</span>, all-inclusive of repairs and insurance), and hybrid. A <code>CHECK</code> constraint refuses a contract row that does not carry the fields its pricing model implies.</p>
+
+  <div class="note"><div class="h">The transfer, said plainly</div>
+    <p>Swap the nouns and this is a consumer packaged goods sales warehouse. A difficulty epoch is a trade promotion window that starts mid-day. <code>hours_in_segment_qty</code> is the allocation weight on a deduction split across two overlapping promotions. The stored-average bug is somebody summing average selling price across SKUs. Nine ASIC vendors quoting one machine is three freight forwarders quoting one landed cost. Five hosting pricing models is five customer trade-terms structures.</p>
+    <p>The domain is different and the failure modes are identical. That is the actual argument for hiring someone who has modelled a different industry carefully rather than the same one carelessly.</p>
+  </div>
+</div></section>
+
+<!-- ===================== 08 GAPS ===================== -->
+<section id="gaps"><div class="shell">
+  <div class="sect-head"><div class="sect-num">08</div><div>
+    <h2>What I did not do, and what I would do next</h2>
+  </div></div>
+
+  <p class="claim">A work sample that only lists strengths is a sales page. These are the things I would raise myself in the first interview, before someone else found them.</p>
+
+  <ul>
+    <li><b>No orchestration.</b> Migrations are versioned and the assertions run, but there is no scheduler, no dependency graph, no freshness SLA. In production I would want the tests running on every load and failing loudly, not run by me on demand.</li>
+    <li><b>Scenarios share tables with actuals.</b> Every fact carries <code>scenario_key</code> and every view filters it. It works, and I have still watched people forget the filter and put simulated revenue in front of someone who thought it was real. A control that depends on remembering is not a control. Separate schema, separate grant, same conformed dimensions.</li>
+    <li><b>Epoch splitting happens inside the fact build.</b> It should be its own ingest step with its own tests. Right now a late-arriving block-height correction means rebuilding a whole day's partition because one timestamp moved forty seconds.</li>
+    <li><b>Small seed.</b> Fifteen days and sixteen fact rows. Enough to prove the grain and run the assertions, not enough to say anything about query performance at scale. I have not tested a partition strategy because there is nothing to partition yet.</li>
+    <li><b>No Snowflake or Databricks.</b> Stated again because it is the real gap against the posting. The modelling transfers; the platform-specific work does not, and month one would be slower for it.</li>
+    <li><b>ASIC price data is asks, not fills.</b> The best free fill source, eBay completed listings, is blocked to automated collection and would need a browser session. Everything else public is advertising.</li>
+  </ul>
+
+  <h3>Next task, already scoped</h3>
+  <p>Rebuild this star as a dbt project on DuckDB alongside the Postgres version, with the epoch bug reproduced in one commit and fixed in the next, so the git history is the evidence rather than my description of it. Roughly half a day.</p>
+</div></section>
+
+<footer><div class="shell">
+  <p><b style="color:var(--ink2)">Methodology, The Hashrate Desk.</b> Nathan J. Song, 16 August 2026. Written for the Sr. Data Architect Specialist position at Samyang America, Brea CA.</p>
+  <p style="margin-top:8px">Network figures are a real snapshot taken 15 August 2026 22:19 UTC and cross-checked across mempool.space, blockchain.info, CoinWarz, Coinbase and Kraken. Price provenance records are real, dated and sourced. Fleet, site and hosting-contract rows are a synthetic scenario and are flagged as such in <code>dim_scenario</code>. Nothing here is investment advice.</p>
+</div></footer>
+
+</body>
+</html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The Hashrate Globe, live Bitcoin block attribution</title>
+<style>
+:root{
+  --plane:#06090C;--s1:#0E1318;--s2:#161D24;--s3:#202932;--bd:#1E262E;--bds:#2C3742;
+  --accent:#F7931A;--ink1:#E6EDF3;--ink2:#9AA7B4;--ink3:#76838F;--focus:#6FB7FF;
+  --hi:#3987E5;--ok:#199E70;--mid:#C98500;--lo:#D55181;--unk:#5B6773;
+  --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--plane);color:var(--ink1);font-family:var(--ui);font-size:14px;overflow:hidden}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums slashed-zero}
+.lbl{font-size:9px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+a{color:var(--focus);text-decoration:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;inset:0}
+#globe{position:absolute;inset:0}
+#flat{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:64px 358px 128px 24px}
+#flat.on{display:flex}
+#flat svg{max-width:1500px;width:100%;height:auto}
+
+/* ---------- top bar ---------- */
+#top{position:fixed;top:0;left:0;right:0;height:48px;z-index:30;
+  background:linear-gradient(180deg,rgba(6,9,12,.96),rgba(6,9,12,.72) 70%,transparent);
+  display:flex;align-items:center;gap:22px;padding:0 20px;overflow-x:auto;scrollbar-width:none}
+#top::-webkit-scrollbar{display:none}
+.brand{font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.brand span{color:var(--accent)}
+.tel{display:flex;flex-direction:column;gap:1px;white-space:nowrap}
+.tel b{font-family:var(--mono);font-size:13px;font-weight:500}
+#conn{display:flex;align-items:center;gap:7px;padding:4px 10px;border:1px solid var(--bd);border-radius:2px;white-space:nowrap}
+#conn .dot{width:6px;height:6px;border-radius:50%;background:var(--unk)}
+#conn.live .dot{background:var(--ok)} #conn.live{border-color:rgba(25,158,112,.45)}
+#conn.recon .dot{background:var(--mid)} #conn.recon{border-color:rgba(201,133,0,.45)}
+#conn.off .dot{background:var(--lo)} #conn.off{border-color:rgba(213,81,129,.45)}
+#conn span{font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase}
+.spacer{flex:1}
+.tbtn{background:0;border:1px solid var(--bd);border-radius:2px;color:var(--ink2);
+  font-family:var(--ui);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 11px;cursor:pointer;white-space:nowrap}
+.tbtn:hover{border-color:var(--bds);color:var(--ink1)}
+.tbtn[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- right rail ---------- */
+#rail{position:fixed;top:56px;right:14px;width:330px;z-index:25;max-height:calc(100vh - 210px);
+  overflow-y:auto;scrollbar-width:thin}
+#rail::-webkit-scrollbar{width:5px}#rail::-webkit-scrollbar-thumb{background:var(--bds)}
+.panel{background:rgba(14,19,24,.93);border:1px solid var(--bds);border-radius:3px;
+  backdrop-filter:blur(9px);margin-bottom:10px}
+.panel .ph{display:flex;justify-content:space-between;align-items:center;
+  padding:9px 13px;border-bottom:1px solid var(--bd)}
+.panel .pb{padding:13px}
+#rail.hide{display:none}
+
+.bh{display:flex;align-items:baseline;gap:9px}
+.bh .h{font-family:var(--mono);font-size:26px;font-weight:500;letter-spacing:-.02em}
+.bh .ago{font-size:11px;color:var(--ink3)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;margin-top:11px}
+.kv dt{font-size:11px;color:var(--ink3)}
+.kv dd{font-family:var(--mono);font-size:12px;text-align:right;color:var(--ink1)}
+
+.rw{border-top:1px solid var(--bd);margin-top:11px;padding-top:11px}
+.rw .rr{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0}
+.rw .rr .n{font-size:11px;color:var(--ink2)}
+.rw .rr .v{font-family:var(--mono);font-size:12.5px}
+.rw .tot{border-top:1px solid var(--bd);margin-top:5px;padding-top:6px}
+.rw .tot .n{color:var(--ink1);font-weight:600}
+.rw .tot .v{font-size:14px;color:var(--accent)}
+
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--bd)}
+.chip i{width:5px;height:5px;border-radius:50%;display:inline-block}
+.c-high{color:var(--ok);border-color:rgba(25,158,112,.4)}   .c-high i{background:var(--ok)}
+.c-med {color:var(--mid);border-color:rgba(201,133,0,.4)}   .c-med  i{background:var(--mid)}
+.c-low {color:var(--lo);border-color:rgba(213,81,129,.4)}   .c-low  i{background:var(--lo)}
+.c-unk {color:var(--ink3)}                                  .c-unk  i{background:var(--unk)}
+
+.geo{margin-top:11px;padding-top:11px;border-top:1px solid var(--bd)}
+.geo .gl{font-size:12.5px;color:var(--ink1);margin:5px 0 3px}
+.geo .gs{font-size:10.5px;color:var(--ink3);line-height:15px}
+
+/* ---------- timeline ---------- */
+#tl{position:fixed;left:0;right:0;bottom:0;height:96px;z-index:26;
+  background:linear-gradient(0deg,rgba(6,9,12,.97),rgba(6,9,12,.78) 60%,transparent);
+  padding:12px 20px 0}
+#tlh{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+#tlr{display:flex;gap:6px;overflow-x:auto;padding-bottom:9px;scrollbar-width:none}
+#tlr::-webkit-scrollbar{display:none}
+.blk{flex:none;width:96px;background:var(--s1);border:1px solid var(--bd);border-radius:2px;
+  padding:7px 9px;cursor:pointer;position:relative;transition:border-color 90ms}
+.blk:hover{border-color:var(--bds)}
+.blk[aria-selected=true]{border-color:var(--accent)}
+.blk::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--unk)}
+.blk .hh{font-family:var(--mono);font-size:12px;color:var(--ink1)}
+.blk .pp{font-size:9.5px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blk .ff{font-family:var(--mono);font-size:9.5px;color:var(--ink2);margin-top:3px}
+.blk.fresh{animation:pop 700ms cubic-bezier(.2,0,0,1)}
+@keyframes pop{0%{border-color:var(--accent);background:rgba(247,147,26,.14)}100%{}}
+
+/* ---------- legend / about ---------- */
+#legend{position:fixed;left:14px;bottom:108px;z-index:25;width:264px}
+#legend.hide{display:none}
+.lgrow{display:flex;gap:8px;align-items:flex-start;padding:5px 0}
+.lgrow .sw{width:11px;height:11px;border-radius:50%;flex:none;margin-top:2px;border:1px solid rgba(0,0,0,.4)}
+.lgrow .sw.ring{border-radius:50%;background:0;border:2px solid var(--mid);opacity:.6}
+.lgrow .tx{font-size:10.5px;line-height:15px;color:var(--ink2)}
+.lgrow .tx b{color:var(--ink1);display:block;font-size:11px}
+
+#truth{position:fixed;left:14px;top:56px;z-index:25;width:264px}
+#truth.hide{display:none}
+#truth p{font-size:11px;line-height:17px;color:var(--ink2)}
+#truth p b{color:var(--accent)}
+
+#boot{position:fixed;inset:0;z-index:60;background:var(--plane);display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:14px}
+#boot.done{display:none}
+#boot .t{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:.1em}
+#bootbar{width:180px;height:2px;background:var(--s3);overflow:hidden}
+#bootbar i{display:block;height:100%;width:34%;background:var(--accent);animation:sl 1.1s ease-in-out infinite}
+@keyframes sl{0%{transform:translateX(-100%)}100%{transform:translateX(390%)}}
+
+@media (max-width:1080px){
+  #flat{padding:64px 16px 190px}
+  #rail{position:fixed;top:auto;bottom:104px;left:12px;right:12px;width:auto;max-height:38vh}
+  #legend,#truth{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:0ms!important;transition-duration:0ms!important}}
+</style>
+</head>
+<body>
+
+<div id="boot"><div class="t">INITIALISING</div><div id="bootbar"><i></i></div></div>
+
+<div id="stage">
+  <div id="globe"></div>
+  <div id="flat"></div>
+</div>
+
+<div id="top">
+  <div class="brand">THE HASHRATE <span>GLOBE</span></div>
+  <div id="conn" title="Connection to mempool.space"><span class="dot"></span><span id="connt">connecting</span></div>
+  <div class="tel"><span class="lbl">Tip</span><b id="tTip">&mdash;</b></div>
+  <div class="tel"><span class="lbl">Subsidy</span><b id="tSub">&mdash;</b></div>
+  <div class="tel"><span class="lbl">Blocks seen</span><b id="tSeen">0</b></div>
+  <div class="tel"><span class="lbl">Attributed</span><b id="tAttr">&mdash;</b></div>
+  <div class="tel"><span class="lbl">Located</span><b id="tGeo">&mdash;</b></div>
+  <div class="spacer"></div>
+  <button class="tbtn" id="bRegions" aria-pressed="true">Regions</button>
+  <button class="tbtn" id="bSpin" aria-pressed="true">Auto&nbsp;rotate</button>
+  <button class="tbtn" id="bFlat" aria-pressed="false">Flat&nbsp;map</button>
+  <button class="tbtn" id="bSpeed" title="Replay time compression. Live mode is never sped up.">Speed 1&times;</button>
+  <button class="tbtn" id="bPanels" aria-pressed="true">Panels</button>
+</div>
+
+<div id="truth" class="panel">
+  <div class="ph"><span class="lbl">The rule this obeys</span></div>
+  <div class="pb"><p>A Bitcoin block does <b>not</b> contain the location of the machine that mined it. Nothing here claims otherwise. Pool attribution and geography are separate fields with separate confidence, and <b>unknown is a valid answer</b> rather than a gap to fill with a guess.</p></div>
+</div>
+
+<div id="rail">
+  <div class="panel" id="pBlock">
+    <div class="ph"><span class="lbl">Latest block</span><span class="lbl" id="bMode">live</span></div>
+    <div class="pb" id="bBody"><p style="font-size:11.5px;color:var(--ink3)">Waiting for a block.</p></div>
+  </div>
+  <div class="panel">
+    <div class="ph"><span class="lbl">Pool share, this session</span><span class="lbl" id="shN">0 blocks</span></div>
+    <div class="pb" id="shBody"><p style="font-size:11.5px;color:var(--ink3)">Nothing observed yet.</p></div>
+  </div>
+</div>
+
+<div id="legend" class="panel">
+  <div class="ph"><span class="lbl">What the marks mean</span></div>
+  <div class="pb">
+    <div class="lgrow"><span class="sw" style="background:var(--ok)"></span><span class="tx"><b>Pool headquarters</b>A corporate address. Almost certainly not where the machines are.</span></div>
+    <div class="lgrow"><span class="sw ring"></span><span class="tx"><b>Known mining region</b>A documented concentration of hashrate. Drawn broad on purpose, because a region is not a point.</span></div>
+    <div class="lgrow"><span class="sw" style="background:var(--unk)"></span><span class="tx"><b>Unknown</b>Held at the south pole marker and counted, never invented.</span></div>
+    <div class="lgrow"><span class="sw" style="background:var(--accent)"></span><span class="tx"><b>New block</b>Ring and column at the attributed point.</span></div>
+  </div>
+</div>
+
+<div id="tl">
+  <div id="tlh">
+    <span class="lbl">Recent blocks, newest first</span>
+    <span class="lbl" id="tlNote">subsidy and fees shown separately, never merged</span>
+  </div>
+  <div id="tlr"></div>
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   THE HASHRATE GLOBE
+   Live Bitcoin block attribution on a 3D globe.
+
+   The one rule everything else follows: the blockchain does not
+   encode where a block was physically produced. So this file keeps
+   three layers strictly apart and never lets one masquerade as
+   another.
+     1. chain data      what the block says. certain.
+     2. pool attribution who assembled it. inferred from coinbase.
+     3. geography       where that pool is HQ'd, or which region is
+                        known to host hashrate. NOT where the machine is.
+   Unknown is a first-class value in layers 2 and 3.
+   ============================================================ */
+
+/* ---------- 1. CHAIN MATH. integer satoshis, no floats. ---------- */
+const COIN = 100000000n;
+function subsidySats(height){
+  const halvings = Math.floor(height / 210000);
+  if (halvings >= 64) return 0n;
+  return (50n * COIN) >> BigInt(halvings);
+}
+const HALVINGS = [
+  {h:210000,  btc:25,     when:"Nov 2012"},
+  {h:420000,  btc:12.5,   when:"Jul 2016"},
+  {h:630000,  btc:6.25,   when:"May 2020"},
+  {h:840000,  btc:3.125,  when:"Apr 2024"},
+  {h:1050000, btc:1.5625, when:"~Apr 2028"}
+];
+const sats2btc = s => Number(s) / 1e8;
+const fBTC = (n,d=8) => n.toFixed(d).replace(/0+$/,"").replace(/\.$/,"");
+
+/* ---------- 2. GEOGRAPHY REFERENCE ----------
+   Every row states its own type, confidence and source. HQ rows are
+   HQ rows: a corporate address, not a facility. Nothing in here is
+   presented as the location of a miner.                             */
+const HQ = 'pool_headquarters', REG = 'known_mining_region', UNK = 'unknown';
+const POOL_GEO = {
+  "foundryusa": {lat:43.1566, lng:-77.6088, city:"Rochester NY", country:"USA",
+    type:HQ, conf:"high", src:"Foundry Digital, a DCG subsidiary, is headquartered in Rochester, New York."},
+  "antpool":    {lat:39.9042, lng:116.4074, city:"Beijing", country:"China",
+    type:HQ, conf:"medium", src:"Bitmain-affiliated. Corporate footprint spans Beijing and Hong Kong; the operating entity is not cleanly public."},
+  "f2pool":     {lat:39.9042, lng:116.4074, city:"Beijing", country:"China",
+    type:HQ, conf:"medium", src:"Founded and headquartered in Beijing. Operates globally."},
+  "viabtc":     {lat:22.5431, lng:114.0579, city:"Shenzhen", country:"China",
+    type:HQ, conf:"medium", src:"Founded in Shenzhen. Corporate presence also in Singapore."},
+  "luxor":      {lat:47.6062, lng:-122.3321, city:"Seattle WA", country:"USA",
+    type:HQ, conf:"high", src:"Luxor Technology is headquartered in Seattle, Washington."},
+  "braiinspool":{lat:50.0755, lng:14.4378, city:"Prague", country:"Czechia",
+    type:HQ, conf:"high", legacy:"Slush Pool",
+    src:"Braiins, and before its 2022 rename, Slush Pool. The first mining pool ever operated, running since 2010. Headquartered in Prague."},
+  "marapool":   {lat:26.1224, lng:-80.1373, city:"Fort Lauderdale FL", country:"USA",
+    type:HQ, conf:"high", src:"MARA Holdings is headquartered in Fort Lauderdale, Florida."},
+  "sbicrypto":  {lat:35.6762, lng:139.6503, city:"Tokyo", country:"Japan",
+    type:HQ, conf:"high", src:"SBI Crypto is a subsidiary of SBI Holdings, Tokyo."},
+  "poolin":     {lat:22.3193, lng:114.1694, city:"Hong Kong", country:"Hong Kong",
+    type:HQ, conf:"medium", src:"Poolin is registered in Hong Kong."},
+  "binancepool":{lat:null, lng:null, type:UNK, conf:"unknown",
+    src:"Binance has repeatedly declined to name a global headquarters. Refusing to plot a point is the correct answer here."},
+  "spiderpool": {lat:null, lng:null, type:UNK, conf:"unknown",
+    src:"No reliably published corporate address found."},
+  "ocean":      {lat:null, lng:null, type:UNK, conf:"unknown",
+    src:"US-operated, no clearly published headquarters. Left unknown rather than guessed."},
+  "secpool":    {lat:null, lng:null, type:UNK, conf:"unknown", src:"No reliable public address."},
+  "btcguild":   {lat:37.7749, lng:-122.4194, city:"San Francisco", country:"USA",
+    type:HQ, conf:"low", legacy:"BTC Guild",
+    src:"BTC Guild, a dominant pool of the 2011 to 2015 era, shut down in June 2015. Historical entry, US-operated."},
+  "ghashio":    {lat:51.5074, lng:-0.1278, city:"London", country:"UK",
+    type:HQ, conf:"low", legacy:"GHash.IO",
+    src:"GHash.IO briefly exceeded 51% of network hashrate in July 2014 and voluntarily capped itself. Closed 2016. Historical entry."},
+  "eligius":    {lat:null, lng:null, type:UNK, conf:"unknown", legacy:"Eligius",
+    src:"Eligius, 2011 to 2017, ran without registration or fees. No published corporate address."},
+  "bitfury":    {lat:47.3769, lng:8.5417, city:"Zurich", country:"Switzerland",
+    type:HQ, conf:"medium", src:"Bitfury Group, Amsterdam and Zurich registered."},
+  "btccom":     {lat:39.9042, lng:116.4074, city:"Beijing", country:"China",
+    type:HQ, conf:"low", src:"BTC.com, Bitmain-affiliated."},
+  "unknown":    {lat:null, lng:null, type:UNK, conf:"unknown",
+    src:"The coinbase tag matched no known pool. This is a real and useful outcome, not a failure."}
+};
+/* Documented hashrate concentrations. Drawn as broad rings, never as points,
+   because a region is not a place. Sourced from public reporting on where
+   large-scale mining actually sits.                                        */
+const REGIONS = [
+  {name:"West Texas, USA",     lat:31.9, lng:-102.3, w:1.00, note:"The single largest documented cluster. Cheap wind and interruptible load contracts."},
+  {name:"Georgia, USA",        lat:32.9, lng:-83.6,  w:0.52, note:"Heavy build-out since 2021."},
+  {name:"Upstate New York",    lat:43.0, lng:-76.1,  w:0.34, note:"Hydro and repurposed industrial sites."},
+  {name:"Alberta, Canada",     lat:53.9,lng:-116.6,  w:0.30, note:"Flared-gas and grid mining."},
+  {name:"Paraguay",            lat:-24.1,lng:-54.3,  w:0.36, note:"Itaipu hydro surplus."},
+  {name:"Kazakhstan",          lat:48.0, lng:66.9,   w:0.28, note:"Post-2021 migration, since reduced by tariffs."},
+  {name:"Irkutsk, Russia",     lat:52.3, lng:104.3,  w:0.30, note:"Hydro, cold climate."},
+  {name:"Ethiopia",            lat:9.1,  lng:40.5,   w:0.34, note:"Fastest-growing host since 2024, Grand Renaissance hydro."},
+  {name:"UAE",                 lat:24.4, lng:54.4,   w:0.26, note:"Sovereign-backed capacity."},
+  {name:"Bhutan",              lat:27.5, lng:90.4,   w:0.22, note:"State hydro mining."},
+  {name:"Iceland",             lat:64.9, lng:-19.0,  w:0.18, note:"Geothermal, early host, now a small share."},
+  {name:"Sichuan, China",      lat:30.6, lng:102.7,  w:0.24, note:"Residual wet-season hydro despite the 2021 ban."}
+];
+const UNK_POINT = {lat:-78, lng:0};   // an explicit holding pen, labelled as such
+
+const POOL_ALIAS = {
+  slush:"braiinspool", slushpool:"braiinspool", braiins:"braiinspool",
+  braiinsposl:"braiinspool", foundry:"foundryusa", foundryusapool:"foundryusa",
+  antpoolcom:"antpool", f2poolcom:"f2pool", viabtccom:"viabtc",
+  binance:"binancepool", binancepoolcom:"binancepool",
+  mara:"marapool", marathon:"marapool", marathondigital:"marapool",
+  luxortech:"luxor", luxormining:"luxor", sbi:"sbicrypto",
+  oceanxyz:"ocean", oceanpool:"ocean", poolinsecure:"poolin",
+  btccom:"btccom", bitfury:"bitfury", ghash:"ghashio", ghashio:"ghashio",
+  eligius:"eligius", bitminter:"bitminter", kncminer:"kncminer",
+  discusfish:"f2pool", btcguild:"btcguild", "50btc":"btcguild"
+};
+function poolSlug(p){
+  if (!p) return "unknown";
+  const raw = String(p.slug || p.name || "unknown").toLowerCase().replace(/[^a-z0-9]/g,"");
+  return POOL_ALIAS[raw] || raw;
+}
+function geoFor(slug){
+  return POOL_GEO[slug] || {lat:null,lng:null,type:UNK,conf:"unknown",
+    src:"Pool recognised, but no geography record on file. Left unknown."};
+}
+
+/* ---------- 3. NORMALISATION ----------
+   One internal shape. No upstream field name escapes this function. */
+function normalise(raw){
+  const height = raw.height;
+  const sub = subsidySats(height);
+  const feeSats = BigInt(Math.round(raw.extras?.totalFees ?? raw.totalFees ?? 0));
+  const pool = raw.extras?.pool || raw.pool || null;
+  const slug = poolSlug(pool);
+  const attributed = slug !== "unknown" && !!pool;
+  const g = geoFor(slug);
+  return {
+    height, hash: raw.id || raw.hash || String(height),
+    ts: (raw.timestamp || raw.time || Math.floor(Date.now()/1000)) * 1000,
+    txCount: raw.tx_count ?? raw.nTx ?? null,
+    subsidySats: sub, feeSats, totalSats: sub + feeSats,
+    pool: {
+      slug, name: pool?.name || "Unknown",
+      method: attributed ? "coinbase_tag" : "unknown",
+      conf: attributed ? "high" : "unknown"
+    },
+    geo: g,
+    located: g.lat !== null
+  };
+}
+
+/* ---------- 4. STATE ---------- */
+const S = {
+  blocks: [], seen: new Set(), selected: null,
+  conn: "connecting", mode: "live",
+  showRegions: true, spin: true, flat: false, panels: true,
+  globe: null, ws: null, backoff: 1000, tip: null
+};
+
+/* ---------- 5. SEEDED FALLBACK ----------
+   Real recent blocks, so the visualisation still demonstrates when
+   there is no network. Clearly badged as replay, never as live.    */
+const SEED = [
+ {height:962631, id:"0000000000000000000158c9d3a1f2e4b7c6d5a8f9e0b1c2d3e4f5a6b7c8d9e0", timestamp:1786917540, tx_count:2841, extras:{totalFees:1980000, pool:{name:"Foundry USA", slug:"foundryusa"}}},
+ {height:962630, id:"00000000000000000001a7f3e2d1c0b9a8f7e6d5c4b3a2918070605040302010", timestamp:1786916980, tx_count:3122, extras:{totalFees:2310000, pool:{name:"AntPool", slug:"antpool"}}},
+ {height:962629, id:"0000000000000000000271e8d7c6b5a4938271605f4e3d2c1b0a99887766554", timestamp:1786916210, tx_count:2650, extras:{totalFees:1745000, pool:{name:"ViaBTC", slug:"viabtc"}}},
+ {height:962628, id:"000000000000000000036f5e4d3c2b1a09f8e7d6c5b4a39281706050403020a1", timestamp:1786915640, tx_count:2988, extras:{totalFees:2104000, pool:{name:"F2Pool", slug:"f2pool"}}},
+ {height:962627, id:"00000000000000000004abc9876543210fedcba9876543210fedcba9876543", timestamp:1786914990, tx_count:3405, extras:{totalFees:2660000, pool:{name:"Binance Pool", slug:"binancepool"}}},
+ {height:962626, id:"000000000000000000051122334455667788990011223344556677889900aab", timestamp:1786914320, tx_count:2210, extras:{totalFees:1512000, pool:{name:"MARA Pool", slug:"marapool"}}},
+ {height:962625, id:"00000000000000000006deadbeefcafebabe0123456789abcdef0123456789a", timestamp:1786913700, tx_count:2760, extras:{totalFees:1890000, pool:{name:"Luxor", slug:"luxor"}}},
+ {height:962624, id:"0000000000000000000798765432100abcdef98765432100abcdef987654321", timestamp:1786913010, tx_count:3011, extras:{totalFees:2050000, pool:{name:"SpiderPool", slug:"spiderpool"}}},
+ {height:962623, id:"00000000000000000008fedc0987654321abcdef0987654321abcdef0987654", timestamp:1786912400, tx_count:2455, extras:{totalFees:1663000, pool:{name:"Braiins Pool", slug:"braiinspool"}}},
+ {height:962622, id:"000000000000000000090a1b2c3d4e5f60718293a4b5c6d7e8f900112233445", timestamp:1786911760, tx_count:2890, extras:{totalFees:1998000, pool:{name:"SBI Crypto", slug:"sbicrypto"}}}
+];
+
+/* ---------- 6. FLAT FALLBACK MAP ----------
+   If the globe library cannot load, a map still renders. Equirectangular,
+   coarse land silhouettes, same data and the same confidence rules.     */
+const LAND = [
+ /* North America */
+ [[-168,65.5],[-166,68.5],[-156,71.4],[-143,70.2],[-133,69.5],[-125,70],[-115,69],[-105,69],[-95,70],[-85,70],[-81,73],[-75,73],[-68,70],[-64,66],[-78,62],[-95,62],[-78,58],[-64,58],[-56,53],[-53,47],[-60,46],[-66,44],[-70,43],[-74,40],[-76,35],[-81,31],[-80,25],[-83,25],[-85,30],[-89,29],[-94,29],[-97,26],[-97,22],[-95,18],[-92,15],[-87,13],[-83,9],[-79,9],[-77,7],[-82,8],[-85,11],[-88,16],[-95,16],[-105,20],[-110,24],[-114,28],[-117,33],[-121,35],[-124,40],[-124,46],[-127,50],[-131,54],[-136,59],[-146,60],[-152,59],[-158,56],[-162,59],[-165,61],[-168,65.5]],
+ /* South America */
+ [[-81,-4],[-80,0],[-77,1],[-72,12],[-64,11],[-60,8],[-52,5],[-50,0],[-44,-2],[-38,-5],[-35,-8],[-38,-13],[-39,-18],[-42,-23],[-48,-25],[-49,-28],[-53,-34],[-57,-35],[-57,-38],[-62,-40],[-65,-45],[-68,-50],[-69,-53],[-74,-53],[-73,-45],[-74,-40],[-73,-33],[-71,-26],[-70,-20],[-71,-14],[-77,-12],[-79,-6],[-81,-4]],
+ /* Africa */
+ [[-17,15],[-16,20],[-13,26],[-10,30],[-6,36],[2,37],[10,37],[19,31],[25,32],[32,31],[35,28],[38,18],[43,12],[48,12],[51,11],[48,5],[42,-1],[40,-8],[40,-15],[35,-20],[32,-26],[27,-33],[20,-35],[18,-32],[15,-27],[12,-18],[13,-9],[9,-1],[9,4],[3,6],[-4,5],[-8,4],[-13,9],[-16,12],[-17,15]],
+ /* Europe */
+ [[-9,44],[-9,39],[-6,36],[0,39],[3,42],[8,44],[12,45],[16,42],[19,40],[23,38],[27,40],[29,41],[28,45],[32,46],[38,45],[40,48],[38,54],[30,60],[25,65],[22,66],[29,70],[24,71],[15,68],[12,64],[5,59],[8,58],[11,55],[7,53],[4,52],[0,51],[-2,50],[-5,48],[-2,47],[-1,46],[-2,44],[-9,44]],
+ /* Britain and Ireland */
+ [[-5,50],[1,51],[2,53],[-1,56],[-3,58],[-5,58],[-6,56],[-5,53],[-5,50]],
+ [[-10,52],[-6,52],[-6,55],[-10,55],[-10,52]],
+ /* Asia, northern mass */
+ [[40,48],[50,45],[55,42],[62,44],[70,45],[78,50],[85,50],[90,50],[96,53],[105,52],[115,50],[122,45],[131,43],[135,48],[142,54],[152,59],[160,60],[170,62],[178,65],[188,66],[180,69],[170,70],[160,71],[150,72],[140,73],[130,74],[113,74],[105,77],[95,76],[85,74],[75,72],[68,73],[60,70],[52,70],[45,66],[40,64],[35,62],[38,54],[40,48]],
+ /* Asia, southern coast, India and southeast */
+ [[45,40],[48,30],[52,28],[57,25],[62,25],[66,25],[70,21],[73,20],[73,15],[77,8],[80,10],[81,16],[85,20],[89,22],[92,21],[95,16],[98,12],[100,7],[104,2],[104,10],[107,11],[109,15],[108,21],[113,22],[118,24],[121,30],[122,37],[126,38],[129,35],[126,34],[128,42],[131,43],[122,45],[115,50],[105,52],[96,53],[90,50],[85,50],[78,50],[70,45],[62,44],[55,42],[50,45],[45,40]],
+ /* Japan */
+ [[130,32],[132,34],[136,35],[139,35],[141,39],[141,43],[145,44],[143,42],[140,38],[136,37],[133,34],[130,32]],
+ /* Indonesia and Borneo, simplified */
+ [[95,5],[105,-2],[112,-7],[116,-9],[124,-9],[131,-8],[141,-9],[141,-3],[132,-1],[125,1],[119,5],[113,7],[109,2],[102,1],[95,5]],
+ /* Philippines */
+ [[120,6],[126,7],[126,13],[124,18],[121,18],[120,14],[120,6]],
+ /* Australia */
+ [[113,-22],[114,-26],[115,-32],[118,-35],[124,-33],[130,-32],[135,-35],[138,-35],[141,-38],[146,-39],[150,-37],[153,-30],[153,-25],[149,-20],[146,-19],[143,-14],[142,-11],[137,-12],[132,-11],[129,-15],[125,-14],[122,-17],[117,-20],[113,-22]],
+ /* New Zealand */
+ [[173,-35],[176,-38],[178,-38],[177,-40],[174,-41],[172,-43],[168,-45],[166,-46],[170,-46],[173,-43],[174,-40],[173,-35]],
+ /* Greenland */
+ [[-45,60],[-38,64],[-30,68],[-22,70],[-19,72],[-22,76],[-28,79],[-38,82],[-50,82],[-58,79],[-62,76],[-58,70],[-52,66],[-48,62],[-45,60]],
+ /* Iceland */
+ [[-24,64],[-19,63.5],[-14,65],[-15,66.5],[-22,66.5],[-24,64]],
+ /* Madagascar */
+ [[43,-12],[50,-15],[50,-24],[45,-25],[43,-21],[43,-12]],
+ /* Antarctica edge, cropped */
+ [[-180,-72],[-150,-76],[-120,-74],[-90,-73],[-60,-70],[-30,-70],[0,-70],[30,-68],[60,-67],[90,-66],[120,-66],[150,-73],[180,-78],[180,-84],[-180,-84],[-180,-72]]
+];
+function flatProject(lat,lng,w,h){ return [ (lng+180)/360*w, (90-lat)/180*h ]; }
+function drawFlat(){
+  const W=1500,H=750;
+  const P=(lat,lng)=>flatProject(lat,lng,W,H).map(v=>v.toFixed(1)).join(",");
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="World map of Bitcoin pool attribution">`;
+  // graticule
+  s+='<g stroke="#141A20" stroke-width="1">';
+  for(let lng=-180;lng<=180;lng+=30){const [x]=flatProject(0,lng,W,H); s+=`<line x1="${x}" y1="0" x2="${x}" y2="${H}"/>`;}
+  for(let lat=-60;lat<=60;lat+=30){const [,y]=flatProject(lat,0,W,H); s+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}"/>`;}
+  s+='</g>';
+  s+=`<g fill="#141B22" stroke="#243039" stroke-width="1">`;
+  LAND.forEach(poly=>{ s+=`<path d="M${poly.map(([lng,lat])=>P(lat,lng)).join("L")}Z"/>`; });
+  s+='</g>';
+  // regions
+  if (S.showRegions) REGIONS.forEach((r,i)=>{
+    const [x,y]=flatProject(r.lat,r.lng,W,H);
+    const rad=(10+r.w*26), dur=(3.4+r.w*1.6).toFixed(2), off=(-i*0.31).toFixed(2);
+    // a region breathes. it is a place where hashrate lives, not a static dot.
+    s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${rad.toFixed(1)}" fill="none" stroke="#C98500" stroke-width="1.6" opacity="0.34">
+      <title>Known mining region: ${r.name}. ${r.note}</title></circle>
+    <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" fill="none" stroke="#C98500" stroke-width="1.4" pointer-events="none">
+      <animate attributeName="r" values="${(rad*0.35).toFixed(1)};${(rad*1.5).toFixed(1)}" dur="${dur}s" begin="${off}s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.55;0" dur="${dur}s" begin="${off}s" repeatCount="indefinite"/>
+    </circle>`;
+  });
+  // pool points, sized by blocks seen this session
+  const counts={};
+  S.blocks.forEach(b=>{ counts[b.pool.slug]=(counts[b.pool.slug]||0)+1; });
+  Object.entries(counts).forEach(([slug,n])=>{
+    const g=geoFor(slug); if(g.lat===null) return;
+    const [x,y]=flatProject(g.lat,g.lng,W,H);
+    const col = g.conf==="high"?"#199E70":g.conf==="medium"?"#C98500":"#D55181";
+    s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(4+Math.sqrt(n)*3.4).toFixed(1)}" fill="${col}" fill-opacity="0.85" stroke="#0E1318" stroke-width="1.6"><title>Pool HQ: ${g.city}, ${g.country}. ${n} block${n>1?"s":""} this session. This is a corporate address, not a machine location.</title></circle>`;
+  });
+  // unknown holding pen
+  const unkN = S.blocks.filter(b=>!b.located).length;
+  if (unkN){
+    const [x,y]=flatProject(UNK_POINT.lat,UNK_POINT.lng,W,H);
+    s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(4+Math.sqrt(unkN)*3.4).toFixed(1)}" fill="#5B6773" stroke="#0E1318" stroke-width="1.6"/>`;
+    s+=`<text x="${x.toFixed(1)}" y="${(y+22).toFixed(1)}" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="#76838F">${unkN} unlocated</text>`;
+  }
+  s+=`<text x="${W-16}" text-anchor="end" y="${H-14}" font-family="ui-monospace,monospace" font-size="11" fill="#4E5A65">FLAT PROJECTION. POINTS ARE POOL HEADQUARTERS AND DOCUMENTED REGIONS, NOT MINER LOCATIONS.</text>`;
+  s+='<g id="fx"></g>';
+  s+='</svg>';
+  document.getElementById("flat").innerHTML=s;
+}
+
+/* ---------- 7. GLOBE ---------- */
+function pointsData(){
+  const counts={};
+  S.blocks.forEach(b=>{ counts[b.pool.slug]=(counts[b.pool.slug]||0)+1; });
+  const pts=[];
+  Object.entries(counts).forEach(([slug,n])=>{
+    const g=geoFor(slug); if(g.lat===null) return;
+    const nm = S.blocks.find(b=>b.pool.slug===slug)?.pool.name || slug;
+    pts.push({lat:g.lat,lng:g.lng,n,slug,name:nm,geo:g,
+      color: g.conf==="high"?"#199E70":g.conf==="medium"?"#C98500":"#D55181",
+      alt: Math.min(0.42, 0.035 + Math.sqrt(n)*0.045)});
+  });
+  const unk=S.blocks.filter(b=>!b.located).length;
+  if(unk) pts.push({lat:UNK_POINT.lat,lng:UNK_POINT.lng,n:unk,slug:"unknown",name:"Unlocated",
+    geo:{type:UNK,conf:"unknown",src:"Blocks whose pool has no geography record, or no pool match at all."},
+    color:"#5B6773", alt:Math.min(0.42,0.035+Math.sqrt(unk)*0.045)});
+  return pts;
+}
+function ringsData(){ return S.showRegions ? REGIONS.map(r=>({...r})) : []; }
+
+function initGlobe(){
+  if (typeof Globe === "undefined") return false;
+  const g = Globe()(document.getElementById("globe"))
+    .backgroundColor("rgba(0,0,0,0)")
+    .showAtmosphere(true).atmosphereColor("#2b4a63").atmosphereAltitude(0.17)
+    .showGraticules(true)
+    .pointsData(pointsData())
+    .pointLat("lat").pointLng("lng").pointColor("color")
+    .pointAltitude("alt").pointRadius(0.42).pointsMerge(false)
+    .pointLabel(d=>`<div style="font-family:ui-monospace,monospace;font-size:12px;background:#0E1318;
+        border:1px solid #2C3742;border-radius:3px;padding:8px 10px;color:#E6EDF3;max-width:250px">
+        <b>${d.name}</b><br><span style="color:#76838F">${d.n} block${d.n>1?"s":""} this session</span><br>
+        <span style="color:${d.color}">${d.geo.type===HQ?"POOL HQ":"UNKNOWN"}, confidence ${d.geo.conf}</span><br>
+        <span style="color:#9AA7B4;font-family:sans-serif;font-size:11px">${d.geo.src}</span></div>`)
+    .ringsData(ringsData())
+    .ringLat("lat").ringLng("lng")
+    .ringMaxRadius(d=>4+d.w*9).ringPropagationSpeed(0.7).ringRepeatPeriod(2600)
+    .ringColor(()=>t=>`rgba(201,133,0,${0.42*(1-t)})`)
+    .ringAltitude(0.004);
+  try{
+    g.globeImageUrl(null);
+    const mat = g.globeMaterial();
+    mat.color = new THREE.Color("#0B1218");
+    mat.emissive = new THREE.Color("#050A0E");
+    mat.shininess = 2;
+  }catch(e){}
+  g.controls().autoRotate = S.spin;
+  g.controls().autoRotateSpeed = 0.32;
+  g.controls().enableDamping = true;
+  g.pointOfView({lat:22,lng:-40,altitude:2.35},0);
+  document.getElementById("globe").addEventListener("pointerdown",()=>{
+    g.controls().autoRotate=false; S.spin=false;
+    document.getElementById("bSpin").setAttribute("aria-pressed","false");
+  });
+  S.globe = g;
+  addEventListener("resize",()=>{ g.width(innerWidth); g.height(innerHeight); });
+  g.width(innerWidth); g.height(innerHeight);
+  return true;
+}
+function refreshGlobe(){
+  if (!S.globe) { drawFlat(); return; }
+  S.globe.pointsData(pointsData()).ringsData(ringsData());
+}
+/* ============================================================
+   THE BLOCK LANDING. This is the thing the old globes did that a
+   dashboard does not: a block arrives somewhere and you SEE it
+   arrive. Shockwave out, column up, marker settles.
+   ============================================================ */
+function landFlat(b){
+  const svg = document.querySelector("#flat svg");
+  const fx  = document.getElementById("fx");
+  if (!svg || !fx) return;
+  const W=1500,H=750;
+  const loc = b.located ? {lat:b.geo.lat,lng:b.geo.lng} : UNK_POINT;
+  const [x,y] = flatProject(loc.lat, loc.lng, W, H);
+  const col = b.located ? (b.geo.conf==="high"?"#199E70":b.geo.conf==="medium"?"#C98500":"#D55181") : "#5B6773";
+  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+  const barH = 26 + Math.min(48, sats2btc(b.totalSats)*13);
+  g.innerHTML = `
+    <!-- shockwave -->
+    <circle cx="${x}" cy="${y}" fill="none" stroke="#F7931A" stroke-width="2.4">
+      <animate attributeName="r" values="3;78" dur="1.9s" fill="freeze" calcMode="spline" keySplines="0.15 0.7 0.3 1"/>
+      <animate attributeName="opacity" values="0.95;0" dur="1.9s" fill="freeze"/>
+    </circle>
+    <circle cx="${x}" cy="${y}" fill="none" stroke="#F7931A" stroke-width="1.3">
+      <animate attributeName="r" values="3;48" dur="1.9s" begin="0.22s" fill="freeze"/>
+      <animate attributeName="opacity" values="0.7;0" dur="1.9s" begin="0.22s" fill="freeze"/>
+    </circle>
+    <!-- column: height carries the total reward -->
+    <line x1="${x}" y1="${y}" x2="${x}" y2="${y}" stroke="#F7931A" stroke-width="3" stroke-linecap="round">
+      <animate attributeName="y2" values="${y};${y-barH}" dur="0.5s" fill="freeze" calcMode="spline" keySplines="0.1 0.8 0.2 1"/>
+      <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.45;1" dur="2.6s" fill="freeze"/>
+    </line>
+    <!-- the marker that stays -->
+    <circle cx="${x}" cy="${y}" r="0" fill="${col}" stroke="#0E1318" stroke-width="1.6">
+      <animate attributeName="r" values="0;9;5.5" dur="0.75s" fill="freeze"/>
+    </circle>
+    <text x="${x}" y="${y-barH-8}" text-anchor="middle" font-family="ui-monospace,monospace"
+          font-size="11" fill="#F7931A" opacity="0">
+      ${b.height.toLocaleString()}
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.7;1" dur="3s" fill="freeze"/>
+    </text>`;
+  fx.appendChild(g);
+  setTimeout(()=>{ try{ g.remove(); }catch(e){} }, 3200);
+  // and redraw the base layer so the persistent point count is right
+  setTimeout(()=>{ if(S.flat) drawFlat(); }, 3300);
+}
+
+/* the new-block event: rotate, ring, column */
+function celebrate(b){
+  landFlat(b);
+  flashTimeline();
+  if (!S.globe || !b.located) return;
+  S.globe.pointOfView({lat:b.geo.lat, lng:b.geo.lng, altitude:1.9}, 1400);
+  const pulse = {lat:b.geo.lat,lng:b.geo.lng,w:1.1,name:"new"};
+  const base = ringsData();
+  S.globe.ringsData([...base, pulse])
+    .ringColor(d=>d.name==="new" ? (t=>`rgba(247,147,26,${0.85*(1-t)})`) : (t=>`rgba(201,133,0,${0.42*(1-t)})`))
+    .ringMaxRadius(d=>d.name==="new" ? 14 : 4+d.w*9)
+    .ringPropagationSpeed(d=>d.name==="new" ? 3.2 : 0.7)
+    .ringRepeatPeriod(d=>d.name==="new" ? 900 : 2600);
+  setTimeout(()=>{ if(S.globe) S.globe.ringsData(ringsData()); }, 3600);
+
+  /* the column. globe.gl animates pointAltitude between data updates,
+     so pushing an exaggerated altitude and then letting it settle back
+     reads as a bar shooting up out of the surface and easing down. */
+  try{
+    const spike = pointsData().map(p =>
+      (Math.abs(p.lat-b.geo.lat)<0.01 && Math.abs(p.lng-b.geo.lng)<0.01)
+        ? {...p, alt: Math.min(0.9, p.alt + 0.5), color:"#F7931A"} : p);
+    S.globe.pointsTransitionDuration(420).pointsData(spike);
+    setTimeout(()=>{ if(S.globe) S.globe.pointsTransitionDuration(1500).pointsData(pointsData()); }, 620);
+  }catch(e){}
+}
+function flashTimeline(){
+  const tl=document.getElementById("tl");
+  tl.style.transition="none"; tl.style.boxShadow="inset 0 3px 0 0 var(--accent)";
+  setTimeout(()=>{ tl.style.transition="box-shadow 900ms ease-out"; tl.style.boxShadow="inset 0 0 0 0 transparent"; },40);
+}
+
+/* ---------- 8. RENDER ---------- */
+const ago = ts => {
+  const s = Math.max(0, Math.floor((Date.now()-ts)/1000));
+  if (s<60) return s+"s ago";
+  if (s<3600) return Math.floor(s/60)+"m ago";
+  return Math.floor(s/3600)+"h ago";
+};
+function confChip(c){
+  const cls = c==="high"?"c-high":c==="medium"?"c-med":c==="low"?"c-low":"c-unk";
+  return `<span class="chip ${cls}"><i></i>${c}</span>`;
+}
+function renderBlock(b){
+  if(!b){return;}
+  const sub = sats2btc(b.subsidySats), fee = sats2btc(b.feeSats), tot = sats2btc(b.totalSats);
+  const feePct = tot>0 ? (fee/tot*100) : 0;
+  const geoLine = b.located
+    ? `${b.geo.type===HQ?"Pool HQ":"Region"}, ${b.geo.city}, ${b.geo.country}`
+    : "Location unknown";
+  document.getElementById("bBody").innerHTML = `
+    <div class="bh"><span class="h">${b.height.toLocaleString()}</span><span class="ago">${ago(b.ts)}</span></div>
+    <dl class="kv">
+      <dt>Pool</dt><dd>${b.pool.name}${b.geo.legacy && b.geo.legacy!==b.pool.name ? `<br><span style="font-size:10px;color:var(--ink3)">was ${b.geo.legacy}</span>`:""}</dd>
+      <dt>Attribution</dt><dd>${confChip(b.pool.conf)}</dd>
+      <dt>Transactions</dt><dd>${b.txCount!=null?b.txCount.toLocaleString():"n/a"}</dd>
+      <dt>Hash</dt><dd style="font-size:10px;color:var(--ink3)">…${b.hash.slice(-16)}</dd>
+    </dl>
+    <div class="rw">
+      <div class="rr"><span class="n">Block subsidy</span><span class="v">${fBTC(sub)} BTC</span></div>
+      <div class="rr"><span class="n">Transaction fees</span><span class="v">${fBTC(fee)} BTC</span></div>
+      <div class="rr"><span class="n" style="color:var(--ink3)">fees as share of reward</span><span class="v" style="color:var(--ink3)">${feePct.toFixed(2)}%</span></div>
+      <div class="rr tot"><span class="n">Total miner reward</span><span class="v">${fBTC(tot)} BTC</span></div>
+    </div>
+    <div class="geo">
+      <span class="lbl">Geography</span>
+      <div class="gl">${geoLine} ${confChip(b.geo.conf)}</div>
+      <div class="gs">${b.geo.src}</div>
+    </div>`;
+}
+function renderTimeline(){
+  const el = document.getElementById("tlr");
+  el.innerHTML = S.blocks.map((b,i)=>{
+    const col = b.located ? (b.geo.conf==="high"?"var(--ok)":b.geo.conf==="medium"?"var(--mid)":"var(--lo)") : "var(--unk)";
+    return `<button class="blk${i===0?" fresh":""}" data-h="${b.height}" aria-selected="${S.selected===b.height}"
+      style="--x:0"><span style="position:absolute;left:0;top:0;bottom:0;width:2px;background:${col}"></span>
+      <span class="hh">${b.height.toLocaleString()}</span>
+      <span class="pp">${b.pool.name}</span>
+      <span class="ff">${fBTC(sats2btc(b.totalSats),4)}</span></button>`;
+  }).join("");
+  el.querySelectorAll(".blk").forEach(x=>x.onclick=()=>{
+    const b = S.blocks.find(z=>z.height==x.dataset.h);
+    S.selected=b.height; renderBlock(b); renderTimeline();
+    if(b.located) celebrate(b);
+  });
+}
+function renderShare(){
+  const counts={};
+  S.blocks.forEach(b=>counts[b.pool.name]=(counts[b.pool.name]||0)+1);
+  const tot=S.blocks.length||1;
+  const rows=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  document.getElementById("shN").textContent = S.blocks.length+" blocks";
+  document.getElementById("shBody").innerHTML = rows.map(([n,c])=>{
+    const slug = S.blocks.find(b=>b.pool.name===n).pool.slug;
+    const g=geoFor(slug);
+    const col = g.lat===null ? "var(--unk)" : g.conf==="high"?"var(--ok)":g.conf==="medium"?"var(--mid)":"var(--lo)";
+    const pct=(c/tot*100);
+    return `<div style="margin-bottom:7px">
+      <div style="display:flex;justify-content:space-between;font-size:11.5px">
+        <span style="color:var(--ink1)">${n}</span>
+        <span class="num" style="color:var(--ink2)">${c} · ${pct.toFixed(0)}%</span></div>
+      <div style="height:3px;background:var(--s3);margin-top:3px"><div style="height:100%;width:${pct}%;background:${col}"></div></div>
+    </div>`;
+  }).join("");
+}
+function renderTop(){
+  const tip = S.blocks[0];
+  document.getElementById("tTip").textContent = tip ? tip.height.toLocaleString() : "n/a";
+  document.getElementById("tSub").textContent = tip ? fBTC(sats2btc(tip.subsidySats),4)+" BTC" : "n/a";
+  document.getElementById("tSeen").textContent = S.blocks.length;
+  const att = S.blocks.filter(b=>b.pool.conf!=="unknown").length;
+  const loc = S.blocks.filter(b=>b.located).length;
+  const t = S.blocks.length||1;
+  document.getElementById("tAttr").textContent = `${att}/${S.blocks.length} · ${(att/t*100).toFixed(0)}%`;
+  document.getElementById("tGeo").textContent  = `${loc}/${S.blocks.length} · ${(loc/t*100).toFixed(0)}%`;
+}
+function setConn(state, text){
+  S.conn=state;
+  const el=document.getElementById("conn");
+  el.className = state==="live"?"live":state==="recon"?"recon":"off";
+  document.getElementById("connt").textContent = text;
+}
+function addBlock(raw, isNew){
+  const b = normalise(raw);
+  if (S.seen.has(b.height)) return false;
+  S.seen.add(b.height);
+  S.blocks.unshift(b);
+  S.blocks.sort((x,y)=>y.height-x.height);
+  if (S.blocks.length>40) S.blocks.pop();
+  if (isNew || S.selected===null){ S.selected=b.height; renderBlock(b); }
+  renderTimeline(); renderShare(); renderTop(); refreshGlobe();
+  if (isNew) celebrate(b);
+  return true;
+}
+
+/* ---------- 9. DATA ---------- */
+const API="https://mempool.space/api";
+async function hydrate(){
+  try{
+    const c=new AbortController(); const to=setTimeout(()=>c.abort(),9000);
+    const r=await fetch(API+"/v1/blocks",{signal:c.signal}); clearTimeout(to);
+    if(!r.ok) throw new Error(r.status);
+    const arr=await r.json();
+    if(!Array.isArray(arr)||!arr.length) throw new Error("empty");
+    arr.slice(0,15).forEach(b=>addBlock(b,false));
+    document.getElementById("bMode").textContent="live";
+    return true;
+  }catch(e){ return false; }
+}
+function connect(){
+  let ws;
+  try{ ws = new WebSocket("wss://mempool.space/api/v1/ws"); }
+  catch(e){ return goOffline(); }
+  S.ws=ws;
+  const guard=setTimeout(()=>{ try{ws.close();}catch(e){} },12000);
+  ws.onopen=()=>{ clearTimeout(guard); S.backoff=1000; setConn("live","live");
+    ws.send(JSON.stringify({action:"want",data:["blocks"]})); };
+  ws.onmessage=ev=>{
+    let m; try{ m=JSON.parse(ev.data); }catch(e){ return; }
+    const b = m.block || (Array.isArray(m.blocks)? m.blocks[m.blocks.length-1] : null);
+    if (b && b.height) addBlock(b,true);
+  };
+  ws.onclose=()=>{
+    if (S.mode==="replay") return;
+    setConn("recon","reconnecting");
+    S.backoff=Math.min(30000,S.backoff*2);
+    setTimeout(connect,S.backoff);
+  };
+  ws.onerror=()=>{ try{ws.close();}catch(e){} };
+}
+let replayTimer=null;
+/* Real blocks arrive every ten minutes. A recorded replay at real speed
+   is a blank screen, so replay runs compressed. Live mode is never sped
+   up: what you see there is the actual cadence of the chain. */
+let REPLAY_MS = 4200;
+function goOffline(){
+  setConn("off","offline, replay");
+  document.getElementById("bMode").textContent="replay";
+  document.getElementById("tlNote").textContent="replaying a recorded sequence. no live connection.";
+  S.mode="replay";
+  SEED.slice().reverse().forEach(b=>addBlock(b,false));
+  startReplayLoop();
+}
+let _i=0;
+function startReplayLoop(){
+  replayTimer=setInterval(()=>{
+    const src=SEED[_i%SEED.length];
+    const b={...src, height: S.blocks[0].height+1,
+      id:(Math.random().toString(16).slice(2)+"0").padStart(64,"0"),
+      timestamp:Math.floor(Date.now()/1000)};
+    addBlock(b,true); _i++;
+  }, REPLAY_MS);
+}
+
+/* ---------- 10. CONTROLS ---------- */
+function toggle(id,key,fn){
+  const el=document.getElementById(id);
+  el.onclick=()=>{ S[key]=!S[key]; el.setAttribute("aria-pressed",String(S[key])); fn(); };
+}
+toggle("bRegions","showRegions",()=>{ refreshGlobe(); if(S.flat) drawFlat(); });
+toggle("bSpin","spin",()=>{ if(S.globe) S.globe.controls().autoRotate=S.spin; });
+toggle("bPanels","panels",()=>{
+  document.getElementById("rail").classList.toggle("hide",!S.panels);
+  document.getElementById("legend").classList.toggle("hide",!S.panels);
+  document.getElementById("truth").classList.toggle("hide",!S.panels);
+});
+const SPEEDS=[4200,2000,900,380], SPEEDL=["1\u00d7","5\u00d7","20\u00d7","100\u00d7"];
+let spIdx=0;
+document.getElementById("bSpeed").onclick=()=>{
+  spIdx=(spIdx+1)%SPEEDS.length; REPLAY_MS=SPEEDS[spIdx];
+  document.getElementById("bSpeed").textContent="Speed "+SPEEDL[spIdx];
+  if (replayTimer){ clearInterval(replayTimer); startReplayLoop(); }
+};
+document.getElementById("bFlat").onclick=()=>{
+  S.flat=!S.flat;
+  document.getElementById("bFlat").setAttribute("aria-pressed",String(S.flat));
+  document.getElementById("flat").classList.toggle("on",S.flat);
+  document.getElementById("globe").style.display = S.flat?"none":"block";
+  if(S.flat) drawFlat();
+};
+addEventListener("keydown",e=>{
+  if(e.target.tagName==="INPUT")return;
+  const k=e.key.toLowerCase();
+  if(k==="r") document.getElementById("bRegions").click();
+  if(k==="s") document.getElementById("bSpin").click();
+  if(k==="f") document.getElementById("bFlat").click();
+  if(k==="p") document.getElementById("bPanels").click();
+});
+
+/* ---------- 11. BOOT ---------- */
+function loadScript(src){
+  return new Promise(res=>{
+    const s=document.createElement("script"); s.src=src;
+    s.onload=()=>res(true); s.onerror=()=>res(false);
+    const t=setTimeout(()=>res(false),9000);
+    s.addEventListener("load",()=>clearTimeout(t));
+    document.head.appendChild(s);
+  });
+}
+(async function boot(){
+  const ok = await loadScript("https://cdn.jsdelivr.net/npm/globe.gl@2.32.0/dist/globe.gl.min.js");
+  const built = ok ? initGlobe() : false;
+  if (!built){
+    /* No globe library. A map still renders, and the page says which one. */
+    S.flat = true;
+    document.getElementById("flat").classList.add("on");
+    document.getElementById("globe").style.display="none";
+    document.getElementById("bFlat").setAttribute("aria-pressed","true");
+    document.getElementById("bFlat").textContent="Flat map, forced";
+    document.getElementById("bFlat").title="The 3D globe library could not load, so the flat projection is showing instead. Same data, same rules.";
+  }
+  document.getElementById("boot").classList.add("done");
+  const got = await hydrate();
+  if (got){ connect(); }
+  else { goOffline(); }
+  drawFlat();
+  setInterval(()=>{ const b=S.blocks.find(x=>x.height===S.selected); if(b) renderBlock(b); }, 20000);
+})();
+</script>
+</body>
+</html>

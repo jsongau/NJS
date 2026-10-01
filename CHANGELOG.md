@@ -4,11 +4,11 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-10-01
 
-- `btc` — Bitcoin mining calculator. Live price, difficulty and average block
-  reward from mempool.space; breakeven power rate, breakeven BTC price, payback
-  period, and the net-per-month effect of the next halving. Subsidy computed in
-  integer satoshis from block height. No fallback values: if the feed is down the
-  figures stay blank rather than show an invented number.
+- `btc` — The Hashrate Desk published: the economics model hub, the live block
+  attribution globe, the halving page, the profitability answer page and the
+  methodology. All five are the original August builds, byte for byte. The twelve
+  pages they link to that were never built redirect to the hub as temporary
+  redirects, so the links go live the day those pages exist.
 
 ## 2026-09-02
 

@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is Bitcoin mining profitable? Configure a build and get a straight answer | The Hashrate Desk</title>
+<meta name="description" content="Is Bitcoin mining worth it in 2026? A fifty unit Antminer S21 Pro build hosted at 7.5 cents per kWh produces one bitcoin for $104,654 against a market of $63,050 on 16 August 2026. Only an operator at 3.6 cents per kWh clears cost to produce. Configure machine, count, power price, venue and hold period.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="is-bitcoin-mining-profitable.html">
+<meta property="og:title" content="Is Bitcoin mining profitable? Configure a build and get a straight answer | The Hashrate Desk"><meta property="og:description" content="Is Bitcoin mining worth it in 2026? A fifty unit Antminer S21 Pro build hosted at 7.5 cents per kWh produces one bitcoin for $104,654 against a market of $63,050 on 16 August 2026. Only an operator at 3.6 cents per kWh clears cost to produce. Configure machine, count, power price, venue and hold period.">
+<meta property="og:type" content="website">
+<script>(function(){try{var t=localStorage.getItem("hd-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+<style>/* ======================================================================
+   THE HASHRATE DESK, ONE THEME SYSTEM
+
+   Two palettes, one set of token names. Every colour anywhere on the site,
+   including inside the SVG charts, resolves through a custom property, so
+   a theme switch is one attribute on <html> and the charts follow for free.
+
+   The light palette is NOT the dark one inverted. That was the previous
+   attempt and it failed for reasons worth writing down, because each one is
+   a rule now:
+
+     A cream plane (#FBFAF7) plus cold ink (#14181D) plus cold-grey borders
+     is a temperature clash across the neutral ramp, and no amount of
+     spacing or type work rescues it.
+
+     A plane-to-card delta under 3% is invisible, so every container needs
+     an outline to exist, and outlines on everything is ruled-paper.
+
+     One border colour at one weight everywhere is a wireframe that was
+     never skinned.
+
+     A uniform 2px radius is the bottom of a nine-step scale used as the
+     entire scale. On dark the corner vanishes into the plane; on white it
+     is fully visible and reads as unchosen.
+
+     Darkening the dark accent until it passes a contrast check
+     (#F7931A to #A85A00) keeps the lightness maths and throws away the
+     chroma. The result is khaki, not orange.
+
+   So: derive the whole neutral ramp from ONE ink and ONE plane by mixing,
+   hold one temperature, give elevation a real delta, use three border
+   weights, scale radius with detachment, and recompute the accent from a
+   ramp built for the plane it sits on.
+   ====================================================================== */
+
+:root{
+  --serif:ui-serif,"Iowan Old Style","Charter","Bitstream Charter","Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono","DejaVu Sans Mono",monospace;
+
+  /* radius scales with detachment, it does not stay constant */
+  --r-chip:3px; --r-ctl:6px; --r-panel:10px; --r-float:14px;
+  /* sections against groups at roughly 4:1, so the page has chapters */
+  --sp-section:84px; --sp-group:22px;
+  --shell:1440px; --gutter:44px;
+}
+
+/* ---------------------------------------------------------------- LIGHT */
+html[data-theme="light"]{
+  --paper:#FFFFFF;
+  --ink:#1C1A16;                                                /* warm ink, warm plane, one temperature */
+
+  --ink-1:var(--ink);                                           /* 18.4:1 */
+  --ink-2:color-mix(in srgb, var(--ink) 78%, var(--paper));     /*  8.1:1  prose */
+  --ink-3:color-mix(in srgb, var(--ink) 63%, var(--paper));     /*  5.0:1  captions */
+  --ink-4:color-mix(in srgb, var(--ink) 52%, var(--paper));     /*  3.5:1  labels only */
+  --tint-1:color-mix(in srgb, var(--ink) 3.5%, var(--paper));
+  --tint-2:color-mix(in srgb, var(--ink) 6%,   var(--paper));
+  --tint-3:color-mix(in srgb, var(--ink) 9%,   var(--paper));
+
+  --rule-hair:color-mix(in srgb, var(--ink) 10%, var(--paper));
+  --rule:color-mix(in srgb, var(--ink) 16%, var(--paper));
+  --rule-strong:color-mix(in srgb, var(--ink) 32%, var(--paper));
+  --rule-ink:var(--ink-1);
+
+  /* Radix orange 11 / 9 / 3. Text-safe, saturated fill, wash. Still orange. */
+  --accent:#CC4E00; --accent-solid:#F76B15; --accent-wash:#FFEFD6; --accent-line:#EDA26B;
+  --cool:#1D4E7C; --cool-solid:#3E6F9E; --cool-mid:#7FA6C6; --cool-wash:#E9F0F6;
+  --pos:#1E7A5F; --pos-wash:#E6F5EE; --neg:#C22B30; --neg-wash:#FCECEC;
+  --warn:#8A5A00; --warn-wash:#FBF0DC;
+
+  --ch-band-out:#E4EDF4; --ch-band-in:#C3D6E6;
+  --ch-median:var(--ink-1); --ch-mark:var(--accent);
+  --ch-grid:color-mix(in srgb, var(--ink) 9%, var(--paper));
+  --ch-zero:color-mix(in srgb, var(--ink) 40%, var(--paper));
+  --ch-1:#1D4E7C; --ch-2:#1E7A5F; --ch-3:#CC4E00; --ch-4:#7A5AA8; --ch-5:#A8443F;
+
+  /* stacked, sub-8%, tight contact term, warm ink, never pure black */
+  --sh-xs:0 1px 0 0 rgba(28,26,22,.05);
+  --sh-sm:0 1px 1px 0 rgba(28,26,22,.05), 0 2px 4px -1px rgba(28,26,22,.045);
+  --sh-md:0 0 0 1px rgba(28,26,22,.055), 0 1px 1px 0 rgba(28,26,22,.05), 0 5px 12px -3px rgba(28,26,22,.07);
+  --sh-float:0 -1px 0 0 var(--rule), 0 -8px 22px -10px rgba(28,26,22,.16);
+  --sh-drop:0 0 0 1px rgba(28,26,22,.06), 0 12px 30px -8px rgba(28,26,22,.18);
+
+  --sel:#FFE2C2;
+  color-scheme:light;
+}
+
+/* ----------------------------------------------------------------- DARK */
+/* Same names, same structure, values re-picked. Dark elevates by getting
+   LIGHTER, so the ladder runs the other way: the plane is the darkest
+   value and surfaces rise out of it. Borders carry more of the work
+   because shadows barely read on near-black.                            */
+html[data-theme="dark"]{
+  --paper:#12161B;
+  --ink:#E8EDF2;
+
+  --ink-1:var(--ink);
+  --ink-2:color-mix(in srgb, var(--ink) 74%, var(--paper));
+  --ink-3:color-mix(in srgb, var(--ink) 56%, var(--paper));
+  --ink-4:color-mix(in srgb, var(--ink) 44%, var(--paper));
+  --tint-1:color-mix(in srgb, var(--ink) 5%,  var(--paper));
+  --tint-2:color-mix(in srgb, var(--ink) 9%,  var(--paper));
+  --tint-3:color-mix(in srgb, var(--ink) 13%, var(--paper));
+
+  --rule-hair:color-mix(in srgb, var(--ink) 11%, var(--paper));
+  --rule:color-mix(in srgb, var(--ink) 18%, var(--paper));
+  --rule-strong:color-mix(in srgb, var(--ink) 34%, var(--paper));
+  --rule-ink:color-mix(in srgb, var(--ink) 72%, var(--paper));
+
+  --accent:#FF9A3C; --accent-solid:#F7931A; --accent-wash:rgba(247,147,26,.14); --accent-line:#8A5A1F;
+  --cool:#7FB2E4; --cool-solid:#3E7FBF; --cool-mid:#4E7BA0; --cool-wash:rgba(62,111,158,.16);
+  --pos:#46C08D; --pos-wash:rgba(30,122,95,.18); --neg:#F0787C; --neg-wash:rgba(194,43,48,.18);
+  --warn:#E5A93B; --warn-wash:rgba(138,90,0,.22);
+
+  --ch-band-out:rgba(62,111,158,.16); --ch-band-in:rgba(62,111,158,.34);
+  --ch-median:#E8EDF2; --ch-mark:#FF9A3C;
+  --ch-grid:color-mix(in srgb, var(--ink) 11%, var(--paper));
+  --ch-zero:color-mix(in srgb, var(--ink) 42%, var(--paper));
+  --ch-1:#5B9BD5; --ch-2:#46C08D; --ch-3:#FF9A3C; --ch-4:#A28BE0; --ch-5:#E4776F;
+
+  --sh-xs:0 1px 0 0 rgba(0,0,0,.30);
+  --sh-sm:0 1px 2px 0 rgba(0,0,0,.38);
+  --sh-md:0 0 0 1px rgba(232,237,242,.07), 0 4px 14px -4px rgba(0,0,0,.55);
+  --sh-float:0 -1px 0 0 var(--rule), 0 -10px 26px -12px rgba(0,0,0,.7);
+  --sh-drop:0 0 0 1px rgba(232,237,242,.09), 0 14px 34px -10px rgba(0,0,0,.7);
+
+  --sel:rgba(247,147,26,.28);
+  color-scheme:dark;
+}
+
+/* ================================================================ RESET */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:var(--stack-h,132px);-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+body{background:var(--paper);color:var(--ink-2);font-family:var(--sans);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--sel);color:var(--ink-1)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+/* Optical weight drops slightly on light: dark text on white reads heavier
+   because there is no halation to eat the stroke. */
+html[data-theme="light"] body{font-weight:400}
+html[data-theme="dark"]  body{font-weight:400}
+
+.shell{max-width:var(--shell);margin:0 auto;padding:0 var(--gutter)}
+@media (max-width:900px){:root{--gutter:20px;--sp-section:56px}}
+
+/* ============================================================ NUMERALS */
+/* Column numerals stay monospace so they align. DISPLAY numerals move to
+   the sans at 600 with tabular figures and negative tracking: a default
+   mono at 44px on white reads as terminal cosplay, not as a financial
+   figure. Two different jobs, two different treatments.                 */
+.cnum{font-family:var(--mono);font-variant-numeric:tabular-nums slashed-zero;
+  font-size:.94em;letter-spacing:-.01em}
+.dnum{font-family:var(--sans);font-variant-numeric:tabular-nums;
+  font-weight:600;letter-spacing:-.022em;color:var(--ink-1)}
+.unit{font-family:var(--sans);font-weight:400;font-size:.62em;color:var(--ink-4);
+  margin-left:.35em;letter-spacing:0}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+/* Direction is carried by a small glyph or a tinted chip, not by setting a
+   whole large figure in red. A negative power bill is information, not an
+   alarm. */
+.delta{display:inline-flex;align-items:center;gap:4px;padding:1px 6px;border-radius:var(--r-chip);
+  font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums}
+.delta.up{background:var(--pos-wash);color:var(--pos)}
+.delta.down{background:var(--neg-wash);color:var(--neg)}
+.delta.flat{background:var(--tint-2);color:var(--ink-3)}
+
+/* ================================================================= TYPE */
+/* Tracking tightens as size grows, on a curve. Default tracking at display
+   sizes is the clearest evidence nobody set the type. */
+.h-display{font-family:var(--serif);font-weight:600;color:var(--ink-1);
+  font-size:clamp(38px,5.2vw,64px);line-height:1.03;letter-spacing:-.021em}
+.h-1{font-family:var(--serif);font-weight:600;color:var(--ink-1);font-size:32px;line-height:1.12;letter-spacing:-.014em}
+.h-2{font-family:var(--serif);font-weight:600;color:var(--ink-1);font-size:23px;line-height:1.2;letter-spacing:-.008em}
+.h-3{font-family:var(--sans);font-weight:600;color:var(--ink-1);font-size:15px;line-height:1.3;letter-spacing:-.004em}
+.standfirst{font-family:var(--serif);font-size:19px;line-height:1.62;color:var(--ink-2);max-width:62ch}
+.prose{font-size:15px;line-height:1.68;color:var(--ink-2);max-width:70ch}
+.prose p+p{margin-top:.85em}
+.prose b,.prose strong{color:var(--ink-1);font-weight:600}
+.deck{font-size:14.5px;line-height:1.6;color:var(--ink-3);max-width:64ch}
+.cap{font-size:12px;line-height:1.5;color:var(--ink-3)}
+
+/* Uppercase letterspaced labels are capped at true section headers and
+   table heads. On white they buzz, and putting them on everything makes
+   every zone shout at one volume. */
+.eyebrow{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-4)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-4)}
+
+/* ============================================================= SECTIONS */
+section.sect{padding:var(--sp-section) 0 0}
+.sect-head{display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 18px;
+  border-top:2px solid var(--rule-ink);padding-top:14px;margin-bottom:30px}
+.sect-head .n{font-family:var(--mono);font-size:11px;color:var(--ink-4);padding-top:7px}
+.sect-head .b{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px}
+
+/* ============================================================== SURFACE */
+/* Pick two of {border, background, shadow} per element, usually one.
+   An element with all three is the visual equivalent of bolding every word. */
+.panel{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-panel)}
+.panel.recess{background:var(--tint-1);border-color:var(--rule-hair)}
+.panel.lift{box-shadow:var(--sh-sm);border-color:var(--rule-hair)}
+/* Exactly one element per screen gets this. */
+.panel.focus{box-shadow:var(--sh-md);border:0;background:var(--paper)}
+.pad{padding:20px 22px}
+.pad-lg{padding:30px 32px}
+
+/* ================================================================ TABLE */
+/* Horizontal rules only, at two weights. No vertical rules, no cell
+   borders, no zebra, no filled header band. Column separation comes from
+   alignment and gutters. No premium data product ships vertical rules. */
+table.data{width:100%;border-collapse:collapse;font-size:13.5px}
+table.data thead th{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-4);text-align:right;
+  padding:0 0 8px 18px;border-bottom:1px solid var(--rule-strong);white-space:nowrap}
+table.data thead th:first-child{text-align:left;padding-left:0}
+table.data tbody td{padding:9px 0 9px 18px;border-bottom:1px solid var(--rule-hair);
+  text-align:right;color:var(--ink-2);font-variant-numeric:tabular-nums}
+table.data tbody td:first-child{text-align:left;padding-left:0;color:var(--ink-1)}
+table.data tbody tr:hover td{background:var(--tint-1)}
+table.data tbody tr:last-child td{border-bottom:0}
+table.data td.num,table.data th.num{font-family:var(--mono);font-size:12.5px}
+table.data .sub{display:block;font-size:11px;color:var(--ink-4);margin-top:2px;font-family:var(--sans)}
+/* Density is a token, not a constant. Verdicts run roomy, ladders run tight. */
+table.data.tight tbody td{padding:5px 0 5px 16px}
+table.data.roomy tbody td{padding:14px 0 14px 20px}
+/* Promotion by weight and tint, never by boxing a column in rules. */
+table.data td.lead{color:var(--ink-1);font-weight:600}
+table.data tr.on td{background:var(--accent-wash)}
+/* A full-width divider row beats a Status column: position encodes the
+   threshold and the table loses a column. */
+table.data tr.marker td{border-top:1px dashed var(--accent-line);border-bottom:0;
+  padding:7px 0;text-align:left;font-family:var(--mono);font-size:11px;color:var(--accent);background:none}
+table.data tr.marker:hover td{background:none}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ================================================================ CHIPS */
+.chip{display:inline-flex;align-items:baseline;gap:6px;padding:4px 9px;border-radius:var(--r-chip);
+  background:var(--tint-2);font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.chip b{color:var(--ink-1);font-weight:600}
+.chip.on{background:var(--accent-wash);color:var(--accent)}
+.chip.pos{background:var(--pos-wash);color:var(--pos)}
+.chip.neg{background:var(--neg-wash);color:var(--neg)}
+
+/* GRAFT from the Warm Console direction: a single rail declaring every
+   assumption held constant across the page, so no figure below is orphaned
+   from the inputs that produced it. */
+.assump{display:flex;flex-wrap:wrap;gap:7px;padding:14px 16px;background:var(--tint-1);
+  border:1px solid var(--rule-hair);border-radius:var(--r-panel)}
+.assump .eyebrow{width:100%;margin-bottom:3px}
+
+/* GRAFT from the Precision Instrument direction: inline sensitivity, so a
+   reader can see which way a number moves without touching a slider. */
+.sens{display:flex;flex-direction:column;gap:7px}
+.sens .row{display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:var(--ink-3)}
+.sens .k{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:var(--r-chip);
+  background:var(--tint-2);color:var(--ink-2);white-space:nowrap;flex:none}
+.sens b{color:var(--ink-1);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ============================================================== CONTROL */
+.ctl{display:flex;align-items:center;gap:0;border:1px solid var(--rule-strong);
+  border-radius:var(--r-ctl);overflow:hidden;background:var(--paper)}
+.ctl button{padding:6px 12px;font-size:12px;font-weight:600;color:var(--ink-3);
+  transition:background 90ms,color 90ms}
+.ctl button+button{border-left:1px solid var(--rule)}
+.ctl button:hover{background:var(--tint-2);color:var(--ink-1)}
+.ctl button[aria-pressed=true]{background:var(--ink-1);color:var(--paper)}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{width:32px;height:32px;border:1px solid var(--rule-strong);border-radius:var(--r-ctl);
+  color:var(--ink-2);font-size:16px;line-height:1;display:grid;place-items:center}
+.stepper button:hover{background:var(--tint-2);color:var(--ink-1)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:2px;
+  background:var(--rule);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;
+  background:var(--paper);border:1.5px solid var(--ink-1);cursor:pointer;box-shadow:var(--sh-xs)}
+input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;
+  background:var(--paper);border:1.5px solid var(--ink-1);cursor:pointer}
+input[type=number],input[type=text],select{width:100%;padding:7px 10px;font-family:var(--mono);
+  font-size:13px;color:var(--ink-1);background:var(--paper);border:1px solid var(--rule-strong);
+  border-radius:var(--r-ctl);font-variant-numeric:tabular-nums}
+input:focus,select:focus{border-color:var(--accent);outline:none}
+label.fld{display:block;margin-bottom:14px}
+label.fld>.eyebrow{display:block;margin-bottom:6px}
+.hint{font-size:11.5px;color:var(--ink-4);margin-top:5px;line-height:1.45}
+
+/* ================================================================ CHART */
+/* No container border, no vertical gridlines, no legend row, no axis rule.
+   Series get labelled in place. */
+.fig{margin:0}
+.fig svg{width:100%;height:auto;overflow:visible}
+.fig .grid line{stroke:var(--ch-grid);stroke-width:1}
+.fig text{font-family:var(--mono);font-size:10px;fill:var(--ink-4)}
+.fig .lab{font-family:var(--sans);font-size:11px;font-weight:600;fill:var(--ink-2)}
+.fig-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+  gap:10px;margin-bottom:14px}
+
+/* ============================================================ LINKS ETC */
+a.link{color:var(--accent);border-bottom:1px solid color-mix(in srgb,var(--accent) 32%,transparent)}
+a.link:hover{border-bottom-color:var(--accent)}
+.src{font-family:var(--mono);font-size:10.5px;color:var(--ink-4)}
+.src a{border-bottom:1px solid var(--rule)}
+.src a:hover{color:var(--ink-2)}
+hr.rule{border:0;border-top:1px solid var(--rule-hair);margin:var(--sp-group) 0}
+
+/* ======================================================================
+   THE SHELL: header stack, mega nav, sticky bottom rail, footer.
+
+   One fixed element, #stack, with the bars as ordinary children in
+   document order. They cannot overlap because they are in normal flow
+   inside it. An earlier version pinned three bars independently at
+   hard-coded offsets (top:0, top:36px, top:74px) and the fourth bar
+   rendered straight through the masthead at scroll zero. Body padding and
+   anchor offsets both read the measured height, never a constant.
+   ====================================================================== */
+#stack{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);
+  border-bottom:1px solid var(--rule)}
+body{padding-top:132px}
+
+/* ---- telemetry strip ---- */
+#tel{height:34px;display:flex;align-items:center;background:var(--tint-1);
+  border-bottom:1px solid var(--rule-hair);overflow-x:auto;scrollbar-width:none}
+#tel::-webkit-scrollbar{display:none}
+#tel .shell{display:flex;align-items:baseline;gap:24px;white-space:nowrap;width:100%}
+#tel .t{display:flex;align-items:baseline;gap:6px;font-family:var(--mono);font-size:11px;color:var(--ink-4)}
+#tel .t b{color:var(--ink-2);font-weight:500;font-variant-numeric:tabular-nums}
+#tel .t.hi b{color:var(--accent)}
+#tel .stamp{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-4);
+  border:1px solid var(--rule-hair);border-radius:var(--r-chip);padding:2px 8px}
+
+/* ---- masthead ---- */
+#mast{height:60px;display:flex;align-items:center;background:var(--paper);overflow:visible;
+  transition:height .18s ease,opacity .14s ease}
+#stack.tight #mast{height:0;opacity:0;pointer-events:none;overflow:hidden}
+#mast .shell{display:flex;align-items:center;gap:26px;width:100%}
+.wordmark{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:19px;
+  font-weight:600;color:var(--ink-1);letter-spacing:-.012em;flex:none}
+.wordmark i{width:3px;height:19px;background:var(--accent-solid);border-radius:1px;display:block}
+.wordmark span{color:var(--ink-4);font-weight:400}
+.mast-right{margin-left:auto;display:flex;align-items:center;gap:14px;flex:none}
+.who{font-size:11.5px;color:var(--ink-4);white-space:nowrap}
+@media (max-width:1100px){.who{display:none}}
+
+/* ---- mega nav ---- */
+#nav{height:38px;display:flex;align-items:center;background:var(--paper);
+  border-top:1px solid var(--rule-hair);position:relative}
+#nav .shell{display:flex;align-items:stretch;gap:2px;width:100%;height:38px}
+.navi{position:relative;display:flex;align-items:center}
+.navi>a,.navi>button{display:flex;align-items:center;gap:5px;height:100%;padding:0 12px;
+  font-size:12px;font-weight:600;color:var(--ink-3);border-bottom:2px solid transparent;
+  white-space:nowrap;transition:color 90ms}
+.navi>a:hover,.navi>button:hover{color:var(--ink-1)}
+.navi[data-on] >a,.navi[data-on]>button{color:var(--ink-1);border-bottom-color:var(--accent-solid)}
+.navi .car{width:7px;height:7px;border-right:1.4px solid currentColor;border-bottom:1.4px solid currentColor;
+  transform:rotate(45deg) translateY(-2px);opacity:.5}
+/* Panels open below the whole stack, never inside a bar, so they cannot be
+   clipped by a parent with overflow hidden. */
+.panelnav{position:absolute;top:100%;left:0;min-width:520px;background:var(--paper);
+  border:1px solid var(--rule);border-radius:0 0 var(--r-panel) var(--r-panel);
+  box-shadow:var(--sh-drop);padding:18px 20px;display:none;z-index:120}
+.navi.open .panelnav{display:grid;grid-template-columns:1fr 1fr;gap:4px 26px}
+.panelnav a{display:block;padding:8px 10px;border-radius:var(--r-ctl)}
+.panelnav a:hover{background:var(--tint-2)}
+.panelnav .t{font-size:13px;font-weight:600;color:var(--ink-1)}
+.panelnav .d{font-size:11.5px;color:var(--ink-4);line-height:1.4;margin-top:1px}
+.panelnav .grp{grid-column:1/-1;margin-top:6px}
+@media (max-width:900px){.panelnav{min-width:min(92vw,420px);grid-template-columns:1fr!important}}
+
+/* ---- theme + denomination ---- */
+.tbtn{display:flex;align-items:center;gap:7px;padding:6px 11px;border:1px solid var(--rule-strong);
+  border-radius:var(--r-ctl);font-size:11.5px;font-weight:600;color:var(--ink-3)}
+.tbtn:hover{color:var(--ink-1);background:var(--tint-2)}
+.tbtn i{width:12px;height:12px;border-radius:50%;border:1.5px solid currentColor;
+  position:relative;overflow:hidden;flex:none;display:block}
+.tbtn i::after{content:"";position:absolute;inset:-1px;background:currentColor;clip-path:inset(0 0 0 50%)}
+html[data-theme="dark"] .tbtn i::after{clip-path:circle(58% at 128% 22%)}
+
+/* ---- sticky bottom rail ---- */
+#rail{position:fixed;left:0;right:0;bottom:0;z-index:95;background:var(--paper);
+  box-shadow:var(--sh-float);transform:translateY(103%);transition:transform .22s cubic-bezier(.2,0,0,1)}
+#rail.on{transform:none}
+#rail .shell{display:flex;align-items:center;gap:0;height:58px;overflow-x:auto;scrollbar-width:none}
+#rail .shell::-webkit-scrollbar{display:none}
+.rcell{display:flex;flex-direction:column;gap:1px;padding:0 20px 0 0;flex:none;min-width:0}
+.rcell+.rcell{padding-left:20px;border-left:1px solid var(--rule-hair)}
+.rcell .k{font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);white-space:nowrap}
+.rcell .v{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--ink-1);
+  font-variant-numeric:tabular-nums;letter-spacing:-.015em;white-space:nowrap}
+.rcell .v.mono{font-family:var(--mono);font-size:13.5px;font-weight:500}
+#rail .end{margin-left:auto;padding-left:22px;flex:none}
+@media (max-width:900px){#rail .shell{height:52px}.rcell{padding-right:14px}.rcell+.rcell{padding-left:14px}}
+
+/* ---- footer ---- */
+footer.foot{margin-top:var(--sp-section);border-top:1px solid var(--rule);
+  background:var(--tint-1);padding:44px 0 110px}
+footer.foot .cols{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:34px}
+footer.foot h4{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-4);margin-bottom:12px}
+footer.foot a{display:block;font-size:13px;color:var(--ink-3);padding:3px 0}
+footer.foot a:hover{color:var(--ink-1)}
+footer.foot .blurb{font-size:12.5px;line-height:1.6;color:var(--ink-4);max-width:44ch}
+@media (max-width:900px){footer.foot .cols{grid-template-columns:1fr 1fr}}
+
+/* ---- skip link ---- */
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ink-1);color:var(--paper);
+  padding:10px 16px;border-radius:0 0 var(--r-ctl) 0}
+.skip:focus{left:0}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://hashratedesk.example/#site","name":"The Hashrate Desk","description":"Bitcoin mining economics, with the arithmetic shown.","author":{"@id":"https://hashratedesk.example/#author"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://hashratedesk.example/#author","name":"Nathan J. Song","knowsAbout":["Bitcoin mining economics","Dimensional modelling","Kimball star schema","Data warehousing","ASIC hardware economics"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Is Bitcoin mining profitable? A configurable verdict","description":"Four named power price scenarios applied to one fleet, with cost to produce, cash payback and break-even power price computed for each.","author":{"@type":"Person","@id":"https://hashratedesk.example/#author","name":"Nathan J. Song","knowsAbout":["Bitcoin mining economics","Dimensional modelling","Kimball star schema","Data warehousing","ASIC hardware economics"]},"datePublished":"2026-08-15","dateModified":"2026-08-16","isPartOf":{"@id":"https://hashratedesk.example/#site"},"mainEntityOfPage":"https://hashratedesk.example/is-bitcoin-mining-profitable.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"The Hashrate Desk","item":"https://hashratedesk.example/index.html"},{"@type":"ListItem","position":2,"name":"Operating"},{"@type":"ListItem","position":3,"name":"Is Bitcoin mining profitable?","item":"https://hashratedesk.example/is-bitcoin-mining-profitable.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Bitcoin mining scenarios ranked by cost to produce one bitcoin","numberOfItems":4,"itemListElement":[{"@type":"ListItem","position":1,"name":"Large operator, own site, 3.60 cents per kWh, $60,261 per bitcoin"},{"@type":"ListItem","position":2,"name":"Hosted colocation, 7.50 cents per kWh, $104,654 per bitcoin"},{"@type":"ListItem","position":3,"name":"At home, industrial tariff, 8.71 cents per kWh, $118,846 per bitcoin"},{"@type":"ListItem","position":4,"name":"At home, residential tariff, 18.44 cents per kWh, $229,161 per bitcoin"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"ASIC miners ranked by the electricity price they can bear","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"SealMiner A4 Pro Air, break-even power 4.84 cents per kWh"},{"@type":"ListItem","position":2,"name":"Antminer S21e XP Hyd 3U, break-even power 4.14 cents per kWh"},{"@type":"ListItem","position":3,"name":"Antminer S21 Pro, break-even power 3.84 cents per kWh"},{"@type":"ListItem","position":4,"name":"Antminer S21 Hyd, break-even power 3.77 cents per kWh"},{"@type":"ListItem","position":5,"name":"Teraflux AH3880, break-even power 3.73 cents per kWh"},{"@type":"ListItem","position":6,"name":"Antminer S21+, break-even power 3.65 cents per kWh"},{"@type":"ListItem","position":7,"name":"Avalon A1566HA 2U, break-even power 3.55 cents per kWh"},{"@type":"ListItem","position":8,"name":"Whatsminer M70S+, break-even power 3.38 cents per kWh"},{"@type":"ListItem","position":9,"name":"Antminer S21 XP, break-even power 3.36 cents per kWh"},{"@type":"ListItem","position":10,"name":"Antminer S21, break-even power 3.26 cents per kWh"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Bitcoin mining profitable in 2026?","acceptedAnswer":{"@type":"Answer","text":"Only at a power price most people cannot get. Modelled on 16 August 2026 with bitcoin at $63,050, a fifty unit Antminer S21 Pro fleet held for 36 months produces one bitcoin for $60,261 at 3.6 cents per kWh, $104,654 at 7.5 cents hosted, and $229,161 at the US residential average of 18.44 cents. Only the first of those clears the market price. The break-even power price for this build is 3.84 cents per kWh, which is below what any of the twelve hosting providers surveyed on this site publishes, and below the US industrial average of 8.71 cents."}},{"@type":"Question","name":"Is Bitcoin mining worth it at home?","acceptedAnswer":{"@type":"Answer","text":"Not on a residential meter, at these inputs. At the US residential average of 18.44 cents per kWh in May 2026, this model produces a bitcoin for $229,161, which is 3.6 times the market price of $63,050. Every machine hour at that rate destroys value, and no hardware choice repairs it: the best machine in the catalogue on this measure, the SealMiner A4 Pro Air, still needs power below 4.84 cents. Home mining can still make sense as heat, as a hobby, or where the electricity is genuinely free, but it does not make sense as an investment on a metered residential tariff."}},{"@type":"Question","name":"How long does a Bitcoin miner take to pay for itself?","acceptedAnswer":{"@type":"Answer","text":"At 3.6 cents per kWh, 578 days for a fifty unit Antminer S21 Pro fleet costing $96,900, modelled from 16 August 2026 with difficulty drifting at 0.20 percent per epoch and the subsidy halving on day 607. At 7.5 cents the same fleet does not pay for itself at all inside five years. Payback is not capital divided by this month's profit: this month's profit is the best month the fleet will ever have, because difficulty rises and the block subsidy halves inside any hold longer than 20 months."}},{"@type":"Question","name":"What electricity price do you need for Bitcoin mining to be profitable?","acceptedAnswer":{"@type":"Answer","text":"Below 3.84 cents per kWh for this configuration, as modelled on 16 August 2026. That is the rate at which the cost to produce one bitcoin, counting power, pool fee and the hardware actually consumed over a 36 month hold, meets the market price of $63,050. The figure moves with the machine: the SealMiner A4 Pro Air tolerates 4.84 cents, the Antminer S21 only 3.26 cents. For reference, Riot discloses 3.6 cents, MARA 4.0 and CleanSpark 5.2 in their 2026 quarterly filings."}},{"@type":"Question","name":"Is hosted mining better than mining at home?","acceptedAnswer":{"@type":"Answer","text":"On price, almost always. On the model's own venue assumptions, barely at all. Holding the power price at 7.5 cents and changing nothing but the building, hosted produces a bitcoin for $104,654 and home for $105,127, a difference of $474 a coin, because the four extra points of uptime a staffed facility buys very nearly cancel the five extra points of PUE it bills you for. The real argument for hosting is not the building, it is that hosting is how a fifty machine buyer reaches a 5.5 to 8.5 cent rate at all, against 18.44 cents on a residential meter."}}]}</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<header id="stack">
+  <div id="tel"><div class="shell">
+    <span class="t">BTC <b>$63,050</b></span>
+    <span class="t">DIFFICULTY <b>127.48 T</b></span>
+    <span class="t">HASHRATE <b>912.5 EH/s</b></span>
+    <span class="t">HEIGHT <b>962,631</b></span>
+    <span class="t">SUBSIDY <b>3.125 BTC</b></span>
+    <span class="t hi">NEXT HALVING <b>607 days</b></span>
+    <span class="stamp">snapshot 15 Aug 2026 22:19 UTC</span>
+  </div></div>
+  <div id="mast"><div class="shell">
+    <a class="wordmark" href="index.html"><i></i>The Hashrate <span>Desk</span></a>
+    <div class="mast-right">
+      <span class="who">Nathan J. Song, work sample</span>
+      <div class="ctl" id="denom" role="group" aria-label="Denomination">
+        <button id="btnUSD" aria-pressed="true">USD</button><button id="btnBTC" aria-pressed="false">BTC</button>
+      </div>
+      <button class="tbtn" id="themeBtn" type="button" aria-pressed="false"><i></i><span class="tl">Dark</span></button>
+    </div>
+  </div></div>
+  <nav id="nav" aria-label="Primary"><div class="shell"><div class="navi"><a href="index.html">Calculator</a></div><div class="navi" data-panel>
+         <button aria-expanded="false" aria-haspopup="true">Cost to mine<i class="car"></i></button>
+         <div class="panelnav" role="menu">
+           <a role="menuitem" href="cost-to-mine-a-bitcoin.html"><span class="t">Cost to mine a bitcoin</span><span class="d">The additive stack: power, hardware, overhead.</span></a><a role="menuitem" href="break-even-electricity-price.html"><span class="t">Break-even power price</span><span class="d">The rate at which your fleet stops paying.</span></a><a role="menuitem" href="fair-value.html"><span class="t">Production cost fair value</span><span class="d">Four families, weighted, with the disagreement shown.</span></a><a role="menuitem" href="halving.html"><span class="t">The halving, day 607</span><span class="d">What happens to a fleet bought today.</span></a>
+         </div></div><div class="navi" data-panel>
+         <button aria-expanded="false" aria-haspopup="true">Hardware<i class="car"></i></button>
+         <div class="panelnav" role="menu">
+           <a role="menuitem" href="asic-profitability.html"><span class="t">ASIC profitability</span><span class="d">27 machines ranked by net dollars a day.</span></a><a role="menuitem" href="asic-resale-value.html"><span class="t">Resale and depreciation</span><span class="d">Book value against what a buyer pays.</span></a><a role="menuitem" href="sha256-coins.html"><span class="t">SHA-256 coins</span><span class="d">What else the same hardware can point at.</span></a>
+         </div></div><div class="navi" data-on="" data-panel>
+         <button aria-expanded="false" aria-haspopup="true">Operating<i class="car"></i></button>
+         <div class="panelnav" role="menu">
+           <a role="menuitem" href="bitcoin-mining-hosting.html"><span class="t">Hosting providers</span><span class="d">Twelve operators ranked by what they disclose.</span></a><a role="menuitem" href="is-bitcoin-mining-profitable.html"><span class="t">Is it worth it?</span><span class="d">Configure a build and get a straight answer.</span></a><a role="menuitem" href="mining-electricity-cost.html"><span class="t">Electricity benchmarks</span><span class="d">What real miners actually pay.</span></a><a role="menuitem" href="globe.html"><span class="t">Live mining map</span><span class="d">Blocks landing in real time, by pool and region.</span></a>
+         </div></div><div class="navi" data-panel>
+         <button aria-expanded="false" aria-haspopup="true">Method<i class="car"></i></button>
+         <div class="panelnav" role="menu">
+           <a role="menuitem" href="methodology.html"><span class="t">Methodology</span><span class="d">The star schema, the grain bug, the tests.</span></a><a role="menuitem" href="glossary.html"><span class="t">Glossary</span><span class="d">J/TH, PUE, hashprice, in plain English.</span></a><a role="menuitem" href="data.html"><span class="t">Download the data</span><span class="d">Every table on this site as CSV and JSON.</span></a>
+         </div></div></div></nav>
+</header>
+<main id="main">
+  <div class="shell">
+
+    <section class="sect" style="padding-top:44px" data-tighten>
+      <p class="eyebrow">Operating &middot; configured 16 August 2026</p>
+      <h1 class="h-display" style="margin:14px 0 22px;max-width:17ch">Is Bitcoin mining worth it?</h1>
+      <p class="standfirst" data-answer>Mostly no, at prices on 16 August 2026. A fifty unit Antminer S21 Pro build, hosted at
+        7.5 cents per kWh and held for 36 months, produces one bitcoin for <b>$104,654</b>
+        against a market of <b>$63,050</b>, and does not repay its <b>$96,900</b> of
+        hardware inside five years. Of the four scenarios below, only the operator paying
+        <b>3.6 cents per kWh</b> clears its own cost to produce. Change the configuration and the
+        verdict recomputes.</p>
+
+      <div class="assump" style="margin-top:26px">
+        <span class="eyebrow">Held constant behind every figure on this page</span>
+        <span class="chip ">Bitcoin <b>$63,050</b></span>
+        <span class="chip ">Difficulty <b>127.48 T</b></span>
+        <span class="chip ">Difficulty drift <b>+0.20% / epoch</b></span>
+        <span class="chip ">Pool fee <b>1.0%</b></span>
+        <span class="chip ">Fee share <b>0.71% of subsidy</b></span>
+        <span class="chip on">Halving <b>day 607</b></span>
+        <span class="chip ">Liquidation haircut <b>15%</b></span>
+        <span class="chip ">Network cost to produce <b>$78,721</b></span>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-head"><div class="n">01</div><div class="b">
+    <h2 class="h-1">Configure a build and read the verdict</h2><p class="deck">Five inputs decide whether a Bitcoin mining build pays for itself: which machine, how many, what the power costs, where the machines sit, and how long you hold them. The default below is the one this site models everywhere else, a fifty unit Antminer S21 Pro fleet, hosted at the middle of the published hosting band. The verdict panel is computed by the same engine that baked the numbers into this page, so it agrees with the static text before any script has run.</p></div></div>
+
+      <div class="panel recess pad-lg" id="cfg">
+        <p class="eyebrow">The build</p>
+        <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 20px;margin-top:14px">
+
+          <label class="fld" for="cfgMiner"><span class="eyebrow">Machine</span>
+            <select id="cfgMiner">
+              <option value="S23HYD">Antminer S23 Hyd · 9.5 J/TH · $12,900</option><option value="A4PROAIR">SealMiner A4 Pro Air · 10.9 J/TH · $3,336</option><option value="S23">Antminer S23 · 11.0 J/TH · $7,700</option><option value="M70SP">Whatsminer M70S+ · 12.9 J/TH · $3,189</option><option value="S21EXPH">Antminer S21e XP Hyd 3U · 13.0 J/TH · $8,229</option><option value="M79S">Whatsminer M79S · 13.5 J/TH · $12,289</option><option value="S21XP">Antminer S21 XP · 13.5 J/TH · $3,358</option><option value="AH3880">Teraflux AH3880 · 14.5 J/TH · $5,699</option><option value="S21PRO" selected>Antminer S21 Pro · 15.0 J/TH · $1,938</option><option value="S21HYD">Antminer S21 Hyd · 16.0 J/TH · $2,479</option><option value="S21P">Antminer S21+ · 16.5 J/TH · $1,609</option><option value="A1566HA">Avalon A1566HA 2U · 16.8 J/TH · $3,658</option><option value="S21">Antminer S21 · 17.5 J/TH · $1,700</option><option value="A1566">Avalon A1566 · 18.5 J/TH · $1,443</option><option value="M63S">Whatsminer M63S · 18.5 J/TH · $4,930</option><option value="M66S">Whatsminer M66S · 18.5 J/TH · $4,999</option><option value="S19XP">Antminer S19 XP · 21.3 J/TH · $900</option><option value="S19KPRO">Antminer S19k Pro · 23.0 J/TH · $379</option><option value="M50S">Whatsminer M50S · 26.0 J/TH · $941</option><option value="S19JPRO">Antminer S19j Pro · 29.5 J/TH · $329</option><option value="S19PRO">Antminer S19 Pro · 29.5 J/TH · $447</option><option value="M30SPP">Whatsminer M30S++ · 31.0 J/TH · $1,048</option><option value="S19">Antminer S19 · 34.2 J/TH · $350</option><option value="M30S">Whatsminer M30S · 38.0 J/TH · $299</option><option value="M20S">Whatsminer M20S · 49.4 J/TH · $119</option>
+            </select>
+            <span class="hint">25 machines with a live asking price. The two with no bid are left out, because a machine nobody will buy has no capital cost to recover.</span>
+          </label>
+
+          <label class="fld" for="cfgCount"><span class="eyebrow">How many</span>
+            <input type="number" id="cfgCount" min="1" max="500" step="1" value="50">
+            <span class="hint">Cost to produce one coin is scale invariant: doubling the fleet doubles the capital, the draw and the bitcoin. Count changes your exposure, not the verdict.</span>
+          </label>
+
+          <label class="fld" for="cfgKwh"><span class="eyebrow">Power, cents per kWh</span>
+            <input type="number" id="cfgKwh" min="0" max="40" step="0.01" value="7.50">
+            <span class="hint">All in, including any facility fee. Riot discloses 3.6, MARA 4.0, CleanSpark 5.2. The US industrial average is 8.71 and residential is 18.44.</span>
+          </label>
+
+          <label class="fld" for="cfgVenue"><span class="eyebrow">Where</span>
+            <select id="cfgVenue">
+              <option value="hosted" selected>Hosted · PUE 1.10 · 96% uptime</option><option value="home">At home · PUE 1.05 · 92% uptime</option>
+            </select>
+            <span class="hint">Venue is modelled as a PUE and an uptime, nothing else. Both figures are assumptions of this page rather than measurements.</span>
+          </label>
+
+          <label class="fld" for="cfgHold"><span class="eyebrow">Hold period</span>
+            <select id="cfgHold">
+              <option value="12">12 months</option><option value="24">24 months</option><option value="36" selected>36 months</option><option value="48">48 months</option><option value="60">60 months</option>
+            </select>
+            <span class="hint">The subsidy halves on day 607. Any hold past 20 months contains a revenue cut of one half.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel focus pad-lg" id="verdict" style="margin-top:20px">
+        <p class="eyebrow">Does this build pay back?</p>
+        <p class="h-1" id="vHead" style="margin:10px 0 10px">No, not within five years</p>
+        <p class="prose" id="vSub" style="max-width:88ch">This build produces a bitcoin for $104,654 against a market of $63,050, so it does not clear its own cost to produce and is short $41,604 a coin. For it to pay back, bitcoin has to hold above $105,074 or the power price has to sit below 3.84 cents, and the 36 month hold has to be one you can actually sit through: the subsidy halves on day 607, which is inside this window.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 26px;margin-top:26px">
+          
+    <div>
+      <p class="eyebrow">Cost to produce one bitcoin</p>
+      <p class="dnum " style="font-size:26px;margin:7px 0 5px" id="vPerBTC">$104,654</p>
+      <p class="cap">Power, plus pool fee, plus the hardware actually consumed over the hold, divided by the coins produced.</p>
+    </div>
+          
+    <div>
+      <p class="eyebrow">Against the market</p>
+      <p class="dnum neg" style="font-size:26px;margin:7px 0 5px" id="vMargin">−$41,604</p>
+      <p class="cap">Per coin, against a market price of $63,050. Negative means the build sells its output below what it cost to make.</p>
+    </div>
+          
+    <div>
+      <p class="eyebrow">Cash payback</p>
+      <p class="dnum " style="font-size:26px;margin:7px 0 5px" id="vPayback">none in 5 yr</p>
+      <p class="cap">The day cumulative mining cash flow finally equals the cheque written for the machines, with difficulty drifting and the subsidy halving inside the walk.</p>
+    </div>
+          
+    <div>
+      <p class="eyebrow">Capital outlay</p>
+      <p class="dnum " style="font-size:26px;margin:7px 0 5px" id="vCapex">$96,900</p>
+      <p class="cap">Machine count times the lowest vendor asking price recorded on 15 August 2026. An ask is an offer, not a trade.</p>
+    </div>
+          
+    <div>
+      <p class="eyebrow">Break-even power price</p>
+      <p class="dnum " style="font-size:26px;margin:7px 0 5px" id="vBeKwh">3.84 cents</p>
+      <p class="cap">The rate at which cost to produce meets the market price. Above this line the build is destroying value on every coin.</p>
+    </div>
+          
+    <div>
+      <p class="eyebrow">Position at the end of the hold</p>
+      <p class="dnum neg" style="font-size:26px;margin:7px 0 5px" id="vTotal">−$185,559</p>
+      <p class="cap">Cumulative cash, less the capital, plus what the fleet is still worth after a liquidation haircut.</p>
+    </div>
+        </div>
+
+        <p class="cap" style="margin-top:22px" id="vFoot">Modelled at $63,050 a bitcoin with the price held flat, difficulty
+        drifting at 0.20 percent an epoch, and the block subsidy stepping down on day 607.
+        This is a deterministic walk, not a forecast. The <a class="link" href="index.html">calculator</a> runs the same fleet through
+        1,200 simulated price paths and reports the band.</p>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-head"><div class="n">02</div><div class="b">
+    <h2 class="h-1">Four scenarios, one fleet</h2><p class="deck">Of four named power prices applied to the same fifty unit Antminer S21 Pro fleet over the same 36 month hold, exactly one clears the cost of producing a bitcoin as of 16 August 2026. The fleet, the machine and the hold are held identical across all four rows so that the power price is the only thing being compared, and because cost to produce a coin does not change with fleet size, every figure in the cost column holds for a one machine build as well as a fifty machine one.</p></div></div>
+
+      <div class="tbl-scroll"><table class="data roomy">
+        <thead><tr>
+          <th>Scenario</th><th class="num">Power, per kWh</th><th>Venue</th>
+          <th class="num">Cost to produce 1 BTC</th><th class="num">Against $63,050</th>
+          <th class="num">Cash payback</th><th class="num">Position at 36 months</th>
+        </tr></thead>
+        <tbody>
+          <tr id="s-operator">
+      <td class="lead">Large operator, own site<span class="sub">Riot Platforms Q2 2026 disclosed net cost of power, after curtailment credits</span></td>
+      <td class="num"><span class="cnum">3.60c</span></td>
+      <td>Hosted</td>
+      <td class="num lead"><span class="cnum">$60,261</span></td>
+      <td class="num pos"><span class="cnum">+$2,789</span></td>
+      <td class="num"><span class="cnum">578 days</span></td>
+      <td class="num pos"><span class="cnum">+$12,438</span></td>
+    </tr>
+          <tr class="marker"><td colspan="7">Below this line: the cost of producing one bitcoin exceeds what a bitcoin sells for. These configurations lose money on every coin they make.</td></tr>
+          <tr id="s-hosted">
+      <td class="lead">Hosted colocation<span class="sub">Middle of the published hosting band of $0.055 to $0.085 per kWh, twelve operators surveyed 16 August 2026</span></td>
+      <td class="num"><span class="cnum">7.50c</span></td>
+      <td>Hosted</td>
+      <td class="num lead"><span class="cnum">$104,654</span></td>
+      <td class="num neg"><span class="cnum">−$41,604</span></td>
+      <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td>
+      <td class="num neg"><span class="cnum">−$185,559</span></td>
+    </tr><tr id="s-homeind">
+      <td class="lead">At home, industrial tariff<span class="sub">US industrial average, EIA, May 2026</span></td>
+      <td class="num"><span class="cnum">8.71c</span></td>
+      <td>At home</td>
+      <td class="num lead"><span class="cnum">$118,846</span></td>
+      <td class="num neg"><span class="cnum">−$55,796</span></td>
+      <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td>
+      <td class="num neg"><span class="cnum">−$238,489</span></td>
+    </tr><tr id="s-homeres">
+      <td class="lead">At home, residential tariff<span class="sub">US residential average, EIA, May 2026</span></td>
+      <td class="num"><span class="cnum">18.44c</span></td>
+      <td>At home</td>
+      <td class="num lead"><span class="cnum">$229,161</span></td>
+      <td class="num neg"><span class="cnum">−$166,111</span></td>
+      <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td>
+      <td class="num neg"><span class="cnum">−$710,011</span></td>
+    </tr>
+        </tbody>
+      </table></div>
+
+      <div class="prose" style="max-width:none;margin-top:22px;columns:2;column-gap:44px">
+        <p><b>The spread between the top and bottom row is entirely electricity.</b> Same machine, same
+        purchase price, same difficulty, same hold. Moving from 3.6 cents to 18.44 cents raises the cost
+        of producing one bitcoin from $60,261 to $229,161, a factor of
+        3.8. No hardware decision available in 2026 moves the
+        number that far. This is the reason miners chase stranded gas, curtailment credits and Paraguayan
+        hydro rather than chasing efficiency alone.</p>
+        <p><b>The hosted row is the interesting one, because it is the one most readers can actually buy.</b>
+        At 7.5 cents, the middle of the band the twelve surveyed hosting providers publish, the fleet nets
+        +$21 a month. That is not a margin, it is a rounding error: the shutdown price for
+        this configuration is $62,924, against a market of $63,050. A four percent fall
+        in bitcoin, or half a cent on the rate, puts the machines below the line at which running them costs
+        more than switching them off.</p>
+        <p><b>The industrial row is shown because it is the honest ceiling for a self run site, not because a
+        house gets that rate.</b> The US industrial average of 8.71 cents in May 2026 is what a factory pays.
+        A residential meter pays 18.44. Anyone modelling home mining at an industrial tariff is modelling a
+        warehouse they have not rented yet.</p>
+      </div>
+      <p class="src"><a href="https://www.riotplatforms.com/riot-platforms-reports-second-quarter-2026-financial-results-and-strategic-highlights/" rel="nofollow noopener" target="_blank">Riot Platforms Q2 2026, 3.6 cents net of curtailment credits</a> &middot; <a href="https://www.eia.gov/electricity/monthly/update/end-use.php" rel="nofollow noopener" target="_blank">EIA end use prices, May 2026</a> &middot; <a href="bitcoin-mining-hosting.html" rel="nofollow noopener" target="_blank">Hosting rates surveyed 16 Aug 2026</a> &middot; <a href="https://www.aol.com/articles/mara-mara-q2-2026-earnings-003216000.html" rel="nofollow noopener" target="_blank">MARA Q2 2026, 4.0 cents</a> &middot; <a href="https://www.fool.com/earnings/call-transcripts/2026/05/11/cleanspark-clsk-q2-2026-earnings-transcript/" rel="nofollow noopener" target="_blank">CleanSpark FQ2 2026, 5.2 cents</a></p>
+    </section>
+
+    <section class="sect">
+      <div class="sect-head"><div class="n">03</div><div class="b">
+    <h2 class="h-1">What has to be true</h2><p class="deck">The default build needs power below 3.84 cents per kWh, or bitcoin above $105,074, to cover the cost of producing a coin over a 36 month hold from 16 August 2026. Those two conditions are the whole answer: everything else on this page is a way of showing how far the configuration sits from one of them. The ladder below prices the same question for every machine in the catalogue that has a live asking price, because a machine's tolerance for expensive power is the only hardware property that decides this.</p></div></div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:34px;align-items:start">
+        <div>
+          <p class="eyebrow" style="margin-bottom:12px">The default build against a power price ladder</p>
+          <table class="data tight">
+            <thead><tr><th>Power price</th><th class="num">Cost to produce</th><th class="num">Net / month</th><th class="num">Cash payback</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="lead">3.00 cents</td>
+                <td class="num"><span class="cnum">$53,432</span></td>
+                <td class="num pos"><span class="cnum">+$6,367</span></td>
+                <td class="num"><span class="cnum">491 days</span></td></tr><tr>
+                <td class="lead">3.60 cents<span class="sub">Riot, Q2 2026</span></td>
+                <td class="num"><span class="cnum">$60,261</span></td>
+                <td class="num pos"><span class="cnum">+$5,521</span></td>
+                <td class="num"><span class="cnum">578 days</span></td></tr><tr>
+                <td class="lead">4.50 cents</td>
+                <td class="num"><span class="cnum">$70,506</span></td>
+                <td class="num pos"><span class="cnum">+$4,252</span></td>
+                <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td></tr><tr>
+                <td class="lead">5.00 cents<span class="sub">this site's default</span></td>
+                <td class="num"><span class="cnum">$76,197</span></td>
+                <td class="num pos"><span class="cnum">+$3,547</span></td>
+                <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td></tr><tr>
+                <td class="lead">6.00 cents</td>
+                <td class="num"><span class="cnum">$87,580</span></td>
+                <td class="num pos"><span class="cnum">+$2,137</span></td>
+                <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td></tr><tr class="on">
+                <td class="lead">7.50 cents<span class="sub">hosted, mid band</span></td>
+                <td class="num"><span class="cnum">$104,654</span></td>
+                <td class="num pos"><span class="cnum">+$21</span></td>
+                <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td></tr><tr>
+                <td class="lead">8.71 cents<span class="sub">US industrial</span></td>
+                <td class="num"><span class="cnum">$118,427</span></td>
+                <td class="num neg"><span class="cnum">−$1,685</span></td>
+                <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td></tr><tr>
+                <td class="lead">12.00 cents</td>
+                <td class="num"><span class="cnum">$155,876</span></td>
+                <td class="num neg"><span class="cnum">−$6,325</span></td>
+                <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td></tr><tr>
+                <td class="lead">18.44 cents<span class="sub">US residential</span></td>
+                <td class="num"><span class="cnum">$229,180</span></td>
+                <td class="num neg"><span class="cnum">−$15,407</span></td>
+                <td class="num"><span style="color:var(--ink-4)">none in 5 yr</span></td></tr>
+            </tbody>
+          </table>
+          <p class="cap" style="margin-top:12px">Fifty Antminer S21 Pro units, hosted, 36 month hold. The highlighted row is the default
+          configuration. Every row here is held hosted, so the 8.71 and 18.44 cent rows differ by a few hundred dollars from the
+          same rates in the scenario table above, where they are modelled at home. That difference is the venue assumption and
+          nothing else.</p>
+        </div>
+
+        <div>
+          <p class="eyebrow" style="margin-bottom:12px">Machines ranked by the power price they can bear</p>
+          <table class="data tight">
+            <thead><tr><th>Machine</th><th class="num">J/TH</th><th class="num">$ / TH</th><th class="num">Break-even power</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="lead">SealMiner A4 Pro Air</td>
+                <td class="num"><span class="cnum">10.9</span></td>
+                <td class="num"><span class="cnum">$9.93</span></td>
+                <td class="num lead"><span class="cnum">4.84c</span></td></tr><tr>
+                <td class="lead">Antminer S21e XP Hyd 3U</td>
+                <td class="num"><span class="cnum">13.0</span></td>
+                <td class="num"><span class="cnum">$9.57</span></td>
+                <td class="num lead"><span class="cnum">4.14c</span></td></tr><tr class="on">
+                <td class="lead">Antminer S21 Pro</td>
+                <td class="num"><span class="cnum">15.0</span></td>
+                <td class="num"><span class="cnum">$8.28</span></td>
+                <td class="num lead"><span class="cnum">3.84c</span></td></tr><tr>
+                <td class="lead">Antminer S21 Hyd</td>
+                <td class="num"><span class="cnum">16.0</span></td>
+                <td class="num"><span class="cnum">$7.40</span></td>
+                <td class="num lead"><span class="cnum">3.77c</span></td></tr><tr>
+                <td class="lead">Teraflux AH3880</td>
+                <td class="num"><span class="cnum">14.5</span></td>
+                <td class="num"><span class="cnum">$9.50</span></td>
+                <td class="num lead"><span class="cnum">3.73c</span></td></tr><tr>
+                <td class="lead">Antminer S21+</td>
+                <td class="num"><span class="cnum">16.5</span></td>
+                <td class="num"><span class="cnum">$7.45</span></td>
+                <td class="num lead"><span class="cnum">3.65c</span></td></tr><tr>
+                <td class="lead">Avalon A1566HA 2U</td>
+                <td class="num"><span class="cnum">16.8</span></td>
+                <td class="num"><span class="cnum">$7.62</span></td>
+                <td class="num lead"><span class="cnum">3.55c</span></td></tr><tr>
+                <td class="lead">Whatsminer M70S+</td>
+                <td class="num"><span class="cnum">12.9</span></td>
+                <td class="num"><span class="cnum">$13.07</span></td>
+                <td class="num lead"><span class="cnum">3.38c</span></td></tr><tr>
+                <td class="lead">Antminer S21 XP</td>
+                <td class="num"><span class="cnum">13.5</span></td>
+                <td class="num"><span class="cnum">$12.44</span></td>
+                <td class="num lead"><span class="cnum">3.36c</span></td></tr><tr>
+                <td class="lead">Antminer S21</td>
+                <td class="num"><span class="cnum">17.5</span></td>
+                <td class="num"><span class="cnum">$8.50</span></td>
+                <td class="num lead"><span class="cnum">3.26c</span></td></tr>
+            </tbody>
+          </table>
+          <p class="cap" style="margin-top:12px">Top ten of 25. Efficiency alone does not win this table: the
+          SealMiner A4 Pro Air tolerates the highest power price of any machine here at 4.84 cents because it
+          pairs 10.9 J/TH with $9.93 per terahash, and a cheap efficient machine
+          beats an expensive efficient one on every horizon.</p>
+        </div>
+      </div>
+
+      <div class="sens" style="margin-top:26px">
+        <div class="row"><span class="k">shutdown price</span> Below <b>$62,924</b> a bitcoin, the default configuration earns less in a day than its electricity costs, and the only correct action is to switch it off. Capital already spent is not recovered by running at a loss.</div>
+        <div class="row"><span class="k">break-even power</span> <b>3.84 cents per kWh</b>. No provider in the twelve operator hosting survey publishes a rate that low; the cheapest published figure is 5.5 cents, and that one is a profit share rather than a flat rate.</div>
+        <div class="row"><span class="k">break-even bitcoin</span> <b>$105,074</b>, which is 67 percent above the market price on 16 August 2026 and 33 percent above the network's own modelled cost to produce of $78,721.</div>
+        <div class="row"><span class="k">machine choice</span> Swapping the Antminer S21 Pro for the SealMiner A4 Pro Air moves break-even power from 3.84 cents to 4.84 cents. That is the largest single improvement available from hardware, and it is still not enough to reach the US industrial average of 8.71 cents.</div>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-head"><div class="n">04</div><div class="b">
+    <h2 class="h-1">Hosted or at home</h2><p class="deck">Changing nothing but the building moves the cost of producing a bitcoin by $474 on a base of $104,654, which is 0.5 percent of it. The venue question is therefore not really a venue question. It is a question about which power price each venue can reach, and about a set of costs and risks this model does not price at all.</p></div></div>
+
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+        
+          <article class="panel pad-lg">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between">
+              <h3 class="h-2">Hosted</h3>
+              <span class="chip on">PUE 1.10 &middot; 96% uptime</span>
+            </div>
+            <p class="cap" style="margin-top:6px">A colocation contract. The facility load is billed through to you, so PUE sits inside the rate, and staff on site recover a failed unit in hours rather than at the weekend.</p>
+            <table class="data tight" style="margin-top:16px"><tbody>
+              <tr><td>At the wall</td><td class="num"><span class="cnum">193 kW</span></td></tr>
+              <tr><td>Bitcoin over 36 months</td><td class="num"><span class="cnum">4.460 BTC</span></td></tr>
+              <tr><td>Electricity over 36 months</td><td class="num"><span class="cnum">$380,762</span></td></tr>
+              <tr><td>Hardware consumed</td><td class="num"><span class="cnum">$83,197</span></td></tr>
+              <tr><td>Cost to produce 1 BTC</td><td class="num lead"><span class="cnum">$104,654</span></td></tr>
+              <tr><td>Position at 36 months</td><td class="num neg"><span class="cnum">−$185,559</span></td></tr>
+            </tbody></table>
+          </article>
+          <article class="panel pad-lg">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between">
+              <h3 class="h-2">At home</h3>
+              <span class="chip">PUE 1.05 &middot; 92% uptime</span>
+            </div>
+            <p class="cap" style="margin-top:6px">Your own space, your own meter. Less facility overhead to pay for, more downtime, because nobody is on site at three in the morning and summer heat curtails a domestic room long before it curtails a datacentre.</p>
+            <table class="data tight" style="margin-top:16px"><tbody>
+              <tr><td>At the wall</td><td class="num"><span class="cnum">184 kW</span></td></tr>
+              <tr><td>Bitcoin over 36 months</td><td class="num"><span class="cnum">4.274 BTC</span></td></tr>
+              <tr><td>Electricity over 36 months</td><td class="num"><span class="cnum">$363,455</span></td></tr>
+              <tr><td>Hardware consumed</td><td class="num"><span class="cnum">$83,197</span></td></tr>
+              <tr><td>Cost to produce 1 BTC</td><td class="num lead"><span class="cnum">$105,127</span></td></tr>
+              <tr><td>Position at 36 months</td><td class="num neg"><span class="cnum">−$179,851</span></td></tr>
+            </tbody></table>
+          </article>
+      </div>
+
+      <div class="prose" style="max-width:none;margin-top:24px;columns:2;column-gap:44px">
+        <p><b>Hosting buys a rate, not a building.</b> A fifty machine buyer on a residential meter pays 18.44
+        cents. The same buyer signing a colocation contract reaches the 5.5 to 8.5 cent band that the twelve
+        surveyed operators publish. That gap is worth $124,508 per bitcoin
+        produced, which dwarfs every modelled difference between the two venues. The model gives home a
+        slightly better PUE and a worse uptime, and those two effects very nearly cancel.</p>
+        <p><b>What hosting costs you is control.</b> Your machines sit in someone else's building, under
+        someone else's insurance, subject to someone else's curtailment decisions. The hosting survey on this
+        site records one operator that lost access to roughly $30 million of customer equipment when
+        sanctions hit its host, and one that is being sued over machines a customer says were never
+        delivered. Neither risk appears anywhere in the arithmetic above, and neither can be modelled from
+        published data.</p>
+        <p><b>What home mining costs you is not in this model either.</b> Fifty S21 Pro units draw
+        184 kW and reject essentially all of it as heat into whatever room they occupy. That is
+        a three phase service, an electrician, a ventilation plan and a noise problem measured in the
+        seventies of decibels. The realistic home build is one or two machines, and because cost to produce
+        is scale invariant, the verdict for one machine is identical to the verdict for fifty.</p>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-head"><div class="n">05</div><div class="b">
+    <h2 class="h-1">The halving is inside a three year hold</h2><p class="deck">The block subsidy halves on day 607, which is month 20 of a 36 month hold, so the third year of this build earns 55 percent less bitcoin than the first year for exactly the same electricity. Any payback figure quoted as capital divided by this month's profit is quoting the best month the fleet will ever have.</p></div></div>
+
+      <div class="tbl-scroll"><table class="data roomy">
+        <thead><tr><th>Period</th><th class="num">Bitcoin produced</th><th class="num">Share of the three years</th>
+          <th class="num">Net cash after power and pool fee</th><th class="num">Subsidy in force</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">Months 1 to 12</td>
+            <td class="num"><span class="cnum">1.986 BTC</span></td>
+            <td class="num"><span class="cnum">45%</span></td>
+            <td class="num neg"><span class="cnum">−$2,959</span></td>
+            <td class="num"><span class="cnum">3.1250 BTC</span></td></tr><tr>
+            <td class="lead">Months 13 to 24</td>
+            <td class="num"><span class="cnum">1.580 BTC</span></td>
+            <td class="num"><span class="cnum">35%</span></td>
+            <td class="num neg"><span class="cnum">−$28,327</span></td>
+            <td class="num"><span class="cnum">3.1250 falling to 1.5625 BTC</span></td></tr><tr>
+            <td class="lead">Months 25 to 36</td>
+            <td class="num"><span class="cnum">0.895 BTC</span></td>
+            <td class="num"><span class="cnum">20%</span></td>
+            <td class="num neg"><span class="cnum">−$71,076</span></td>
+            <td class="num"><span class="cnum">1.5625 BTC</span></td></tr>
+          <tr><td class="lead">Whole hold</td><td class="num lead"><span class="cnum">4.460 BTC</span></td>
+            <td class="num"><span class="cnum">100%</span></td>
+            <td class="num lead neg"><span class="cnum">−$102,362</span></td>
+            <td class="num"><span class="cnum">steps down on day 607</span></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="prose" style="margin-top:22px">
+        <p>Two forces compound over a 36 month hold and both point the same way. Difficulty drifts upward at
+        0.20 percent per epoch, which shrinks the fleet's share of the network by roughly
+        5 percent a year. Then the subsidy halves at
+        block 1,050,000 and the revenue side is cut in half overnight while the electricity bill does not move
+        by a cent. The fleet produces 1.986 BTC in its first twelve months and
+        0.895 BTC in its last twelve.</p>
+        <p>This is why a shorter hold is not simply a smaller version of a longer one. Shortening the hold to
+        12 months at the default power price leaves the cost of producing a coin at
+        $90,522, because the hardware has barely been consumed and the
+        subsidy is still whole. Extending it to 60 months raises it to
+        $119,568. A hold period is not a neutral reporting window; it is an
+        assumption about how much post-halving revenue you are willing to average into your own answer.</p>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="sect-head"><div class="n">06</div><div class="b">
+    <h2 class="h-1">Questions people actually ask</h2></div></div>
+      <div class="prose">
+        <h3 class="h-3" style="margin-top:22px">Is Bitcoin mining profitable in 2026?</h3><p>Only at a power price most people cannot get. Modelled on 16 August 2026 with bitcoin at $63,050, a fifty unit Antminer S21 Pro fleet held for 36 months produces one bitcoin for $60,261 at 3.6 cents per kWh, $104,654 at 7.5 cents hosted, and $229,161 at the US residential average of 18.44 cents. Only the first of those clears the market price. The break-even power price for this build is 3.84 cents per kWh, which is below what any of the twelve hosting providers surveyed on this site publishes, and below the US industrial average of 8.71 cents.</p><h3 class="h-3" style="margin-top:22px">Is Bitcoin mining worth it at home?</h3><p>Not on a residential meter, at these inputs. At the US residential average of 18.44 cents per kWh in May 2026, this model produces a bitcoin for $229,161, which is 3.6 times the market price of $63,050. Every machine hour at that rate destroys value, and no hardware choice repairs it: the best machine in the catalogue on this measure, the SealMiner A4 Pro Air, still needs power below 4.84 cents. Home mining can still make sense as heat, as a hobby, or where the electricity is genuinely free, but it does not make sense as an investment on a metered residential tariff.</p><h3 class="h-3" style="margin-top:22px">How long does a Bitcoin miner take to pay for itself?</h3><p>At 3.6 cents per kWh, 578 days for a fifty unit Antminer S21 Pro fleet costing $96,900, modelled from 16 August 2026 with difficulty drifting at 0.20 percent per epoch and the subsidy halving on day 607. At 7.5 cents the same fleet does not pay for itself at all inside five years. Payback is not capital divided by this month's profit: this month's profit is the best month the fleet will ever have, because difficulty rises and the block subsidy halves inside any hold longer than 20 months.</p><h3 class="h-3" style="margin-top:22px">What electricity price do you need for Bitcoin mining to be profitable?</h3><p>Below 3.84 cents per kWh for this configuration, as modelled on 16 August 2026. That is the rate at which the cost to produce one bitcoin, counting power, pool fee and the hardware actually consumed over a 36 month hold, meets the market price of $63,050. The figure moves with the machine: the SealMiner A4 Pro Air tolerates 4.84 cents, the Antminer S21 only 3.26 cents. For reference, Riot discloses 3.6 cents, MARA 4.0 and CleanSpark 5.2 in their 2026 quarterly filings.</p><h3 class="h-3" style="margin-top:22px">Is hosted mining better than mining at home?</h3><p>On price, almost always. On the model's own venue assumptions, barely at all. Holding the power price at 7.5 cents and changing nothing but the building, hosted produces a bitcoin for $104,654 and home for $105,127, a difference of $474 a coin, because the four extra points of uptime a staffed facility buys very nearly cancel the five extra points of PUE it bills you for. The real argument for hosting is not the building, it is that hosting is how a fifty machine buyer reaches a 5.5 to 8.5 cent rate at all, against 18.44 cents on a residential meter.</p>
+      </div>
+      <p class="src"><a href="https://www.eia.gov/electricity/monthly/update/end-use.php" rel="nofollow noopener" target="_blank">EIA end use prices, May 2026</a> &middot; <a href="https://www.riotplatforms.com/riot-platforms-reports-second-quarter-2026-financial-results-and-strategic-highlights/" rel="nofollow noopener" target="_blank">Riot Q2 2026</a> &middot; <a href="https://www.aol.com/articles/mara-mara-q2-2026-earnings-003216000.html" rel="nofollow noopener" target="_blank">MARA Q2 2026</a> &middot; <a href="https://www.fool.com/earnings/call-transcripts/2026/05/11/cleanspark-clsk-q2-2026-earnings-transcript/" rel="nofollow noopener" target="_blank">CleanSpark FQ2 2026</a> &middot; <a href="https://miningnow.com/" rel="nofollow noopener" target="_blank">Vendor asking prices, 15 Aug 2026</a> &middot; <a href="https://mempool.space/" rel="nofollow noopener" target="_blank">Network snapshot, 15 Aug 2026</a></p>
+    </section>
+  </div>
+</main>
+<footer class="foot"><div class="shell"><div class="cols">
+    <div>
+      <h4>The Hashrate Desk</h4>
+      <p class="blurb">A Bitcoin mining economics model built as a work sample by Nathan J. Song.
+      Every external figure carries a source and a date. Every projection steps the block subsidy down at
+      the halving. The warehouse data is synthetic; the network snapshot is real.</p>
+    </div>
+    <div><h4>Cost</h4><a href="cost-to-mine-a-bitcoin.html">Cost to mine a bitcoin</a><a href="break-even-electricity-price.html">Break-even power price</a><a href="fair-value.html">Production cost fair value</a><a href="halving.html">The halving, day 607</a></div>
+    <div><h4>Hardware</h4><a href="asic-profitability.html">ASIC profitability</a><a href="asic-resale-value.html">Resale and depreciation</a><a href="sha256-coins.html">SHA-256 coins</a></div>
+    <div><h4>Operating</h4><a href="bitcoin-mining-hosting.html">Hosting providers</a><a href="is-bitcoin-mining-profitable.html">Is it worth it?</a><a href="mining-electricity-cost.html">Electricity benchmarks</a><a href="globe.html">Live mining map</a></div>
+  </div></div></footer>
+<div id="rail" aria-label="Key figures"><div class="shell"><div class="rcell"><span class="k">Build</span><span class="v mono">50 × S21 Pro</span></div><div class="rcell"><span class="k">Power</span><span class="v mono">7.50c / kWh</span></div><div class="rcell"><span class="k">Cost to produce</span><span class="v">$104,654</span></div><div class="rcell"><span class="k">Verdict</span><span class="v"><span class="neg">Does not clear</span></span></div><div class="rcell"><span class="k">Capex</span><span class="v">$96,900</span></div><div class="rcell"><span class="k">Net / month</span><span class="v">+$21</span></div><div class="rcell"><span class="k">Break-even power</span><span class="v mono">3.84c</span></div><div class="rcell"><span class="k">Cash payback</span><span class="v">none in 5 yr</span></div>
+    <div class="end"><button class="tbtn" id="railTop" type="button">Back to top</button></div>
+  </div></div>
+<script>(()=>{var et=Object.defineProperty;var tt=(e,t)=>{for(var o in t)et(e,o,{get:t[o],enumerable:!0})};var V={};tt(V,{BLOCKS_DAY:()=>A,CURGEN_TH:()=>he,CURGEN_YR:()=>ce,DAYS_TO_HALVING:()=>N,HALVING_INTERVAL_DAYS:()=>se,MACRS5:()=>le,MC:()=>dt,MINERS:()=>M,MO_DAYS:()=>D,NET:()=>g,NET_BTC_DAY:()=>J,NET_HS:()=>R,NET_PH_IMPLIED:()=>F,REWARD:()=>re,S:()=>n,TWO32:()=>ie,VOL:()=>Ce,_valCache:()=>j,ageYears:()=>He,bands:()=>nt,bookValue:()=>rt,breakevenJTH:()=>ct,btcPerDay:()=>ke,cohortFit:()=>Se,crossZero:()=>at,dayEcon:()=>ot,dayEconAt:()=>H,defaultState:()=>Q,diffAtDrift:()=>$,electricalCost:()=>Ee,fleetPaths:()=>it,fleetSpec:()=>T,flipJTH:()=>lt,gauss:()=>E,incomeValue:()=>Te,integrate:()=>pe,miner:()=>K,netPerMachine:()=>ht,pctl:()=>w,productionCost:()=>G,resaleCurve:()=>xe,residual:()=>Z,rnd:()=>de,scheduleValue:()=>Me,seed:()=>O,setState:()=>X,subsidyAt:()=>ue,valuation:()=>st,valuationCompute:()=>Ae});var g={asOf:"2026-08-15T22:19Z",difficulty:1274798556936914e-1,hashrateEH:895,height:962631,subsidy:3.125,feesPerBlock:.0223,btc:63050,supply:20070684,thermocapB:92.58,puell:.79,hashpricePH:31.23,halvingHeight:105e4},ie=4294967296,R=g.difficulty*ie/600,F=R/1e15,A=144,D=365.25/12,re=g.subsidy+g.feesPerBlock,J=A*re,N=(g.halvingHeight-g.height)/A,se=21e4/A,M=[{id:"S23HYD",v:"Bitmain",n:"Antminer S23 Hyd",y:2026,th:580,w:5510,p:12900,q:"quoted",cool:"hydro"},{id:"S23",v:"Bitmain",n:"Antminer S23",y:2026,th:318,w:3498,p:7700,q:"quoted",cool:"air"},{id:"A4PROAIR",v:"Bitdeer",n:"SealMiner A4 Pro Air",y:2026,th:336,w:3662,p:3336,q:"quoted",cool:"air"},{id:"S21EXPH",v:"Bitmain",n:"Antminer S21e XP Hyd 3U",y:2024,th:860,w:11180,p:8229,q:"quoted",cool:"hydro"},{id:"M79S",v:"MicroBT",n:"Whatsminer M79S",y:2025,th:930,w:12555,p:12289,q:"thin",cool:"hydro"},{id:"AH3880",v:"Auradine",n:"Teraflux AH3880",y:2025,th:600,w:8700,p:5699,q:"quoted",cool:"hydro"},{id:"A1566HA",v:"Canaan",n:"Avalon A1566HA 2U",y:2025,th:480,w:8064,p:3658,q:"quoted",cool:"hydro"},{id:"S21XP",v:"Bitmain",n:"Antminer S21 XP",y:2024,th:270,w:3645,p:3358,q:"thin",cool:"air"},{id:"M70SP",v:"MicroBT",n:"Whatsminer M70S+",y:2025,th:244,w:3140,p:3189,q:"quoted",cool:"air"},{id:"S21PRO",v:"Bitmain",n:"Antminer S21 Pro",y:2024,th:234,w:3510,p:1938,q:"quoted",cool:"air"},{id:"S21P",v:"Bitmain",n:"Antminer S21+",y:2025,th:216,w:3564,p:1609,q:"quoted",cool:"air"},{id:"S21HYD",v:"Bitmain",n:"Antminer S21 Hyd",y:2023,th:335,w:5360,p:2479,q:"quoted",cool:"hydro"},{id:"M63S",v:"MicroBT",n:"Whatsminer M63S",y:2023,th:390,w:7215,p:4930,q:"thin",cool:"hydro"},{id:"M66S",v:"MicroBT",n:"Whatsminer M66S",y:2023,th:298,w:5513,p:4999,q:"thin",cool:"hydro"},{id:"S21",v:"Bitmain",n:"Antminer S21",y:2023,th:200,w:3500,p:1700,q:"thin",cool:"air"},{id:"A1566",v:"Canaan",n:"Avalon A1566",y:2024,th:185,w:3420,p:1443,q:"quoted",cool:"air"},{id:"S19XP",v:"Bitmain",n:"Antminer S19 XP",y:2022,th:141,w:3010,p:900,q:"thin",cool:"air"},{id:"S19KPRO",v:"Bitmain",n:"Antminer S19k Pro",y:2023,th:120,w:2760,p:379,q:"quoted",cool:"air"},{id:"M30SPP",v:"MicroBT",n:"Whatsminer M30S++",y:2020,th:112,w:3472,p:1048,q:"thin",cool:"air"},{id:"S19PRO",v:"Bitmain",n:"Antminer S19 Pro",y:2020,th:110,w:3250,p:447,q:"quoted",cool:"air"},{id:"S19JPRO",v:"Bitmain",n:"Antminer S19j Pro",y:2021,th:104,w:3068,p:329,q:"quoted",cool:"air"},{id:"M50S",v:"MicroBT",n:"Whatsminer M50S",y:2022,th:126,w:3276,p:941,q:"thin",cool:"air"},{id:"S19",v:"Bitmain",n:"Antminer S19",y:2020,th:95,w:3250,p:350,q:"thin",cool:"air"},{id:"M30S",v:"MicroBT",n:"Whatsminer M30S",y:2020,th:86,w:3268,p:299,q:"quoted",cool:"air"},{id:"M20S",v:"MicroBT",n:"Whatsminer M20S",y:2019,th:68,w:3360,p:119,q:"thin",cool:"air"},{id:"S17PRO",v:"Bitmain",n:"Antminer S17 Pro",y:2019,th:53,w:2094,p:0,q:"nobid",cool:"air"},{id:"S9",v:"Bitmain",n:"Antminer S9 (13.5T)",y:2017,th:13.5,w:1323,p:0,q:"nobid",cool:"air"}];M.forEach(e=>{e.jth=e.w/e.th,e.perTH=e.p/e.th});var ce=2024,he=(()=>{let e=M.filter(o=>o.y>=ce&&o.q!=="nobid"&&o.p>0).map(o=>o.perTH).sort((o,a)=>o-a);if(!e.length)return 10;let t=(e.length-1)/2;return(e[Math.floor(t)]+e[Math.ceil(t)])/2})();function Q(){return{minerId:"S21PRO",count:50,price:1938,uptime:96,kwh:.05,pue:1.1,btc:g.btc,pool:1,feeshare:.71,drift:.2,frozen:!1,denom:"USD",resaleRate:45,resaleBuyerKwh:.06,resalePayback:12,bookMethod:"sl3",exitMonths:12,resaleSpread:15,beMode:"total",netJTH:20,netJTHsrc:"blended",netKwh:.055,netPUE:1.1,netCapexTH:Math.round(he*2)/2,netLifeYrs:4,netOverhead:10,weights:{cost:.35,hash:.25,puell:.2,thermo:.1,regime:.1}}}var n=Q();function X(e){return n=e,n}function ue(e){let t=g.subsidy,o=(e||0)-N;for(;o>=0;)t/=2,o-=se;return t}function T(){let e=K();return{m:e,hs:e.th*1e12*n.count*(n.uptime/100),thTotal:e.th*n.count,kw:e.w*n.count*n.pue/1e3,capex:n.price*n.count}}function ke(e,t){let o=T(),a=R*e,i=ue(t)*(1+n.feeshare/100);return A*i*(o.hs/a)*(1-n.pool/100)}function ot(e,t,o){let a=T(),i=ke(e,o),s=i*t/(1-n.pool/100),h=s*n.pool/100,c=a.kw*24*n.kwh,r=s-h-c;return{btc:i,gross:s,poolFee:h,power:c,net:r,margin:s>0?r/s:0}}function $(e,t){return n.frozen?1:Math.pow(1+t/100,e/14)}function pe(e,t){t=t||5;let o=T(),a=0,i=0,s=0,h=0,c=0;for(let r=0;r<e;r+=t){let p=Math.min(t,e-r),l=H($(r,n.drift),n.btc,o,r);a+=l.btc*p,i+=l.gross*p,s+=l.power*p,h+=l.poolFee*p,c+=l.net*p}return{btc:a,gross:i,power:s,fee:h,net:c,days:e}}function H(e,t,o,a){let i=R*e,s=ue(a)*(1+n.feeshare/100),h=A*s*(o.hs/i),c=h*t,r=c*n.pool/100,p=o.kw*24*n.kwh;return{btc:h,gross:c,poolFee:r,power:p,net:c-r-p}}function w(e,t){let o=(e.length-1)*t,a=Math.floor(o),i=Math.ceil(o);return e[a]+(e[i]-e[a])*(o-a)}function nt(e){let{all:t,allB:o,allT:a,pts:i,step:s}=e,h=t.length,c=new Float64Array(h),r=new Float64Array(h),p=new Float64Array(h),l=new Array(i);for(let d=0;d<i;d++){for(let u=0;u<h;u++)c[u]=t[u][d],r[u]=o[u][d],p[u]=a[u][d];c.sort(),r.sort(),p.sort(),l[d]={t:d*s,p10:w(c,.1),p25:w(c,.25),p50:w(c,.5),p75:w(c,.75),p90:w(c,.9),p10btc:w(r,.1),p25btc:w(r,.25),p50btc:w(r,.5),p75btc:w(r,.75),p90btc:w(r,.9),p10tot:w(p,.1),p25tot:w(p,.25),p50tot:w(p,.5),p75tot:w(p,.75),p90tot:w(p,.9)}}return l}function at(e,t){if(!e.length)return null;let o=1e-6;if(e[0][t]>=-o)return 0;for(let a=1;a<e.length;a++)if(e[a-1][t]<-o&&e[a][t]>=-o){let i=e[a-1][t],s=e[a][t];return s===i?e[a].t:e[a-1].t+(e[a].t-e[a-1].t)*(-i/(s-i))}return null}function xe(e){let t=[];for(let o=0;o<=e/365+.001;o+=.25)t.push({y:o,v:Z(o).median});return o=>{let a=o/365;if(a<=0)return t[0].v;if(a>=t[t.length-1].y)return t[t.length-1].v;let i=Math.floor(a/.25),s=t[i],h=t[Math.min(i+1,t.length-1)],c=(a-s.y)/.25;return s.v+(h.v-s.v)*c}}function it(e,t,o){O=20260815;let a=T(),i=Math.floor(t/o)+1,s=[],h=[],c=[],r=xe(t);for(let p=0;p<e;p++){let l=n.frozen?0:E(n.drift,.45),d=n.btc,u=-a.capex,f=-a.capex/n.btc,x=new Float64Array(i),v=new Float64Array(i),m=new Float64Array(i);x[0]=u,v[0]=f,m[0]=u+r(0);for(let k=1;k<i;k++){let C=k*o,ne=o/365;d=d*Math.exp(Ce*Math.sqrt(ne)*E(0,1));let b=H($(C,l),d,a,C);u+=b.net*o,f+=(b.btc-(b.gross>0?(b.power+b.poolFee)/d:0))*o,x[k]=u,v[k]=f,m[k]=u+r(C)}s.push(x),h.push(v),c.push(m)}return{all:s,allB:h,allT:c,pts:i,step:o}}function Se(){let e=M.filter(l=>l.q!=="nobid"&&l.p>0).map(l=>({x:He(l),y:Math.log(l.perTH)})),t=e.length,o=e.reduce((l,d)=>l+d.x,0)/t,a=e.reduce((l,d)=>l+d.y,0)/t,i=0,s=0,h=0;e.forEach(l=>{i+=(l.x-o)*(l.y-a),s+=(l.x-o)**2,h+=(l.y-a)**2});let c=i/s,r=a-c*o,p=i*i/(s*h);return{a:r,b:c,r2:p,n:t,ratePerYear:Math.exp(c)-1}}function Te(e,t,o,a){let i={minerId:n.minerId,price:n.price,count:n.count,kwh:n.kwh};n.minerId=e.id,n.count=1,n.kwh=o;let s=T(),h=H($(t*365,n.drift),n.btc,s,t*365);return n.minerId=i.minerId,n.price=i.price,n.count=i.count,n.kwh=i.kwh,Math.max(0,h.net*a*D)}function Me(e,t,o){return e*Math.pow(1-o,t)}function rt(e,t,o){if(o==="sl3")return e*Math.max(0,1-t/3);if(o==="sl5")return e*Math.max(0,1-t/5);let a=1;for(let s=0;s<Math.min(6,Math.floor(t));s++)a-=le[s];let i=t-Math.floor(t);return Math.floor(t)<6&&(a-=le[Math.floor(t)]*i),e*Math.max(0,a)}function Z(e){let t=K(),o=T(),a=Se(),i=t.perTH,s=Math.max(0,i*Math.exp(a.b*e)*o.thTotal),h=Te(t,e,n.resaleBuyerKwh,n.resalePayback)*n.count,c=Me(o.capex,e,n.resaleRate/100),r=[s,h,c].sort((l,d)=>l-d),p=1-n.resaleSpread/100;return{A:s,B:h,C:c,gross:r[1],spread:n.resaleSpread,median:r[1]*p,lo:r[0]*p,hi:r[2]*p,fit:a}}function Ee(e,t,o,a){return F*e*24*o*t/a}function G(e){e=e||{};let t=e.jth!==void 0?e.jth:n.netJTH,o=e.kwh!==void 0?e.kwh:n.netKwh,a=e.pue!==void 0?e.pue:n.netPUE,i=e.cth!==void 0?e.cth:n.netCapexTH,s=e.life!==void 0?e.life:n.netLifeYrs,h=e.ovh!==void 0?e.ovh:n.netOverhead,c=e.btcDay!==void 0?e.btcDay:J,r=Ee(t,o,a,c),l=F*1e3*i/Math.max(.25,s)/365.25/c,d=r+l,u=d*(h/100),f=d+u;return{elec:r,capital:l,overhead:u,hard:d,allIn:f,elecShare:f>0?r/f:0,capShare:f>0?l/f:0}}function st(){let e=[n.netJTH,n.netKwh,n.netPUE,n.netCapexTH,n.netLifeYrs,n.netOverhead,n.btc,n.weights.cost,n.weights.hash,n.weights.puell,n.weights.thermo].join("|");if(j.k===e)return j.v;let t=Ae();return j={k:e,v:t},t}function Ae(){let e=J,t=G(),o=t.elec,a=t.allIn,i=n.netCapexTH,s=13,h=.05,c=730,r=s*24/1e3*h,l=1e3*(i/c+r)*F/e,d=g.btc/Math.pow(g.puell,.55),f=g.supply*g.btc/(g.thermocapB*1e9),x=g.btc*(16/f),v={state:"capitulation / AI reallocation",conf:.62},m=[{k:"cost",name:"Cost basis",v:a,lo:a*.72,hi:a*1.34,w:n.weights.cost,note:"electricity $"+Math.round(t.elec).toLocaleString()+" plus hardware $"+Math.round(t.capital).toLocaleString()+" plus overhead $"+Math.round(t.overhead).toLocaleString()+", at "+n.netJTH.toFixed(1)+" J/TH network average"},{k:"hash",name:"Hashprice payback",v:l,lo:l*.72,hi:l*1.45,w:n.weights.hash,note:"24-month ASIC payback at $"+n.netCapexTH.toFixed(0)+"/TH, 13 J/TH"},{k:"puell",name:"Puell multiple",v:d,lo:d*.7,hi:d*1.4,w:n.weights.puell,note:"issuance value vs 365-day MA = "+g.puell},{k:"thermo",name:"Thermocap",v:x,lo:x*.62,hi:x*1.55,w:n.weights.thermo,note:"market cap / cumulative security spend = "+f.toFixed(1)+"\xD7"}],k=m.reduce((y,S)=>y+S.w,0),C=!(k>0);C&&(m.forEach(y=>y.w=1),k=m.length),m.forEach(y=>y.wn=y.w/k);let ne=m.reduce((y,S)=>y+S.v*S.wn,0);O=777;let b=[];for(let y=0;y<2e4;y++){let S=Math.max(8,E(n.netJTH,2.5)),be=n.netKwh>0?Math.min(.012,n.netKwh*.22):0,je=be>0?Math.max(0,E(n.netKwh,be)):n.netKwh,Ge=E(n.netPUE,.03),Qe=Math.max(1,E(n.netCapexTH,n.netCapexTH*.2)),Xe=Math.min(6,Math.max(2,E(n.netLifeYrs,.6))),ve=G({jth:S,kwh:je,pue:Ge,cth:Qe,life:Xe,btcDay:e}).allIn*m[0].wn;for(let q=1;q<m.length;q++)ve+=m[q].v*m[q].wn*E(1,.12);b.push(ve/m.reduce((q,Ze)=>q+Ze.wn,0))}b.sort((y,S)=>y-S);let We=w(b,.05),_e=w(b,.1),ae=w(b,.5),Ye=w(b,.9),Fe=w(b,.95),Ke=b.filter(y=>y>n.btc).length/b.length,_=(n.btc-ae)/ae,I,B,P,L;_<=-.3?(I="DEEPLY UNDERVALUED",B="\u25B2",P="var(--good)",L=10):_<=-.1?(I="UNDERVALUED",B="\u25B2",P="var(--good)",L=30):_<.1?(I="FAIRLY VALUED",B=" to ",P="var(--ink2)",L=50):_<.3?(I="OVERVALUED",B="\u25BC",P="var(--serious)",L=70):(I="DEEPLY OVERVALUED",B="\u25BC",P="var(--crit-txt)",L=90);let ye=m.reduce((y,S)=>y+S.v,0)/m.length,Y=Math.sqrt(m.reduce((y,S)=>y+Math.pow(S.v-ye,2),0)/m.length)/ye,ge=m[0].wn+m[1].wn,Ve=ge*Math.max(0,.2-Y)/.2,ze=Math.max(.22,Math.min(.72,v.conf*(1-.55*Ve)-Math.min(.15,Y))),Je=Y<.08?`families agree to \xB1${(Y*100).toFixed(1)}%, but ${Math.round(ge*100)}% of the weight sits on models that share one input, so agreement is discounted, not rewarded`:`families disperse \xB1${(Y*100).toFixed(1)}%, genuine disagreement, reported rather than averaged away`;return{fam:m,fair:ne,p05:We,p10:_e,p50:ae,p90:Ye,p95:Fe,draws:b,word:I,glyph:B,colour:P,pos:L,gap:_,conf:ze,confWhy:Je,below:Ke,elec:o,allIn:a,regime:v,tcRatio:f,degenerate:C}}function ct(){let e=g.subsidy*(1+n.feeshare/100),t=A*e*(1e12/R)*n.btc*(1-n.pool/100),o=24*n.pue*n.kwh/1e3;return o<=0?1/0:t*(n.uptime/100)/o}function ht(e){let t={minerId:n.minerId,count:n.count,price:n.price};n.minerId=e.id,n.count=1;let o=H(1,n.btc,T());return n.minerId=t.minerId,n.count=t.count,n.price=t.price,o.net}function lt(){let e=4,t=120;for(let o=0;o<40;o++){let a=(e+t)/2;G({jth:a}).allIn<n.btc?e=a:t=a}return((e+t)/2).toFixed(1)}var He=e=>2026.62-(e.y+.5),K=()=>M.find(e=>e.id===n.minerId),le=[.2,.32,.192,.1152,.1152,.0576],Ce=.5,O=20260815;function de(){return O=(O*1664525+1013904223)%4294967296,O/4294967296}function E(e,t){let o=Math.max(1e-9,de()),a=de();return e+t*Math.sqrt(-2*Math.log(o))*Math.cos(2*Math.PI*a)}var dt={paths:1200,ghostPaths:500,step:20,days:1460},j={k:null,v:null};window.HD=V;function z(){let e=document.getElementById("stack");if(!e)return;let t=Math.round(e.getBoundingClientRect().height);document.documentElement.style.setProperty("--stack-h",t+"px"),document.body.style.paddingTop=t+"px"}function ut(){let e=document.getElementById("stack");if(!e)return;z(),addEventListener("resize",z,{passive:!0}),window.ResizeObserver&&new ResizeObserver(z).observe(e),e.addEventListener("transitionend",z);let t=document.querySelector("[data-tighten]")||document.querySelector("main > *");t&&"IntersectionObserver"in window&&new IntersectionObserver(([o])=>{e.classList.toggle("tight",!o.isIntersecting),document.getElementById("rail")?.classList.toggle("on",!o.isIntersecting),z()},{rootMargin:"-40px 0px 0px 0px"}).observe(t)}function Ie(e){document.documentElement.setAttribute("data-theme",e);let t=document.getElementById("themeBtn");t&&(t.setAttribute("aria-pressed",String(e==="dark")),t.querySelector(".tl").textContent=e==="dark"?"Light":"Dark",t.setAttribute("aria-label",e==="dark"?"Switch to the light view":"Switch to the dark view"));try{localStorage.setItem("hd-theme",e)}catch{}window.__booted&&window.dispatchEvent(new CustomEvent("hd:theme",{detail:e}))}function pt(){Ie(document.documentElement.getAttribute("data-theme")||"light");let e=document.getElementById("themeBtn"),t=()=>Ie(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");e&&(e.onclick=t),addEventListener("keydown",o=>{(o.key==="d"||o.key==="D")&&!/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)&&!o.metaKey&&!o.ctrlKey&&t()})}function mt(){let e=[...document.querySelectorAll(".navi[data-panel]")],t=o=>e.forEach(a=>{a!==o&&(a.classList.remove("open"),a.querySelector("button")?.setAttribute("aria-expanded","false"))});e.forEach(o=>{let a=o.querySelector("button"),i=h=>{o.classList.toggle("open",h),a.setAttribute("aria-expanded",String(h)),h&&t(o)};a.addEventListener("click",h=>{h.stopPropagation(),i(!o.classList.contains("open"))});let s;matchMedia("(hover:hover)").matches&&(o.addEventListener("mouseenter",()=>{clearTimeout(s),i(!0)}),o.addEventListener("mouseleave",()=>{s=setTimeout(()=>i(!1),140)}))}),document.addEventListener("click",()=>t(null)),addEventListener("keydown",o=>{o.key==="Escape"&&t(null)})}function ft(){let e=document.getElementById("railTop");e&&(e.onclick=()=>window.scrollTo({top:0,behavior:"smooth"}))}var Pe=[];function U(e){Pe.push(e)}function Be(){ut(),pt(),mt(),ft();for(let e of Pe)try{e(V)}catch(t){console.error("[hd] hydrate failed:",t)}window.__booted=!0}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",Be):Be();U(()=>{document.querySelectorAll('tr[id^="p-"]').forEach(e=>{let t=e.id.slice(2);e.style.cursor="pointer",e.addEventListener("click",()=>{let o=document.getElementById("d-"+t);o&&o.scrollIntoView({block:"start",behavior:"smooth"})})})});var Le=e=>(e<0?"\u2212":"")+"$"+Math.abs(Math.round(e)).toLocaleString(),qe=e=>(e>0?"+":e<0?"\u2212":"")+"$"+Math.abs(Math.round(e)).toLocaleString(),wt=e=>Math.round(e).toLocaleString();U(e=>{let t=document.getElementById("cntBig"),o=document.getElementById("cntSlide");if(!t||!o)return;let a=(r,p)=>{let l=document.getElementById(r);l&&(l.textContent=p)},i=(r,p)=>{let l=[...document.querySelectorAll("#rail .rcell")].find(d=>d.querySelector(".k")?.textContent===r);l&&(l.querySelector(".v").textContent=p)};function s(){let r=e.fleetSpec(),p=e.dayEcon(1,e.S.btc),l=e.integrate(365.25);t.textContent=e.S.count,a("rCapex",Le(r.capex)),a("rHash",(r.thTotal/1e3).toFixed(2)+" PH/s"),a("rKw",wt(r.kw)+" kW"),a("rY1",l.btc.toFixed(3)+" BTC"),i("Capex",Le(r.capex)),i("Net / month",qe(p.net*e.MO_DAYS)),i("Power / month",qe(-p.power*e.MO_DAYS)),i("Days to 1 BTC",String(Math.round(1/p.btc)))}let h=r=>Math.max(1,Math.min(250,Math.round(r))),c=r=>{e.S.count=h(r),o.value=e.S.count,s()};o.addEventListener("input",()=>c(+o.value)),document.getElementById("cntDown")?.addEventListener("click",()=>c(e.S.count-1)),document.getElementById("cntUp")?.addEventListener("click",()=>c(e.S.count+1)),s()});var ee={hosted:{id:"hosted",label:"Hosted",pue:1.1,uptime:96,blurb:"A colocation contract. The facility load is billed through to you, so PUE sits inside the rate, and staff on site recover a failed unit in hours rather than at the weekend."},home:{id:"home",label:"At home",pue:1.05,uptime:92,blurb:"Your own space, your own meter. Less facility overhead to pay for, more downtime, because nobody is on site at three in the morning and summer heat curtails a domestic room long before it curtails a datacentre."}};var te={minerId:"S21PRO",count:50,kwh:.075,venue:"hosted",months:36},It=M.filter(e=>e.q!=="nobid"&&e.p>0),me=e=>M.find(t=>t.id===e)||M.find(t=>t.id==="S21PRO"),Re=e=>ee[e]||ee.hosted;function yt(e,t){let o=me(e.minerId),a=Re(e.venue);return{...Q(),minerId:o.id,price:o.p,count:e.count,kwh:e.kwh,pue:a.pue,uptime:a.uptime,...t||{}}}function gt(e,t,o){let a=n;X(yt(e,t));try{return o()}finally{X(a)}}function bt(e,t){let o=T(),a=5,i=-e;for(let s=0;s<t;s+=a){let h=H($(s,n.drift),n.btc,o,s),c=i;if(i+=h.net*a,c<0&&i>=0)return s+a*(-c/(i-c))}return null}var vt=1826;function W(e,t){return gt(e,t,()=>{let o=K(),a=Re(e.venue),i=e.months*D,s=i/365.25,h=T(),c=H(1,n.btc,h,0),r=pe(i,5),p=Z(s),l=Math.max(0,h.capex-p.median),d=r.power+r.fee+l,u=r.btc>0?d/r.btc:1/0,f=bt(h.capex,vt);return{cfg:e,m:o,venue:a,kwh:e.kwh,months:e.months,days:i,years:s,count:n.count,price:n.price,capex:h.capex,kw:h.kw,thTotal:h.thTotal,btc:n.btc,uptime:n.uptime,pue:n.pue,dayNet:c.net,monthNet:c.net*D,dayPower:c.power,btcMined:r.btc,gross:r.gross,power:r.power,fee:r.fee,netCash:r.net,resale:p.median,hardware:l,cost:d,perBTC:u,clears:u<n.btc,margin:n.btc-u,payback:f,paybackInHold:f!=null&&f<=i,total:r.net-h.capex+p.median,shutdown:c.btc>0?c.power/(c.btc*(1-n.pool/100)):1/0,halvingInside:N<i}})}function De(e){let t=g.btc;if(W({...e,kwh:0}).perBTC>=t)return 0;let o=0,a=.6;if(W({...e,kwh:a}).perBTC<t)return a;for(let i=0;i<24;i++){let s=(o+a)/2;W({...e,kwh:s}).perBTC<t?o=s:a=s}return(o+a)/2}function Ne(e){let t=500,o=5e5;for(let a=0;a<26;a++){let i=(t+o)/2;W(e,{btc:i}).perBTC>i?t=i:o=i}return(t+o)/2}function Oe(e){return e.paybackInHold?"Yes, on day "+Math.round(e.payback)+" of a "+Math.round(e.days)+" day hold":e.payback!=null?"Not inside the hold, but on day "+Math.round(e.payback):"No, not within five years"}function $e(e,t,o){let a=c=>(c*100).toFixed(2)+" cents",i=c=>"$"+Math.abs(Math.round(c)).toLocaleString(),s=e.clears?"This build produces a bitcoin for "+i(e.perBTC)+" against a market of "+i(e.btc)+", so it clears its own cost to produce with "+i(e.margin)+" a coin to spare.":"This build produces a bitcoin for "+i(e.perBTC)+" against a market of "+i(e.btc)+", so it does not clear its own cost to produce and is short "+i(Math.abs(e.margin))+" a coin.",h="For it to pay back, bitcoin has to hold above "+i(o)+" or the power price has to sit below "+a(t)+", and the "+Math.round(e.months)+" month hold has to be one you can actually sit through: the subsidy halves on day "+Math.round(N)+", "+(e.halvingInside?"which is inside this window":"which is outside this window")+".";return s+" "+h}var oe=e=>(e<0?"\u2212":"")+"$"+Math.abs(Math.round(e)).toLocaleString(),fe=e=>(e>0?"+":e<0?"\u2212":"")+"$"+Math.abs(Math.round(e)).toLocaleString(),we=e=>(e*100).toFixed(2),Ue=e=>Math.round(e).toLocaleString()+" days";U(e=>{let t=d=>document.getElementById(d),o=t("cfgMiner"),a=t("cfgCount"),i=t("cfgKwh"),s=t("cfgVenue"),h=t("cfgHold");if(!o||!a||!i||!s||!h)return;let c=(d,u)=>{let f=t(d);f&&(f.textContent=u)},r=(d,u,f)=>{let x=[...document.querySelectorAll("#rail .rcell")].find(m=>m.querySelector(".k")?.textContent===d);if(!x)return;let v=x.querySelector(".v");if(v)if(v.textContent="",f){let m=document.createElement("span");m.className=f,m.textContent=u,v.appendChild(m)}else v.textContent=u};function p(){let d=Math.max(1,Math.min(500,Math.round(+a.value||te.count))),u=Math.max(0,Math.min(.4,(+i.value||0)/100)),f=Math.max(1,Math.round(+h.value||te.months));return{minerId:o.value,count:d,kwh:u,venue:ee[s.value]?s.value:te.venue,months:f}}function l(){let d=p(),u=W(d),f=De(d),x=Ne(d),v=me(d.minerId);c("vHead",Oe(u)),c("vSub",$e(u,f,x)),c("vPerBTC",oe(u.perBTC)),c("vMargin",fe(u.margin)),c("vPayback",u.payback!=null?Ue(u.payback):"none in 5 yr"),c("vCapex",oe(u.capex)),c("vBeKwh",we(f)+" cents"),c("vTotal",fe(u.total));let m=t("vMargin");m&&(m.className="dnum "+(u.clears?"pos":"neg"));let k=t("vTotal");k&&(k.className="dnum "+(u.total>=0?"pos":"neg")),r("Build",d.count+" \xD7 "+v.n.replace("Antminer ","")),r("Power",we(d.kwh)+"c / kWh"),r("Cost to produce",oe(u.perBTC)),r("Verdict",u.clears?"Clears":"Does not clear",u.clears?"pos":"neg"),r("Capex",oe(u.capex)),r("Net / month",fe(u.monthNet)),r("Break-even power",we(f)+"c"),r("Cash payback",u.payback!=null?Ue(u.payback):"none in 5 yr")}[o,a,i,s,h].forEach(d=>{d.addEventListener("input",l),d.addEventListener("change",l)}),l()});})();
+</script>
+</body></html>

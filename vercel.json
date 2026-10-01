@@ -6,6 +6,66 @@
       "source": "/ritual.html",
       "destination": "/ritual",
       "permanent": true
+    },
+    {
+      "source": "/btc/asic-profitability",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/asic-resale-value",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/bitcoin-mining-hosting",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/break-even-electricity-price",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/cost-to-mine-a-bitcoin",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/data",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/desk",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/fair-value",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/glossary",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/hashrate-desk-v5",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/mining-electricity-cost",
+      "destination": "/btc",
+      "permanent": false
+    },
+    {
+      "source": "/btc/sha256-coins",
+      "destination": "/btc",
+      "permanent": false
     }
   ],
   "rewrites": [

@@ -2,6 +2,14 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-10-01
+
+- `btc` — Bitcoin mining calculator. Live price, difficulty and average block
+  reward from mempool.space; breakeven power rate, breakeven BTC price, payback
+  period, and the net-per-month effect of the next halving. Subsidy computed in
+  integer satoshis from block height. No fallback values: if the feed is down the
+  figures stay blank rather than show an invented number.
+
 ## 2026-09-02
 
 - `commerce` — HR call center, attendance and workforce analytics console

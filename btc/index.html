@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Mining Calculator · Nathan J. Song</title>
+<meta name="description" content="A Bitcoin mining profitability calculator that shows where a rig loses money, not just where it wins: breakeven power rate, breakeven BTC price, payback period, and what the next halving does to all three.">
+<link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0c0f16">
+<link rel="canonical" href="https://nathanjsong.com/btc">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bitcoin Mining Calculator · Nathan J. Song">
+<meta property="og:description" content="Breakeven power rate, breakeven BTC price, payback period, and what the next halving does to all three.">
+<meta property="og:url" content="https://nathanjsong.com/btc">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,700;1,700;1,800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080a0f; --panel:#10141c; --line:#1e2633;
+    --ink:#eef3fb; --muted:#8994a7; --dim:#5a6577;
+    --accent:#2f7bff; --accent2:#22d3ee; --glow:rgba(47,123,255,.55);
+    --pink:#ff2d78; --pink-glow:rgba(255,45,120,.55);
+    --btc:#f7931a;
+    --good:#34d399; --bad:#fb7185;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-weight:300;
+    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:90px}
+  .bg-grid{position:fixed;inset:0;z-index:-2;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:52px 52px;opacity:.12;mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 78%)}
+  .bg-orb{position:fixed;z-index:-1;width:60vw;height:60vw;border-radius:50%;filter:blur(120px);opacity:.20;
+    background:radial-gradient(circle,var(--btc),transparent 60%);top:-18vw;left:-12vw;animation:float 18s ease-in-out infinite}
+  .bg-orb.two{background:radial-gradient(circle,var(--accent2),transparent 60%);top:46vh;right:-15vw;left:auto;animation-delay:-9s;opacity:.13}
+  @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(4vw,6vh)}}
+  .page{max-width:1120px;margin:0 auto;padding:52px 26px}
+  .display{font-family:'Archivo',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:.95}
+  .label{font-family:'JetBrains Mono',monospace;font-weight:600;text-transform:uppercase;letter-spacing:.24em;font-size:11px;color:var(--accent2)}
+  .mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+  a{color:inherit;text-decoration:none}
+  .clink{transition:color .2s;text-underline-offset:3px;text-decoration-color:var(--accent2)}
+  .clink:hover{color:var(--accent2);text-decoration:underline}
+
+  /* ---------- header ---------- */
+  header{padding-bottom:30px;border-bottom:1px solid var(--line)}
+  .crumb{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:12px;color:var(--dim);
+    font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+  .crumb a:hover{color:var(--accent2)}
+  h1.title{font-size:clamp(38px,6.4vw,76px);max-width:16ch}
+  h1.title em{font-style:italic;color:transparent;background:linear-gradient(90deg,var(--btc),#ffc266);
+    -webkit-background-clip:text;background-clip:text}
+  .lede{margin-top:20px;color:var(--muted);font-size:15.5px;max-width:62ch}
+
+  /* ---------- live strip ---------- */
+  .live{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(176px,1fr));gap:1px;
+    background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .live .cell{background:var(--panel);padding:14px 16px;display:flex;flex-direction:column;gap:5px}
+  .live .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .live .v{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-size:19px;font-weight:600;
+    color:var(--ink);min-width:9ch;line-height:1.2}
+  .live .v.pending{color:var(--dim)}
+  .srcline{margin-top:10px;font-size:11.5px;color:var(--dim);font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+  .srcline b{color:var(--muted);font-weight:600}
+  .warn{margin-top:14px;border:1px solid rgba(251,113,133,.34);background:rgba(251,113,133,.07);
+    border-radius:10px;padding:12px 15px;font-size:13.5px;color:#ffc9d1;display:none}
+  .warn.on{display:block}
+
+  /* ---------- layout ---------- */
+  .grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:46px;margin-top:46px;align-items:start}
+  .sec-head{display:flex;align-items:baseline;gap:13px;margin-bottom:20px}
+  .sec-head h2{font-family:'Archivo',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;
+    letter-spacing:-.01em;font-size:25px}
+  .sec-head .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--btc);font-weight:600;letter-spacing:.1em}
+
+  /* ---------- inputs ---------- */
+  .field{margin-bottom:17px}
+  .field label{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.17em;
+    text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:7px}
+  .inwrap{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:9px;background:var(--panel);
+    transition:border-color .18s, box-shadow .18s}
+  .inwrap:focus-within{border-color:var(--btc);box-shadow:0 0 0 3px rgba(247,147,26,.14)}
+  .inwrap input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--ink);
+    font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-size:15px;font-weight:600;
+    padding:11px 13px;-moz-appearance:textfield}
+  .inwrap input::-webkit-outer-spin-button,.inwrap input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .inwrap .unit{display:flex;align-items:center;padding:0 13px;border-left:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--dim);
+    text-transform:uppercase;font-weight:600;white-space:nowrap;min-width:7.5ch;justify-content:center}
+  .hint{margin-top:6px;font-size:12px;color:var(--dim);line-height:1.5}
+  .hint.clamped{color:var(--bad)}
+  .presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .preset{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;padding:7px 12px;
+    border:1px solid var(--line);border-radius:100px;color:var(--muted);background:var(--panel);cursor:pointer;
+    transition:.18s;font-weight:600}
+  .preset:hover{border-color:var(--btc);color:var(--ink)}
+
+  /* ---------- results ---------- */
+  .rpanel{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+  .verdict{padding:22px 24px;border-bottom:1px solid var(--line);
+    background:radial-gradient(120% 140% at 20% 0%,rgba(247,147,26,.09),transparent 62%)}
+  .verdict .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--dim);font-weight:600;margin-bottom:8px}
+  .verdict .big{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;
+    font-size:clamp(30px,5vw,46px);line-height:1.05;min-width:11ch;display:inline-block}
+  .verdict .big.good{color:var(--good)} .verdict .big.bad{color:var(--bad)} .verdict .big.idle{color:var(--dim)}
+  .verdict .sub{margin-top:9px;font-size:13.5px;color:var(--muted);min-height:1.5em}
+
+  .rows{padding:6px 24px 20px}
+  .row{display:grid;grid-template-columns:1fr minmax(10ch,auto);gap:16px;align-items:baseline;
+    padding:12px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .row .k{font-size:13.5px;color:var(--muted)}
+  .row .k small{display:block;color:var(--dim);font-size:11.5px;margin-top:2px;line-height:1.45}
+  .row .v{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums;font-size:15.5px;font-weight:600;
+    text-align:right;min-width:10ch;color:var(--ink)}
+  .row .v.good{color:var(--good)} .row .v.bad{color:var(--bad)} .row .v.idle{color:var(--dim)}
+  .rgroup{padding:16px 24px 4px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--btc);font-weight:600}
+
+  /* ---------- honesty ---------- */
+  .caveat{margin-top:46px;border:1px solid var(--line);border-left:2px solid var(--btc);border-radius:12px;
+    background:var(--panel);padding:26px 28px}
+  .caveat h3{font-family:'Archivo',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;
+    font-size:19px;margin-bottom:14px}
+  .caveat p{color:var(--muted);font-size:14.5px;margin-bottom:12px;max-width:78ch}
+  .caveat p:last-child{margin-bottom:0}
+  .caveat b{color:var(--ink);font-weight:600}
+
+  footer{margin-top:52px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;
+    font-size:12.5px;color:var(--dim);font-family:'JetBrains Mono',monospace;letter-spacing:.04em}
+
+  @media(max-width:880px){
+    .grid{grid-template-columns:1fr;gap:38px}
+    .page{padding:40px 20px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .bg-orb{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div><div class="bg-orb"></div><div class="bg-orb two"></div>
+
+<div class="page">
+
+<header>
+  <nav class="crumb">
+    <a class="clink" href="/">Nathan J. Song</a><span>/</span><span>BTC</span>
+  </nav>
+  <h1 class="title display">Bitcoin mining <em>calculator</em></h1>
+  <p class="lede">Most mining calculators show you a profit number and stop. This one shows you where the rig
+    <b>loses</b> — the power rate it breaks at, the BTC price it breaks at, and what the next halving does to both.
+    Built from the mining economics I modelled at Wattum Management.</p>
+
+  <div class="live" id="live">
+    <div class="cell"><span class="k">BTC price</span><span class="v pending" id="lvPrice">—</span></div>
+    <div class="cell"><span class="k">Network difficulty</span><span class="v pending" id="lvDiff">—</span></div>
+    <div class="cell"><span class="k">Block subsidy</span><span class="v pending" id="lvSubsidy">—</span></div>
+    <div class="cell"><span class="k">Avg reward / block</span><span class="v pending" id="lvReward">—</span></div>
+  </div>
+  <p class="srcline" id="srcline">Fetching live network values from <b>mempool.space</b>…</p>
+  <div class="warn" id="warn"></div>
+</header>
+
+<div class="grid">
+
+  <!-- ============ INPUTS ============ -->
+  <section>
+    <div class="sec-head"><span class="num">01</span><h2>Your rig</h2></div>
+
+    <div class="presets" id="presets">
+      <button class="preset" type="button" data-h="234" data-w="3510">S21 · 234 TH</button>
+      <button class="preset" type="button" data-h="198" data-w="3465">S19 XP · 198 TH</button>
+      <button class="preset" type="button" data-h="110" data-w="3250">S19j Pro · 110 TH</button>
+    </div>
+
+    <div class="field">
+      <label for="hashrate">Hashrate</label>
+      <div class="inwrap"><input id="hashrate" type="number" inputmode="decimal" value="234" min="0" step="any"><span class="unit">TH/s</span></div>
+      <p class="hint" id="hintHash">Terahashes per second, from the spec sheet.</p>
+    </div>
+
+    <div class="field">
+      <label for="watts">Power draw</label>
+      <div class="inwrap"><input id="watts" type="number" inputmode="decimal" value="3510" min="0" step="any"><span class="unit">W</span></div>
+      <p class="hint" id="hintWatts">At the wall, not the chip.</p>
+    </div>
+
+    <div class="field">
+      <label for="rate">Electricity rate</label>
+      <div class="inwrap"><input id="rate" type="number" inputmode="decimal" value="0.07" min="0" step="any"><span class="unit">$/kWh</span></div>
+      <p class="hint" id="hintRate">All-in: energy, delivery, demand charges. Hosting contracts quote this directly.</p>
+    </div>
+
+    <div class="field">
+      <label for="poolfee">Pool fee</label>
+      <div class="inwrap"><input id="poolfee" type="number" inputmode="decimal" value="2" min="0" max="100" step="any"><span class="unit">%</span></div>
+      <p class="hint" id="hintPool">Taken off the top of what you mine.</p>
+    </div>
+
+    <div class="field">
+      <label for="hardware">Hardware cost</label>
+      <div class="inwrap"><input id="hardware" type="number" inputmode="decimal" value="4200" min="0" step="any"><span class="unit">$</span></div>
+      <p class="hint" id="hintHw">Leave blank if you only want the daily picture.</p>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section>
+    <div class="sec-head"><span class="num">02</span><h2>What it does</h2></div>
+
+    <div class="rpanel">
+      <div class="verdict">
+        <div class="k">Net profit per month</div>
+        <span class="big idle" id="vNetMonth">—</span>
+        <p class="sub" id="vSub">Enter your numbers and the live values will do the rest.</p>
+      </div>
+
+      <div class="rgroup">Daily</div>
+      <div class="rows">
+        <div class="row"><div class="k">Bitcoin mined</div><div class="v idle" id="rBtc">—</div></div>
+        <div class="row"><div class="k">Revenue <small>after pool fee</small></div><div class="v idle" id="rRev">—</div></div>
+        <div class="row"><div class="k">Power cost <small id="rKwhNote">—</small></div><div class="v idle" id="rCost">—</div></div>
+        <div class="row"><div class="k">Net</div><div class="v idle" id="rNet">—</div></div>
+      </div>
+
+      <div class="rgroup">Where it breaks</div>
+      <div class="rows">
+        <div class="row"><div class="k">Breakeven power rate <small>above this, it bleeds</small></div><div class="v idle" id="rBePower">—</div></div>
+        <div class="row"><div class="k">Breakeven BTC price <small>below this, it bleeds</small></div><div class="v idle" id="rBePrice">—</div></div>
+        <div class="row"><div class="k">Payback on hardware <small>at today's numbers, held flat</small></div><div class="v idle" id="rPayback">—</div></div>
+      </div>
+
+      <div class="rgroup">Next halving</div>
+      <div class="rows">
+        <div class="row"><div class="k">Block <small id="rHalvNote">—</small></div><div class="v idle" id="rHalvHeight">—</div></div>
+        <div class="row"><div class="k">Net per month after it <small>same price, same difficulty</small></div><div class="v idle" id="rHalvNet">—</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="caveat">
+  <h3>What this does not tell you</h3>
+  <p><b>Difficulty only goes one way over time.</b> This calculator holds it flat at today's value, which flatters
+    every forward-looking number on the page. Payback periods in particular are optimistic by construction — a rig
+    that pays back in eight months on flat difficulty rarely pays back in eight months.</p>
+  <p><b>The halving row assumes nothing else moves.</b> Price and difficulty both react to a halving. Treat that
+    number as the mechanical effect of the subsidy cut alone, not a forecast.</p>
+  <p><b>Fees are an average, not a promise.</b> Average reward per block comes from recent blocks. Fee revenue is
+    lumpy and a quiet week looks nothing like a busy one.</p>
+  <p><b>Uptime is assumed at 100%.</b> Real deployments lose hours to curtailment, heat, firmware and the grid.
+    Derate the result by whatever uptime your contract actually delivers.</p>
+</div>
+
+<footer>
+  <span>Nathan J. Song · mining economics, Wattum Management</span>
+  <span><a class="clink" href="/">← back to the CV</a></span>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- consensus subsidy, integer satoshis ---------- */
+  var COIN = 100000000n;
+  function blockSubsidySats(height){
+    var halvings = Math.floor(height / 210000);
+    if (halvings >= 64) return 0n;
+    return (50n * COIN) >> BigInt(halvings);
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var TWO32 = Math.pow(2,32);
+
+  /* live network state — null until proven, never faked */
+  var net = { price:null, difficulty:null, height:null, avgRewardSats:null, fetchedAt:null, source:null };
+
+  /* ---------- formatting ---------- */
+  function usd(n, dp){
+    if (n === null || !isFinite(n)) return "—";
+    dp = (dp === undefined) ? 2 : dp;
+    var s = Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:dp,maximumFractionDigits:dp});
+    return (n < 0 ? "−$" : "$") + s;
+  }
+  function num(n, dp){
+    if (n === null || !isFinite(n)) return "—";
+    return n.toLocaleString("en-US",{minimumFractionDigits:dp,maximumFractionDigits:dp});
+  }
+  function setV(el, text, cls){
+    el.textContent = text;
+    el.classList.remove("good","bad","idle");
+    if (cls) el.classList.add(cls);
+  }
+
+  /* ---------- read + clamp inputs ---------- */
+  function readInputs(){
+    function v(id){
+      var raw = $(id).value.trim();
+      if (raw === "") return null;
+      var n = parseFloat(raw);
+      return isFinite(n) ? n : null;
+    }
+    var i = {
+      hashrate: v("hashrate"),
+      watts:    v("watts"),
+      rate:     v("rate"),
+      poolfee:  v("poolfee"),
+      hardware: v("hardware")
+    };
+    var clamped = [];
+    if (i.hashrate !== null && i.hashrate < 0){ i.hashrate = 0; clamped.push("hintHash"); }
+    if (i.watts    !== null && i.watts    < 0){ i.watts    = 0; clamped.push("hintWatts"); }
+    if (i.rate     !== null && i.rate     < 0){ i.rate     = 0; clamped.push("hintRate"); }
+    if (i.poolfee  !== null && (i.poolfee < 0 || i.poolfee > 100)){
+      i.poolfee = Math.min(100, Math.max(0, i.poolfee)); clamped.push("hintPool");
+    }
+    if (i.hardware !== null && i.hardware < 0){ i.hardware = 0; clamped.push("hintHw"); }
+    i._clamped = clamped;
+    return i;
+  }
+
+  var HINT_TEXT = {
+    hintHash:"Terahashes per second, from the spec sheet.",
+    hintWatts:"At the wall, not the chip.",
+    hintRate:"All-in: energy, delivery, demand charges. Hosting contracts quote this directly.",
+    hintPool:"Taken off the top of what you mine.",
+    hintHw:"Leave blank if you only want the daily picture."
+  };
+  function applyClampNotes(clamped){
+    Object.keys(HINT_TEXT).forEach(function(id){
+      var el = $(id);
+      if (clamped.indexOf(id) > -1){
+        el.classList.add("clamped");
+        el.textContent = "Clamped to a value this can actually compute.";
+      } else {
+        el.classList.remove("clamped");
+        el.textContent = HINT_TEXT[id];
+      }
+    });
+  }
+
+  /* ---------- the model ---------- */
+  function compute(){
+    var i = readInputs();
+    applyClampNotes(i._clamped);
+
+    var haveNet = net.price !== null && net.difficulty !== null && net.avgRewardSats !== null;
+    var haveRig = i.hashrate !== null && i.hashrate > 0 && i.watts !== null && i.rate !== null;
+
+    if (!haveNet || !haveRig){
+      ["vNetMonth","rBtc","rRev","rCost","rNet","rBePower","rBePrice","rPayback","rHalvHeight","rHalvNet"]
+        .forEach(function(id){ setV($(id), "—", "idle"); });
+      $("rKwhNote").textContent = "—";
+      $("rHalvNote").textContent = "—";
+      $("vSub").textContent = haveNet
+        ? "Enter a hashrate, power draw and electricity rate."
+        : "Waiting on live network values. You can still type them in below if they never arrive.";
+      return;
+    }
+
+    var rewardBtc = Number(net.avgRewardSats) / 1e8;
+    var hashesPerSec = i.hashrate * 1e12;
+    var btcPerDay = (hashesPerSec * 86400 * rewardBtc) / (net.difficulty * TWO32);
+
+    var keepShare = 1 - (i.poolfee === null ? 0 : i.poolfee) / 100;
+    var revPerDay = btcPerDay * net.price * keepShare;
+
+    var kwhPerDay = (i.watts / 1000) * 24;
+    var costPerDay = kwhPerDay * i.rate;
+
+    var netPerDay = revPerDay - costPerDay;
+    var netPerMonth = netPerDay * 30.4375;
+
+    /* where it breaks */
+    var bePower = kwhPerDay > 0 ? revPerDay / kwhPerDay : null;
+    var bePrice = (btcPerDay > 0 && keepShare > 0) ? costPerDay / (btcPerDay * keepShare) : null;
+    var payback = (i.hardware !== null && i.hardware > 0 && netPerDay > 0) ? i.hardware / netPerDay : null;
+
+    /* next halving */
+    var nextHalvingHeight = null, blocksToGo = null, halvingNetMonth = null;
+    if (net.height !== null){
+      nextHalvingHeight = (Math.floor(net.height / 210000) + 1) * 210000;
+      blocksToGo = nextHalvingHeight - net.height;
+      var subsidyNow  = Number(blockSubsidySats(net.height)) / 1e8;
+      var subsidyNext = Number(blockSubsidySats(nextHalvingHeight)) / 1e8;
+      var feesBtc = Math.max(0, rewardBtc - subsidyNow);
+      var rewardAfter = subsidyNext + feesBtc;
+      var btcPerDayAfter = (hashesPerSec * 86400 * rewardAfter) / (net.difficulty * TWO32);
+      halvingNetMonth = (btcPerDayAfter * net.price * keepShare - costPerDay) * 30.4375;
+    }
+
+    /* ---------- paint ---------- */
+    setV($("vNetMonth"), usd(netPerMonth), netPerMonth >= 0 ? "good" : "bad");
+    $("vSub").textContent = netPerMonth >= 0
+      ? "Profitable at these inputs — read the breakeven rows before you believe it."
+      : "Losing money at these inputs. The breakeven rows say by how much.";
+
+    setV($("rBtc"),  num(btcPerDay, 8) + " BTC", null);
+    setV($("rRev"),  usd(revPerDay), null);
+    setV($("rCost"), usd(costPerDay), null);
+    $("rKwhNote").textContent = num(kwhPerDay, 1) + " kWh per day";
+    setV($("rNet"),  usd(netPerDay), netPerDay >= 0 ? "good" : "bad");
+
+    setV($("rBePower"), bePower === null ? "—" : usd(bePower, 4) + " /kWh", bePower === null ? "idle" : null);
+    setV($("rBePrice"), bePrice === null ? "—" : usd(bePrice, 0), bePrice === null ? "idle" : null);
+
+    if (payback === null){
+      var txt = (i.hardware === null || i.hardware === 0) ? "—" : "never at these inputs";
+      setV($("rPayback"), txt, "idle");
+    } else {
+      setV($("rPayback"), num(payback, 0) + " days", null);
+    }
+
+    if (nextHalvingHeight === null){
+      setV($("rHalvHeight"), "—", "idle");
+      setV($("rHalvNet"), "—", "idle");
+      $("rHalvNote").textContent = "—";
+    } else {
+      setV($("rHalvHeight"), nextHalvingHeight.toLocaleString("en-US"), null);
+      $("rHalvNote").textContent = blocksToGo.toLocaleString("en-US") + " blocks away";
+      setV($("rHalvNet"), usd(halvingNetMonth), halvingNetMonth >= 0 ? "good" : "bad");
+    }
+  }
+
+  /* ---------- live values. never invented. ---------- */
+  function paintLive(){
+    if (net.price !== null)      setV($("lvPrice"), usd(net.price, 0));
+    if (net.difficulty !== null) setV($("lvDiff"), (net.difficulty / 1e12).toFixed(2) + " T");
+    if (net.height !== null)     setV($("lvSubsidy"), num(Number(blockSubsidySats(net.height)) / 1e8, 4) + " BTC");
+    if (net.avgRewardSats !== null) setV($("lvReward"), num(Number(net.avgRewardSats) / 1e8, 4) + " BTC");
+    ["lvPrice","lvDiff","lvSubsidy","lvReward"].forEach(function(id){
+      if ($(id).textContent !== "—") $(id).classList.remove("pending");
+    });
+  }
+
+  function fail(msg){
+    $("warn").className = "warn on";
+    $("warn").textContent = msg;
+    $("srcline").innerHTML = "Live values unavailable. Nothing on this page is a placeholder — "
+      + "the figures stay blank until real data loads.";
+  }
+
+  function loadLive(){
+    var base = "https://mempool.space/api";
+    Promise.all([
+      fetch(base + "/v1/prices").then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); }),
+      fetch(base + "/v1/blocks").then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+    ]).then(function(res){
+      var prices = res[0], blocks = res[1];
+
+      if (prices && typeof prices.USD === "number") net.price = prices.USD;
+
+      /* height and difficulty both come off the most recent block header */
+      if (blocks && blocks.length){
+        if (typeof blocks[0].height === "number") net.height = blocks[0].height;
+        if (typeof blocks[0].difficulty === "number") net.difficulty = blocks[0].difficulty;
+      }
+
+      if (blocks && blocks.length){
+        var withReward = blocks.filter(function(b){ return b.extras && typeof b.extras.reward === "number"; });
+        if (withReward.length){
+          var sum = withReward.reduce(function(a,b){ return a + b.extras.reward; }, 0);
+          net.avgRewardSats = Math.round(sum / withReward.length);
+        }
+      }
+
+      net.fetchedAt = new Date();
+      net.source = "mempool.space";
+
+      if (net.price === null || net.difficulty === null || net.avgRewardSats === null){
+        fail("Some live values did not come back. The rows that depend on them stay blank rather than guess.");
+      } else {
+        $("srcline").innerHTML = "Live values from <b>" + net.source + "</b> · fetched "
+          + net.fetchedAt.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})
+          + " · average reward over the last " + (blocks.length) + " blocks";
+      }
+      paintLive();
+      compute();
+    }).catch(function(){
+      fail("Could not reach mempool.space. No figures are shown rather than show invented ones. Reload to retry.");
+      compute();
+    });
+  }
+
+  /* ---------- wiring ---------- */
+  ["hashrate","watts","rate","poolfee","hardware"].forEach(function(id){
+    $(id).addEventListener("input", compute);
+  });
+  $("presets").addEventListener("click", function(e){
+    var b = e.target.closest(".preset");
+    if (!b) return;
+    $("hashrate").value = b.getAttribute("data-h");
+    $("watts").value = b.getAttribute("data-w");
+    compute();
+  });
+
+  compute();
+  loadLive();
+})();
+</script>
+</body>
+</html>

@@ -2,6 +2,12 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-01
+
+- `docs/agent-njs` — Agent NJS gets a home: his profile and rules, and an
+  evidence-backed record of what PM Countdown proves Nathan can build, for the
+  AI consulting practice. One NJS for every project; other repos only point here.
+
 ## 2026-10-01
 
 - `btc` — The Hashrate Desk published: the economics model hub, the live block

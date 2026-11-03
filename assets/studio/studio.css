@@ -1394,9 +1394,23 @@ html:has(body[data-page="home"]) { scroll-padding-top: 140px; }
 .bt.open .bt-panel[hidden] { display: block; }
 .bt.open .bt-panel { padding-top: 14px; }
 .bt.open .bt-panel::before { display: block; margin-bottom: 4px; font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
-.bt.open .bt-panel[id$="-p-legs"]::before { content: 'Legs'; }
-.bt.open .bt-panel[id$="-p-proof"]::before { content: 'Proof'; }
-.bt.open .bt-panel[id$="-p-job"]::before { content: 'The job'; }
+.bt.open .bt-panel[id$="-p-legs"]::before { content: 'Deliverables'; }
+.bt.open .bt-panel[id$="-p-proof"]::before { content: 'Results'; }
+.bt.open .bt-panel[id$="-p-job"]::before { content: 'Brief'; }
 .bt-tear { margin-top: 14px; }
 .bt-pay b { font-size: 14.5px; }
 @media (max-width: 860px) { .wall-tools { width: 100%; flex-wrap: nowrap; } .wall-filter { flex: 1; min-width: 0; } .wall-view button { padding: 0 10px; } .bt-strip { height: 10px; } }
+
+/* Case files: editorial header, live dot, quieter shipped mark. */
+.bt-head { padding: 13px 20px; letter-spacing: .08em; text-transform: uppercase; }
+.bt-no { display: inline-flex; align-items: baseline; gap: 6px; }
+.bt-no b { font-weight: 700; color: #F3F1EA; }
+.bt-no span { color: #8E938A; font-weight: 500; }
+.bt-stamp { color: #F3F1EA; font-weight: 600; }
+.bt-stamp svg { display: none; }
+.bt-live { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 60%, transparent); animation: live 2.4s ease-out infinite; }
+@keyframes live { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--signal) 55%, transparent); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
+@media (prefers-reduced-motion: reduce) { .bt-live { animation: none; } }
+.lg-hit { font: 600 10.5px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.lg-hit svg { color: var(--signal-ink); }
+.bt-tier small, .bt-pay small { letter-spacing: .14em; }

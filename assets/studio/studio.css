@@ -910,3 +910,22 @@ footer .legal { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); borde
 .marq-t i { color: var(--signal); }
 .chip[aria-checked="true"] { color:#121416; }
 .summary, .pl-run { --signal-ink: var(--signal); }
+
+/* ===== Pages (2026-11-03): each tab is its own page, built from the same partials. ===== */
+.sec-h h1 { font-size: clamp(38px, 4.8vw, 68px); line-height: 1; letter-spacing: -.04em; margin-top: 12px; }
+.top nav a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--signal); padding-bottom: 4px; }
+body:not([data-page="home"]) main > section:first-child { border-top: 0; }
+[data-page="crew"] #crew { padding-top: 96px !important; }
+@media (max-width: 720px) { [data-page="crew"] #crew { padding-top: 56px !important; } }
+.care-solo .step-n { display: none; }
+.care-solo .step { border-left: 0; padding-left: 0; }
+.faq { border-top: 1px solid var(--line); }
+.faq-list { display: grid; gap: 12px; max-width: 880px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 0 24px; }
+.faq details[open] { border-color: var(--ink-3); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; font: 600 18px/1.3 var(--sans); color: var(--ink); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; flex: none; font: 400 26px/1 var(--mono); color: var(--signal-ink); transition: transform var(--t-quick); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq summary:focus-visible { outline: 3px solid var(--signal); outline-offset: 4px; border-radius: 8px; }
+.faq details p { margin: 0 0 22px; color: var(--ink-2); font-size: 16px; line-height: 1.6; max-width: 68ch; }

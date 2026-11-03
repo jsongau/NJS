@@ -30,24 +30,44 @@ function clock() {
   setInterval(tick, 15000);
 }
 
+// Old one-page links (/#build, /#delivered...) now live on their own pages.
+const MOVED = { build: '/build', pricing: '/plans', delivered: '/work', 's-care': '/care', crew: '/crew' };
+function redirectOldHash() {
+  const h = location.hash.slice(1);
+  if (location.pathname === '/' && MOVED[h]) { location.replace(MOVED[h]); return true; }
+  return false;
+}
+
+// Links marked data-carry take the current selection (kept in the hash) with them.
+function carryLinks() {
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-carry]');
+    if (!a || !location.hash || location.hash.length < 3) return;
+    const u = new URL(a.href, location.href);
+    if (!u.hash) { u.hash = location.hash; a.href = u.pathname + u.search + u.hash; }
+  });
+}
+
 async function boot() {
+  if (redirectOldHash()) return;
   const [catalog, projects] = await Promise.all([
     loadJson('studio-catalog-data', 'studio-catalog.public.json'),
     loadJson('studio-projects-data', 'projects.json'),
   ]);
   document.body.dataset.prices = catalog.prices === 'shown' ? 'range' : 'meter';
   const store = createStore(catalog, projects);
-  mountBlueprint(store);
-  mountProof(store);
+  // Each page carries only some sections; a view mounts only where its root is on the page.
+  const on = (sel) => !!$(sel);
+  if (on('#stage')) mountBlueprint(store);
+  if (on('#proof')) mountProof(store);
   mountMadlib(store);
   mountPlans(store);
-  mountConfigurator(store);
-  mountCare(store);
-  mountSummary(store);
-  sheet.init();
-  mountEndings(store);
-  mountDelivered(store);
+  if (on('#s-business')) mountConfigurator(store);
+  if (on('#s-care')) mountCare(store);
+  if (on('#plan')) { mountSummary(store); sheet.init(); mountEndings(store); }
+  if (on('#wall')) mountDelivered(store);
   mountTracking(store);
+  carryLinks();
   clock();
   // Logo: the j dot hops once on arrival (CSS); hovering the header logo snaps the S straight
   // (a few lines of JS inside the SVG drive that part).

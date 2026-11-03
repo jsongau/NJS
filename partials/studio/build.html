@@ -1,0 +1,135 @@
+<section class="cfg sec" id="build" aria-labelledby="b-h">
+  <div class="wrap">
+    <div class="sec-h">
+      <div><span class="kick">Configurator</span><h2 id="b-h">Build your project.</h2></div>
+      <div><p>Pick what it should do. Watch the plan fill in. Then book a 20-minute call or send me your plan.</p><p class="fine">Everything here is an estimate. The audit sets the exact scope and the final price, in writing, before any build starts.</p></div>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="steps" id="steps">
+        <div class="rail" aria-hidden="true"><i id="rail-fill"></i></div>
+
+        <section class="step" id="s-business" aria-labelledby="s1-h">
+          <div class="step-h"><span class="step-n">01</span><span>Business</span></div>
+          <h3 id="s1-h">What kind of business is it?</h3>
+          <p class="help">Pick an industry and the closest kind, or type your own. This changes the examples, not the price.</p>
+          <div class="biz-search">
+            <input id="biz-q" type="text" maxlength="60" autocomplete="off" spellcheck="false" placeholder="Search or type it: tattoo shop, HVAC, florist" aria-label="Search or type your business" aria-controls="biz-sugg" aria-expanded="false">
+            <div class="biz-sugg" id="biz-sugg" hidden></div>
+          </div>
+          <p class="biz-k" id="ind-k">Industry</p>
+          <div class="seg-chips" id="cfg-ind" role="radiogroup" aria-labelledby="ind-k"></div>
+          <p class="biz-k" id="sec-k">Which kind?</p>
+          <div class="seg-chips sec-chips" id="cfg-sec" aria-labelledby="sec-k"></div>
+          <p class="biz-own" id="biz-own" hidden>Planning for <b id="biz-own-t"></b>. The examples below use the closest fit. Tell me the details on the call.</p>
+          <div class="dental-note" id="dental-note" hidden><p>Dental offices also have CoverCapy Growth, a front-desk-first plan for insured patients. I'll cover both on the call.</p><p>Please don't put patient details anywhere on this page.</p></div>
+        </section>
+
+        <section class="step" id="s-package" aria-labelledby="s2-h">
+          <div class="step-h"><span class="step-n">02</span><span>Package</span></div>
+          <h3 id="s2-h">Start from a package.</h3>
+          <p class="help">A tab loads a starting set of features. What you pick decides the tier, not the tab.</p>
+          <div class="tabs" id="tabs" role="tablist" aria-label="Packages"></div>
+          <div class="panels" id="panels"></div>
+          <p class="note-line" id="tier-why" aria-live="off"></p>
+        </section>
+
+        <section class="step" id="s-features" aria-labelledby="s3-h">
+          <div class="step-h"><span class="step-n">03</span><span>Features</span><span class="aside num" id="feat-count">0 picked</span></div>
+          <h3 id="s3-h">What should it do?</h3>
+          <p class="help">Tap everything you'd want. You can drop things later.</p>
+          <div class="cards" id="features"></div>
+        </section>
+
+        <section class="step" id="s-size" aria-labelledby="s4-h">
+          <div class="step-h"><span class="step-n">04</span><span>Pages</span></div>
+          <h3 id="s4-h">How big is the site?</h3>
+          <p class="help">Count the pages a customer could land on. A rough guess is fine.</p>
+          <div class="slider-top"><span class="val" id="pages-val">About 5<small>pages</small></span><span class="band-badge" id="band-badge">A few pages</span></div>
+          <div class="range"><input type="range" id="pages" min="0" max="20" step="1" value="4" aria-labelledby="s4-h"></div>
+          <div class="ticks" id="ticks" aria-hidden="true"></div>
+          <p class="band-line" id="band-line"></p>
+          <p class="side-note">Not sure? Pick "A full site". The audit counts them properly.</p>
+        </section>
+
+        <section class="step" id="s-style" aria-labelledby="s5-h">
+          <div class="step-h"><span class="step-n">05</span><span>Style</span></div>
+          <h3 id="s5-h">How should it feel?</h3>
+          <p class="help">Pick the closest one. The audit turns this into a real look.</p>
+          <div class="styles" id="styles" role="group" aria-labelledby="s5-h"></div>
+        </section>
+
+        <section class="step" id="s-extras" aria-labelledby="s6-h">
+          <div class="step-h"><span class="step-n">06</span><span>Extras</span></div>
+          <h3 id="s6-h">Anything else?</h3>
+          <p class="help">Add-ons work with any tier.</p>
+          <div class="cards" id="addons"></div>
+        </section>
+
+<!--@step-care-->
+      </div>
+
+      <div class="plan-wrap">
+        <div class="summary-host" id="sheet" aria-label="Your plan">
+          <aside class="summary" id="plan" aria-labelledby="sum-h">
+            <div class="grab" aria-hidden="true"></div>
+            <div class="sum-h"><h3 id="sum-h">Your plan</h3><span class="status" id="status">Draft</span><button type="button" class="sheet-close" id="sheet-close">Close</button></div>
+            <p class="sum-for" id="sum-for">Built for: Gym</p>
+
+            <div class="total">
+              <div class="total-k"><span>Investment level</span><span id="total-k2">Tier</span></div>
+              <div class="total-main meter-only">
+                <span class="tier-word empty" id="tier-word">Pick a feature to see the size.</span>
+                <span class="size"><small>SIZE, OF 100</small><span class="od" id="size-od" aria-hidden="true"></span></span>
+                <span class="delta" id="delta" aria-hidden="true"></span>
+              </div>
+              <div class="priced-only" id="priced-figures"></div>
+              <div class="underline" id="underline" aria-hidden="true"></div>
+              <div class="meter"><div class="m-bar"><i id="m-fill"></i></div><div class="m-ticks" id="m-ticks"><span>Basic</span><span>Premium</span><span>Partner</span><span>+ extras</span></div></div>
+              <div class="weeks-row"><span>Timeline after the audit</span><span><span class="od" id="weeks-od" aria-hidden="true"></span> <span id="weeks-u">weeks</span></span></div>
+              <p class="est">Tier and timeline are a starting estimate. The audit sets the exact scope and price.</p>
+            </div>
+
+            <div class="ns-say"><span class="ns-av" aria-hidden="true">NS</span><div><p id="ns-line"></p><small>Agent NS · scripted line</small></div></div>
+
+            <ul class="assure" aria-label="What every plan comes with">
+              <li><b>Audit credited</b><span>The audit fee comes off the build.</span></li>
+              <li><b>You own it</b><span>Code, domain and accounts are in your name.</span></li>
+              <li><b>Month to month</b><span>Care plans cancel anytime.</span></li>
+            </ul>
+
+            <dl class="rows" id="rows"></dl>
+            <p class="list-k">Features</p>
+            <ul class="list" id="sum-features"></ul>
+            <p class="list-k">Extras</p>
+            <ul class="list" id="sum-extras"></ul>
+
+            <div class="ends" id="ends">
+              <p class="why" id="ends-why"></p>
+              <a class="btn btn-lime btn-block" id="call-btn" href="#" target="_blank" rel="noopener" data-todo="cal-url">Book a 20-minute call</a>
+              <p class="sub">Tell me a good time. Bring questions, not a brief.</p>
+              <button type="button" class="btn btn-block" id="send-btn">Send my plan</button>
+              <p class="sub" id="send-sub">I'll email you times.</p>
+              <form class="form" id="lead-form" novalidate>
+                <label>Name<input name="name" autocomplete="name" required></label>
+                <label>Email<input name="email" type="email" autocomplete="email" required></label>
+                <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel"><span class="hint">Only if you'd rather I call. I won't text you without asking.</span></label>
+                <label>Business name and city<input name="city" autocomplete="organization" maxlength="80"></label>
+                <label>Anything I should know first? (optional)<textarea name="note" maxlength="600"></textarea></label>
+                <label id="ppo-field" hidden>Which PPO plans do you take? (optional)<input name="ppo" maxlength="200"><span class="hint">Please don't include any patient information.</span></label>
+                <label class="check"><input type="checkbox" name="consent_marketing"><span>Email me when something new opens. Unsubscribe anytime.</span></label>
+                <span class="hp" aria-hidden="true"><input name="company_website" tabindex="-1" autocomplete="off"></span>
+                <p class="err" id="form-err" role="alert"></p>
+                <button type="submit" class="btn btn-lime btn-block" id="form-submit">Send my plan</button>
+                <p class="hint">I use what you send only to reply to you. I don't sell or share it.</p>
+              </form>
+              <p class="msg" id="form-msg" role="status"></p>
+              <div class="dep"><span>Audit deposit, credited to your build.</span><button type="button" class="btn" disabled aria-describedby="dep-why">Deposits open soon</button></div>
+              <p class="terms-short" id="dep-why">Nothing on this page takes payment yet. The audit sets the final price, in writing, before any build work is charged. Care plans are month to month, cancel anytime.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

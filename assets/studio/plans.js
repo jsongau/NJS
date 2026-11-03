@@ -38,7 +38,7 @@ export function mountPlans(store) {
       '<ul class="pl-inc">' + t.includes.map((x) => (x.endsWith(':') ? '<li class="sub">' + esc(x) + '</li>' : '<li>' + esc(x) + '</li>')).join('') + '</ul>' +
       (t.id === 'run' ? dash() : '') +
       '<p class="pl-meta"><span>About ' + weeksText(t.weeks) + ' weeks</span><span>' + esc(c.label) + ': ' + esc(c.response.label.toLowerCase()) + '</span></p>' +
-      (proj ? '<a class="pl-ex-l" href="#p-' + proj.id + '">' + esc(m.exLine) + '</a>' : '') +
+      (proj ? '<a class="pl-ex-l" href="' + ($('#wall') ? '' : '/work') + '#p-' + proj.id + '">' + esc(m.exLine) + '</a>' : '') +
       '</article>';
   }).join('');
   el.addEventListener('click', (e) => {
@@ -49,6 +49,7 @@ export function mountPlans(store) {
     if (plan) actions.setCarePlan(plan.id);
     const s = $('#s-features');
     if (s) s.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+    else location.href = '/build' + (location.hash || '#s-features');
   });
   store.subscribe(({ quote: q }) => {
     $$('.pl', el).forEach((a) => a.classList.toggle('cur', !!q.tier && a.classList.contains('pl-' + q.tier.id)));

@@ -13,6 +13,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Delivered cards show real logos for Boba Night and PM Countdown.
   Wave 0 of the pages plan: funnel events (page view to lead sent, no personal data) beacon to
   a new `event-intake` edge function and `studio_events` table.
+  Waves 1 and 2: every tab is its own page (`/plans`, `/build`, `/work`, `/care`, `/crew`), built
+  from one set of partials by `tools/build-pages.mjs`, with its own title, description and
+  structured data, a 7-question FAQ on `/plans`, and the domain's first sitemap.xml and robots.txt.
 
 ## 2026-11-01
 

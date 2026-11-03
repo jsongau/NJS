@@ -66,6 +66,18 @@ export function mountEndings(store) {
   let sent = false;
   let enabled = false;
 
+  // The call request needs no plan, so it opens the form even when the plan is empty.
+  function forceForm() {
+    callMode = true;
+    form.classList.add('open');
+    sendBtn.hidden = true;
+    $('#send-sub').hidden = true;
+    const note = form.elements.note;
+    if (note && !note.value) note.value = "I'd like a 20-minute call. Best times: ";
+    track('form_open', { detail: 'call' });
+    if (sheet.isPhone()) sheet.setOpen(true);
+    else $('#plan').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
   function openForm() {
     if (!enabled) return;
     form.classList.add('open');
@@ -75,6 +87,9 @@ export function mountEndings(store) {
     setTimeout(() => form.querySelector('input[name="name"]').focus(), 40);
   }
   sendBtn.addEventListener('click', openForm);
+  // Arrived from "Request a 20-minute call" on another page: open the form with the call note.
+  const askCall = new URLSearchParams(location.search).get('call') === '1';
+  let callMode = false;
   $('#final-send').addEventListener('click', () => {
     if (sheet.isPhone()) sheet.setOpen(true);
     else $('#plan').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -153,6 +168,7 @@ export function mountEndings(store) {
       if (!sent) a.href = callLive ? callUrl(store) : '#plan';
     });
     $('#ppo-field').hidden = sel.business_type !== 'dental';
-    if (!enabled && form.classList.contains('open')) { form.classList.remove('open'); sendBtn.hidden = false; $('#send-sub').hidden = false; }
+    if (askCall && !sent && !form.classList.contains('open') && !callLive) { forceForm(); }
+    if (!enabled && !callMode && form.classList.contains('open')) { form.classList.remove('open'); sendBtn.hidden = false; $('#send-sub').hidden = false; }
   });
 }

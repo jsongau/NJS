@@ -1,0 +1,9 @@
+[
+  ["What does it cost?", "Every project gets a written price after the audit, before any build starts. The configurator shows which plan your project lands in, Basic, Premium or Partner, and how big it is. Deposits are not open yet, so nothing on this site takes payment."],
+  ["How long does a build take?", "About 1 to 2 weeks for Basic, 4 to 6 weeks for Premium and 6 to 10 weeks for Partner, counted from the audit. Your written plan gives the exact dates."],
+  ["Who owns the site and the accounts?", "You do. Hosting, database, domain and payments sit in accounts in your name on every plan. If we stop working together, everything keeps running and you keep every login."],
+  ["AI writes most of the code. Is that safe?", "AI writes most of the code. I decide what it builds, read every change and test it before anything goes live. Every AI agent I set up for you runs on written rules, with limits and a log you can read."],
+  ["Do I need to know what I want before we talk?", "No. Build a rough plan here, or send one line about your business. The 20-minute call and the audit sort out what you actually need."],
+  ["What happens after launch?", "You pick a care plan or none. Hosting, Care and Partner are month to month, and help without a plan is billed by the hour. Platform bills like Vercel, Supabase and Stripe go to you directly, and I don't mark them up."],
+  ["Who will I work with?", "Me, from the first call to the hand off. Behind me is a crew of AI agents that I direct and check. There is no account manager in between."]
+]

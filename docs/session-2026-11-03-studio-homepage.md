@@ -39,3 +39,13 @@
 - `madlib.js` `reveal()` scrolls an opened picker panel fully into view under the sticky bar.
 - `projects.json` takes an optional `logo`. Boba Night (jsongau/niteboba favicon) and PM Countdown (local repo favicon) are in `assets/studio/brand/delivered/`.
 - Next: CoverCapy and BoxVacay logos (their local repos are outside ~/Projects; the GitHub copies have no logo files). Then test the lead pipeline end to end and replace the cal.com TODO link.
+
+## Waves 0 to 2 (pages plan)
+- Wave 0: `studio_events` table and `event-intake` edge function are live in Supabase project cedunmyttprzgslthuyk. `assets/studio/track.js` beacons page view, picker, business and plan picks, configurator steps, plan seen, form open, lead sent and call clicks. No personal data; a test keeps the page, function and table event lists identical.
+- Pages: sections live once in `partials/studio/*.html`; page templates in `partials/studio/pages/`. Run `node tools/build-pages.mjs` after editing a partial; `--check` (and the pages test) fails on stale output. Never edit the generated `index.html` or `*/index.html` by hand.
+- Each tab page promotes its first section's h2 to the page's h1. Tab pages end with `final-route` (plain links to `/build` and `/build?call=1`), so their buttons always work without a plan.
+- `main.js` mounts a view only where its root exists, redirects old `/#build` style links, and carries the selection hash on `data-carry` links.
+- Decided: Waves 1 and 2 shipped together so no empty pages go live. Home keeps every section until Wave 3.
+- Trap: the phone header hides all tab links below 860px, so on a phone the tab pages are only reachable from the footer. Needs a phone menu before Wave 3.
+- Next: phone menu, then Wave 3 (slim home, always-on final buttons) after a week of funnel data; CoverCapy and BoxVacay logos; cal.com link; Vercel Analytics.
+

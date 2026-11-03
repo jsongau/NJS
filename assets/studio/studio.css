@@ -990,3 +990,31 @@ body:not([data-page="home"]) main > section:first-child { border-top: 0; }
 .agents-cta .btn:not(.btn-lime) { color: #F3F1EA; border-color: #F3F1EA; }
 .agents-cta .btn:not(.btn-lime):hover { background: #F3F1EA; color: #121416; }
 .agents-cta .dep-note { font-size: 13px; color: #8E938A; }
+
+/* Phone menu (the tab links hide under 860px). */
+.menu-btn { display: none; }
+.top .m-menu[hidden] { display: none; }
+@media (max-width: 859px) {
+  .menu-btn { display: inline-grid; place-content: center; gap: 6px; width: 44px; height: 44px; margin-left: 8px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--surface); cursor: pointer; }
+  .menu-btn i { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform var(--t-quick); }
+  .menu-btn[aria-expanded="true"] i:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] i:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .menu-btn:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+  .top .m-menu { position: fixed; z-index: 45; top: 60px; left: 0; right: 0; display: grid; gap: 4px; padding: 16px 16px 24px; background: var(--bg, #FBF5F6); border-bottom: 1px solid var(--line); box-shadow: 0 24px 40px -24px rgba(18,20,22,.35); }
+  .top .m-menu a:not(.btn) { display: flex; align-items: center; min-height: 52px; padding: 0 8px; font: 600 22px/1 var(--sans); letter-spacing: -.02em; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .top .m-menu a[aria-current="page"] { color: var(--signal-ink); }
+  .top .m-menu .btn { margin-top: 14px; min-height: 52px; }
+  body.menu-open { overflow: hidden; }
+}
+@media (max-width: 520px) {
+  .top .logo b, .top .logo small { white-space: nowrap; }
+  .top .logo small { display: none; }
+  .top nav { gap: 8px; }
+  .top nav .btn { min-height: 40px; padding: 8px 12px; font-size: 13.5px; white-space: nowrap; }
+  .menu-btn { width: 40px; height: 40px; margin-left: 0; }
+  .top .logo { gap: 8px; }
+  .top .logo-m, .top .logo-m svg { width: 34px; height: 34px; }
+  .top .logo b { font-size: 16px; }
+  .top .clock { display: none; }
+}
+@media (max-width: 369px) { .top .logo span:not(.logo-m) { display: none; } }

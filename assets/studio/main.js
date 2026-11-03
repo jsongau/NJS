@@ -49,8 +49,26 @@ function carryLinks() {
   });
 }
 
+// Phone menu: the header hides the tab links under 860px, so a Menu button opens them.
+function phoneMenu() {
+  const btn = $('#menu-btn');
+  const menu = $('#m-menu');
+  if (!btn || !menu) return;
+  const set = (open) => {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('menu-open', open);
+    if (open) menu.querySelector('a').focus({ preventScroll: true });
+  };
+  btn.addEventListener('click', () => set(menu.hidden));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); } });
+  document.addEventListener('click', (e) => { if (!menu.hidden && !e.target.closest('#m-menu, #menu-btn')) set(false); });
+  addEventListener('resize', () => { if (innerWidth >= 860 && !menu.hidden) set(false); }, { passive: true });
+}
+
 async function boot() {
   if (redirectOldHash()) return;
+  phoneMenu();
   const [catalog, projects] = await Promise.all([
     loadJson('studio-catalog-data', 'studio-catalog.public.json'),
     loadJson('studio-projects-data', 'projects.json'),

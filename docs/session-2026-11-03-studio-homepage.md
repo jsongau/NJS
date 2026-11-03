@@ -46,6 +46,6 @@
 - Each tab page promotes its first section's h2 to the page's h1. Tab pages end with `final-route` (plain links to `/build` and `/build?call=1`), so their buttons always work without a plan.
 - `main.js` mounts a view only where its root exists, redirects old `/#build` style links, and carries the selection hash on `data-carry` links.
 - Decided: Waves 1 and 2 shipped together so no empty pages go live. Home keeps every section until Wave 3.
-- Trap: the phone header hides all tab links below 860px, so on a phone the tab pages are only reachable from the footer. Needs a phone menu before Wave 3.
-- Next: phone menu, then Wave 3 (slim home, always-on final buttons) after a week of funnel data; CoverCapy and BoxVacay logos; cal.com link; Vercel Analytics.
+- Phone menu shipped (the header hid every tab link under 860px). Trap: `.top nav a:not(.btn)` hides links inside any nav in the header, so menu rules are scoped `.top .m-menu`.
+- Next: Wave 3 (slim home, always-on final buttons) after a week of funnel data; CoverCapy and BoxVacay logos; cal.com link; Vercel Analytics.
 

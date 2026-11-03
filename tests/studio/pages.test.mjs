@@ -32,7 +32,8 @@ test('pages: exactly one h1 each, and the right tab is marked current', () => {
     const h = html(p);
     assert.equal((h.match(/<h1[\s>]/g) || []).length, 1, p.id + ' h1 count');
     const cur = h.match(/<a href="([^"]+)" aria-current="page">/g) || [];
-    if (p.nav) { assert.equal(cur.length, 1, p.id); assert.ok(cur[0].includes('"' + p.path + '"'), p.id); } else assert.equal(cur.length, 0, p.id);
+    // One in the desktop nav, one in the phone menu, both pointing at this page.
+    if (p.nav) { assert.equal(cur.length, 2, p.id); cur.forEach((c) => assert.ok(c.includes('"' + p.path + '"'), p.id)); } else assert.equal(cur.length, 0, p.id);
   }
 });
 

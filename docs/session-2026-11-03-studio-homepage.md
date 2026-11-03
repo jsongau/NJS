@@ -1,11 +1,11 @@
 # 2026-11-03: NJS Studio becomes the homepage
 
 ## What changed
-- `/` is now the NJS Studio page. The CV that lived at `/` moved, unchanged, to `/resume1`.
+- `/` is now the NJS Studio page. The CV that lived at `/` moved, unchanged, to `/resume`.
 - `/studio` redirects to `/` (temporary redirect, so it can become its own page later).
 - New code: `assets/studio/` (modules, CSS, public catalog, projects, brand SVGs), `tools/`
   (catalog build and one-file preview), `tests/studio/` (engine and catalog tests).
-- Footer links to the CV at `/resume1`.
+- Footer links to the CV at `/resume`.
 
 ## Decisions
 - Light theme, pink palette (Jay rejected dark and lime-first). Geist and Geist Mono only.
@@ -25,7 +25,7 @@
 - `call_url_todo` is true in the catalog, so call buttons open the form. Set a real Cal.com link
   and flip the flag to make them link out.
 - Tests and the preview tool read the page from `index.html` at the repo root.
-- The CV's own links and Agent NS widget are unchanged; check `/resume1` after deploy.
+- The CV's own links and Agent NS widget are unchanged; check `/resume` after deploy.
 
 ## Next steps
 1. Cal.com link for "Book a call".

@@ -4,6 +4,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-03
 
+- `/build` and `/care` — Care plans read faster: short cards in a 2 by 2 grid (who it fits, updates a
+  month, one line) and one "Compare what each plan includes" table with the same rows for every plan.
+
 - `/` — NJS Studio becomes the homepage: the sentence picker, 10 industries and 49 kinds, the
   Basic / Premium / Partner plans, the Goldsmith icon set and the NJS logo. The CV moves to
   `/resume`. `/studio` redirects home. Prices stay hidden; call buttons open the plan form

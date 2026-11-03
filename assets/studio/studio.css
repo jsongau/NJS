@@ -1051,3 +1051,30 @@ html:has(body[data-page="home"]) { scroll-padding-top: 140px; }
   .ml-end .slot-t { white-space: nowrap; }
 }
 .ml-end .slot-c { flex: none; margin-bottom: .42em; margin-left: 0; }
+
+/* Care plans: short cards in a 2 by 2 grid, details in one comparison table (same rows per plan). */
+.plans { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.plan { gap: 10px; padding: 18px 18px 20px; }
+.plan .fits { font-size: 11px; }
+.plan .upn { display: flex; align-items: center; gap: 10px; font: inherit; color: var(--ink); }
+.plan .upn-n { font: 600 34px/1 var(--mono); letter-spacing: -.04em; color: var(--signal-ink); }
+.plan .upn-t { font: 500 11px/1.25 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+.plan .pline { font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.plan .ul { display: none; }
+.cmp { margin-top: 12px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); }
+.cmp summary { cursor: pointer; padding: 14px 18px; font-weight: 600; color: var(--ink); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.cmp summary::-webkit-details-marker { display: none; }
+.cmp summary::after { content: ''; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); transition: transform var(--t-quick); }
+.cmp[open] summary::after { transform: rotate(225deg) translateY(-2px); }
+.cmp-scroll { overflow-x: auto; padding: 0 6px 10px; }
+.cmp table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+.cmp th, .cmp td { padding: 10px 12px; border-top: 1px solid var(--line); text-align: center; }
+.cmp thead th { border-top: 0; font-size: 13px; font-weight: 650; color: var(--ink); }
+.cmp tbody th { text-align: left; font-weight: 500; color: var(--ink-2); }
+.cmp td.num { font: 600 15px/1 var(--mono); color: var(--ink); }
+.cmp td.y { color: var(--signal-ink); }
+.cmp td.y svg { width: 16px; height: 16px; display: inline-block; vertical-align: middle; }
+.cmp td.n { color: var(--line-hi); }
+.cmp .cur { background: color-mix(in srgb, var(--signal) 9%, transparent); }
+.cmp thead .cur { color: var(--signal-ink); }
+@media (max-width: 560px) { .plans { grid-template-columns: 1fr; } .plan .upn-n { font-size: 28px; } }

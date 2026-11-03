@@ -22,25 +22,67 @@ export function mountPlans(store) {
   if (!el) return;
   const shown = catalog.prices === 'shown';
   const care = Object.fromEntries(catalog.care_plans.map((p) => [p.id, p]));
+  // Compact cards (2026-11-03). The face sells; "What's included" slides a drawer up inside the
+  // card's own frame, so opening one never moves the page (Mary's rule). The live date is a real
+  // estimate from today: about a week for the audit, then the plan's longest build time.
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+  const liveBy = (weeks) => { const d = new Date(); d.setDate(d.getDate() + 7 * (1 + weeks[weeks.length - 1])); return MON[d.getMonth()] + ' ' + d.getDate(); };
   el.innerHTML = catalog.tiers.map((t) => {
     const m = PLAN[t.id];
     const proj = projects.projects.find((p) => p.id === m.example);
     const c = care[m.care];
+    const n = t.includes.filter((x) => !x.endsWith(':')).length;
     const price = shown && t.price
-      ? '<p class="pl-price"><span class="pl-from">From</span> <b class="num">' + money(t.price.low_cents) + '</b><span class="pl-unit">to build</span></p>' +
-        '<p class="pl-mo">+ ' + esc(c.label) + ' from <b class="num">' + money(c.monthly.low_cents) + '</b> a month</p>'
-      : '<p class="pl-price hid"><b>Priced in your written plan</b></p><p class="pl-mo">Then the ' + esc(c.label) + ' plan, month to month</p>';
+      ? '<p class="pl-price"><span class="pl-from">From</span> <b class="num">' + money(t.price.low_cents) + '</b><span class="pl-unit">to build</span></p>'
+      : '<p class="pl-price hid">Priced in your written plan · then ' + esc(c.label) + ', month to month</p>';
     return '<article class="pl pl-' + t.id + '" aria-labelledby="pl-' + t.id + '">' +
-      '<div class="pl-top"><span class="gic pl-ic">' + icon('plan_' + t.id) + '</span><p class="pl-kick">' + esc(m.kick) + '</p></div>' +
-      '<h3 id="pl-' + t.id + '">' + esc(t.label) + '</h3>' +
-      '<p class="pl-for">' + esc(t.for) + '</p>' + price +
-      '<button type="button" class="btn ' + (t.id === 'run' ? 'btn-lime' : '') + ' pl-go" data-t="' + t.id + '">' + esc(m.cta) + '</button>' +
-      '<ul class="pl-inc">' + t.includes.map((x) => (x.endsWith(':') ? '<li class="sub">' + esc(x) + '</li>' : '<li>' + esc(x) + '</li>')).join('') + '</ul>' +
-      (t.id === 'run' ? dash() : '') +
-      '<p class="pl-meta"><span>About ' + weeksText(t.weeks) + ' weeks</span><span>' + esc(c.label) + ': ' + esc(c.response.label.toLowerCase()) + '</span></p>' +
-      (proj ? '<a class="pl-ex-l" href="' + ($('#wall') ? '' : '/work') + '#p-' + proj.id + '">' + esc(m.exLine) + '</a>' : '') +
+      '<span class="pl-spot" aria-hidden="true"></span>' +
+      '<div class="pl-face">' +
+        '<div class="pl-top"><span class="gic pl-ic">' + icon('plan_' + t.id) + '</span><p class="pl-kick">' + esc(m.kick) + '</p></div>' +
+        '<h3 id="pl-' + t.id + '">' + esc(t.label) + '</h3>' +
+        '<p class="pl-for">' + esc(t.for) + '</p>' +
+        '<p class="pl-eta"><i aria-hidden="true"></i><span>Start this week, live around <b>' + liveBy(t.weeks) + '</b></span></p>' +
+        price +
+        '<div class="pl-acts"><button type="button" class="btn ' + (t.id === 'run' ? 'btn-lime' : '') + ' pl-go" data-t="' + t.id + '">' + esc(m.cta) + '</button>' +
+        '<button type="button" class="pl-more" aria-expanded="false" aria-controls="pl-d-' + t.id + '">What\'s included <span class="pl-n">' + n + '</span></button></div>' +
+        (proj ? '<a class="pl-ex-l" href="' + ($('#wall') ? '' : '/work') + '#p-' + proj.id + '">' + esc(m.exLine) + '</a>' : '') +
+      '</div>' +
+      '<div class="pl-drawer" id="pl-d-' + t.id + '" role="region" aria-label="' + esc(t.label) + ': what\'s included" inert>' +
+        '<div class="pl-dhd"><b>' + esc(t.label) + '</b><button type="button" class="pl-x" aria-label="Close">×</button></div>' +
+        '<ul class="pl-inc">' + t.includes.map((x, i) => (x.endsWith(':') ? '<li class="sub" style="--i:' + i + '">' + esc(x) + '</li>' : '<li style="--i:' + i + '">' + esc(x) + '</li>')).join('') + '</ul>' +
+        (t.id === 'run' ? dash() : '') +
+        '<p class="pl-meta"><span>About ' + weeksText(t.weeks) + ' weeks after the audit</span><span>' + esc(c.label) + ': ' + esc(c.response.label.toLowerCase()) + '</span><span>Dates are an estimate; the audit sets yours.</span></p>' +
+        '<button type="button" class="btn ' + (t.id === 'run' ? 'btn-lime' : '') + ' pl-go" data-t="' + t.id + '">' + esc(m.cta) + '</button>' +
+      '</div>' +
       '</article>';
   }).join('');
+  // Drawer open and close; one open at a time; Escape closes and hands focus back.
+  const setOpen = (card, open) => {
+    const more = $('.pl-more', card), dr = $('.pl-drawer', card);
+    card.classList.toggle('open', open);
+    more.setAttribute('aria-expanded', String(open));
+    dr.toggleAttribute('inert', !open);
+    if (open) setTimeout(() => $('.pl-x', card).focus({ preventScroll: true }), 120);
+  };
+  el.addEventListener('click', (e) => {
+    const more = e.target.closest('.pl-more');
+    if (more) { const card = more.closest('.pl'); $$('.pl.open', el).forEach((c) => c !== card && setOpen(c, false)); setOpen(card, !card.classList.contains('open')); return; }
+    const x = e.target.closest('.pl-x');
+    if (x) { const card = x.closest('.pl'); setOpen(card, false); $('.pl-more', card).focus({ preventScroll: true }); }
+  });
+  el.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const card = e.target.closest('.pl.open');
+    if (card) { setOpen(card, false); $('.pl-more', card).focus({ preventScroll: true }); }
+  });
+  // Spotlight follows the pointer across each card.
+  el.addEventListener('pointermove', (e) => {
+    const card = e.target.closest('.pl');
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
   el.addEventListener('click', (e) => {
     const b = e.target.closest('.pl-go');
     if (!b) return;

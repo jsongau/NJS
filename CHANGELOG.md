@@ -37,6 +37,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Draft card v3: the widgets became a slider (track slides, the next screen tilts in, the glass
   catches a light sweep), tap ripples, swipe on the phone, auto-play that pauses on touch and
   resumes; zero layout shift on any click (Mary's new rule, docs/MARY-MEMORY.md).
+  Plan cards v2: compact faces with a live "start this week, live around <date>" estimate; "What's
+  included" slides a drawer up inside the card; running glow border, pointer spotlight, Partner
+  breathes and its button shines.
 
 ## 2026-11-01
 

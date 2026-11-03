@@ -5,6 +5,14 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-03 · **Expanding cards open inward.** "Show more" on a card is a drawer that slides up
+  inside the card's own frame (the plan cards), never a section that grows and pushes the page.
+  Measure with `offsetTop`/`offsetHeight`, not `getBoundingClientRect`, when a hover lift
+  (`transform`) is active, or the check reports a fake 3px shift.
+- 2026-11-03 · **FOMO stays honest.** No invented scarcity or counts ("2 spots left", "12 people
+  started today"). Use real, computed urgency: the plan cards show "Start this week, live around
+  <date>" from today plus the audit week plus the plan's longest build time. A real capacity
+  number can be shown only when Jay supplies it.
 - 2026-11-03 · **A click never moves the layout.** (Jay, after the Draft card jumped when
   switching features.) Anything a visitor can click, and anything that changes because of a
   click, keeps its size and position:

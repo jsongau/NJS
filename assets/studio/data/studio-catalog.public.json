@@ -1,0 +1,1653 @@
+{
+  "version": "2026-11-03.1",
+  "show_prices": false,
+  "show_deposit_amount": false,
+  "currency": "usd",
+  "flags": {
+    "deposit_enabled": false,
+    "alerts_on": false,
+    "scheduler_on": false,
+    "rush_available": true,
+    "chat": "off"
+  },
+  "links": {
+    "lead_intake": "https://cedunmyttprzgslthuyk.supabase.co/functions/v1/lead-intake",
+    "call_url": "https://cal.com/TODO-nathanjsong/fit-call",
+    "call_url_todo": true
+  },
+  "rules": {
+    "grow_at_feature_count": 4,
+    "run_at_feature_count": 7,
+    "window_share": 0.5
+  },
+  "business_types": [
+    {
+      "id": "gym",
+      "label": "Gym or studio",
+      "plan_label": "For a gym or studio",
+      "door": "build",
+      "preset": {
+        "launch": [
+          "site",
+          "book"
+        ],
+        "grow": [
+          "site",
+          "book",
+          "deposit",
+          "portal",
+          "follow"
+        ],
+        "run": [
+          "site",
+          "book",
+          "deposit",
+          "portal",
+          "follow",
+          "agent",
+          "loop"
+        ]
+      },
+      "scene": {
+        "brand": "Your gym",
+        "head": "Train hard in Brea",
+        "cta": "Book a class",
+        "tiles": [
+          "Classes",
+          "Coaches",
+          "Packs"
+        ],
+        "accent": "#FF8A4C"
+      }
+    },
+    {
+      "id": "dental",
+      "label": "Dental office or clinic",
+      "plan_label": "For a dental office or clinic",
+      "door": "dental",
+      "preset": {
+        "launch": [
+          "site",
+          "book",
+          "reviews"
+        ],
+        "grow": [
+          "site",
+          "book",
+          "reviews",
+          "follow",
+          "dash"
+        ],
+        "run": [
+          "site",
+          "book",
+          "reviews",
+          "follow",
+          "dash",
+          "agent",
+          "pages"
+        ]
+      },
+      "scene": {
+        "brand": "Your practice",
+        "head": "Gentle care, plans accepted",
+        "cta": "Book a cleaning",
+        "tiles": [
+          "Your plan",
+          "Services",
+          "Hours"
+        ],
+        "accent": "#6FD0EA"
+      }
+    },
+    {
+      "id": "food",
+      "label": "Restaurant or cafe",
+      "plan_label": "For a restaurant or cafe",
+      "door": "build",
+      "preset": {
+        "launch": [
+          "site",
+          "book",
+          "reviews"
+        ],
+        "grow": [
+          "site",
+          "book",
+          "reviews",
+          "deposit",
+          "portal"
+        ],
+        "run": [
+          "site",
+          "book",
+          "reviews",
+          "deposit",
+          "portal",
+          "agent",
+          "pages"
+        ]
+      },
+      "scene": {
+        "brand": "Your kitchen",
+        "head": "Open late on Birch St",
+        "cta": "Reserve a table",
+        "tiles": [
+          "Menu",
+          "Catering",
+          "Hours"
+        ],
+        "accent": "#F5BE4F"
+      }
+    },
+    {
+      "id": "shop",
+      "label": "Retail shop",
+      "plan_label": "For a retail shop",
+      "door": "build",
+      "preset": {
+        "launch": [
+          "site",
+          "reviews"
+        ],
+        "grow": [
+          "site",
+          "reviews",
+          "portal",
+          "dash",
+          "follow"
+        ],
+        "run": [
+          "site",
+          "reviews",
+          "portal",
+          "dash",
+          "follow",
+          "agent",
+          "pages"
+        ]
+      },
+      "scene": {
+        "brand": "Your shop",
+        "head": "New in this week",
+        "cta": "Pick up in store",
+        "tiles": [
+          "New in",
+          "Brands",
+          "Rewards"
+        ],
+        "accent": "#F27BB8"
+      }
+    },
+    {
+      "id": "service",
+      "label": "Service business",
+      "plan_label": "For a service business",
+      "door": "build",
+      "preset": {
+        "launch": [
+          "site",
+          "book"
+        ],
+        "grow": [
+          "site",
+          "book",
+          "deposit",
+          "follow"
+        ],
+        "run": [
+          "site",
+          "book",
+          "deposit",
+          "follow",
+          "dash",
+          "agent"
+        ]
+      },
+      "scene": {
+        "brand": "Your crew",
+        "head": "Same-week jobs in OC",
+        "cta": "Get a quote",
+        "tiles": [
+          "Services",
+          "Areas",
+          "Reviews"
+        ],
+        "accent": "#79DBA2"
+      }
+    }
+  ],
+  "features": [
+    {
+      "id": "site",
+      "name": "A site that ranks",
+      "icon": "search",
+      "weight": 1,
+      "proof": "covercapy",
+      "desc": "A fast site on your domain, set up to show in local search.",
+      "wording": {
+        "gym": "Class schedule, coaches and a map that show up when people search nearby.",
+        "dental": "Your plans accepted, services and hours, written the way patients search.",
+        "food": "Menu, hours and map that show up for \"near me\".",
+        "shop": "Your shop and what you carry, found by people close by.",
+        "service": "Your service area and jobs you do, found by people who need them today."
+      }
+    },
+    {
+      "id": "book",
+      "name": "Online booking",
+      "icon": "cal",
+      "weight": 1,
+      "proof": "boxvacay",
+      "desc": "Customers pick a time. It lands in your calendar.",
+      "wording": {
+        "gym": "Book a class or a private session from a phone.",
+        "dental": "New patient requests with plan and reason for visit.",
+        "food": "Reservations and catering requests in one inbox.",
+        "shop": "Appointments for fittings, pickups or consultations.",
+        "service": "Quote requests and job times, with photos from the customer."
+      }
+    },
+    {
+      "id": "deposit",
+      "name": "Deposits and payments",
+      "icon": "card",
+      "weight": 2,
+      "proof": "boxvacay",
+      "desc": "Stripe checkout, so a no-show still pays something.",
+      "wording": {
+        "gym": "Hold a private session spot with a deposit.",
+        "dental": "Pay a balance or a membership plan online.",
+        "food": "Deposits for large parties and catering.",
+        "shop": "Pay online, pick up in store.",
+        "service": "A deposit before you roll a truck."
+      }
+    },
+    {
+      "id": "portal",
+      "name": "Member portal",
+      "icon": "user",
+      "weight": 2,
+      "proof": "covercapy",
+      "desc": "Customer accounts with packages, perks and past bookings.",
+      "wording": {
+        "gym": "Memberships, class packs and how many classes are left.",
+        "dental": "An in-house membership plan page for patients without insurance.",
+        "food": "A rewards page for regulars.",
+        "shop": "Loyalty points and saved favorites.",
+        "service": "Past jobs, invoices and warranties in one place."
+      }
+    },
+    {
+      "id": "dash",
+      "name": "Owner dashboard",
+      "icon": "chart",
+      "weight": 2,
+      "desc": "The numbers you check every Monday, on one screen.",
+      "wording": {
+        "gym": "Members, class fill rate and who stopped coming.",
+        "dental": "New patients by source and how many calls turned into visits.",
+        "food": "Covers, busy hours and catering leads.",
+        "shop": "Sales by day and by item.",
+        "service": "Leads, quotes sent, jobs won."
+      }
+    },
+    {
+      "id": "follow",
+      "name": "AI follow-ups",
+      "icon": "msg",
+      "weight": 2,
+      "desc": "Reminders, rebooking and a nudge to customers who drifted off.",
+      "wording": {
+        "gym": "A note to members who haven't booked in three weeks.",
+        "dental": "Recall reminders and treatment that was planned but never booked.",
+        "food": "A thank-you and a reason to come back.",
+        "shop": "Back-in-stock and new-arrival texts to people who asked.",
+        "service": "Follow up on quotes that went quiet."
+      }
+    },
+    {
+      "id": "reviews",
+      "name": "Review requests",
+      "icon": "star",
+      "weight": 1,
+      "desc": "Asks happy customers for a review at the right moment.",
+      "wording": {
+        "gym": "After a member's tenth class.",
+        "dental": "After a good visit, never after a hard one.",
+        "food": "The morning after a visit.",
+        "shop": "A week after a purchase.",
+        "service": "When the job is marked done."
+      }
+    },
+    {
+      "id": "agent",
+      "name": "Back-office agent",
+      "icon": "bot",
+      "weight": 3,
+      "proof": "pmcountdown",
+      "desc": "One repeat job, done on a schedule, with a log, a limit and an off switch.",
+      "wording": {
+        "gym": "Updates the class roster and texts the waitlist when a spot opens.",
+        "dental": "Checks next week's insurance verifications and flags the ones missing.",
+        "food": "Pulls yesterday's sales and orders into one morning note.",
+        "shop": "Counts low stock and drafts the reorder.",
+        "service": "Chases unpaid invoices politely, then tells you who's left."
+      }
+    },
+    {
+      "id": "pages",
+      "name": "Pages from your data",
+      "icon": "pages",
+      "weight": 3,
+      "proof": "covercapy",
+      "desc": "A useful page for every service, city or item, built from one list you keep.",
+      "wording": {
+        "gym": "A page per class type and per coach.",
+        "dental": "A page per service and per city you serve.",
+        "food": "A page per dish, event or location.",
+        "shop": "A page per product line or brand.",
+        "service": "A page per service in every city you cover."
+      }
+    },
+    {
+      "id": "loop",
+      "name": "Review loop",
+      "icon": "loop",
+      "weight": 3,
+      "proof": "pmcountdown",
+      "desc": "A nightly check that grades your agents and proposes fixes. Nothing changes until you approve.",
+      "tip": "This is how my own trading agents on PM Countdown get reviewed every night."
+    }
+  ],
+  "styles": [
+    {
+      "id": "bold",
+      "label": "Bold and loud",
+      "line": "Big type, strong color, hard to scroll past.",
+      "swatch": [
+        "#0e0b14",
+        "#ff5a36",
+        "#ffe14d"
+      ]
+    },
+    {
+      "id": "editorial",
+      "label": "Luxury editorial",
+      "line": "Quiet, lots of space, type that looks expensive.",
+      "swatch": [
+        "#f4efe7",
+        "#1d1a17",
+        "#b08a4a"
+      ]
+    },
+    {
+      "id": "calm",
+      "label": "Clean and calm",
+      "line": "Simple and clear. Nothing in the way.",
+      "swatch": [
+        "#f6f8fa",
+        "#2b3a4a",
+        "#7fb7c9"
+      ]
+    },
+    {
+      "id": "playful",
+      "label": "Playful",
+      "line": "Bright, a bit of motion, fun to tap.",
+      "swatch": [
+        "#fff4fb",
+        "#7a3cff",
+        "#20d3a0"
+      ]
+    },
+    {
+      "id": "show",
+      "label": "I'll show you",
+      "line": "Send me two sites you like on the call.",
+      "swatch": []
+    }
+  ],
+  "addons": [
+    {
+      "id": "onsite",
+      "name": "In-person strategy session",
+      "icon": "pin",
+      "billing": "one_time",
+      "unit": "flat",
+      "desc": "I come to your place, watch a normal hour, and map the build with your team.",
+      "wording": {
+        "gym": "I watch the front desk during a busy class change.",
+        "dental": "Before opening or after close, never with patients in the room.",
+        "food": "A slow afternoon, front of house and kitchen.",
+        "shop": "Floor, register and back room.",
+        "service": "Your office, or a ride-along on one job."
+      },
+      "meter_bump": 4,
+      "proposed": true
+    },
+    {
+      "id": "workshop",
+      "name": "Team training workshop",
+      "icon": "team",
+      "billing": "one_time",
+      "unit": "flat",
+      "desc": "A hands-on session so your staff can run the new tools without calling me.",
+      "wording": {
+        "gym": "Front desk and coaches: bookings, packs, the waitlist.",
+        "dental": "Front office: requests, reminders, the dashboard. No patient data used in training.",
+        "food": "Managers: reservations, catering leads, reviews.",
+        "shop": "Staff: orders, loyalty, stock alerts.",
+        "service": "Office and crew leads: quotes, invoices, the agent's log."
+      },
+      "meter_bump": 6,
+      "proposed": true
+    },
+    {
+      "id": "brand",
+      "name": "Brand mark and icons",
+      "icon": "mark",
+      "billing": "one_time",
+      "unit": "flat",
+      "desc": "A logo, badges and line art, as vector files you own.",
+      "wording": {
+        "gym": "A mark that works on a shirt and a gym wall.",
+        "dental": "A calm mark that works on a sign and a form.",
+        "food": "A mark for the menu, cups and the door.",
+        "shop": "A mark for bags, tags and the storefront.",
+        "service": "A mark for the truck, the invoice and the yard sign."
+      },
+      "meter_bump": 6,
+      "proposed": true
+    },
+    {
+      "id": "rush",
+      "name": "Rush launch",
+      "icon": "bolt",
+      "billing": "modifier",
+      "desc": "A shorter timeline. I clear other work to get you live sooner.",
+      "note": "Tighter timeline, and it adds cost. Confirmed after the audit, because it depends on my schedule.",
+      "weeks_multiplier": 0.7,
+      "meter_bump": 8,
+      "proposed": true
+    },
+    {
+      "id": "fit",
+      "name": "Founder fitness: kickboxing or boxing",
+      "short": "Founder fitness",
+      "icon": "fist",
+      "billing": "separate",
+      "unit": "per_hour",
+      "desc": "Private pad sessions with me, for you or your team.",
+      "line": "Build the business, then go hit something.",
+      "wording": {
+        "gym": "You already know the drill. Pads with someone who builds your back office.",
+        "dental": "An hour away from the schedule.",
+        "food": "Before service, not after a double.",
+        "shop": "Mornings, before you open.",
+        "service": "Between jobs, or a team session to end the week."
+      },
+      "footnote": "Not offered at, run by, or endorsed by any gym where I teach classes.",
+      "meter_bump": 0
+    }
+  ],
+  "page_bands": [
+    {
+      "id": "p1_5",
+      "min": 1,
+      "max": 5,
+      "label": "A few pages",
+      "line": "Home, services, about, contact, booking.",
+      "extra_weeks": 0
+    },
+    {
+      "id": "p6_15",
+      "min": 6,
+      "max": 15,
+      "label": "A full site",
+      "line": "A page for each service or class, plus the basics.",
+      "extra_weeks": 1,
+      "proposed": true
+    },
+    {
+      "id": "p16_40",
+      "min": 16,
+      "max": 40,
+      "label": "A big site",
+      "line": "Locations, team, menus, guides.",
+      "tier_floor": "grow",
+      "extra_weeks": 2,
+      "proposed": true
+    },
+    {
+      "id": "p41_150",
+      "min": 41,
+      "max": 150,
+      "label": "A content library",
+      "line": "Too many to write by hand. I'd generate most of them.",
+      "tier_floor": "grow",
+      "adds": [
+        "pages"
+      ],
+      "extra_weeks": 3,
+      "proposed": true
+    },
+    {
+      "id": "p151",
+      "min": 151,
+      "max": null,
+      "label": "Built from a database",
+      "line": "Like CoverCapy: 6,493 pages from one dentist table.",
+      "tier_floor": "run",
+      "requires": [
+        "pages"
+      ],
+      "adds": [
+        "pages"
+      ],
+      "extra_weeks": 3,
+      "proposed": true
+    }
+  ],
+  "tiers": [
+    {
+      "id": "launch",
+      "label": "Basic",
+      "rank": 1,
+      "weeks": [
+        1,
+        2
+      ],
+      "load": [
+        1,
+        4
+      ],
+      "revisions": 2,
+      "for": "A site that looks right, ranks nearby and takes bookings. Like Boba Night.",
+      "includes": [
+        "A fast site on your own domain",
+        "Booking or a lead form into a database you own",
+        "Google Business Profile and local search",
+        "Analytics you can read in a minute",
+        "I host it for you, monthly"
+      ]
+    },
+    {
+      "id": "grow",
+      "label": "Premium",
+      "rank": 2,
+      "weeks": [
+        4,
+        6
+      ],
+      "load": [
+        2,
+        10
+      ],
+      "revisions": 3,
+      "for": "Your customers log in, pay and book, and an AI helper follows up.",
+      "includes": [
+        "Everything in Basic, plus:",
+        "Member or customer portal with deposits",
+        "Stripe payments and email hooked up",
+        "One AI helper: follow-ups, intake or scheduling",
+        "Review requests after every visit"
+      ]
+    },
+    {
+      "id": "run",
+      "label": "Partner",
+      "rank": 3,
+      "weeks": [
+        6,
+        10
+      ],
+      "load": [
+        3,
+        18
+      ],
+      "revisions": 4,
+      "for": "I work alongside you: a dashboard of your numbers and AI agents running the back office.",
+      "includes": [
+        "Everything in Premium, plus:",
+        "An owner dashboard of your real numbers",
+        "AI agents on a schedule, with logs and limits",
+        "A review loop that proposes fixes you approve",
+        "A monthly call with me to pick what we build next"
+      ]
+    }
+  ],
+  "care_plans": [
+    {
+      "id": "none",
+      "label": "No plan",
+      "updates_per_month": 0,
+      "response": {
+        "hours": 0,
+        "label": "Ask any time"
+      },
+      "line": "You run it yourself. I hand over a written guide on launch day. Help later is billed by the hour.",
+      "includes": [],
+      "bullets": []
+    },
+    {
+      "id": "keep",
+      "label": "Hosting",
+      "fits": "Fits Basic sites",
+      "updates_per_month": 2,
+      "response": {
+        "hours": 48,
+        "label": "Within 2 business days"
+      },
+      "line": "I host it, back it up and keep it patched. Small changes when you need them.",
+      "includes": [
+        "hosting",
+        "backups",
+        "security",
+        "uptime"
+      ],
+      "bullets": [
+        {
+          "text": "Hosting managed on Vercel and Supabase, in accounts you own"
+        },
+        {
+          "text": "Daily database backups, plus a monthly copy saved to storage you own"
+        },
+        {
+          "text": "Security: SSL, software updates, access checks every month"
+        },
+        {
+          "text": "Uptime check every 5 minutes, with an alert to me"
+        },
+        {
+          "text": "Reply within 2 business days; site-down issues within 1 business day",
+          "kind": "reply"
+        },
+        {
+          "text": "Short monthly email: what changed, what broke, what I fixed"
+        }
+      ]
+    },
+    {
+      "id": "tend",
+      "label": "Care",
+      "fits": "Fits Premium builds",
+      "updates_per_month": 5,
+      "response": {
+        "hours": 24,
+        "label": "Within 1 business day"
+      },
+      "line": "Everything in Hosting, plus someone watching your payments and AI helper.",
+      "includes": [
+        "hosting",
+        "backups",
+        "security",
+        "uptime",
+        "reports"
+      ],
+      "bullets": [
+        {
+          "text": "Everything in Hosting"
+        },
+        {
+          "text": "Reply within 1 business day; site-down or payments-down issues the same business day",
+          "kind": "reply"
+        },
+        {
+          "text": "Your AI helper's log read every week; wrong answers fixed and tested on past cases first"
+        },
+        {
+          "text": "Payment and booking checks after every change"
+        },
+        {
+          "text": "Monthly report with the numbers from your dashboard"
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "label": "Partner",
+      "fits": "Fits Partner builds with agents",
+      "updates_per_month": 12,
+      "response": {
+        "hours": 4,
+        "label": "Same business day"
+      },
+      "min_tier": "grow",
+      "line": "Everything in Care, plus the nightly review loop and time each month to build something new.",
+      "includes": [
+        "hosting",
+        "backups",
+        "security",
+        "uptime",
+        "reports",
+        "agent_watch",
+        "review_loop"
+      ],
+      "bullets": [
+        {
+          "text": "Everything in Care"
+        },
+        {
+          "text": "Or swap 4 updates for one small new feature"
+        },
+        {
+          "text": "The nightly review loop runs on your agents; fixes wait for your approval"
+        },
+        {
+          "text": "Reply the same business day",
+          "kind": "reply"
+        },
+        {
+          "text": "A 30-minute call each month to pick what's next"
+        },
+        {
+          "text": "Quarterly check of agent limits, costs and who has access"
+        }
+      ]
+    }
+  ],
+  "billing": {
+    "annual_months_billed": 10,
+    "proposed": true
+  },
+  "deposit": {
+    "mode": "fixed",
+    "credited": true,
+    "label": "Audit deposit, credited to your build",
+    "stripe_product_name": "NJS Studio audit deposit"
+  },
+  "industries": [
+    {
+      "id": "fitness",
+      "label": "Fitness and wellness",
+      "sectors": [
+        {
+          "id": "gym",
+          "label": "Gym",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your gym",
+            "head": "Train hard in Brea",
+            "cta": "Book a class",
+            "tiles": [
+              "Classes",
+              "Coaches",
+              "Packs"
+            ]
+          },
+          "noun": "a gym"
+        },
+        {
+          "id": "martial",
+          "label": "Boxing or martial arts",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your dojo",
+            "head": "First class is on us",
+            "cta": "Try a class",
+            "tiles": [
+              "Schedule",
+              "Kids",
+              "Fight team"
+            ],
+            "accent": "#FF6B5C"
+          },
+          "noun": "a boxing or martial arts gym"
+        },
+        {
+          "id": "yoga",
+          "label": "Yoga or Pilates",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your studio",
+            "head": "Breathe in, slow down",
+            "cta": "Book a mat",
+            "tiles": [
+              "Classes",
+              "Intro pack",
+              "Teachers"
+            ],
+            "accent": "#B79CFF"
+          },
+          "noun": "a yoga or Pilates studio"
+        },
+        {
+          "id": "trainer",
+          "label": "Personal trainer",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your coaching",
+            "head": "Strong in 12 weeks",
+            "cta": "Book a session",
+            "tiles": [
+              "Programs",
+              "Results",
+              "Packages"
+            ]
+          },
+          "noun": "a personal training business"
+        },
+        {
+          "id": "spa",
+          "label": "Spa or massage",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your spa",
+            "head": "An hour that's yours",
+            "cta": "Book a massage",
+            "tiles": [
+              "Treatments",
+              "Gift cards",
+              "Memberships"
+            ],
+            "accent": "#E9A3C9"
+          },
+          "noun": "a spa"
+        },
+        {
+          "id": "medspa",
+          "label": "Med spa",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your med spa",
+            "head": "Skin you'll notice",
+            "cta": "Book a consult",
+            "tiles": [
+              "Treatments",
+              "Before and after",
+              "Memberships"
+            ],
+            "accent": "#E9A3C9"
+          },
+          "noun": "a med spa"
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "label": "Health care",
+      "sectors": [
+        {
+          "id": "dental",
+          "label": "Dental office",
+          "profile": "dental",
+          "scene": {
+            "brand": "Your practice",
+            "head": "Gentle care, plans accepted",
+            "cta": "Book a cleaning",
+            "tiles": [
+              "Your plan",
+              "Services",
+              "Hours"
+            ]
+          },
+          "noun": "a dental office"
+        },
+        {
+          "id": "clinic",
+          "label": "Medical clinic",
+          "profile": "service",
+          "scene": {
+            "brand": "Your clinic",
+            "head": "Same-week visits",
+            "cta": "Book a visit",
+            "tiles": [
+              "Services",
+              "Insurance",
+              "Doctors"
+            ],
+            "accent": "#6FD0EA"
+          },
+          "noun": "a medical clinic"
+        },
+        {
+          "id": "chiro",
+          "label": "Chiropractic or PT",
+          "profile": "service",
+          "scene": {
+            "brand": "Your clinic",
+            "head": "Move without the ache",
+            "cta": "Book an adjustment",
+            "tiles": [
+              "Treatments",
+              "First visit",
+              "Plans"
+            ],
+            "accent": "#6FD0EA"
+          },
+          "noun": "a chiropractic or PT clinic"
+        },
+        {
+          "id": "therapy",
+          "label": "Therapy or counseling",
+          "profile": "service",
+          "scene": {
+            "brand": "Your practice",
+            "head": "Talk to someone this week",
+            "cta": "Book a free call",
+            "tiles": [
+              "Approach",
+              "Fees",
+              "Who I see"
+            ],
+            "accent": "#9FC9B3"
+          },
+          "noun": "a therapy practice"
+        },
+        {
+          "id": "vet",
+          "label": "Veterinary",
+          "profile": "service",
+          "scene": {
+            "brand": "Your vet",
+            "head": "Care for the whole family",
+            "cta": "Book a checkup",
+            "tiles": [
+              "Services",
+              "Urgent care",
+              "Wellness plans"
+            ],
+            "accent": "#79DBA2"
+          },
+          "noun": "a vet clinic"
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "label": "Food and drink",
+      "sectors": [
+        {
+          "id": "restaurant",
+          "label": "Restaurant",
+          "profile": "food",
+          "scene": {
+            "brand": "Your kitchen",
+            "head": "Open late on Birch St",
+            "cta": "Reserve a table",
+            "tiles": [
+              "Menu",
+              "Catering",
+              "Hours"
+            ]
+          },
+          "noun": "a restaurant"
+        },
+        {
+          "id": "cafe",
+          "label": "Cafe, boba or dessert",
+          "profile": "food",
+          "scene": {
+            "brand": "Your cafe",
+            "head": "Fresh drinks all day",
+            "cta": "Order ahead",
+            "tiles": [
+              "Menu",
+              "Rewards",
+              "Locations"
+            ],
+            "accent": "#C9A27E"
+          },
+          "noun": "a cafe or boba shop"
+        },
+        {
+          "id": "bar",
+          "label": "Bar or brewery",
+          "profile": "food",
+          "scene": {
+            "brand": "Your taproom",
+            "head": "Twelve taps, one patio",
+            "cta": "See what's pouring",
+            "tiles": [
+              "On tap",
+              "Events",
+              "Food"
+            ],
+            "accent": "#F5BE4F"
+          },
+          "noun": "a bar or brewery"
+        },
+        {
+          "id": "catering",
+          "label": "Catering",
+          "profile": "food",
+          "scene": {
+            "brand": "Your catering",
+            "head": "Feeds a party or a crowd",
+            "cta": "Get a catering quote",
+            "tiles": [
+              "Menus",
+              "Events",
+              "Reviews"
+            ]
+          },
+          "noun": "a catering company"
+        },
+        {
+          "id": "truck",
+          "label": "Food truck",
+          "profile": "food",
+          "scene": {
+            "brand": "Your truck",
+            "head": "Find us this week",
+            "cta": "See the schedule",
+            "tiles": [
+              "Schedule",
+              "Menu",
+              "Book us"
+            ],
+            "accent": "#FF8A4C"
+          },
+          "noun": "a food truck"
+        },
+        {
+          "id": "bakery",
+          "label": "Bakery",
+          "profile": "food",
+          "scene": {
+            "brand": "Your bakery",
+            "head": "Baked before sunrise",
+            "cta": "Order a cake",
+            "tiles": [
+              "Cakes",
+              "Daily bake",
+              "Pickup"
+            ],
+            "accent": "#F2C38B"
+          },
+          "noun": "a bakery"
+        }
+      ]
+    },
+    {
+      "id": "retail",
+      "label": "Retail and ecommerce",
+      "sectors": [
+        {
+          "id": "boutique",
+          "label": "Boutique or apparel",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your shop",
+            "head": "New in this week",
+            "cta": "Shop new arrivals",
+            "tiles": [
+              "New in",
+              "Brands",
+              "Rewards"
+            ]
+          },
+          "noun": "a boutique"
+        },
+        {
+          "id": "online",
+          "label": "Online store",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your store",
+            "head": "Ships the same day",
+            "cta": "Shop now",
+            "tiles": [
+              "Favorites",
+              "Bundles",
+              "Reviews"
+            ]
+          },
+          "noun": "an online store"
+        },
+        {
+          "id": "collect",
+          "label": "Cards, collectibles or hobby",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your shop",
+            "head": "Fresh stock every Friday",
+            "cta": "See what's new",
+            "tiles": [
+              "Singles",
+              "Sealed",
+              "Events"
+            ],
+            "accent": "#7FA8FF"
+          },
+          "noun": "a card or hobby shop"
+        },
+        {
+          "id": "beauty",
+          "label": "Beauty or skincare",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your brand",
+            "head": "Clean skin, simple steps",
+            "cta": "Find your routine",
+            "tiles": [
+              "Routines",
+              "Favorites",
+              "Quiz"
+            ],
+            "accent": "#F27BB8"
+          },
+          "noun": "a beauty brand"
+        },
+        {
+          "id": "specialty",
+          "label": "Specialty shop",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your shop",
+            "head": "Hard to find, easy to love",
+            "cta": "Visit the shop",
+            "tiles": [
+              "Shop",
+              "Gifts",
+              "Visit"
+            ]
+          },
+          "noun": "a specialty shop"
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "label": "Home and local services",
+      "sectors": [
+        {
+          "id": "contractor",
+          "label": "Contractor or remodel",
+          "profile": "service",
+          "scene": {
+            "brand": "Your crew",
+            "head": "Same-week jobs in OC",
+            "cta": "Get a quote",
+            "tiles": [
+              "Services",
+              "Areas",
+              "Reviews"
+            ]
+          },
+          "noun": "a contracting business"
+        },
+        {
+          "id": "cleaning",
+          "label": "Cleaning",
+          "profile": "service",
+          "scene": {
+            "brand": "Your cleaning co",
+            "head": "Spotless, every visit",
+            "cta": "Book a clean",
+            "tiles": [
+              "Plans",
+              "Areas",
+              "Reviews"
+            ]
+          },
+          "noun": "a cleaning company"
+        },
+        {
+          "id": "landscape",
+          "label": "Landscaping or pools",
+          "profile": "service",
+          "scene": {
+            "brand": "Your crew",
+            "head": "Yards that stay green",
+            "cta": "Get a quote",
+            "tiles": [
+              "Services",
+              "Gallery",
+              "Areas"
+            ]
+          },
+          "noun": "a landscaping or pool company"
+        },
+        {
+          "id": "auto",
+          "label": "Auto repair or detailing",
+          "profile": "service",
+          "scene": {
+            "brand": "Your shop",
+            "head": "Honest work, same day",
+            "cta": "Book service",
+            "tiles": [
+              "Services",
+              "Pricing",
+              "Reviews"
+            ],
+            "accent": "#7FA8FF"
+          },
+          "noun": "an auto shop"
+        },
+        {
+          "id": "salon",
+          "label": "Salon or barber",
+          "profile": "service",
+          "scene": {
+            "brand": "Your salon",
+            "head": "Fresh cuts, easy booking",
+            "cta": "Book a chair",
+            "tiles": [
+              "Services",
+              "Stylists",
+              "Gallery"
+            ],
+            "accent": "#F27BB8"
+          },
+          "noun": "a salon or barbershop"
+        },
+        {
+          "id": "pet",
+          "label": "Pet grooming or care",
+          "profile": "service",
+          "scene": {
+            "brand": "Your shop",
+            "head": "Happy dogs, clean dogs",
+            "cta": "Book a groom",
+            "tiles": [
+              "Services",
+              "Daycare",
+              "Gallery"
+            ]
+          },
+          "noun": "a pet grooming shop"
+        }
+      ]
+    },
+    {
+      "id": "pro",
+      "label": "Professional services",
+      "sectors": [
+        {
+          "id": "law",
+          "label": "Law firm",
+          "profile": "service",
+          "scene": {
+            "brand": "Your firm",
+            "head": "Straight answers, fast",
+            "cta": "Book a consult",
+            "tiles": [
+              "Practice areas",
+              "Team",
+              "Results"
+            ],
+            "accent": "#9DB4FF"
+          },
+          "noun": "a law firm"
+        },
+        {
+          "id": "accounting",
+          "label": "Accounting or tax",
+          "profile": "service",
+          "scene": {
+            "brand": "Your firm",
+            "head": "Taxes done before April",
+            "cta": "Book a call",
+            "tiles": [
+              "Services",
+              "Clients",
+              "Portal"
+            ],
+            "accent": "#9DB4FF"
+          },
+          "noun": "an accounting firm"
+        },
+        {
+          "id": "realestate",
+          "label": "Real estate",
+          "profile": "service",
+          "scene": {
+            "brand": "Your team",
+            "head": "Homes in North OC",
+            "cta": "See listings",
+            "tiles": [
+              "Listings",
+              "Sold",
+              "Value my home"
+            ],
+            "accent": "#79DBA2"
+          },
+          "noun": "a real estate team"
+        },
+        {
+          "id": "insurance",
+          "label": "Insurance or finance",
+          "profile": "service",
+          "scene": {
+            "brand": "Your office",
+            "head": "Coverage that fits",
+            "cta": "Get a quote",
+            "tiles": [
+              "Plans",
+              "Claims",
+              "Agents"
+            ],
+            "accent": "#9DB4FF"
+          },
+          "noun": "an insurance office"
+        },
+        {
+          "id": "creative",
+          "label": "Consulting or creative studio",
+          "profile": "service",
+          "scene": {
+            "brand": "Your studio",
+            "head": "Work that moves numbers",
+            "cta": "Start a project",
+            "tiles": [
+              "Services",
+              "Work",
+              "Process"
+            ],
+            "accent": "#B79CFF"
+          },
+          "noun": "a consulting or creative studio"
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "label": "Education and kids",
+      "sectors": [
+        {
+          "id": "tutoring",
+          "label": "Tutoring or test prep",
+          "profile": "service",
+          "scene": {
+            "brand": "Your center",
+            "head": "Grades up by finals",
+            "cta": "Book a free assessment",
+            "tiles": [
+              "Programs",
+              "Results",
+              "Tutors"
+            ],
+            "accent": "#F5BE4F"
+          },
+          "noun": "a tutoring center"
+        },
+        {
+          "id": "kids",
+          "label": "Kids classes or camps",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your program",
+            "head": "Summer camp is open",
+            "cta": "Save a spot",
+            "tiles": [
+              "Camps",
+              "Classes",
+              "Ages"
+            ],
+            "accent": "#F5BE4F"
+          },
+          "noun": "a kids program or camp"
+        },
+        {
+          "id": "music",
+          "label": "Music, dance or art lessons",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your studio",
+            "head": "First lesson is free",
+            "cta": "Book a lesson",
+            "tiles": [
+              "Lessons",
+              "Teachers",
+              "Recitals"
+            ],
+            "accent": "#B79CFF"
+          },
+          "noun": "a music, dance or art studio"
+        },
+        {
+          "id": "course",
+          "label": "Online course or coaching",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your course",
+            "head": "Learn it in six weeks",
+            "cta": "Join the course",
+            "tiles": [
+              "Curriculum",
+              "Results",
+              "Pricing"
+            ],
+            "accent": "#C6F432"
+          },
+          "noun": "an online course"
+        },
+        {
+          "id": "school",
+          "label": "Private or charter school",
+          "profile": "service",
+          "scene": {
+            "brand": "Your school",
+            "head": "Tours open this month",
+            "cta": "Book a tour",
+            "tiles": [
+              "Programs",
+              "Admissions",
+              "Calendar"
+            ],
+            "accent": "#9DB4FF"
+          },
+          "noun": "a private school"
+        }
+      ]
+    },
+    {
+      "id": "events",
+      "label": "Events, venues and creators",
+      "sectors": [
+        {
+          "id": "venue",
+          "label": "Event venue",
+          "profile": "food",
+          "scene": {
+            "brand": "Your venue",
+            "head": "Room for 300, one view",
+            "cta": "Check a date",
+            "tiles": [
+              "Spaces",
+              "Packages",
+              "Gallery"
+            ],
+            "accent": "#E9A3C9"
+          },
+          "noun": "an event venue"
+        },
+        {
+          "id": "wedding",
+          "label": "Wedding or event planner",
+          "profile": "service",
+          "scene": {
+            "brand": "Your studio",
+            "head": "Days people remember",
+            "cta": "Check your date",
+            "tiles": [
+              "Packages",
+              "Gallery",
+              "Process"
+            ],
+            "accent": "#E9A3C9"
+          },
+          "noun": "a planning business"
+        },
+        {
+          "id": "photo",
+          "label": "Photo or video",
+          "profile": "service",
+          "scene": {
+            "brand": "Your studio",
+            "head": "Moments, made to last",
+            "cta": "Book a shoot",
+            "tiles": [
+              "Portfolio",
+              "Packages",
+              "Reviews"
+            ],
+            "accent": "#C9A27E"
+          },
+          "noun": "a photo or video studio"
+        },
+        {
+          "id": "creator",
+          "label": "Creator or influencer",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your brand",
+            "head": "New drop Friday",
+            "cta": "Join the list",
+            "tiles": [
+              "Shop",
+              "Videos",
+              "Collabs"
+            ],
+            "accent": "#C6F432"
+          },
+          "noun": "a creator brand"
+        },
+        {
+          "id": "entertain",
+          "label": "Entertainment or nightlife",
+          "profile": "food",
+          "scene": {
+            "brand": "Your venue",
+            "head": "Doors at nine",
+            "cta": "Get tickets",
+            "tiles": [
+              "Events",
+              "Tables",
+              "Gallery"
+            ],
+            "accent": "#B79CFF"
+          },
+          "noun": "a nightlife venue"
+        }
+      ]
+    },
+    {
+      "id": "tech",
+      "label": "Tech and startups",
+      "sectors": [
+        {
+          "id": "saas",
+          "label": "SaaS or app",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your app",
+            "head": "Do it in half the time",
+            "cta": "Start free",
+            "tiles": [
+              "Features",
+              "Pricing",
+              "Docs"
+            ],
+            "accent": "#C6F432"
+          },
+          "noun": "a software product"
+        },
+        {
+          "id": "startup",
+          "label": "Early-stage startup",
+          "profile": "shop",
+          "scene": {
+            "brand": "Your startup",
+            "head": "Join the waitlist",
+            "cta": "Get early access",
+            "tiles": [
+              "How it works",
+              "Team",
+              "FAQ"
+            ],
+            "accent": "#C6F432"
+          },
+          "noun": "a startup"
+        },
+        {
+          "id": "itservices",
+          "label": "IT or managed services",
+          "profile": "service",
+          "scene": {
+            "brand": "Your team",
+            "head": "IT that just works",
+            "cta": "Book an assessment",
+            "tiles": [
+              "Services",
+              "Plans",
+              "Support"
+            ],
+            "accent": "#7FA8FF"
+          },
+          "noun": "an IT services company"
+        }
+      ]
+    },
+    {
+      "id": "community",
+      "label": "Nonprofit and community",
+      "sectors": [
+        {
+          "id": "nonprofit",
+          "label": "Nonprofit",
+          "profile": "service",
+          "scene": {
+            "brand": "Your cause",
+            "head": "Meals for local families",
+            "cta": "Donate",
+            "tiles": [
+              "Programs",
+              "Volunteer",
+              "Impact"
+            ],
+            "accent": "#79DBA2"
+          },
+          "noun": "a nonprofit"
+        },
+        {
+          "id": "church",
+          "label": "Church or faith group",
+          "profile": "service",
+          "scene": {
+            "brand": "Your church",
+            "head": "Sundays at 10",
+            "cta": "Plan a visit",
+            "tiles": [
+              "Services",
+              "Groups",
+              "Events"
+            ],
+            "accent": "#F2C38B"
+          },
+          "noun": "a church"
+        },
+        {
+          "id": "club",
+          "label": "Club, league or association",
+          "profile": "gym",
+          "scene": {
+            "brand": "Your club",
+            "head": "Season sign-ups are open",
+            "cta": "Join the club",
+            "tiles": [
+              "Teams",
+              "Schedule",
+              "Members"
+            ],
+            "accent": "#79DBA2"
+          },
+          "noun": "a club or league"
+        }
+      ]
+    }
+  ],
+  "business_other": {
+    "profile": "service",
+    "label": "Something else"
+  },
+  "plan_wants": {
+    "launch": "a website, hosted for me",
+    "grow": "online booking and payments",
+    "run": "a partner and AI agents"
+  },
+  "prices": "hidden"
+}

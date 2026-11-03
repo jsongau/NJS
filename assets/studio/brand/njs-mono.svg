@@ -1,0 +1,18 @@
+<svg id="njsmono" class="nj" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="NJS Studio"><style>
+#njsmono{overflow:visible}
+#njsmono .dr{stroke-dasharray:2.6 2.2}
+
+@media (prefers-reduced-motion:reduce){#njsmono *{animation:none!important}}
+</style>
+<g class="t"><rect x="2" y="2" width="60" height="60" rx="17" fill="#121416"/>
+<g class="sn">
+<path class="so" d="M38.5 18C35.5 14 21.5 14 21.5 21.5C21.5 28 38.5 29 38.5 35.5C38.5 43 24.5 43 21.5 39" fill="none" stroke="#FF4F9A" stroke-width="5.6" stroke-linecap="round"></path>
+<path class="si" d="M38.5 18C35.5 14 21.5 14 21.5 21.5C21.5 28 38.5 29 38.5 35.5C38.5 43 24.5 43 21.5 39" fill="none" stroke="#121416" stroke-width="2.8" stroke-linecap="round"></path>
+</g>
+<rect x="13" y="13" width="7" height="31" rx="1" fill="#FBF5F6"/>
+<polygon points="13,13 20,13 47,44 40,44" fill="#FBF5F6"/>
+<path class="jj" d="M43.5 13V43a8.5 8.5 0 0 1-8.5 8.5h-5" fill="none" stroke="#FBF5F6" stroke-width="7"/>
+
+<g class="sp" opacity="0" stroke="#FF4F9A" stroke-width="1.8" stroke-linecap="round"><path d="M43.5 2.8v-1.6M37.5 6.5l-1.6-.8M49.5 6.5l1.6-.8"/></g>
+<circle class="dot" cx="43.5" cy="7" r="3.4" fill="#FF4F9A"/>
+</g></svg>

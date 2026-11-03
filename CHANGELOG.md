@@ -2,6 +2,13 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-03
+
+- `/` — NJS Studio becomes the homepage: the sentence picker, 10 industries and 49 kinds, the
+  Basic / Premium / Partner plans, the Goldsmith icon set and the NJS logo. The CV moves to
+  `/resume1`. `/studio` redirects home. Prices stay hidden; call buttons open the plan form
+  until the booking link exists.
+
 ## 2026-11-01
 
 - `docs/agent-njs` — Agent NJS gets a home: his profile and rules, and an

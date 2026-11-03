@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/studio",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/ritual.html",
       "destination": "/ritual",
       "permanent": true

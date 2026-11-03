@@ -11,6 +11,8 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Same day: the business ribbon slows to a readable 38px a second and grows to 62 businesses,
   each with its own line and Goldsmith mark; the picker menu scrolls into view when it opens;
   Delivered cards show real logos for Boba Night and PM Countdown.
+  Wave 0 of the pages plan: funnel events (page view to lead sent, no personal data) beacon to
+  a new `event-intake` edge function and `studio_events` table.
 
 ## 2026-11-01
 

@@ -4,6 +4,7 @@
 import { $, $$, esc, reduced } from './util.js';
 import { icon } from './icons.js';
 import { resolveBusiness } from './engine.js';
+import { track } from './track.js';
 
 export function mountMadlib(store) {
   const { catalog, actions } = store;
@@ -31,6 +32,7 @@ export function mountMadlib(store) {
     close(true);
     openPop = pop; opener = btn;
     pop.hidden = false; btn.setAttribute('aria-expanded', 'true');
+    track('picker_open', { detail: pop === popBiz ? 'business' : 'plan' });
     pop.style.setProperty('--x', Math.max(0, btn.offsetLeft - 8) + 'px');
     if (pop === popBiz) { const r = resolveBusiness(store.get().sel, catalog); renderKinds(r.industry || 'other', r.sector); }
     requestAnimationFrame(() => { pop.classList.add('on'); const f = pop.querySelector('[aria-pressed="true"], button'); if (f) f.focus({ preventScroll: true }); reveal(pop); });

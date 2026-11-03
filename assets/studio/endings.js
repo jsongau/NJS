@@ -4,6 +4,7 @@
 import { $, plural, weeksText } from './util.js';
 import { resolveBusiness } from './engine.js';
 import { sheet } from './summary.js';
+import { track } from './track.js';
 
 export function planMessage(store, extra = {}) {
   const { catalog } = store;
@@ -68,6 +69,7 @@ export function mountEndings(store) {
   function openForm() {
     if (!enabled) return;
     form.classList.add('open');
+    track('form_open', { tier: store.get().sel.package_tab || null });
     sendBtn.hidden = true;
     $('#send-sub').hidden = true;
     setTimeout(() => form.querySelector('input[name="name"]').focus(), 40);
@@ -86,6 +88,7 @@ export function mountEndings(store) {
   if (!callLive) calls.forEach((a) => { a.textContent = 'Request a 20-minute call'; a.removeAttribute('target'); });
   calls.forEach((a) => a.addEventListener('click', (e) => {
     if (a.getAttribute('aria-disabled') === 'true') { e.preventDefault(); return; }
+    track('call_click', { detail: a.id });
     if (callLive) return;
     e.preventDefault();
     if (sheet.isPhone()) sheet.setOpen(true);
@@ -118,6 +121,7 @@ export function mountEndings(store) {
       const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (r.ok) {
         sent = true;
+        track('lead_sent', { business_type: body.door, tier: store.get().sel.package_tab || null });
         const first = body.name.split(/\s+/)[0];
         msg.className = 'msg';
         msg.innerHTML = '';

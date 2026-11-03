@@ -10,6 +10,7 @@ import { mountBlueprint } from './blueprint.js';
 import { mountPlans } from './plans.js';
 import { mountMadlib } from './madlib.js';
 import { $ } from './util.js';
+import { mountTracking } from './track.js';
 
 const BASE = '/assets/studio/data/';
 
@@ -46,6 +47,7 @@ async function boot() {
   sheet.init();
   mountEndings(store);
   mountDelivered(store);
+  mountTracking(store);
   clock();
   // Logo: the j dot hops once on arrival (CSS); hovering the header logo snaps the S straight
   // (a few lines of JS inside the SVG drive that part).

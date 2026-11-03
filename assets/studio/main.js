@@ -9,6 +9,7 @@ import { mountDelivered, mountProof } from './delivered.js';
 import { mountBlueprint } from './blueprint.js';
 import { mountPlans } from './plans.js';
 import { mountMadlib } from './madlib.js';
+import { mountCrew } from './crew.js';
 import { $ } from './util.js';
 import { mountTracking } from './track.js';
 
@@ -61,6 +62,7 @@ async function boot() {
   if (on('#stage')) mountBlueprint(store);
   if (on('#proof')) mountProof(store);
   mountMadlib(store);
+  mountCrew(store);
   mountPlans(store);
   if (on('#s-business')) mountConfigurator(store);
   if (on('#s-care')) mountCare(store);

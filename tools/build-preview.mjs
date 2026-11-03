@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const A = join(ROOT, 'assets/studio');
-const ORDER = ['engine', 'util', 'track', 'icons', 'marquee', 'store', 'configurator', 'care', 'summary', 'endings', 'delivered', 'blueprint', 'plans', 'madlib', 'main'];
+const ORDER = ['engine', 'util', 'track', 'icons', 'marquee', 'store', 'configurator', 'care', 'summary', 'endings', 'delivered', 'blueprint', 'plans', 'madlib', 'crewart', 'crew', 'main'];
 
 function wrap(name, src) {
   const exported = [];

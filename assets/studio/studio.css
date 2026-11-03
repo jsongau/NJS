@@ -812,73 +812,73 @@ footer .legal { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); borde
 .gi .ak { stroke: var(--signal); }
 .gi .m, .gi .e, .gi .p1, .gi .p2, .gi .p3, .gi .s, .gi .f, .gi .t1, .gi .t2, .gi .t3, .gi .sh { transform-box: fill-box; transform-origin: center; }
 .gi .d { stroke-dasharray: 1; stroke-dashoffset: 0; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi, .slot.bump .gi, :is(.ml-tile[aria-pressed="true"], .ind-tile[aria-checked="true"]) .gi { --go: running; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi, .slot.bump .gi, :is(.ml-tile[aria-pressed="true"], .ind-tile[aria-checked="true"]) .gi { --go: running; }
 .gi * { animation-play-state: var(--go, paused); }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):not(:hover) .gi * { animation: none; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="fitness"] .m { animation: lift 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):not(:hover) .gi * { animation: none; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="fitness"] .m { animation: lift 900ms var(--ease-io) infinite; }
 @keyframes lift { 0%, 100% { transform: none; } 45% { transform: translateY(-3px) rotate(-6deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="health"] .m { animation: twinkle 900ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="health"] .s { animation: twinkle 900ms 300ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="health"] .m { animation: twinkle 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="health"] .s { animation: twinkle 900ms 300ms ease-in-out infinite; }
 @keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.5) rotate(45deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="food"] .m { animation: bob 700ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="food"] .m { animation: bob 700ms ease-in-out infinite; }
 @keyframes bob { 0%, 100% { transform: none; } 50% { transform: translateY(-2.5px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="retail"] .m { transform-origin: 50% 0; animation: swing 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="retail"] .m { transform-origin: 50% 0; animation: swing 900ms var(--ease-io) infinite; }
 @keyframes swing { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(8deg); } 70% { transform: rotate(-6deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="home"] .m { animation: smoke 1200ms ease-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="home"] .m { animation: smoke 1200ms ease-out infinite; }
 @keyframes smoke { 0% { transform: translate(0, 2px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translate(2px, -3px); opacity: 0; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="pro"] .m { animation: lid 800ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="pro"] .m { animation: lid 800ms var(--ease-io) infinite; }
 @keyframes lid { 0%, 100% { transform: none; } 50% { transform: translateY(-2px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="education"] .m { transform-origin: 50% 0; animation: swing 1000ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="events"] .m { animation: tilt 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="education"] .m { transform-origin: 50% 0; animation: swing 1000ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="events"] .m { animation: tilt 900ms var(--ease-io) infinite; }
 @keyframes tilt { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-9deg) scale(1.04); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="tech"] .m { animation: launch 900ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="tech"] .f { transform-origin: 50% 0; animation: flame 220ms ease-in-out infinite alternate; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="tech"] .m { animation: launch 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="tech"] .f { transform-origin: 50% 0; animation: flame 220ms ease-in-out infinite alternate; }
 @keyframes launch { 0%, 100% { transform: none; } 50% { transform: translateY(-3px); } }
 @keyframes flame { from { transform: scaleY(.7); } to { transform: scaleY(1.25); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="community"] .m { animation: beat 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="community"] .m { animation: beat 900ms ease-in-out infinite; }
 @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.14); } 30% { transform: scale(.98); } 45% { transform: scale(1.08); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="other"] .m { animation: spin 2400ms linear infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="other"] .m { animation: spin 2400ms linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="plan_launch"] .m { animation: click 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="plan_launch"] .m { animation: click 900ms var(--ease-io) infinite; }
 @keyframes click { 0%, 100% { transform: none; } 40% { transform: translate(-3px, -2px); } 55% { transform: translate(-3px, -2px) scale(.85); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="plan_grow"] .m { animation: slide 1000ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="plan_grow"] .m { animation: slide 1000ms var(--ease-io) infinite; }
 @keyframes slide { 0%, 100% { transform: none; } 50% { transform: translate(2px, 2px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi .d { animation: draw 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi .d { animation: draw 900ms var(--ease-out) both; }
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi :is(.b1, .b2, .b3) { transform-origin: 50% 100%; animation: grow 900ms var(--ease-out) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi .b2 { animation-delay: 90ms; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi .b3 { animation-delay: 180ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi :is(.b1, .b2, .b3) { transform-origin: 50% 100%; animation: grow 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi .b2 { animation-delay: 90ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi .b3 { animation-delay: 180ms; }
 @keyframes grow { from { transform: scaleY(.25); } to { transform: none; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="search"] .m { animation: sweep 1100ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="search"] .m { animation: sweep 1100ms var(--ease-io) infinite; }
 @keyframes sweep { 0%, 100% { transform: none; } 33% { transform: translate(-2px, -1px); } 66% { transform: translate(2px, -2px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="card"] .m { animation: swipe 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="card"] .m { animation: swipe 900ms var(--ease-io) infinite; }
 @keyframes swipe { 0%, 100% { transform: none; } 50% { transform: translateX(3px) rotate(-4deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="user"] .m { animation: nod 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="user"] .m { animation: nod 900ms var(--ease-io) infinite; }
 @keyframes nod { 0%, 100% { transform: none; } 50% { transform: translateY(-1.5px) rotate(-8deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="msg"] :is(.t1, .t2, .t3) { animation: type 900ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="msg"] .t2 { animation-delay: 150ms; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="msg"] .t3 { animation-delay: 300ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="msg"] :is(.t1, .t2, .t3) { animation: type 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="msg"] .t2 { animation-delay: 150ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="msg"] .t3 { animation-delay: 300ms; }
 @keyframes type { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-2.5px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="star"] .m { animation: spinin 900ms var(--ease-snap) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="star"] .s { animation: twinkle 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="star"] .m { animation: spinin 900ms var(--ease-snap) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="star"] .s { animation: twinkle 900ms ease-in-out infinite; }
 @keyframes spinin { from { transform: rotate(-72deg) scale(.8); } to { transform: none; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="bot"] .e { animation: blink 1600ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="bot"] .m { animation: twinkle 800ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="bot"] .e { animation: blink 1600ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="bot"] .m { animation: twinkle 800ms ease-in-out infinite; }
 @keyframes blink { 0%, 40%, 50%, 100% { transform: none; } 45% { transform: scaleY(.1); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="pages"] .p1 { transform-origin: 0 100%; animation: fan1 900ms var(--ease-out) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="pages"] .p3 { animation: fan3 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="pages"] .p1 { transform-origin: 0 100%; animation: fan1 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="pages"] .p3 { animation: fan3 900ms var(--ease-out) both; }
 @keyframes fan1 { to { transform: rotate(-8deg) translateX(-1px); } }
 @keyframes fan3 { to { transform: translate(2px, -1px) rotate(6deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="loop"] .m { animation: spin 1600ms linear infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="pin"] .m { animation: drop 900ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="pin"] .sh { animation: shadow 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="loop"] .m { animation: spin 1600ms linear infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="pin"] .m { animation: drop 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="pin"] .sh { animation: shadow 900ms var(--ease-io) infinite; }
 @keyframes drop { 0%, 100% { transform: none; } 50% { transform: translateY(-3px); } }
 @keyframes shadow { 0%, 100% { transform: none; } 50% { transform: scaleX(.6); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="team"] .m { animation: lid 900ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="mark"] .m { animation: spinin 900ms var(--ease-snap) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="bolt"] .m { animation: flash 500ms steps(2, jump-none) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="team"] .m { animation: lid 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="mark"] .m { animation: spinin 900ms var(--ease-snap) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="bolt"] .m { animation: flash 500ms steps(2, jump-none) infinite; }
 @keyframes flash { 0% { opacity: 1; } 50% { opacity: .35; } 100% { opacity: 1; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot):hover .gi[data-i="fist"] .m { animation: jab 700ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):hover .gi[data-i="fist"] .m { animation: jab 700ms var(--ease-io) infinite; }
 @keyframes jab { 0%, 100% { transform: none; } 35% { transform: translateX(3.5px) rotate(4deg); } }
 @media (prefers-reduced-motion: reduce) { .gi * { animation: none !important; } .slot.bump .slot-ic { animation: none; } }
 .ml-tile { --ic-bg: var(--surface-2); } .ind-tile, .pl { --ic-bg: var(--surface); } .card-hit .ic { --ic-bg: var(--surface-2); }
@@ -929,3 +929,64 @@ body:not([data-page="home"]) main > section:first-child { border-top: 0; }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq summary:focus-visible { outline: 3px solid var(--signal); outline-offset: 4px; border-radius: 8px; }
 .faq details p { margin: 0 0 22px; color: var(--ink-2); font-size: 16px; line-height: 1.6; max-width: 68ch; }
+
+/* ===== Crew portraits (Goldsmith) and "Your agents" ===== */
+.mate { transition: border-color var(--t-quick), transform var(--t-quick) var(--ease-out), box-shadow var(--t-quick); outline: none; }
+.mate:hover, .mate:focus-visible { border-color: var(--ink); transform: translateY(-2px); box-shadow: 0 18px 40px -28px rgba(18,20,22,.45); }
+.mate:focus-visible { outline: 3px solid var(--iris); outline-offset: 3px; }
+.ava.has-art { width: 60px; height: 60px; padding: 0; border-radius: 17px; flex: none; }
+.ava.has-art::after { display: none; }
+.ca { width: 60px; height: 60px; overflow: visible; display: block; }
+.ca * { transform-box: fill-box; transform-origin: center; }
+.ca .ca-d { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.ca .ca-k { opacity: 0; }
+.mate:is(:hover, :focus-visible) .ca .ca-d { animation: ca-draw 1.1s var(--ease-out) both; }
+.mate:is(:hover, :focus-visible) .ca-hop { transform-origin: 50% 100%; animation: ca-hop 1.2s cubic-bezier(.45,0,.4,1) both; }
+.mate:is(:hover, :focus-visible) .ca-swing { transform-box: view-box; transform-origin: 32px 14px; animation: ca-swing 1.4s var(--ease-io) both; }
+.mate:is(:hover, :focus-visible) .ca-b1 { animation: ca-b1 1.4s var(--ease-io) both; }
+.mate:is(:hover, :focus-visible) .ca-b2 { animation: ca-b2 1.4s var(--ease-io) both; }
+.mate:is(:hover, :focus-visible) .ca-b3 { animation: ca-b3 1.4s var(--ease-io) both; }
+.mate:is(:hover, :focus-visible) .ca-cur { animation: ca-cur 1.4s var(--ease-io) both; }
+.mate:is(:hover, :focus-visible) .ca-lens { animation: ca-lens 1.3s var(--ease-io) both; }
+.mate:is(:hover, :focus-visible) .ca-drop { transform-origin: 50% 100%; animation: ca-drop 1.2s cubic-bezier(.45,0,.4,1) both; }
+.mate:is(:hover, :focus-visible) .ca-k { animation: ca-k 1.2s ease-out both; }
+.mate:is(:hover, :focus-visible) .ca-nib { transform-box: view-box; animation: ca-nib 1.1s var(--ease-out) both; }
+@keyframes ca-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes ca-hop { 0% { transform: none; } 12% { transform: scale(1.35, .65); } 35% { transform: translateY(-9px) scale(.8, 1.25); } 58% { transform: scale(1.5, .55); } 72% { transform: translateY(-3px) scale(.92, 1.08); } 86% { transform: scale(1.12, .9); } 100% { transform: none; } }
+@keyframes ca-swing { 0% { transform: rotate(0); } 30% { transform: rotate(-16deg); } 65% { transform: rotate(14deg); } 100% { transform: rotate(0); } }
+@keyframes ca-b1 { 0%, 100% { transform: none; } 35%, 70% { transform: translateX(18px) scale(.94); } }
+@keyframes ca-b2 { 0%, 100% { transform: none; } 35%, 70% { transform: translateX(-18px) translateY(10px); } }
+@keyframes ca-b3 { 0%, 100% { transform: none; } 35%, 70% { transform: translateX(-18px) translateY(-10px); } }
+@keyframes ca-cur { 0%, 100% { transform: none; } 25% { transform: translate(-18px, -12px); } 35% { transform: translate(-18px, -12px) scale(.85); } 70% { transform: translate(-4px, -4px); } }
+@keyframes ca-lens { 0% { transform: none; } 25% { transform: translate(-14px, -18px); } 50% { transform: translate(-6px, -12px); } 75% { transform: translate(-14px, -6px); } 100% { transform: none; } }
+@keyframes ca-drop { 0% { transform: none; } 30% { transform: translateY(-12px) scale(.94, 1.08); } 55% { transform: translateY(1px) scale(1.18, .78); } 70% { transform: scale(.96, 1.05); } 100% { transform: none; } }
+@keyframes ca-k { 0%, 50% { opacity: 0; } 60% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes ca-nib { from { transform: translate(-36px, 24px) rotate(-30deg); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .ca * { animation: none !important; } }
+
+.agents { padding-top: 24px; }
+.agents-box { border-radius: 28px; background: #121416; color: #C9CCC4; padding: clamp(24px, 4vw, 48px);
+  --surface: #17191C; --surface-2: #1F2226; --ink: #F3F1EA; --ink-2: #C9CCC4; --ink-3: #8E938A; --line: #2A2E33; --line-hi: #3A3F45; --signal-ink: var(--signal); --ic-bg: #1F2226; }
+.agents-box .sec-h h2 { color: #F3F1EA; } .agents-box .sec-h p { color: #C9CCC4; }
+.agents-box .kick { color: var(--signal); }
+.agents-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-top: 28px; }
+.ag { display: flex; flex-direction: column; gap: 8px; text-align: left; padding: 18px; border-radius: 18px; background: var(--surface); border: 1.5px solid var(--line); color: var(--ink); font: inherit; text-decoration: none; transition: border-color var(--t-quick), transform var(--t-quick) var(--ease-out), background var(--t-quick); }
+.ag:hover { border-color: var(--ink-3); transform: translateY(-2px); }
+.ag:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+.ag.on { border-color: var(--signal); background: #22181D; }
+.ag-top { display: flex; justify-content: space-between; align-items: center; }
+.ag .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--surface-2); }
+.ag .ic .gi { width: 28px; height: 28px; }
+.ag b { font-size: 17px; font-weight: 650; color: #F3F1EA; }
+.ag-do { font-size: 14px; line-height: 1.45; color: #C9CCC4; }
+.ag-ex { font: 500 11.5px/1.4 var(--mono); color: #8E938A; margin-top: auto; padding-top: 6px; }
+.ag-st { font: 600 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 7px 10px; border-radius: 999px; border: 1px solid var(--line-hi); color: #F3F1EA; }
+.ag.on .ag-st { background: var(--signal); border-color: var(--signal); color: #121416; }
+.ag-own { border-style: dashed; }
+.ag:hover .gi, .ag.on .gi { --go: running; }
+.agents-cta { display: grid; justify-items: start; gap: 14px; margin-top: 26px; padding-top: 22px; border-top: 1px dashed var(--line-hi); }
+.agents-cta #agents-line { color: #F3F1EA; font-size: 17px; font-weight: 500; }
+.agents-cta .pair { display: flex; flex-wrap: wrap; gap: 10px; }
+.agents-cta .btn:not(.btn-lime) { color: #F3F1EA; border-color: #F3F1EA; }
+.agents-cta .btn:not(.btn-lime):hover { background: #F3F1EA; color: #121416; }
+.agents-cta .dep-note { font-size: 13px; color: #8E938A; }

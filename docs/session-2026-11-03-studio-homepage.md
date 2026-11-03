@@ -50,4 +50,5 @@
 - Next: Wave 3 (slim home, always-on final buttons) after a week of funnel data; CoverCapy and BoxVacay logos; cal.com link; Vercel Analytics.
 - Home sub-menu (`partials/studio/subnav.html`): jumps scroll to the section heading without changing the hash (the hash holds the plan selection). Trap: `html { scroll-padding-top: 84px }` already existed and adds to any scroll-margin; home now sets scroll-padding to header plus sub-menu instead.
 - Trap: a `<button>` is always an atomic inline box, so `display: inline` on `.slot` cannot let it wrap like text. The last slot and its period sit in `.ml-end` (nowrap), and on phones the sentence scales with the viewport so the longest pick fits on one line.
+- Draft card v2: `assets/studio/widgets.js` holds one widget per feature id, written from the business scene (brand, cta, tiles). Sized in container query units (`cqw`) on `.bp-phone`, so it reads at any width. The card is a flex column now (was absolute layers that collided at mid widths). Tabs rotate every 4.2s while visible and stop for good once the visitor touches the card. Widgets never show money figures (copy test).
 

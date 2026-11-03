@@ -6,6 +6,8 @@ import { $, $$, esc, radioGroup, reduced, typer, weeksText } from './util.js';
 import { quote, resolveBusiness } from './engine.js';
 import { icon } from './icons.js';
 import { marqRow, MARQ_SPEED } from './marquee.js';
+import { renderWidget, playWidget, actWidget } from './widgets.js';
+import { track } from './track.js';
 
 const KEY = 'njs-bp-played-v1';
 const HERO_LINE = {
@@ -37,7 +39,8 @@ export function mountBlueprint(store) {
   h1.setAttribute('aria-label', 'Your project, built while you watch.');
 
   stage.innerHTML =
-    '<span class="stage-k"><b>DRAFT</b> · <span id="bp-for"></span></span><span class="bp-cap">Preview</span>' +
+    '<div class="bp-top"><span class="stage-k"><b>DRAFT</b> · <span id="bp-for"></span></span><span class="bp-cap">Tap the phone to try it</span></div>' +
+    '<div class="bp-screens">' +
     '<div class="bp-browser"><div class="bp-bar"><i></i><i></i><i></i><span class="bp-url" id="bp-url"></span></div><div class="bp-body">' +
     '<div class="bp-site" id="bp-site"><div class="bp-nav"><b id="bp-brand"></b><span id="bp-n1"></span><span id="bp-n2"></span></div>' +
     '<div class="bp-hero"><h4 id="bp-head"></h4><span class="bp-cta" id="bp-cta"></span></div><div class="bp-img"></div>' +
@@ -45,8 +48,10 @@ export function mountBlueprint(store) {
     '<svg class="bp-wire" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
     WIRE.map((r, i) => '<rect x="' + r[0] + '" y="' + r[1] + '" width="' + r[2] + '" height="' + r[3] + '" rx="1.5" pathLength="1" vector-effect="non-scaling-stroke" style="--i:' + i + '"/>').join('') +
     '</svg></div></div>' +
-    '<div class="bp-phone" aria-hidden="true"><div class="bp-site" id="bp-psite"><div class="bp-p-head" id="bp-phead"></div><div class="bp-p-slot"></div><div class="bp-p-slot"></div><div class="bp-p-cta" id="bp-pcta"></div></div></div>' +
-    '<ul class="bp-chips" id="bp-chips" aria-hidden="true"></ul>' +
+    '<div class="bp-phone"><div class="bp-site bp-wg" id="bp-wg" role="tabpanel" aria-live="polite"></div></div>' +
+    '</div>' +
+    '<div class="bp-tabs" id="bp-tabs" role="tablist" aria-label="Features in this draft"></div>' +
+    '<div class="bp-detail" id="bp-detail"></div>' +
     '<div class="bp-total"><span class="bp-tier" id="bp-tier">Premium</span><span class="bp-meter"><i id="bp-meter"></i></span><p class="bp-say"><b>NS</b><span id="bp-say"></span></p></div>';
   stage.insertAdjacentHTML('afterend', '<p class="sr">Preview. Your real build is designed in the audit.</p>');
   const say = typer($('#bp-say'), 900);
@@ -93,17 +98,67 @@ export function mountBlueprint(store) {
     $('#bp-n2').textContent = s.tiles[1];
     $('#bp-head').textContent = s.head;
     $('#bp-cta').textContent = s.cta;
-    $('#bp-phead').textContent = s.head;
-    $('#bp-pcta').textContent = s.cta;
     $('#bp-tiles').innerHTML = s.tiles.map((t) => '<div>' + esc(t) + '</div>').join('');
     $$('.bp-site', stage).forEach((el) => el.style.setProperty('--bp-acc', s.accent));
   }
-  function paintChips(v) {
-    const ids = v.ids.slice(0, 4);
-    const more = v.ids.length - ids.length;
-    $('#bp-chips').innerHTML = ids.map((id, i) => '<li style="--i:' + i + '"><span class="gic">' + icon(featById[id].icon) + '</span><b>' + esc(featById[id].name) + '</b><em>' + (v.own ? 'in your plan' : 'suggested') + '</em></li>').join('') +
-      '';
+  // Feature tabs and the live widget on the phone. Tabs rotate on their own until the visitor
+  // touches the preview; after that they stay where the visitor put them.
+  let active = null;
+  let touched = false;
+  let rot = null;
+  const ctx = (v) => ({ brand: v.b.scene.brand, cta: v.b.scene.cta, tiles: v.b.scene.tiles, label: v.b.label || 'business' });
+  function showWidget(v, id, play) {
+    active = id;
+    const wg = $('#bp-wg');
+    wg.innerHTML = renderWidget(id, ctx(v));
+    wg.setAttribute('aria-label', 'Live preview: ' + featById[id].name);
+    $$('#bp-tabs [role="tab"]').forEach((t) => { const on = t.dataset.f === id; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    const f = featById[id];
+    const d = $('#bp-detail');
+    d.innerHTML = '<div><b>' + esc(f.name) + '</b><span>' + esc(f.desc || '') + '</span></div>' +
+      (v.own
+        ? '<em class="bp-own">In your plan</em>'
+        : '<button type="button" class="bp-use" data-act="use">Start with these ' + v.ids.length + '</button>');
+    if (play !== false) requestAnimationFrame(() => playWidget(wg.firstElementChild));
   }
+  let tabKey = '';
+  function paintChips(v) {
+    const key = v.ids.join(',') + '|' + v.own + '|' + v.b.key;
+    if (key === tabKey) return;
+    tabKey = key;
+    const tabs = $('#bp-tabs');
+    tabs.innerHTML = v.ids.map((id, i) => '<button type="button" role="tab" data-f="' + id + '" style="--i:' + i + '" aria-selected="false" tabindex="-1"><span class="gic">' + icon(featById[id].icon) + '</span>' + esc(featById[id].name) + '</button>').join('');
+    showWidget(v, v.ids.includes(active) ? active : v.ids[0], !v.ids.includes(active));
+  }
+  function stopRotate() { touched = true; clearInterval(rot); rot = null; $('#bp-tabs').classList.remove('auto'); }
+  function startRotate() {
+    if (touched || rot || reduced()) return;
+    $('#bp-tabs').classList.add('auto');
+    rot = setInterval(() => {
+      if (!current || document.hidden || stage.matches(':hover')) return;
+      const ids = current.ids;
+      showWidget(current, ids[(ids.indexOf(active) + 1) % ids.length]);
+    }, 4200);
+  }
+  if (typeof IntersectionObserver === 'function') {
+    new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) startRotate(); else { clearInterval(rot); rot = null; } }), { threshold: 0.35 }).observe(stage);
+  } else startRotate();
+  stage.addEventListener('click', (e) => {
+    const tab = e.target.closest('#bp-tabs [role="tab"]');
+    if (tab) { stopRotate(); showWidget(current, tab.dataset.f); return; }
+    const use = e.target.closest('[data-act="use"]');
+    if (use) { stopRotate(); actions.setTab('grow'); track('plan_picked', { detail: 'preview' }); return; }
+    const btn = e.target.closest('.bp-wg [data-act]');
+    if (btn) { stopRotate(); actWidget(btn.closest('.wg'), btn); }
+  });
+  $('#bp-tabs').addEventListener('keydown', (e) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+    e.preventDefault(); stopRotate();
+    const ids = current.ids; let i = ids.indexOf(active);
+    i = e.key === 'Home' ? 0 : e.key === 'End' ? ids.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + ids.length) % ids.length;
+    showWidget(current, ids[i]);
+    $('#bp-tabs [aria-selected="true"]').focus();
+  });
   function paintTotal(v) {
     $('#bp-tier').textContent = v.q.tier ? v.q.tier.label : '';
     $('#bp-meter').style.transform = 'scaleX(' + v.q.meter / 100 + ')';
@@ -165,6 +220,7 @@ export function mountBlueprint(store) {
       if (running) finalFrame();
       paintContent(v);
       rebuild();
+      showWidget(v, v.ids.includes(active) ? active : v.ids[0]);
     }
     if (state.sel.style !== lastStyle) lastStyle = state.sel.style;
     paintChips(v);

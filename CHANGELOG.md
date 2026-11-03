@@ -23,6 +23,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   fits on one line from 320px up.
   Home: the business ribbon opens the page under the header, a sticky sub-menu jumps to each
   section and marks the one in view, and the sentence picker keeps its caret and period together on phones.
+  Draft card v2: the preview phone runs a live widget for each feature (search, booking, deposit,
+  portal, dashboard, follow-ups, reviews, agent, pages, review loop) that visitors can tap; feature
+  tabs rotate until touched; "Start with these" loads the plan; the card no longer overlaps itself.
 
 ## 2026-11-01
 

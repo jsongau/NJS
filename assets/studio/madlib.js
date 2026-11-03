@@ -33,7 +33,18 @@ export function mountMadlib(store) {
     pop.hidden = false; btn.setAttribute('aria-expanded', 'true');
     pop.style.setProperty('--x', Math.max(0, btn.offsetLeft - 8) + 'px');
     if (pop === popBiz) { const r = resolveBusiness(store.get().sel, catalog); renderKinds(r.industry || 'other', r.sector); }
-    requestAnimationFrame(() => { pop.classList.add('on'); const f = pop.querySelector('[aria-pressed="true"], button'); if (f) f.focus({ preventScroll: true }); });
+    requestAnimationFrame(() => { pop.classList.add('on'); const f = pop.querySelector('[aria-pressed="true"], button'); if (f) f.focus({ preventScroll: true }); reveal(pop); });
+  }
+  // A panel that opens below the fold is a panel nobody sees. Scroll just enough to show all of
+  // it under the sticky bar; if it is taller than the screen, line its top up under the bar.
+  function reveal(pop) {
+    const bar = ($('#top-bar') || {}).offsetHeight || 72;
+    const r = pop.getBoundingClientRect();
+    const room = innerHeight - bar - 16;
+    let dy = 0;
+    if (r.height > room || r.top < bar + 8) dy = r.top - bar - 12;
+    else if (r.bottom > innerHeight - 16) dy = r.bottom - innerHeight + 16;
+    if (Math.abs(dy) > 2) scrollBy({ top: dy, behavior: reduced() ? 'auto' : 'smooth' });
   }
   function close(silent) {
     if (!openPop) return;

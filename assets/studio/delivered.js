@@ -17,7 +17,7 @@ export function mountDelivered(store) {
     const legs = p.features.map((f, j) => '<li class="' + (j > 3 ? 'more' : '') + '"><b>' + esc(f.name) + '<em>' + esc(f.what) + '</em></b><small>Shipped: ' + esc(f.shipped) + '</small><span class="done">DONE</span></li>').join('');
     return '<article class="tk" id="p-' + p.id + '" aria-labelledby="pt-' + p.id + '">' +
       '<div class="tk-top"><span class="stamp">' + icon('stamp') + 'SHIPPED</span><span class="k num">' + n + ' features · ' + esc(p.meta) + '</span></div>' +
-      '<div class="tk-who"><span class="mono" style="background:' + esc(p.color) + '">' + esc(p.mono) + '</span><div><h3 id="pt-' + p.id + '">' + esc(p.title) + '</h3><p class="sub">' + esc(p.sub) + '</p></div></div>' +
+      '<div class="tk-who">' + (p.logo ? '<img class="mono logo" src="' + esc(p.logo) + '" alt="' + esc(p.name) + ' logo" width="40" height="40" loading="lazy" decoding="async">' : '<span class="mono" style="background:' + esc(p.color) + '">' + esc(p.mono) + '</span>') + '<div><h3 id="pt-' + p.id + '">' + esc(p.title) + '</h3><p class="sub">' + esc(p.sub) + '</p></div></div>' +
       '<div class="tk-stats">' + stats + '</div>' +
       '<p class="tk-res"><span class="live' + (p.kind === 'concept' ? ' concept' : '') + '">' + (p.kind === 'concept' ? 'CONCEPT' : 'LIVE') + '</span><span>' + n + ' of ' + n + ' features shipped · ' + esc(p.verified.how) + ', ' + prettyDate(p.verified.on) + '</span></p>' +
       '<ol class="tk-legs">' + legs + '</ol>' +

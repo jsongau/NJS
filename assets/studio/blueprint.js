@@ -5,6 +5,7 @@
 import { $, $$, esc, radioGroup, reduced, typer, weeksText } from './util.js';
 import { quote, resolveBusiness } from './engine.js';
 import { icon } from './icons.js';
+import { marqRow, MARQ_SPEED } from './marquee.js';
 
 const KEY = 'njs-bp-played-v1';
 const HERO_LINE = {
@@ -50,12 +51,20 @@ export function mountBlueprint(store) {
   stage.insertAdjacentHTML('afterend', '<p class="sr">Preview. Your real build is designed in the audit.</p>');
   const say = typer($('#bp-say'), 900);
 
-  // Marquee of every kind of business in the catalog (Snellenberg-style, reverses with scroll).
+  // Business ribbon (Snellenberg-style, reverses with scroll). Content and marks live in
+  // marquee.js; the speed is set in pixels per second so the row length never changes it.
   const marq = $('#marq');
   if (marq) {
-    const names = (catalog.industries || []).flatMap((i) => i.sectors.map((x) => x.label));
-    const row = names.map((n) => '<span>' + esc(n) + '</span><i>✦</i>').join('');
+    const row = marqRow(esc);
     marq.innerHTML = '<div>' + row + '</div><div>' + row + '</div>';
+    const pace = () => {
+      const w = marq.firstElementChild.getBoundingClientRect().width;
+      const v = innerWidth < 700 ? MARQ_SPEED.narrow : MARQ_SPEED.wide;
+      if (w) marq.style.animationDuration = (w / v).toFixed(1) + 's';
+    };
+    pace();
+    if (document.fonts) document.fonts.ready.then(pace);
+    addEventListener('resize', pace, { passive: true });
     let lastY = scrollY;
     addEventListener('scroll', () => { const y = scrollY; if (Math.abs(y - lastY) > 4) { marq.classList.toggle('rev', y < lastY); lastY = y; } }, { passive: true });
   }

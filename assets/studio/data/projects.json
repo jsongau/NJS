@@ -6,7 +6,7 @@
     { "value": "6,493", "label": "pages from one database", "source": "CoverCapy, pages in the sitemap, as of June 21, 2026" }
   ],
   "projects": [
-    { "id": "bobanight", "mono": "BN", "color": "#8a5a3c", "kind": "live",
+    { "id": "bobanight", "mono": "BN", "logo": "/assets/studio/brand/delivered/bobanight.svg", "color": "#8a5a3c", "kind": "live",
       "name": "Boba Night", "meta": "Southern California",
       "title": "The Boba Night late night tea guide build", "sub": "A boba guide for Southern California",
       "url": "https://www.bobanight.com",
@@ -40,7 +40,7 @@
         { "name": "Dentist Portal", "what": "Claims and accreditation", "shipped": "the business side of the marketplace", "catalog_feature": "portal" },
         { "name": "Page generator", "what": "Programmatic SEO", "shipped": "6,493 pages across 13 states", "catalog_feature": "pages" },
         { "name": "Structured data", "what": "Search markup", "shipped": "JSON-LD on 6,610 pages", "catalog_feature": "site" } ] },
-    { "id": "pmcountdown", "mono": "PM", "color": "#2459f0", "kind": "live",
+    { "id": "pmcountdown", "mono": "PM", "logo": "/assets/studio/brand/delivered/pmcountdown.svg", "color": "#2459f0", "kind": "live",
       "name": "PM Countdown", "meta": "Kalshi, 12+ agents",
       "title": "The PM Countdown trading agent desk build", "sub": "Trading agents that grade themselves in public",
       "url": "https://pmcountdown.com",

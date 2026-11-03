@@ -8,6 +8,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Basic / Premium / Partner plans, the Goldsmith icon set and the NJS logo. The CV moves to
   `/resume`. `/studio` redirects home. Prices stay hidden; call buttons open the plan form
   until the booking link exists.
+  Same day: the business ribbon slows to a readable 38px a second and grows to 62 businesses,
+  each with its own line and Goldsmith mark; the picker menu scrolls into view when it opens;
+  Delivered cards show real logos for Boba Night and PM Countdown.
 
 ## 2026-11-01
 

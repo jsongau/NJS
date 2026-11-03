@@ -32,3 +32,10 @@
 2. Analytics events table (needs a migration OK).
 3. Trademark search before printing "NJS Studio".
 4. Vercel plan: Hobby does not allow commercial use; move this project to Pro.
+
+## Afternoon round
+- Ribbon content moved out of the catalog into `assets/studio/marquee.js` (62 entries, own marks). The catalog is rebuilt from the private source on the Mac, so page copy added to the public catalog would be wiped.
+- Ribbon speed is pixels per second (38 wide, 28 narrow), set from the row width, so adding entries never speeds it up. Hover pauses it.
+- `madlib.js` `reveal()` scrolls an opened picker panel fully into view under the sticky bar.
+- `projects.json` takes an optional `logo`. Boba Night (jsongau/niteboba favicon) and PM Countdown (local repo favicon) are in `assets/studio/brand/delivered/`.
+- Next: CoverCapy and BoxVacay logos (their local repos are outside ~/Projects; the GitHub copies have no logo files). Then test the lead pipeline end to end and replace the cal.com TODO link.

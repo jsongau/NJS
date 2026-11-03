@@ -66,9 +66,45 @@ function phoneMenu() {
   addEventListener('resize', () => { if (innerWidth >= 860 && !menu.hidden) set(false); }, { passive: true });
 }
 
+// Home sub-menu: jumps to a section without touching the hash (the hash holds the plan
+// selection), and marks the section in view.
+function subNav() {
+  const nav = $('#subnav');
+  if (!nav) return;
+  const links = [...nav.querySelectorAll('a')];
+  const targets = links.map((a) => document.getElementById(a.getAttribute('href').slice(1)));
+  nav.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const t = document.getElementById(a.getAttribute('href').slice(1));
+    if (!t) return;
+    e.preventDefault();
+    // Land on the heading, not on the section's empty top padding.
+    const head = t.querySelector('.sec-h, .step-h, .kick') || t;
+    head.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
+  const mark = () => {
+    const line = ($('#top-bar') || {}).offsetHeight + nav.offsetHeight + 24;
+    let cur = -1;
+    targets.forEach((t, i) => { if (t && t.getBoundingClientRect().top <= line) cur = i; });
+    links.forEach((a, i) => { if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    nav.classList.toggle('stuck', nav.getBoundingClientRect().top <= ($('#top-bar') || {}).offsetHeight + 1);
+    const on = links[cur];
+    if (on && nav.scrollWidth > nav.clientWidth) {
+      const w = nav.querySelector('.wrap');
+      const l = on.offsetLeft - 16;
+      if (l < w.scrollLeft || on.offsetLeft + on.offsetWidth > w.scrollLeft + w.clientWidth) w.scrollTo({ left: l, behavior: 'smooth' });
+    }
+  };
+  let ticking = false;
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; mark(); }); } }, { passive: true });
+  mark();
+}
+
 async function boot() {
   if (redirectOldHash()) return;
   phoneMenu();
+  subNav();
   const [catalog, projects] = await Promise.all([
     loadJson('studio-catalog-data', 'studio-catalog.public.json'),
     loadJson('studio-projects-data', 'projects.json'),

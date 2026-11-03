@@ -18,6 +18,8 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   structured data, a 7-question FAQ on `/plans`, and the domain's first sitemap.xml and robots.txt.
   Phone menu: under 860px a Menu button opens the five tabs and the main button; the phone header
   fits on one line from 320px up.
+  Home: the business ribbon opens the page under the header, a sticky sub-menu jumps to each
+  section and marks the one in view, and the sentence picker keeps its caret and period together on phones.
 
 ## 2026-11-01
 

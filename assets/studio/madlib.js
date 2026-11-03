@@ -40,7 +40,7 @@ export function mountMadlib(store) {
   // A panel that opens below the fold is a panel nobody sees. Scroll just enough to show all of
   // it under the sticky bar; if it is taller than the screen, line its top up under the bar.
   function reveal(pop) {
-    const bar = ($('#top-bar') || {}).offsetHeight || 72;
+    const bar = (($('#top-bar') || {}).offsetHeight || 72) + (($('#subnav') || {}).offsetHeight || 0);
     const r = pop.getBoundingClientRect();
     const room = innerHeight - bar - 16;
     let dy = 0;

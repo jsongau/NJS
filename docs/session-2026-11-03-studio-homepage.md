@@ -48,4 +48,6 @@
 - Decided: Waves 1 and 2 shipped together so no empty pages go live. Home keeps every section until Wave 3.
 - Phone menu shipped (the header hid every tab link under 860px). Trap: `.top nav a:not(.btn)` hides links inside any nav in the header, so menu rules are scoped `.top .m-menu`.
 - Next: Wave 3 (slim home, always-on final buttons) after a week of funnel data; CoverCapy and BoxVacay logos; cal.com link; Vercel Analytics.
+- Home sub-menu (`partials/studio/subnav.html`): jumps scroll to the section heading without changing the hash (the hash holds the plan selection). Trap: `html { scroll-padding-top: 84px }` already existed and adds to any scroll-margin; home now sets scroll-padding to header plus sub-menu instead.
+- Trap: a `<button>` is always an atomic inline box, so `display: inline` on `.slot` cannot let it wrap like text. The last slot and its period sit in `.ml-end` (nowrap), and on phones the sentence scales with the viewport so the longest pick fits on one line.
 

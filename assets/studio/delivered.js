@@ -47,36 +47,64 @@ export function mountDelivered(store) {
     const stats = p.stats.map((s) => '<div><i>' + esc(s.label) + '</i><b>' + esc(s.value) + '</b><span>' + esc(s.note) + '</span></div>').join('');
     const legs = p.features.map((f, j) => {
       const lv = LEVEL[f.level || 1];
-      return '<li class="lg lv-' + lv.id + (j > 4 ? ' more' : '') + '" style="--j:' + j + '"><span class="lg-lv" title="' + esc(tierLabel(lv.id)) + '-level feature">' + lv.short + '</span>' +
+      return '<li class="lg lv-' + lv.id + (j > 2 ? ' more' : '') + '" style="--j:' + j + '"><span class="lg-lv" title="' + esc(tierLabel(lv.id)) + '-level feature">' + lv.short + '</span>' +
         '<span class="lg-b"><b>' + esc(f.name) + '</b><em>' + esc(f.what) + '</em><small>' + esc(f.shipped) + '</small></span>' +
         '<span class="lg-hit">' + icon('check') + 'HIT</span></li>';
     }).join('');
+    // A one-line strip: one block per leg, coloured by level. Readable at a glance, even compact.
+    const strip = '<div class="bt-strip" aria-hidden="true">' + p.features.map((f, j) => '<i class="lv-' + LEVEL[f.level || 1].id + '" style="--j:' + j + '" title="' + esc(f.name) + '"></i>').join('') + '</div>';
     const logo = p.logo ? '<img class="mono logo" src="' + esc(p.logo) + '" alt="' + esc(p.name) + ' logo" width="48" height="48" loading="lazy" decoding="async">' : '<span class="mono" style="background:' + esc(p.color) + '">' + esc(p.mono) + '</span>';
     const host = p.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+    const tid = 'bt-' + p.id;
+    const tab = (k, label, on) => '<button type="button" role="tab" id="' + tid + '-t-' + k + '" aria-controls="' + tid + '-p-' + k + '" aria-selected="' + on + '" tabindex="' + (on ? 0 : -1) + '" data-tab="' + k + '">' + label + '</button>';
     return '<article class="bt bt-' + tier.id + '" id="p-' + p.id + '" data-tier="' + tier.id + '" aria-labelledby="pt-' + p.id + '">' +
       '<header class="bt-head"><span class="bt-no num">BUILD TICKET #' + String(i + 1).padStart(2, '0') + '</span><span class="bt-stamp">' + icon('stamp') + (p.kind === 'concept' ? 'CONCEPT' : 'SHIPPED · LIVE') + '</span></header>' +
       '<div class="bt-who">' + logo + '<div><h3 id="pt-' + p.id + '">' + esc(p.name) + '</h3><a class="bt-url" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(host) + '</a></div>' +
       '<span class="bt-tier"><small>Build tier</small><b>' + esc(tierLabel(tier.id)) + '</b></span></div>' +
-      '<p class="bt-job"><b>The job.</b> ' + esc(p.job || p.sub) + '</p>' +
-      '<div class="bt-stats">' + stats + '</div>' +
-      '<div class="bt-legs-h"><span>' + n + ' legs · ' + n + ' hit</span><span class="bt-mix">' + byLv.map((c, k) => c ? '<i class="lv-' + LEVEL[k + 1].id + '">' + c + ' ' + esc(tierLabel(LEVEL[k + 1].id)) + '</i>' : '').join('') + '</span></div>' +
-      '<ol class="bt-legs">' + legs + '</ol>' +
-      (n > 5 ? '<button type="button" class="bt-more" aria-expanded="false">Show all ' + n + ' legs</button>' : '') +
+      '<div class="bt-sum"><span class="bt-sum-k">' + n + ' legs · ' + n + ' hit</span>' + strip + '<span class="bt-mix">' + byLv.map((c, k) => c ? '<i class="lv-' + LEVEL[k + 1].id + '">' + c + ' ' + esc(tierLabel(LEVEL[k + 1].id)) + '</i>' : '').join('') + '</span></div>' +
+      '<div class="bt-tabs" role="tablist" aria-label="' + esc(p.name) + ' ticket">' + tab('legs', 'Legs', true) + tab('proof', 'Proof', false) + tab('job', 'The job', false) + '</div>' +
+      '<div class="bt-panel" role="tabpanel" id="' + tid + '-p-legs" aria-labelledby="' + tid + '-t-legs"><ol class="bt-legs">' + legs + '</ol></div>' +
+      '<div class="bt-panel" role="tabpanel" id="' + tid + '-p-proof" aria-labelledby="' + tid + '-t-proof" hidden><div class="bt-stats">' + stats + '</div><p class="bt-ver">' + icon('stamp') + 'All ' + n + ' features ' + esc(p.verified.how) + ', ' + prettyDate(p.verified.on) + '.</p></div>' +
+      '<div class="bt-panel" role="tabpanel" id="' + tid + '-p-job" aria-labelledby="' + tid + '-t-job" hidden><p class="bt-job">' + esc(p.job || p.sub) + '</p><p class="bt-job-sub">' + esc(p.sub) + ' · ' + esc(p.meta) + '</p></div>' +
+      '<button type="button" class="bt-exp" aria-expanded="false" aria-controls="' + tid + '-p-legs"><span>Expand ticket</span><i aria-hidden="true"></i></button>' +
       '<div class="bt-tear" aria-hidden="true"></div>' +
-      '<footer class="bt-foot"><div class="bt-pay"><small>Payout</small><b>' + esc(tierLabel(tier.id)) + ' build, all ' + n + ' features live</b><span>' + esc(p.verified.how) + ', ' + prettyDate(p.verified.on) + '</span></div>' +
-      '<div class="bt-cta"><button type="button" class="btn btn-lime bt-start" data-p="' + p.id + '">Start a build like ' + esc(p.name) + '</button><a class="tlink" href="' + esc(p.url) + '" target="_blank" rel="noopener">See it live</a></div></footer>' +
+      '<footer class="bt-foot"><div class="bt-pay"><small>Payout</small><b>' + esc(tierLabel(tier.id)) + ' build, all ' + n + ' live</b></div>' +
+      '<div class="bt-cta"><button type="button" class="btn btn-lime bt-start" data-p="' + p.id + '">Start a build like this</button><a class="tlink" href="' + esc(p.url) + '" target="_blank" rel="noopener">See it live</a></div></footer>' +
       '</article>';
   }).join('');
 
+  const setOpen = (c, o) => {
+    c.classList.toggle('open', o);
+    const b = $('.bt-exp', c);
+    b.setAttribute('aria-expanded', o);
+    $('span', b).textContent = o ? 'Compact ticket' : 'Expand ticket';
+  };
+  const showTab = (c, k) => {
+    $$('[role="tab"]', c).forEach((t) => { const on = t.dataset.tab === k; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; });
+    $$('[role="tabpanel"]', c).forEach((pn) => { pn.hidden = !pn.id.endsWith('-p-' + k); });
+  };
+  wall.addEventListener('keydown', (e) => {
+    const t = e.target.closest('[role="tab"]');
+    if (!t || !['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+    const tabs = $$('[role="tab"]', t.parentNode); const i = tabs.indexOf(t);
+    const nx = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+    nx.focus(); showTab(t.closest('.bt'), nx.dataset.tab);
+  });
+  const view = $('#wall-view');
+  if (view) view.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-v]');
+    if (!b) return;
+    $$('[data-v]', view).forEach((x) => x.setAttribute('aria-pressed', x === b));
+    const full = b.dataset.v === 'full';
+    wall.classList.toggle('full', full);
+    $$('.bt', wall).forEach((c) => setOpen(c, full));
+  });
+
   wall.addEventListener('click', (e) => {
-    const more = e.target.closest('.bt-more');
-    if (more) {
-      const c = more.closest('.bt');
-      const o = c.classList.toggle('open');
-      more.setAttribute('aria-expanded', o);
-      more.textContent = o ? 'Show fewer legs' : 'Show all ' + $$('.lg', c).length + ' legs';
-      return;
-    }
+    const tb = e.target.closest('[role="tab"]');
+    if (tb) { showTab(tb.closest('.bt'), tb.dataset.tab); return; }
+    const ex = e.target.closest('.bt-exp');
+    if (ex) { const c = ex.closest('.bt'); setOpen(c, !c.classList.contains('open')); return; }
     const start = e.target.closest('.bt-start');
     if (!start) return;
     const p = list.find((x) => x.id === start.dataset.p);

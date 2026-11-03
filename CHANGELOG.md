@@ -4,6 +4,10 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-03
 
+- `/work` — Delivered becomes a wall of build tickets: every feature is a leg tagged Basic, Premium
+  or Partner, the highest leg sets the build tier, a tier filter on top, and "Start a build like X"
+  loads that build into the visitor's plan.
+
 - `/build` and `/care` — Care plans read faster: short cards in a 2 by 2 grid (who it fits, updates a
   month, one line) and one "Compare what each plan includes" table with the same rows for every plan.
 

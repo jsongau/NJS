@@ -1,75 +1,328 @@
 {
-  "version": "2026-11-03.1",
-  "proof": [
-    { "value": "4", "label": "products live and running", "source": "The delivered wall below, as of Nov 3, 2026" },
-    { "value": "1,771", "label": "commits in 40 working days", "source": "PM Countdown, counted with git log, as of Oct 31, 2026" },
-    { "value": "6,493", "label": "pages from one database", "source": "CoverCapy, pages in the sitemap, as of June 21, 2026" }
-  ],
-  "projects": [
-    { "id": "bobanight", "mono": "BN", "logo": "/assets/studio/brand/delivered/bobanight.svg", "color": "#8a5a3c", "kind": "live",
-      "name": "Boba Night", "meta": "Southern California",
-      "title": "The Boba Night late night tea guide build", "sub": "A boba guide for Southern California",
-      "url": "https://www.bobanight.com",
-      "stats": [
-        { "label": "TOPPINGS", "value": "57", "note": "in The Pantry" },
-        { "label": "NEAR ME", "value": "5 mi", "note": "map range" },
-        { "label": "CONCIERGE", "value": "3 Qs", "note": "to one drink" } ],
-      "verified": { "how": "checked on the live site", "on": "2026-11-03", "by": "NJS" },
-      "open_question": "Owner and shop count still to confirm with Jay before this ships",
-      "features": [
-        { "name": "Tea Concierge", "what": "AI-style picker", "shipped": "one shop and drink after three questions" },
-        { "name": "Open right now", "what": "Live hours board", "shipped": "open-now and late-night listings" },
-        { "name": "Boba map", "what": "Near-me search", "shipped": "5-mile range around you", "catalog_feature": "site" },
-        { "name": "Surprise me", "what": "Random spinner", "shipped": "one tap, one shop" },
-        { "name": "The Pantry", "what": "Topping library", "shipped": "57 toppings and teas" },
-        { "name": "Pearl Ratings", "what": "Critic reviews", "shipped": "its own rating system" },
-        { "name": "Claim a shop", "what": "Owner portal", "shipped": "claim and corrections forms" } ] },
-    { "id": "covercapy", "mono": "CC", "color": "#14525b", "kind": "live",
-      "name": "CoverCapy", "meta": "30 days, Supabase",
-      "title": "The CoverCapy 6,493 page dental platform build", "sub": "A concierge PPO dental platform",
-      "url": "https://www.covercapy.com",
-      "stats": [
-        { "label": "PAGES", "value": "6,493", "note": "in the sitemap" },
-        { "label": "BUILT IN", "value": "30 days", "note": "May 23 to June 21" },
-        { "label": "COMMITS", "value": "637", "note": "one per change" } ],
-      "verified": { "how": "counted in the repo", "on": "2026-06-21", "by": "NJS" },
-      "features": [
-        { "name": "Find a Dentist", "what": "Live search", "shipped": "by ZIP or city on Supabase", "catalog_feature": "site" },
-        { "name": "Plan Compare", "what": "Smart match", "shipped": "PPO plans side by side" },
-        { "name": "Cost Estimator", "what": "Treatment scenarios", "shipped": "what a procedure costs on a plan" },
-        { "name": "Dentist Portal", "what": "Claims and accreditation", "shipped": "the business side of the marketplace", "catalog_feature": "portal" },
-        { "name": "Page generator", "what": "Programmatic SEO", "shipped": "6,493 pages across 13 states", "catalog_feature": "pages" },
-        { "name": "Structured data", "what": "Search markup", "shipped": "JSON-LD on 6,610 pages", "catalog_feature": "site" } ] },
-    { "id": "pmcountdown", "mono": "PM", "logo": "/assets/studio/brand/delivered/pmcountdown.svg", "color": "#2459f0", "kind": "live",
-      "name": "PM Countdown", "meta": "Kalshi, 12+ agents",
-      "title": "The PM Countdown trading agent desk build", "sub": "Trading agents that grade themselves in public",
-      "url": "https://pmcountdown.com",
-      "stats": [
-        { "label": "COMMITS", "value": "1,771", "note": "in 40 working days" },
-        { "label": "MIGRATIONS", "value": "170", "note": "database changes" },
-        { "label": "TESTS", "value": "142", "note": "test files" } ],
-      "verified": { "how": "counted in the repo", "on": "2026-10-31", "by": "NJS" },
-      "features": [
-        { "name": "Agent LoLo", "what": "Bitcoin agent", "shipped": "reads the 15-minute market every 30 seconds", "catalog_feature": "agent" },
-        { "name": "The Brain", "what": "Nightly review", "shipped": "fixes need human approval", "catalog_feature": "loop" },
-        { "name": "Public ledger", "what": "Receipts", "shipped": "every trade graded, losses shown" },
-        { "name": "Parlay tickets", "what": "Shareable cards", "shipped": "legs graded live from the box score" },
-        { "name": "Kalshi orders", "what": "Signed API", "shipped": "real-money orders with limits" },
-        { "name": "Memberships", "what": "Checkout", "shipped": "paid plans and an email list", "catalog_feature": "deposit" } ] },
-    { "id": "boxvacay", "mono": "BV", "color": "#b45309", "kind": "live",
-      "name": "BoxVacay", "meta": "Thailand, booking",
-      "title": "The BoxVacay Muay Thai camp and booking build", "sub": "A Muay Thai travel and training guide",
-      "url": "https://www.boxvacay.com",
-      "stats": [
-        { "label": "PAGES", "value": "77", "note": "from one generator" },
-        { "label": "CAMPS", "value": "39", "note": "in the database" },
-        { "label": "TRAINERS", "value": "85", "note": "with profiles" } ],
-      "verified": { "how": "counted in the repo", "on": "2026-07-18", "by": "NJS" },
-      "features": [
-        { "name": "Camp finder", "what": "9 destinations", "shipped": "39 camps, filterable" },
-        { "name": "Trainer packages", "what": "Pre-purchase", "shipped": "book a trainer before you land" },
-        { "name": "Booking calendar", "what": "Date requests", "shipped": "pick dates, send a request", "catalog_feature": "book" },
-        { "name": "Reserve backend", "what": "Serverless", "shipped": "request saved, both sides emailed", "catalog_feature": "book" },
-        { "name": "Stripe deposit", "what": "Checkout link", "shipped": "optional deposit, no card stored", "catalog_feature": "deposit" } ] }
-  ]
+ "version": "2026-11-03.1",
+ "proof": [
+  {
+   "value": "4",
+   "label": "products live and running",
+   "source": "The delivered wall below, as of Nov 3, 2026"
+  },
+  {
+   "value": "1,771",
+   "label": "commits in 40 working days",
+   "source": "PM Countdown, counted with git log, as of Oct 31, 2026"
+  },
+  {
+   "value": "6,493",
+   "label": "pages from one database",
+   "source": "CoverCapy, pages in the sitemap, as of June 21, 2026"
+  }
+ ],
+ "projects": [
+  {
+   "id": "bobanight",
+   "mono": "BN",
+   "logo": "/assets/studio/brand/delivered/bobanight.svg",
+   "color": "#8a5a3c",
+   "kind": "live",
+   "name": "Boba Night",
+   "meta": "Southern California",
+   "title": "The Boba Night late night tea guide build",
+   "sub": "A boba guide for Southern California",
+   "url": "https://www.bobanight.com",
+   "stats": [
+    {
+     "label": "TOPPINGS",
+     "value": "57",
+     "note": "in The Pantry"
+    },
+    {
+     "label": "NEAR ME",
+     "value": "5 mi",
+     "note": "map range"
+    },
+    {
+     "label": "CONCIERGE",
+     "value": "3 Qs",
+     "note": "to one drink"
+    }
+   ],
+   "verified": {
+    "how": "checked on the live site",
+    "on": "2026-11-03",
+    "by": "NJS"
+   },
+   "open_question": "Owner and shop count still to confirm with Jay before this ships",
+   "features": [
+    {
+     "name": "Tea Concierge",
+     "what": "AI-style picker",
+     "shipped": "one shop and drink after three questions",
+     "level": 1
+    },
+    {
+     "name": "Open right now",
+     "what": "Live hours board",
+     "shipped": "open-now and late-night listings",
+     "level": 1
+    },
+    {
+     "name": "Boba map",
+     "what": "Near-me search",
+     "shipped": "5-mile range around you",
+     "catalog_feature": "site",
+     "level": 1
+    },
+    {
+     "name": "Surprise me",
+     "what": "Random spinner",
+     "shipped": "one tap, one shop",
+     "level": 1
+    },
+    {
+     "name": "The Pantry",
+     "what": "Topping library",
+     "shipped": "57 toppings and teas",
+     "level": 1
+    },
+    {
+     "name": "Pearl Ratings",
+     "what": "Critic reviews",
+     "shipped": "its own rating system",
+     "level": 1,
+     "catalog_feature": "reviews"
+    },
+    {
+     "name": "Claim a shop",
+     "what": "Owner portal",
+     "shipped": "claim and corrections forms",
+     "level": 1
+    }
+   ],
+   "job": "A late-night boba guide that answers one question fast: where can I get a drink right now, near me?"
+  },
+  {
+   "id": "covercapy",
+   "mono": "CC",
+   "color": "#14525b",
+   "kind": "live",
+   "name": "CoverCapy",
+   "meta": "30 days, Supabase",
+   "title": "The CoverCapy 6,493 page dental platform build",
+   "sub": "A concierge PPO dental platform",
+   "url": "https://www.covercapy.com",
+   "stats": [
+    {
+     "label": "PAGES",
+     "value": "6,493",
+     "note": "in the sitemap"
+    },
+    {
+     "label": "BUILT IN",
+     "value": "30 days",
+     "note": "May 23 to June 21"
+    },
+    {
+     "label": "COMMITS",
+     "value": "637",
+     "note": "one per change"
+    }
+   ],
+   "verified": {
+    "how": "counted in the repo",
+    "on": "2026-06-21",
+    "by": "NJS"
+   },
+   "features": [
+    {
+     "name": "Find a Dentist",
+     "what": "Live search",
+     "shipped": "by ZIP or city on Supabase",
+     "catalog_feature": "site",
+     "level": 1
+    },
+    {
+     "name": "Plan Compare",
+     "what": "Smart match",
+     "shipped": "PPO plans side by side",
+     "level": 2
+    },
+    {
+     "name": "Cost Estimator",
+     "what": "Treatment scenarios",
+     "shipped": "what a procedure costs on a plan",
+     "level": 2
+    },
+    {
+     "name": "Dentist Portal",
+     "what": "Claims and accreditation",
+     "shipped": "the business side of the marketplace",
+     "catalog_feature": "portal",
+     "level": 2
+    },
+    {
+     "name": "Page generator",
+     "what": "Programmatic SEO",
+     "shipped": "6,493 pages across 13 states",
+     "catalog_feature": "pages",
+     "level": 3
+    },
+    {
+     "name": "Structured data",
+     "what": "Search markup",
+     "shipped": "JSON-LD on 6,610 pages",
+     "catalog_feature": "site",
+     "level": 1
+    }
+   ],
+   "job": "Help patients with PPO dental insurance find a dentist, compare plans and see costs before they book."
+  },
+  {
+   "id": "pmcountdown",
+   "mono": "PM",
+   "logo": "/assets/studio/brand/delivered/pmcountdown.svg",
+   "color": "#2459f0",
+   "kind": "live",
+   "name": "PM Countdown",
+   "meta": "Kalshi, 12+ agents",
+   "title": "The PM Countdown trading agent desk build",
+   "sub": "Trading agents that grade themselves in public",
+   "url": "https://pmcountdown.com",
+   "stats": [
+    {
+     "label": "COMMITS",
+     "value": "1,771",
+     "note": "in 40 working days"
+    },
+    {
+     "label": "MIGRATIONS",
+     "value": "170",
+     "note": "database changes"
+    },
+    {
+     "label": "TESTS",
+     "value": "142",
+     "note": "test files"
+    }
+   ],
+   "verified": {
+    "how": "counted in the repo",
+    "on": "2026-10-31",
+    "by": "NJS"
+   },
+   "features": [
+    {
+     "name": "Agent LoLo",
+     "what": "Bitcoin agent",
+     "shipped": "reads the 15-minute market every 30 seconds",
+     "catalog_feature": "agent",
+     "level": 3
+    },
+    {
+     "name": "The Brain",
+     "what": "Nightly review",
+     "shipped": "fixes need human approval",
+     "catalog_feature": "loop",
+     "level": 3
+    },
+    {
+     "name": "Public ledger",
+     "what": "Receipts",
+     "shipped": "every trade graded, losses shown",
+     "level": 2,
+     "catalog_feature": "dash"
+    },
+    {
+     "name": "Parlay tickets",
+     "what": "Shareable cards",
+     "shipped": "legs graded live from the box score",
+     "level": 2
+    },
+    {
+     "name": "Kalshi orders",
+     "what": "Signed API",
+     "shipped": "real-money orders with limits",
+     "level": 3
+    },
+    {
+     "name": "Memberships",
+     "what": "Checkout",
+     "shipped": "paid plans and an email list",
+     "catalog_feature": "deposit",
+     "level": 2
+    }
+   ],
+   "job": "Run AI trading agents in public, with every trade graded and a nightly review that needs a human OK."
+  },
+  {
+   "id": "boxvacay",
+   "mono": "BV",
+   "color": "#b45309",
+   "kind": "live",
+   "name": "BoxVacay",
+   "meta": "Thailand, booking",
+   "title": "The BoxVacay Muay Thai camp and booking build",
+   "sub": "A Muay Thai travel and training guide",
+   "url": "https://www.boxvacay.com",
+   "stats": [
+    {
+     "label": "PAGES",
+     "value": "77",
+     "note": "from one generator"
+    },
+    {
+     "label": "CAMPS",
+     "value": "39",
+     "note": "in the database"
+    },
+    {
+     "label": "TRAINERS",
+     "value": "85",
+     "note": "with profiles"
+    }
+   ],
+   "verified": {
+    "how": "counted in the repo",
+    "on": "2026-07-18",
+    "by": "NJS"
+   },
+   "features": [
+    {
+     "name": "Camp finder",
+     "what": "9 destinations",
+     "shipped": "39 camps, filterable",
+     "level": 1,
+     "catalog_feature": "site"
+    },
+    {
+     "name": "Trainer packages",
+     "what": "Pre-purchase",
+     "shipped": "book a trainer before you land",
+     "level": 2,
+     "catalog_feature": "portal"
+    },
+    {
+     "name": "Booking calendar",
+     "what": "Date requests",
+     "shipped": "pick dates, send a request",
+     "catalog_feature": "book",
+     "level": 1
+    },
+    {
+     "name": "Reserve backend",
+     "what": "Serverless",
+     "shipped": "request saved, both sides emailed",
+     "catalog_feature": "book",
+     "level": 2
+    },
+    {
+     "name": "Stripe deposit",
+     "what": "Checkout link",
+     "shipped": "optional deposit, no card stored",
+     "catalog_feature": "deposit",
+     "level": 2
+    }
+   ],
+   "job": "Sell fight-camp trips: pick a destination, book a trainer before you land, hold the spot with a deposit."
+  }
+ ]
 }

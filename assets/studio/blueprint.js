@@ -39,7 +39,7 @@ export function mountBlueprint(store) {
   h1.setAttribute('aria-label', 'Your project, built while you watch.');
 
   stage.innerHTML =
-    '<div class="bp-top"><span class="stage-k"><b>DRAFT</b> · <span id="bp-for"></span></span><span class="bp-cap">Tap the phone to try it</span></div>' +
+    '<div class="bp-top"><span class="stage-k"><b>DRAFT</b> · <span id="bp-for"></span></span><span class="bp-cap">Tap or swipe the phone</span></div>' +
     '<div class="bp-screens">' +
     '<div class="bp-browser"><div class="bp-bar"><i></i><i></i><i></i><span class="bp-url" id="bp-url"></span></div><div class="bp-body">' +
     '<div class="bp-site" id="bp-site"><div class="bp-nav"><b id="bp-brand"></b><span id="bp-n1"></span><span id="bp-n2"></span></div>' +
@@ -51,7 +51,7 @@ export function mountBlueprint(store) {
     '<div class="bp-phone"><div class="bp-site bp-wg" id="bp-wg" role="tabpanel" aria-live="polite"></div></div>' +
     '</div>' +
     '<div class="bp-tabs" id="bp-tabs" role="tablist" aria-label="Features in this draft"></div>' +
-    '<div class="bp-detail" id="bp-detail"></div>' +
+    '<div class="bp-detail" id="bp-detail"><div class="bp-d-t"><b id="bp-d-name"></b><span id="bp-d-desc"></span></div><span class="bp-d-n" id="bp-d-n"></span><span class="bp-d-act" id="bp-d-act"></span></div>' +
     '<div class="bp-total"><span class="bp-tier" id="bp-tier">Premium</span><span class="bp-meter"><i id="bp-meter"></i></span><p class="bp-say"><b>NS</b><span id="bp-say"></span></p></div>';
   stage.insertAdjacentHTML('afterend', '<p class="sr">Preview. Your real build is designed in the audit.</p>');
   const say = typer($('#bp-say'), 900);
@@ -101,62 +101,115 @@ export function mountBlueprint(store) {
     $('#bp-tiles').innerHTML = s.tiles.map((t) => '<div>' + esc(t) + '</div>').join('');
     $$('.bp-site', stage).forEach((el) => el.style.setProperty('--bp-acc', s.accent));
   }
-  // Feature tabs and the live widget on the phone. Tabs rotate on their own until the visitor
-  // touches the preview; after that they stay where the visitor put them.
+  // Feature slider (Mary's rule: clicking never moves the layout). Every widget is built once,
+  // side by side in one track; changing feature slides the track, so nothing reflows and each
+  // widget keeps what the visitor tapped. Auto-plays while in view, pauses on any touch and
+  // picks up again after a quiet spell. Swipe the phone to move by hand.
+  const SLIDE_MS = 4200;
+  const IDLE_MS = 8000;
   let active = null;
-  let touched = false;
   let rot = null;
+  let idle = null;
+  let inView = false;
   const ctx = (v) => ({ brand: v.b.scene.brand, cta: v.b.scene.cta, tiles: v.b.scene.tiles, label: v.b.label || 'business' });
-  function showWidget(v, id, play) {
-    active = id;
-    const wg = $('#bp-wg');
-    wg.innerHTML = renderWidget(id, ctx(v));
-    wg.setAttribute('aria-label', 'Live preview: ' + featById[id].name);
-    $$('#bp-tabs [role="tab"]').forEach((t) => { const on = t.dataset.f === id; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
-    const f = featById[id];
+  const strip = () => $('#bp-wg .wg-track');
+  function showWidget(v, id, opts = {}) {
+    const ids = v.ids;
+    const i = Math.max(0, ids.indexOf(id));
+    const prev = active;
+    active = ids[i];
+    const t = strip();
+    if (t) {
+      t.style.setProperty('--at', i);
+      $$('.wg-slide', t).forEach((sl, k) => {
+        const on = k === i;
+        sl.classList.toggle('on', on);
+        sl.classList.toggle('before', k < i);
+        sl.toggleAttribute('inert', !on);
+        sl.setAttribute('aria-hidden', String(!on));
+      });
+      const w = t.children[i] && t.children[i].firstElementChild;
+      if (w && (prev !== active || opts.play)) setTimeout(() => playWidget(w), opts.instant ? 0 : 260);
+    }
+    $('#bp-wg').setAttribute('aria-label', 'Live preview: ' + featById[active].name);
+    const tabs = $('#bp-tabs');
+    $$('[role="tab"]', tabs).forEach((tb) => { const on = tb.dataset.f === active; tb.setAttribute('aria-selected', String(on)); tb.tabIndex = on ? 0 : -1; });
+    const cur = $('[aria-selected="true"]', tabs);
+    if (cur) tabs.scrollTo({ left: cur.offsetLeft - (tabs.clientWidth - cur.offsetWidth) / 2, behavior: opts.instant || reduced() ? 'auto' : 'smooth' });
+    // Detail strip: fixed size, text crossfades.
     const d = $('#bp-detail');
-    d.innerHTML = '<div><b>' + esc(f.name) + '</b><span>' + esc(f.desc || '') + '</span></div>' +
-      (v.own
-        ? '<em class="bp-own">In your plan</em>'
-        : '<button type="button" class="bp-use" data-act="use">Start with these ' + v.ids.length + '</button>');
-    if (play !== false) requestAnimationFrame(() => playWidget(wg.firstElementChild));
+    const f = featById[active];
+    d.classList.remove('swap'); void d.offsetWidth; d.classList.add('swap');
+    $('#bp-d-name').textContent = f.name;
+    $('#bp-d-desc').textContent = f.desc || '';
+    $('#bp-d-n').textContent = (i + 1) + ' / ' + ids.length;
+    $('#bp-d-act').innerHTML = v.own ? '<em class="bp-own">In your plan</em>' : '<button type="button" class="bp-use" data-act="use">Start with these ' + ids.length + '</button>';
+    restartBar();
+  }
+  function restartBar() {
+    const tabs = $('#bp-tabs');
+    tabs.classList.remove('tick'); void tabs.offsetWidth;
+    if (rot) tabs.classList.add('tick');
   }
   let tabKey = '';
   function paintChips(v) {
     const key = v.ids.join(',') + '|' + v.own + '|' + v.b.key;
     if (key === tabKey) return;
     tabKey = key;
-    const tabs = $('#bp-tabs');
-    tabs.innerHTML = v.ids.map((id, i) => '<button type="button" role="tab" data-f="' + id + '" style="--i:' + i + '" aria-selected="false" tabindex="-1"><span class="gic">' + icon(featById[id].icon) + '</span>' + esc(featById[id].name) + '</button>').join('');
-    showWidget(v, v.ids.includes(active) ? active : v.ids[0], !v.ids.includes(active));
+    $('#bp-tabs').innerHTML = v.ids.map((id, i) => '<button type="button" role="tab" data-f="' + id + '" style="--i:' + i + '" aria-selected="false" tabindex="-1"><span class="gic">' + icon(featById[id].icon) + '</span>' + esc(featById[id].name) + '<i class="bp-tick"></i></button>').join('');
+    $('#bp-wg').innerHTML = '<div class="wg-track" style="--n:' + v.ids.length + '">' +
+      v.ids.map((id) => '<div class="wg-slide" data-f="' + id + '">' + renderWidget(id, ctx(v)) + '</div>').join('') + '</div>';
+    showWidget(v, v.ids.includes(active) ? active : v.ids[0], { instant: true, play: true });
   }
-  function stopRotate() { touched = true; clearInterval(rot); rot = null; $('#bp-tabs').classList.remove('auto'); }
+  function next(dir = 1) {
+    if (!current) return;
+    const ids = current.ids;
+    showWidget(current, ids[(ids.indexOf(active) + dir + ids.length) % ids.length]);
+  }
   function startRotate() {
-    if (touched || rot || reduced()) return;
-    $('#bp-tabs').classList.add('auto');
-    rot = setInterval(() => {
-      if (!current || document.hidden || stage.matches(':hover')) return;
-      const ids = current.ids;
-      showWidget(current, ids[(ids.indexOf(active) + 1) % ids.length]);
-    }, 4200);
+    if (rot || reduced() || !inView) return;
+    rot = setInterval(() => { if (!document.hidden && !stage.matches(':hover')) next(1); else restartBar(); }, SLIDE_MS);
+    restartBar();
   }
+  function stopRotate() { clearInterval(rot); rot = null; $('#bp-tabs').classList.remove('tick'); }
+  // Any touch pauses the slider; it resumes after IDLE_MS of quiet.
+  function hold() { stopRotate(); clearTimeout(idle); idle = setTimeout(startRotate, IDLE_MS); }
   if (typeof IntersectionObserver === 'function') {
-    new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) startRotate(); else { clearInterval(rot); rot = null; } }), { threshold: 0.35 }).observe(stage);
-  } else startRotate();
+    new IntersectionObserver((es) => es.forEach((e) => { inView = e.isIntersecting; if (inView) startRotate(); else stopRotate(); }), { threshold: 0.35 }).observe(stage);
+  } else { inView = true; startRotate(); }
+
+  // Tap ripple from the exact point touched, on tabs and on every button in the phone.
+  stage.addEventListener('pointerdown', (e) => {
+    const el = e.target.closest('#bp-tabs [role="tab"], .bp-wg button, .bp-use');
+    if (!el || reduced()) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--rx', (e.clientX - r.left) + 'px');
+    el.style.setProperty('--ry', (e.clientY - r.top) + 'px');
+    el.classList.remove('rip'); void el.offsetWidth; el.classList.add('rip');
+  });
   stage.addEventListener('click', (e) => {
     const tab = e.target.closest('#bp-tabs [role="tab"]');
-    if (tab) { stopRotate(); showWidget(current, tab.dataset.f); return; }
+    if (tab) { hold(); showWidget(current, tab.dataset.f, { play: true }); return; }
     const use = e.target.closest('[data-act="use"]');
-    if (use) { stopRotate(); actions.setTab('grow'); track('plan_picked', { detail: 'preview' }); return; }
+    if (use) { hold(); actions.setTab('grow'); track('plan_picked', { detail: 'preview' }); return; }
     const btn = e.target.closest('.bp-wg [data-act]');
-    if (btn) { stopRotate(); actWidget(btn.closest('.wg'), btn); }
+    if (btn) { hold(); actWidget(btn.closest('.wg'), btn); }
   });
+  // Swipe the phone: a horizontal drag of 40px or more moves one slide; a tap stays a tap.
+  let sx = null, sy = null;
+  $('#bp-wg').addEventListener('pointerdown', (e) => { sx = e.clientX; sy = e.clientY; }, { passive: true });
+  $('#bp-wg').addEventListener('pointerup', (e) => {
+    if (sx === null) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    sx = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.4) { hold(); next(dx < 0 ? 1 : -1); }
+  }, { passive: true });
   $('#bp-tabs').addEventListener('keydown', (e) => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
-    e.preventDefault(); stopRotate();
+    e.preventDefault(); hold();
     const ids = current.ids; let i = ids.indexOf(active);
     i = e.key === 'Home' ? 0 : e.key === 'End' ? ids.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + ids.length) % ids.length;
-    showWidget(current, ids[i]);
+    showWidget(current, ids[i], { play: true });
     $('#bp-tabs [aria-selected="true"]').focus();
   });
   function paintTotal(v) {
@@ -220,7 +273,7 @@ export function mountBlueprint(store) {
       if (running) finalFrame();
       paintContent(v);
       rebuild();
-      showWidget(v, v.ids.includes(active) ? active : v.ids[0]);
+      tabKey = ''; paintChips(v);
     }
     if (state.sel.style !== lastStyle) lastStyle = state.sel.style;
     paintChips(v);

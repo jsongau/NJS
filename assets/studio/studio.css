@@ -1227,3 +1227,58 @@ html:has(body[data-page="home"]) { scroll-padding-top: 140px; }
   .bp-detail { flex-direction: column; align-items: stretch; }
   .bp-detail .bp-use { width: 100%; }
 }
+
+/* ===== Draft card v3: feature slider (Mary's rule: a click never moves the layout). ===== */
+.stage, .stage p { text-align: left; }
+.stage p, .wg p { max-width: none; margin: 0; }
+.bp-wg { overflow: hidden; touch-action: pan-y; }
+.wg-track { position: absolute; inset: 0; display: flex; transform: translateX(calc(var(--at, 0) * -100%)); transition: transform 780ms cubic-bezier(.77, 0, .18, 1); will-change: transform; }
+.wg-slide { position: relative; flex: 0 0 100%; height: 100%; transition: transform 780ms cubic-bezier(.77, 0, .18, 1), opacity 560ms ease, filter 560ms ease; }
+.wg-slide > .wg { position: absolute; inset: 0; }
+.wg-slide:not(.on) { opacity: 0; filter: blur(4px); transform: scale(.8) rotate(4deg); }
+.wg-slide.before:not(.on) { transform: scale(.8) rotate(-4deg); }
+.wg-slide.on { transition-delay: 60ms; }
+/* The phone glass catches a light sweep as each slide lands. */
+.bp-screens .bp-phone::after { content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%); transform: translateX(-120%); }
+.stage:has(.wg-slide.on .wg.live) .bp-phone::after { animation: glass 900ms 120ms ease-out; }
+@keyframes glass { to { transform: translateX(120%); } }
+
+/* Tabs: the progress line runs under the active tab while the slider auto-plays. */
+.bp-tabs { scroll-behavior: smooth; }
+.bp-tabs.auto [role="tab"][aria-selected="true"]::after { content: none; }
+.bp-tick { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--signal); transform: scaleX(0); transform-origin: left; pointer-events: none; }
+.bp-tabs.tick [role="tab"][aria-selected="true"] .bp-tick { animation: tabfill 4200ms linear both; }
+.bp-tabs [role="tab"] { transition: background 260ms var(--ease-out), color 260ms, border-color 260ms, box-shadow 260ms; }
+.bp-tabs [role="tab"][aria-selected="true"] { box-shadow: 0 8px 18px -10px rgba(18,20,22,.6); }
+
+/* Detail strip: one fixed size for every feature; the words crossfade, nothing shifts. */
+.bp-detail { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 14px; height: 92px; min-height: 0; padding: 12px 16px; overflow: hidden; }
+.bp-d-t { display: grid; gap: 4px; min-width: 0; }
+.bp-d-t b { font-size: 15px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bp-d-t span { font-size: 13.5px; color: var(--ink-2); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.bp-d-n { font: 500 11px/1 var(--mono); letter-spacing: .06em; color: var(--ink-3); white-space: nowrap; }
+.bp-d-act { display: flex; justify-content: flex-end; min-width: 168px; }
+.bp-detail.swap .bp-d-t { animation: dswap 420ms var(--ease-out); }
+.bp-detail.swap .bp-d-n { animation: dswap 420ms 60ms var(--ease-out) both; }
+@keyframes dswap { from { opacity: 0; transform: translateY(8px); filter: blur(2px); } }
+
+/* Tap ripple from the touch point. */
+.bp-tabs [role="tab"], .wg button, .bp-use { position: relative; overflow: hidden; isolation: isolate; }
+.rip::after { content: ''; position: absolute; z-index: -1; left: var(--rx, 50%); top: var(--ry, 50%); width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: currentColor; opacity: .28; pointer-events: none; animation: rip 620ms ease-out forwards; }
+.bp-tabs [role="tab"][aria-selected="true"].rip::after, .wg-btn.rip::after, .bp-use.rip::after { background: #fff; }
+@keyframes rip { to { transform: scale(26); opacity: 0; } }
+.wg button:active, .bp-tabs [role="tab"]:active { transform: scale(.96); }
+.wg-sw.rip::after { content: none; }
+
+@media (max-width: 600px) {
+  .bp-detail { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; height: 132px; }
+  .bp-d-n { grid-column: 2; grid-row: 1; align-self: start; }
+  .bp-d-act { grid-column: 1 / -1; min-width: 0; }
+  .bp-d-act .bp-use { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wg-track, .wg-slide { transition: none; }
+  .wg-slide:not(.on) { filter: none; transform: none; }
+  .bp-screens .bp-phone::after { display: none; }
+}
+.bp-phone .bp-wg { background: #fff; color: #121416; }

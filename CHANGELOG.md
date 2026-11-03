@@ -26,6 +26,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Draft card v2: the preview phone runs a live widget for each feature (search, booking, deposit,
   portal, dashboard, follow-ups, reviews, agent, pages, review loop) that visitors can tap; feature
   tabs rotate until touched; "Start with these" loads the plan; the card no longer overlaps itself.
+  Draft card v3: the widgets became a slider (track slides, the next screen tilts in, the glass
+  catches a light sweep), tap ripples, swipe on the phone, auto-play that pauses on touch and
+  resumes; zero layout shift on any click (Mary's new rule, docs/MARY-MEMORY.md).
 
 ## 2026-11-01
 

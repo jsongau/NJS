@@ -31,9 +31,10 @@ test('pages: exactly one h1 each, and the right tab is marked current', () => {
   for (const p of Object.values(PAGES)) {
     const h = html(p);
     assert.equal((h.match(/<h1[\s>]/g) || []).length, 1, p.id + ' h1 count');
-    const cur = h.match(/<a href="([^"]+)" aria-current="page">/g) || [];
-    // One in the desktop nav, one in the phone menu, both pointing at this page.
-    if (p.nav) { assert.equal(cur.length, 2, p.id); cur.forEach((c) => assert.ok(c.includes('"' + p.path + '"'), p.id)); } else assert.equal(cur.length, 0, p.id);
+    const cur = h.match(/<a [^>]*href="([^"]+)"[^>]* aria-current="page">/g) || [];
+    // The phone menu marks this page; the desktop MegaNav marks it too when it has a top link
+    // (Care sits inside the Studio panel). Every mark points at this page.
+    if (p.nav) { assert.ok(cur.length >= 1 && cur.length <= 2, p.id); cur.forEach((c) => assert.ok(c.includes('"' + p.path + '"'), p.id)); } else assert.equal(cur.length, 0, p.id);
   }
 });
 

@@ -10,6 +10,7 @@ import { mountBlueprint } from './blueprint.js';
 import { mountPlans } from './plans.js';
 import { mountMadlib } from './madlib.js';
 import { mountCrew } from './crew.js';
+import { mountMegaNav } from './meganav.js';
 import { $ } from './util.js';
 import { mountTracking } from './track.js';
 
@@ -58,7 +59,7 @@ function phoneMenu() {
     menu.hidden = !open;
     btn.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('menu-open', open);
-    if (open) menu.querySelector('a').focus({ preventScroll: true });
+    if (open) { const f = menu.querySelector('summary, a'); if (f) f.focus({ preventScroll: true }); }
   };
   btn.addEventListener('click', () => set(menu.hidden));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); } });
@@ -117,6 +118,7 @@ async function boot() {
   if (on('#proof')) mountProof(store);
   mountMadlib(store);
   mountCrew(store);
+  mountMegaNav(store);
   mountPlans(store);
   if (on('#s-business')) mountConfigurator(store);
   if (on('#s-care')) mountCare(store);

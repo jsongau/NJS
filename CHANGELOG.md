@@ -4,6 +4,10 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-03
 
+- Header — MegaNav 2: hover panels for AI agents, Plans, Build, Delivered and Studio. Animated agent
+  faces with a "Your agent here" slot; picks are shared with `/crew` and flow into the plan; Plans
+  start a plan and explain paying; phones get the same map as an accordion.
+
 - `/work` — Delivered becomes a wall of build tickets: every feature is a leg tagged Basic, Premium
   or Partner, the highest leg sets the build tier, a tier filter on top, and "Start a build like X"
   loads that build into the visitor's plan.

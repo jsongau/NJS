@@ -1,0 +1,12 @@
+[
+  ["run5k", "Run my first 5K", "Strength and mobility built around your run days, so your legs and hips hold up. Reformer Pilates keeps the core doing its job.", ["Pilates", "Conditioning"], "I coach the strength side"],
+  ["run10k", "Run a 10K", "Two strength days a week while your miles build, and yoga between long runs so you recover instead of stiffen.", ["Yoga", "Conditioning"], "I coach the strength side"],
+  ["fight", "Have an amateur fight", "Clean technique on pads, round after round of conditioning, and the habits fight camps run on. You walk into a fight team's camp ready.", ["Kickboxing", "Conditioning"], "I coach the fundamentals"],
+  ["strike", "Learn to strike", "Stance, the jab, combinations and defense, on focus mitts, speed paddles and Thai pads. Form first, then speed, then power.", ["Kickboxing"], "I coach this"],
+  ["grapple", "Learn to grapple", "I pair you with a jiu-jitsu coach for the mat work and build the grip, hips and conditioning grappling asks for.", ["Partner coach", "Mobility"], "With a partner coach"],
+  ["energy", "Have more energy", "Short, regular sessions that wake you up instead of wiping you out, with a routine you can keep on a busy week.", ["Kickboxing", "Yoga"], "I coach this"],
+  ["weight", "Lose weight", "Kickboxing rounds for the work, Pilates for strength, and a weekly check-in so it sticks past the first month.", ["Kickboxing", "Pilates"], "I coach this"],
+  ["injury", "Prevent injuries, move better", "Reformer Pilates and yoga for the hips, back and shoulders that daily life and hard training wear down.", ["Pilates", "Yoga"], "I coach this"],
+  ["strong", "Get stronger", "Pilates and bodyweight strength with progressions you can see from week to week.", ["Pilates", "Conditioning"], "I coach this"],
+  ["desk", "Undo desk life", "Mobility for tight hips, neck and shoulders. Twenty minutes a day goes a long way.", ["Yoga", "Pilates"], "I coach this"]
+]

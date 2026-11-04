@@ -2,7 +2,7 @@
 // No personal data leaves the page: no names, emails or phone numbers, ever. A visit gets a
 // random session id that lives only in sessionStorage and dies with the tab.
 
-const EVENTS = ['page_view', 'picker_open', 'business_picked', 'plan_picked', 'build_step', 'plan_seen', 'form_open', 'lead_sent', 'call_click'];
+const EVENTS = ['page_view', 'picker_open', 'business_picked', 'plan_picked', 'build_step', 'plan_seen', 'form_open', 'lead_sent', 'call_click', 'mode_switch', 'goal_picked'];
 let endpoint = null;
 let base = null;
 
@@ -31,7 +31,7 @@ function source() {
 export function startTracking(leadIntakeUrl) {
   if (!leadIntakeUrl || typeof navigator === 'undefined' || !navigator.sendBeacon) return false;
   endpoint = leadIntakeUrl.replace(/\/lead-intake$/, '/event-intake');
-  base = { sid: sid(), device: device(), ...source() };
+  base = { sid: sid(), device: device(), mode: document.body.dataset.mode === 'fitness' ? 'fitness' : 'business', ...source() };
   return true;
 }
 

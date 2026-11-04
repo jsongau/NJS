@@ -12,7 +12,8 @@ import { mountMadlib } from './madlib.js';
 import { mountCrew } from './crew.js';
 import { mountMegaNav } from './meganav.js';
 import { $ } from './util.js';
-import { mountTracking } from './track.js';
+import { mountTracking, track } from './track.js';
+import { mountFitness } from './fitness.js';
 
 const BASE = '/assets/studio/data/';
 
@@ -102,8 +103,27 @@ function subNav() {
   mark();
 }
 
+// Business | Fitness switch: a full-screen color wipe covers the page, the next page loads
+// under it and the wipe slides away. Without JavaScript it is a plain link.
+const WIPE = 'njs-wipe';
+function modeSwitch() {
+  try { if (sessionStorage.getItem(WIPE)) { sessionStorage.removeItem(WIPE); document.documentElement.classList.add('wipe-in'); setTimeout(() => document.documentElement.classList.remove('wipe-in'), 900); } } catch (_) { /* private mode */ }
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-mode-link]');
+    if (!a || a.getAttribute('aria-current') || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    track('mode_switch', { detail: a.dataset.modeLink });
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    e.preventDefault();
+    document.documentElement.dataset.wipeTo = a.dataset.modeLink;
+    document.documentElement.classList.add('wipe-out');
+    try { sessionStorage.setItem(WIPE, '1'); } catch (_) { /* private mode */ }
+    setTimeout(() => { location.href = a.href; }, 460);
+  });
+}
+
 async function boot() {
   if (redirectOldHash()) return;
+  modeSwitch();
   phoneMenu();
   subNav();
   const [catalog, projects] = await Promise.all([
@@ -126,6 +146,7 @@ async function boot() {
   if (on('#wall')) mountDelivered(store);
   mountTracking(store);
   carryLinks();
+  mountFitness();
   clock();
   // Logo: the j dot hops once on arrival (CSS); hovering the header logo snaps the S straight
   // (a few lines of JS inside the SVG drive that part).

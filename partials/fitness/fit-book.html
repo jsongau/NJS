@@ -1,0 +1,17 @@
+<section class="sec fx-book" id="book" aria-labelledby="fb-h">
+  <div class="wrap fx-book-grid">
+    <div><span class="kick">Start here</span><h2 id="fb-h">Request a private session.</h2><p>Tell me your goal and where you train. I'll reply with times for a first session.</p><p class="fine">Prices are set on the first call. Nothing on this page takes payment.</p></div>
+    <form class="fx-form" id="fx-form" novalidate>
+      <label>Your goal<select name="goal" id="fx-goal"><option value="">Pick one</option></select></label>
+      <label>Where<select name="location"><option value="">Pick one</option><option value="brea">North OC (Brea)</option><option value="rancho-santa-margarita">South OC (Rancho Santa Margarita)</option><option value="corona">Inland Empire (Corona)</option><option value="online">Online</option></select></label>
+      <label>Name<input name="name" autocomplete="name" maxlength="120" required></label>
+      <label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+      <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+      <label class="fx-wide">Anything I should know?<textarea name="note" rows="3" maxlength="1500" placeholder="Old injuries, days that work, what you've tried"></textarea></label>
+      <label class="fx-hp" aria-hidden="true">Company website<input name="company_website" tabindex="-1" autocomplete="off"></label>
+      <label class="fx-check fx-wide"><input type="checkbox" name="consent_marketing"> Send me training tips now and then. Unsubscribe any time.</label>
+      <button type="submit" class="btn btn-lime fx-wide" id="fx-send">Send my request</button>
+      <p class="fx-msg fx-wide" id="fx-msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>

@@ -19,6 +19,7 @@ const ALLOWED = (Deno.env.get("ALLOWED_ORIGINS") ?? DEFAULT_ORIGINS.join(","))
 const EVENTS = new Set([
   "page_view", "picker_open", "business_picked", "plan_picked",
   "build_step", "plan_seen", "form_open", "lead_sent", "call_click",
+  "mode_switch", "goal_picked",
 ]);
 const DEVICES = new Set(["phone", "tablet", "desktop"]);
 const MAX_PER_10_MIN = 300;
@@ -88,6 +89,7 @@ Deno.serve(async (req) => {
     utm_source: clean(body.utm_source, 120),
     utm_campaign: clean(body.utm_campaign, 120),
     device: device && DEVICES.has(device) ? device : null,
+    mode: body.mode === "fitness" ? "fitness" : "business",
     ip_hash: ipHash,
   });
 

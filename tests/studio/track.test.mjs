@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const SQL = read('supabase/migrations/20261103120000_studio_events.sql');
+const SQL_NOW = read('supabase/migrations/20261103230000_studio_events_mode.sql');
 const FN = read('supabase/functions/event-intake/index.ts');
 const TRACK = read('assets/studio/track.js');
 
@@ -16,7 +17,7 @@ const listIn = (src, re) => [...src.match(re)[1].matchAll(/'([a-z_]+)'|"([a-z_]+
 test('tracking: page, edge function and table agree on the event names', () => {
   const page = listIn(TRACK, /const EVENTS = \[([^\]]+)\]/);
   const fn = listIn(FN, /const EVENTS = new Set\(\[([^\]]+)\]/);
-  const sql = listIn(SQL, /event in \(([^)]+)\)/);
+  const sql = listIn(SQL_NOW, /event in \(([^)]+)\)/);
   assert.deepEqual(page, fn);
   assert.deepEqual(page, sql);
 });

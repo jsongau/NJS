@@ -40,6 +40,10 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Plan cards v2: compact faces with a live "start this week, live around <date>" estimate; "What's
   included" slides a drawer up inside the card; running glow border, pointer spotlight, Partner
   breathes and its button shines.
+  Fitness mode, Wave 1: a Business | Fitness switch in the header and phone menu (page-turn wipe),
+  and /fitness: goal picker (10 goals, honest about who coaches what), Strike/Flow/Core, three
+  regions, how coaching works, and a private-session request that lands in leads as door train.
+  studio_events gains a mode column and mode_switch / goal_picked events.
 
 ## 2026-11-01
 

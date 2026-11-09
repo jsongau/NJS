@@ -58,3 +58,14 @@
 - Gym names stay off until each manager OKs in writing; the calendar reads "Brea · North OC".
 - Where reformer sessions happen (which gym has reformers).
 - Prices and Stripe for checkout (wave F3), then live availability (wave F4).
+
+## Later still: focus picker and striking pages
+- Jay: the 12-pack must not read as "you'll learn maces"; clients pick their focus. A "Your 12 sessions,
+  your choice" picker (one or two of nine areas, `partials/fitness/focus.json`) with animated Goldsmith icons
+  carries `?focus=a,b` into the booking form and `meta.focus`.
+- New pages: `/fitness/boxing` (mitts, speed paddles, footwork, setups, defense), `/fitness/kickboxing`
+  (Thai pads, front teep, round kick, switch kick, setups), `/fitness/muay-thai` (teep, knees, elbows, clinch),
+  and `/fitness/striking` as their hub. All share the Orthodox / Southpaw / Switch stance switch.
+- Technique tiles come from `partials/fitness/techniques.json`; icons in `TECH_ICONS` in `tools/build-pages.mjs`.
+- Motion: cards reveal once (`.in`), icons loop only while on screen (`.live`), nothing moves under reduced motion.
+- Trap: a stance panel with longer text grew the card by 23px on phones; the panels now stack in one grid cell.

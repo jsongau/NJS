@@ -69,3 +69,16 @@
 - Technique tiles come from `partials/fitness/techniques.json`; icons in `TECH_ICONS` in `tools/build-pages.mjs`.
 - Motion: cards reveal once (`.in`), icons loop only while on screen (`.live`), nothing moves under reduced motion.
 - Trap: a stance panel with longer text grew the card by 23px on phones; the panels now stack in one grid cell.
+
+## Later: the art set and packs everywhere
+- Jay: the 12-pack is not Brea-only; it works in Brea, at the client's place, or online. 9Round in Rancho
+  Santa Margarita (10:00 and 10:30 half hours) runs on 9Round pricing, never on packs, and shows in teal.
+- Agent Goldsmith's illustration set in `partials/fitness/art/` (hero jab, six weeks filling, habit ring,
+  clock, map, trophies, sunrise, club mill, striking combo). Coral, teal, lavender, sky and sand. Each loops a
+  multi-stage animation only while on screen (`.live`), and holds still under reduced motion.
+- Trap: CSS `transform` on an SVG `<g>` that also has a `transform` attribute replaces the attribute and
+  throws the part off position. Positioned groups now wrap the animated group.
+- Trap: `transform-box: fill-box` on every SVG child moved the habit ring's `rotate(-90)` off centre. Fill-box is
+  now limited to the animated `ar-` classes.
+- Booking window preview is v10 (not in the repo yet): four locations, part-of-day requests for your place
+  and online, teal 9Round slots that open a sign-up window.

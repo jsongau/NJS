@@ -237,4 +237,5 @@ export function mountFitness() {
   mountVideos();
   mountFocus();
   mountStance();
+  reveal($$('.nf-art'));
 }

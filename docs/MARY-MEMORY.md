@@ -5,6 +5,25 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-09 · **Place search is one combobox: "ZIP code or city".** (Jay liked it on booking v15.) Never two
+  fields (ZIP plus a city dropdown). How it works:
+  - One text input with `role="combobox"`, `aria-controls` the list, `aria-expanded`, `aria-autocomplete="list"`,
+    `autocomplete="off"`, 16px text (iPhone won't zoom), a clear (×) button once it has text.
+  - Suggestions are a `role="listbox"` of `role="option"` rows, max 8, each 46px+ tall: the ZIP or city in bold,
+    "City · Area" or "Area" in small grey on the right. Digits match ZIPs by prefix; letters match city names,
+    starts-with first, then contains.
+  - Keys: arrows move `aria-activedescendant`, Enter picks, Esc closes. Taps use `pointerdown` with
+    `preventDefault` so the input's blur doesn't close the list before the pick lands.
+  - A full 5-digit ZIP with one city fills itself ("92688 · Rancho Santa Margarita"); a ZIP shared by two cities
+    lists both. A ZIP outside the area never dead-ends: say so, let them send anyway, or offer Online.
+  - Confirm the pick in a status line ("Corona, Inland Empire. I train clients there.") with `aria-live="polite"`.
+  - Data ships as a small static file built from CoverCapy's `search_locations` (city, area, ZIPs), not a live
+    database call per keystroke: instant, works offline, no keys on the page.
+- 2026-11-09 · **Phone checkout keeps the next step in reach.** A fixed bottom bar shows the current pick
+  ("Thu Nov 12 · 9:00 AM / UFC Gym Brea · 12-pack") beside the one main button; short labels on phones
+  ("Checkout", "‹" for back). The first screen shows the place and time picker, not a summary card; a review
+  card with "Change" sits above the payment form.
+
 - 2026-11-09 · **Fitness is coral on warm paper, never yellow.** Coral `#FF8A6B` is a fill (buttons, highlight
   marker, badges) with ink text on it (8.0:1). Text accents are `#A63A1E` (6.02:1 on `#FAF6F2`). Coral never
   carries text on paper (2.15:1).

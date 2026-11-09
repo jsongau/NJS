@@ -7,6 +7,12 @@
       <label>Name<input name="name" autocomplete="name" maxlength="120" required></label>
       <label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
       <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+      <fieldset class="fx-times fx-wide"><legend>When works for you?</legend>
+        <label><input type="checkbox" name="times" value="weekday-mornings"><span>Weekday mornings</span></label>
+        <label><input type="checkbox" name="times" value="weekday-midday"><span>Weekday midday</span></label>
+        <label><input type="checkbox" name="times" value="weekday-evenings"><span>Weekday evenings</span></label>
+        <label><input type="checkbox" name="times" value="weekends"><span>Weekends</span></label>
+      </fieldset>
       <label class="fx-wide">Anything I should know?<textarea name="note" rows="3" maxlength="1500" placeholder="Old injuries, days that work, what you've tried"></textarea></label>
       <input type="hidden" name="discipline" value="">
       <label class="fx-hp" aria-hidden="true">Company website<input name="company_website" tabindex="-1" autocomplete="off"></label>

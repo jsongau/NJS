@@ -2,6 +2,12 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-09
+
+- `/fitness` — Light theme, a "Your first session" hero card (discipline, region, prefilled request),
+  the Business | Fitness color wipe removed, a "When works for you?" picker, structured `leads.meta`,
+  and three fitness funnel events. See `docs/session-2026-11-09-fitness-f0-f1.md`.
+
 ## 2026-11-03
 
 - Header — MegaNav 2: hover panels for AI agents, Plans, Build, Delivered and Studio. Animated agent

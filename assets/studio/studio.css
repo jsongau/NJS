@@ -1776,6 +1776,14 @@ body[data-mode="fitness"] .kick { color: var(--fx-acc); }
 .fx-form textarea { resize: vertical; min-height: 90px; }
 .fx-form input:focus, .fx-form select:focus, .fx-form textarea:focus { outline: 2px solid var(--ink); outline-offset: 1px; border-color: transparent; }
 .fx-wide { grid-column: 1 / -1; }
+.fx-times { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.fx-times legend { padding: 0; margin-bottom: 8px; font: 600 13px/1.2 var(--sans); color: var(--ink); }
+.fx-times label { position: relative; display: block; }
+.fx-times input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.fx-times span { display: grid; place-items: center; min-height: 44px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--line-hi); background: var(--surface); font: 600 13px/1.2 var(--sans); color: var(--ink-2); text-align: center; transition: background var(--t-quick), color var(--t-quick), border-color var(--t-quick); }
+.fx-times input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.fx-times input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 2px; }
+@media (max-width: 720px) { .fx-times { grid-template-columns: 1fr 1fr; } }
 .fx-hp { position: absolute; left: -9999px; }
 .fx-check { display: flex !important; align-items: center; gap: 10px !important; font-weight: 500 !important; color: var(--ink-2) !important; }
 .fx-check input { width: 18px; min-height: 18px; accent-color: var(--ink); }

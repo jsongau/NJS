@@ -1,14 +1,16 @@
 // Funnel tracking tests. Run with: node --test
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const SQL = read('supabase/migrations/20261103120000_studio_events.sql');
-const SQL_NOW = read('supabase/migrations/20261103230000_studio_events_mode.sql');
+// The newest migration that redefines the event check is the one the table runs on.
+const MIGS = readdirSync(join(ROOT, 'supabase/migrations')).filter((f) => f.endsWith('.sql')).sort();
+const SQL_NOW = MIGS.map((f) => read('supabase/migrations/' + f)).filter((t) => /studio_events_event_check check/.test(t)).pop();
 const FN = read('supabase/functions/event-intake/index.ts');
 const TRACK = read('assets/studio/track.js');
 

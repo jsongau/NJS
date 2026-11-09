@@ -19,7 +19,7 @@ const ALLOWED = (Deno.env.get("ALLOWED_ORIGINS") ?? DEFAULT_ORIGINS.join(","))
 const EVENTS = new Set([
   "page_view", "picker_open", "business_picked", "plan_picked",
   "build_step", "plan_seen", "form_open", "lead_sent", "call_click",
-  "mode_switch", "goal_picked",
+  "mode_switch", "goal_picked", "fit_tab", "fit_region", "book_step",
 ]);
 const DEVICES = new Set(["phone", "tablet", "desktop"]);
 const MAX_PER_10_MIN = 300;

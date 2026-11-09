@@ -2,7 +2,7 @@
 // No personal data leaves the page: no names, emails or phone numbers, ever. A visit gets a
 // random session id that lives only in sessionStorage and dies with the tab.
 
-const EVENTS = ['page_view', 'picker_open', 'business_picked', 'plan_picked', 'build_step', 'plan_seen', 'form_open', 'lead_sent', 'call_click', 'mode_switch', 'goal_picked'];
+const EVENTS = ['page_view', 'picker_open', 'business_picked', 'plan_picked', 'build_step', 'plan_seen', 'form_open', 'lead_sent', 'call_click', 'mode_switch', 'goal_picked', 'fit_tab', 'fit_region', 'book_step'];
 let endpoint = null;
 let base = null;
 

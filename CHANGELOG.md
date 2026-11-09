@@ -6,7 +6,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 - `/fitness` — Light theme, a "Your first session" hero card (discipline, region, prefilled request),
   the Business | Fitness color wipe removed, a "When works for you?" picker, structured `leads.meta`,
-  and three fitness funnel events. See `docs/session-2026-11-09-fitness-f0-f1.md`.
+  and three fitness funnel events. Then the v3 rebuild: coral theme, seven fitness pages (home, personal
+  training, clubs and maces, striking, yoga and Pilates, coach, book), 12-pack and 2-pack, the Thursday
+  Brea calendar, and a booking request carrying pack, discipline and time. See `docs/session-2026-11-09-fitness-f0-f1.md`.
 
 ## 2026-11-03
 

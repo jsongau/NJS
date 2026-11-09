@@ -1,9 +1,15 @@
-// Fitness mode page (2026-11-03): goal picker and the private-session request.
-// The request goes to the same lead-intake function as the studio form, as a "train" lead.
+// NJS Fitness pages (2026-11-09, v3): the Thursday calendar, the start bar and the booking request.
+// The calendar shows Jay's Thursday at Brea: classes at 6 AM and 6 PM, booked hours from his current
+// clients, everything else open. Until live availability ships (wave F3), the open hours are a
+// request: Jay confirms each one by email. The request goes to lead-intake as a "train" lead.
 import { $, $$ } from './util.js';
 import { track } from './track.js';
 
 const ENDPOINT = 'https://cedunmyttprzgslthuyk.supabase.co/functions/v1/lead-intake';
+const HOURS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+const CLASS = new Set([6, 18]);
+const BOOKED = new Set([7, 10, 13, 17]);
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const ERR = {
   name: 'Add your name so I know who to write back to.',
   email: 'That email doesn\'t look right. Check it and try again.',
@@ -12,88 +18,134 @@ const ERR = {
   net: 'No connection. Check your signal and try again.',
 };
 
-// Hero "Your first session" card: discipline tabs (fixed-height panels, no layout shift),
-// a region choice, and a CTA that carries both into the request form below.
-function mountFirst(form) {
-  const card = $('.fx-first');
-  if (!card) return;
-  const tabs = $$('[role="tab"]', card);
-  const show = (t, focus) => {
-    tabs.forEach((x) => {
-      const on = x === t;
-      x.setAttribute('aria-selected', String(on));
-      x.tabIndex = on ? 0 : -1;
-      $('#' + x.getAttribute('aria-controls')).hidden = !on;
-    });
-    if (focus) t.focus();
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => { show(t); track('fit_tab', { detail: t.dataset.disc }); });
-    t.addEventListener('keydown', (e) => {
-      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (d) { e.preventDefault(); show(tabs[(i + d + tabs.length) % tabs.length], true); }
-    });
-  });
-  card.addEventListener('change', (e) => { if (e.target.name === 'fx-region') track('fit_region', { detail: e.target.value }); });
-  $('.fx-first-go', card).addEventListener('click', () => {
-    const t = tabs.find((x) => x.getAttribute('aria-selected') === 'true');
-    const r = $('input[name="fx-region"]:checked', card);
-    if (r && form.elements.location) form.elements.location.value = r.value;
-    if (t && form.elements.discipline) form.elements.discipline.value = t.dataset.disc;
-    form.dataset.entry = 'hero_card';
-    track('form_open', { detail: 'first_session:' + (t ? t.dataset.disc : '') });
-  });
+const fmt = (h) => (h % 12 || 12) + ':00 ' + (h < 12 ? 'AM' : 'PM');
+const iso = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const label = (d, h) => 'Thu ' + MON[d.getMonth()] + ' ' + d.getDate() + ' · ' + fmt(h);
+
+// The next four Thursdays, counted from today in the visitor's clock. A Thursday whose hours have
+// all passed is skipped.
+function thursdays(now = new Date()) {
+  const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  while (d.getDay() !== 4 || (iso(d) === iso(now) && now.getHours() >= HOURS[HOURS.length - 1])) d.setDate(d.getDate() + 1);
+  const out = [];
+  for (let i = 0; i < 4; i++) { out.push(new Date(d)); d.setDate(d.getDate() + 7); }
+  return out;
 }
 
-export function mountFitness() {
-  const grid = $('.fx-goal-grid');
-  const form = $('#fx-form');
-  if (!grid || !form) return;
-  mountFirst(form);
-  const goals = $$('.fx-goal', grid).map((b) => ({ id: b.dataset.goal, name: $('b', b).textContent, how: $('.fx-how', b).textContent }));
-  const sel = $('#fx-goal');
-  sel.insertAdjacentHTML('beforeend', goals.map((g) => '<option value="' + g.id + '">' + g.name + '</option>').join('') + '<option value="other">Something else</option>');
+function mountCalendar(form) {
+  const cal = $('[data-nf-cal]');
+  if (!cal) return;
+  const days = $('[data-nf-days]', cal), slots = $('[data-nf-slots]', cal), pick = $('[data-nf-pick]', cal), go = $('[data-nf-go]', cal);
+  const bar = $('[data-nf-bar]'), barGo = $('[data-nf-bar-go]');
+  const th = thursdays();
+  const now = new Date();
+  let day = 0, hour = null;
 
-  const pick = (id, from) => {
-    $$('.fx-goal', grid).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.goal === id)));
-    sel.value = id;
-    const g = goals.find((x) => x.id === id);
-    if (g) {
-      $('#fx-pick').innerHTML = '<p><b>' + g.name + '.</b> ' + g.how + '</p><a class="btn btn-lime" href="#book">Request a session for this</a>';
-      if (from) track('goal_picked', { detail: id });
-      if (from === 'grid' && form.dataset.entry !== 'hero_card') form.dataset.entry = 'goal_grid';
-    }
+  days.innerHTML = th.map((x, i) => '<button type="button" class="nf-day" aria-pressed="' + (i === 0) + '" data-i="' + i + '"><small>Thu</small><b>' + x.getDate() + '</b><small>' + MON[x.getMonth()] + '</small></button>').join('');
+  const drawSlots = () => {
+    const today = iso(th[day]) === iso(now);
+    slots.innerHTML = HOURS.map((h) => {
+      const c = CLASS.has(h), b = BOOKED.has(h), past = today && h <= now.getHours();
+      const off = c || b || past;
+      return '<li><button type="button" class="nf-slot' + (c ? ' is-class' : '') + '" data-h="' + h + '" aria-pressed="' + (h === hour) + '"' + (off ? ' disabled' : '') + '>' + fmt(h) + '<em>' + (c ? 'Class' : b ? 'Booked' : past ? 'Past' : 'Open') + '</em></button></li>';
+    }).join('');
   };
-  grid.addEventListener('click', (e) => { const b = e.target.closest('.fx-goal'); if (b) pick(b.dataset.goal, 'grid'); });
-  sel.addEventListener('change', () => { if (sel.value && sel.value !== 'other') pick(sel.value, 'form'); });
+  const render = () => {
+    if (hour === null) {
+      pick.innerHTML = '<b>Pick an open hour</b>Times are Pacific. I confirm every booking by email.';
+      go.setAttribute('href', '/fitness/book');
+      return;
+    }
+    const d = th[day], when = label(d, hour);
+    const q = 'slot=' + iso(d) + 'T' + String(hour).padStart(2, '0');
+    pick.innerHTML = '<b>' + when + '</b>Brea · 60 minutes';
+    go.setAttribute('href', form ? '#request' : '/fitness/book?' + q + '#request');
+    if (bar) { bar.innerHTML = '<b>' + when + '</b>' + (form ? 'Finish your request below' : 'Pick a pack to book it'); barGo.setAttribute('href', form ? '#request' : '/fitness/book?' + q + '#request'); }
+    if (form) setSlot(form, iso(d) + 'T' + String(hour).padStart(2, '0'), when);
+  };
+  drawSlots();
+  days.addEventListener('click', (e) => {
+    const b = e.target.closest('.nf-day');
+    if (!b) return;
+    day = +b.dataset.i;
+    hour = null;
+    $$('.nf-day', days).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    drawSlots();
+    render();
+  });
+  slots.addEventListener('click', (e) => {
+    const b = e.target.closest('.nf-slot');
+    if (!b || b.disabled) return;
+    hour = +b.dataset.h;
+    $$('.nf-slot', slots).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    track('fit_tab', { detail: 'slot_' + hour });
+    render();
+  });
+
+  // A slot passed in the link (?slot=2026-11-12T08) is picked on arrival.
+  const want = new URLSearchParams(location.search).get('slot');
+  const m = want && want.match(/^(\d{4}-\d{2}-\d{2})T(\d{2})$/);
+  if (m) {
+    const i = th.findIndex((x) => iso(x) === m[1]), h = +m[2];
+    if (i >= 0 && HOURS.includes(h) && !CLASS.has(h) && !BOOKED.has(h)) {
+      day = i; hour = h;
+      $$('.nf-day', days).forEach((x, j) => x.setAttribute('aria-pressed', String(j === i)));
+      drawSlots();
+      render();
+    }
+  }
+}
+
+function setSlot(form, value, text) {
+  form.dataset.slot = value;
+  const box = $('[data-nf-slotpick]', form);
+  if (box) box.innerHTML = '<span><b>' + text + '</b> · Brea. Change it in the calendar above.</span>';
+  const brea = form.querySelector('input[name="location"][value="brea"]');
+  if (brea) brea.checked = true;
+}
+
+function mountForm(form) {
+  const q = new URLSearchParams(location.search);
+  const pack = q.get('pack');
+  if (pack === '2' || pack === '12') form.querySelector('input[name="pack"][value="' + pack + '-pack"]').checked = true;
+  const focus = q.get('focus');
+  const f = focus && form.querySelector('input[name="discipline"][value="' + CSS.escape(focus) + '"]');
+  if (f) f.checked = true;
+  form.dataset.entry = q.get('slot') ? 'calendar' : pack ? 'pack' : 'form';
 
   form.addEventListener('focusin', () => { if (!form.dataset.started) { form.dataset.started = '1'; track('book_step', { detail: 'start' }); } });
+  form.addEventListener('change', (e) => { if (e.target.name === 'location') track('fit_region', { detail: e.target.value }); });
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const d = Object.fromEntries(new FormData(form));
-    const msg = $('#fx-msg');
-    msg.className = 'fx-msg fx-wide';
+    const fd = new FormData(form);
+    const d = Object.fromEntries(fd);
+    const msg = $('#nf-msg');
+    msg.className = 'nf-msg wide';
     if (!d.name || !d.name.trim()) { msg.textContent = ERR.name; form.elements.name.focus(); return; }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test((d.email || '').trim())) { msg.textContent = ERR.email; form.elements.email.focus(); return; }
-    const g = goals.find((x) => x.id === d.goal);
+    const location_ = d.location === 'in-home' ? 'in-home' : d.location;
     const body = {
       door: 'train', name: d.name.trim(), email: d.email.trim(), phone: (d.phone || '').trim() || null,
-      location: d.location || null,
-      message: ['Goal: ' + (g ? g.name : d.goal === 'other' ? 'Something else' : 'Not picked'), (d.note || '').trim()].filter(Boolean).join('\n'),
-      meta: { discipline: d.discipline || undefined, goal: d.goal || undefined, times: new FormData(form).getAll('times'), entry: form.dataset.entry || 'form' },
+      location: location_ || null, city: (d.city || '').trim() || null,
+      message: (d.note || '').trim() || null,
+      meta: {
+        pack: d.pack, discipline: d.discipline, times: fd.getAll('times'),
+        slot: d.location === 'brea' ? form.dataset.slot : undefined,
+        first: d.first === '1' || undefined, entry: form.dataset.entry,
+      },
       page: location.pathname, referrer: document.referrer || null,
       consent_marketing: d.consent_marketing === 'on', company_website: d.company_website || '',
     };
-    const btn = $('#fx-send');
+    const btn = $('#nf-send');
     btn.disabled = true; btn.textContent = 'Sending';
     try {
       const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (r.ok) {
-        track('lead_sent', { business_type: 'train', detail: d.goal || null });
+        track('lead_sent', { business_type: 'train', detail: d.pack + ':' + d.discipline });
         form.reset();
-        delete form.dataset.entry;
+        delete form.dataset.slot;
         msg.classList.add('ok');
-        msg.textContent = 'Got it, ' + body.name.split(/\s+/)[0] + '. Look for an email from me with times. If it doesn\'t show up, check spam.';
+        msg.textContent = 'Got it, ' + body.name.split(/\s+/)[0] + '. Your request is pending; look for an email from me with your time and price. If it doesn\'t show up, check spam.';
       } else {
         let code = ''; try { code = (await r.json()).error || ''; } catch (_) { /* no body */ }
         msg.textContent = r.status === 429 ? ERR.rate : code === 'invalid_email' ? ERR.email : code === 'name_required' ? ERR.name : ERR.other;
@@ -101,4 +153,27 @@ export function mountFitness() {
     } catch (_) { msg.textContent = ERR.net; }
     btn.disabled = false; btn.textContent = 'Send my request';
   });
+}
+
+// Video embeds load the YouTube player only when tapped (privacy-enhanced domain).
+function mountVideos() {
+  $$('[data-nf-video]').forEach((b) => b.addEventListener('click', () => {
+    const id = b.dataset.nfVideo;
+    if (!/^[\w-]{11}$/.test(id)) return;
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+    f.title = b.getAttribute('aria-label') || 'Video';
+    f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+    f.allowFullscreen = true;
+    b.replaceWith(f);
+    track('fit_tab', { detail: 'video_' + id });
+  }));
+}
+
+export function mountFitness() {
+  if (document.body.dataset.mode !== 'fitness') return;
+  const form = $('#nf-form');
+  if (form) mountForm(form);
+  mountCalendar(form);
+  mountVideos();
 }

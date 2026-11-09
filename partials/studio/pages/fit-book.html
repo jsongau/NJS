@@ -1,0 +1,67 @@
+<!--@head-->
+<!--@skip-->
+
+<!--@header-fit-->
+
+<main id="top">
+<section class="nf-hero sub" aria-labelledby="bk-h" style="padding-bottom:10px">
+  <div class="wrap">
+    <div>
+      <p class="nf-crumb"><a href="/fitness">Fitness</a> / Book a time</p>
+      <h1 id="bk-h" style="margin-top:16px"><span>Pick a time.</span><span>I'll <em>confirm it.</em></span></h1>
+      <p class="nf-lede">Choose a pack and an open hour, then send it. <b>Nothing is charged here.</b> I confirm your time and the price by email.</p>
+    </div>
+  </div>
+</section>
+
+<!--@nf-cal-->
+
+<section class="nf-sec tight" id="request" aria-labelledby="rq-h">
+  <div class="wrap">
+    <div class="nf-h"><div><p class="nf-k">Your request</p><h2 id="rq-h"><span>A few details,</span><span>then you're set.</span></h2></div><p>Booking somewhere other than Thursday in Brea? Pick the place and the times that work, and I reply with an exact time.</p></div>
+    <form class="nf-form" id="nf-form" novalidate>
+      <fieldset class="wide"><legend>Pack</legend><div class="nf-choice" style="grid-template-columns:1fr 1fr">
+        <label><input type="radio" name="pack" value="12-pack" checked><span>12-pack · 2× a week</span></label>
+        <label><input type="radio" name="pack" value="2-pack"><span>2-pack · try it</span></label>
+      </div></fieldset>
+      <fieldset class="wide"><legend>What do you want to train?</legend><div class="nf-choice">
+        <label><input type="radio" name="discipline" value="personal-training" checked><span>Personal training</span></label>
+        <label><input type="radio" name="discipline" value="clubs-and-maces"><span>Clubs and maces</span></label>
+        <label><input type="radio" name="discipline" value="striking"><span>Kickboxing or boxing</span></label>
+        <label><input type="radio" name="discipline" value="yoga"><span>Yoga</span></label>
+        <label><input type="radio" name="discipline" value="reformer-pilates"><span>Reformer Pilates</span></label>
+      </div></fieldset>
+      <fieldset class="wide"><legend>Where</legend><div class="nf-choice">
+        <label><input type="radio" name="location" value="brea" checked><span>Brea · Thu</span></label>
+        <label><input type="radio" name="location" value="rancho-santa-margarita"><span>RSM · weekdays</span></label>
+        <label><input type="radio" name="location" value="in-home"><span>Your place</span></label>
+        <label><input type="radio" name="location" value="online"><span>Online</span></label>
+      </div></fieldset>
+      <div class="wide"><p style="font:600 13px/1.2 var(--sans);color:var(--ink);margin-bottom:7px">Your time</p><p class="nf-slot-pick" data-nf-slotpick>No hour picked. Choose one in the calendar above, or tell me what works below.</p></div>
+      <fieldset class="wide"><legend>Other times that work</legend><div class="nf-choice">
+        <label><input type="checkbox" name="times" value="weekday-mornings"><span>Weekday mornings</span></label>
+        <label><input type="checkbox" name="times" value="weekday-midday"><span>Weekday midday</span></label>
+        <label><input type="checkbox" name="times" value="weekday-evenings"><span>Weekday evenings</span></label>
+        <label><input type="checkbox" name="times" value="weekends"><span>Weekends</span></label>
+      </div></fieldset>
+      <label>Name<input name="name" autocomplete="name" maxlength="120" required></label>
+      <label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+      <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+      <label>City or ZIP, for your place<input name="city" autocomplete="postal-code" maxlength="80"></label>
+      <label class="wide">Anything I should know?<textarea name="note" maxlength="1500" placeholder="Your goal, old injuries, what you've tried"></textarea></label>
+      <label class="nf-hp" aria-hidden="true">Company website<input name="company_website" tabindex="-1" autocomplete="off"></label>
+      <label class="nf-check wide"><input type="checkbox" name="first" value="1"> This is my first session with Nathan</label>
+      <label class="nf-check wide"><input type="checkbox" name="consent_marketing"> Send me training tips now and then. Unsubscribe any time.</label>
+      <button type="submit" class="nf-btn nf-coral wide" id="nf-send">Send my request</button>
+      <p class="nf-msg wide" id="nf-msg" role="status" aria-live="polite"></p>
+      <p class="nf-fine wide">Your request stays pending until I confirm it by email. Nothing is charged on this site.</p>
+    </form>
+  </div>
+</section>
+
+<!--@nf-where-->
+</main>
+
+<!--@nf-foot-->
+</body>
+</html>

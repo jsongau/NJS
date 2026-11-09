@@ -19,16 +19,18 @@ const ALLOWED = (Deno.env.get("ALLOWED_ORIGINS") ?? DEFAULT_ORIGINS.join(","))
   .split(",").map((s) => s.trim()).filter(Boolean);
 
 const DOORS = ["build", "dental", "learn", "train", "kids"];
-const LOCATIONS = ["brea", "rancho-santa-margarita", "corona", "online"];
+const LOCATIONS = ["brea", "rancho-santa-margarita", "corona", "in-home", "online"];
 const MAX_PER_10_MIN = 5;
 
 // Every key and value in meta is allow-listed: no free text, no personal data.
-const DISCIPLINES = ["kickboxing", "yoga", "reformer-pilates"];
+const DISCIPLINES = ["personal-training", "clubs-and-maces", "striking", "kickboxing", "yoga", "reformer-pilates"];
+const PACKS = ["2-pack", "12-pack"];
 const TIMES = ["weekday-mornings", "weekday-midday", "weekday-evenings", "weekends"];
-const ENTRIES = ["hero_card", "goal_grid", "form"];
+const ENTRIES = ["hero_card", "goal_grid", "form", "calendar", "pack"];
 const LABEL: Record<string, string> = {
+  "personal-training": "personal training", "clubs-and-maces": "clubs and maces", striking: "kickboxing or boxing",
   kickboxing: "kickboxing", yoga: "yoga", "reformer-pilates": "reformer Pilates",
-  brea: "North OC", "rancho-santa-margarita": "South OC", corona: "Corona", online: "online",
+  brea: "Brea", "rancho-santa-margarita": "Rancho Santa Margarita", corona: "Corona", "in-home": "your place", online: "online",
 };
 
 const supabase = createClient(
@@ -67,6 +69,10 @@ export function cleanMeta(raw: unknown): Record<string, unknown> {
     if (t.length) out.times = t;
   }
   if (typeof m.entry === "string" && ENTRIES.includes(m.entry)) out.entry = m.entry;
+  if (typeof m.pack === "string" && PACKS.includes(m.pack)) out.pack = m.pack;
+  // A Thursday hour picked in the calendar, as local Pacific "YYYY-MM-DDTHH".
+  if (typeof m.slot === "string" && /^\d{4}-\d{2}-\d{2}T(0[6-9]|1\d)$/.test(m.slot)) out.slot = m.slot;
+  if (m.first === true) out.first = true;
   return out;
 }
 
@@ -94,6 +100,9 @@ async function send(to: string, subject: string, text: string, replyTo?: string)
 // To Jay: what they want first, contact details second.
 function notifyText(row: Record<string, unknown>, meta: Record<string, unknown>) {
   const top = [
+    meta.pack ? `Pack: ${meta.pack}` : null,
+    meta.slot ? `Requested time: ${meta.slot}:00 Pacific` : null,
+    meta.first ? "First session with Nathan" : null,
     meta.discipline ? `Discipline: ${LABEL[meta.discipline as string]}` : null,
     row.location ? `Where: ${LABEL[row.location as string] ?? row.location}` : null,
     meta.goal ? `Goal: ${meta.goal}` : null,
@@ -105,17 +114,24 @@ function notifyText(row: Record<string, unknown>, meta: Record<string, unknown>)
   return [...top, "", ...rest].join("\n");
 }
 
+function slotText(slot: unknown) {
+  if (typeof slot !== "string") return "";
+  const h = Number(slot.slice(11));
+  return ` You asked for ${slot.slice(0, 10)} at ${h % 12 || 12}:00 ${h < 12 ? "AM" : "PM"} Pacific.`;
+}
+
 // To the visitor (train only): confirms what they asked for and what happens next.
 // The reply-time promise comes from REPLY_PROMISE, set by Jay; without it, no time is promised.
 function confirmText(row: Record<string, unknown>, meta: Record<string, unknown>) {
   const first = String(row.name).split(/\s+/)[0];
-  const what = meta.discipline ? `a first ${LABEL[meta.discipline as string]} session` : "a private session";
-  const where = row.location ? (row.location === "online" ? " online" : ` in ${LABEL[row.location as string]}`) : "";
-  const promise = Deno.env.get("REPLY_PROMISE") ?? "I'll reply by email with times that work.";
+  const what = meta.pack ? `the ${meta.pack}${meta.discipline ? ` (${LABEL[meta.discipline as string]})` : ""}`
+    : meta.discipline ? `a first ${LABEL[meta.discipline as string]} session` : "a private session";
+  const where = row.location ? (row.location === "online" ? " online" : row.location === "in-home" ? " at your place" : ` in ${LABEL[row.location as string]}`) : "";
+  const promise = Deno.env.get("REPLY_PROMISE") ?? "I'll reply by email with your time and the price.";
   return [
     `Hi ${first},`,
     "",
-    `Thanks for asking about ${what}${where}. ${promise}`,
+    `Thanks for asking about ${what}${where}.${slotText(meta.slot)} Your request is pending until I confirm it. ${promise}`,
     "",
     "If anything changes (days, old injuries, what you want to work on), just reply to this email.",
     "",

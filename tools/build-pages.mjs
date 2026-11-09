@@ -29,6 +29,26 @@ const ORG = {
 };
 const ld = (type, extra) => ({ '@context': 'https://schema.org', '@type': type, ...extra });
 
+// NJS Fitness: one coach entity shared by every fitness page.
+const COACH = {
+  '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', alternateName: 'Jiaming Song', jobTitle: 'Personal trainer',
+  url: SITE + '/fitness/coach',
+  knowsAbout: ['Personal training', 'Muscle building', 'Fat loss', 'Steel club training', 'Steel mace training', 'Kickboxing', 'Boxing', 'Yoga', 'Reformer Pilates'],
+  areaServed: ['Brea, CA', 'Rancho Santa Margarita, CA', 'Orange County, California'],
+};
+const crumbs = (slug, name) => ld('BreadcrumbList', { itemListElement: [
+  { '@type': 'ListItem', position: 1, name: 'Fitness', item: SITE + '/fitness' },
+  { '@type': 'ListItem', position: 2, name, item: SITE + '/fitness/' + slug },
+] });
+function fitPage(slug, name, title, description, service) {
+  return {
+    out: 'fitness/' + slug + '/index.html', path: '/fitness/' + slug, nav: null, mode: 'fitness',
+    title, description, og_title: title.replace(/ · NJS Fitness$/, ''), og_description: description,
+    skip_href: '#top', skip_text: 'Skip to the page',
+    jsonld: service ? [ld('Service', { name: service, serviceType: service, provider: COACH, areaServed: 'Orange County, California', url: SITE + '/fitness/' + slug }), crumbs(slug, name)] : null,
+  };
+}
+
 export const PAGES = {
   home: {
     out: 'index.html', path: '/', nav: null,
@@ -90,20 +110,36 @@ export const PAGES = {
   },
   fitness: {
     out: 'fitness/index.html', path: '/fitness', nav: null, mode: 'fitness',
-    title: 'NJS Fitness · Kickboxing, yoga and Pilates coaching in Orange County · Nathan J. Song',
-    description: 'Kickboxing, yoga and reformer Pilates coaching with Nathan J. Song in Brea, Rancho Santa Margarita and Corona. Pick your goal and request a private session.',
+    title: 'Personal Trainer in Orange County · 12-Pack Training · NJS Fitness',
+    description: 'Personal training with Nathan J. Song in Brea and Rancho Santa Margarita: muscle building, fat loss, steel clubs and maces, kickboxing and yoga. Train twice a week for six weeks.',
     og_title: 'NJS Fitness: a strong mind needs a strong body',
-    og_description: 'Pick a goal, from your first 5K to an amateur fight, and see how Nathan J. Song would train you for it. Orange County and the Inland Empire.',
-    skip_href: '#goals', skip_text: 'Skip to the goals',
+    og_description: 'Twelve sessions, twice a week, with a three-time SHRED winner. Book a Thursday hour in Brea or a weekday in Rancho Santa Margarita.',
+    skip_href: '#packs', skip_text: 'Skip to the packs',
     jsonld: [
-      ld('ProfilePage', { mainEntity: { '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', jobTitle: 'Kickboxing, yoga and reformer Pilates coach',
-        knowsAbout: ['Kickboxing', 'Yoga', 'Reformer Pilates', 'Mobility', 'Conditioning'], url: SITE + '/fitness',
-        areaServed: ['Brea, CA', 'Rancho Santa Margarita, CA', 'Corona, CA', 'Orange County, California', 'Inland Empire, California'] } }),
-      ld('Service', { name: 'Private kickboxing, yoga and Pilates coaching', provider: { '@id': SITE + '/fitness#coach' }, areaServed: 'Orange County and the Inland Empire, California',
-        hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Fitness goals', itemListElement: GOALS.map(([, n]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: n } })) } }),
+      ld('ProfilePage', { mainEntity: COACH }),
+      ld('Service', { name: 'Personal training packs', serviceType: 'Personal training', provider: { '@id': COACH['@id'] }, areaServed: 'Orange County, California',
+        hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Training packs', itemListElement: ['The 12-pack', 'The 2-pack'].map((n) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: n } })) } }),
     ],
   },
+  'fit-pt': fitPage('personal-training', 'Personal training', 'Personal Training for Muscle Building and Fat Loss in Orange County · NJS Fitness',
+    'One on one personal training for muscle building and fat loss in Brea and Rancho Santa Margarita, with a three-time SHRED winner. Twice a week for six weeks.', 'Personal training'),
+  'fit-clubs': fitPage('clubs-and-maces', 'Clubs and maces', 'Steel Club and Steel Mace Training in Orange County · NJS Fitness',
+    'Learn the shield cast, the mill, the reverse mill and the mace 360 with coach Nathan J. Song. Steel clubs and maces for strong, durable shoulders and grip, in Orange County.', 'Steel club and steel mace training'),
+  'fit-striking': fitPage('striking', 'Kickboxing and boxing', 'Private Kickboxing and Boxing Coach in Orange County · NJS Fitness',
+    'Private kickboxing and boxing sessions on pads, mitts and Thai pads with Nathan J. Song in Brea and Rancho Santa Margarita. Technique first, then conditioning.', 'Private kickboxing and boxing'),
+  'fit-yoga': fitPage('yoga-and-pilates', 'Yoga and Pilates', 'Private Yoga and Reformer Pilates in Orange County · NJS Fitness',
+    'Private yoga with 400+ hours of training behind it, and reformer Pilates sessions while Nathan J. Song completes his certification. Orange County, at home or online.', 'Private yoga and reformer Pilates'),
+  'fit-coach': {
+    ...fitPage('coach', 'About Nathan', 'About Nathan J. Song, Personal Trainer in Orange County · NJS Fitness',
+      'Nathan J. Song is a personal trainer in Orange County: three-time SHRED winner, steel clubs and maces coach, kickboxing and yoga. Classes in Brea and Rancho Santa Margarita.', null),
+  },
+  'fit-book': {
+    ...fitPage('book', 'Book a time', 'Book a Personal Training Session · NJS Fitness',
+      'Pick a 12-pack or a 2-pack and an open Thursday hour in Brea, or request a weekday in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
+  },
 };
+PAGES['fit-coach'].jsonld = [ld('ProfilePage', { mainEntity: COACH }), crumbs('coach', 'About Nathan')];
+PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
 for (const [id, p] of Object.entries(PAGES)) p.id = id;
 
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -173,7 +209,8 @@ export function renderPage(id) {
   const mode = { brand: fit ? 'NJS Fitness' : 'NJS Studio', mode: fit ? 'fitness' : 'business',
     biz_href: fit ? '/' : page.path, fit_href: '/fitness',
     biz_cur: fit ? '' : ' aria-current="true"', fit_cur: fit ? ' aria-current="true"' : '' };
-  const vars = { ...page, ...cur, ...mode, jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
+  const extra = { extra_css: fit ? '<link rel="stylesheet" href="/assets/studio/fitness.css">' : '' };
+  const vars = { ...page, ...cur, ...mode, ...extra, jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
   let html = expand(read('pages/' + id), ['pages/' + id]);
   html = html.replace(/\{\{([a-z_]+)\}\}/g, (_, k) => {
     if (!(k in vars)) throw new Error(id + ': no value for {{' + k + '}}');
@@ -186,7 +223,7 @@ export function renderPage(id) {
     html = html.replace(re, '<h1 id="' + page.h1 + '">$1</h1>');
   }
   // An empty {{jsonld}} line leaves no blank line behind.
-  return html.replace(/\n\n<\/head>/, '\n</head>') + '\n';
+  return html.replace(/\n\n<\/head>/, '\n</head>').replace(/\n\n<script type="module"/, '\n<script type="module"') + '\n';
 }
 
 export function buildAll() {

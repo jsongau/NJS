@@ -5,6 +5,12 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-09 · **Fitness is coral on warm paper, never yellow.** Coral `#FF8A6B` is a fill (buttons, highlight
+  marker, badges) with ink text on it (8.0:1). Text accents are `#A63A1E` (6.02:1 on `#FAF6F2`). Coral never
+  carries text on paper (2.15:1).
+- 2026-11-09 · **Video embeds load on tap.** A fixed 16:9 frame with a thumbnail button; the iframe
+  (youtube-nocookie) replaces the button only when the visitor asks, so no layout shift and no player on load.
+
 - 2026-11-03 · **Expanding cards open inward.** "Show more" on a card is a drawer that slides up
   inside the card's own frame (the plan cards), never a section that grows and pushes the page.
   Measure with `offsetTop`/`offsetHeight`, not `getBoundingClientRect`, when a hover lift

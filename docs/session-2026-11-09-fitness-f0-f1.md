@@ -33,3 +33,28 @@
 2. Send one real request from the live `/fitness` form; confirm the row, `meta`, both emails, and the events.
 3. Jay: set `REPLY_PROMISE` if he wants a reply time in the confirmation email.
 4. F2: the seven-page tree.
+
+## Later the same day: the v3 rebuild (wave F2, pages)
+- Jay: "I don't like yellow" -> soft coral `#FF8A6B` as a fill only, accent text `#A63A1E`, warm paper `#FAF6F2`.
+- Main sellers: the 12-pack (2 sessions a week for 6 weeks, the habit pitch) and the 2-pack. Prices are not
+  on the site; the packs say "Confirmed by email" until checkout ships.
+- Seven pages under `/fitness`, each from `partials/studio/pages/fit-*.html`, styled by `assets/studio/fitness.css`
+  (`nf-` classes, loaded only on fitness pages through `{{extra_css}}`).
+- Thursday at Brea: classes 6 AM and 6 PM, booked 7, 10, 1 and 5 (from Jay), every other hour 6 AM to 7 PM open.
+  Hours live in `assets/studio/fitness.js` until live availability ships.
+- Clubs and maces page: movement definitions and six YouTube demos (loaded only on tap, youtube-nocookie).
+  Research: grip and short-term shoulder mobility have small studies behind them; tendon and ligament
+  "bulletproofing" has none, so the page frames it as Jay's own approach, not a proven effect.
+- Reformer Pilates is bookable and always labeled "in certification".
+- `lead-intake` (not yet deployed) accepts `pack`, `slot`, `first`, the new disciplines and `in-home`.
+  **Deploy the function before the pages**: the live v1 rejects `in-home` with `invalid_location`.
+
+## Traps
+- `.nf-pack p` outranked `.nf-n` and shrank the big pack numbers; the rule is now `.nf-pack .nf-n`.
+- `.nf-pack` set a white background after `.nf-dark`; the dark pack needs `.nf-pack.nf-dark`.
+
+## Open
+- SHRED: confirm it is UFC GYM's SHRED challenge and which years, before the name or years go on the page.
+- Gym names stay off until each manager OKs in writing; the calendar reads "Brea · North OC".
+- Where reformer sessions happen (which gym has reformers).
+- Prices and Stripe for checkout (wave F3), then live availability (wave F4).

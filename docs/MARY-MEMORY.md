@@ -5,6 +5,17 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-09 · **Headlines break between phrases, never inside one, and never strand a word.** (Jay, after "Pick
+  a time. Pick a pack. Start / training." on a big phone.) Enforced by code, not by remembering:
+  - `tools/build-pages.mjs` wraps every phrase of a multi-phrase h1–h3 in `<span class="ph">` (inline-block), so
+    the browser breaks between "Pick a pack." and "Start training.", not inside them. Plain `<span>` lines inside a
+    heading get the same treatment. `studio.css` adds `text-wrap: balance` on h1–h3 and `pretty` inside `.ph`.
+  - Hand-built previews do the same by hand: each phrase in `<span class="ph">` (or `.nw` if it surely fits).
+  - Size big headlines to their column: from 390px up, every phrase of an h1/h2 fits on one line. If one doesn't,
+    shrink the font or widen the column (the section header grid is 1.2fr to 1fr); never let it wrap inside.
+  - Proof before any preview goes to Jay: `node tools/check-headlines.mjs <pages>` at 320, 360, 375, 390, 393,
+    412, 430, 768, 1024, 1280 and 1440 must say "All headlines break cleanly". Checking only 390 is how this slipped.
+  - Small card titles (h3 under 28px) may wrap onto two even lines.
 - 2026-11-09 · **Place search is one combobox: "ZIP code or city".** (Jay liked it on booking v15.) Never two
   fields (ZIP plus a city dropdown). How it works:
   - One text input with `role="combobox"`, `aria-controls` the list, `aria-expanded`, `aria-autocomplete="list"`,

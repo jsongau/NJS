@@ -45,11 +45,14 @@ node tools/build-studio-catalog.mjs --check
 node --test tests/studio/*.test.mjs
 node tools/build-preview.mjs /tmp/njs-preview.html
 python3 -m http.server 8765
+node tools/check-headlines.mjs http://localhost:8765/ http://localhost:8765/fitness/
 ```
 
-Rebuild pages, check none are stale, check the catalog, run the tests (expect 40 pass, 8 skipped,
-0 fail), build a one-file preview, serve locally at http://localhost:8765. Run the tests before
-every commit. The copy-lint test fails on any `$` followed by a digit: no prices on the site.
+Rebuild pages, check none are stale, check the catalog, run the tests (expect 44 pass, 8 skipped,
+0 fail), build a one-file preview, serve locally at http://localhost:8765, then audit headline line
+breaks (needs the local server and Playwright; pass every page you touched, and any preview file).
+Run the tests before every commit, and the headline audit before any preview goes to Jay. The
+copy-lint test fails on any `$` followed by a digit: no prices on the site.
 
 ## Backend (Supabase project `cedunmyttprzgslthuyk`)
 

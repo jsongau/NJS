@@ -265,6 +265,64 @@ function expand(text, seen = []) {
   }).join('\n');
 }
 
+// Mary's headline rule, enforced here so no page can forget it: a heading with more than one phrase
+// ("Pick a pack. Book your first time.") gets each phrase in <span class="ph">, an inline-block, so the
+// browser breaks lines between phrases, never inside one. Phrases end at . , : ; ? ! — · or a <br>.
+// One-phrase headings are left alone; `text-wrap: balance` in studio.css keeps them from orphaning.
+const VOID = /^<(br|img|wbr|input|hr)\b/i;
+const BOUND = /([.,:;?!—·])(\s+)/;
+export function phraseWrap(inner) {
+  if (/class="[^"]*\bph\b/.test(inner) || /<(div|p|ul|ol|li|section|figure|svg)\b/i.test(inner)) return inner;
+  const parts = inner.split(/(<[^>]+>)/).filter((x) => x !== '');
+  const pieces = []; const seps = []; let cur = '';
+  const cut = (sep) => { pieces.push(cur); seps.push(sep); cur = ''; };
+  for (let i = 0; i < parts.length; i++) {
+    const t = parts[i];
+    if (t.startsWith('<')) {
+      if (/^<br\b/i.test(t)) { cut(t); continue; }
+      if (VOID.test(t) || t.startsWith('</')) { cur += t; continue; }
+      // An inline element is one unit; a plain <span> (a stacked line) gets its own phrase wrap.
+      const name = t.match(/^<([a-z0-9]+)/i)[1].toLowerCase();
+      let depth = 1, j = i + 1, body = '';
+      for (; j < parts.length && depth; j++) {
+        const u = parts[j];
+        if (u.startsWith('<') && !VOID.test(u) && new RegExp('^</?' + name + '\\b', 'i').test(u)) depth += u.startsWith('</') ? -1 : 1;
+        if (depth) body += u;
+      }
+      cur += t + (t === '<span>' ? phraseWrap(body) : body) + '</' + name + '>';
+      i = j - 1;
+      continue;
+    }
+    let rest = t;
+    for (let m; (m = rest.match(BOUND));) {
+      const end = m.index + m[1].length;
+      const after = rest.slice(end + m[2].length);
+      cur += rest.slice(0, end);
+      if (after === '' && i === parts.length - 1) { rest = ''; break; }
+      cut(' ');
+      rest = after;
+    }
+    cur += rest;
+  }
+  pieces.push(cur);
+  const real = pieces.filter((p) => p.trim());
+  const join = (wrap) => pieces.map((p, k) => (p.trim() ? (wrap ? '<span class="ph">' + p.trim() + '</span>' : p) : '') + (k < seps.length ? seps[k] : '')).join('').trim();
+  return real.length < 2 ? join(false) : join(true);
+}
+// Widow control: the last two words of each phrase (4+ words) share a no-break space.
+function widow(seg) {
+  const parts = seg.split(/(<[^>]+>)/);
+  if (parts.filter((t) => !t.startsWith('<')).join('').trim().split(/\s+/).length < 4) return seg;
+  for (let i = parts.length - 1; i >= 0; i--) {
+    if (parts[i].startsWith('<')) continue;
+    const t = parts[i].replace(/\s+$/, ''); const k = t.lastIndexOf(' ');
+    if (k > -1) { parts[i] = t.slice(0, k) + '\u00a0' + t.slice(k + 1) + parts[i].slice(t.length); return parts.join(''); }
+  }
+  return seg;
+}
+const widows = (inner) => (/class="ph"/.test(inner) ? inner.replace(/(<span class="ph">)([\s\S]*?)(<\/span>)(?=\s|<br|$)/g, (_, a, b, c) => a + widow(b) + c) : widow(inner));
+const phraseHeadings = (html) => html.replace(/(<h([1-3])\b[^>]*>)([\s\S]*?)(<\/h\2>)/g, (_, open, _l, inner, close) => open + widows(phraseWrap(inner)) + close);
+
 export function renderPage(id) {
   const page = PAGES[id];
   const cur = Object.fromEntries(['plans', 'build', 'work', 'care', 'crew'].map((t) => ['cur_' + t, page.nav === t ? ' aria-current="page"' : '']));
@@ -285,6 +343,7 @@ export function renderPage(id) {
     if (!re.test(html)) throw new Error(id + ': no h2#' + page.h1 + ' to promote');
     html = html.replace(re, '<h1 id="' + page.h1 + '">$1</h1>');
   }
+  html = phraseHeadings(html);
   // An empty {{jsonld}} line leaves no blank line behind.
   return html.replace(/\n\n<\/head>/, '\n</head>').replace(/\n\n<script type="module"/, '\n<script type="module"') + '\n';
 }

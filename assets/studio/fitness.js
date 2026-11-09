@@ -12,10 +12,42 @@ const ERR = {
   net: 'No connection. Check your signal and try again.',
 };
 
+// Hero "Your first session" card: discipline tabs (fixed-height panels, no layout shift),
+// a region choice, and a CTA that carries both into the request form below.
+function mountFirst(form) {
+  const card = $('.fx-first');
+  if (!card) return;
+  const tabs = $$('[role="tab"]', card);
+  const show = (t, focus) => {
+    tabs.forEach((x) => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on));
+      x.tabIndex = on ? 0 : -1;
+      $('#' + x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t));
+    t.addEventListener('keydown', (e) => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (d) { e.preventDefault(); show(tabs[(i + d + tabs.length) % tabs.length], true); }
+    });
+  });
+  $('.fx-first-go', card).addEventListener('click', () => {
+    const t = tabs.find((x) => x.getAttribute('aria-selected') === 'true');
+    const r = $('input[name="fx-region"]:checked', card);
+    if (r && form.elements.location) form.elements.location.value = r.value;
+    if (t && form.elements.discipline) form.elements.discipline.value = t.dataset.disc;
+    track('form_open', { detail: 'first_session:' + (t ? t.dataset.disc : '') });
+  });
+}
+
 export function mountFitness() {
   const grid = $('.fx-goal-grid');
   const form = $('#fx-form');
   if (!grid || !form) return;
+  mountFirst(form);
   const goals = $$('.fx-goal', grid).map((b) => ({ id: b.dataset.goal, name: $('b', b).textContent, how: $('.fx-how', b).textContent }));
   const sel = $('#fx-goal');
   sel.insertAdjacentHTML('beforeend', goals.map((g) => '<option value="' + g.id + '">' + g.name + '</option>').join('') + '<option value="other">Something else</option>');
@@ -43,7 +75,7 @@ export function mountFitness() {
     const body = {
       door: 'train', name: d.name.trim(), email: d.email.trim(), phone: (d.phone || '').trim() || null,
       location: d.location || null,
-      message: ['Goal: ' + (g ? g.name : d.goal === 'other' ? 'Something else' : 'Not picked'), (d.note || '').trim()].filter(Boolean).join('\n'),
+      message: ['Goal: ' + (g ? g.name : d.goal === 'other' ? 'Something else' : 'Not picked'), d.discipline ? 'Discipline: ' + d.discipline : '', (d.note || '').trim()].filter(Boolean).join('\n'),
       page: location.pathname, referrer: document.referrer || null,
       consent_marketing: d.consent_marketing === 'on', company_website: d.company_website || '',
     };

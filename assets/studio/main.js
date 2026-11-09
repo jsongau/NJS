@@ -103,21 +103,13 @@ function subNav() {
   mark();
 }
 
-// Business | Fitness switch: a full-screen color wipe covers the page, the next page loads
-// under it and the wipe slides away. Without JavaScript it is a plain link.
-const WIPE = 'njs-wipe';
+// Business | Fitness switch: a plain link to the other side, counted on the way out.
+// The full-screen color wipe was removed 2026-11-09 (Jay: "get rid of that fancy animation").
 function modeSwitch() {
-  try { if (sessionStorage.getItem(WIPE)) { sessionStorage.removeItem(WIPE); document.documentElement.classList.add('wipe-in'); setTimeout(() => document.documentElement.classList.remove('wipe-in'), 900); } } catch (_) { /* private mode */ }
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[data-mode-link]');
-    if (!a || a.getAttribute('aria-current') || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    if (!a || a.getAttribute('aria-current')) return;
     track('mode_switch', { detail: a.dataset.modeLink });
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    e.preventDefault();
-    document.documentElement.dataset.wipeTo = a.dataset.modeLink;
-    document.documentElement.classList.add('wipe-out');
-    try { sessionStorage.setItem(WIPE, '1'); } catch (_) { /* private mode */ }
-    setTimeout(() => { location.href = a.href; }, 460);
   });
 }
 

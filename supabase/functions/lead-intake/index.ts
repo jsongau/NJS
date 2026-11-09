@@ -25,6 +25,7 @@ const MAX_PER_10_MIN = 5;
 // Every key and value in meta is allow-listed: no free text, no personal data.
 const DISCIPLINES = ["personal-training", "clubs-and-maces", "striking", "kickboxing", "yoga", "reformer-pilates"];
 const PACKS = ["2-pack", "12-pack"];
+const FOCUS = ["muscle", "fat-loss", "shoulders", "boxing", "kickboxing", "muay-thai", "conditioning", "mobility", "pilates"];
 const TIMES = ["weekday-mornings", "weekday-midday", "weekday-evenings", "weekends"];
 const ENTRIES = ["hero_card", "goal_grid", "form", "calendar", "pack"];
 const LABEL: Record<string, string> = {
@@ -70,6 +71,10 @@ export function cleanMeta(raw: unknown): Record<string, unknown> {
   }
   if (typeof m.entry === "string" && ENTRIES.includes(m.entry)) out.entry = m.entry;
   if (typeof m.pack === "string" && PACKS.includes(m.pack)) out.pack = m.pack;
+  if (Array.isArray(m.focus)) {
+    const f = [...new Set(m.focus.filter((x) => typeof x === "string" && FOCUS.includes(x)))].slice(0, 2);
+    if (f.length) out.focus = f;
+  }
   // A Thursday hour picked in the calendar, as local Pacific "YYYY-MM-DDTHH".
   if (typeof m.slot === "string" && /^\d{4}-\d{2}-\d{2}T(0[6-9]|1\d)$/.test(m.slot)) out.slot = m.slot;
   if (m.first === true) out.first = true;
@@ -101,6 +106,7 @@ async function send(to: string, subject: string, text: string, replyTo?: string)
 function notifyText(row: Record<string, unknown>, meta: Record<string, unknown>) {
   const top = [
     meta.pack ? `Pack: ${meta.pack}` : null,
+    meta.focus ? `Focus: ${(meta.focus as string[]).join(", ")}` : null,
     meta.slot ? `Requested time: ${meta.slot}:00 Pacific` : null,
     meta.first ? "First session with Nathan" : null,
     meta.discipline ? `Discipline: ${LABEL[meta.discipline as string]}` : null,

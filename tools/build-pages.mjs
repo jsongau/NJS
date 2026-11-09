@@ -18,6 +18,8 @@ export const SITE = 'https://nathanjsong.com';
 
 const FAQ = JSON.parse(readFileSync(join(P, 'faq.json'), 'utf8'));
 const GOALS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/goals.json'), 'utf8'));
+const FOCUS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/focus.json'), 'utf8'));
+const TECH = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/techniques.json'), 'utf8'));
 const PROJECTS = JSON.parse(readFileSync(join(ROOT, 'assets/studio/data/projects.json'), 'utf8')).projects;
 
 const ORG = {
@@ -33,14 +35,14 @@ const ld = (type, extra) => ({ '@context': 'https://schema.org', '@type': type, 
 const COACH = {
   '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', alternateName: 'Jiaming Song', jobTitle: 'Personal trainer',
   url: SITE + '/fitness/coach',
-  knowsAbout: ['Personal training', 'Muscle building', 'Fat loss', 'Steel club training', 'Steel mace training', 'Kickboxing', 'Boxing', 'Yoga', 'Reformer Pilates'],
+  knowsAbout: ['Personal training', 'Muscle building', 'Fat loss', 'Steel club training', 'Steel mace training', 'Boxing', 'Kickboxing', 'Muay Thai', 'Yoga', 'Reformer Pilates'],
   areaServed: ['Brea, CA', 'Rancho Santa Margarita, CA', 'Orange County, California'],
 };
 const crumbs = (slug, name) => ld('BreadcrumbList', { itemListElement: [
   { '@type': 'ListItem', position: 1, name: 'Fitness', item: SITE + '/fitness' },
   { '@type': 'ListItem', position: 2, name, item: SITE + '/fitness/' + slug },
 ] });
-function fitPage(slug, name, title, description, service) {
+function fitPage(slug, name, title, description, service, parent) {
   return {
     out: 'fitness/' + slug + '/index.html', path: '/fitness/' + slug, nav: null, mode: 'fitness',
     title, description, og_title: title.replace(/ · NJS Fitness$/, ''), og_description: description,
@@ -125,8 +127,14 @@ export const PAGES = {
     'One on one personal training for muscle building and fat loss in Brea and Rancho Santa Margarita, with a three-time SHRED winner. Twice a week for six weeks.', 'Personal training'),
   'fit-clubs': fitPage('clubs-and-maces', 'Clubs and maces', 'Steel Club and Steel Mace Training in Orange County · NJS Fitness',
     'Learn the shield cast, the mill, the reverse mill and the mace 360 with coach Nathan J. Song. Steel clubs and maces for strong, durable shoulders and grip, in Orange County.', 'Steel club and steel mace training'),
-  'fit-striking': fitPage('striking', 'Kickboxing and boxing', 'Private Kickboxing and Boxing Coach in Orange County · NJS Fitness',
-    'Private kickboxing and boxing sessions on pads, mitts and Thai pads with Nathan J. Song in Brea and Rancho Santa Margarita. Technique first, then conditioning.', 'Private kickboxing and boxing'),
+  'fit-striking': fitPage('striking', 'Striking', 'Boxing, Kickboxing and Muay Thai Coach in Orange County · NJS Fitness',
+    'Private boxing, kickboxing and Muay Thai with Nathan J. Song in Brea and Rancho Santa Margarita: focus mitts, speed paddles, Thai pads, setups and stance work.', 'Private boxing, kickboxing and Muay Thai'),
+  'fit-boxing': fitPage('boxing', 'Boxing', 'Private Boxing Coach in Orange County · Focus Mitts and Speed Paddles · NJS Fitness',
+    'One on one boxing with Nathan J. Song on focus mitts and speed paddles: stance, footwork, setups, combinations and defense. Brea and Rancho Santa Margarita.', 'Private boxing lessons'),
+  'fit-kickboxing': fitPage('kickboxing', 'Kickboxing', 'Private Kickboxing Coach in Orange County · Thai Pads, Teeps and Setups · NJS Fitness',
+    'One on one kickboxing with Nathan J. Song on Thai pads: the front teep, the round kick, switch kicks and the punches that set them up. Orange County.', 'Private kickboxing lessons'),
+  'fit-muaythai': fitPage('muay-thai', 'Muay Thai', 'Private Muay Thai Coach in Orange County · NJS Fitness',
+    'One on one Muay Thai with Nathan J. Song: teeps, round kicks, knees, elbows and the clinch on Thai pads. Brea and Rancho Santa Margarita, Orange County.', 'Private Muay Thai lessons'),
   'fit-yoga': fitPage('yoga-and-pilates', 'Yoga and Pilates', 'Private Yoga and Reformer Pilates in Orange County · NJS Fitness',
     'Private yoga with 400+ hours of training behind it, and reformer Pilates sessions while Nathan J. Song completes his certification. Orange County, at home or online.', 'Private yoga and reformer Pilates'),
   'fit-coach': {
@@ -177,6 +185,58 @@ function renderGoals() {
     '  </div>', '</section>'].join('\n');
 }
 
+
+// Fitness focus areas: one list (partials/fitness/focus.json) drives the home picker and the booking form.
+// Icons by Agent Goldsmith on a 64 grid, 2.5px strokes, coral accent shapes (.a). Each icon has one moving
+// part; its transform-origin is the point it is attached at (the club at the shoulder, the flame at its base).
+const FI = (b) => '<svg class="nf-fi" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + b + '</svg>';
+const FOCUS_ICONS = {
+  muscle: '<path d="M8 56h48" opacity=".35"/><g class="nf-a-lift"><rect class="a" x="10" y="22" width="8" height="20" rx="2" stroke="none"/><rect x="10" y="22" width="8" height="20" rx="2"/><rect class="a" x="46" y="22" width="8" height="20" rx="2" stroke="none"/><rect x="46" y="22" width="8" height="20" rx="2"/><path d="M18 32h28M5 27v10M59 27v10"/></g><path class="nf-a-spark" d="M32 8v6M24 11l3 4M40 11l-3 4"/>',
+  'fat-loss': '<g class="nf-a-flick"><path class="a" d="M32 56c-9 0-14-6-14-13 0-8 7-12 8-20 5 4 6 8 6 12 2-2 3-5 3-8 6 5 11 10 11 17 0 7-5 12-14 12z" stroke="none" opacity=".9"/><path d="M32 58c-10 0-16-7-16-15 0-10 9-14 9-24 6 4 8 9 8 13 2-2 3-5 3-9 7 6 12 12 12 20 0 8-6 15-16 15z"/></g><path d="M26 50c0-4 3-6 6-9 3 3 6 5 6 9" opacity=".6"/>',
+  shoulders: '<circle cx="32" cy="44" r="5"/><path d="M14 58c4-8 10-12 18-12s14 4 18 12" opacity=".5"/><path class="nf-a-trail" d="M14 22a20 20 0 0 1 36 0" stroke-dasharray="3 5" opacity=".5"/><g class="nf-a-swing"><path d="M32 44V16" stroke-width="3"/><circle class="a" cx="32" cy="11" r="6" stroke="none"/><circle cx="32" cy="11" r="6"/></g>',
+  boxing: '<g class="nf-a-punch"><path class="a" d="M22 22h16a10 10 0 0 1 10 10v2a10 10 0 0 1-10 10H26a6 6 0 0 1-6-6V24z" stroke="none"/><path d="M20 20h18a12 12 0 0 1 12 12v2a12 12 0 0 1-12 12H26a8 8 0 0 1-8-8V22a2 2 0 0 1 2-2z"/><path d="M18 46v8h14v-8M32 20v8"/></g><g class="nf-a-fade"><path d="M4 26h8M2 34h10M4 42h8"/></g>',
+  kickboxing: '<rect class="nf-a-hit a" x="44" y="14" width="12" height="36" rx="5" stroke="none"/><rect class="nf-a-hit" x="44" y="14" width="12" height="36" rx="5"/><path class="nf-a-draw" d="M8 54C14 40 24 32 40 30" stroke-dasharray="44" /><path d="M8 54l-2 4M8 54l5 1"/>',
+  'muay-thai': '<rect x="48" y="12" width="10" height="40" rx="4"/><g class="nf-a-teep"><path d="M6 36h22"/><path class="a" d="M28 28h10a6 6 0 0 1 6 6v4a6 6 0 0 1-6 6H28z" stroke="none"/><path d="M28 28h10a6 6 0 0 1 6 6v4a6 6 0 0 1-6 6H28"/></g><path d="M6 46h14" opacity=".4"/>',
+  conditioning: '<path class="a" d="M32 54S10 42 10 26a11 11 0 0 1 22-4 11 11 0 0 1 22 4c0 16-22 28-22 28z" stroke="none" opacity=".25"/><path d="M32 54S10 42 10 26a11 11 0 0 1 22-4 11 11 0 0 1 22 4c0 16-22 28-22 28z"/><path class="nf-a-pulse" d="M4 34h14l4-8 6 16 5-12 3 4h24" stroke-dasharray="80"/>',
+  mobility: '<circle class="nf-a-breathe a" cx="32" cy="32" r="22" stroke="none" opacity=".22"/><circle cx="32" cy="14" r="5"/><path d="M32 19v18M32 37l-10 16M32 37l10 16M16 24l16 4 16-4"/>',
+  pilates: '<path d="M6 46h52M10 46v8M54 46v8"/><path d="M12 40h40" opacity=".4"/><g class="nf-a-slide"><rect class="a" x="18" y="34" width="18" height="8" rx="2" stroke="none"/><rect x="18" y="34" width="18" height="8" rx="2"/></g><path d="M10 38c2-2 4 2 6 0" /><path d="M50 30v10M46 30h8"/>',
+};
+
+// Technique icons for the striking pages (same grid and stroke as the focus icons).
+const TECH_ICONS = {
+  mitt: '<g class="nf-a-hit"><ellipse class="a" cx="40" cy="30" rx="14" ry="17" stroke="none" opacity=".9"/><ellipse cx="40" cy="30" rx="14" ry="17"/><circle cx="40" cy="30" r="6"/></g><path d="M40 47v10"/><g class="nf-a-punch"><path d="M6 30h12"/><circle cx="21" cy="30" r="4"/></g>',
+  paddle: '<g class="nf-a-hit"><rect class="a" x="34" y="8" width="12" height="30" rx="6" stroke="none"/><rect x="34" y="8" width="12" height="30" rx="6"/><path d="M40 38v18"/></g><g class="nf-a-fade"><path d="M10 20h12M8 28h14M10 36h12"/></g>',
+  thaipad: '<g class="nf-a-hit"><rect class="a" x="14" y="12" width="36" height="16" rx="6" stroke="none"/><rect x="14" y="12" width="36" height="16" rx="6"/><rect x="14" y="32" width="36" height="16" rx="6"/></g><path d="M20 52h24M24 48v4M40 48v4"/>',
+  setup: '<circle class="nf-a-seq1 a" cx="14" cy="32" r="7" stroke="none"/><circle cx="14" cy="32" r="7"/><circle class="nf-a-seq2 a" cx="32" cy="32" r="7" stroke="none"/><circle cx="32" cy="32" r="7"/><circle class="nf-a-seq3 a" cx="50" cy="32" r="7" stroke="none"/><circle cx="50" cy="32" r="7"/><path d="M21 32h4M39 32h4"/>',
+  step: '<g class="nf-a-stepl"><path class="a" d="M18 40c-4 0-6-4-6-9s2-9 6-9 6 4 6 9-2 9-6 9z" stroke="none"/><path d="M18 40c-4 0-6-4-6-9s2-9 6-9 6 4 6 9-2 9-6 9z"/></g><g class="nf-a-stepr"><path d="M44 46c-4 0-6-4-6-9s2-9 6-9 6 4 6 9-2 9-6 9z"/></g><path d="M8 56h48" opacity=".35"/>',
+  slip: '<path d="M8 56c6-10 14-14 24-14s18 4 24 14" opacity=".5"/><g class="nf-a-slipx"><circle class="a" cx="32" cy="24" r="10" stroke="none"/><circle cx="32" cy="24" r="10"/></g><path class="nf-a-fade" d="M50 18l8-4M50 26h9"/>',
+  conditioning: FOCUS_ICONS.conditioning,
+  teep: FOCUS_ICONS['muay-thai'],
+  roundkick: FOCUS_ICONS.kickboxing,
+  switch: '<path d="M14 22h30l-6-6M50 42H20l6 6"/><circle class="nf-a-seq1 a" cx="50" cy="22" r="5" stroke="none"/><circle class="nf-a-seq2 a" cx="14" cy="42" r="5" stroke="none"/>',
+  knee: '<path d="M10 56h44" opacity=".35"/><g class="nf-a-knee"><path d="M22 52l10-16 14 6"/><circle class="a" cx="32" cy="36" r="6" stroke="none"/><circle cx="32" cy="36" r="6"/></g><rect x="48" y="10" width="8" height="30" rx="3"/>',
+  elbow: '<path d="M12 50l14-14 16 6"/><circle class="a" cx="26" cy="36" r="5" stroke="none"/><path class="nf-a-draw" d="M20 22a22 22 0 0 1 32 10" stroke-dasharray="44"/>',
+  clinch: '<circle class="a nf-a-breathe" cx="32" cy="30" r="10" stroke="none" opacity=".5"/><circle cx="32" cy="30" r="10"/><path d="M12 50c2-14 8-22 20-22s18 8 20 22"/><path d="M18 20c4-6 9-8 14-8s10 2 14 8"/>',
+};
+function renderTiles(key) {
+  const list = TECH[key];
+  if (!list) throw new Error('no techniques for ' + key);
+  return '<div class="nf-tiles">' + list.map(([icon, title, text]) => '<article class="nf-tile"><span class="nf-fic">' + FI(TECH_ICONS[icon]) + '</span><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p></article>').join('') + '</div>';
+}
+
+function renderFocus() {
+  const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '">More on ' + esc(name.toLowerCase()) + '</a></li>';
+  return ['<section class="nf-sec" id="focus" aria-labelledby="focus-h">', '  <div class="wrap">',
+    '    <div class="nf-h"><div><p class="nf-k">Your focus</p><h2 id="focus-h"><span>Your 12 sessions,</span><span>your choice.</span></h2></div><p>Pick one or two things you want from the next six weeks. I build every session around them. Change your mind later and we change the plan.</p></div>',
+    '    <ul class="nf-focus" data-nf-focus>', ...FOCUS.map(card), '    </ul>',
+    '    <div class="nf-fbar" data-nf-fbar><p data-nf-fsum><b>Pick up to two</b>Tap a card to add it to your plan.</p><a class="nf-btn nf-ink" href="/fitness/book?pack=12" data-nf-fgo>Build my 12-pack</a></div>',
+    '  </div>', '</section>'].join('\n');
+}
+function renderFocusForm() {
+  return '      <fieldset class="wide"><legend>Your focus <span class="nf-fine" style="font-weight:400">(pick one or two)</span></legend><div class="nf-choice nf-choice-3">' +
+    FOCUS.map(([id, name]) => '<label><input type="checkbox" name="focus" value="' + id + '"><span>' + esc(name) + '</span></label>').join('') + '</div></fieldset>';
+}
+
 export function sitemap() {
   const urls = Object.values(PAGES).map((p) => p.path).concat('/resume');
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
@@ -197,6 +257,9 @@ function expand(text, seen = []) {
     if (!m) return line;
     if (m[1] === 'faq') return renderFaq();
     if (m[1] === 'fit-goals') return renderGoals();
+    if (m[1] === 'nf-focus') return renderFocus();
+    if (m[1] === 'nf-focus-form') return renderFocusForm();
+    if (m[1].startsWith('nf-tiles-')) return renderTiles(m[1].slice(9));
     if (seen.includes(m[1])) throw new Error('include loop: ' + seen.concat(m[1]).join(' > '));
     return expand(read(m[1]), seen.concat(m[1]));
   }).join('\n');

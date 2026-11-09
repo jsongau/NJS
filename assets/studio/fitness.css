@@ -242,3 +242,118 @@ body[data-mode="fitness"] footer { margin-top: 0; }
   .nf-split .nf-h p { margin-top: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .nf-btn, a.nf-card, .nf-faq summary::after { transition: none; } }
+
+/* ===== Focus picker (2026-11-09): pick one or two focus areas for the 12-pack. =====
+   Cards fade up as they scroll in (stagger by --i). Each icon has one looping part that runs
+   only while its card is on screen (.in) and never under reduced motion. Selecting a card
+   changes colour and the tick only: no size change, no layout shift. */
+.nf-focus { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.nf-fc { display: grid; gap: 6px; opacity: 0; transform: translateY(18px); transition: opacity .45s var(--nf-ease) calc(var(--i) % 3 * 70ms), transform .55s var(--nf-ease) calc(var(--i) % 3 * 70ms); }
+.nf-fc.in { opacity: 1; transform: none; }
+.no-js .nf-fc, .nf-focus:not([data-ready]) .nf-fc { opacity: 1; transform: none; }
+.nf-fbtn { position: relative; display: grid; gap: 6px; align-content: start; height: 100%; min-height: 196px; padding: 16px; border-radius: var(--nf-r); border: 1.5px solid var(--line); background: var(--surface); text-align: left; font: inherit; color: var(--ink-2); cursor: pointer; transition: border-color .2s, background .2s, transform .2s var(--nf-ease); }
+.nf-fbtn:hover { border-color: var(--line-hi); }
+.nf-fbtn:active { transform: scale(.98); }
+.nf-fbtn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.nf-fbtn b { font-size: 17px; letter-spacing: -.02em; color: var(--ink); line-height: 1.2; }
+.nf-fbtn > span:not(.nf-fic) { font-size: 13px; line-height: 1.4; }
+.nf-fic { display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 4px; border-radius: 18px; background: var(--surface-2); color: var(--ink); }
+.nf-fi { width: 52px; height: 52px; overflow: visible; }
+.nf-fi .a { fill: var(--nf-coral); }
+.nf-tick { position: absolute; top: 14px; right: 14px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--line-hi); background: var(--surface); }
+.nf-fbtn[aria-pressed="true"] { border-color: var(--ink); background: #FFF4EF; }
+.nf-fbtn[aria-pressed="true"] .nf-fic { background: var(--nf-coral); }
+.nf-fbtn[aria-pressed="true"] .nf-fi .a { fill: #fff; }
+.nf-fbtn[aria-pressed="true"] .nf-tick { background: var(--ink); border-color: var(--ink); }
+.nf-fbtn[aria-pressed="true"] .nf-tick::after { content: ''; position: absolute; left: 8px; top: 4px; width: 5px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.nf-flink { font-size: 13px; font-weight: 600; color: var(--ink-2); padding: 2px 4px; }
+.nf-fbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; padding: 16px 18px; border-radius: var(--nf-r); background: var(--ink); color: #C9CCC4; min-height: 84px; }
+.nf-fbar p { flex: 1; min-width: 0; font-size: 14px; line-height: 1.35; }
+.nf-fbar p b { display: block; color: #fff; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nf-fbar .nf-btn { flex: none; background: var(--nf-coral); border-color: var(--nf-coral); color: var(--ink); min-height: 46px; padding: 0 18px; }
+
+/* Icon motion. transform-box: fill-box puts the origin on the part itself. */
+.nf-fi g, .nf-fi path, .nf-fi rect, .nf-fi circle { transform-box: fill-box; }
+.live .nf-a-lift { animation: nf-lift 1.8s var(--nf-ease) infinite; }
+.live .nf-a-spark { animation: nf-spark 1.8s ease-out infinite; }
+.live .nf-a-flick { transform-origin: 50% 100%; animation: nf-flick 1.4s ease-in-out infinite; }
+.live .nf-a-swing { transform-box: view-box; transform-origin: 32px 44px; animation: nf-swing 2.4s ease-in-out infinite; }
+.live .nf-a-trail { animation: nf-dash 2.4s linear infinite; }
+.live .nf-a-punch { animation: nf-punch 1.6s cubic-bezier(.7, 0, .2, 1) infinite; }
+.live .nf-a-fade { animation: nf-fade 1.6s ease-out infinite; }
+.live .nf-a-draw { animation: nf-draw 1.8s ease-in-out infinite; }
+.live .nf-a-hit { transform-origin: 50% 50%; animation: nf-hit 1.8s ease-out infinite; }
+.live .nf-a-teep { animation: nf-teep 1.8s cubic-bezier(.7, 0, .2, 1) infinite; }
+.live .nf-a-pulse { animation: nf-pulse 1.6s linear infinite; }
+.live .nf-a-breathe { transform-origin: 50% 50%; animation: nf-breathe 3.6s ease-in-out infinite; }
+.live .nf-a-slide { animation: nf-slide 2.6s ease-in-out infinite; }
+@keyframes nf-lift { 0%, 100% { transform: translateY(6px); } 45%, 60% { transform: translateY(-6px); } }
+@keyframes nf-spark { 0%, 40% { opacity: 0; } 55% { opacity: 1; } 80%, 100% { opacity: 0; } }
+@keyframes nf-flick { 0%, 100% { transform: scale(1, 1); } 30% { transform: scale(.94, 1.06); } 60% { transform: scale(1.04, .96); } }
+@keyframes nf-swing { 0%, 100% { transform: rotate(-38deg); } 50% { transform: rotate(38deg); } }
+@keyframes nf-dash { to { stroke-dashoffset: -32; } }
+@keyframes nf-punch { 0%, 30%, 100% { transform: translateX(-4px); } 45% { transform: translateX(7px); } 60% { transform: translateX(-4px); } }
+@keyframes nf-fade { 0%, 35% { opacity: 0; } 45% { opacity: 1; } 70%, 100% { opacity: 0; } }
+@keyframes nf-draw { 0% { stroke-dashoffset: 44; } 45%, 70% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -44; } }
+@keyframes nf-hit { 0%, 40% { transform: none; } 50% { transform: translateX(4px) rotate(4deg); } 65%, 100% { transform: none; } }
+@keyframes nf-teep { 0%, 30%, 100% { transform: translateX(-4px); } 50% { transform: translateX(6px); } 65% { transform: translateX(-4px); } }
+@keyframes nf-pulse { from { stroke-dashoffset: 80; } to { stroke-dashoffset: -80; } }
+@keyframes nf-breathe { 0%, 100% { transform: scale(.82); } 50% { transform: scale(1.05); } }
+@keyframes nf-slide { 0%, 100% { transform: translateX(-6px); } 50% { transform: translateX(10px); } }
+
+/* Stance switch: orthodox, southpaw, switch. Footprints move with transform only, in a fixed frame. */
+.nf-stance { display: grid; gap: 16px; padding: 22px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); }
+.nf-stance-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px; border-radius: 14px; background: var(--surface-2); }
+.nf-stance-tabs button { min-height: 42px; border: 0; border-radius: 10px; background: transparent; font: 600 14px/1 var(--sans); color: var(--ink-2); cursor: pointer; }
+.nf-stance-tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(18, 20, 22, .12); }
+.nf-stance-tabs button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.nf-stance-fig { display: grid; place-items: center; aspect-ratio: 16 / 10; border-radius: 18px; background: var(--bg); }
+.nf-stance-fig svg { width: min(100%, 360px); height: auto; overflow: visible; }
+.nf-stance-fig .ft { transition: transform .6s var(--nf-ease); transform-box: fill-box; transform-origin: 50% 50%; }
+.nf-stance-fig .ft-l { transform: translate(-34px, 18px) rotate(-12deg); }
+.nf-stance-fig .ft-r { transform: translate(34px, -18px) rotate(-12deg); }
+.nf-stance[data-st="southpaw"] .ft-l { transform: translate(-34px, -18px) rotate(-12deg); }
+.nf-stance[data-st="southpaw"] .ft-r { transform: translate(34px, 18px) rotate(-12deg); }
+.nf-stance[data-st="switch"] .ft-l { animation: nf-sw-l 3.2s var(--nf-ease) infinite; }
+.nf-stance[data-st="switch"] .ft-r { animation: nf-sw-r 3.2s var(--nf-ease) infinite; }
+@keyframes nf-sw-l { 0%, 40% { transform: translate(-34px, 18px) rotate(-12deg); } 50%, 90% { transform: translate(-34px, -18px) rotate(-12deg); } 100% { transform: translate(-34px, 18px) rotate(-12deg); } }
+@keyframes nf-sw-r { 0%, 40% { transform: translate(34px, -18px) rotate(-12deg); } 50%, 90% { transform: translate(34px, 18px) rotate(-12deg); } 100% { transform: translate(34px, -18px) rotate(-12deg); } }
+.nf-stance-txt { display: grid; }
+.nf-stance-txt > div { grid-area: 1 / 1; }
+.nf-stance-txt b { display: block; color: var(--ink); font-size: 18px; letter-spacing: -.02em; }
+.nf-stance-txt p { margin-top: 6px; font-size: 15px; line-height: 1.5; }
+.nf-stance-txt > [hidden] { display: block; visibility: hidden; }
+
+/* Pad and technique tiles with a small animated icon */
+.nf-tiles { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+.nf-tile { padding: 18px; border-radius: var(--nf-r); background: var(--surface); border: 1px solid var(--line); display: grid; gap: 6px; align-content: start; }
+.nf-tile .nf-fic { width: 56px; height: 56px; border-radius: 16px; }
+.nf-tile .nf-fi { width: 44px; height: 44px; }
+.nf-tile h3 { font-size: 18px; letter-spacing: -.02em; color: var(--ink); line-height: 1.2; }
+.nf-tile p { font-size: 14px; line-height: 1.45; }
+.nf-choice.nf-choice-3 { grid-template-columns: 1fr 1fr; }
+
+@media (min-width: 720px) {
+  .nf-focus { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .nf-fbtn { min-height: 210px; padding: 20px; }
+  .nf-tiles { grid-template-columns: repeat(3, 1fr); }
+  .nf-choice.nf-choice-3 { grid-template-columns: repeat(3, 1fr); }
+  .nf-stance { grid-template-columns: 1.1fr 1fr; align-items: center; padding: 28px; }
+  .nf-stance-tabs { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nf-fc { opacity: 1; transform: none; transition: none; }
+  .live [class*="nf-a-"], .nf-stance .ft { animation: none !important; transition: none; }
+}
+.live .nf-a-seq1 { animation: nf-seq 1.8s ease-in-out infinite; }
+.live .nf-a-seq2 { animation: nf-seq 1.8s ease-in-out .3s infinite; }
+.live .nf-a-seq3 { animation: nf-seq 1.8s ease-in-out .6s infinite; }
+.nf-a-seq1, .nf-a-seq2, .nf-a-seq3 { opacity: .25; }
+@keyframes nf-seq { 0%, 100% { opacity: .25; } 25%, 40% { opacity: 1; } }
+.live .nf-a-stepl { animation: nf-stepl 1.6s ease-in-out infinite; }
+.live .nf-a-stepr { animation: nf-stepl 1.6s ease-in-out .8s infinite; }
+@keyframes nf-stepl { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } 50% { transform: translateY(0); } }
+.live .nf-a-slipx { animation: nf-slipx 1.8s ease-in-out infinite; }
+@keyframes nf-slipx { 0%, 100% { transform: translateX(0); } 30%, 45% { transform: translateX(-9px) translateY(4px); } 70%, 85% { transform: translateX(9px) translateY(4px); } }
+.live .nf-a-knee { animation: nf-knee 1.6s cubic-bezier(.7, 0, .2, 1) infinite; }
+@keyframes nf-knee { 0%, 30%, 100% { transform: translate(0, 4px); } 50% { transform: translate(6px, -6px); } 65% { transform: translate(0, 4px); } }

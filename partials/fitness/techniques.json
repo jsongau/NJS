@@ -1,0 +1,34 @@
+{
+  "striking": [
+    ["mitt", "Focus mitts", "Sharp combinations called and caught in real time. Timing, accuracy and snap."],
+    ["paddle", "Speed paddles", "Quick, light targets that train your eyes and hands to react fast."],
+    ["thaipad", "Thai pads", "Full-power kicks, knees and elbows into pads built to take them."],
+    ["setup", "Setups", "The punch that opens the door for the shot you really want."],
+    ["step", "Footwork", "Angles, distance and staying balanced while you move."],
+    ["conditioning", "Rounds", "Timed rounds that build the engine striking is known for."]
+  ],
+  "boxing": [
+    ["mitt", "Focus mitts", "I call combinations and catch them. You learn to throw with snap, then with power."],
+    ["paddle", "Speed paddles", "Fast, light targets that sharpen your reaction time and hand speed."],
+    ["step", "Footwork", "Step, pivot and cut angles without giving up your base."],
+    ["setup", "Setups and combinations", "Jab to open, then the right hand or the hook you set up. One, two, three, built up."],
+    ["slip", "Defense", "Slips, rolls and blocks, so you hit without getting hit."],
+    ["conditioning", "Rounds to finish", "Timed rounds on the mitts, on the bag or shadowboxing."]
+  ],
+  "kickboxing": [
+    ["thaipad", "Thai pads", "Kicks and punches at full power, into pads made for it."],
+    ["teep", "The front teep", "A straight push kick with the ball of the foot. It keeps distance and breaks rhythm."],
+    ["roundkick", "Round kick", "Turn the hip over and swing the shin through. Power from the hips, not the leg."],
+    ["setup", "Setups", "Punches that lead into kicks: jab, cross, then the kick they never saw coming."],
+    ["switch", "Switch kick", "A quick stance switch that loads the rear leg for a faster, harder kick."],
+    ["conditioning", "Rounds", "Pad rounds that leave you sweating and smiling."]
+  ],
+  "muay-thai": [
+    ["teep", "Teep", "The Muay Thai front kick. A jab with your leg, to keep range and stop pressure."],
+    ["roundkick", "Round kick", "The shin kick Muay Thai is famous for, thrown through the target."],
+    ["knee", "Knees", "Straight knees driven up through the hips, from range and in the clinch."],
+    ["elbow", "Elbows", "Short, sharp strikes from close range. Taught on pads, with control."],
+    ["clinch", "Clinch", "Hand position, posture and balance when you're chest to chest."],
+    ["thaipad", "Thai pads", "Where all eight weapons come together: fists, elbows, knees and shins."]
+  ]
+}

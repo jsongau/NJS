@@ -1032,12 +1032,13 @@ body:not([data-page="home"]) main > section:first-child { border-top: 0; }
 .subnav a:last-child { margin-left: auto; color: var(--signal-ink); font-weight: 600; }
 .subnav a:last-child[aria-current] { background: var(--signal); color: var(--on-signal, #121416); }
 .subnav a:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
-html:has(body[data-page="home"]) { scroll-padding-top: 140px; }
+html:has(#subnav) { scroll-padding-top: 140px; }
+body[data-mode="fitness"] .subnav { background: rgba(250, 246, 242, .92); }
 @media (max-width: 859px) {
   .subnav { top: 60px; }
   .subnav a { min-height: 36px; padding: 0 12px; font-size: 13.5px; }
   .subnav a:last-child { margin-left: 0; }
-  html:has(body[data-page="home"]) { scroll-padding-top: 122px; }
+  html:has(#subnav) { scroll-padding-top: 122px; }
   [data-page="home"] .hero { padding-top: 28px; }
 }
 /* The last slot and its period stay together; the slot leaves room for the period. */

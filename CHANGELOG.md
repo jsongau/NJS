@@ -12,6 +12,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   stance switch, and a booking request carrying pack, focus and time. See `docs/session-2026-11-09-fitness-f0-f1.md`.
   Headline audit: the page builder now keeps each headline phrase together, section headers are sized to their
   column, and `tools/check-headlines.mjs` checks every heading at 11 widths (all 16 pages clean).
+  `/fitness` gets the Business sticky sub menu (focus, 12-pack, why, Thursdays, where, coach, questions, book).
 
 ## 2026-11-03
 

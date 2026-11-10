@@ -82,7 +82,7 @@ function subNav() {
     if (!t) return;
     e.preventDefault();
     // Land on the heading, not on the section's empty top padding.
-    const head = t.querySelector('.sec-h, .step-h, .kick') || t;
+    const head = t.querySelector('.sec-h, .step-h, .kick, .nf-h') || t;
     head.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   });
   const mark = () => {

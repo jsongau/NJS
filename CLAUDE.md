@@ -32,6 +32,9 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | Fitness goals (5K, fight, Pilates…) | `partials/fitness/goals.json` (`[id, name, how, tags, who]`) | rebuild pages |
 | Fitness focus cards and where each links | `partials/fitness/focus.json` (`[id, name, line, page link]`); every focus needs its own page | rebuild pages |
 | The five pillars, and each focus page's wheel, health notes (with source links), ladder levels and questions | `partials/fitness/path.json` | rebuild pages |
+| Coach's notes (sourced articles: warm-up, band workouts, AC joint) | `partials/studio/pages/fit-note-*.html`, hub `fit-notes.html`. Every health claim needs a source link that was read, and no claim that a treatment heals an injury | rebuild pages |
+| The path hub `/fitness/path` | `partials/studio/pages/fit-path.html` + `path.json` | rebuild pages |
+| Gear links (hidden while empty) | `partials/fitness/gear.json` (`[id, name, brand, why, link, [focus ids]]`); only gear Jay uses; the disclosure line renders with the row | rebuild pages |
 | A new fitness page | copy a `fit-*.html` page, add a `fitPage(...)` line to `PAGES` in `tools/build-pages.mjs`, link it from `focus.json` or the footer | rebuild pages |
 | Delivered projects, proof, logos | `assets/studio/data/projects.json`, logos in `assets/studio/brand/delivered/` | none |
 | Industries, kinds, plans, care tiers, links (booking URL, lead form) | `docs/nathan-j-song/studio-catalog.source.json` (**private, gitignored, only on Jay's Mac**) | `node tools/build-studio-catalog.mjs` |

@@ -13,6 +13,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Then the well-rounded path on all nine focus pages: a five-pillar wheel whose open points link to the
   page that fills them, a four-level ladder, three health notes linked to CDC and NIH pages, and three
   questions with FAQ schema. The home plan bar gets a small wheel that fills as you pick.
+  `/fitness/path` hub (the whole wheel and all nine ladders by pillar), a gear row that stays hidden until
+  `gear.json` has items, and coach's notes at `/fitness/notes`: a four-part warm-up, a six-move band
+  workout and a sore AC joint (standard care, what the evidence says about acupuncture, training once cleared).
 
 ## 2026-11-09
 

@@ -159,6 +159,14 @@ export const PAGES = {
   },
   'fit-path': fitPage('path', 'The path', 'A Well-Rounded Body: Strength, Engine, Mobility, Control and Skill · NJS Fitness',
     'The five parts of a capable body and the training that builds each one: strength, conditioning, mobility, core control and striking skill, with a four-level ladder for each.', null),
+  'fit-notes': fitPage('notes', "Coach's notes", "Coach's Notes: Warm-Ups, Band Workouts and Shoulder Care · NJS Fitness",
+    'Short, sourced notes from a personal trainer in Orange County: a warm-up worth ten minutes, a full band workout, and what helps a sore AC joint.', null),
+  'fit-note-warmup': fitPage('notes/warm-up', 'Warm-up', 'A Ten Minute Warm-Up That Works: Four Parts, With Sources · NJS Fitness',
+    'A four-part warm-up for lifting and striking, and what the research says about warm-ups, injuries and static stretching.', null),
+  'fit-note-bands': fitPage('notes/band-workouts', 'Band workouts', 'A Full Resistance Band Workout, and Whether Bands Build Strength · NJS Fitness',
+    'A six-move resistance band workout for home or travel, and what a review of seven studies found when bands were compared with weights.', null),
+  'fit-note-ac': fitPage('notes/ac-joint', 'AC joint', 'A Sore AC Joint: What Helps, Where Acupuncture Fits, and When to Train · NJS Fitness',
+    'What a shoulder separation is, what standard care looks like, what the evidence says about acupuncture for shoulder pain, and how to train once you are cleared.', null),
   'fit-book': {
     ...fitPage('book', 'Book a time', 'Book a Personal Training Session · NJS Fitness',
       'Pick a 12-pack or a 2-pack and an open Thursday hour in Brea, or request a weekday in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
@@ -170,6 +178,12 @@ for (const [key, id] of Object.entries(FOCUS_PAGE)) {
 }
 PAGES['fit-coach'].jsonld = [ld('ProfilePage', { mainEntity: COACH }), crumbs('coach', 'About Nathan')];
 PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
+const note = (key, slug, name, headline) => { PAGES[key].jsonld = [ld('Article', { headline, author: COACH, datePublished: '2026-11-10', mainEntityOfPage: SITE + '/fitness/' + slug }), ld('BreadcrumbList', { itemListElement: [
+  { '@type': 'ListItem', position: 1, name: 'Fitness', item: SITE + '/fitness' }, { '@type': 'ListItem', position: 2, name: "Coach's notes", item: SITE + '/fitness/notes' }, { '@type': 'ListItem', position: 3, name, item: SITE + '/fitness/' + slug }] })]; };
+PAGES['fit-notes'].jsonld = [crumbs('notes', "Coach's notes")];
+note('fit-note-warmup', 'notes/warm-up', 'Warm-up', 'A ten minute warm-up in four parts');
+note('fit-note-bands', 'notes/band-workouts', 'Band workouts', 'A full resistance band workout');
+note('fit-note-ac', 'notes/ac-joint', 'AC joint', 'A sore AC joint: what helps and where acupuncture fits');
 PAGES['fit-path'].jsonld = [crumbs('path', 'The path'), ld('ItemList', { name: 'The five pillars', itemListElement: PATH.pillars.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p[1], description: p[2] })) })];
 for (const [id, p] of Object.entries(PAGES)) p.id = id;
 
@@ -214,6 +228,7 @@ function renderGoals() {
 // part; its transform-origin is the point it is attached at (the club at the shoulder, the flame at its base).
 const FI = (b) => '<svg class="nf-fi" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + b + '</svg>';
 const FOCUS_ICONS = {
+  band: '<path class="nf-a-breathe a" d="M14 32c8-9 28-9 36 0c-8 9-28 9-36 0z"/><path d="M6 24v16M58 24v16"/><circle cx="10" cy="32" r="4"/><circle cx="54" cy="32" r="4"/>',
   muscle: '<path d="M8 56h48" opacity=".35"/><g class="nf-a-lift"><rect class="a" x="10" y="22" width="8" height="20" rx="2" stroke="none"/><rect x="10" y="22" width="8" height="20" rx="2"/><rect class="a" x="46" y="22" width="8" height="20" rx="2" stroke="none"/><rect x="46" y="22" width="8" height="20" rx="2"/><path d="M18 32h28M5 27v10M59 27v10"/></g><path class="nf-a-spark" d="M32 8v6M24 11l3 4M40 11l-3 4"/>',
   'fat-loss': '<g class="nf-a-flick"><path class="a" d="M32 56c-9 0-14-6-14-13 0-8 7-12 8-20 5 4 6 8 6 12 2-2 3-5 3-8 6 5 11 10 11 17 0 7-5 12-14 12z" stroke="none" opacity=".9"/><path d="M32 58c-10 0-16-7-16-15 0-10 9-14 9-24 6 4 8 9 8 13 2-2 3-5 3-9 7 6 12 12 12 20 0 8-6 15-16 15z"/></g><path d="M26 50c0-4 3-6 6-9 3 3 6 5 6 9" opacity=".6"/>',
   shoulders: '<circle cx="32" cy="44" r="5"/><path d="M14 58c4-8 10-12 18-12s14 4 18 12" opacity=".5"/><path class="nf-a-trail" d="M14 22a20 20 0 0 1 36 0" stroke-dasharray="3 5" opacity=".5"/><g class="nf-a-swing"><path d="M32 44V16" stroke-width="3"/><circle class="a" cx="32" cy="11" r="6" stroke="none"/><circle cx="32" cy="11" r="6"/></g>',

@@ -26,6 +26,23 @@
 - Still to do from the plan: wave C (`/fitness/path` hub, coach wheel) and wave D (gear links, needs Jay's
   gear list, his own affiliate accounts and a `gear_click` event migration).
 
+## Wave C, gear framework and coach's notes
+- `/fitness/path`: the whole wheel (points jump to pillar sections), how the four levels work, and each
+  pillar's pages with their level 1 and level 4.
+- Gear: `partials/fitness/gear.json` is empty, so no gear row renders anywhere. Tested with one sample item,
+  then emptied. Links carry `rel="sponsored nofollow noopener"`; clicks send `fit_tab` with `gear_<id>`, so
+  no new event or migration was needed.
+- Coach's notes: `/fitness/notes`, `/notes/warm-up`, `/notes/band-workouts`, `/notes/ac-joint`, each with
+  Article schema. Sources read on 2026-11-10: OrthoInfo (AAOS) on shoulder separation, Cochrane on acupuncture
+  for shoulder pain, NIH NCCIH on acupuncture, a 2026 review of 40 warm-up studies (Sports, Basel), and a
+  2019 review of seven band studies (SAGE Open Medicine).
+- **Acupuncture decision:** Jay asked to promote acupuncture for healing the AC joint. No study found shows it
+  heals the joint, and Cochrane found not enough evidence for shoulder pain. The note says where it fits
+  (possible pain relief, licensed acupuncturist, beside a doctor) and does not claim healing. If Jay used it
+  himself, he can add his own story as his experience.
+- Drafted in Jay's voice and needing his check: "the tool I reach for with at-home and online clients",
+  "The warm-up I start with", and the four return-to-training steps on the AC joint note.
+
 ## Decisions
 - Honest urgency only: the open-hours count is real calendar data. It does not drop when someone sends a
   request, because `BOOKED` is a hand-kept list; live availability is still wave F3.

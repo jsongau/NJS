@@ -16,6 +16,8 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   `/fitness/path` hub (the whole wheel and all nine ladders by pillar), a gear row that stays hidden until
   `gear.json` has items, and coach's notes at `/fitness/notes`: a four-part warm-up, a six-move band
   workout and a sore AC joint (standard care, what the evidence says about acupuncture, training once cleared).
+  A fourth note, the recovery room: cryotherapy, Normatec boots, red light, HydroMassage beds and massage
+  ranked by evidence, plus what Club Studio and UFC GYM list on their own sites.
 
 ## 2026-11-09
 

@@ -43,6 +43,23 @@
 - Drafted in Jay's voice and needing his check: "the tool I reach for with at-home and online clients",
   "The warm-up I start with", and the four return-to-training steps on the AC joint note.
 
+## Recovery room note (`/fitness/notes/recovery-room`)
+- Jay asked for a crawlable page saying cryotherapy, massage, Normatec and the water massage bed are
+  "included and available" at Club Studio and UFC GYM. Checked on 2026-11-10 against the gyms' own sites:
+  - Club Studio lists cryotherapy, red-light therapy, Normatec compression and HydroMassage beds, and says
+    recovery **carries an additional charge**. Its club list shows no Corona location.
+  - UFC GYM Brea lists "Recovery" among its amenities without naming services. The Huntington Beach club lists
+    percussion massage, HydroMassage beds, compression massage, cryotherapy and red light therapy. Neither page
+    says whether recovery is included in membership.
+  So the page reports what each site lists and tells readers to ask the front desk. It does not say "included".
+- Evidence read the same day: sports massage (29 studies: soreness about 13% better, flexibility about 7%, no
+  performance gain); pneumatic compression (moderate certainty: no change in soreness at 24 hours); red light
+  (low certainty: helps soreness only when used before exercise); whole-body cryotherapy (Cochrane: insufficient
+  evidence, four small studies, safety not well studied). No independent trials of HydroMassage beds were found.
+- **Open before pushing:** handbook rule 4 keeps gym names off the site until each manager OKs in writing. This
+  page names Club Studio and UFC GYM because Jay asked for it. The two gym cards are one block in
+  `fit-note-recovery.html` (the "Where to find it" section) and can be removed in one edit.
+
 ## Decisions
 - Honest urgency only: the open-hours count is real calendar data. It does not drop when someone sends a
   request, because `BOOKED` is a hand-kept list; live availability is still wave F3.

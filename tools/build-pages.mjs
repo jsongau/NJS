@@ -167,6 +167,8 @@ export const PAGES = {
     'A six-move resistance band workout for home or travel, and what a review of seven studies found when bands were compared with weights.', null),
   'fit-note-ac': fitPage('notes/ac-joint', 'AC joint', 'A Sore AC Joint: What Helps, Where Acupuncture Fits, and When to Train · NJS Fitness',
     'What a shoulder separation is, what standard care looks like, what the evidence says about acupuncture for shoulder pain, and how to train once you are cleared.', null),
+  'fit-note-recovery': fitPage('notes/recovery-room', 'Recovery room', 'Cryotherapy, Normatec Boots, Red Light and HydroMassage: What Is Worth It · NJS Fitness',
+    'What each recovery room tool is, what the research says about cryotherapy, compression boots, red light therapy, HydroMassage beds and sports massage, and which gyms list them.', null),
   'fit-book': {
     ...fitPage('book', 'Book a time', 'Book a Personal Training Session · NJS Fitness',
       'Pick a 12-pack or a 2-pack and an open Thursday hour in Brea, or request a weekday in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
@@ -183,6 +185,7 @@ const note = (key, slug, name, headline) => { PAGES[key].jsonld = [ld('Article',
 PAGES['fit-notes'].jsonld = [crumbs('notes', "Coach's notes")];
 note('fit-note-warmup', 'notes/warm-up', 'Warm-up', 'A ten minute warm-up in four parts');
 note('fit-note-bands', 'notes/band-workouts', 'Band workouts', 'A full resistance band workout');
+note('fit-note-recovery', 'notes/recovery-room', 'Recovery room', 'The recovery room: what each tool is and what the research says');
 note('fit-note-ac', 'notes/ac-joint', 'AC joint', 'A sore AC joint: what helps and where acupuncture fits');
 PAGES['fit-path'].jsonld = [crumbs('path', 'The path'), ld('ItemList', { name: 'The five pillars', itemListElement: PATH.pillars.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p[1], description: p[2] })) })];
 for (const [id, p] of Object.entries(PAGES)) p.id = id;
@@ -228,6 +231,7 @@ function renderGoals() {
 // part; its transform-origin is the point it is attached at (the club at the shoulder, the flame at its base).
 const FI = (b) => '<svg class="nf-fi" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + b + '</svg>';
 const FOCUS_ICONS = {
+  recover: '<path class="a nf-a-breathe" d="M32 8c8 10 12 16 12 22a12 12 0 0 1-24 0c0-6 4-12 12-22z"/><path class="nf-a-trail" stroke-dasharray="4 4" d="M8 52c6-4 10-4 16 0s10 4 16 0 10-4 16 0"/>',
   band: '<path class="nf-a-breathe a" d="M14 32c8-9 28-9 36 0c-8 9-28 9-36 0z"/><path d="M6 24v16M58 24v16"/><circle cx="10" cy="32" r="4"/><circle cx="54" cy="32" r="4"/>',
   muscle: '<path d="M8 56h48" opacity=".35"/><g class="nf-a-lift"><rect class="a" x="10" y="22" width="8" height="20" rx="2" stroke="none"/><rect x="10" y="22" width="8" height="20" rx="2"/><rect class="a" x="46" y="22" width="8" height="20" rx="2" stroke="none"/><rect x="46" y="22" width="8" height="20" rx="2"/><path d="M18 32h28M5 27v10M59 27v10"/></g><path class="nf-a-spark" d="M32 8v6M24 11l3 4M40 11l-3 4"/>',
   'fat-loss': '<g class="nf-a-flick"><path class="a" d="M32 56c-9 0-14-6-14-13 0-8 7-12 8-20 5 4 6 8 6 12 2-2 3-5 3-8 6 5 11 10 11 17 0 7-5 12-14 12z" stroke="none" opacity=".9"/><path d="M32 58c-10 0-16-7-16-15 0-10 9-14 9-24 6 4 8 9 8 13 2-2 3-5 3-9 7 6 12 12 12 20 0 8-6 15-16 15z"/></g><path d="M26 50c0-4 3-6 6-9 3 3 6 5 6 9" opacity=".6"/>',

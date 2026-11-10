@@ -331,6 +331,9 @@ function mountPath() {
     list.dataset.ready = '1';
   });
   reveal($$('.nf-hc'));
+  reveal($$('.nf-pathc'));
+  // Gear links: count which item was opened (no personal data, same event as other fitness taps).
+  document.addEventListener('click', (e) => { const g = e.target.closest && e.target.closest('[data-nf-gear]'); if (g) track('fit_tab', { detail: 'gear_' + g.dataset.nfGear }); });
 }
 
 export function mountFitness() {

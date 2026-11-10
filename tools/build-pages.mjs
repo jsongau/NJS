@@ -20,6 +20,8 @@ const FAQ = JSON.parse(readFileSync(join(P, 'faq.json'), 'utf8'));
 const GOALS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/goals.json'), 'utf8'));
 const FOCUS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/focus.json'), 'utf8'));
 // The well-rounded path: five pillars, and per focus its pillars, health notes, ladder and questions.
+// Gear Jay uses: [id, name, brand, why, link, [focus ids]]. Empty until he fills it; nothing renders while it is empty.
+const GEAR = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/gear.json'), 'utf8'));
 const PATH = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/path.json'), 'utf8'));
 const TECH = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/techniques.json'), 'utf8'));
 const PROJECTS = JSON.parse(readFileSync(join(ROOT, 'assets/studio/data/projects.json'), 'utf8')).projects;
@@ -155,6 +157,8 @@ export const PAGES = {
     ...fitPage('coach', 'About Nathan', 'About Nathan J. Song, Personal Trainer in Orange County · NJS Fitness',
       'Nathan J. Song is a personal trainer in Orange County: three-time SHRED winner, steel clubs and maces coach, kickboxing and yoga. Classes in Brea and Rancho Santa Margarita.', null),
   },
+  'fit-path': fitPage('path', 'The path', 'A Well-Rounded Body: Strength, Engine, Mobility, Control and Skill · NJS Fitness',
+    'The five parts of a capable body and the training that builds each one: strength, conditioning, mobility, core control and striking skill, with a four-level ladder for each.', null),
   'fit-book': {
     ...fitPage('book', 'Book a time', 'Book a Personal Training Session · NJS Fitness',
       'Pick a 12-pack or a 2-pack and an open Thursday hour in Brea, or request a weekday in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
@@ -166,6 +170,7 @@ for (const [key, id] of Object.entries(FOCUS_PAGE)) {
 }
 PAGES['fit-coach'].jsonld = [ld('ProfilePage', { mainEntity: COACH }), crumbs('coach', 'About Nathan')];
 PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
+PAGES['fit-path'].jsonld = [crumbs('path', 'The path'), ld('ItemList', { name: 'The five pillars', itemListElement: PATH.pillars.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p[1], description: p[2] })) })];
 for (const [id, p] of Object.entries(PAGES)) p.id = id;
 
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -291,7 +296,7 @@ function renderWheel(id) {
   const cards = missing.map(([pid, name, , fid]) => { const [, fname, fline, href] = focusRow(fid); return '<a class="nf-card nf-pairc" href="' + href + '"><span class="nf-fic">' + FI(FOCUS_ICONS[fid]) + '</span><h3>' + esc(fname) + '</h3><p><b>Adds ' + esc(name) + '.</b> ' + esc(fline) + '</p></a>'; }).join('');
   const also = f.also.length ? ' and helps ' + f.also.map((a) => PILLAR[a].name.toLowerCase()).join(' and ') : '';
   return ['<section class="nf-sec tight" id="wheel" aria-labelledby="wheel-h">', '  <div class="wrap nf-wheelrow">',
-    '    <div><div class="nf-h"><div><p class="nf-k">Well-rounded</p><h2 id="wheel-h"><span>' + esc(PILLAR[f.main].name) + ' here.</span><span>Round out the rest.</span></h2></div><p>A capable body has five parts. This page builds ' + PILLAR[f.main].name.toLowerCase() + also + '. The open points on the wheel are what to add next.</p></div>',
+    '    <div><div class="nf-h"><div><p class="nf-k">Well-rounded</p><h2 id="wheel-h"><span>' + esc(PILLAR[f.main].name) + ' here.</span><span>Round out the rest.</span></h2></div><p>A capable body has five parts. This page builds ' + PILLAR[f.main].name.toLowerCase() + also + '. The open points on the wheel are what to add next. <a class="nf-more" href="/fitness/path">See the whole path</a></p></div>',
     '    <div class="nf-cards">' + cards + '</div></div>',
     svg, '  </div>', '</section>'].join('\n');
 }
@@ -316,6 +321,43 @@ function renderHealth(id) {
     '    <div class="nf-h"><div><p class="nf-k">What it does for you</p><h2 id="health-h"><span>Good for more</span><span>than the mirror.</span></h2></div><p>What public health sources say about this kind of training. General information, not medical advice.</p></div>',
     '    <div class="nf-cards c3">',
     ...f.health.map(([title, text, src, url], n) => '      <article class="nf-card nf-hc" style="--i:' + n + '"><svg class="nf-hc-i" viewBox="0 0 44 24" aria-hidden="true"><path d="M1 12h10l3-8 5 16 4-12 3 4h17"/></svg><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p><a class="nf-src" href="' + url + '" target="_blank" rel="noopener">' + esc(src) + '</a></article>'),
+    '    </div>', '  </div>', '</section>'].join('\n');
+}
+
+// The path hub: the whole wheel, then each pillar with the pages that build it and where each ladder starts and ends.
+function renderPathWheel() {
+  const R = 92;
+  const nodes = PATH.pillars.map(([pid, name, line], k) => {
+    const [x, y] = wpt(k, R), [lx, ly] = wpt(k, R + 30);
+    const anchor = Math.abs(lx - WC[0]) < 8 ? 'middle' : lx > WC[0] ? 'start' : 'end';
+    return '<a href="#p-' + pid + '" aria-label="' + esc(name) + '"><g class="wh-node wh-main" data-wh-line="' + esc(name + ': ' + line) + '"><circle class="wh-hit" cx="' + x + '" cy="' + y + '" r="22"/><circle class="wh-pulse" cx="' + x + '" cy="' + y + '" r="11"/><circle class="wh-dot" cx="' + x + '" cy="' + y + '" r="11"/><text x="' + lx + '" y="' + (ly + 4) + '" text-anchor="' + anchor + '">' + esc(name) + '</text></g></a>';
+  });
+  return ['<figure class="nf-art nf-wheel nf-wheel-all" data-nf-wheel>',
+    '<svg viewBox="0 0 360 300" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="The five pillars: ' + esc(PATH.pillars.map((p) => p[1]).join(', ')) + '">',
+    '  <g class="wh-grid"><polygon points="' + wpoly(Array(5).fill(R)) + '"/><polygon points="' + wpoly(Array(5).fill(R * 2 / 3)) + '"/><polygon points="' + wpoly(Array(5).fill(R / 3)) + '"/>' + PATH.pillars.map((_, k) => '<path d="M' + WC.join(' ') + 'L' + wpt(k, R).join(' ') + '"/>').join('') + '</g>',
+    '  <g class="wh-fill"><polygon points="' + wpoly(Array(5).fill(R)) + '"/></g>',
+    '  ' + nodes.join('\n  '), '</svg>',
+    '<figcaption data-nf-whcap>Point at a pillar to see what it means. Tap one to jump to it.</figcaption>', '</figure>'].join('\n');
+}
+function renderPathPillars() {
+  return PATH.pillars.map(([pid, name, line]) => {
+    const rows = FOCUS.filter((f) => PATH.focus[f[0]].main === pid);
+    return ['<section class="nf-sec tight" id="p-' + pid + '" aria-labelledby="p-' + pid + '-h">', '  <div class="wrap">',
+      '    <div class="nf-h"><div><p class="nf-k">Pillar ' + (PILLAR[pid].i + 1) + ' of 5</p><h2 id="p-' + pid + '-h">' + esc(name) + '</h2></div><p><b>' + esc(line) + '</b> ' + (rows.length > 1 ? rows.length + ' ways to build it. Pick the one you would look forward to.' : 'One page builds it.') + '</p></div>',
+      '    <div class="nf-cards ' + (rows.length >= 3 ? 'c3' : 'c2') + '">',
+      ...rows.map(([fid, fname, fline, href]) => '      <a class="nf-card nf-pathc" href="' + href + '"><span class="nf-fic">' + FI(FOCUS_ICONS[fid]) + '</span><h3>' + esc(fname) + '</h3><p>' + esc(fline) + '</p><dl><div><dt>Level 1</dt><dd>' + esc(PATH.focus[fid].ladder[0]) + '</dd></div><div><dt>Level 4</dt><dd>' + esc(PATH.focus[fid].ladder[3]) + '</dd></div></dl><span class="nf-more">See the ladder</span></a>'),
+      '    </div>', '  </div>', '</section>'].join('\n');
+  }).join('\n\n');
+}
+
+// Gear row for a focus page. Links are marked sponsored and the disclosure sits right above them.
+function renderGear(id) {
+  const items = GEAR.filter((g) => g[5].includes(id));
+  if (!items.length) return '';
+  return ['<section class="nf-sec tight" id="gear" aria-labelledby="gear-h">', '  <div class="wrap">',
+    '    <div class="nf-h"><div><p class="nf-k">Gear I use</p><h2 id="gear-h"><span>What I train with,</span><span>and why.</span></h2></div><p class="nf-disc">Some of these links pay me a small commission. It costs you nothing, and I only list gear I use.</p></div>',
+    '    <div class="nf-cards c3">',
+    ...items.map(([gid, name, brand, why, url]) => '      <a class="nf-card nf-gear" href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener" data-nf-gear="' + esc(gid) + '"><p class="nf-k">' + esc(brand) + '</p><h3>' + esc(name) + '</h3><p>' + esc(why) + '</p><span class="nf-src">View at ' + esc(brand) + '</span></a>'),
     '    </div>', '  </div>', '</section>'].join('\n');
 }
 
@@ -369,6 +411,9 @@ function expand(text, seen = []) {
     if (m[1].startsWith('nf-ladder-')) return renderLadder(m[1].slice(10));
     if (m[1].startsWith('nf-health-')) return renderHealth(m[1].slice(10));
     if (m[1].startsWith('nf-qa-')) return renderQa(m[1].slice(6));
+    if (m[1].startsWith('nf-gear-')) return renderGear(m[1].slice(8));
+    if (m[1] === 'nf-path-wheel') return renderPathWheel();
+    if (m[1] === 'nf-path-pillars') return renderPathPillars();
     if (seen.includes(m[1])) throw new Error('include loop: ' + seen.concat(m[1]).join(' > '));
     return expand(read(m[1]), seen.concat(m[1]));
   }).join('\n');

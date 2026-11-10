@@ -800,3 +800,17 @@ body[data-mode="fitness"] footer { margin-top: 0; }
   .nf-ladder[data-ready] li { opacity: 1; transform: none; }
   .nf-lv, .nf-lv-bars rect, .nf-hc-i path, .nf-lv:hover { animation: none !important; transform: none !important; }
 }
+
+/* Path hub and gear rows */
+.nf-wheel-all .wh-fill polygon { fill: rgba(255, 138, 107, .22); }
+.nf-wheel-all.live .wh-pulse { animation: wh-pulse 2.6s ease-out infinite; }
+.nf-pathc { align-content: start; }
+.nf-pathc .nf-fic { width: 56px; height: 56px; margin: 0 0 4px; border-radius: 16px; }
+.nf-pathc .nf-fi { width: 44px; height: 44px; }
+.nf-pathc dl { display: grid; gap: 8px; margin: 8px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+.nf-pathc dt { font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--nf-acc); }
+.nf-pathc dd { margin: 4px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.nf-pathc .nf-more { margin-top: 6px; }
+@media (hover: hover) { .nf-pathc:hover .nf-fic { transform: translateY(-3px) rotate(-5deg) scale(1.07); background: var(--nf-coral-soft); } }
+.nf-disc { font-size: 14px; color: var(--ink-2); }
+.nf-gear { text-decoration: none; color: inherit; }

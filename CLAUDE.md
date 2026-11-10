@@ -31,6 +31,7 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | FAQ | `partials/studio/faq.json` (`[question, answer]` pairs) | rebuild pages |
 | Fitness goals (5K, fight, Pilates…) | `partials/fitness/goals.json` (`[id, name, how, tags, who]`) | rebuild pages |
 | Fitness focus cards and where each links | `partials/fitness/focus.json` (`[id, name, line, page link]`); every focus needs its own page | rebuild pages |
+| The five pillars, and each focus page's wheel, health notes (with source links), ladder levels and questions | `partials/fitness/path.json` | rebuild pages |
 | A new fitness page | copy a `fit-*.html` page, add a `fitPage(...)` line to `PAGES` in `tools/build-pages.mjs`, link it from `focus.json` or the footer | rebuild pages |
 | Delivered projects, proof, logos | `assets/studio/data/projects.json`, logos in `assets/studio/brand/delivered/` | none |
 | Industries, kinds, plans, care tiers, links (booking URL, lead form) | `docs/nathan-j-song/studio-catalog.source.json` (**private, gitignored, only on Jay's Mac**) | `node tools/build-studio-catalog.mjs` |

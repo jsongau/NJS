@@ -19,6 +19,8 @@ export const SITE = 'https://nathanjsong.com';
 const FAQ = JSON.parse(readFileSync(join(P, 'faq.json'), 'utf8'));
 const GOALS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/goals.json'), 'utf8'));
 const FOCUS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/focus.json'), 'utf8'));
+// The well-rounded path: five pillars, and per focus its pillars, health notes, ladder and questions.
+const PATH = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/path.json'), 'utf8'));
 const TECH = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/techniques.json'), 'utf8'));
 const PROJECTS = JSON.parse(readFileSync(join(ROOT, 'assets/studio/data/projects.json'), 'utf8')).projects;
 
@@ -158,6 +160,10 @@ export const PAGES = {
       'Pick a 12-pack or a 2-pack and an open Thursday hour in Brea, or request a weekday in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
   },
 };
+const FOCUS_PAGE = { 'fit-muscle': 'muscle', 'fit-fatloss': 'fat-loss', 'fit-conditioning': 'conditioning', 'fit-shoulders': 'shoulders', 'fit-boxing': 'boxing', 'fit-kickboxing': 'kickboxing', 'fit-muaythai': 'muay-thai', 'fit-mobility': 'mobility', 'fit-pilates': 'pilates' };
+for (const [key, id] of Object.entries(FOCUS_PAGE)) {
+  PAGES[key].jsonld.push(ld('FAQPage', { mainEntity: PATH.focus[id].qa.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }));
+}
 PAGES['fit-coach'].jsonld = [ld('ProfilePage', { mainEntity: COACH }), crumbs('coach', 'About Nathan')];
 PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
 for (const [id, p] of Object.entries(PAGES)) p.id = id;
@@ -253,22 +259,81 @@ function renderFocusArt(id) {
     '</svg>', '</figure>'].join('\n');
 }
 
-// "Pairs well with": two sibling focus pages as link cards.
-const PAIRS = { muscle: ['fat-loss', 'shoulders'], 'fat-loss': ['conditioning', 'muscle'], conditioning: ['boxing', 'fat-loss'], shoulders: ['muscle', 'mobility'], mobility: ['pilates', 'shoulders'], pilates: ['mobility', 'muscle'] };
-function renderPairs(id) {
-  if (!PAIRS[id]) throw new Error('no pairs for ' + id);
-  return '<div class="nf-cards c2">' + PAIRS[id].map((x) => {
-    const [fid, name, line, href] = FOCUS.find((f) => f[0] === x);
-    return '<a class="nf-card nf-pairc" href="' + href + '"><span class="nf-fic">' + FI(FOCUS_ICONS[fid]) + '</span><h3>' + esc(name) + '</h3><p>' + esc(line) + '</p></a>';
-  }).join('') + '</div>';
+// ---- The well-rounded path (partials/fitness/path.json) ----
+const PILLAR = Object.fromEntries(PATH.pillars.map((p, i) => [p[0], { i, name: p[1], line: p[2], focus: p[3] }]));
+const focusRow = (id) => FOCUS.find((f) => f[0] === id);
+const pathOf = (id) => { const f = PATH.focus[id]; if (!f) throw new Error('no path data for ' + id); return f; };
+// A point on the wheel: spoke k of five, starting at the top and going clockwise, at radius r.
+const WC = [180, 150];
+const wpt = (k, r) => { const a = (-90 + k * 72) * Math.PI / 180; return [WC[0] + r * Math.cos(a), WC[1] + r * Math.sin(a)].map((n) => Math.round(n * 10) / 10); };
+const wpoly = (rs) => rs.map((r, k) => wpt(k, r).join(',')).join(' ');
+
+// The wheel: a five-spoke radar. This page's pillar is full, the pillars it also helps are part
+// filled, the rest are open and pulse. Every other spoke is a link to the page that fills it.
+function renderWheel(id) {
+  const f = pathOf(id), R = 92;
+  const level = (pid) => pid === f.main ? 1 : f.also.includes(pid) ? 0.62 : 0.2;
+  const nodes = PATH.pillars.map(([pid, name, line, fid], k) => {
+    const [x, y] = wpt(k, R), [lx, ly] = wpt(k, R + 30);
+    const st = pid === f.main ? 'main' : f.also.includes(pid) ? 'also' : 'open';
+    const anchor = Math.abs(lx - WC[0]) < 8 ? 'middle' : lx > WC[0] ? 'start' : 'end';
+    const dot = '<g class="wh-node wh-' + st + '" data-wh-line="' + esc(name + ': ' + line) + '"><circle class="wh-hit" cx="' + x + '" cy="' + y + '" r="22"/><circle class="wh-pulse" cx="' + x + '" cy="' + y + '" r="11"/><circle class="wh-dot" cx="' + x + '" cy="' + y + '" r="11"/><text x="' + lx + '" y="' + (ly + 4) + '" text-anchor="' + anchor + '">' + esc(name) + '</text></g>';
+    return fid === id ? dot : '<a href="' + focusRow(fid)[3] + '" aria-label="' + esc(name + ': ' + focusRow(fid)[1]) + '">' + dot + '</a>';
+  });
+  const svg = ['<figure class="nf-art nf-wheel" data-nf-wheel>',
+    '<svg viewBox="0 0 360 300" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="The five pillars: ' + esc(PATH.pillars.map((p) => p[1]).join(', ')) + '">',
+    '  <g class="wh-grid"><polygon points="' + wpoly([R, R, R, R, R]) + '"/><polygon points="' + wpoly(Array(5).fill(R * 2 / 3)) + '"/><polygon points="' + wpoly(Array(5).fill(R / 3)) + '"/>' + PATH.pillars.map((_, k) => '<path d="M' + WC.join(' ') + 'L' + wpt(k, R).join(' ') + '"/>').join('') + '</g>',
+    '  <g class="wh-fill"><polygon points="' + wpoly(PATH.pillars.map((p) => R * level(p[0]))) + '"/></g>',
+    '  ' + nodes.join('\n  '),
+    '</svg>',
+    '<figcaption data-nf-whcap>' + esc(PILLAR[f.main].name + ': ' + PILLAR[f.main].line) + '</figcaption>', '</figure>'].join('\n');
+  const missing = PATH.pillars.filter((p) => p[0] !== f.main && !f.also.includes(p[0])).slice(0, 2);
+  const cards = missing.map(([pid, name, , fid]) => { const [, fname, fline, href] = focusRow(fid); return '<a class="nf-card nf-pairc" href="' + href + '"><span class="nf-fic">' + FI(FOCUS_ICONS[fid]) + '</span><h3>' + esc(fname) + '</h3><p><b>Adds ' + esc(name) + '.</b> ' + esc(fline) + '</p></a>'; }).join('');
+  const also = f.also.length ? ' and helps ' + f.also.map((a) => PILLAR[a].name.toLowerCase()).join(' and ') : '';
+  return ['<section class="nf-sec tight" id="wheel" aria-labelledby="wheel-h">', '  <div class="wrap nf-wheelrow">',
+    '    <div><div class="nf-h"><div><p class="nf-k">Well-rounded</p><h2 id="wheel-h"><span>' + esc(PILLAR[f.main].name) + ' here.</span><span>Round out the rest.</span></h2></div><p>A capable body has five parts. This page builds ' + PILLAR[f.main].name.toLowerCase() + also + '. The open points on the wheel are what to add next.</p></div>',
+    '    <div class="nf-cards">' + cards + '</div></div>',
+    svg, '  </div>', '</section>'].join('\n');
+}
+
+// The ladder: four levels, each one something a person can do and check.
+function renderLadder(id) {
+  const f = pathOf(id);
+  const bars = (n) => '<svg class="nf-lv-bars" viewBox="0 0 34 26" aria-hidden="true">' + [0, 1, 2, 3].map((k) => '<rect class="' + (k <= n ? 'on' : '') + '" x="' + (k * 9) + '" y="' + (18 - k * 6) + '" width="6" height="' + (8 + k * 6) + '" rx="2" style="--k:' + k + '"/>').join('') + '</svg>';
+  return ['<section class="nf-sec tight" id="ladder" aria-labelledby="ladder-h">', '  <div class="wrap">',
+    '    <div class="nf-h"><div><p class="nf-k">Your ladder</p><h2 id="ladder-h"><span>Four levels.</span><span>One step at a time.</span></h2></div><p>Each level is something you can do and check. Your first 12-pack is built to reach level 1. Tap where you are now.</p></div>',
+    '    <ol class="nf-ladder" data-nf-ladder>',
+    ...f.ladder.map((text, n) => '      <li style="--s:' + n + '"><button type="button" class="nf-lv" aria-pressed="false" data-lv="' + (n + 1) + '">' + bars(n) + '<span class="nf-lv-n">Level ' + (n + 1) + '</span><b>' + esc(PATH.levels[n]) + '</b><span>' + esc(text) + '</span></button></li>'),
+    '    </ol>',
+    '    <p class="nf-lv-msg" role="status" data-nf-lvmsg>Starting fresh? Your first 12-pack is built to reach level 1.</p>',
+    '  </div>', '</section>'].join('\n');
+}
+
+// Health: three plain benefits, each with a link to the public source that says it.
+function renderHealth(id) {
+  const f = pathOf(id);
+  return ['<section class="nf-sec tight" id="health" aria-labelledby="health-h">', '  <div class="wrap">',
+    '    <div class="nf-h"><div><p class="nf-k">What it does for you</p><h2 id="health-h"><span>Good for more</span><span>than the mirror.</span></h2></div><p>What public health sources say about this kind of training. General information, not medical advice.</p></div>',
+    '    <div class="nf-cards c3">',
+    ...f.health.map(([title, text, src, url], n) => '      <article class="nf-card nf-hc" style="--i:' + n + '"><svg class="nf-hc-i" viewBox="0 0 44 24" aria-hidden="true"><path d="M1 12h10l3-8 5 16 4-12 3 4h17"/></svg><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p><a class="nf-src" href="' + url + '" target="_blank" rel="noopener">' + esc(src) + '</a></article>'),
+    '    </div>', '  </div>', '</section>'].join('\n');
+}
+
+function renderQa(id) {
+  const f = pathOf(id);
+  return ['<section class="nf-sec tight" id="questions" aria-labelledby="qa-h">', '  <div class="wrap">',
+    '    <div class="nf-h"><div><p class="nf-k">Questions</p><h2 id="qa-h">Before you book.</h2></div></div>',
+    '    <div class="nf-faq">',
+    ...f.qa.map(([q, a]) => '      <details><summary>' + esc(q) + '</summary><p>' + esc(a) + '</p></details>'),
+    '    </div>', '  </div>', '</section>'].join('\n');
 }
 
 function renderFocus() {
-  const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '" aria-label="Learn more about ' + esc(name) + '">Learn more</a></li>';
+  const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" data-p="' + [PATH.focus[id].main].concat(PATH.focus[id].also).join(' ') + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '" aria-label="Learn more about ' + esc(name) + '">Learn more</a></li>';
   return ['<section class="nf-sec" id="focus" aria-labelledby="focus-h">', '  <div class="wrap">',
     '    <div class="nf-h"><div><p class="nf-k">Your focus</p><h2 id="focus-h"><span>Your 12 sessions,</span><span>your choice.</span></h2></div><p>Pick one or two things you want from the next six weeks. I build every session around them. Change your mind later and we change the plan.</p></div>',
     '    <ul class="nf-focus" data-nf-focus>', ...FOCUS.map(card), '    </ul>',
-    '    <div class="nf-fbar" data-nf-fbar data-n="0"><span class="nf-fslots" aria-hidden="true"><i>1</i><i>2</i></span><p data-nf-fsum><b>Pick up to two</b>Tap a card to add it to your plan.</p><a class="nf-btn nf-ink" href="/fitness/book?pack=12" data-nf-fgo>Build my 12-pack</a></div>',
+    '    <div class="nf-fbar" data-nf-fbar data-n="0"><svg class="nf-mini" viewBox="-40 -40 80 80" aria-hidden="true" data-nf-mini><polygon points="' + PATH.pillars.map((_, k) => wpt(k, 30).map((n, j) => Math.round((n - WC[j]) * 10) / 10).join(',')).join(' ') + '"/>' + PATH.pillars.map(([pid, name], k) => { const [x, y] = wpt(k, 30); return '<circle data-pl="' + pid + '" data-name="' + name + '" cx="' + Math.round((x - WC[0]) * 10) / 10 + '" cy="' + Math.round((y - WC[1]) * 10) / 10 + '" r="7"/>'; }).join('') + '</svg><p data-nf-fsum><b>Pick up to two</b>Tap a card to add it to your plan.</p><a class="nf-btn nf-ink" href="/fitness/book?pack=12" data-nf-fgo>Build my 12-pack</a></div>',
     '  </div>', '</section>'].join('\n');
 }
 function renderFocusForm() {
@@ -300,7 +365,10 @@ function expand(text, seen = []) {
     if (m[1] === 'nf-focus-form') return renderFocusForm();
     if (m[1].startsWith('nf-tiles-')) return renderTiles(m[1].slice(9));
     if (m[1].startsWith('nf-fart-')) return renderFocusArt(m[1].slice(8));
-    if (m[1].startsWith('nf-pairs-')) return renderPairs(m[1].slice(9));
+    if (m[1].startsWith('nf-wheel-')) return renderWheel(m[1].slice(9));
+    if (m[1].startsWith('nf-ladder-')) return renderLadder(m[1].slice(10));
+    if (m[1].startsWith('nf-health-')) return renderHealth(m[1].slice(10));
+    if (m[1].startsWith('nf-qa-')) return renderQa(m[1].slice(6));
     if (seen.includes(m[1])) throw new Error('include loop: ' + seen.concat(m[1]).join(' > '));
     return expand(read(m[1]), seen.concat(m[1]));
   }).join('\n');

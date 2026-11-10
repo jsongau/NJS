@@ -169,14 +169,26 @@ function mountFocus() {
   const sum = $('[data-nf-fsum]'), go = $('[data-nf-fgo]'), fbar = $('[data-nf-fbar]'), bar = $('[data-nf-bar]'), barGo = $('[data-nf-bar-go]');
   const picked = [];
   const name = (id) => $('.nf-fbtn[data-focus="' + id + '"] b', list).textContent;
+  // The small wheel in the plan bar: each pick fills its pillar, and the line names one still open.
+  const dots = $$('[data-nf-mini] circle');
+  const NEXT = ['mobility', 'engine', 'strength', 'control', 'skill'];
+  const wheel = (ids) => {
+    const full = new Set(), part = new Set();
+    ids.forEach((id) => ($('.nf-fbtn[data-focus="' + id + '"]', list).dataset.p || '').split(' ').forEach((p, i) => p && (i ? part : full).add(p)));
+    dots.forEach((d) => { d.classList.toggle('on', full.has(d.dataset.pl)); d.classList.toggle('half', !full.has(d.dataset.pl) && part.has(d.dataset.pl)); });
+    if (!dots.length || !full.size) return '';
+    const label = (p) => dots.find((d) => d.dataset.pl === p).dataset.name;
+    const open = NEXT.find((p) => !full.has(p) && !part.has(p));
+    return 'Builds ' + [...full].map(label).join(' and ').toLowerCase() + '.' + (open ? ' Add ' + label(open).toLowerCase() + ' later to round it out.' : '');
+  };
   const render = () => {
     $$('.nf-fbtn', list).forEach((b) => b.setAttribute('aria-pressed', String(picked.includes(b.dataset.focus))));
     const href = '/fitness/book?pack=12' + (picked.length ? '&focus=' + picked.join(',') : '');
     go.setAttribute('href', href);
     if (fbar) fbar.dataset.n = picked.length;
-    if (!picked.length) { sum.innerHTML = '<b>Pick up to two</b>Tap a card to add it to your plan.'; return; }
+    if (!picked.length) { wheel(picked); sum.innerHTML = '<b>Pick up to two</b>Tap a card to add it to your plan.'; return; }
     const text = picked.map(name).join(' + ');
-    sum.innerHTML = '<b>' + text + '</b>Your 12-pack is built around ' + (picked.length === 1 ? 'this' : 'these') + '.';
+    sum.innerHTML = '<b>' + text + '</b>' + (wheel(picked) || 'Your 12-pack is built around ' + (picked.length === 1 ? 'this' : 'these') + '.');
     if (bar) { bar.innerHTML = '<b>' + text + '</b>Your 12-pack focus'; barGo.setAttribute('href', href); }
   };
   list.addEventListener('click', (e) => {
@@ -294,6 +306,33 @@ function mountRipple() {
   });
 }
 
+// Focus pages: the wheel names a pillar when you point at it, and the ladder marks where you are.
+function mountPath() {
+  $$('[data-nf-wheel]').forEach((fig) => {
+    const cap = $('[data-nf-whcap]', fig), base = cap.textContent;
+    const show = (e) => { const n = e.target.closest('[data-wh-line]'); if (n) cap.textContent = n.dataset.whLine; };
+    fig.addEventListener('pointerover', show);
+    fig.addEventListener('focusin', show);
+    fig.addEventListener('pointerleave', () => { cap.textContent = base; });
+    fig.addEventListener('focusout', () => { cap.textContent = base; });
+    fig.addEventListener('click', (e) => { if (e.target.closest('a')) track('fit_tab', { detail: 'wheel' }); });
+  });
+  $$('[data-nf-ladder]').forEach((list) => {
+    const msg = $('[data-nf-lvmsg]'), items = $$('li', list);
+    list.addEventListener('click', (e) => {
+      const b = e.target.closest('.nf-lv');
+      if (!b) return;
+      const n = +b.dataset.lv;
+      items.forEach((li, i) => { li.classList.toggle('done', i < n); $('.nf-lv', li).setAttribute('aria-pressed', String(i === n - 1)); });
+      msg.textContent = n === 1 ? 'Starting fresh? Your first 12-pack is built to reach level 1.' : 'Already at level ' + n + '? Say so in the note when you book, and we start from there.';
+      track('fit_tab', { detail: 'level_' + n });
+    });
+    reveal(items);
+    list.dataset.ready = '1';
+  });
+  reveal($$('.nf-hc'));
+}
+
 export function mountFitness() {
   if (document.body.dataset.mode !== 'fitness') return;
   const form = $('#nf-form');
@@ -307,6 +346,7 @@ export function mountFitness() {
   mountRipple();
   reveal($$('.nf-art'));
   reveal($$('.nf-pairc'));
+  mountPath();
   // Focus page mark: a click stamps the tile and sends out a ring.
   $$('[data-nf-fart]').forEach((f) => f.addEventListener('click', () => replay(f, 'hit')));
 }

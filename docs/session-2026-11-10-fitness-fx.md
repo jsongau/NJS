@@ -15,6 +15,17 @@
   `fit-shoulders`, `fit-mobility`, `fit-pilates`. Builder includes: `nf-fart-<id>` (big focus mark) and
   `nf-pairs-<id>` (two sibling pages). Footer gains a Focus column; the hubs link down to the new pages.
 
+## Later the same day: the well-rounded path (waves A and B)
+- One data file, `partials/fitness/path.json`: five pillars (Strength, Engine, Mobility, Control, Skill) and,
+  per focus, its main pillar, the pillars it also helps, three health notes, four ladder levels, three questions.
+- Builder includes: `nf-wheel-<id>`, `nf-ladder-<id>`, `nf-health-<id>`, `nf-qa-<id>`. The wheel replaced the
+  "Pairs well with" row: its two cards are now the first two pillars the page does not cover.
+- Health notes quote only what three pages say (fetched and read on 2026-11-10): CDC adult activity
+  guidelines, CDC benefits of physical activity, NIH NCCIH on yoga. Wording stays as cautious as the source.
+- **Ladder levels are drafts written from site copy. Jay must correct them before they go live.**
+- Still to do from the plan: wave C (`/fitness/path` hub, coach wheel) and wave D (gear links, needs Jay's
+  gear list, his own affiliate accounts and a `gear_click` event migration).
+
 ## Decisions
 - Honest urgency only: the open-hours count is real calendar data. It does not drop when someone sends a
   request, because `BOOKED` is a hand-kept list; live availability is still wave F3.

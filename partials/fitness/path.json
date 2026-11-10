@@ -1,0 +1,454 @@
+{
+ "pillars": [
+  [
+   "strength",
+   "Strength",
+   "Lift, carry and push more.",
+   "muscle"
+  ],
+  [
+   "engine",
+   "Engine",
+   "Work longer before you tire.",
+   "conditioning"
+  ],
+  [
+   "mobility",
+   "Mobility",
+   "Reach, bend and turn without stiffness.",
+   "mobility"
+  ],
+  [
+   "control",
+   "Control",
+   "A steady core, and joints that go where you send them.",
+   "pilates"
+  ],
+  [
+   "skill",
+   "Skill",
+   "Hit clean, move well and think under pressure.",
+   "boxing"
+  ]
+ ],
+ "levels": [
+  "Start",
+  "Build",
+  "Sharpen",
+  "Own it"
+ ],
+ "focus": {
+  "muscle": {
+   "main": "strength",
+   "also": [],
+   "health": [
+    [
+     "Two days is the guideline",
+     "The CDC recommends muscle-strengthening work for all major muscle groups at least 2 days a week. A 12-pack is that, for six weeks.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ],
+    [
+     "Bones and joints that last",
+     "Muscle strengthening helps protect your bones, joints and muscles, which matters more with every decade.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "Daily life gets easier",
+     "Active adults in middle age and later have fewer limits on everyday tasks.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ]
+   ],
+   "ladder": [
+    "You squat, hinge, push, pull and carry with clean form, and you know your starting numbers.",
+    "Every main lift is heavier than in week 1, and you can run a session from a written plan.",
+    "You pick your own loads and know when to add weight or reps.",
+    "You write your own six-week block and train it alone."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. We start with how to move, with light weights, and add load only when the form is clean."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Mobility keeps the lifts comfortable, and conditioning builds the engine behind them."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, at your place, or online. In Rancho Santa Margarita I coach inside 9Round, on 9Round pricing."
+    ]
+   ]
+  },
+  "fat-loss": {
+   "main": "engine",
+   "also": [
+    "strength"
+   ],
+   "health": [
+    [
+     "Training and eating work together",
+     "The CDC pairs regular activity with healthy eating: keeping weight off takes more activity unless eating habits change too.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "Lower risk of type 2 diabetes",
+     "Regular activity can reduce your risk of developing type 2 diabetes and metabolic syndrome.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "Keep your muscle",
+     "Muscle-strengthening work at least 2 days a week is part of the adult guidelines, whatever your goal.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ]
+   ],
+   "ladder": [
+    "Two sessions a week, every week, and two eating habits that hold.",
+    "Your rounds are longer, your lifts are heavier, and the habits no longer take effort.",
+    "You adjust your own week when life gets in the way.",
+    "You hold the result on your own, with a check-in when you want one."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. We set a pace you can hold, and it gets harder only as you get fitter."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Striking makes the conditioning fun, and mobility helps you recover between sessions."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, at your place, or online. In Rancho Santa Margarita I coach inside 9Round, on 9Round pricing."
+    ]
+   ]
+  },
+  "conditioning": {
+   "main": "engine",
+   "also": [],
+   "health": [
+    [
+     "Hard minutes count double",
+     "Adults need 150 minutes of moderate activity a week, or 75 minutes of vigorous activity. Conditioning rounds are the vigorous kind.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ],
+    [
+     "A healthier heart",
+     "Regular activity lowers the risk of heart disease and helps with blood pressure and cholesterol.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "A clearer head",
+     "Activity helps you sleep better, and moderate to vigorous sessions reduce short-term feelings of anxiety.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ]
+   ],
+   "ladder": [
+    "A steady baseline: rounds you can finish at an even pace.",
+    "More rounds or shorter rests than your baseline.",
+    "Full three minute rounds at pace, with a strong last round.",
+    "You build your own interval sessions and know how hard to push."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. Your first session sets a baseline at your level, and every later session is measured against it."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Strength gives the engine something to move, and boxing gives the rounds a purpose."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, at your place, or online. In Rancho Santa Margarita I coach inside 9Round, on 9Round pricing."
+    ]
+   ]
+  },
+  "shoulders": {
+   "main": "strength",
+   "also": [
+    "mobility",
+    "control"
+   ],
+   "health": [
+    [
+     "Shoulders are on the list",
+     "The CDC strength guideline names the shoulders among the major muscle groups to train at least 2 days a week.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ],
+    [
+     "Bones and joints that last",
+     "Muscle strengthening helps protect your bones, joints and muscles, which matters more with every decade.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "Daily life gets easier",
+     "Active adults in middle age and later have fewer limits on everyday tasks.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ]
+   ],
+   "ladder": [
+    "Smooth basic swings with a light club, on both sides.",
+    "The shield cast and the mill with good timing.",
+    "The reverse mill and the mace 360, at heavier weights.",
+    "You link swings into your own sets and warm up with them before any session."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. Every swing is learned light and slow. If you have a shoulder injury, check with your doctor first."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Muscle building adds pressing strength, and striking uses the shoulders you build."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, at your place, or online. In Rancho Santa Margarita I coach inside 9Round, on 9Round pricing."
+    ]
+   ]
+  },
+  "boxing": {
+   "main": "skill",
+   "also": [
+    "engine"
+   ],
+   "health": [
+    [
+     "Hard minutes count double",
+     "Adults need 150 minutes of moderate activity a week, or 75 minutes of vigorous activity. Hard rounds on the mitts count as vigorous for most people.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ],
+    [
+     "A clearer head",
+     "Activity helps you sleep better, and moderate to vigorous sessions reduce short-term feelings of anxiety.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "A healthier heart",
+     "Regular activity lowers the risk of heart disease and helps with blood pressure and cholesterol.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ]
+   ],
+   "ladder": [
+    "A balanced stance, a straight jab and a clean 1-2 on the mitts.",
+    "Three and four punch combinations with your feet under you.",
+    "Slips and rolls between punches, and setups that draw a reaction.",
+    "Full rounds on the mitts where you choose the combinations."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. We start with stance and the jab. There is no sparring unless you ask for it later."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Conditioning lets you hold the pace, and mobility keeps your hips and shoulders loose."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, or at your place. Pad work needs me in the room, so it is not an online session."
+    ]
+   ]
+  },
+  "kickboxing": {
+   "main": "skill",
+   "also": [
+    "engine",
+    "mobility"
+   ],
+   "health": [
+    [
+     "Hard minutes count double",
+     "Adults need 150 minutes of moderate activity a week, or 75 minutes of vigorous activity. Hard rounds on the Thai pads count as vigorous for most people.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ],
+    [
+     "A clearer head",
+     "Activity helps you sleep better, and moderate to vigorous sessions reduce short-term feelings of anxiety.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "Sharper thinking",
+     "Regular activity helps keep thinking and judgment skills sharp as you age.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ]
+   ],
+   "ladder": [
+    "Stance, the teep and a round kick on the Thai pads.",
+    "Punches into kicks without losing your balance.",
+    "The switch kick, and setups that land the kick.",
+    "Full pad rounds mixing hands and legs at pace."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. We start with stance, the teep and one kick, and add from there."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Mobility opens the hips for higher kicks, and strength puts weight behind them."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, or at your place. Pad work needs me in the room, so it is not an online session."
+    ]
+   ]
+  },
+  "muay-thai": {
+   "main": "skill",
+   "also": [
+    "engine"
+   ],
+   "health": [
+    [
+     "Hard minutes count double",
+     "Adults need 150 minutes of moderate activity a week, or 75 minutes of vigorous activity. Hard rounds on the Thai pads count as vigorous for most people.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ],
+    [
+     "A clearer head",
+     "Activity helps you sleep better, and moderate to vigorous sessions reduce short-term feelings of anxiety.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "A healthier heart",
+     "Regular activity lowers the risk of heart disease and helps with blood pressure and cholesterol.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ]
+   ],
+   "ladder": [
+    "Stance, the teep and a round kick that lands with the shin.",
+    "Knees and elbows on the pads.",
+    "Basic clinch position, and knees from the clinch.",
+    "Full Thai pad rounds using every weapon."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. We start with stance, the teep and the round kick."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Mobility opens the hips, and conditioning carries you through the later rounds."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, or at your place. Pad work needs me in the room, so it is not an online session."
+    ]
+   ]
+  },
+  "mobility": {
+   "main": "mobility",
+   "also": [
+    "control"
+   ],
+   "health": [
+    [
+     "Less stress",
+     "Research suggests yoga may help with stress and with general wellness.",
+     "NIH: yoga, effectiveness and safety",
+     "https://www.nccih.nih.gov/health/yoga-what-you-need-to-know"
+    ],
+    [
+     "Better sleep and balance",
+     "Studies have found yoga helpful for sleep, and for balance in older adults.",
+     "NIH: yoga, effectiveness and safety",
+     "https://www.nccih.nih.gov/health/yoga-what-you-need-to-know"
+    ],
+    [
+     "A stiff back or neck",
+     "The evidence suggests a slight benefit for low-back pain, and yoga may relieve neck pain. It is not a treatment: see your doctor about pain that lasts.",
+     "NIH: yoga, effectiveness and safety",
+     "https://www.nccih.nih.gov/health/yoga-what-you-need-to-know"
+    ]
+   ],
+   "ladder": [
+    "A ten minute daily practice you actually do.",
+    "Deeper ranges in the hips, back and shoulders, with steady breath.",
+    "A full flow from memory.",
+    "You know what your body needs that day and build the session yourself."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. Every pose has an easier version, and we go at the pace your body allows."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Strength work gives the new range something to hold, and Pilates adds control."
+    ],
+    [
+     "Where do sessions happen?",
+     "At the gym in Brea on Thursdays, at your place, or online. In Rancho Santa Margarita I coach inside 9Round, on 9Round pricing."
+    ]
+   ]
+  },
+  "pilates": {
+   "main": "control",
+   "also": [
+    "mobility"
+   ],
+   "health": [
+    [
+     "Core work counts as strength",
+     "The CDC strength guideline covers the abdomen, back and hips, the muscles reformer work trains, at least 2 days a week.",
+     "CDC: adult activity guidelines",
+     "https://www.cdc.gov/physical-activity-basics/guidelines/adults.html"
+    ],
+    [
+     "Bones and joints that last",
+     "Muscle strengthening helps protect your bones, joints and muscles, which matters more with every decade.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ],
+    [
+     "Steadier on your feet",
+     "For older adults, a variety of activities improves physical function and lowers the risk of falls.",
+     "CDC: benefits of physical activity",
+     "https://www.cdc.gov/physical-activity-basics/benefits/index.html"
+    ]
+   ],
+   "ladder": [
+    "You set up the reformer for your body and hold the basic positions.",
+    "Longer sequences with control.",
+    "Heavier springs and harder sequences without losing alignment.",
+    "You move through a full session with only light cues."
+   ],
+   "qa": [
+    [
+     "I've never done this. Is that OK?",
+     "Yes. We start with your setup and the basic positions. I am completing my reformer certification now."
+    ],
+    [
+     "Can I mix it with something else?",
+     "Yes. A 12-pack can carry two focus areas. Mobility and yoga pair naturally with it, and strength work adds load."
+    ],
+    [
+     "Where do sessions happen?",
+     "Reformer sessions need a reformer, so I confirm the place by email when you book."
+    ]
+   ]
+  }
+ }
+}

@@ -10,6 +10,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Six new focus pages (muscle building, fat loss, conditioning, shoulder strength, mobility and yoga,
   reformer Pilates), so every card links to its own page. The closing banner's sun no longer covers the
   headline. See `docs/session-2026-11-10-fitness-fx.md`.
+  Then the well-rounded path on all nine focus pages: a five-pillar wheel whose open points link to the
+  page that fills them, a four-level ladder, three health notes linked to CDC and NIH pages, and three
+  questions with FAQ schema. The home plan bar gets a small wheel that fills as you pick.
 
 ## 2026-11-09
 

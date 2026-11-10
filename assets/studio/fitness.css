@@ -621,10 +621,6 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-fbtn::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 138, 107, .26), transparent 70%); opacity: 0; transition: opacity .3s; }
 .nf-fbtn::after { content: ''; position: absolute; top: 23.5px; right: 23.5px; width: 5px; height: 5px; border-radius: 50%; opacity: 0; pointer-events: none; }
 .nf-fic { transition: transform .4s var(--nf-ease), background .2s; }
-.nf-fadd { align-self: end; padding-top: 10px; font: 600 11px/1 var(--mono); font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transition: color .2s, transform .35s var(--nf-ease); }
-.nf-fadd::before { content: '+ Add to my plan'; }
-.nf-fbtn[aria-pressed="true"] .nf-fadd { color: var(--nf-acc); }
-.nf-fbtn[aria-pressed="true"] .nf-fadd::before { content: 'In your plan'; }
 .nf-tick::before { content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid var(--nf-coral); opacity: 0; }
 .nf-fbtn.burst .nf-tick { animation: nf-tickpop .45s var(--nf-ease); }
 .nf-fbtn.burst .nf-tick::before { animation: nf-ring .6s ease-out; }
@@ -641,7 +637,6 @@ body[data-mode="fitness"] footer { margin-top: 0; }
   .nf-fbtn:hover::before { opacity: 1; }
   .nf-fbtn:hover .nf-fic { transform: translateY(-3px) rotate(-5deg) scale(1.07); background: var(--nf-coral-soft); }
   .nf-fbtn[aria-pressed="true"]:hover .nf-fic { background: var(--nf-coral); }
-  .nf-fbtn:hover .nf-fadd { color: var(--ink); transform: translateX(4px); }
 }
 /* The plan bar: two seats that fill, and a button that wakes once there is a plan */
 .nf-fslots { display: flex; gap: 6px; flex: none; }
@@ -684,9 +679,55 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-art .ar-rays { transform-box: view-box; transform-origin: 300px 170px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .nf-btn, .nf-btn::after, .nf-live i::after, .nf-combo-tap, .nf-combo-pill, .nf-combo-call, .nf-fbtn::before, .nf-fbtn::after, .nf-fic, .nf-fadd, .nf-tick, .nf-tick::before, .nf-fslots i, .nf-pack, .nf-pack::before, .nf-weeks i, .nf-slot, .nf-day { animation: none !important; transition: none !important; }
+  .nf-btn, .nf-btn::after, .nf-live i::after, .nf-combo-tap, .nf-combo-pill, .nf-combo-call, .nf-fbtn::before, .nf-fbtn::after, .nf-fic, .nf-tick, .nf-tick::before, .nf-fslots i, .nf-pack, .nf-pack::before, .nf-weeks i, .nf-slot, .nf-day { animation: none !important; transition: none !important; }
   .nf-combo-tap:hover, .nf-pack:hover, .nf-slot:hover, .nf-day:hover { transform: none !important; }
 }
 /* The calendar footer keeps its height when the hint text gives way to a picked time (phones wrapped to three lines). */
 @media (max-width: 719px) { .nf-cal-f { min-height: 93px; } }
 @media (max-width: 719px) { .nf-fslots { display: none; } }
+
+/* ===== Compact focus cards (2026-11-10): one row each: icon, name and line, tick, and the page link. =====
+   A card is about half its old height. Picking still changes colour and the tick only. */
+.nf-focus { grid-template-columns: 1fr; gap: 8px; }
+.nf-fc { position: relative; display: block; }
+.nf-fbtn { width: 100%; grid-template-columns: 48px 1fr; grid-template-rows: auto 1fr; column-gap: 14px; row-gap: 3px; align-content: center; min-height: 92px; padding: 14px 98px 14px 14px; }
+.nf-fbtn .nf-fic { grid-row: 1 / 3; align-self: center; width: 48px; height: 48px; margin: 0; border-radius: 14px; }
+.nf-fbtn .nf-fi { width: 38px; height: 38px; }
+.nf-fbtn b { align-self: end; font-size: 16px; }
+.nf-fbtn > span:not(.nf-fic) { align-self: start; }
+.nf-fbtn .nf-tick { top: 12px; right: 12px; width: 22px; height: 22px; }
+.nf-fbtn[aria-pressed="true"] .nf-tick::after { left: 7px; top: 3px; }
+.nf-fbtn::after { top: 20.5px; right: 20.5px; }
+.nf-fc .nf-flink { position: absolute; right: 10px; bottom: 8px; padding: 6px 4px; font-size: 12px; color: var(--ink-2); text-underline-offset: 3px; }
+.nf-fc .nf-flink:hover { color: var(--ink); }
+@media (min-width: 560px) { .nf-focus { grid-template-columns: 1fr 1fr; gap: 10px; } }
+@media (min-width: 720px) { .nf-fbtn { min-height: 104px; padding: 16px 100px 16px 16px; } }
+@media (min-width: 1024px) { .nf-focus { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
+
+/* Focus pages: the big mark, the "in detail" links and the pairing cards */
+.nf-fart { cursor: pointer; transition: transform .4s var(--nf-ease); }
+.nf-fart .nf-fi { width: auto; height: auto; }
+.nf-fart .a { fill: var(--nf-coral); }
+.nf-fart .h2-halo, .nf-fart .h2-orbit { transform-box: view-box; transform-origin: 180px 128px; }
+.nf-fart .fa-tile { transform-box: fill-box; transform-origin: 50% 50%; transition: rotate .45s var(--nf-ease), scale .45s var(--nf-ease); }
+.nf-fart .fa-ring { transform-box: fill-box; transform-origin: 50% 50%; opacity: 0; }
+.nf-fart.hit .fa-tile { animation: nf-stamp .5s var(--nf-ease); }
+.nf-fart.hit .fa-ring { animation: fa-ring .7s ease-out; }
+@keyframes fa-ring { 0% { opacity: .9; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.75); } }
+@media (hover: hover) {
+  .nf-fart:hover { transform: translateY(-5px); }
+  .nf-fart:hover .h2-halo { scale: 1.12; }
+  .nf-fart:hover .h2-orbit { scale: 1.06; opacity: 1; }
+  .nf-fart:hover .fa-tile { rotate: -4deg; scale: 1.06; }
+  .nf-fart:hover .h2-drift { translate: 0 -6px; }
+}
+.nf-more { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 600; color: var(--nf-acc); text-underline-offset: 3px; }
+.nf-pairc { grid-template-columns: 56px 1fr; column-gap: 16px; align-items: center; }
+.nf-pairc .nf-fic { grid-row: 1 / 3; width: 56px; height: 56px; margin: 0; border-radius: 16px; }
+.nf-pairc .nf-fi { width: 44px; height: 44px; }
+.nf-pairc h3 { align-self: end; }
+.nf-pairc p { align-self: start; font-size: 14px; }
+@media (hover: hover) { .nf-pairc:hover .nf-fic { transform: translateY(-3px) rotate(-5deg) scale(1.07); background: var(--nf-coral-soft); } }
+@media (min-width: 1024px) { .nf-foot .wrap { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { .nf-fart, .nf-fart * { animation: none !important; transition: none !important; } .nf-fart:hover { transform: none; } }
+@media (min-width: 720px) and (max-width: 1023px) { .nf-foot .wrap > div:first-child { grid-column: 1 / -1; } }

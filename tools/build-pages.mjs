@@ -137,6 +137,18 @@ export const PAGES = {
     'One on one Muay Thai with Nathan J. Song: teeps, round kicks, knees, elbows and the clinch on Thai pads. Brea and Rancho Santa Margarita, Orange County.', 'Private Muay Thai lessons'),
   'fit-yoga': fitPage('yoga-and-pilates', 'Yoga and Pilates', 'Private Yoga and Reformer Pilates in Orange County · NJS Fitness',
     'Private yoga with 400+ hours of training behind it, and reformer Pilates sessions while Nathan J. Song completes his certification. Orange County, at home or online.', 'Private yoga and reformer Pilates'),
+  'fit-muscle': fitPage('muscle-building', 'Muscle building', 'Muscle Building Personal Trainer in Orange County · NJS Fitness',
+    'Private strength training for building muscle in Brea and across Orange County. Clean form, load that goes up each week, twice a week for six weeks.', 'Muscle building personal training'),
+  'fit-fatloss': fitPage('fat-loss', 'Fat loss', 'Fat Loss Personal Trainer in Orange County · NJS Fitness',
+    'Private training for fat loss in Brea and across Orange County. Strength work that keeps your muscle, conditioning rounds and simple eating habits, twice a week for six weeks.', 'Fat loss personal training'),
+  'fit-conditioning': fitPage('conditioning', 'Conditioning', 'Private Conditioning Coach in Orange County · NJS Fitness',
+    'Private conditioning sessions in Brea and across Orange County: timed rounds and intervals on pads, the bag and bodyweight, twice a week for six weeks.', 'Conditioning training'),
+  'fit-shoulders': fitPage('shoulder-strength', 'Shoulder strength', 'Shoulder Strength and Mobility Training in Orange County · Steel Clubs and Maces · NJS Fitness',
+    'Private shoulder training in Brea and across Orange County with steel clubs and maces: rotation, stability and strength, twice a week for six weeks.', 'Shoulder strength training'),
+  'fit-mobility': fitPage('mobility-and-yoga', 'Mobility and yoga', 'Private Yoga and Mobility Sessions in Orange County · NJS Fitness',
+    'Private yoga and mobility sessions in Brea and across Orange County, with 400+ hours of yoga training behind them. Hips, back and shoulders that move freely.', 'Private yoga and mobility'),
+  'fit-pilates': fitPage('reformer-pilates', 'Reformer Pilates', 'Private Reformer Pilates in Orange County · NJS Fitness',
+    'Private reformer Pilates sessions in Orange County with Nathan J. Song, who is completing his reformer certification. Core strength, alignment and control.', 'Reformer Pilates'),
   'fit-coach': {
     ...fitPage('coach', 'About Nathan', 'About Nathan J. Song, Personal Trainer in Orange County · NJS Fitness',
       'Nathan J. Song is a personal trainer in Orange County: three-time SHRED winner, steel clubs and maces coach, kickboxing and yoga. Classes in Brea and Rancho Santa Margarita.', null),
@@ -224,8 +236,35 @@ function renderTiles(key) {
   return '<div class="nf-tiles">' + list.map(([icon, title, text]) => '<article class="nf-tile"><span class="nf-fic">' + FI(TECH_ICONS[icon]) + '</span><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p></article>').join('') + '</div>';
 }
 
+// A large animated mark for a focus page: the focus icon on a tile, inside the hero's halo and rings.
+// The icon sits in its own nested <svg>, so its moving part keeps its 64-grid coordinates.
+function renderFocusArt(id) {
+  if (!FOCUS_ICONS[id]) throw new Error('no focus icon for ' + id);
+  return ['<figure class="nf-art nf-fart" data-nf-fart aria-hidden="true">',
+    '<svg viewBox="0 0 360 260" fill="none" stroke-linecap="round" stroke-linejoin="round">',
+    '  <defs><linearGradient id="fa-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE1D4"/><stop offset=".72" stop-color="#FBF1EA"/><stop offset="1" stop-color="#FAF6F2"/></linearGradient><radialGradient id="fa-halo"><stop offset="0" stop-color="#FFF7E8"/><stop offset=".55" stop-color="#FFD2BF" stop-opacity=".7"/><stop offset="1" stop-color="#FFD2BF" stop-opacity="0"/></radialGradient><clipPath id="fa-card"><rect x="8" y="8" width="344" height="244" rx="28"/></clipPath></defs>',
+    '  <rect x="8" y="8" width="344" height="244" rx="28" fill="url(#fa-sky)"/>',
+    '  <g clip-path="url(#fa-card)"><g class="h2-halo"><circle cx="180" cy="128" r="118" fill="url(#fa-halo)"/></g>',
+    '  <g class="h2-orbit" stroke-width="2"><circle cx="180" cy="128" r="104" stroke="#B9A7F5" stroke-dasharray="3 11" opacity=".7"/><circle cx="180" cy="128" r="88" stroke="#7FD3C8" stroke-dasharray="26 14" opacity=".5"/></g></g>',
+    '  <g class="h2-drift"><circle cx="46" cy="52" r="5" fill="#7FD3C8"/><circle cx="318" cy="204" r="4" fill="#B9A7F5"/><path d="M312 44l3.5 7 7 3.5-7 3.5-3.5 7-3.5-7-7-3.5 7-3.5z" fill="#FF8A6B"/><rect x="38" y="190" width="7" height="12" rx="3.5" fill="#FFD2A8" transform="rotate(-18 41 196)"/></g>',
+    '  <circle class="fa-ring" cx="180" cy="128" r="70" stroke="#FF8A6B" stroke-width="4"/>',
+    '  <g class="fa-tile"><rect x="112" y="64" width="136" height="136" rx="38" fill="#121416" opacity=".12" transform="translate(5 7)"/><rect x="112" y="60" width="136" height="136" rx="38" fill="#fff" stroke="#121416" stroke-width="3.5"/>',
+    '  <svg class="nf-fi" x="126" y="74" width="108" height="108" viewBox="0 0 64 64" fill="none" stroke="#121416" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' + FOCUS_ICONS[id] + '</svg></g>',
+    '</svg>', '</figure>'].join('\n');
+}
+
+// "Pairs well with": two sibling focus pages as link cards.
+const PAIRS = { muscle: ['fat-loss', 'shoulders'], 'fat-loss': ['conditioning', 'muscle'], conditioning: ['boxing', 'fat-loss'], shoulders: ['muscle', 'mobility'], mobility: ['pilates', 'shoulders'], pilates: ['mobility', 'muscle'] };
+function renderPairs(id) {
+  if (!PAIRS[id]) throw new Error('no pairs for ' + id);
+  return '<div class="nf-cards c2">' + PAIRS[id].map((x) => {
+    const [fid, name, line, href] = FOCUS.find((f) => f[0] === x);
+    return '<a class="nf-card nf-pairc" href="' + href + '"><span class="nf-fic">' + FI(FOCUS_ICONS[fid]) + '</span><h3>' + esc(name) + '</h3><p>' + esc(line) + '</p></a>';
+  }).join('') + '</div>';
+}
+
 function renderFocus() {
-  const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><em class="nf-fadd" aria-hidden="true"></em><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '" aria-label="Learn more about ' + esc(name) + '">Learn more</a></li>';
+  const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '" aria-label="Learn more about ' + esc(name) + '">Learn more</a></li>';
   return ['<section class="nf-sec" id="focus" aria-labelledby="focus-h">', '  <div class="wrap">',
     '    <div class="nf-h"><div><p class="nf-k">Your focus</p><h2 id="focus-h"><span>Your 12 sessions,</span><span>your choice.</span></h2></div><p>Pick one or two things you want from the next six weeks. I build every session around them. Change your mind later and we change the plan.</p></div>',
     '    <ul class="nf-focus" data-nf-focus>', ...FOCUS.map(card), '    </ul>',
@@ -260,6 +299,8 @@ function expand(text, seen = []) {
     if (m[1] === 'nf-focus') return renderFocus();
     if (m[1] === 'nf-focus-form') return renderFocusForm();
     if (m[1].startsWith('nf-tiles-')) return renderTiles(m[1].slice(9));
+    if (m[1].startsWith('nf-fart-')) return renderFocusArt(m[1].slice(8));
+    if (m[1].startsWith('nf-pairs-')) return renderPairs(m[1].slice(9));
     if (seen.includes(m[1])) throw new Error('include loop: ' + seen.concat(m[1]).join(' > '));
     return expand(read(m[1]), seen.concat(m[1]));
   }).join('\n');

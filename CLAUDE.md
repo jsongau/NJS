@@ -11,7 +11,8 @@ This repo is **public**: never commit prices, secrets, keys or private notes.
 |---|---|---|
 | `/` | NJS Studio homepage (AI agents, websites, plans) | `partials/studio/pages/home.html` |
 | `/plans` `/build` `/work` `/care` `/crew` | Studio pages | `partials/studio/pages/<name>.html` |
-| `/fitness` | NJS Fitness: Jay as a coach (goal picker, session request) | `partials/studio/pages/fitness.html` + `partials/fitness/` |
+| `/fitness` | NJS Fitness home: hit-the-bag hero, focus picker, packs, Thursday calendar | `partials/studio/pages/fitness.html` + `partials/fitness/` |
+| `/fitness/<page>` | 15 fitness pages: hubs (personal-training, striking, clubs-and-maces, yoga-and-pilates), one page per focus (muscle-building, fat-loss, conditioning, shoulder-strength, mobility-and-yoga, reformer-pilates, boxing, kickboxing, muay-thai), coach, book | `partials/studio/pages/fit-*.html`, styles in `assets/studio/fitness.css`, behaviour in `assets/studio/fitness.js` |
 | `/resume` | Jay's interactive CV (the old homepage) | `resume/index.html`, hand edited |
 | `/galaxy` `/olesmoky` `/molsoncoors` `/btc` … | Portfolio demos, each self-contained | their own folder, hand edited |
 
@@ -29,6 +30,8 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | Footer | `partials/studio/footer.html` | rebuild pages |
 | FAQ | `partials/studio/faq.json` (`[question, answer]` pairs) | rebuild pages |
 | Fitness goals (5K, fight, Pilates…) | `partials/fitness/goals.json` (`[id, name, how, tags, who]`) | rebuild pages |
+| Fitness focus cards and where each links | `partials/fitness/focus.json` (`[id, name, line, page link]`); every focus needs its own page | rebuild pages |
+| A new fitness page | copy a `fit-*.html` page, add a `fitPage(...)` line to `PAGES` in `tools/build-pages.mjs`, link it from `focus.json` or the footer | rebuild pages |
 | Delivered projects, proof, logos | `assets/studio/data/projects.json`, logos in `assets/studio/brand/delivered/` | none |
 | Industries, kinds, plans, care tiers, links (booking URL, lead form) | `docs/nathan-j-song/studio-catalog.source.json` (**private, gitignored, only on Jay's Mac**) | `node tools/build-studio-catalog.mjs` |
 | Styles | `assets/studio/studio.css` (tokens on `:root`; fitness colors under `body[data-mode="fitness"]`) | none |

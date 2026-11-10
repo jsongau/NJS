@@ -306,4 +306,7 @@ export function mountFitness() {
   mountOpen();
   mountRipple();
   reveal($$('.nf-art'));
+  reveal($$('.nf-pairc'));
+  // Focus page mark: a click stamps the tile and sends out a ring.
+  $$('[data-nf-fart]').forEach((f) => f.addEventListener('click', () => replay(f, 'hit')));
 }

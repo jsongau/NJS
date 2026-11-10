@@ -2,6 +2,15 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-10
+
+- `/fitness` — Things answer when you hover and click: a hit-the-bag hero that counts out the 12-pack in
+  twelve punches, focus cards with a pointer light and a pick burst, a glowing 12-pack, an open-hours line
+  read from the Thursday calendar, calendar pops and a button ripple. Focus cards are half their old height.
+  Six new focus pages (muscle building, fat loss, conditioning, shoulder strength, mobility and yoga,
+  reformer Pilates), so every card links to its own page. The closing banner's sun no longer covers the
+  headline. See `docs/session-2026-11-10-fitness-fx.md`.
+
 ## 2026-11-09
 
 - `/fitness` — Light theme, a "Your first session" hero card (discipline, region, prefilled request),

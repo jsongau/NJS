@@ -1,31 +1,80 @@
-<figure class="nf-art nf-art-hero" aria-hidden="true">
-<svg viewBox="0 0 360 260" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<figure class="nf-art nf-art-hero nf-combo" data-nf-combo>
+<button type="button" class="nf-combo-tap" aria-label="Hit the bag. Twelve punches, one for each session in the 12-pack." data-nf-combo-tap>
+<svg viewBox="0 0 360 260" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   <defs>
-    <linearGradient id="hg-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE6DC"/><stop offset="1" stop-color="#FAF6F2"/></linearGradient>
-    <linearGradient id="hg-pad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9CC9F5"/><stop offset="1" stop-color="#5E9FE0"/></linearGradient>
-    <radialGradient id="hg-burst"><stop offset="0" stop-color="#FFF4C2"/><stop offset=".6" stop-color="#FF8A6B" stop-opacity=".6"/><stop offset="1" stop-color="#FF8A6B" stop-opacity="0"/></radialGradient>
+    <linearGradient id="h2-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE1D4"/><stop offset=".72" stop-color="#FBF1EA"/><stop offset="1" stop-color="#FAF6F2"/></linearGradient>
+    <radialGradient id="h2-halo"><stop offset="0" stop-color="#FFF7E8"/><stop offset=".55" stop-color="#FFD2BF" stop-opacity=".7"/><stop offset="1" stop-color="#FFD2BF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="h2-bag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF9F84"/><stop offset=".45" stop-color="#FF7A5C"/><stop offset="1" stop-color="#D9532F"/></linearGradient>
+    <linearGradient id="h2-glove" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9A7E"/><stop offset="1" stop-color="#F0603C"/></linearGradient>
+    <linearGradient id="h2-skin" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD9BF"/><stop offset="1" stop-color="#F5B894"/></linearGradient>
+    <radialGradient id="h2-burst"><stop offset="0" stop-color="#FFFBE0"/><stop offset=".5" stop-color="#FFB38F" stop-opacity=".85"/><stop offset="1" stop-color="#FF8A6B" stop-opacity="0"/></radialGradient>
+    <clipPath id="h2-card"><rect x="8" y="8" width="344" height="244" rx="28"/></clipPath>
   </defs>
-  <rect x="8" y="8" width="344" height="244" rx="28" fill="url(#hg-sky)"/>
-  <g class="ar-rings"><circle cx="270" cy="96" r="38" stroke="#B9A7F5" stroke-width="2" opacity=".5"/><circle cx="270" cy="96" r="58" stroke="#7FD3C8" stroke-width="2" opacity=".35"/></g>
-  <path d="M30 222h300" stroke="#EAE2DA" stroke-width="3"/>
-  <g class="ar-float"><circle cx="58" cy="58" r="5" fill="#7FD3C8"/><circle cx="312" cy="196" r="4" fill="#B9A7F5"/><path d="M300 40l4 8 8 4-8 4-4 8-4-8-8-4 8-4z" fill="#FF8A6B"/></g>
-  <!-- coach holding pad -->
-  <g class="ar-coach">
-    <circle cx="282" cy="72" r="15" fill="#121416"/>
-    <path d="M282 88v58M282 146l-14 62M282 146l14 62" stroke="#121416" stroke-width="9"/>
-    <path d="M282 104l-26 6" stroke="#121416" stroke-width="8"/>
-    <g class="ar-padhit"><rect x="236" y="88" width="20" height="38" rx="9" fill="url(#hg-pad)" stroke="#121416" stroke-width="3"/></g>
+  <rect x="8" y="8" width="344" height="244" rx="28" fill="url(#h2-sky)"/>
+  <g clip-path="url(#h2-card)">
+    <g class="h2-halo"><circle cx="138" cy="118" r="104" fill="url(#h2-halo)"/></g>
+    <g class="h2-orbit" stroke-width="2"><circle cx="138" cy="118" r="86" stroke="#B9A7F5" stroke-dasharray="3 11" opacity=".7"/><circle cx="138" cy="118" r="70" stroke="#7FD3C8" stroke-dasharray="26 14" opacity=".5"/></g>
+    <g class="h2-drift"><circle cx="46" cy="52" r="5" fill="#7FD3C8"/><circle cx="326" cy="188" r="4" fill="#B9A7F5"/><path d="M322 44l3.5 7 7 3.5-7 3.5-3.5 7-3.5-7-7-3.5 7-3.5z" fill="#FF8A6B"/><rect x="34" y="164" width="7" height="12" rx="3.5" fill="#FFD2A8" transform="rotate(-18 37 170)"/></g>
+    <path d="M8 224h344v28H8z" fill="#F3E9E1"/>
+    <path d="M24 224h312" stroke="#E2D6CC" stroke-width="2.5"/>
+    <ellipse cx="118" cy="228" rx="50" ry="5" fill="#121416" opacity=".1"/>
+    <ellipse class="h2-bagshadow" cx="266" cy="228" rx="26" ry="4" fill="#121416" opacity=".1"/>
   </g>
-  <!-- athlete jab cycle -->
-  <g class="ar-boxer">
-    <circle cx="112" cy="70" r="16" fill="#FF8A6B" stroke="#121416" stroke-width="3"/>
-    <path d="M112 87v56" stroke="#121416" stroke-width="10"/>
-    <path d="M112 143l-20 64M112 143l24 62" stroke="#121416" stroke-width="9"/>
-    <g class="ar-rear"><path d="M112 104l18 10" stroke="#121416" stroke-width="8"/><circle cx="134" cy="114" r="9" fill="#FF8A6B" stroke="#121416" stroke-width="3"/></g>
-    <g class="ar-jab"><path d="M112 100h30" stroke="#121416" stroke-width="8"/><circle cx="146" cy="100" r="10" fill="#FF6F61" stroke="#121416" stroke-width="3"/></g>
+
+  <!-- heavy bag: outer group sways, inner group takes the hit -->
+  <path d="M236 14h60" stroke="#121416" stroke-width="5"/>
+  <g class="h2-sway"><g class="h2-kick">
+    <path d="M266 16v20M266 36l-13 20M266 36l13 20" stroke="#121416" stroke-width="2.5"/>
+    <rect x="243" y="54" width="46" height="122" rx="21" fill="url(#h2-bag)" stroke="#121416" stroke-width="3.5"/>
+    <path d="M244.5 76h43M244.5 154h43" stroke="#121416" stroke-width="3" opacity=".85"/>
+    <path d="M253 88v52" stroke="#fff" stroke-width="5" opacity=".38"/>
+    <path d="M280 92v8M280 108v8M280 124v8" stroke="#121416" stroke-width="2" opacity=".35"/>
+    <path d="M266 176v8" stroke="#121416" stroke-width="3"/><circle cx="266" cy="187" r="3.5" fill="#121416"/>
+  </g></g>
+
+  <!-- boxer -->
+  <g class="h2-body"><g class="h2-lunge">
+    <path d="M114 152L97 187 86 214" stroke="#121416" stroke-width="13"/>
+    <rect x="72" y="211" width="27" height="12" rx="6" fill="#FF8A6B" stroke="#121416" stroke-width="3"/>
+    <path d="M123 152l18 33 2 29" stroke="#121416" stroke-width="13"/>
+    <rect x="133" y="211" width="29" height="12" rx="6" fill="#FF8A6B" stroke="#121416" stroke-width="3"/>
+    <!-- rear arm: guard and cross -->
+    <g class="h2-g2"><path d="M116 101l13 19 12-17" stroke="url(#h2-skin)" stroke-width="10"/><path d="M116 101l13 19 12-17" stroke="#121416" stroke-width="10" opacity=".08"/></g>
+    <path d="M101 142c-5-22 1-42 14-52l24-1c9 11 8 31 2 49z" fill="#1B1E22" stroke="#121416" stroke-width="3"/>
+    <path d="M118 92c5 6 13 7 19 1" stroke="#FF8A6B" stroke-width="3"/>
+    <path d="M98 138l42-4 8 31-22 5-5-13-8 15-21-6z" fill="#FF8A6B" stroke="#121416" stroke-width="3"/>
+    <path d="M99 145l41-4" stroke="#fff" stroke-width="3" opacity=".7"/>
+    <path d="M131 80l-1 9" stroke="#F5B894" stroke-width="10"/>
+    <g class="h2-head">
+      <circle cx="136" cy="68" r="15.5" fill="url(#h2-skin)" stroke="#121416" stroke-width="3"/>
+      <path d="M121 66c-1-11 8-18 17-16 5 1 9 4 11 8-9-3-18-1-28 8z" fill="#121416"/>
+      <path d="M121.5 67.500c9-6 19-8 29.5-5.5" stroke="#FF6F61" stroke-width="4"/>
+      <circle cx="144" cy="70" r="1.8" fill="#121416"/><path d="M143 78c2 1 4 1 5 0" stroke="#121416" stroke-width="1.8"/>
+    </g>
+    <g class="h2-g2"><circle cx="143" cy="98" r="11" fill="url(#h2-glove)" stroke="#121416" stroke-width="3"/><path d="M137 94c2-3 5-4 8-3" stroke="#fff" stroke-width="2" opacity=".7"/></g>
+    <g class="h2-x2"><path d="M118 101l96 2" stroke="url(#h2-skin)" stroke-width="10"/><circle cx="226" cy="103" r="12.5" fill="url(#h2-glove)" stroke="#121416" stroke-width="3"/><path d="M219 98c2-3 6-5 10-3" stroke="#fff" stroke-width="2" opacity=".7"/></g>
+    <!-- lead arm: guard and jab -->
+    <g class="h2-g1"><path d="M137 100l15 15 9-18" stroke="url(#h2-skin)" stroke-width="10"/><circle cx="163" cy="91" r="11.5" fill="url(#h2-glove)" stroke="#121416" stroke-width="3"/><path d="M157 87c2-3 5-4 8-3" stroke="#fff" stroke-width="2" opacity=".7"/></g>
+    <g class="h2-x1"><path d="M137 99l84-4" stroke="url(#h2-skin)" stroke-width="10"/><circle cx="232" cy="94" r="12.5" fill="url(#h2-glove)" stroke="#121416" stroke-width="3"/><path d="M225 89c2-3 6-5 10-3" stroke="#fff" stroke-width="2" opacity=".7"/></g>
+  </g></g>
+
+  <g class="h2-speed" stroke="#121416" stroke-width="2.5" opacity=".5"><path d="M170 81h22M178 112h26M162 118h14"/></g>
+  <g class="h2-imp"><circle cx="240" cy="98" r="30" fill="url(#h2-burst)"/><path d="M226 72l-7-12M244 66l2-14M258 76l11-8M224 124l-9 8M252 130l6 11" stroke="#FF6F61" stroke-width="3.5"/></g>
+  <g class="h2-sweat" fill="#9CC9F5"><path d="M118 52c-3 4-3 7 0 8 3-1 3-4 0-8z"/><path d="M108 66c-2 3-2 5 0 6 2-1 2-3 0-6z"/></g>
+  <g class="h2-confetti"><rect x="238" y="86" width="6" height="10" rx="3" fill="#7FD3C8"/><rect x="238" y="86" width="6" height="10" rx="3" fill="#B9A7F5"/><rect x="238" y="86" width="6" height="10" rx="3" fill="#FFD2A8"/><circle cx="241" cy="92" r="4" fill="#FF6F61"/><circle cx="241" cy="92" r="3.5" fill="#9CC9F5"/><path d="M241 84l2.5 5 5 2.5-5 2.5-2.5 5-2.5-5-5-2.5 5-2.500z" fill="#121416"/></g>
+
+  <!-- twelve pips: six weeks, two sessions each -->
+  <g class="h2-pips" data-nf-combo-pips>
+    <rect x="62" y="235" width="14" height="7" rx="3.5"/><rect x="79" y="235" width="14" height="7" rx="3.5"/>
+    <rect x="103" y="235" width="14" height="7" rx="3.5"/><rect x="120" y="235" width="14" height="7" rx="3.5"/>
+    <rect x="144" y="235" width="14" height="7" rx="3.5"/><rect x="161" y="235" width="14" height="7" rx="3.5"/>
+    <rect x="185" y="235" width="14" height="7" rx="3.5"/><rect x="202" y="235" width="14" height="7" rx="3.5"/>
+    <rect x="226" y="235" width="14" height="7" rx="3.5"/><rect x="243" y="235" width="14" height="7" rx="3.5"/>
+    <rect x="267" y="235" width="14" height="7" rx="3.5"/><rect x="284" y="235" width="14" height="7" rx="3.5"/>
   </g>
-  <g class="ar-impact"><circle cx="232" cy="104" r="26" fill="url(#hg-burst)"/><path d="M220 82l-6-10M236 78l2-12M248 88l10-6M218 124l-8 6" stroke="#FF8A6B" stroke-width="3"/></g>
-  <g class="ar-sweat"><path d="M96 58c-3 4-3 7 0 8 3-1 3-4 0-8z" fill="#9CC9F5"/><path d="M128 52c-2 3-2 5 0 6 2-1 2-3 0-6z" fill="#9CC9F5"/></g>
-  <g class="ar-count" font-family="Geist Mono, monospace" font-weight="700" font-size="14" fill="#121416"><text x="40" y="200">1</text><text x="40" y="200">2</text><text x="40" y="200">3</text></g>
 </svg>
+<span class="nf-combo-pill" aria-hidden="true" data-nf-combo-pill>Hit the bag</span>
+<span class="nf-combo-call" aria-hidden="true" data-nf-combo-call></span>
+</button>
+<p class="nf-combo-live" role="status" data-nf-combo-live></p>
 </figure>

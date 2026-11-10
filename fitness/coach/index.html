@@ -131,9 +131,9 @@
       <div class="nf-art-wide">
 <figure class="nf-art nf-art-sunrise" aria-hidden="true">
 <svg viewBox="0 0 600 200" fill="none" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMax meet">
-  <defs><linearGradient id="sg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1E6"/><stop offset="1" stop-color="#FFD3A8"/></linearGradient></defs>
-  <g class="ar-rays" style="transform-origin:300px 170px"><path d="M300 30v24M220 58l14 18M380 58l-14 18M170 120h24M406 120h24M246 34l8 22M354 34l-8 22" stroke="#121416" stroke-width="4" opacity=".55"/></g>
-  <g class="ar-sun"><circle cx="300" cy="170" r="70" fill="url(#sg-sun)" stroke="#121416" stroke-width="4"/></g>
+  <defs><clipPath id="sg-sky"><rect x="-40" y="-60" width="680" height="230"/></clipPath><linearGradient id="sg-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1E6"/><stop offset="1" stop-color="#FFD3A8"/></linearGradient></defs>
+  <g clip-path="url(#sg-sky)"><g class="ar-rays"><path d="M300 30v24M220 58l14 18M380 58l-14 18M170 120h24M406 120h24M246 34l8 22M354 34l-8 22" stroke="#121416" stroke-width="4" opacity=".55"/></g>
+  <g class="ar-sun"><circle cx="300" cy="170" r="70" fill="url(#sg-sun)" stroke="#121416" stroke-width="4"/></g></g>
   <path d="M0 170h600" stroke="#121416" stroke-width="4"/>
   <g class="ar-runner">
     <circle cx="0" cy="118" r="9" fill="#121416"/>

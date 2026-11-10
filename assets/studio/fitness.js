@@ -20,6 +20,9 @@ const ERR = {
 
 const fmt = (h) => (h % 12 || 12) + ':00 ' + (h < 12 ? 'AM' : 'PM');
 const iso = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const openHours = (d, now) => HOURS.filter((h) => !CLASS.has(h) && !BOOKED.has(h) && !(iso(d) === iso(now) && h <= now.getHours())).length;
+// Restart a one-shot CSS animation: drop the class, force a style pass, add it again.
+const replay = (el, cls) => { el.classList.remove(cls); void el.getBoundingClientRect(); el.classList.add(cls); };
 const label = (d, h) => 'Thu ' + MON[d.getMonth()] + ' ' + d.getDate() + ' · ' + fmt(h);
 
 // The next four Thursdays, counted from today in the visitor's clock. A Thursday whose hours have
@@ -41,7 +44,7 @@ function mountCalendar(form) {
   const now = new Date();
   let day = 0, hour = null;
 
-  days.innerHTML = th.map((x, i) => '<button type="button" class="nf-day" aria-pressed="' + (i === 0) + '" data-i="' + i + '"><small>Thu</small><b>' + x.getDate() + '</b><small>' + MON[x.getMonth()] + '</small></button>').join('');
+  days.innerHTML = th.map((x, i) => '<button type="button" class="nf-day" aria-pressed="' + (i === 0) + '" data-i="' + i + '"><small>Thu</small><b>' + x.getDate() + '</b><small>' + MON[x.getMonth()] + '</small><small class="nf-day-n">' + openHours(x, now) + ' open</small></button>').join('');
   const drawSlots = () => {
     const today = iso(th[day]) === iso(now);
     slots.innerHTML = HOURS.map((h) => {
@@ -163,13 +166,14 @@ const FOCUS_MAX = 2;
 function mountFocus() {
   const list = $('[data-nf-focus]');
   if (!list) return;
-  const sum = $('[data-nf-fsum]'), go = $('[data-nf-fgo]'), bar = $('[data-nf-bar]'), barGo = $('[data-nf-bar-go]');
+  const sum = $('[data-nf-fsum]'), go = $('[data-nf-fgo]'), fbar = $('[data-nf-fbar]'), bar = $('[data-nf-bar]'), barGo = $('[data-nf-bar-go]');
   const picked = [];
   const name = (id) => $('.nf-fbtn[data-focus="' + id + '"] b', list).textContent;
   const render = () => {
     $$('.nf-fbtn', list).forEach((b) => b.setAttribute('aria-pressed', String(picked.includes(b.dataset.focus))));
     const href = '/fitness/book?pack=12' + (picked.length ? '&focus=' + picked.join(',') : '');
     go.setAttribute('href', href);
+    if (fbar) fbar.dataset.n = picked.length;
     if (!picked.length) { sum.innerHTML = '<b>Pick up to two</b>Tap a card to add it to your plan.'; return; }
     const text = picked.map(name).join(' + ');
     sum.innerHTML = '<b>' + text + '</b>Your 12-pack is built around ' + (picked.length === 1 ? 'this' : 'these') + '.';
@@ -180,8 +184,16 @@ function mountFocus() {
     if (!b) return;
     const id = b.dataset.focus, i = picked.indexOf(id);
     if (i >= 0) picked.splice(i, 1);
-    else { picked.push(id); if (picked.length > FOCUS_MAX) picked.shift(); track('goal_picked', { detail: id }); }
+    else { picked.push(id); if (picked.length > FOCUS_MAX) picked.shift(); replay(b, 'burst'); track('goal_picked', { detail: id }); }
     render();
+  });
+  // A soft light follows the pointer across each card.
+  list.addEventListener('pointermove', (e) => {
+    const b = e.target.closest('.nf-fbtn');
+    if (!b || e.pointerType === 'touch') return;
+    const r = b.getBoundingClientRect();
+    b.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    b.style.setProperty('--my', (e.clientY - r.top) + 'px');
   });
   reveal($$('.nf-fc', list));
   list.dataset.ready = '1';
@@ -229,6 +241,59 @@ function mountVideos() {
   }));
 }
 
+// Hero: hit the bag. Each tap throws a jab or a cross and lights one of twelve pips, two a week for
+// six weeks, so the visitor counts out the 12-pack with their own hand. The idle loop yields while
+// they play and comes back after seven quiet seconds. Everything moves inside a fixed frame.
+function mountCombo() {
+  const fig = $('[data-nf-combo]');
+  if (!fig) return;
+  const tap = $('[data-nf-combo-tap]', fig), pill = $('[data-nf-combo-pill]', fig), call = $('[data-nf-combo-call]', fig), live = $('[data-nf-combo-live]', fig);
+  const pips = $$('[data-nf-combo-pips] rect', fig);
+  const cta = $('.nf-hero .nf-btn.nf-ink');
+  let n = 0, idle = 0, tracked = false;
+  tap.addEventListener('click', () => {
+    if (n >= 12) { n = 0; fig.classList.remove('done'); pips.forEach((p) => p.classList.remove('on', 'pop')); }
+    n++;
+    const cross = n % 2 === 0;
+    fig.classList.add('used');
+    fig.classList.remove('pa', 'pb');
+    replay(fig, cross ? 'pb' : 'pa');
+    pips[n - 1].classList.add('on');
+    replay(pips[n - 1], 'pop');
+    call.textContent = n === 12 ? '12 of 12' : cross ? 'Cross' : 'Jab';
+    replay(call, 'go');
+    pill.innerHTML = n === 12 ? 'That\'s the 12-pack' : '<b>' + n + '</b>/12 · week ' + Math.ceil(n / 2);
+    if (n === 12) {
+      fig.classList.add('done');
+      if (cta) replay(cta, 'nf-wake');
+      live.textContent = 'Twelve punches. That is the 12-pack: two sessions a week for six weeks.';
+      track('fit_tab', { detail: 'hero_12' });
+    } else if (!tracked) { tracked = true; track('fit_tab', { detail: 'hero_combo' }); }
+    clearTimeout(idle);
+    idle = setTimeout(() => fig.classList.remove('used', 'pa', 'pb'), 7000);
+  });
+}
+
+// The hero line counts the open hours on the next Thursday from the same data as the calendar.
+function mountOpen() {
+  const el = $('[data-nf-open] span');
+  if (!el) return;
+  const now = new Date(), d = thursdays(now)[0], n = openHours(d, now);
+  if (n) el.innerHTML = '<b>' + n + ' open hour' + (n === 1 ? '' : 's') + '</b> · Thu ' + MON[d.getMonth()] + ' ' + d.getDate() + ' in Brea';
+}
+
+// A press ripple that starts where the button was touched.
+function mountRipple() {
+  document.addEventListener('pointerdown', (e) => {
+    const b = e.target.closest && e.target.closest('.nf-btn');
+    if (!b) return;
+    const r = b.getBoundingClientRect();
+    b.style.setProperty('--rx', (e.clientX - r.left) + 'px');
+    b.style.setProperty('--ry', (e.clientY - r.top) + 'px');
+    replay(b, 'rip');
+  });
+}
+
 export function mountFitness() {
   if (document.body.dataset.mode !== 'fitness') return;
   const form = $('#nf-form');
@@ -237,5 +302,8 @@ export function mountFitness() {
   mountVideos();
   mountFocus();
   mountStance();
+  mountCombo();
+  mountOpen();
+  mountRipple();
   reveal($$('.nf-art'));
 }

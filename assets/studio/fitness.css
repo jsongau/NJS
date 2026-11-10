@@ -515,3 +515,178 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-split .nf-art { margin-top: 20px; max-width: 420px; }
 .nf-dark.split .nf-art { max-width: 460px; justify-self: center; width: 100%; }
 @media (min-width: 1024px) { .nf-hero-art { margin-top: 0; } }
+
+/* ===== FX layer (2026-11-10): things answer when you hover and when you click. =====
+   Mary's rules hold: every effect is transform, opacity, colour or shadow inside a fixed frame,
+   so nothing moves the layout. Loops yield while the visitor plays. Reduced motion gets none of it. */
+@property --nf-ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@keyframes nf-ang { to { --nf-ang: 360deg; } }
+@keyframes nf-glow { 0% { box-shadow: 0 0 0 0 rgba(255, 138, 107, .65); } 70%, 100% { box-shadow: 0 0 0 14px rgba(255, 138, 107, 0); } }
+@keyframes nf-rip { from { transform: scale(0); opacity: .28; } to { transform: scale(16); opacity: 0; } }
+@keyframes nf-pop { 0% { transform: scale(.94); } 55% { transform: scale(1.05); } 100% { transform: none; } }
+
+/* Press ripple on every fitness button */
+.nf-btn { position: relative; overflow: hidden; }
+.nf-btn::after { content: ''; position: absolute; left: var(--rx, 50%); top: var(--ry, 50%); width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: currentColor; opacity: 0; pointer-events: none; }
+.nf-btn.rip::after { animation: nf-rip .55s ease-out; }
+.nf-btn.nf-wake { animation: nf-glow 1s ease-out 3; }
+
+/* Hero line: open hours on the next Thursday */
+.nf-live { display: inline-flex; align-items: center; gap: 10px; margin-top: 16px; min-height: 28px; font-size: 14px; color: var(--ink-2); text-decoration: none; white-space: nowrap; }
+.nf-live b { color: var(--ink); }
+.nf-live i { position: relative; flex: none; width: 9px; height: 9px; border-radius: 50%; background: #2FB67C; }
+.nf-live i::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #2FB67C; animation: nf-ping 1.8s ease-out infinite; }
+.nf-live:hover span { text-decoration: underline; text-underline-offset: 3px; }
+@keyframes nf-ping { from { transform: scale(1); opacity: .7; } to { transform: scale(3.2); opacity: 0; } }
+
+/* Hero: hit the bag */
+.nf-combo-tap { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 28px; font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: transform .4s var(--nf-ease); }
+.nf-combo-tap:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+.nf-combo-tap:active { transform: scale(.985); }
+.nf-combo-pill { position: absolute; left: 7%; top: 8.5%; padding: 7px 11px; border-radius: 999px; background: var(--surface); border: 1.5px solid var(--ink); font: 600 12px/1 var(--mono); letter-spacing: .04em; color: var(--ink); white-space: nowrap; transition: background .25s, transform .35s var(--nf-ease); }
+.nf-combo-pill b { color: var(--nf-acc); }
+.done .nf-combo-pill { background: var(--nf-coral); }
+.done .nf-combo-pill b { color: var(--ink); }
+.nf-combo-call { position: absolute; left: 57%; top: 13%; font: 700 15px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); white-space: nowrap; opacity: 0; pointer-events: none; }
+.nf-combo-call.go { animation: h2-call .7s ease-out; }
+.nf-combo-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.nf-combo svg > g, .nf-combo svg g g { transform-box: view-box; }
+.h2-halo, .h2-orbit { transform-origin: 138px 118px; }
+.h2-sway, .h2-kick { transform-origin: 266px 16px; }
+.h2-lunge { transform-origin: 118px 222px; }
+.h2-x1 { transform-origin: 137px 99px; opacity: 0; }
+.h2-x2 { transform-origin: 118px 101px; opacity: 0; }
+.h2-imp { transform-origin: 240px 98px; opacity: 0; }
+.h2-speed, .h2-sweat { opacity: 0; }
+.h2-confetti > * { opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; }
+.h2-pips rect { fill: #E4D5CA; transform-box: fill-box; transform-origin: 50% 50%; transition: fill .2s; }
+.h2-pips rect.on { fill: #121416; }
+.h2-pips rect.pop { animation: h2-pip .4s var(--nf-ease); }
+.done .h2-pips rect.on { fill: #FF6F61; }
+.h2-halo, .h2-orbit, .h2-body, .h2-g1, .h2-drift { transition: scale .5s var(--nf-ease), translate .45s var(--nf-ease), opacity .3s; }
+/* idle loop: bounce, sway, one jab every few seconds */
+.live .h2-body { animation: h2-bob 1.1s ease-in-out infinite; }
+.live .h2-sway { animation: h2-sway 3.6s ease-in-out infinite; }
+.live .h2-orbit { animation: ar-spin 44s linear infinite; }
+.live .h2-drift { animation: ar-float 4.5s ease-in-out infinite; transform-box: fill-box; }
+.live:not(.used) .h2-g1 { animation: h2-i-hide 3.6s infinite; }
+.live:not(.used) .h2-x1 { animation: h2-i-show 3.6s infinite; }
+.live:not(.used) .h2-imp { animation: h2-i-imp 3.6s infinite; }
+.live:not(.used) .h2-kick { animation: h2-i-kick 3.6s infinite; }
+/* a tap: .pa is the jab, .pb the cross */
+.pa .h2-g1, .pb .h2-g2 { animation: h2-hide .46s both; }
+.pa .h2-x1, .pb .h2-x2 { animation: h2-show .46s both; }
+.pb .h2-lunge { animation: h2-lunge .46s var(--nf-ease) both; }
+.pa .h2-imp, .pb .h2-imp { animation: h2-imp .5s ease-out both; }
+.pa .h2-kick { animation: h2-kick .95s ease-out both; }
+.pb .h2-kick { animation: h2-kick2 1.05s ease-out both; }
+.pa .h2-speed, .pb .h2-speed { animation: h2-speed .4s ease-out both; }
+.pb .h2-sweat { animation: ar-sweat 1s ease-in both; transform-box: fill-box; }
+.done .h2-confetti > * { animation: h2-conf .9s cubic-bezier(.2, .7, .3, 1) both; }
+.done .h2-confetti > :nth-child(1) { --cx: -46px; --cy: -58px; --cr: 200deg; }
+.done .h2-confetti > :nth-child(2) { --cx: 38px; --cy: -66px; --cr: -160deg; }
+.done .h2-confetti > :nth-child(3) { --cx: -70px; --cy: -18px; --cr: 120deg; }
+.done .h2-confetti > :nth-child(4) { --cx: 60px; --cy: -26px; --cr: 0deg; }
+.done .h2-confetti > :nth-child(5) { --cx: -22px; --cy: -84px; --cr: 0deg; }
+.done .h2-confetti > :nth-child(6) { --cx: 12px; --cy: -96px; --cr: 90deg; }
+@keyframes h2-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(2.5px); } }
+@keyframes h2-sway { 0%, 100% { transform: rotate(-1.6deg); } 50% { transform: rotate(1.6deg); } }
+@keyframes h2-i-hide { 0%, 40% { opacity: 1; } 41%, 50% { opacity: 0; } 51%, 100% { opacity: 1; } }
+@keyframes h2-i-show { 0%, 40% { opacity: 0; transform: scaleX(.6); } 43%, 49% { opacity: 1; transform: none; } 51%, 100% { opacity: 0; transform: scaleX(.75); } }
+@keyframes h2-i-imp { 0%, 42% { opacity: 0; transform: scale(.3); } 44% { opacity: 1; transform: scale(1); } 54%, 100% { opacity: 0; transform: scale(1.4); } }
+@keyframes h2-i-kick { 0%, 43% { transform: rotate(0); } 50% { transform: rotate(-6deg); } 62% { transform: rotate(3deg); } 74% { transform: rotate(-1.5deg); } 86%, 100% { transform: rotate(0); } }
+@keyframes h2-hide { 0% { opacity: 1; } 8%, 80% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes h2-show { 0% { opacity: 0; transform: scaleX(.55); } 22%, 62% { opacity: 1; transform: none; } 100% { opacity: 0; transform: scaleX(.78); } }
+@keyframes h2-lunge { 0%, 100% { transform: none; } 25%, 60% { transform: skewX(-4deg); } }
+@keyframes h2-imp { 0%, 14% { opacity: 0; transform: scale(.3); } 26% { opacity: 1; transform: scale(1.1); } 75%, 100% { opacity: 0; transform: scale(1.55); } }
+@keyframes h2-kick { 0%, 10% { transform: rotate(0); } 28% { transform: rotate(-9deg); } 52% { transform: rotate(4.5deg); } 74% { transform: rotate(-2deg); } 100% { transform: rotate(0); } }
+@keyframes h2-kick2 { 0%, 10% { transform: rotate(0); } 26% { transform: rotate(-14deg); } 48% { transform: rotate(7deg); } 68% { transform: rotate(-3.5deg); } 86% { transform: rotate(1.5deg); } 100% { transform: rotate(0); } }
+@keyframes h2-speed { 0% { opacity: 0; transform: translateX(-14px); } 30% { opacity: .55; } 100% { opacity: 0; transform: translateX(22px); } }
+@keyframes h2-pip { 0% { transform: scale(.4); } 55% { transform: scale(1.5); } 100% { transform: none; } }
+@keyframes h2-call { 0% { opacity: 0; transform: translate(-50%, 8px) scale(.8); } 20% { opacity: 1; transform: translate(-50%, 0) scale(1.08); } 70% { opacity: 1; transform: translate(-50%, -6px); } 100% { opacity: 0; transform: translate(-50%, -16px); } }
+@keyframes h2-conf { 0% { opacity: 0; translate: 0 0; rotate: 0deg; scale: .4; } 15% { opacity: 1; scale: 1.2; } 100% { opacity: 0; translate: var(--cx) var(--cy); rotate: var(--cr); scale: 1; } }
+@media (hover: hover) {
+  .nf-combo-tap:hover { transform: translateY(-5px); }
+  .nf-combo-tap:hover .h2-halo { scale: 1.14; }
+  .nf-combo-tap:hover .h2-orbit { scale: 1.07; opacity: 1; }
+  .nf-combo-tap:hover .h2-body { translate: 5px 0; }
+  .nf-combo-tap:hover .h2-g1 { translate: 3px -5px; }
+  .nf-combo-tap:hover .h2-drift { translate: 0 -6px; }
+  .nf-combo-tap:hover .nf-combo-pill { background: var(--nf-coral); transform: translateY(-2px) rotate(-2deg); }
+  .nf-combo-tap:hover .nf-combo-pill b { color: var(--ink); }
+}
+
+/* Focus cards: a light follows the pointer, the icon tips forward, a pick lands with a burst */
+.nf-fbtn { grid-template-rows: auto auto auto 1fr; overflow: hidden; isolation: isolate; }
+.nf-fbtn::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 138, 107, .26), transparent 70%); opacity: 0; transition: opacity .3s; }
+.nf-fbtn::after { content: ''; position: absolute; top: 23.5px; right: 23.5px; width: 5px; height: 5px; border-radius: 50%; opacity: 0; pointer-events: none; }
+.nf-fic { transition: transform .4s var(--nf-ease), background .2s; }
+.nf-fadd { align-self: end; padding-top: 10px; font: 600 11px/1 var(--mono); font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); transition: color .2s, transform .35s var(--nf-ease); }
+.nf-fadd::before { content: '+ Add to my plan'; }
+.nf-fbtn[aria-pressed="true"] .nf-fadd { color: var(--nf-acc); }
+.nf-fbtn[aria-pressed="true"] .nf-fadd::before { content: 'In your plan'; }
+.nf-tick::before { content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid var(--nf-coral); opacity: 0; }
+.nf-fbtn.burst .nf-tick { animation: nf-tickpop .45s var(--nf-ease); }
+.nf-fbtn.burst .nf-tick::before { animation: nf-ring .6s ease-out; }
+.nf-fbtn.burst::after { animation: nf-sparks .65s ease-out; }
+.nf-fbtn.burst .nf-fic { animation: nf-stamp .5s var(--nf-ease); }
+@keyframes nf-tickpop { 0% { transform: scale(.6); } 55% { transform: scale(1.35); } 100% { transform: none; } }
+@keyframes nf-ring { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(3.4); opacity: 0; } }
+@keyframes nf-stamp { 0% { transform: scale(.88) rotate(-8deg); } 55% { transform: scale(1.14) rotate(4deg); } 100% { transform: none; } }
+@keyframes nf-sparks {
+  0% { opacity: 1; box-shadow: 0 0 0 #FF8A6B, 0 0 0 #7FD3C8, 0 0 0 #B9A7F5, 0 0 0 #FFD2A8, 0 0 0 #FF6F61, 0 0 0 #9CC9F5, 0 0 0 #121416, 0 0 0 #FF8A6B; }
+  100% { opacity: 0; box-shadow: 0 -38px 0 #FF8A6B, -30px -24px 0 #7FD3C8, -40px 4px 0 #B9A7F5, -26px 30px 0 #FFD2A8, 2px 40px 0 #FF6F61, 12px 26px 0 #9CC9F5, -14px -36px 0 #121416, -42px -14px 0 #FF8A6B; }
+}
+@media (hover: hover) {
+  .nf-fbtn:hover::before { opacity: 1; }
+  .nf-fbtn:hover .nf-fic { transform: translateY(-3px) rotate(-5deg) scale(1.07); background: var(--nf-coral-soft); }
+  .nf-fbtn[aria-pressed="true"]:hover .nf-fic { background: var(--nf-coral); }
+  .nf-fbtn:hover .nf-fadd { color: var(--ink); transform: translateX(4px); }
+}
+/* The plan bar: two seats that fill, and a button that wakes once there is a plan */
+.nf-fslots { display: flex; gap: 6px; flex: none; }
+.nf-fslots i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 1.5px dashed #5A5F63; font: 700 11px/1 var(--mono); font-style: normal; color: #8E938A; transition: background .25s, border-color .25s, color .25s; }
+.nf-fbar[data-n="1"] .nf-fslots i:first-child, .nf-fbar[data-n="2"] .nf-fslots i { background: var(--nf-coral); border: 1.5px solid var(--nf-coral); color: var(--ink); animation: nf-pop .4s var(--nf-ease); }
+.nf-fbar:not([data-n="0"]) .nf-btn { animation: nf-glow 1.8s ease-out infinite; }
+
+/* Packs: a light circles the 12-pack; hover refills the six weeks one by one */
+.nf-pack { transition: transform .45s var(--nf-ease), box-shadow .45s var(--nf-ease), border-color .2s; }
+.nf-pack.nf-dark { position: relative; }
+.nf-pack.nf-dark::before { content: ''; position: absolute; inset: -2px; padding: 2px; border-radius: 30px; pointer-events: none; background: conic-gradient(from var(--nf-ang), transparent 0 52%, #FF8A6B 72%, #FFE0B8 80%, transparent 94%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); animation: nf-ang 5s linear infinite; opacity: .8; transition: opacity .3s; }
+.nf-weeks i { transform-origin: 0 50%; }
+@keyframes nf-wk { 0% { transform: scaleX(0); filter: brightness(1.5); } 70% { transform: scaleX(1.04); } 100% { transform: none; filter: none; } }
+@media (hover: hover) {
+  .nf-pack:hover { transform: translateY(-5px); }
+  .nf-pack.nf-dark:hover { box-shadow: 0 28px 60px -24px rgba(255, 138, 107, .7); }
+  .nf-pack.nf-dark:hover::before { opacity: 1; }
+  .nf-pack:not(.nf-dark):hover { border-color: var(--ink); box-shadow: 0 22px 44px -26px rgba(18, 20, 22, .35); }
+  .nf-pack:hover .nf-weeks i { animation: nf-wk .7s var(--nf-ease) both; }
+  .nf-pack:hover .nf-weeks div:nth-child(2) i { animation-delay: .09s; }
+  .nf-pack:hover .nf-weeks div:nth-child(3) i { animation-delay: .18s; }
+  .nf-pack:hover .nf-weeks div:nth-child(4) i { animation-delay: .27s; }
+  .nf-pack:hover .nf-weeks div:nth-child(5) i { animation-delay: .36s; }
+  .nf-pack:hover .nf-weeks div:nth-child(6) i { animation-delay: .45s; }
+}
+
+/* Calendar: open hours lift on hover, a pick lands with a pop, the Book button wakes */
+.nf-slot, .nf-day { transition: transform .25s var(--nf-ease), box-shadow .25s var(--nf-ease), border-color .2s, background .2s; }
+.nf-slot[aria-pressed="true"] { animation: nf-pop .38s var(--nf-ease); }
+.nf-day[aria-pressed="true"] { animation: nf-pop .38s var(--nf-ease); }
+.nf-day .nf-day-n { margin-top: 3px; letter-spacing: .04em; color: var(--nf-acc); }
+.nf-day[aria-pressed="true"] .nf-day-n { color: var(--nf-coral); }
+.nf-cal:has(.nf-slot[aria-pressed="true"]) [data-nf-go] { animation: nf-glow 1.8s ease-out infinite; }
+@media (hover: hover) {
+  .nf-slot:not(:disabled):hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: 0 5px 0 -1px var(--nf-coral); }
+  .nf-day:hover { border-color: var(--ink); transform: translateY(-2px); }
+}
+
+/* Closing banner: the sun rises behind the horizon and its rays turn around it */
+.nf-art .ar-rays { transform-box: view-box; transform-origin: 300px 170px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-btn, .nf-btn::after, .nf-live i::after, .nf-combo-tap, .nf-combo-pill, .nf-combo-call, .nf-fbtn::before, .nf-fbtn::after, .nf-fic, .nf-fadd, .nf-tick, .nf-tick::before, .nf-fslots i, .nf-pack, .nf-pack::before, .nf-weeks i, .nf-slot, .nf-day { animation: none !important; transition: none !important; }
+  .nf-combo-tap:hover, .nf-pack:hover, .nf-slot:hover, .nf-day:hover { transform: none !important; }
+}
+/* The calendar footer keeps its height when the hint text gives way to a picked time (phones wrapped to three lines). */
+@media (max-width: 719px) { .nf-cal-f { min-height: 93px; } }
+@media (max-width: 719px) { .nf-fslots { display: none; } }

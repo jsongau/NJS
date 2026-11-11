@@ -3,7 +3,8 @@
 Read this first. It is the handbook for any Claude session (any account) that opens this folder.
 Owner: Jay (Nathan J. Song). Live site: https://nathanjsong.com, served by Vercel from
 GitHub `jsongau/NJS`, branch `main`. **Anything pushed to `main` is live within a minute.**
-This repo is **public**: never commit prices, secrets, keys or private notes.
+This repo is **public**: never commit Studio prices, secrets, keys or private notes. (Fitness prices are
+public on purpose: see the 12-pack in `partials/fitness/nf-packs.html`.)
 
 ## What lives here
 
@@ -35,6 +36,7 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | Coach's notes (sourced articles: warm-up, band workouts, AC joint) | `partials/studio/pages/fit-note-*.html`, hub `fit-notes.html`. Every health claim needs a source link that was read, and no claim that a treatment heals an injury | rebuild pages |
 | The path hub `/fitness/path` | `partials/studio/pages/fit-path.html` + `path.json` | rebuild pages |
 | Gear links (hidden while empty) | `partials/fitness/gear.json` (`[id, name, brand, why, link, [focus ids]]`); only gear Jay uses; the disclosure line renders with the row | rebuild pages |
+| The fitness offer and its prices (one pack: the 12-pack; no trial pack) | `partials/fitness/nf-packs.html`, the Where choices in `fit-book.html` (`data-price`), `nf-where.html`, the pay question in `fitness.html` | rebuild pages |
 | A new fitness page | copy a `fit-*.html` page, add a `fitPage(...)` line to `PAGES` in `tools/build-pages.mjs`, link it from `focus.json` or the footer | rebuild pages |
 | Delivered projects, proof, logos | `assets/studio/data/projects.json`, logos in `assets/studio/brand/delivered/` | none |
 | Industries, kinds, plans, care tiers, links (booking URL, lead form) | `docs/nathan-j-song/studio-catalog.source.json` (**private, gitignored, only on Jay's Mac**) | `node tools/build-studio-catalog.mjs` |
@@ -59,7 +61,8 @@ Rebuild pages, check none are stale, check the catalog, run the tests (expect 44
 0 fail), build a one-file preview, serve locally at http://localhost:8765, then audit headline line
 breaks (needs the local server and Playwright; pass every page you touched, and any preview file).
 Run the tests before every commit, and the headline audit before any preview goes to Jay. The
-copy-lint test fails on any `$` followed by a digit: no prices on the site.
+copy-lint test fails on any `$` followed by a digit on Studio pages: no Studio prices on the site. Fitness
+pages are exempt.
 
 ## Backend (Supabase project `cedunmyttprzgslthuyk`)
 

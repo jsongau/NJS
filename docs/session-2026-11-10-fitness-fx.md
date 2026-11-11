@@ -81,3 +81,16 @@
    `mail` column on `leads` recording whether each email was sent.
 3. A real photo and a short clip of Jay on the Fitness home and coach page.
 4. Distribution: Google Business Profile, Instagram bio link, a QR code after class, each with its own tag.
+
+## 2026-11-11: one pack, prices on the fitness side
+- Jay's call: no trial pack. The 12-pack is the only offer. At the gym it is 2,400 dollars (200 a session);
+  at the client's place it is 300 a session (3,600 for twelve). Online has no stated price yet, so the form
+  says the price is confirmed by email.
+- Included, as Jay dictated by voice: Brea, 3 years of gym membership with class access; Rancho Santa
+  Margarita, 1 year of 9Round membership with unlimited workouts. **"3 years" came through voice
+  transcription and must be confirmed before this goes live**, and both gyms must have agreed to the bundle.
+- The copy-lint test now allows prices on fitness pages only. Studio prices stay off the site.
+- Every "Try 2 sessions first" button became "See what's included" (jumps to the pack) or "Start the 12-pack".
+  `lead-intake` still accepts the value `2-pack`; nothing sends it any more, so no redeploy was needed.
+- Booking form: the Pack choice is a hidden field, Where has four places (`rancho-santa-margarita` was already
+  allowed by `lead-intake`), and `?loc=` preselects one.

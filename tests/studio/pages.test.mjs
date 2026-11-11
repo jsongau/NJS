@@ -74,7 +74,8 @@ test('pages: copy rules hold on every page (no em or en dashes, no hype, no pric
     const text = html(p).replace(/<style[\s\S]*?<\/style>/g, '').replace(/<svg[\s\S]*?<\/svg>/g, '');
     assert.ok(!dashes.test(text), p.id + ' has a dash');
     assert.equal((text.match(hype) || [null])[0], null, p.id);
-    assert.ok(!/\$\s?\d/.test(text), p.id + ' shows a price');
+    // Studio prices stay off the site. Fitness pages show Jay's public coaching prices.
+    if (p.mode !== 'fitness') assert.ok(!/\$\s?\d/.test(text), p.id + ' shows a price');
   }
 });
 

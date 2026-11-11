@@ -104,13 +104,19 @@ function setSlot(form, value, text) {
   const box = $('[data-nf-slotpick]', form);
   if (box) box.innerHTML = '<span><b>' + text + '</b> · Brea. Change it in the calendar above.</span>';
   const brea = form.querySelector('input[name="location"][value="brea"]');
-  if (brea) brea.checked = true;
+  if (brea) { brea.checked = true; brea.dispatchEvent(new Event('change', { bubbles: true })); }
 }
 
 function mountForm(form) {
   const q = new URLSearchParams(location.search);
   const pack = q.get('pack');
-  if (pack === '2' || pack === '12') form.querySelector('input[name="pack"][value="' + pack + '-pack"]').checked = true;
+  // Where: a link can preselect the place, and the price line under the choices follows the pick.
+  const loc = q.get('loc') && form.querySelector('input[name="location"][value="' + CSS.escape(q.get('loc')) + '"]');
+  if (loc) loc.checked = true;
+  const line = $('[data-nf-priceline]', form);
+  const price = () => { const c = form.querySelector('input[name="location"]:checked'); if (line && c && c.dataset.price) line.textContent = c.dataset.price; };
+  form.addEventListener('change', (e) => { if (e.target.name === 'location') price(); });
+  price();
   (q.get('focus') || '').split(',').slice(0, 2).forEach((id) => {
     const f = id && form.querySelector('input[name="focus"][value="' + CSS.escape(id) + '"]');
     if (f) f.checked = true;

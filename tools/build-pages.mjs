@@ -124,7 +124,7 @@ export const PAGES = {
     jsonld: [
       ld('ProfilePage', { mainEntity: COACH }),
       ld('Service', { name: 'Personal training packs', serviceType: 'Personal training', provider: { '@id': COACH['@id'] }, areaServed: 'Orange County, California',
-        hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Training packs', itemListElement: ['The 12-pack', 'The 2-pack'].map((n) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: n } })) } }),
+        hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Training packs', itemListElement: [{ '@type': 'Offer', price: '2400', priceCurrency: 'USD', itemOffered: { '@type': 'Service', name: 'The 12-pack: twelve private training sessions' } }] } }),
     ],
   },
   'fit-pt': fitPage('personal-training', 'Personal training', 'Personal Training for Muscle Building and Fat Loss in Orange County · NJS Fitness',
@@ -171,7 +171,7 @@ export const PAGES = {
     'What each recovery room tool is, what the research says about cryotherapy, compression boots, red light therapy, HydroMassage beds and sports massage, and which gyms list them.', null),
   'fit-book': {
     ...fitPage('book', 'Book a time', 'Book a Personal Training Session · NJS Fitness',
-      'Pick a 12-pack or a 2-pack and an open Thursday hour in Brea, or request a weekday in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
+      'Start the 12-pack: pick an open Thursday hour in Brea, or request a time in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
   },
 };
 const FOCUS_PAGE = { 'fit-muscle': 'muscle', 'fit-fatloss': 'fat-loss', 'fit-conditioning': 'conditioning', 'fit-shoulders': 'shoulders', 'fit-boxing': 'boxing', 'fit-kickboxing': 'kickboxing', 'fit-muaythai': 'muay-thai', 'fit-mobility': 'mobility', 'fit-pilates': 'pilates' };
@@ -277,9 +277,13 @@ function renderFocusArt(id) {
     '  <g clip-path="url(#fa-card)"><g class="h2-halo"><circle cx="180" cy="128" r="118" fill="url(#fa-halo)"/></g>',
     '  <g class="h2-orbit" stroke-width="2"><circle cx="180" cy="128" r="104" stroke="#B9A7F5" stroke-dasharray="3 11" opacity=".7"/><circle cx="180" cy="128" r="88" stroke="#7FD3C8" stroke-dasharray="26 14" opacity=".5"/></g></g>',
     '  <g class="h2-drift"><circle cx="46" cy="52" r="5" fill="#7FD3C8"/><circle cx="318" cy="204" r="4" fill="#B9A7F5"/><path d="M312 44l3.5 7 7 3.5-7 3.5-3.5 7-3.5-7-7-3.5 7-3.5z" fill="#FF8A6B"/><rect x="38" y="190" width="7" height="12" rx="3.5" fill="#FFD2A8" transform="rotate(-18 41 196)"/></g>',
+    '  <g class="fa-sat fa-sat1"><circle cx="180" cy="24" r="6.5" fill="#7FD3C8" stroke="#121416" stroke-width="2.5"/></g><g class="fa-sat fa-sat2"><circle cx="180" cy="216" r="5.5" fill="#FF8A6B" stroke="#121416" stroke-width="2.5"/><circle cx="92" cy="128" r="4" fill="#B9A7F5" stroke="#121416" stroke-width="2"/></g>',
+    '  <path class="fa-tw" d="M70 96l2.5 5 5 2.5-5 2.5-2.5 5-2.5-5-5-2.5 5-2.5z" fill="#121416"/><path class="fa-tw fa-tw2" d="M292 150l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#FF6F61"/>',
     '  <circle class="fa-ring" cx="180" cy="128" r="70" stroke="#FF8A6B" stroke-width="4"/>',
     '  <g class="fa-tile"><rect x="112" y="64" width="136" height="136" rx="38" fill="#121416" opacity=".12" transform="translate(5 7)"/><rect x="112" y="60" width="136" height="136" rx="38" fill="#fff" stroke="#121416" stroke-width="3.5"/>',
     '  <svg class="nf-fi" x="126" y="74" width="108" height="108" viewBox="0 0 64 64" fill="none" stroke="#121416" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' + FOCUS_ICONS[id] + '</svg></g>',
+    '  <g class="fa-chip fa-chip1"><rect x="26" y="182" width="74" height="50" rx="14" fill="#fff" stroke="#121416" stroke-width="3"/>' + [0, 1, 2, 3].map((k) => '<rect class="fa-bar" style="--k:' + k + '" x="' + (40 + k * 12) + '" y="' + (212 - k * 6) + '" width="7" height="' + (10 + k * 6) + '" rx="2.5" fill="' + (k === 3 ? '#FF8A6B' : '#121416') + '"/>').join('') + '</g>',
+    '  <g class="fa-chip fa-chip2"><rect x="256" y="30" width="78" height="42" rx="14" fill="#fff" stroke="#121416" stroke-width="3"/><path class="fa-ecg" d="M266 52h12l4-10 7 20 5-14 4 4h22" stroke="#FF6F61" stroke-width="3"/></g>',
     '</svg>', '</figure>'].join('\n');
 }
 

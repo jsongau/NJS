@@ -2,6 +2,13 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-11
+
+- `/fitness` — One pack only: the 2-session trial is gone from every page and from the booking form. The
+  12-pack now shows its price and what it includes by place (gym membership in Brea and at 9Round in Rancho
+  Santa Margarita, or sessions at your place). Booking adds Rancho Santa Margarita and a price line that
+  follows the place you pick. Focus-page marks gained orbiting dots, a level meter and a pulse chip.
+
 ## 2026-11-10
 
 - `/fitness` — Things answer when you hover and click: a hit-the-bag hero that counts out the 12-pack in

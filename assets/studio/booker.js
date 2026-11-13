@@ -12,9 +12,9 @@ export function mountBooker() {
   const root = document.querySelector('[data-booker]');
   if (!root) return;
   const PLACES = {
-    rsm: { name: '9Round RSM', days: [1, 2, 3, 5], member: '9Round', hours: [8, 9, 10, 10.5, 11, 12], gym: true,
-      blocks: { 8: ['class', '8:00 to 10:00 AM · My classes', 2], 11: ['class', '11:00 AM to 1:00 PM · My classes', 2] }, booked: new Set(), open: new Set([10, 10.5]),
-      note: 'Two open half hours between my classes at 9Round.' },
+    rsm: { name: '9Round RSM', days: [1, 2, 3, 5], member: '9Round', hours: [7, 7.5, 8, 9, 10, 10.5, 11, 12, 13, 13.5], gym: true,
+      blocks: { 8: ['class', '8:00 to 10:00 AM · My classes', 2], 11: ['class', '11:00 AM to 1:00 PM · My classes', 2] }, booked: new Set(), open: new Set([7, 7.5, 10, 10.5, 13, 13.5]),
+      note: 'Open half hours before, between and after my classes at 9Round.' },
     brea: { name: 'UFC Gym Brea', days: [0, 1, 2, 3, 4, 5, 6], member: 'UFC Gym Brea', hours: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
       blocks: { 6: ['class', '6:00 AM · My class', 1], 18: ['class', '6:00 PM · My class', 1] }, booked: new Set([7, 10, 13, 17]), open: new Set([8, 9, 11, 12, 14, 15, 16, 19]),
       note: 'Classes at 6 AM and 6 PM. Open hours in between.' },
@@ -28,6 +28,8 @@ export function mountBooker() {
   const st = { city: null, loc: 'brea', date: 0, hour: null, pack: '12', focus: [], step: 0 };
   const SOON = { 4: 'Not on Thursdays', 0: 'Weekdays only', 6: 'Weekdays only' };
   const avail = (loc, dow) => (PLACES[loc].days.includes(dow) ? (loc === 'brea' && dow !== 4 ? 'parts' : PLACES[loc].parts ? 'parts' : 'sched') : null);
+  // 9Round runs in 30-minute chunks: every 9Round slot is a half hour. Other places book by the hour.
+  const slotLen = (p) => (p.gym ? 0.5 : 1);
   const isParts = () => avail(st.loc, dates[st.date].getDay()) === 'parts';
   const $ = (s) => root.querySelector(s), $$ = (s) => [...root.querySelectorAll(s)];
   let dates = [];
@@ -62,7 +64,7 @@ export function mountBooker() {
       const b = p.blocks[h];
       if (b) return '<div class="tile class' + (b[2] > 1 ? ' bk-wide' : '') + '"><b>' + (b[2] > 1 ? fmt(h).replace(':00', '') + ' to ' + fmt(h + b[2]).replace(':00', '') : fmt(h)) + '</b><small>My class</small></div>';
       if (p.booked.has(h)) return '<div class="tile booked"><b>' + fmt(h) + '</b><small>Booked</small></div>';
-      if (p.open.has(h)) return '<button type="button" class="tile bk-open' + (p.gym ? ' gym' : '') + '" data-h="' + h + '" aria-pressed="' + (h === st.hour) + '"' + (p.gym ? ' aria-haspopup="dialog"' : '') + '><b>' + fmt(h) + '</b><small>' + (p.gym ? '9Round · 30 min' : 'Open') + '</small></button>';
+      if (p.open.has(h)) return '<button type="button" class="tile bk-open' + (p.gym ? ' gym' : '') + '" data-h="' + h + '" aria-pressed="' + (h === st.hour) + '"' + (p.gym ? ' aria-haspopup="dialog"' : '') + '><b>' + fmt(h) + '</b><small>' + (p.gym ? '9Round · ' + (slotLen(p) < 1 ? '30' : '60') + ' min' : 'Open') + '</small></button>';
       return '<div class="tile bk-off"><b>' + fmt(h) + '</b><small>Not available</small></div>';
     }).join('');
     let skip = 0; const out = [];
@@ -72,7 +74,7 @@ export function mountBooker() {
       let cell;
       if (b) { cell = '<div class="blk class" style="min-height:' + (b[2] * 44 - 8) + 'px">' + b[1] + '<em>Class</em></div>'; skip = b[2] - 1; }
       else if (p.booked.has(h)) cell = '<div class="blk booked">' + fmt(h) + '<em>Booked</em></div>';
-      else if (p.open.has(h)) cell = '<button type="button" class="blk bk-open' + (p.gym ? ' gym' : '') + '" data-h="' + h + '" aria-pressed="' + (h === st.hour) + '"' + (p.gym ? ' aria-haspopup="dialog"' : '') + '>' + fmt(h) + ' to ' + fmt(h + (p.gym ? .5 : 1)) + '<em>' + (p.gym ? '9Round · 30 min' : 'Open') + '</em></button>';
+      else if (p.open.has(h)) cell = '<button type="button" class="blk bk-open' + (p.gym ? ' gym' : '') + '" data-h="' + h + '" aria-pressed="' + (h === st.hour) + '"' + (p.gym ? ' aria-haspopup="dialog"' : '') + '>' + fmt(h) + ' to ' + fmt(h + slotLen(p)) + '<em>' + (p.gym ? '9Round · ' + (slotLen(p) < 1 ? '30' : '60') + ' min' : 'Open') + '</em></button>';
       else cell = '<div class="blk bk-off">Not available</div>';
       out.push('<li class="row"' + (b ? ' style="min-height:' + b[2] * 44 + 'px"' : '') + '><time>' + fmt(h) + '</time><div class="cell">' + cell + '</div></li>');
     });

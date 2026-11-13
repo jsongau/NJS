@@ -2,6 +2,10 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-13
+
+- `/fitness/book` — 9Round RSM opens six half hours: 7:00 and 7:30 AM, 10:00 and 10:30 AM, 1:00 and 1:30 PM. 9Round always books in 30-minute chunks.
+
 ## 2026-11-12
 
 - `/fitness/book` — Date-first booking on the one-pack site: pick a day and the day opens the places (Thursday:

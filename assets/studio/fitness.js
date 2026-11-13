@@ -342,7 +342,23 @@ function mountPath() {
   document.addEventListener('click', (e) => { const g = e.target.closest && e.target.closest('[data-nf-gear]'); if (g) track('fit_tab', { detail: 'gear_' + g.dataset.nfGear }); });
 }
 
+// 12-pack pace: once or twice a week. Swaps the card copy and pips, and carries ?pace= into every
+// booking link in the packs section so the booking page opens with the same choice.
+function mountPace() {
+  const box = document.querySelector('.nf-pace'); if (!box) return;
+  const sec = box.closest('section');
+  const set = (v) => {
+    box.dataset.pace = v;
+    sec.querySelectorAll('.nf-pips').forEach((e) => { e.dataset.pace = v; });
+    sec.querySelectorAll('[data-pace-p]').forEach((e) => { e.hidden = e.dataset.paceP !== v; });
+    const tag = sec.querySelector('[data-pace-tag]'); if (tag) tag.textContent = v === '1' ? 'Twelve weeks' : 'Six weeks';
+    sec.querySelectorAll('a[href*="/fitness/book"]').forEach((a) => { const u = new URL(a.getAttribute('href'), location.origin); u.searchParams.set('pace', v); a.setAttribute('href', u.pathname + u.search + u.hash); });
+  };
+  box.addEventListener('change', (e) => { if (e.target.name !== 'nf-pace') return; set(e.target.value); track('fit_tab', { detail: 'pace_' + e.target.value + 'x' }); });
+}
+
 export function mountFitness() {
+  mountPace();
   if (document.body.dataset.mode !== 'fitness') return;
   const form = $('#nf-form');
   if (form) mountForm(form);

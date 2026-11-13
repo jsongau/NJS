@@ -5,6 +5,14 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-13 · **Animated figures are rigs, never one swinging path.** (Jay: "the head is falling off".) Head and
+  torso are one piece. Each moving limb sits in its own group whose origin is the joint (hip, knee, shoulder),
+  and only that group rotates. Do not rotate a multi-part path around its bounding box. Use classes outside the
+  `ar-` prefix (which forces `transform-box: fill-box`) so rotation happens around the joint. Check by freezing the
+  animation at several times and looking at the frames, not by watching it once.
+- 2026-11-13 · **A two-way choice is a sliding toggle with stacked panels.** Two real radio inputs, a thumb that
+  slides behind the labels, and both text versions stacked in one grid cell so the card never changes height.
+
 - 2026-11-09 · **Headlines break between phrases, never inside one, and never strand a word.** (Jay, after "Pick
   a time. Pick a pack. Start / training." on a big phone.) Enforced by code, not by remembering:
   - `tools/build-pages.mjs` wraps every phrase of a multi-phrase h1–h3 in `<span class="ph">` (inline-block), so

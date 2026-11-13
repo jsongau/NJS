@@ -349,3 +349,17 @@
 
 .bk .bk-priceline{margin-top:4px;font:600 14px/1.45 var(--sans);color:var(--ink)}
 .bk .pack.dark .bk-priceline{color:#F3F1EA}
+
+/* Pace toggle in step 2 (matches the 12-pack card on the Fitness home). */
+.bk .bk-pace{position:relative;display:grid;grid-template-columns:1fr 1fr;margin:14px 0 0;padding:4px;border:1px solid var(--line-hi);border-radius:999px;background:var(--bg);min-inline-size:0}
+.bk .bk-pace legend{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.bk .bk-pace::before{content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--ink);transition:transform .38s cubic-bezier(.3,1.3,.5,1)}
+.bk .bk-pace[data-pace="1"]::before{transform:translateX(100%)}
+.bk .bk-pace label{position:relative;display:block;cursor:pointer}
+.bk .bk-pace input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.bk .bk-pace span{display:grid;gap:2px;justify-items:center;padding:9px 8px;border-radius:999px;color:var(--ink-2);transition:color .25s}
+.bk .bk-pace b{font:600 15px/1.2 var(--sans);color:inherit}
+.bk .bk-pace small{font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.bk .bk-pace input:checked + span{color:#fff}
+.bk .bk-pace input:focus-visible + span{outline:2px solid var(--coral);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.bk .bk-pace::before,.bk .bk-pace span{transition:none}}

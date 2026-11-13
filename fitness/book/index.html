@@ -105,9 +105,14 @@
         </div>
         <div class="pane" data-pane="1">
           <h2 style="font-size:24px"><span class="ph">Your time is held.</span> <span class="ph">Now pick your focus.</span></h2>
-          <p style="margin-top:6px">Twelve sessions, two a week for six weeks. Your first one is the time you just picked.</p>
+          <p style="margin-top:6px">Twelve sessions at your pace. Your first one is the time you just picked.</p>
+          <fieldset class="bk-pace" id="bk-pace" data-pace="2">
+            <legend>How often?</legend>
+            <label><input type="radio" name="bk-pace" value="2" checked><span><b>Twice a week</b><small>6 weeks</small></span></label>
+            <label><input type="radio" name="bk-pace" value="1"><span><b>Once a week</b><small>12 weeks</small></span></label>
+          </fieldset>
           <div class="packs">
-            <button type="button" class="pack dark" data-pack="12" aria-pressed="true"><p class="bk-n">12<small>sessions</small></p><h3>The 12-pack</h3><p>Two sessions a week for six weeks. Long enough to see it and make it a habit.</p><div class="weeks"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="bonus"><span class="bonus-k">Bonus</span><span><b>A 30-minute AI session with me.</b> For your business or your job, the same session I run for NJS Studio clients.</span></div><p class="bk-priceline" id="bk-price" role="status"></p></button>
+            <button type="button" class="pack dark" data-pack="12" aria-pressed="true"><p class="bk-n">12<small>sessions</small></p><h3>The 12-pack</h3><p id="bk-pace-p">Two sessions a week for six weeks. Long enough to see it and make it a habit.</p><div class="weeks"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="bonus"><span class="bonus-k">Bonus</span><span><b>A 30-minute AI session with me.</b> For your business or your job, the same session I run for NJS Studio clients.</span></div><p class="bk-priceline" id="bk-price" role="status"></p></button>
           </div>
           <fieldset class="focus"><legend>Your focus (pick one or two)</legend><div class="chips" id="chips"></div></fieldset>
           <p class="held" id="held"></p>

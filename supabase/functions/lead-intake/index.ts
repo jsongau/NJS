@@ -30,6 +30,7 @@ const PACKS = ["12-pack"];
 const AREAS = ["North OC", "Central OC", "South OC", "East LA", "Inland Empire"];
 const PARTS = ["morning", "midday", "evening"];
 const AI = ["business", "job", "later"];
+const PACE = ["1x", "2x"];
 const FOCUS = ["muscle", "fat-loss", "shoulders", "boxing", "kickboxing", "muay-thai", "conditioning", "mobility", "pilates"];
 const TIMES = ["weekday-mornings", "weekday-midday", "weekday-evenings", "weekends"];
 const ENTRIES = ["hero_card", "goal_grid", "form", "calendar", "pack", "booker"];
@@ -87,6 +88,7 @@ export function cleanMeta(raw: unknown): Record<string, unknown> {
   if (m.member === true) out.member = true;
   if (typeof m.area === "string" && AREAS.includes(m.area)) out.area = m.area;
   if (typeof m.ai === "string" && AI.includes(m.ai)) out.ai = m.ai;
+  if (typeof m.pace === "string" && PACE.includes(m.pace)) out.pace = m.pace;
   if (m.first === true) out.first = true;
   return out;
 }
@@ -116,6 +118,7 @@ async function send(to: string, subject: string, text: string, replyTo?: string)
 function notifyText(row: Record<string, unknown>, meta: Record<string, unknown>) {
   const top = [
     meta.pack ? `Pack: ${meta.pack}` : null,
+    meta.pace ? `Pace: ${meta.pace === "1x" ? "once a week, 12 weeks" : "twice a week, 6 weeks"}` : null,
     meta.focus ? `Focus: ${(meta.focus as string[]).join(", ")}` : null,
     meta.slot ? `Requested time: ${slotLabel(meta.slot as string)} Pacific` : null,
     meta.part ? `Requested: ${(meta.part as string).replace(":", ", ")} (reply with an exact time)` : null,

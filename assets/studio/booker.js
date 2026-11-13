@@ -25,7 +25,7 @@ export function mountBooker() {
   const FOCUS = ['Muscle building', 'Fat loss', 'Shoulder strength', 'Boxing', 'Kickboxing', 'Muay Thai', 'Conditioning', 'Mobility and yoga', 'Reformer Pilates'];
   const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const fmt = (h) => (Math.floor(h) % 12 || 12) + ':' + (h % 1 ? '30' : '00') + ' ' + (h < 12 ? 'AM' : 'PM');
-  const st = { city: null, loc: 'brea', date: 0, hour: null, pack: '12', focus: [], step: 0 };
+  const st = { pace: '2', city: null, loc: 'brea', date: 0, hour: null, pack: '12', focus: [], step: 0 };
   const SOON = { 4: 'Not on Thursdays', 0: 'Weekdays only', 6: 'Weekdays only' };
   const avail = (loc, dow) => (PLACES[loc].days.includes(dow) ? (loc === 'brea' && dow !== 4 ? 'parts' : PLACES[loc].parts ? 'parts' : 'sched') : null);
   // 9Round runs in 30-minute chunks: every 9Round slot is a half hour. Other places book by the hour.
@@ -87,7 +87,10 @@ export function mountBooker() {
     set('#s-when', st.hour !== null ? DOW[x.getDay()] + ' ' + MON[x.getMonth()] + ' ' + x.getDate() + ', ' + (typeof st.hour === 'string' ? st.hour.toLowerCase() : fmt(st.hour)) : '', 'Choose a time');
     const placeBtn = $('.locs button[data-loc="' + st.loc + '"]');
     st.pack = '12';
-    const packName = 'The 12-pack';
+    const once = st.pace === '1';
+    const packName = 'The 12-pack · ' + (once ? 'once a week' : 'twice a week');
+    $('#bk-pace').dataset.pace = st.pace;
+    $('#bk-pace-p').textContent = once ? 'One session a week for twelve weeks. The same twelve sessions at a steadier pace.' : 'Two sessions a week for six weeks. Long enough to see it and make it a habit.';
     set('#s-pack', packName, '');
     set('#s-focus', st.focus.join(' + '), 'Pick in step 2');
     $('#s-total').textContent = (placeBtn && placeBtn.dataset.total) || 'By email';
@@ -183,6 +186,8 @@ export function mountBooker() {
 
   // URL entry: ?focus=muscle,boxing (and ?slot= from the home calendar) from the CTAs on every fitness page.
   const q = new URLSearchParams(location.search);
+  if (q.get('pace') === '1') { st.pace = '1'; $('#bk-pace input[value="1"]').checked = true; }
+  $('#bk-pace').addEventListener('change', (e) => { st.pace = e.target.value; track('fit_tab', { detail: 'pace_' + st.pace + 'x' }); summary(); });
   // A Thursday hour from the calendar on the Fitness home (?slot=2026-11-12T08) is picked on arrival.
   const slot = /^(\d{4})-(\d{2})-(\d{2})T(\d{2})$/.exec(q.get('slot') || '');
   if (slot) {
@@ -215,7 +220,7 @@ export function mountBooker() {
       door: 'train', name, email, phone: $('#bk-phone').value.trim() || null, message: $('#bk-note').value.trim() || null,
       location: { brea: 'brea', rsm: 'rancho-santa-margarita', home: 'in-home', online: 'online' }[st.loc],
       city: st.loc === 'home' ? st.city : null, company_website: $('#bk-hp').value,
-      meta: { entry: 'booker', pack: '12-pack', slot: hour, part,
+      meta: { entry: 'booker', pack: '12-pack', pace: st.pace + 'x', slot: hour, part,
         focus: st.focus.map((f) => Object.keys(SLUG).find((k) => SLUG[k] === f)), area: city ? city.area : undefined,
         first: $('#bk-first').checked || undefined, ai: ai ? ai.value : undefined },
     };

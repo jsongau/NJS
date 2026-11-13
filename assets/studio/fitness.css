@@ -466,12 +466,6 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 @keyframes ar-twinkle { 0%, 100% { transform: scale(.6) rotate(0); opacity: .5; } 50% { transform: scale(1.2) rotate(45deg); opacity: 1; } }
 
 /* Sunrise: the sun climbs, rays turn, a runner crosses from week 1 to week 6 */
-.live .ar-sun { animation: ar-sunup 8s ease-in-out infinite; }
-.live .ar-rays { animation: ar-spin 24s linear infinite; }
-.live .ar-runner { animation: ar-run 8s linear infinite; }
-.live .ar-runner path { animation: ar-stride .5s ease-in-out infinite alternate; transform-origin: 50% 0; }
-@keyframes ar-sunup { 0% { translate: 0 60px; } 60%, 100% { translate: 0 0; } }
-@keyframes ar-run { from { transform: translateX(60px); } to { transform: translateX(540px); } }
 @keyframes ar-stride { from { transform: skewX(-8deg); } to { transform: skewX(8deg); } }
 
 /* Club: a full mill around the shoulder, arcs flow, the move name changes */
@@ -673,7 +667,6 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 }
 
 /* Closing banner: the sun rises behind the horizon and its rays turn around it */
-.nf-art .ar-rays { transform-box: view-box; transform-origin: 300px 170px; }
 
 @media (prefers-reduced-motion: reduce) {
   .nf-btn, .nf-btn::after, .nf-live i::after, .nf-combo-tap, .nf-combo-pill, .nf-combo-call, .nf-fbtn::before, .nf-fbtn::after, .nf-fic, .nf-tick, .nf-tick::before, .nf-pack, .nf-pack::before, .nf-weeks i, .nf-slot, .nf-day { animation: none !important; transition: none !important; }
@@ -866,3 +859,77 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 /* The "Your time" box keeps its height when the hint gives way to a picked hour. */
 @media (max-width: 719px) { .nf-slot-pick { min-height: 72px; } }
 @media (min-width: 900px) { .nf-pack.nf-dark { align-content: space-between; } }
+
+/* Closing art: a jointed runner crosses six week flags while the sun comes up (2026-11-13).
+   The figure is a rig: head and torso are one piece; only hips, knees and shoulders rotate, each in a
+   group whose own origin is the joint. Classes are sr-* so the fill-box rule for ar-* does not apply.
+   At rest (and with reduced motion) the scene shows the finish: runner at week 6, every flag lit. */
+.nf-art-sunrise .sr-run { transform: translateX(548px); }
+.nf-art-sunrise .sr-flag { fill: #7FD3C8; transform-box: fill-box; transform-origin: 0% 50%; }
+.nf-art-sunrise .sr-star { transform-box: fill-box; transform-origin: center; }
+.nf-art-sunrise .sr-thigh.a { transform: rotate(-28deg); } .nf-art-sunrise .sr-thigh.b { transform: rotate(24deg); }
+.nf-art-sunrise .sr-shin.b { transform: rotate(40deg); }
+.nf-art-sunrise .sr-arm.a { transform: rotate(34deg); } .nf-art-sunrise .sr-arm.b { transform: rotate(-38deg); }
+.nf-art-sunrise.live .sr-run { animation: sr-run 12s linear infinite; }
+.nf-art-sunrise.live .sr-bob { animation: sr-bob .3s ease-in-out infinite alternate; }
+.nf-art-sunrise.live .sr-thigh { animation: sr-thigh .6s ease-in-out infinite; }
+.nf-art-sunrise.live .sr-shin { animation: sr-shin .6s ease-in-out infinite; }
+.nf-art-sunrise.live .sr-arm { animation: sr-arm .6s ease-in-out infinite; }
+.nf-art-sunrise.live .sr-thigh.b, .nf-art-sunrise.live .sr-shin.b, .nf-art-sunrise.live .sr-arm.a { animation-delay: -.3s; }
+.nf-art-sunrise.live .sr-band { animation: sr-band .3s ease-in-out infinite alternate; }
+.nf-art-sunrise.live .sr-rise { animation: sr-rise 12s ease-out infinite; }
+.nf-art-sunrise.live .sr-rays { animation: ar-spin 30s linear infinite; }
+.nf-art-sunrise.live .sr-cloud.c1 { animation: sr-drift 14s ease-in-out infinite alternate; }
+.nf-art-sunrise.live .sr-cloud.c2 { animation: sr-drift 18s ease-in-out infinite alternate-reverse; }
+.nf-art-sunrise.live .sr-star { animation: sr-star 12s ease-in-out infinite; }
+.nf-art-sunrise.live .sr-star.s2 { animation-delay: .15s; } .nf-art-sunrise.live .sr-star.s3 { animation-delay: .3s; }
+.nf-art-sunrise.live .sr-f1 { animation: sr-f1 12s ease-out infinite; }
+.nf-art-sunrise.live .sr-f2 { animation: sr-f2 12s ease-out infinite; }
+.nf-art-sunrise.live .sr-f3 { animation: sr-f3 12s ease-out infinite; }
+.nf-art-sunrise.live .sr-f4 { animation: sr-f4 12s ease-out infinite; }
+.nf-art-sunrise.live .sr-f5 { animation: sr-f5 12s ease-out infinite; }
+.nf-art-sunrise.live .sr-f6 { animation: sr-f6 12s ease-out infinite; }
+@keyframes sr-run { 0% { transform: translate(20px, 0); opacity: 0; } 3% { opacity: 1; } 85% { transform: translate(548px, 0); } 89% { transform: translate(548px, -16px); } 93% { transform: translate(548px, 0); } 96% { transform: translate(548px, 0); opacity: 1; } 100% { transform: translate(548px, 0); opacity: 0; } }
+@keyframes sr-bob { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+@keyframes sr-thigh { 0%, 100% { transform: rotate(-42deg); } 50% { transform: rotate(34deg); } }
+@keyframes sr-shin { 0%, 100% { transform: rotate(12deg); } 25% { transform: rotate(4deg); } 50% { transform: rotate(28deg); } 75% { transform: rotate(88deg); } }
+@keyframes sr-arm { 0%, 100% { transform: rotate(42deg); } 50% { transform: rotate(-46deg); } }
+@keyframes sr-band { from { transform: translateY(0); } to { transform: translateY(2px); } }
+@keyframes sr-rise { 0% { transform: translateY(54px); } 85%, 100% { transform: translateY(0); } }
+@keyframes sr-drift { from { transform: translateX(-14px); } to { transform: translateX(22px); } }
+@keyframes sr-star { 0%, 84% { transform: scale(0); opacity: 0; } 89% { transform: scale(1.2); opacity: 1; } 95% { transform: scale(1); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
+@keyframes sr-f1 { 0%, 8.9% { fill: #FFF6EC; transform: scale(1); } 11.4% { fill: #7FD3C8; transform: scale(1.35); } 14.9%, 96% { fill: #7FD3C8; transform: scale(1); } 100% { fill: #FFF6EC; transform: scale(1); } }
+@keyframes sr-f2 { 0%, 23.3% { fill: #FFF6EC; transform: scale(1); } 25.8% { fill: #7FD3C8; transform: scale(1.35); } 29.3%, 96% { fill: #7FD3C8; transform: scale(1); } 100% { fill: #FFF6EC; transform: scale(1); } }
+@keyframes sr-f3 { 0%, 37.8% { fill: #FFF6EC; transform: scale(1); } 40.3% { fill: #7FD3C8; transform: scale(1.35); } 43.8%, 96% { fill: #7FD3C8; transform: scale(1); } 100% { fill: #FFF6EC; transform: scale(1); } }
+@keyframes sr-f4 { 0%, 52.3% { fill: #FFF6EC; transform: scale(1); } 54.8% { fill: #7FD3C8; transform: scale(1.35); } 58.3%, 96% { fill: #7FD3C8; transform: scale(1); } 100% { fill: #FFF6EC; transform: scale(1); } }
+@keyframes sr-f5 { 0%, 66.8% { fill: #FFF6EC; transform: scale(1); } 69.3% { fill: #7FD3C8; transform: scale(1.35); } 72.8%, 96% { fill: #7FD3C8; transform: scale(1); } 100% { fill: #FFF6EC; transform: scale(1); } }
+@keyframes sr-f6 { 0%, 81.3% { fill: #FFF6EC; transform: scale(1); } 83.8% { fill: #7FD3C8; transform: scale(1.35); } 87.3%, 96% { fill: #7FD3C8; transform: scale(1); } 100% { fill: #FFF6EC; transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .nf-art-sunrise * { animation: none !important; } }
+
+/* 12-pack pace toggle (2026-11-13): once or twice a week. A sliding thumb behind two radio labels; the
+   twelve session pips merge into six weekly pairs or split into twelve weeks. Text panels are stacked
+   so nothing shifts when the choice changes. */
+.nf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.nf-pace { position: relative; display: grid; grid-template-columns: 1fr 1fr; margin: 0; padding: 4px; border: 1px solid #3A3F44; border-radius: 999px; background: #1E2124; min-inline-size: 0; }
+.nf-pace::before { content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 999px; background: var(--nf-coral); transition: transform .38s cubic-bezier(.3, 1.3, .5, 1); }
+.nf-pace[data-pace="1"]::before { transform: translateX(100%); }
+.nf-pace label { position: relative; display: block; cursor: pointer; }
+.nf-pace input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.nf-pace span { display: grid; gap: 2px; justify-items: center; padding: 9px 8px; border-radius: 999px; color: #C9CDC6; transition: color .25s; }
+.nf-pace b { font: 600 15px/1.2 var(--sans); color: inherit; }
+.nf-pace small { font: 600 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
+.nf-pace input:checked + span { color: var(--ink); }
+.nf-pace input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+.nf-pace-txt, .nf-pips-l { display: grid; }
+.nf-pace-txt > *, .nf-pips-l > * { grid-area: 1 / 1; }
+.nf-pace-txt > [hidden], .nf-pips-l > [hidden] { display: block; visibility: hidden; }
+.nf-pips-l > [hidden] { display: grid; }
+.nf-pips { display: flex; gap: 6px; }
+.nf-pips i { flex: 1; height: 10px; border-radius: 5px; background: var(--nf-coral); transition: margin .4s cubic-bezier(.3, 1.3, .5, 1), border-radius .4s; }
+.nf-pips[data-pace="2"] i:nth-child(odd) { margin-right: -6px; border-radius: 5px 0 0 5px; }
+.nf-pips[data-pace="2"] i:nth-child(even) { border-radius: 0 5px 5px 0; }
+.nf-pips-l { margin-top: -8px; }
+.nf-pips-l > div { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; justify-items: center; }
+.nf-pips-l span { font: 600 10px/1 var(--mono); color: #8E938A; letter-spacing: .06em; }
+.nf-tag[data-pace-tag] { min-width: 9.5em; text-align: center; }
+@media (prefers-reduced-motion: reduce) { .nf-pace::before, .nf-pace span, .nf-pips i { transition: none; } }

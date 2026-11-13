@@ -4,6 +4,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-13
 
+- `/fitness` — The 12-pack gets a pace toggle (twice a week for 6 weeks, or once a week for 12); the choice carries into booking and the request. The closing artwork is redrawn as a jointed runner crossing six week flags at sunrise.
 - `/fitness/book` — 9Round RSM opens six half hours: 7:00 and 7:30 AM, 10:00 and 10:30 AM, 1:00 and 1:30 PM. 9Round always books in 30-minute chunks.
 
 ## 2026-11-12

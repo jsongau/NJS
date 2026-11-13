@@ -62,8 +62,8 @@ function mountCalendar(form) {
     const d = th[day], when = label(d, hour);
     const q = 'slot=' + iso(d) + 'T' + String(hour).padStart(2, '0');
     pick.innerHTML = '<b>' + when + '</b>Brea · 60 minutes';
-    go.setAttribute('href', form ? '#request' : '/fitness/book?' + q + '#request');
-    if (bar) { bar.innerHTML = '<b>' + when + '</b>' + (form ? 'Finish your request below' : 'Pick a pack to book it'); barGo.setAttribute('href', form ? '#request' : '/fitness/book?' + q + '#request'); }
+    go.setAttribute('href', form ? '#book' : '/fitness/book?' + q + '#book');
+    if (bar) { bar.innerHTML = '<b>' + when + '</b>' + (form ? 'Finish your request below' : 'Pick a pack to book it'); barGo.setAttribute('href', form ? '#book' : '/fitness/book?' + q + '#book'); }
     if (form) setSlot(form, iso(d) + 'T' + String(hour).padStart(2, '0'), when);
   };
   drawSlots();

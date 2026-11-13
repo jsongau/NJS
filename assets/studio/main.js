@@ -14,6 +14,7 @@ import { mountMegaNav } from './meganav.js';
 import { $ } from './util.js';
 import { mountTracking, track } from './track.js';
 import { mountFitness } from './fitness.js';
+import { mountBooker } from './booker.js';
 
 const BASE = '/assets/studio/data/';
 
@@ -139,6 +140,7 @@ async function boot() {
   mountTracking(store);
   carryLinks();
   mountFitness();
+  mountBooker();
   clock();
   // Logo: the j dot hops once on arrival (CSS); hovering the header logo snaps the S straight
   // (a few lines of JS inside the SVG drive that part).

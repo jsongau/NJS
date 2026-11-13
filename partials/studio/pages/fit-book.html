@@ -8,47 +8,13 @@
   <div class="wrap">
     <div>
       <p class="nf-crumb"><a href="/fitness">Fitness</a> / Book a time</p>
-      <h1 id="bk-h" style="margin-top:16px"><span>Pick a time.</span><span>I'll <em>confirm it.</em></span></h1>
-      <p class="nf-lede">Pick an open hour for your first session, then send it. <b>Nothing is charged here.</b> I confirm your time by email, and you pay me directly.</p>
+      <h1 id="bk-h" style="margin-top:16px"><span>Pick a day.</span><span>Pick a place. <em>Train.</em></span></h1>
+      <p class="nf-lede">Pick a day and a place for your first session of the 12-pack. <b>Nothing is charged here.</b> I confirm your time by email, and you pay me directly.</p>
     </div>
   </div>
 </section>
 
-<!--@nf-cal-->
-
-<section class="nf-sec tight" id="request" aria-labelledby="rq-h">
-  <div class="wrap">
-    <div class="nf-h"><div><p class="nf-k">Your request</p><h2 id="rq-h"><span>A few details,</span><span>then you're set.</span></h2></div><p>The 12-pack works in Brea, in Rancho Santa Margarita, at your place or online. Not Thursday in Brea? Pick the place and the times that work, and I reply with an exact time.</p></div>
-    <form class="nf-form" id="nf-form" novalidate>
-      <input type="hidden" name="pack" value="12-pack">
-<!--@nf-focus-form-->
-      <fieldset class="wide"><legend>Where</legend><div class="nf-choice">
-        <label><input type="radio" name="location" value="brea" checked data-price="12-pack in Brea: $2,400, which is $200 a session. Includes 3 years of gym membership with class access."><span>Brea · Thu</span></label>
-        <label><input type="radio" name="location" value="rancho-santa-margarita" data-price="12-pack at 9Round in Rancho Santa Margarita: $2,400, which is $200 a session. Includes 1 year of 9Round membership."><span>Rancho Santa Margarita</span></label>
-        <label><input type="radio" name="location" value="in-home" data-price="12-pack at your place: $3,600, which is $300 a session. I come to you."><span>Your place</span></label>
-        <label><input type="radio" name="location" value="online" data-price="12-pack online: I confirm the price by email."><span>Online</span></label>
-      </div><p class="nf-priceline" role="status" data-nf-priceline>12-pack in Brea: $2,400, which is $200 a session. Includes 3 years of gym membership with class access.</p></fieldset>
-      <div class="wide"><p style="font:600 13px/1.2 var(--sans);color:var(--ink);margin-bottom:7px">Your time</p><p class="nf-slot-pick" data-nf-slotpick>No hour picked. Choose one in the calendar above, or tell me what works below.</p></div>
-      <fieldset class="wide"><legend>Other times that work</legend><div class="nf-choice">
-        <label><input type="checkbox" name="times" value="weekday-mornings"><span>Weekday mornings</span></label>
-        <label><input type="checkbox" name="times" value="weekday-midday"><span>Weekday midday</span></label>
-        <label><input type="checkbox" name="times" value="weekday-evenings"><span>Weekday evenings</span></label>
-        <label><input type="checkbox" name="times" value="weekends"><span>Weekends</span></label>
-      </div></fieldset>
-      <label>Name<input name="name" autocomplete="name" maxlength="120" required></label>
-      <label>Email<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
-      <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
-      <label>City or ZIP, for your place<input name="city" autocomplete="postal-code" maxlength="80"></label>
-      <label class="wide">Anything I should know?<textarea name="note" maxlength="1500" placeholder="Your goal, old injuries, what you've tried"></textarea></label>
-      <label class="nf-hp" aria-hidden="true">Company website<input name="company_website" tabindex="-1" autocomplete="off"></label>
-      <label class="nf-check wide"><input type="checkbox" name="first" value="1"> This is my first session with Nathan</label>
-      <label class="nf-check wide"><input type="checkbox" name="consent_marketing"> Send me training tips now and then. Unsubscribe any time.</label>
-      <button type="submit" class="nf-btn nf-coral wide" id="nf-send">Send my request</button>
-      <p class="nf-msg wide" id="nf-msg" role="status" aria-live="polite"></p>
-      <p class="nf-fine wide">Your request stays pending until I confirm it by email. Nothing is charged on this site.</p>
-    </form>
-  </div>
-</section>
+<!--@nf-booker-->
 
 <!--@nf-where-->
 </main>

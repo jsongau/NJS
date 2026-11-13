@@ -1,0 +1,112 @@
+<section class="nf-sec tight" id="book" aria-label="Book a time">
+<div class="wrap"><div class="bk" data-booker>
+<div class="book">
+    <section class="bk-panel" aria-label="Booking">
+      <div class="bk-steps" role="tablist">
+        <button type="button" data-go="0" aria-current="step"><span>1</span>Day and place</button>
+        <button type="button" data-go="1" disabled><span>2</span>Pack and focus</button>
+        <button type="button" data-go="2" disabled><span>3</span>Your details</button>
+      </div>
+      <div class="bk-stage">
+        <div class="pane bk-on" data-pane="0">
+          <p class="sub-h"><span>1</span>Pick a day</p>
+          <div class="dates" id="dates"></div>
+          <p class="sub-h"><span>2</span>Pick a place <small id="day-avail"></small></p>
+          <figure class="area" aria-label="Where I train">
+            <svg viewBox="0 0 360 170" role="img" aria-labelledby="area-t">
+              <title id="area-t">Map of Southern California: I train clients across East LA, North and South Orange County, and the Inland Empire. Pins at Brea, Corona and Rancho Santa Margarita.</title>
+              <rect width="360" height="170" rx="18" fill="#EAF4F7"/>
+              <path d="M0 0H360V170H262C238 150 214 132 186 118C150 100 112 92 76 84C46 77 20 74 0 72Z" fill="#F7F1EA"/>
+              <path d="M0 0H150L140 58L108 72L76 84C46 77 20 74 0 72Z" fill="#F1E7DD"/>
+              <path d="M150 0H360V100L262 104L222 84L188 66L140 58Z" fill="#EEE8F6"/>
+              <path d="M140 58L188 66L222 84L262 104L300 170H262C238 150 214 132 186 118C150 100 112 92 76 84L108 72Z" fill="#FFEFE7"/>
+              <path d="M140 58L188 66L222 84L262 104L300 170" fill="none" stroke="#D9CFC4" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <path d="M140 58L108 72L76 84" fill="none" stroke="#D9CFC4" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <path d="M0 72C20 74 46 77 76 84C112 92 150 100 186 118C214 132 238 150 262 170" fill="none" stroke="#9FC7D3" stroke-width="2"/>
+              <path class="cover" d="M40 50C70 22 170 18 262 34C318 44 340 90 320 120C306 142 292 162 270 166C252 160 232 146 206 128C170 106 120 94 76 86C40 80 22 68 40 50Z"/>
+              <g class="area-lbl"><text x="44" y="50">East LA</text><text x="262" y="30">Inland Empire</text><text x="88" y="80">North OC</text><text x="266" y="156">South OC</text><text x="18" y="140" class="sea">Pacific</text></g>
+              <a href="#" data-pin="brea" aria-label="Brea, UFC Gym"><g class="bk-pin" transform="translate(146 64)"><circle class="pulse" r="18"/><circle class="dot" r="7"/><text x="12" y="-10">Brea</text></g></a>
+              <a href="#" data-pin="home" data-city="Corona" aria-label="Corona, private in person"><g class="bk-pin pin-ie" transform="translate(222 82)"><circle class="pulse" r="18"/><circle class="dot" r="7"/><text x="12" y="-10">Corona</text></g></a>
+              <a href="#" data-pin="rsm" aria-label="Rancho Santa Margarita, 9Round"><g class="bk-pin pin-gym" transform="translate(246 136)"><circle class="pulse" r="18"/><circle class="dot" r="7"/><text x="-14" y="-14" text-anchor="end">RSM</text></g></a>
+            </svg>
+            <figcaption><b>I train clients all around SoCal.</b> East LA, North and South OC, and the Inland Empire. Tap a pin: <span><i class="bk-lg pt"></i>UFC Gym Brea</span> <span><i class="bk-lg ie"></i>Corona</span> <span><i class="bk-lg gym"></i>9Round RSM</span></figcaption>
+          </figure>
+          <div class="locs" role="group" aria-label="Where">
+            <button type="button" class="loc" data-loc="brea" data-price="12-pack in Brea: $2,400, which is $200 a session. Includes 3 years of gym membership with class access." data-total="$2,400" aria-pressed="true"><span class="mark"><img src="/assets/studio/brand/gyms/ufc-gym.svg" alt="UFC Gym logo" onerror="this.parentNode.classList.add('nologo');this.remove()"><i>logo</i></span><b>UFC Gym Brea</b><small data-s>Every day</small></button>
+            <button type="button" class="loc" data-loc="home" data-price="12-pack at your place: $3,600, which is $300 a session. I come to you." data-total="$3,600" aria-pressed="false"><span class="mark ico"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 15 16 6l11 9v11H5Z" fill="#FFE6DC" stroke="#121416" stroke-width="2" stroke-linejoin="round"/><circle cx="16" cy="17" r="4" fill="#FF8A6B" stroke="#121416" stroke-width="2"/></svg></span><b>Private, in person</b><small data-s>I come to you</small></button>
+            <button type="button" class="loc" data-loc="online" data-price="12-pack online: I confirm the price by email." data-total="By email" aria-pressed="false"><span class="mark ico"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="8" width="18" height="16" rx="4" fill="#EEE8F6" stroke="#121416" stroke-width="2"/><path d="m22 14 6-4v12l-6-4Z" fill="#B9A6E8" stroke="#121416" stroke-width="2" stroke-linejoin="round"/></svg></span><b>Online</b><small data-s>Live video</small></button>
+            <button type="button" class="loc gymloc" data-loc="rsm" data-price="12-pack at 9Round in Rancho Santa Margarita: $2,400, which is $200 a session. Includes 1 year of 9Round membership." data-total="$2,400" aria-pressed="false"><span class="mark"><img src="/assets/studio/brand/gyms/9round.svg" alt="9Round logo" onerror="this.parentNode.classList.add('nologo');this.remove()"><i>logo</i></span><b>9Round RSM</b><small data-s>Mon to Wed, Fri</small></button>
+            <div class="loc soon bk-wide" aria-disabled="true"><span class="mark"><img src="/assets/studio/brand/gyms/club-studio.svg" alt="Club Studio logo" onerror="this.parentNode.classList.add('nologo');this.remove()"><i>logo</i></span><b>Club Studio</b><small>Coming soon</small></div>
+          </div>
+          <div class="where" id="bk-where" hidden>
+            <p class="where-h">Where should I meet you?</p>
+            <label class="q-l" for="q">ZIP code or city</label>
+            <div class="combo">
+              <input id="q" type="text" role="combobox" aria-expanded="false" aria-controls="sug" aria-autocomplete="list" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="search" placeholder="Try 92880 or Corona">
+              <button type="button" class="q-x" id="qx" aria-label="Clear" hidden>×</button>
+              <ul class="sug" id="sug" role="listbox" aria-label="Matching places" hidden></ul>
+            </div>
+            <p class="zipmsg" id="zipmsg" role="status" aria-live="polite"></p>
+          </div>
+          <p class="sub-h"><span>3</span>Pick a time</p>
+          <div class="cal">
+            <div class="day"><div class="day-h"><h3 id="dayname"></h3><p id="daynote"></p></div><ul class="bk-rows" id="rows"></ul><div class="tiles" id="tiles"></div></div>
+          </div>
+        </div>
+        <div class="pane" data-pane="1">
+          <h2 style="font-size:24px"><span class="ph">Your time is held.</span> <span class="ph">Now pick your focus.</span></h2>
+          <p style="margin-top:6px">Twelve sessions, two a week for six weeks. Your first one is the time you just picked.</p>
+          <div class="packs">
+            <button type="button" class="pack dark" data-pack="12" aria-pressed="true"><p class="bk-n">12<small>sessions</small></p><h3>The 12-pack</h3><p>Two sessions a week for six weeks. Long enough to see it and make it a habit.</p><div class="weeks"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="bonus"><span class="bonus-k">Bonus</span><span><b>A 30-minute AI session with me.</b> For your business or your job, the same session I run for NJS Studio clients.</span></div><p class="bk-priceline" id="bk-price" role="status"></p></button>
+          </div>
+          <fieldset class="focus"><legend>Your focus (pick one or two)</legend><div class="chips" id="chips"></div></fieldset>
+          <p class="held" id="held"></p>
+        </div>
+        <div class="pane" data-pane="2">
+          <h2 style="font-size:24px"><span class="ph">Last step:</span> <span class="ph">who's training?</span></h2>
+          <div class="review" id="review"></div>
+          <div class="bk-form">
+            <label>Name<input id="bk-name" autocomplete="name" maxlength="120" required></label>
+            <label>Email<input id="bk-email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="254" required></label>
+            <label>Phone (optional)<input id="bk-phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="40"></label>
+            <label>Anything I should know?<input id="bk-note" maxlength="1500" placeholder="Old injuries, goals"></label>
+            <label class="bk-hp" aria-hidden="true">Company website<input id="bk-hp" tabindex="-1" autocomplete="off"></label>
+            <label class="chk bk-wide"><input type="checkbox" id="bk-first"> This is my first session with Nathan</label>
+            <fieldset class="bk-wide bonus-pick" id="bonus-pick"><legend>Your bonus AI session (12-pack)</legend><div class="chips">
+              <label><input type="radio" name="ai" value="business" checked><span>For my business</span></label>
+              <label><input type="radio" name="ai" value="job"><span>For my job</span></label>
+              <label><input type="radio" name="ai" value="later"><span>Decide later</span></label>
+            </div><p class="bk-fine">We'll book it after your first week, on a call or before a session.</p></fieldset>
+          </div>
+          <p class="bk-msg" id="bk-msg" role="status" aria-live="polite"></p>
+          <h3 style="font-size:18px;margin-top:28px">What happens next</h3>
+          <ol class="next">
+            <li><b>I confirm.</b> I check the gym and my calendar, then email you. Your booking is pending until then.</li>
+            <li><b>Pay me directly.</b> Nothing is charged on this site. Your gym membership is included at UFC Gym Brea and 9Round.</li>
+            <li><b>Train.</b> Show up a few minutes early. I'll have the plan for your focus ready.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="nav"><p class="barline" id="barline"></p><p id="navnote">Pick an open hour to continue.</p><div style="display:flex;gap:10px"><button type="button" class="bk-btn" id="back" aria-label="Back" hidden>Back</button><button type="button" class="bk-btn ink" id="next" disabled>Continue</button></div></div>
+    </section>
+
+    <aside class="sum" aria-label="Your booking">
+      <p class="bk-k">Your booking</p>
+      <h2 id="s-title">Nothing picked yet</h2>
+      <dl>
+        <div><dt>Where</dt><dd id="s-where" class="bk-empty">Choose a gym</dd></div>
+        <div><dt>First session</dt><dd id="s-when" class="bk-empty">Choose a time</dd></div>
+        <div><dt>Pack</dt><dd id="s-pack">12-pack</dd></div>
+        <div><dt>Focus</dt><dd id="s-focus" class="bk-empty">Pick in step 2</dd></div>
+        <div><dt>Bonus</dt><dd id="s-bonus">AI session, 30 min</dd></div>
+      </dl>
+      <div class="bk-total"><span>Total</span><b id="s-total">Shown at checkout</b></div>
+      <p class="pend"><b>Pending until I confirm.</b> I check the gym and my calendar, then email you. Classes at the gym are booked through the gym itself.</p>
+      <p class="bk-sec">Times are Pacific.</p>
+    </aside>
+  </div>
+
+
+</div>
+</div>
+</section>

@@ -2,6 +2,13 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-12
+
+- `/fitness/book` — Date-first booking on the one-pack site: pick a day and the day opens the places (Thursday:
+  UFC Gym Brea schedule; Mon to Wed and Fri: every place; weekends: Brea or your place), then the 12-pack focus
+  with the price line for that place, then details. ZIP or city search for private sessions. lead-intake v4
+  accepts any day, half hours, part-of-day requests and the service area.
+
 ## 2026-11-11
 
 - `/fitness` — One pack only: the 2-session trial is gone from every page and from the booking form. The

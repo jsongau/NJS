@@ -6,6 +6,8 @@ import { createClient } from "npm:@supabase/supabase-js@2.45.4";
 // the service role, so the tables stay closed to the public.
 // v2 (2026-11-09, Fitness F1): allow-listed `meta` for fitness requests, a cleaner
 // notify email for Jay, and a confirmation email to the visitor for `train` requests.
+// v3 (2026-11-09, booker): any day, half hours, part-of-day requests, service area from the ZIP
+// search. v4 (2026-11-12): one pack only (12-pack); the free trial was dropped before launch.
 
 const DEFAULT_ORIGINS = [
   "https://nathanjsong.com",
@@ -24,10 +26,13 @@ const MAX_PER_10_MIN = 5;
 
 // Every key and value in meta is allow-listed: no free text, no personal data.
 const DISCIPLINES = ["personal-training", "clubs-and-maces", "striking", "kickboxing", "yoga", "reformer-pilates"];
-const PACKS = ["2-pack", "12-pack"];
+const PACKS = ["12-pack"];
+const AREAS = ["North OC", "Central OC", "South OC", "East LA", "Inland Empire"];
+const PARTS = ["morning", "midday", "evening"];
+const AI = ["business", "job", "later"];
 const FOCUS = ["muscle", "fat-loss", "shoulders", "boxing", "kickboxing", "muay-thai", "conditioning", "mobility", "pilates"];
 const TIMES = ["weekday-mornings", "weekday-midday", "weekday-evenings", "weekends"];
-const ENTRIES = ["hero_card", "goal_grid", "form", "calendar", "pack"];
+const ENTRIES = ["hero_card", "goal_grid", "form", "calendar", "pack", "booker"];
 const LABEL: Record<string, string> = {
   "personal-training": "personal training", "clubs-and-maces": "clubs and maces", striking: "kickboxing or boxing",
   kickboxing: "kickboxing", yoga: "yoga", "reformer-pilates": "reformer Pilates",
@@ -75,8 +80,13 @@ export function cleanMeta(raw: unknown): Record<string, unknown> {
     const f = [...new Set(m.focus.filter((x) => typeof x === "string" && FOCUS.includes(x)))].slice(0, 2);
     if (f.length) out.focus = f;
   }
-  // A Thursday hour picked in the calendar, as local Pacific "YYYY-MM-DDTHH".
-  if (typeof m.slot === "string" && /^\d{4}-\d{2}-\d{2}T(0[6-9]|1\d)$/.test(m.slot)) out.slot = m.slot;
+  // An hour (or half hour) picked in the booker, local Pacific "YYYY-MM-DDTHH" or "YYYY-MM-DDTHH:30".
+  if (typeof m.slot === "string" && /^\d{4}-\d{2}-\d{2}T(0[6-9]|1\d)(:30)?$/.test(m.slot)) out.slot = m.slot;
+  // A part of a day for request-only places, "YYYY-MM-DD:morning".
+  if (typeof m.part === "string" && new RegExp("^\\d{4}-\\d{2}-\\d{2}:(" + PARTS.join("|") + ")$").test(m.part)) out.part = m.part;
+  if (m.member === true) out.member = true;
+  if (typeof m.area === "string" && AREAS.includes(m.area)) out.area = m.area;
+  if (typeof m.ai === "string" && AI.includes(m.ai)) out.ai = m.ai;
   if (m.first === true) out.first = true;
   return out;
 }
@@ -107,7 +117,11 @@ function notifyText(row: Record<string, unknown>, meta: Record<string, unknown>)
   const top = [
     meta.pack ? `Pack: ${meta.pack}` : null,
     meta.focus ? `Focus: ${(meta.focus as string[]).join(", ")}` : null,
-    meta.slot ? `Requested time: ${meta.slot}:00 Pacific` : null,
+    meta.slot ? `Requested time: ${slotLabel(meta.slot as string)} Pacific` : null,
+    meta.part ? `Requested: ${(meta.part as string).replace(":", ", ")} (reply with an exact time)` : null,
+    meta.member ? "Says they're a member of the gym (free trial)" : null,
+    meta.area ? `Area: ${meta.area}` : null,
+    meta.ai ? `AI session for: ${meta.ai}` : null,
     meta.first ? "First session with Nathan" : null,
     meta.discipline ? `Discipline: ${LABEL[meta.discipline as string]}` : null,
     row.location ? `Where: ${LABEL[row.location as string] ?? row.location}` : null,
@@ -120,24 +134,29 @@ function notifyText(row: Record<string, unknown>, meta: Record<string, unknown>)
   return [...top, "", ...rest].join("\n");
 }
 
-function slotText(slot: unknown) {
-  if (typeof slot !== "string") return "";
-  const h = Number(slot.slice(11));
-  return ` You asked for ${slot.slice(0, 10)} at ${h % 12 || 12}:00 ${h < 12 ? "AM" : "PM"} Pacific.`;
+function slotLabel(slot: string) {
+  const h = Number(slot.slice(11, 13)); const mm = slot.length > 13 ? "30" : "00";
+  return `${slot.slice(0, 10)} at ${h % 12 || 12}:${mm} ${h < 12 ? "AM" : "PM"}`;
+}
+function slotText(meta: Record<string, unknown>) {
+  if (typeof meta.slot === "string") return ` You asked for ${slotLabel(meta.slot)} Pacific.`;
+  if (typeof meta.part === "string") { const [d, p] = meta.part.split(":"); return ` You asked for the ${p} of ${d}; I'll reply with an exact time.`; }
+  return "";
 }
 
 // To the visitor (train only): confirms what they asked for and what happens next.
 // The reply-time promise comes from REPLY_PROMISE, set by Jay; without it, no time is promised.
 function confirmText(row: Record<string, unknown>, meta: Record<string, unknown>) {
   const first = String(row.name).split(/\s+/)[0];
-  const what = meta.pack ? `the ${meta.pack}${meta.discipline ? ` (${LABEL[meta.discipline as string]})` : ""}`
+  const what = meta.pack === "free-trial" ? "a free trial session" : meta.pack ? `the ${meta.pack}${meta.discipline ? ` (${LABEL[meta.discipline as string]})` : ""}`
     : meta.discipline ? `a first ${LABEL[meta.discipline as string]} session` : "a private session";
   const where = row.location ? (row.location === "online" ? " online" : row.location === "in-home" ? " at your place" : ` in ${LABEL[row.location as string]}`) : "";
-  const promise = Deno.env.get("REPLY_PROMISE") ?? "I'll reply by email with your time and the price.";
+  const promise = meta.pack === "free-trial" ? "I'll reply by email to confirm your time. Bring your gym membership to the session."
+    : Deno.env.get("REPLY_PROMISE") ?? "I'll reply by email with your time and the price.";
   return [
     `Hi ${first},`,
     "",
-    `Thanks for asking about ${what}${where}.${slotText(meta.slot)} Your request is pending until I confirm it. ${promise}`,
+    `Thanks for asking about ${what}${where}.${slotText(meta)} Your request is pending until I confirm it. ${promise}`,
     "",
     "If anything changes (days, old injuries, what you want to work on), just reply to this email.",
     "",
@@ -196,7 +215,7 @@ Deno.serve(async (req) => {
 
   // Emails never block or fail the request: the row is already saved.
   const jay = Deno.env.get("NOTIFY_EMAIL");
-  const label = door === "train" && meta.discipline ? `${door} lead (${LABEL[meta.discipline as string]})` : `${door} lead`;
+  const label = door === "train" && meta.pack === "free-trial" ? "free trial request" : door === "train" && meta.discipline ? `${door} lead (${LABEL[meta.discipline as string]})` : `${door} lead`;
   const mail: Record<string, string> = {};
   if (jay) mail.notify = await send(jay, `New ${label}: ${name}`, notifyText(row, meta), email);
   if (door === "train") mail.confirm = await send(email, "Got your session request", confirmText(row, meta), jay ?? undefined);

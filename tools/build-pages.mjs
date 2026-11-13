@@ -507,7 +507,7 @@ export function renderPage(id) {
   const mode = { brand: fit ? 'NJS Fitness' : 'NJS Studio', mode: fit ? 'fitness' : 'business',
     biz_href: fit ? '/' : page.path, fit_href: '/fitness',
     biz_cur: fit ? '' : ' aria-current="true"', fit_cur: fit ? ' aria-current="true"' : '' };
-  const extra = { extra_css: fit ? '<link rel="stylesheet" href="/assets/studio/fitness.css">' : '' };
+  const extra = { extra_css: fit ? '<link rel="stylesheet" href="/assets/studio/fitness.css">' + (id === 'fit-book' ? '\n<link rel="stylesheet" href="/assets/studio/booker.css">' : '') : '' };
   const vars = { ...page, ...cur, ...mode, ...extra, jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
   let html = expand(read('pages/' + id), ['pages/' + id]);
   html = html.replace(/\{\{([a-z_]+)\}\}/g, (_, k) => {

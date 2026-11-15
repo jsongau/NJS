@@ -96,6 +96,15 @@ export const PAGES = {
     skip_href: '#delivered', skip_text: 'Skip to the projects',
     jsonld: ld('ItemList', { name: 'Delivered projects', itemListElement: PROJECTS.map((p, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'CreativeWork', name: p.name, url: p.url, description: p.sub, creator: { '@id': ORG['@id'] } } })) }),
   },
+  ops: {
+    out: 'marketing-ops/index.html', path: '/marketing-ops', nav: null, h1: 'ops-h', css: 'ops',
+    title: 'Meta Ads, GoHighLevel CRM and Marketing Automation · Nathan J. Song',
+    description: 'How Nathan J. Song runs Meta ads, GoHighLevel pipelines, email and SMS follow-up, review requests and owner reporting, with a worked example for funeral planning.',
+    og_title: 'Ads and CRM, run as one system',
+    og_description: 'Meta ads, GoHighLevel, automation, reviews and reporting, with results from three years in dental and a worked example for memorial planning and senior living.',
+    skip_href: '#example', skip_text: 'Skip to the worked example',
+    jsonld: ld('ProfilePage', { name: 'Marketing operations', mainEntity: { '@type': 'Person', name: 'Nathan J. Song', url: SITE + '/resume', jobTitle: 'Marketing operations manager', knowsAbout: ['Meta Ads', 'GoHighLevel', 'CRM automation', 'Email and SMS marketing', 'Review management', 'Conversion tracking'] } }),
+  },
   care: {
     out: 'care/index.html', path: '/care', nav: 'care',
     title: 'Care plans · Hosting, Care and Partner · NJS Studio',
@@ -507,7 +516,7 @@ export function renderPage(id) {
   const mode = { brand: fit ? 'NJS Fitness' : 'NJS Studio', mode: fit ? 'fitness' : 'business',
     biz_href: fit ? '/' : page.path, fit_href: '/fitness',
     biz_cur: fit ? '' : ' aria-current="true"', fit_cur: fit ? ' aria-current="true"' : '' };
-  const extra = { extra_css: fit ? '<link rel="stylesheet" href="/assets/studio/fitness.css">' + (id === 'fit-book' ? '\n<link rel="stylesheet" href="/assets/studio/booker.css">' : '') : '' };
+  const extra = { extra_css: page.css ? '<link rel="stylesheet" href="/assets/studio/' + page.css + '.css">' : fit ? '<link rel="stylesheet" href="/assets/studio/fitness.css">' + (id === 'fit-book' ? '\n<link rel="stylesheet" href="/assets/studio/booker.css">' : '') : '' };
   const vars = { ...page, ...cur, ...mode, ...extra, jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
   let html = expand(read('pages/' + id), ['pages/' + id]);
   html = html.replace(/\{\{([a-z_]+)\}\}/g, (_, k) => {

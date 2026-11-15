@@ -2,6 +2,10 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-14
+
+- `/marketing-ops` — New page: Meta ads, GoHighLevel CRM, automation, reviews and owner reporting, with results from KYT Dental and a worked example (concept, not a client) for funeral planning and senior living. Linked from the footer and the mobile menu.
+
 ## 2026-11-13
 
 - `/fitness` — The 12-pack gets a pace toggle (twice a week for 6 weeks, or once a week for 12); the choice carries into booking and the request. The closing artwork is redrawn as a jointed runner crossing six week flags at sunrise.

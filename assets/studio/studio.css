@@ -1166,6 +1166,8 @@ body[data-mode="fitness"] .subnav { background: rgba(250, 246, 242, .92); }
 .wg-pipe p { display: grid; gap: 1cqw; padding: 3cqw 2cqw; border-radius: 3.4cqw; background: #F5F6F8; text-align: center; }
 .wg-pipe span { color: #6B7078; font-size: 4cqw; } .wg-pipe b { font-size: 8cqw; letter-spacing: -.02em; }
 .wg-pipe p:last-child { background: color-mix(in srgb, var(--a) 22%, #fff); }
+.wg-url { align-self: flex-start; padding: 1.4cqw 3cqw; border-radius: 99cqw; background: #F0F1F3; color: #5B6068; font: 500 4.2cqw/1.2 var(--mono); }
+.wg-crm { gap: 2.6cqw; } .wg-crm .wg-rows p { padding: 1.6cqw 0; } .wg-crm .wg-pipe b { font-size: 7cqw; }
 .wg-offer { background: color-mix(in srgb, var(--a) 18%, #fff); border: 1px dashed color-mix(in srgb, var(--a) 70%, #121416); }
 .wg-lto.done .wg-btn { background: var(--a); color: #121416 !important; }
 .wg-out { display: none; font-weight: 600; font-size: 5cqw; }

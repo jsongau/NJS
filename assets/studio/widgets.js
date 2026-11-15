@@ -54,15 +54,16 @@ export const WIDGETS = {
     '<small class="wg-note">Happy guests go to Google. Unhappy ones come to you first.</small>',
 
   crm: (c) => '<div class="wg-h">Pipeline</div>' +
-    '<p class="wg-sub">' + esc(c.brand) + '</p>' +
-    '<div class="wg-pipe"><p><span>New</span><b class="wg-p1">4</b></p><p><span>Contacted</span><b class="wg-p2">3</b></p><p><span>Booked</span><b class="wg-p3">2</b></p></div>' +
-    '<div class="wg-card"><small class="wg-pst">New · next step: call back today</small><b>Alex R.</b></div>' +
-    '<button type="button" class="wg-btn" data-act="stage">Move to next stage</button>',
+    '<p class="wg-sub">' + esc(c.brand) + ' · this month</p>' +
+    '<div class="wg-pipe"><p><span>Leads</span><b class="wg-p1">24</b></p><p><span>Booked</span><b class="wg-p2">11</b></p><p><span>Customers</span><b class="wg-p3">6</b></p></div>' +
+    '<div class="wg-rows"><p><span>Lead to customer</span><b class="wg-cv">25%</b></p><p><span>Referrals sent</span><b class="wg-rf">3</b></p></div>' +
+    '<div class="wg-card"><small class="wg-pst">Booked · next step: reminder the day before</small><b>Alex R.</b></div>' +
+    '<button type="button" class="wg-btn" data-act="stage">Mark Alex a customer</button>',
 
-  lto: (c) => '<div class="wg-h">This week only</div>' +
-    '<p class="wg-sub">' + esc(c.brand) + '</p>' +
+  lto: (c) => '<div class="wg-h">Offer page</div>' +
+    '<p class="wg-url">' + slug(c.brand) + '.com/offer</p>' +
     '<div class="wg-card wg-offer"><small>Ends Sunday, 9:00 PM</small><b>New customer offer</b></div>' +
-    '<div class="wg-rows"><p><span>Claimed so far</span><b class="wg-n">14</b></p></div>' +
+    '<div class="wg-rows"><p><span>Page visits</span><b>212</b></p><p><span>Claimed</span><b class="wg-n">14</b></p></div>' +
     '<button type="button" class="wg-btn" data-act="claim">Claim the offer</button>' +
     '<small class="wg-note">The date shown is the real last day. No fake timers.</small>',
 
@@ -148,13 +149,19 @@ export function actWidget(el, btn) {
     return true;
   }
   if (act === 'stage') {
-    const steps = [['4', '3', '2', 'New · next step: call back today'], ['3', '4', '2', 'Contacted · next step: send times'], ['3', '3', '3', 'Booked · next step: reminder the day before']];
+    // Alex moves Booked to Customer, then refers a friend who lands as a new lead.
+    const steps = [
+      ['24', '11', '6', '25%', '3', 'Booked · next step: reminder the day before', 'Mark Alex a customer'],
+      ['24', '10', '7', '29%', '3', 'Customer · next step: ask for a referral', 'Alex refers a friend'],
+      ['25', '10', '7', '28%', '4', 'Referred Sam K. · new lead added', 'Start over'],
+    ];
     const i = ((+el.dataset.step || 0) + 1) % steps.length;
     el.dataset.step = String(i);
-    const [a, b, c, t] = steps[i];
+    const [a, b, c, cv, rf, t, label] = steps[i];
     el.querySelector('.wg-p1').textContent = a; el.querySelector('.wg-p2').textContent = b; el.querySelector('.wg-p3').textContent = c;
+    el.querySelector('.wg-cv').textContent = cv; el.querySelector('.wg-rf').textContent = rf;
     el.querySelector('.wg-pst').textContent = t;
-    btn.textContent = i === steps.length - 1 ? 'Start over' : 'Move to next stage';
+    btn.textContent = label;
     return true;
   }
   if (act === 'claim') {

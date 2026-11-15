@@ -308,16 +308,16 @@
     },
     {
       "id": "crm",
-      "name": "CRM and lead pipeline",
+      "name": "CRM, conversions and referrals",
       "icon": "crm",
       "weight": 2,
-      "desc": "Every lead, call and form in one pipeline, with a stage and a next step on each.",
+      "desc": "Every lead in one pipeline, with the share that became customers and the referrals each customer sent.",
       "wording": {
-        "gym": "Trial sign-ups move from new to booked to member, and none go quiet.",
-        "dental": "New patient calls and forms in one list, each with a next step.",
-        "food": "Catering and party requests tracked from first ask to deposit.",
-        "shop": "Custom orders and wholesale asks tracked until they close.",
-        "service": "Every quote request in one pipeline, from first call to booked job."
+        "gym": "Trial sign-ups tracked to member, with your trial-to-member rate and who referred a friend.",
+        "dental": "New patient calls tracked to first visit, with your booking rate and referrals by patient.",
+        "food": "Catering requests tracked to deposit, with your close rate and who sent the party.",
+        "shop": "Custom and wholesale asks tracked to sale, with your close rate and referral codes used.",
+        "service": "Quote requests tracked to booked job, with your close rate and referrals by customer."
       }
     },
     {
@@ -336,16 +336,16 @@
     },
     {
       "id": "lto",
-      "name": "Limited-time offers",
+      "name": "LTO landing pages",
       "icon": "tag",
       "weight": 1,
-      "desc": "An offer with a real end date: its own page, a claim form and a count of who took it.",
+      "desc": "A landing page for each limited-time offer: one offer, one form, a real end date and a count of who claimed it.",
       "wording": {
-        "gym": "A founding rate or a free first class, with the true last day shown.",
-        "dental": "A new patient special with a clear end date and a claim form.",
-        "food": "A seasonal special or a weeknight deal that ends when you say.",
-        "shop": "A weekend sale with a claim code and the real closing time.",
-        "service": "A seasonal tune-up price with a booking deadline."
+        "gym": "A page for a founding rate or a free first class, with the true last day shown.",
+        "dental": "A page for a new patient special, with a clear end date and a claim form.",
+        "food": "A page for a seasonal special or a weeknight deal that ends when you say.",
+        "shop": "A page for a weekend sale, with a claim code and the real closing time.",
+        "service": "A page for a seasonal tune-up price, with a booking deadline."
       }
     },
     {

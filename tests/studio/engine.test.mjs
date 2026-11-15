@@ -59,10 +59,8 @@ test('3. any weight 2 feature alone is Grow, reason weight', () => {
 });
 
 test('4. four weight 1 features is Grow, reason feature_count', () => {
-  // The live catalog has three weight 1 features, so the count rule is checked on a copy
-  // where one more feature is weight 1.
+  // The live catalog has four weight 1 features (site, book, reviews, lto).
   const c = JSON.parse(JSON.stringify(CAT));
-  c.features.find((f) => f.id === 'dash').weight = 1;
   const ones = c.features.filter((f) => f.weight === 1).map((f) => f.id);
   assert.equal(ones.length, 4);
   const q = quote({ features: ones }, c);

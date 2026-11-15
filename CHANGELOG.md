@@ -7,6 +7,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 - `/marketing-ops` — New page: Meta ads, GoHighLevel CRM, automation, reviews and owner reporting, with results from KYT Dental and a worked example (concept, not a client) for funeral planning and senior living. Linked from the footer and the mobile menu.
 - `/` — Industry picker adds "Senior care and memorial" (funeral home, memorial pre-planning, cremation or cemetery, senior living, memory care, in-home care, hospice) with a candle-in-arch icon; `/marketing-ops` gets two illustrations for the worked example.
 - `/` `/build` — Plan rail sits clear of the sticky header and sub-menu so all four edges show, and fits in one view with no inner scroll (features and extras as chips, two actions side by side). The three promise tiles (audit credited, you own it, month to month) and the deposit row are gone from the rail. Delivered: CoverCapy shows its capybara mark.
+- `/` `/build` — Two new features in the builder: "CRM and lead pipeline" (Premium-level) and "Limited-time offers" (Basic-level, real end dates only), each with an icon, per-industry wording and a live preview in the Draft card.
 
 ## 2026-11-13
 

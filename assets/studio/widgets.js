@@ -53,6 +53,19 @@ export const WIDGETS = {
     '<p class="wg-out" data-out="bad">Sorry about that. The owner will reach out today.</p>' +
     '<small class="wg-note">Happy guests go to Google. Unhappy ones come to you first.</small>',
 
+  crm: (c) => '<div class="wg-h">Pipeline</div>' +
+    '<p class="wg-sub">' + esc(c.brand) + '</p>' +
+    '<div class="wg-pipe"><p><span>New</span><b class="wg-p1">4</b></p><p><span>Contacted</span><b class="wg-p2">3</b></p><p><span>Booked</span><b class="wg-p3">2</b></p></div>' +
+    '<div class="wg-card"><small class="wg-pst">New · next step: call back today</small><b>Alex R.</b></div>' +
+    '<button type="button" class="wg-btn" data-act="stage">Move to next stage</button>',
+
+  lto: (c) => '<div class="wg-h">This week only</div>' +
+    '<p class="wg-sub">' + esc(c.brand) + '</p>' +
+    '<div class="wg-card wg-offer"><small>Ends Sunday, 9:00 PM</small><b>New customer offer</b></div>' +
+    '<div class="wg-rows"><p><span>Claimed so far</span><b class="wg-n">14</b></p></div>' +
+    '<button type="button" class="wg-btn" data-act="claim">Claim the offer</button>' +
+    '<small class="wg-note">The date shown is the real last day. No fake timers.</small>',
+
   agent: () => '<div class="wg-h">Back-office agent <button type="button" class="wg-sw on" data-act="switch" aria-label="Agent on"><i></i></button></div>' +
     '<ol class="wg-log">' +
       '<li style="--i:0"><time>6:00</time>Checked 42 bookings</li>' +
@@ -132,6 +145,22 @@ export function actWidget(el, btn) {
       el.querySelector('.wg-count').textContent = String(have + 1);
       if (have + 1 >= CITIES.length) { btn.textContent = 'Every city covered'; btn.disabled = true; }
     }
+    return true;
+  }
+  if (act === 'stage') {
+    const steps = [['4', '3', '2', 'New · next step: call back today'], ['3', '4', '2', 'Contacted · next step: send times'], ['3', '3', '3', 'Booked · next step: reminder the day before']];
+    const i = ((+el.dataset.step || 0) + 1) % steps.length;
+    el.dataset.step = String(i);
+    const [a, b, c, t] = steps[i];
+    el.querySelector('.wg-p1').textContent = a; el.querySelector('.wg-p2').textContent = b; el.querySelector('.wg-p3').textContent = c;
+    el.querySelector('.wg-pst').textContent = t;
+    btn.textContent = i === steps.length - 1 ? 'Start over' : 'Move to next stage';
+    return true;
+  }
+  if (act === 'claim') {
+    const done = el.classList.toggle('done');
+    el.querySelector('.wg-n').textContent = done ? '15' : '14';
+    btn.textContent = done ? 'Claimed. Code sent by text.' : 'Claim the offer';
     return true;
   }
   if (act === 'approve' || act === 'skip') { el.classList.remove('ok', 'no'); el.classList.add(act === 'approve' ? 'ok' : 'no'); return true; }

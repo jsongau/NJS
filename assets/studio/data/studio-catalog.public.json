@@ -307,6 +307,20 @@
       }
     },
     {
+      "id": "crm",
+      "name": "CRM and lead pipeline",
+      "icon": "crm",
+      "weight": 2,
+      "desc": "Every lead, call and form in one pipeline, with a stage and a next step on each.",
+      "wording": {
+        "gym": "Trial sign-ups move from new to booked to member, and none go quiet.",
+        "dental": "New patient calls and forms in one list, each with a next step.",
+        "food": "Catering and party requests tracked from first ask to deposit.",
+        "shop": "Custom orders and wholesale asks tracked until they close.",
+        "service": "Every quote request in one pipeline, from first call to booked job."
+      }
+    },
+    {
       "id": "reviews",
       "name": "Review requests",
       "icon": "star",
@@ -318,6 +332,20 @@
         "food": "The morning after a visit.",
         "shop": "A week after a purchase.",
         "service": "When the job is marked done."
+      }
+    },
+    {
+      "id": "lto",
+      "name": "Limited-time offers",
+      "icon": "tag",
+      "weight": 1,
+      "desc": "An offer with a real end date: its own page, a claim form and a count of who took it.",
+      "wording": {
+        "gym": "A founding rate or a free first class, with the true last day shown.",
+        "dental": "A new patient special with a clear end date and a claim form.",
+        "food": "A seasonal special or a weeknight deal that ends when you say.",
+        "shop": "A weekend sale with a claim code and the real closing time.",
+        "service": "A seasonal tune-up price with a booking deadline."
       }
     },
     {

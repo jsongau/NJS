@@ -1152,6 +1152,12 @@ body[data-mode="fitness"] .subnav { background: rgba(250, 246, 242, .92); }
 .wg.done .wg-sheet { transform: none; }
 .wg-toast { position: absolute; left: 7cqw; right: 7cqw; bottom: 24cqw; padding: 3cqw 4cqw; border-radius: 3cqw; background: #121416; color: #fff; font-size: 4.6cqw; opacity: 0; transform: translateY(8px); transition: opacity 240ms, transform 240ms; }
 .wg.done .wg-toast { opacity: 1; transform: none; }
+.wg-pipe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2cqw; }
+.wg-pipe p { display: grid; gap: 1cqw; padding: 3cqw 2cqw; border-radius: 3.4cqw; background: #F5F6F8; text-align: center; }
+.wg-pipe span { color: #6B7078; font-size: 4cqw; } .wg-pipe b { font-size: 8cqw; letter-spacing: -.02em; }
+.wg-pipe p:last-child { background: color-mix(in srgb, var(--a) 22%, #fff); }
+.wg-offer { background: color-mix(in srgb, var(--a) 18%, #fff); border: 1px dashed color-mix(in srgb, var(--a) 70%, #121416); }
+.wg-lto.done .wg-btn { background: var(--a); color: #121416 !important; }
 .wg-out { display: none; font-weight: 600; font-size: 5cqw; }
 .wg.good [data-out="good"], .wg.bad [data-out="bad"], .wg.ok [data-out="ok"], .wg.no [data-out="no"] { display: block; animation: wg-in 300ms var(--ease-out); }
 @keyframes wg-in { from { opacity: 0; transform: translateY(6px); } }

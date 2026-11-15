@@ -3,7 +3,7 @@
 // stays visible and disabled until Wave 5.
 import { $, plural, weeksText } from './util.js';
 import { resolveBusiness } from './engine.js';
-import { sheet } from './summary.js';
+import { sheet, planSentence } from './summary.js';
 import { track } from './track.js';
 
 export function planMessage(store, extra = {}) {
@@ -65,36 +65,40 @@ export function mountEndings(store) {
   const sendBtn = $('#send-btn');
   let sent = false;
   let enabled = false;
+  // The form lives in a modal, so the plan card never grows or scrolls when it opens (Mary 2026-11-14).
+  const dlg = $('#lead-dlg');
+  function showForm(title) {
+    $('#lead-dlg-h').textContent = title;
+    const q = store.get().quote;
+    $('#lead-dlg-sum').textContent = q && q.tier ? planSentence(q, catalog) : 'No plan needed. Tell me a good time.';
+    form.classList.add('open');
+    if (!dlg.open) { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); }
+    setTimeout(() => form.elements.name.focus(), 60);
+  }
+  function hideForm() { form.classList.remove('open'); if (dlg.open) { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); } }
+  dlg.addEventListener('close', () => form.classList.remove('open'));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) hideForm(); });
+  $('#lead-dlg-x').addEventListener('click', hideForm);
 
   // The call request needs no plan, so it opens the form even when the plan is empty.
   function forceForm() {
     callMode = true;
-    form.classList.add('open');
-    sendBtn.hidden = true;
-    $('#send-sub').hidden = true;
     const note = form.elements.note;
     if (note && !note.value) note.value = "I'd like a 20-minute call. Best times: ";
     track('form_open', { detail: 'call' });
-    if (sheet.isPhone()) sheet.setOpen(true);
-    else $('#plan').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showForm('Request a 20-minute call');
   }
   function openForm() {
     if (!enabled) return;
-    form.classList.add('open');
     track('form_open', { tier: store.get().sel.package_tab || null });
-    sendBtn.hidden = true;
-    $('#send-sub').hidden = true;
-    setTimeout(() => form.querySelector('input[name="name"]').focus(), 40);
+    showForm('Send my plan');
   }
   sendBtn.addEventListener('click', openForm);
   // Arrived from "Request a 20-minute call" on another page: open the form with the call note.
   const askCall = new URLSearchParams(location.search).get('call') === '1';
   let callMode = false;
-  $('#final-send').addEventListener('click', () => {
-    if (sheet.isPhone()) sheet.setOpen(true);
-    else $('#plan').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    openForm();
-  });
+  let asked = false;
+  $('#final-send').addEventListener('click', openForm);
 
   const calls = [$('#call-btn'), $('#final-call')];
   // Until the booking link exists (call_url_todo), the call buttons open the plan form instead,
@@ -106,11 +110,10 @@ export function mountEndings(store) {
     track('call_click', { detail: a.id });
     if (callLive) return;
     e.preventDefault();
-    if (sheet.isPhone()) sheet.setOpen(true);
-    else $('#plan').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    openForm();
     const note = form.elements.note;
     if (note && !note.value) note.value = "I'd like a 20-minute call. Best times: ";
+    openForm();
+    $('#lead-dlg-h').textContent = 'Request a 20-minute call';
   }));
 
   form.addEventListener('submit', async (e) => {
@@ -143,7 +146,8 @@ export function mountEndings(store) {
         const b = document.createElement('b'); b.textContent = 'Got it, ' + first + '.';
         msg.append(b, ' Your plan is with me. Look for an email from me with times. If it doesn\'t show up, check spam.');
         $('#status').textContent = 'Sent'; $('#status').classList.add('sent');
-        form.reset(); form.classList.remove('open');
+        form.reset(); hideForm();
+        if (sheet.isPhone()) sheet.setOpen(true); else $('#plan').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         if (callLive) calls.forEach((a) => { a.href = callUrl(store, { name: body.name, email: body.email }); });
       } else {
         let code = '';
@@ -168,7 +172,7 @@ export function mountEndings(store) {
       if (!sent) a.href = callLive ? callUrl(store) : '#plan';
     });
     $('#ppo-field').hidden = sel.business_type !== 'dental';
-    if (askCall && !sent && !form.classList.contains('open') && !callLive) { forceForm(); }
-    if (!enabled && !callMode && form.classList.contains('open')) { form.classList.remove('open'); sendBtn.hidden = false; $('#send-sub').hidden = false; }
+    if (askCall && !asked && !sent && !callLive) { asked = true; forceForm(); }
+    if (!enabled && !callMode && form.classList.contains('open')) hideForm();
   });
 }

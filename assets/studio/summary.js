@@ -12,7 +12,7 @@ export function nsLine(q, catalog) {
 
 export function planSentence(q, catalog) {
   if (!q.tier) return 'Your plan is empty.';
-  return q.tier.label + ' build, ' + weeksText(q.weeks) + ' weeks, care plan ' + q.care.label + '.';
+  return q.tier.label + ' build, ' + weeksText(q.weeks) + ' weeks, ' + (q.care.id === 'none' ? 'no care plan' : 'care plan ' + q.care.label) + '.';
 }
 
 export function mountSummary(store) {

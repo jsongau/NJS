@@ -5,6 +5,9 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-14 · **A form never opens inside a sticky rail.** (Jay: the name field was cut off and could not scroll.)
+  A rail has no spare height, so a form goes in a `<dialog>` opened with `showModal()`: centered on desktop, a bottom
+  sheet on phones, its own scroll, Esc and backdrop close, focus on the first field. The button that opens it stays put.
 - 2026-11-14 · **Every icon moves, and not only on hover.** Each icon in `icons.js` needs a `[data-i]` motion rule in
   `studio.css` (or a shared part class: `.d`, `.b1` to `.b3`). `playIconsInView()` adds `.gi-on` to a card for about two
   seconds the first time it scrolls into view, so touch screens see it once; hover and pick replay it.

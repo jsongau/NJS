@@ -129,4 +129,3 @@ opening the Mac folder will not have these; ask Jay to attach them.
 - Fitness waves 2 to 5 need Jay's input first: class schedule per gym, which goals he coaches himself,
   gym manager approvals, session pricing, photos. The fitness footer still shows Business links.
 - AI guide agent: waiting on Jay's go plus model choice. He sets `ANTHROPIC_API_KEY` himself.
-- Delivered logos still missing for CoverCapy and BoxVacay.

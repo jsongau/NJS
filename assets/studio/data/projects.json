@@ -103,6 +103,7 @@
   {
    "id": "covercapy",
    "mono": "CC",
+   "logo": "/assets/studio/brand/delivered/covercapy.svg",
    "color": "#14525b",
    "kind": "live",
    "name": "CoverCapy",

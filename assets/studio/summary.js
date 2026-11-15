@@ -64,23 +64,20 @@ export function mountSummary(store) {
     type(nsLine(q, catalog));
 
     const rows = [
-      ['Features', String(q.features.length)],
       ['Pages', q.pages >= 151 ? 'Hundreds' : 'About ' + q.pages],
-      ['Tier', q.tier ? q.tier.label : 'None yet'],
-      ['Timeline', q.weeks ? 'About ' + weeksText(q.weeks) + ' weeks after the audit' + (q.addons.includes('rush') ? ', shorter with Rush' : '') : 'Once you pick'],
       ['Style', styleById[sel.style] ? styleById[sel.style].label : 'Not picked'],
       ['Care', q.care.id === 'none' ? 'None' : q.care.label + ', ' + q.care.updates_per_month + ' updates a month' + (sel.billing === 'annual' ? ', annual' : '')],
     ];
     $('#rows').innerHTML = rows.map(([k, v]) => '<dt>' + esc(k) + '</dt><dd>' + esc(v) + '</dd>').join('');
 
     $('#sum-features').innerHTML = q.features.length
-      ? q.features.map((id) => '<li>' + esc(featById[id].name) + '<button type="button" data-rm="' + id + '" aria-label="Remove ' + esc(featById[id].name) + '">Remove</button></li>').join('')
+      ? q.features.map((id) => '<li>' + esc(featById[id].name) + '<button type="button" data-rm="' + id + '" aria-label="Remove ' + esc(featById[id].name) + '">×</button></li>').join('')
       : '<li class="empty"><b style="color:var(--ink)">Your plan is empty.</b> Tap a feature to start.</li>';
     $('#sum-extras').innerHTML = q.addons.length
       ? q.addons.map((id) => {
         const a = addById[id];
         const label = (a.short || a.name) + (a.billing === 'separate' ? ', ' + plural(sel.fit_sessions || 1, 'session', 'sessions') + ', arranged separately' : '');
-        return '<li><span><span class="plus">+</span>' + esc(label) + '</span><button type="button" data-rma="' + id + '" aria-label="Remove ' + esc(a.short || a.name) + '">Remove</button></li>';
+        return '<li><span><span class="plus">+</span>' + esc(label) + '</span><button type="button" data-rma="' + id + '" aria-label="Remove ' + esc(a.short || a.name) + '">×</button></li>';
       }).join('')
       : "<li class=\"empty\">No extras. That's fine.</li>";
 

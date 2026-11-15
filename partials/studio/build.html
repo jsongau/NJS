@@ -87,29 +87,24 @@
               <div class="underline" id="underline" aria-hidden="true"></div>
               <div class="meter"><div class="m-bar"><i id="m-fill"></i></div><div class="m-ticks" id="m-ticks"><span>Basic</span><span>Premium</span><span>Partner</span><span>+ extras</span></div></div>
               <div class="weeks-row"><span>Timeline after the audit</span><span><span class="od" id="weeks-od" aria-hidden="true"></span> <span id="weeks-u">weeks</span></span></div>
-              <p class="est">Tier and timeline are a starting estimate. The audit sets the exact scope and price.</p>
             </div>
 
             <div class="ns-say"><span class="ns-av" aria-hidden="true">NS</span><div><p id="ns-line"></p><small>Agent NS · scripted line</small></div></div>
 
-            <ul class="assure" aria-label="What every plan comes with">
-              <li><b>Audit credited</b><span>The audit fee comes off the build.</span></li>
-              <li><b>You own it</b><span>Code, domain and accounts are in your name.</span></li>
-              <li><b>Month to month</b><span>Care plans cancel anytime.</span></li>
-            </ul>
-
             <dl class="rows" id="rows"></dl>
-            <p class="list-k">Features</p>
+            <p class="list-k" id="feat-k">Features</p>
             <ul class="list" id="sum-features"></ul>
-            <p class="list-k">Extras</p>
+            <p class="list-k" id="ext-k">Extras</p>
             <ul class="list" id="sum-extras"></ul>
 
             <div class="ends" id="ends">
               <p class="why" id="ends-why"></p>
-              <a class="btn btn-lime btn-block" id="call-btn" href="#" target="_blank" rel="noopener" data-todo="cal-url">Book a 20-minute call</a>
-              <p class="sub">Tell me a good time. Bring questions, not a brief.</p>
-              <button type="button" class="btn btn-block" id="send-btn">Send my plan</button>
-              <p class="sub" id="send-sub">I'll email you times.</p>
+              <div class="ends-cta">
+                <a class="btn btn-lime btn-block" id="call-btn" href="#" target="_blank" rel="noopener" data-todo="cal-url">Book a 20-minute call</a>
+                <p class="sub" id="call-sub">Bring questions, not a brief.</p>
+                <button type="button" class="btn btn-block" id="send-btn">Send my plan</button>
+                <p class="sub" id="send-sub">I'll email you times.</p>
+              </div>
               <form class="form" id="lead-form" novalidate>
                 <label>Name<input name="name" autocomplete="name" required></label>
                 <label>Email<input name="email" type="email" autocomplete="email" required></label>
@@ -124,8 +119,7 @@
                 <p class="hint">I use what you send only to reply to you. I don't sell or share it.</p>
               </form>
               <p class="msg" id="form-msg" role="status"></p>
-              <div class="dep"><span>Audit deposit, credited to your build.</span><button type="button" class="btn" disabled aria-describedby="dep-why">Deposits open soon</button></div>
-              <p class="terms-short" id="dep-why">Nothing on this page takes payment yet. The audit sets the final price, in writing, before any build work is charged. Care plans are month to month, cancel anytime.</p>
+              <p class="terms-short">A starting estimate. Nothing on this page takes payment. The audit sets the exact scope and price in writing before any build work is charged.</p>
             </div>
           </aside>
         </div>

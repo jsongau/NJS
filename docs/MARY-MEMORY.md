@@ -5,6 +5,11 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-14 · **A sticky rail shows all four edges and never scrolls inside itself.** (Jay: "it feels cut off".)
+  Its `top` clears every sticky bar above it (header 72px plus the sub-menu 59px where a page has one) with a 16px
+  gap, and the same gap below. Size the content to fit: chips instead of stacked rows, actions side by side, drop
+  lower-value blocks on short windows by `max-height` media query. Proof: `scrollHeight === clientHeight` on the
+  rail with a full Partner set at 1440 by 900, 800 and 720.
 - 2026-11-13 · **Animated figures are rigs, never one swinging path.** (Jay: "the head is falling off".) Head and
   torso are one piece. Each moving limb sits in its own group whose origin is the joint (hip, knee, shoulder),
   and only that group rotates. Do not rotate a multi-part path around its bounding box. Use classes outside the

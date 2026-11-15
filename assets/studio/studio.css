@@ -376,8 +376,12 @@ body[data-prices="range"] .plan .priced-only { display: block; }
 @media (max-width: 480px) { .plans { grid-template-columns: 1fr; } }
 
 /* Summary */
-.plan-wrap { position: sticky; top: 96px; }
-@media (min-width: 1024px) { .summary { max-height: calc(100vh - 116px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line-hi) transparent; } }
+/* The rail sits clear of the sticky header (72px) and, on pages that have one, the sub-menu (59px),
+   with a gap above and below so every edge and corner of the card shows. It is sized to fit without
+   its own scrollbar; overflow stays only as a safety net for short windows and the open form. */
+.plan-wrap { --rail-top: 88px; position: sticky; top: var(--rail-top); }
+body:has(.subnav) .plan-wrap { --rail-top: 147px; }
+@media (min-width: 1024px) { .summary { max-height: calc(100vh - var(--rail-top) - 16px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line-hi) transparent; } }
 .summary { position: relative; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line-hi); padding: 26px; overflow: hidden; }
 .summary::before { content: ''; position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: var(--signal); transform-origin: left; transform: scaleX(var(--done, 0)); transition: transform var(--t-move) var(--ease-out); }
 .sum-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -645,10 +649,38 @@ footer .legal { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); borde
 }
 .summary .btn:not(.btn-lime) { background: transparent; color: var(--ink); border-color: var(--line-hi); }
 .summary .form input, .summary .form textarea { background: #0B0C0E; }
-.assure { list-style: none; margin: 18px 0 4px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.assure li { padding: 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); font-size: 12.5px; line-height: 1.4; }
-.assure b { display: block; color: var(--signal); font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-@media (max-width: 520px) { .assure { grid-template-columns: 1fr; } .assure li { display: flex; gap: 10px; } .assure b { margin: 0; min-width: 110px; } }
+/* Compact rail: everything in one view. Features and extras are chips, the two actions sit side by side. */
+.summary { border-color: var(--line-hi); padding: 20px 22px; }
+.summary .total { margin-top: 14px; padding: 14px 16px; }
+.summary .total-main { margin-top: 8px; min-height: 44px; }
+.summary .tier-word { font-size: 34px; }
+.summary .tier-word.empty { font-size: 16px; }
+.summary .meter { margin-top: 10px; }
+.summary .weeks-row { margin-top: 10px; }
+.summary .ns-say { margin-top: 12px; padding: 10px 12px; gap: 10px; }
+.summary .ns-say p { font-size: 13px; line-height: 1.4; min-height: 2.8em; }
+.summary .rows { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 2px 6px; font-size: 13px; }
+.summary .rows dd { text-align: left; margin-right: 12px; }
+.summary #ext-k:has(+ #sum-extras > li.empty), .summary #sum-extras:has(> li.empty),
+.summary #feat-k:has(+ #sum-features > li.empty), .summary #sum-features:has(> li.empty) { display: none; }
+.summary .ends .msg:empty { display: none; }
+.summary .list-k { margin-top: 12px; }
+.summary .list { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; }
+.summary .list li { padding: 0 4px 0 10px; min-height: 30px; border-radius: 999px; gap: 2px; }
+.summary .list li.empty { padding: 0; min-height: 0; }
+.summary .list button { min-width: 26px; min-height: 30px; padding: 0; font-size: 16px; line-height: 1; text-decoration: none; }
+.summary .ends { margin-top: 14px; padding-top: 12px; gap: 8px; }
+.ends-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; }
+.ends-cta .btn { min-height: 46px; padding-left: 10px; padding-right: 10px; font-size: 15px; }
+.ends-cta #call-btn { grid-column: 1; grid-row: 1; } .ends-cta #send-btn { grid-column: 2; grid-row: 1; }
+.ends-cta #call-sub { grid-column: 1; grid-row: 2; } .ends-cta #send-sub { grid-column: 2; grid-row: 2; }
+.ends-cta .sub { margin: 0; font-size: 12px; text-align: center; }
+.summary .terms-short { font-size: 11.5px; line-height: 1.45; }
+@media (min-width: 1024px) { .ends-cta { row-gap: 0; } .ends-cta .sub { display: none; } }
+@media (min-width: 1024px) and (max-height: 860px) { .summary .ns-say { display: none; } }
+@media (min-width: 1024px) and (max-height: 740px) { .summary .terms-short, .summary .sum-for { display: none; } .summary .total { padding: 12px 14px; } }
+@media (max-width: 1023px) { .summary .list li { min-height: 36px; } .summary .list button { min-width: 34px; min-height: 36px; } }
+@media (max-width: 420px) { .ends-cta { grid-template-columns: 1fr; } .ends-cta > * { grid-column: 1 !important; grid-row: auto !important; } }
 
 /* Included with every build (ManyPixels strip). */
 .incl { padding: 72px 0 24px; }

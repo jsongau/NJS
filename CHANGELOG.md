@@ -5,6 +5,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 ## 2026-11-14
 
 - `/marketing-ops` — New page: Meta ads, GoHighLevel CRM, automation, reviews and owner reporting, with results from KYT Dental and a worked example (concept, not a client) for funeral planning and senior living. Linked from the footer and the mobile menu.
+- `/` — Industry picker adds "Senior care and memorial" (funeral home, memorial pre-planning, cremation or cemetery, senior living, memory care, in-home care, hospice) with a candle-in-arch icon; `/marketing-ops` gets two illustrations for the worked example.
 
 ## 2026-11-13
 

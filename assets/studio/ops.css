@@ -72,3 +72,26 @@
   .ops-pipe li { padding: 52px 16px 16px; } .ops .ops-sec { padding: 96px 0; }
 }
 @media (prefers-reduced-motion: reduce) { .of-dot { display: none; } }
+
+/* Worked-example illustrations (2026-11-14): thin gold line work on a night ground for memorial,
+   a warm morning for senior living. Motion is slow and small; reduced motion stops it. */
+.ops-arts { margin-bottom: 16px; }
+.ops-art { margin: 0; border-radius: 24px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.ops-art svg { display: block; width: 100%; height: auto; }
+.ops-art figcaption { display: grid; gap: 2px; padding: 14px 18px; }
+.ops-art figcaption b { color: var(--ink); font-size: 16px; } .ops-art figcaption span { color: var(--ink-2); font-size: 14px; }
+.ops-art [class^="oa-"] { transform-box: fill-box; transform-origin: center; }
+.oa-flame { transform-origin: 50% 100% !important; animation: oa-flame 2.6s ease-in-out infinite; }
+.oa-halo { animation: oa-halo 5s ease-in-out infinite; }
+.oa-stars circle { animation: oa-tw 3.4s ease-in-out infinite; } .oa-stars circle:nth-child(even) { animation-delay: 1.5s; }
+.oa-lily { transform-origin: 50% 100% !important; animation: oa-sway 6s ease-in-out infinite; } .oa-lily.l2 { animation-delay: -3s; }
+.oa-sun circle:last-child { transform-box: fill-box; transform-origin: center; animation: oa-spin 40s linear infinite; }
+.oa-tree { transform-origin: 50% 100% !important; animation: oa-sway 7s ease-in-out infinite; }
+.oa-bird { animation: oa-fly 9s ease-in-out infinite; } .oa-bird.b2 { animation-delay: -4s; }
+@keyframes oa-flame { 0%, 100% { transform: scale(1) rotate(0); } 35% { transform: scale(1.05, 1.1) rotate(-3deg); } 70% { transform: scale(.96, 1.04) rotate(3deg); } }
+@keyframes oa-halo { 0%, 100% { opacity: .4; } 50% { opacity: .65; } }
+@keyframes oa-tw { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+@keyframes oa-sway { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes oa-spin { to { transform: rotate(360deg); } }
+@keyframes oa-fly { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(14px, -6px); } }
+@media (prefers-reduced-motion: reduce) { .ops-art * { animation: none !important; } }

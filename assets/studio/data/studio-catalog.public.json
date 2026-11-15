@@ -955,6 +955,131 @@
       ]
     },
     {
+      "id": "senior",
+      "label": "Senior care and memorial",
+      "sectors": [
+        {
+          "id": "funeral",
+          "label": "Funeral home",
+          "profile": "service",
+          "scene": {
+            "brand": "Your funeral home",
+            "head": "Here for your family, day or night",
+            "cta": "Call us now",
+            "tiles": [
+              "Services",
+              "Prices",
+              "Obituaries"
+            ],
+            "accent": "#CFC3EC"
+          },
+          "noun": "a funeral home"
+        },
+        {
+          "id": "preplan",
+          "label": "Memorial pre-planning",
+          "profile": "service",
+          "scene": {
+            "brand": "Your memorial plan",
+            "head": "Plan ahead, at your own pace",
+            "cta": "Get the price guide",
+            "tiles": [
+              "Options",
+              "Prices",
+              "Payment plans"
+            ],
+            "accent": "#E9D8A6"
+          },
+          "noun": "a memorial planning company"
+        },
+        {
+          "id": "cremation",
+          "label": "Cremation or cemetery",
+          "profile": "service",
+          "scene": {
+            "brand": "Your memorial park",
+            "head": "Simple, dignified, clearly priced",
+            "cta": "See our prices",
+            "tiles": [
+              "Cremation",
+              "Burial",
+              "Visit"
+            ],
+            "accent": "#CFC3EC"
+          },
+          "noun": "a cremation or cemetery service"
+        },
+        {
+          "id": "seniorliving",
+          "label": "Senior living community",
+          "profile": "service",
+          "scene": {
+            "brand": "Your community",
+            "head": "A good day, every day",
+            "cta": "Book a tour",
+            "tiles": [
+              "Floor plans",
+              "Care levels",
+              "Dining"
+            ],
+            "accent": "#BFE3D0"
+          },
+          "noun": "a senior living community"
+        },
+        {
+          "id": "memorycare",
+          "label": "Memory care",
+          "profile": "service",
+          "scene": {
+            "brand": "Your memory care",
+            "head": "Safe, known and cared for",
+            "cta": "Book a tour",
+            "tiles": [
+              "Our approach",
+              "Daily life",
+              "Families"
+            ],
+            "accent": "#BFE3D0"
+          },
+          "noun": "a memory care community"
+        },
+        {
+          "id": "homecare",
+          "label": "In-home care",
+          "profile": "service",
+          "scene": {
+            "brand": "Your home care",
+            "head": "Care at home, from people you know",
+            "cta": "Request a care visit",
+            "tiles": [
+              "Services",
+              "Caregivers",
+              "Areas"
+            ],
+            "accent": "#E9D8A6"
+          },
+          "noun": "an in-home care service"
+        },
+        {
+          "id": "hospice",
+          "label": "Hospice and palliative care",
+          "profile": "service",
+          "scene": {
+            "brand": "Your hospice",
+            "head": "Comfort and support, at home",
+            "cta": "Talk to a nurse",
+            "tiles": [
+              "Care team",
+              "What to expect",
+              "Families"
+            ],
+            "accent": "#CFC3EC"
+          },
+          "noun": "a hospice"
+        }
+      ]
+    },
+    {
       "id": "food",
       "label": "Food and drink",
       "sectors": [

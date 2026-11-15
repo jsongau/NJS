@@ -835,6 +835,9 @@ footer .legal { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); borde
 @keyframes launch { 0%, 100% { transform: none; } 50% { transform: translateY(-3px); } }
 @keyframes flame { from { transform: scaleY(.7); } to { transform: scaleY(1.25); } }
 :is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="community"] .m { animation: beat 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="senior"] .m { transform-origin: 50% 100%; animation: gi-flame 1100ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="senior"] .s { animation: twinkle 1400ms ease-in-out infinite; }
+@keyframes gi-flame { 0%, 100% { transform: scale(1) rotate(0); } 30% { transform: scale(1.08, 1.16) rotate(-4deg); } 65% { transform: scale(.95, 1.06) rotate(4deg); } }
 @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.14); } 30% { transform: scale(.98); } 45% { transform: scale(1.08); } }
 :is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="other"] .m { animation: spin 2400ms linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

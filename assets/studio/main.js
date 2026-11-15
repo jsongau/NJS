@@ -1,3 +1,4 @@
+import { playIconsInView } from './icons.js';
 // Boot: load the public catalog and projects, create the store, mount every view.
 // The single-file preview inlines both JSON files as <script type="application/json">.
 import { createStore } from './store.js';
@@ -150,6 +151,7 @@ async function boot() {
   const onScroll = () => top.classList.toggle('scrolled', scrollY > 8);
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  playIconsInView();
   window.__studio = store;
 }
 

@@ -5,6 +5,9 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-14 · **Every icon moves, and not only on hover.** Each icon in `icons.js` needs a `[data-i]` motion rule in
+  `studio.css` (or a shared part class: `.d`, `.b1` to `.b3`). `playIconsInView()` adds `.gi-on` to a card for about two
+  seconds the first time it scrolls into view, so touch screens see it once; hover and pick replay it.
 - 2026-11-14 · **A sticky rail shows all four edges and never scrolls inside itself.** (Jay: "it feels cut off".)
   Its `top` clears every sticky bar above it (header 72px plus the sub-menu 59px where a page has one) with a 16px
   gap, and the same gap below. Size the content to fit: chips instead of stacked rows, actions side by side, drop

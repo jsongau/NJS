@@ -3,7 +3,9 @@
 // hair off the line work, like a two-colour print. Every icon has one moving part (.m and
 // friends) that plays when its card, tile or plan is hovered or picked. Motion lives in
 // studio.css under "Icon motion"; reduced motion turns it off.
-const O = (id) => '<svg class="gi" data-i="' + id + '" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+// The accent gradient every icon shares (stop colours come from studio.css, so themes carry over).
+const G = '<defs><linearGradient id="gi-g" x1="0" y1="0" x2="1" y2="1"><stop class="g1" offset="0"/><stop class="g2" offset=".55"/><stop class="g3" offset="1"/></linearGradient></defs>';
+const O = (id) => '<svg class="gi" data-i="' + id + '" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + G;
 const C = '</svg>';
 
 const ICONS = {
@@ -54,3 +56,25 @@ const ICONS = {
 };
 export const ICON_IDS = Object.keys(ICONS);
 export function icon(id) { return ICONS[id] || ICONS.other; }
+
+// Play each icon once as its card scrolls into view, staggered, so the motion is seen without a hover
+// (most visitors are on phones). Hover and pick still play it; reduced motion turns all of it off.
+const HOSTS = '.ml-tile, .ind-tile, .card, .pl, .ml-plan, .ag';
+export function playIconsInView(root = document) {
+  if (typeof IntersectionObserver !== 'function' || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const io = new IntersectionObserver((es) => {
+    es.filter((e) => e.isIntersecting).forEach((e, i) => {
+      const el = e.target;
+      io.unobserve(el);
+      setTimeout(() => { el.classList.add('gi-on'); setTimeout(() => el.classList.remove('gi-on'), 1900); }, i * 110);
+    });
+  }, { threshold: 0.6 });
+  const watch = () => root.querySelectorAll(HOSTS).forEach((el) => {
+    if (el.dataset.giSeen || !el.querySelector('.gi')) return;
+    el.dataset.giSeen = '1';
+    io.observe(el);
+  });
+  watch();
+  let t = 0;
+  new MutationObserver(() => { clearTimeout(t); t = setTimeout(watch, 200); }).observe(root.body || root, { childList: true, subtree: true });
+}

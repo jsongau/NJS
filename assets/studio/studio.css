@@ -843,77 +843,87 @@ footer .legal { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); borde
 .gi .ak { stroke: var(--signal); }
 .gi .m, .gi .e, .gi .p1, .gi .p2, .gi .p3, .gi .s, .gi .f, .gi .t1, .gi .t2, .gi .t3, .gi .sh { transform-box: fill-box; transform-origin: center; }
 .gi .d { stroke-dasharray: 1; stroke-dashoffset: 0; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi, .slot.bump .gi, :is(.ml-tile[aria-pressed="true"], .ind-tile[aria-checked="true"]) .gi { --go: running; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi, .slot.bump .gi, :is(.ml-tile[aria-pressed="true"], .ind-tile[aria-checked="true"]) .gi { --go: running; }
 .gi * { animation-play-state: var(--go, paused); }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):not(:hover) .gi * { animation: none; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="fitness"] .m { animation: lift 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag):not(:hover, .gi-on) .gi * { animation: none; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="fitness"] .m { animation: lift 900ms var(--ease-io) infinite; }
 @keyframes lift { 0%, 100% { transform: none; } 45% { transform: translateY(-3px) rotate(-6deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="health"] .m { animation: twinkle 900ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="health"] .s { animation: twinkle 900ms 300ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="health"] .m { animation: twinkle 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="health"] .s { animation: twinkle 900ms 300ms ease-in-out infinite; }
 @keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.5) rotate(45deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="food"] .m { animation: bob 700ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="food"] .m { animation: bob 700ms ease-in-out infinite; }
 @keyframes bob { 0%, 100% { transform: none; } 50% { transform: translateY(-2.5px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="retail"] .m { transform-origin: 50% 0; animation: swing 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="retail"] .m { transform-origin: 50% 0; animation: swing 900ms var(--ease-io) infinite; }
 @keyframes swing { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(8deg); } 70% { transform: rotate(-6deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="home"] .m { animation: smoke 1200ms ease-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="home"] .m { animation: smoke 1200ms ease-out infinite; }
 @keyframes smoke { 0% { transform: translate(0, 2px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translate(2px, -3px); opacity: 0; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="pro"] .m { animation: lid 800ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="pro"] .m { animation: lid 800ms var(--ease-io) infinite; }
 @keyframes lid { 0%, 100% { transform: none; } 50% { transform: translateY(-2px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="education"] .m { transform-origin: 50% 0; animation: swing 1000ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="events"] .m { animation: tilt 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="education"] .m { transform-origin: 50% 0; animation: swing 1000ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="events"] .m { animation: tilt 900ms var(--ease-io) infinite; }
 @keyframes tilt { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-9deg) scale(1.04); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="tech"] .m { animation: launch 900ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="tech"] .f { transform-origin: 50% 0; animation: flame 220ms ease-in-out infinite alternate; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="tech"] .m { animation: launch 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="tech"] .f { transform-origin: 50% 0; animation: flame 220ms ease-in-out infinite alternate; }
 @keyframes launch { 0%, 100% { transform: none; } 50% { transform: translateY(-3px); } }
 @keyframes flame { from { transform: scaleY(.7); } to { transform: scaleY(1.25); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="community"] .m { animation: beat 900ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="senior"] .m { transform-origin: 50% 100%; animation: gi-flame 1100ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="senior"] .s { animation: twinkle 1400ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="community"] .m { animation: beat 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="senior"] .m { transform-origin: 50% 100%; animation: gi-flame 1100ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="senior"] .s { animation: twinkle 1400ms ease-in-out infinite; }
 @keyframes gi-flame { 0%, 100% { transform: scale(1) rotate(0); } 30% { transform: scale(1.08, 1.16) rotate(-4deg); } 65% { transform: scale(.95, 1.06) rotate(4deg); } }
 @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.14); } 30% { transform: scale(.98); } 45% { transform: scale(1.08); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="other"] .m { animation: spin 2400ms linear infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="other"] .m { animation: spin 2400ms linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="plan_launch"] .m { animation: click 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="plan_launch"] .m { animation: click 900ms var(--ease-io) infinite; }
 @keyframes click { 0%, 100% { transform: none; } 40% { transform: translate(-3px, -2px); } 55% { transform: translate(-3px, -2px) scale(.85); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="plan_grow"] .m { animation: slide 1000ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="plan_grow"] .m { animation: slide 1000ms var(--ease-io) infinite; }
 @keyframes slide { 0%, 100% { transform: none; } 50% { transform: translate(2px, 2px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi .d { animation: draw 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi .d { animation: draw 900ms var(--ease-out) both; }
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi :is(.b1, .b2, .b3) { transform-origin: 50% 100%; animation: grow 900ms var(--ease-out) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi .b2 { animation-delay: 90ms; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi .b3 { animation-delay: 180ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi :is(.b1, .b2, .b3) { transform-origin: 50% 100%; animation: grow 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi .b2 { animation-delay: 90ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi .b3 { animation-delay: 180ms; }
 @keyframes grow { from { transform: scaleY(.25); } to { transform: none; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="search"] .m { animation: sweep 1100ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="search"] .m { animation: sweep 1100ms var(--ease-io) infinite; }
 @keyframes sweep { 0%, 100% { transform: none; } 33% { transform: translate(-2px, -1px); } 66% { transform: translate(2px, -2px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="card"] .m { animation: swipe 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="card"] .m { animation: swipe 900ms var(--ease-io) infinite; }
 @keyframes swipe { 0%, 100% { transform: none; } 50% { transform: translateX(3px) rotate(-4deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="user"] .m { animation: nod 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="user"] .m { animation: nod 900ms var(--ease-io) infinite; }
 @keyframes nod { 0%, 100% { transform: none; } 50% { transform: translateY(-1.5px) rotate(-8deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="msg"] :is(.t1, .t2, .t3) { animation: type 900ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="msg"] .t2 { animation-delay: 150ms; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="msg"] .t3 { animation-delay: 300ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="msg"] :is(.t1, .t2, .t3) { animation: type 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="msg"] .t2 { animation-delay: 150ms; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="msg"] .t3 { animation-delay: 300ms; }
 @keyframes type { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-2.5px); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="star"] .m { animation: spinin 900ms var(--ease-snap) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="star"] .s { animation: twinkle 900ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="star"] .m { animation: spinin 900ms var(--ease-snap) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="star"] .s { animation: twinkle 900ms ease-in-out infinite; }
 @keyframes spinin { from { transform: rotate(-72deg) scale(.8); } to { transform: none; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="bot"] .e { animation: blink 1600ms ease-in-out infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="bot"] .m { animation: twinkle 800ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="bot"] .e { animation: blink 1600ms ease-in-out infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="bot"] .m { animation: twinkle 800ms ease-in-out infinite; }
 @keyframes blink { 0%, 40%, 50%, 100% { transform: none; } 45% { transform: scaleY(.1); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="pages"] .p1 { transform-origin: 0 100%; animation: fan1 900ms var(--ease-out) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="pages"] .p3 { animation: fan3 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="pages"] .p1 { transform-origin: 0 100%; animation: fan1 900ms var(--ease-out) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="pages"] .p3 { animation: fan3 900ms var(--ease-out) both; }
 @keyframes fan1 { to { transform: rotate(-8deg) translateX(-1px); } }
 @keyframes fan3 { to { transform: translate(2px, -1px) rotate(6deg); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="loop"] .m { animation: spin 1600ms linear infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="pin"] .m { animation: drop 900ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="pin"] .sh { animation: shadow 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="loop"] .m { animation: spin 1600ms linear infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="pin"] .m { animation: drop 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="pin"] .sh { animation: shadow 900ms var(--ease-io) infinite; }
 @keyframes drop { 0%, 100% { transform: none; } 50% { transform: translateY(-3px); } }
 @keyframes shadow { 0%, 100% { transform: none; } 50% { transform: scaleX(.6); } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="team"] .m { animation: lid 900ms var(--ease-io) infinite; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="mark"] .m { animation: spinin 900ms var(--ease-snap) both; }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="bolt"] .m { animation: flash 500ms steps(2, jump-none) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="team"] .m { animation: lid 900ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="mark"] .m { animation: spinin 900ms var(--ease-snap) both; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="bolt"] .m { animation: flash 500ms steps(2, jump-none) infinite; }
 @keyframes flash { 0% { opacity: 1; } 50% { opacity: .35; } 100% { opacity: 1; } }
-:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):hover .gi[data-i="fist"] .m { animation: jab 700ms var(--ease-io) infinite; }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="fist"] .m { animation: jab 700ms var(--ease-io) infinite; }
 @keyframes jab { 0%, 100% { transform: none; } 35% { transform: translateX(3.5px) rotate(4deg); } }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="crm"] .m { animation: gi-stage 1500ms var(--ease-io) infinite; }
+@keyframes gi-stage { 0%, 12% { transform: translateX(-9px); } 38%, 62% { transform: none; } 88%, 100% { transform: translateX(9px); } }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi[data-i="tag"] .m { transform-origin: 22% 22%; animation: gi-tag 1300ms var(--ease-io) infinite; }
+@keyframes gi-tag { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-11deg); } 65% { transform: rotate(7deg); } }
+/* Finish: the accent shape is a soft three-stop gradient instead of a flat fill, and it glows while its icon
+   plays. Icons also play once as they scroll into view (main.js adds .gi-on), so touch screens see the motion. */
+.gi .a { fill: url(#gi-g) var(--signal); transition: filter 420ms var(--ease-out); }
+.gi .g1 { stop-color: color-mix(in srgb, var(--signal) 58%, #fff); } .gi .g2 { stop-color: var(--signal); } .gi .g3 { stop-color: color-mix(in srgb, var(--signal) 76%, #4A1238); }
+:is(.ml-tile, .ind-tile, .card, .pl, .ml-plan, .slot, .ag, .mn-link, .mn-plan):is(:hover, .gi-on) .gi .a { filter: drop-shadow(0 0 2.4px color-mix(in srgb, var(--signal) 62%, transparent)); }
+@media (prefers-reduced-motion: reduce) { .gi .a { transition: none; } }
 @media (prefers-reduced-motion: reduce) { .gi * { animation: none !important; } .slot.bump .slot-ic { animation: none; } }
 .ml-tile { --ic-bg: var(--surface-2); } .ind-tile, .pl { --ic-bg: var(--surface); } .card-hit .ic { --ic-bg: var(--surface-2); }
 .ml-tile[aria-pressed="true"], .ind-tile[aria-checked="true"], .card.on .card-hit .ic { --ic-bg: #23262A; }

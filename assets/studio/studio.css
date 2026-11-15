@@ -826,6 +826,10 @@ footer .legal { grid-column: 1 / -1; font-size: 12px; color: var(--ink-3); borde
 .ml-pop-plan { width: min(520px, calc(100vw - 32px)); left: var(--x, 0); padding: 8px; }
 .ml-plan { display: flex; gap: 14px; align-items: flex-start; width: 100%; padding: 14px; border: 0; border-radius: 14px; background: none; text-align: left; color: var(--ink); }
 .ml-plan:hover { background: var(--surface-2); }
+.ml-goal-k { margin: 6px 14px 2px; padding-top: 10px; border-top: 1px solid var(--line); }
+.ml-goal { padding: 10px 14px; align-items: center; }
+.ml-goal .gic, .ml-goal .gi { width: 32px; height: 32px; }
+.ml-goal b { font-size: 16px; }
 .ml-plan[aria-pressed="true"] { background: var(--ink); color: #fff; --ic-bg: var(--ink); }
 .ml-plan .gic, .ml-plan .gi { width: 40px; height: 40px; flex: none; }
 .ml-plan b { display: block; font-size: 17px; font-weight: 650; }

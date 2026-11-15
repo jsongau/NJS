@@ -27,6 +27,16 @@ export function mountMadlib(store) {
   }
   $('#ml-plans').innerHTML = catalog.tiers.map((t) => '<button type="button" class="ml-plan" data-t="' + t.id + '"><span class="gic">' + icon('plan_' + t.id) + '</span><span><b>' + esc(wants[t.id] || t.label) + '</b><small>' + esc(t.label) + '. ' + esc(t.for) + '</small></span></button>').join('');
 
+  // Goals sit under the three plans: same picker, but each loads a feature set, and its line is
+  // written for the kind of business picked.
+  const goals = catalog.plan_goals || [];
+  const sameSet = (a, b) => a.length === b.length && a.every((x) => b.includes(x));
+  const goalOf = (sel) => goals.find((g) => sameSet(g.features, sel.features || []));
+  if (goals.length) {
+    $('#ml-plans').insertAdjacentHTML('beforeend', '<p class="ml-k ml-goal-k">Or start from a goal</p>' +
+      goals.map((g) => '<button type="button" class="ml-plan ml-goal" data-g="' + g.id + '" aria-pressed="false"><span class="gic">' + icon(g.icon) + '</span><span><b>' + esc(g.want) + '</b><small data-gl="' + g.id + '"></small></span></button>').join(''));
+  }
+
   function open(pop, btn) {
     if (openPop === pop) { close(); return; }
     close(true);
@@ -82,6 +92,7 @@ export function mountMadlib(store) {
   $('#ml-plans').addEventListener('click', (e) => {
     const b = e.target.closest('.ml-plan');
     if (!b) return;
+    if (b.dataset.g) { actions.setGoal(b.dataset.g); close(); return; }
     actions.setTab(b.dataset.t);
     const care = { launch: 'keep', grow: 'tend', run: 'run' }[b.dataset.t];
     if (care) actions.setCarePlan(care);
@@ -96,8 +107,11 @@ export function mountMadlib(store) {
     $('#slot-biz-t').textContent = r.noun;
     if (ind !== lastInd) { $('#slot-biz-ic').innerHTML = icon(ind); if (lastInd) bump(slotBiz); lastInd = ind; }
     const tier = (q.tier && q.tier.id) || sel.package_tab || 'grow';
-    $('#slot-plan-t').textContent = wants[tier] || tier;
-    if (tier !== lastTier) { $('#slot-plan-ic').innerHTML = icon('plan_' + tier); if (lastTier) bump(slotPlan); lastTier = tier; }
-    $$('.ml-plan', popPlan).forEach((b) => b.setAttribute('aria-pressed', b.dataset.t === tier));
+    const goal = goalOf(sel);
+    const key = goal ? 'goal_' + goal.id : tier;
+    $('#slot-plan-t').textContent = goal ? goal.want : wants[tier] || tier;
+    if (key !== lastTier) { $('#slot-plan-ic').innerHTML = icon(goal ? goal.icon : 'plan_' + tier); if (lastTier) bump(slotPlan); lastTier = key; }
+    $$('.ml-plan', popPlan).forEach((b) => b.setAttribute('aria-pressed', goal ? b.dataset.g === goal.id : b.dataset.t === tier));
+    goals.forEach((g) => { const el = popPlan.querySelector('[data-gl="' + g.id + '"]'); if (el) el.textContent = (g.by_industry && g.by_industry[r.industry]) || (g.line && g.line[sel.business_type]) || ''; });
   });
 }

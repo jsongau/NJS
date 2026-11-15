@@ -1802,5 +1802,72 @@
     "grow": "online booking and payments",
     "run": "a partner and AI agents"
   },
-  "prices": "hidden"
+  "prices": "hidden",
+  "plan_goals": [
+    {
+      "id": "crm",
+      "want": "CRM lifecycle management",
+      "icon": "crm",
+      "features": [
+        "crm",
+        "follow",
+        "reviews",
+        "dash"
+      ],
+      "pages": 8,
+      "line": {
+        "gym": "Trial to member to renewal: every stage tracked, with follow-ups and win-backs.",
+        "dental": "New patient to recall: every stage tracked, with reminders and reactivation.",
+        "food": "First visit to regular: guests, follow-ups and catering leads in one place.",
+        "shop": "First order to repeat buyer: every customer tracked, with follow-ups.",
+        "service": "First call to booked job to repeat client: every stage tracked, with follow-ups."
+      },
+      "by_industry": {
+        "senior": "First inquiry to signed plan to family check-ins: every stage tracked, with gentle follow-ups."
+      }
+    },
+    {
+      "id": "lto",
+      "want": "limited-time offers",
+      "icon": "tag",
+      "features": [
+        "site",
+        "lto",
+        "book"
+      ],
+      "pages": 5,
+      "line": {
+        "gym": "A page for each offer, like a founding rate or a free first class, with a real end date.",
+        "dental": "A page for each offer, like a new patient special, with a real end date.",
+        "food": "A page for each special or seasonal menu, with a real end date.",
+        "shop": "A page for each sale or drop, with a claim code and a real end date.",
+        "service": "A page for each seasonal offer or price guide, with a real end date."
+      },
+      "by_industry": {
+        "senior": "A page for each planning-ahead offer or price guide, with a real end date. Never aimed at grieving families."
+      }
+    },
+    {
+      "id": "acq",
+      "want": "client acquisition",
+      "icon": "team",
+      "features": [
+        "site",
+        "lto",
+        "crm",
+        "follow"
+      ],
+      "pages": 8,
+      "line": {
+        "gym": "Get found, get the trial booked, follow up until they join.",
+        "dental": "Get found, get the first visit booked, follow up until they come in.",
+        "food": "Get found nearby, capture the booking or order, bring them back.",
+        "shop": "Get found, capture the first order, follow up for the second.",
+        "service": "Get found, capture the request, follow up until the job is booked."
+      },
+      "by_industry": {
+        "senior": "Get found, capture the planning inquiry, follow up until the family is ready."
+      }
+    }
+  ]
 }

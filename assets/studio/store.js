@@ -111,6 +111,14 @@ export function createStore(catalog, projects, opts = {}) {
       const pages = { launch: 5, grow: 12, run: 25 }[id] || sel.pages;
       set({ package_tab: id, features: preset.slice(), pages }, { event: 'package_tab_set', undoable: true, tab: id });
     },
+    // A goal (CRM lifecycle, limited-time offers, client acquisition) loads its own feature set.
+    setGoal(id) {
+      const g = (catalog.plan_goals || []).find((x) => x.id === id);
+      if (!g) return;
+      undoSnap = { ...sel };
+      const feats = g.features.filter((f) => catalog.features.some((x) => x.id === f));
+      set({ package_tab: quote({ ...sel, features: feats, pages: g.pages }, catalog).tier.id, features: feats, pages: g.pages }, { event: 'package_tab_set', undoable: true, tab: 'goal_' + id });
+    },
     undo() { if (!undoSnap) return; const s = undoSnap; undoSnap = null; set(s, { event: 'undo' }); },
     toggleFeature(id) {
       const has = sel.features.includes(id);

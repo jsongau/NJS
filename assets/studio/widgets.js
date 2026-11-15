@@ -50,8 +50,8 @@ export const WIDGETS = {
     '<p class="wg-sub">' + esc(c.brand) + '</p>' +
     '<div class="wg-stars">' + [1, 2, 3, 4, 5].map((n) => '<button type="button" data-act="star" data-n="' + n + '" aria-label="' + n + ' stars">★</button>').join('') + '</div>' +
     '<p class="wg-out" data-out="good">Thank you. One tap to post it on Google.</p>' +
-    '<p class="wg-out" data-out="bad">Sorry about that. The owner will reach out today.</p>' +
-    '<small class="wg-note">Happy guests go to Google. Unhappy ones come to you first.</small>',
+    '<p class="wg-out" data-out="bad">Sorry about that. Post it, and the owner will reach out today.</p>' +
+    '<small class="wg-note">Everyone gets the same Google link. Low ratings also alert you right away.</small>',
 
   crm: (c) => '<div class="wg-h">Pipeline</div>' +
     '<p class="wg-sub">' + esc(c.brand) + ' · this month</p>' +

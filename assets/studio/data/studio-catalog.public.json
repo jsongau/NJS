@@ -322,16 +322,16 @@
     },
     {
       "id": "reviews",
-      "name": "Review requests",
+      "name": "Automated review requests",
       "icon": "star",
       "weight": 1,
-      "desc": "Asks happy customers for a review at the right moment.",
+      "desc": "Sent on its own at the right moment to every customer. Review count and rating help local ranking.",
       "wording": {
-        "gym": "After a member's tenth class.",
-        "dental": "After a good visit, never after a hard one.",
-        "food": "The morning after a visit.",
-        "shop": "A week after a purchase.",
-        "service": "When the job is marked done."
+        "gym": "Sent on its own after a member's tenth class. Same link for everyone, replies drafted for you.",
+        "dental": "Sent on its own the day after a visit. Same link for everyone, replies drafted for you.",
+        "food": "Sent on its own the morning after a visit. Same link for everyone, replies drafted for you.",
+        "shop": "Sent on its own a week after a purchase. Same link for everyone, replies drafted for you.",
+        "service": "Sent on its own when the job is marked done. Same link for everyone, replies drafted for you."
       }
     },
     {

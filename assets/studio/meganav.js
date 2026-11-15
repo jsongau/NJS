@@ -67,7 +67,7 @@ function workPanel(projects) {
     const mark = p.logo ? '<img src="' + esc(p.logo) + '" alt="" width="40" height="40" loading="lazy">' : '<b style="background:' + esc(p.color) + '">' + esc(p.mono) + '</b>';
     return '<li><a class="mn-case" href="/work#p-' + p.id + '"><span class="mn-logo">' + mark + '</span><span class="mn-txt"><strong>' + esc(p.name) + ' <span class="mn-tier mn-tier-' + t.id + '">' + esc(t.name) + '</span></strong><small>' + esc(p.job) + '</small></span></a></li>';
   }).join('');
-  return '<div class="mn-in mn-in-work"><div class="mn-main"><p class="mn-hd">Live in production</p><ul class="mn-cases">' + rows + '</ul></div>' +
+  return '<div class="mn-in mn-in-work"><div class="mn-main"><p class="mn-hd">Delivered projects</p><ul class="mn-cases">' + rows + '</ul></div>' +
     '<aside class="mn-feat"><p class="mn-kick">Every case shows its scope</p><p class="mn-p">What was delivered, the results, and which plan it maps to. Pick one and start from its scope.</p>' +
     '<a class="btn mn-go" href="/work">See all work</a><a class="mn-sub" href="/build" data-carry>Start a project like these' + arrow + '</a></aside></div>';
 }

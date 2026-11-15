@@ -1,10 +1,10 @@
 {
- "version": "2026-11-03.1",
+ "version": "2026-11-15.1",
  "proof": [
   {
-   "value": "4",
+   "value": "5",
    "label": "products live and running",
-   "source": "The delivered wall below, as of Nov 3, 2026"
+   "source": "The delivered wall below, as of Nov 15, 2026"
   },
   {
    "value": "1,771",
@@ -18,6 +18,249 @@
   }
  ],
  "projects": [
+  {
+   "id": "zodianimal",
+   "mono": "ZA",
+   "logo": "/assets/studio/brand/delivered/zodianimal.svg",
+   "color": "#0e1020",
+   "kind": "live",
+   "stage": "complete",
+   "name": "Zodi Animal",
+   "meta": "144 animals, free accounts",
+   "title": "The Zodi Animal two-zodiac reading site build",
+   "sub": "Two zodiacs, 144 animals",
+   "url": "https://www.zodianimal.com",
+   "stats": [
+    {
+     "label": "ANIMALS",
+     "value": "144",
+     "note": "12 signs by 12 years"
+    },
+    {
+     "label": "CHART SYSTEMS",
+     "value": "3",
+     "note": "Purple Star, BaZi, Saju"
+    },
+    {
+     "label": "PROVERBS",
+     "value": "87",
+     "note": "in the Proverb Pond"
+    }
+   ],
+   "verified": {
+    "how": "checked on the live site",
+    "on": "2026-11-15",
+    "by": "NJS"
+   },
+   "features": [
+    {
+     "name": "Animal reveal",
+     "what": "Birth date calculator",
+     "shipped": "one of 144 animals from two zodiacs",
+     "level": 1,
+     "catalog_feature": "site"
+    },
+    {
+     "name": "Menagerie",
+     "what": "Catalogue",
+     "shipped": "all 144 animals, four keeper stones each",
+     "level": 1
+    },
+    {
+     "name": "Daily reading",
+     "what": "Horoscope and oracle",
+     "shipped": "a new reading each day, with an archive",
+     "level": 1
+    },
+    {
+     "name": "Destiny charts",
+     "what": "Three chart systems",
+     "shipped": "Purple Star, BaZi and Saju from one birth date",
+     "level": 2
+    },
+    {
+     "name": "Bonds",
+     "what": "Compatibility",
+     "shipped": "test a bond, challenge a friend, circle of three",
+     "level": 2
+    },
+    {
+     "name": "Commanding position",
+     "what": "Feng shui room tool",
+     "shipped": "place a desk in a room, get a score",
+     "level": 2
+    },
+    {
+     "name": "Free accounts",
+     "what": "Member accounts",
+     "shipped": "saved results and five Zodi Karma levels",
+     "level": 2,
+     "catalog_feature": "portal"
+    }
+   ],
+   "job": "Pair a Western Sun sign with a Chinese zodiac year to name one of 144 animals, then give people reasons to come back daily."
+  },
+  {
+   "id": "pmcountdown",
+   "mono": "PM",
+   "logo": "/assets/studio/brand/delivered/pmcountdown.svg",
+   "color": "#2459f0",
+   "kind": "live",
+   "name": "PM Countdown",
+   "meta": "Kalshi, 12+ agents",
+   "title": "The PM Countdown trading agent desk build",
+   "sub": "Trading agents that grade themselves in public",
+   "url": "https://pmcountdown.com",
+   "stats": [
+    {
+     "label": "COMMITS",
+     "value": "1,771",
+     "note": "in 40 working days"
+    },
+    {
+     "label": "MIGRATIONS",
+     "value": "170",
+     "note": "database changes"
+    },
+    {
+     "label": "TESTS",
+     "value": "142",
+     "note": "test files"
+    }
+   ],
+   "verified": {
+    "how": "counted in the repo",
+    "on": "2026-10-31",
+    "by": "NJS"
+   },
+   "features": [
+    {
+     "name": "Agent LoLo",
+     "what": "Bitcoin agent",
+     "shipped": "reads the 15-minute market every 30 seconds",
+     "catalog_feature": "agent",
+     "level": 3
+    },
+    {
+     "name": "The Brain",
+     "what": "Nightly review",
+     "shipped": "fixes need human approval",
+     "catalog_feature": "loop",
+     "level": 3
+    },
+    {
+     "name": "Public ledger",
+     "what": "Receipts",
+     "shipped": "every trade graded, losses shown",
+     "level": 2,
+     "catalog_feature": "dash"
+    },
+    {
+     "name": "Parlay tickets",
+     "what": "Shareable cards",
+     "shipped": "legs graded live from the box score",
+     "level": 2
+    },
+    {
+     "name": "Kalshi orders",
+     "what": "Signed API",
+     "shipped": "real-money orders with limits",
+     "level": 3
+    },
+    {
+     "name": "Memberships",
+     "what": "Checkout",
+     "shipped": "paid plans and an email list",
+     "catalog_feature": "deposit",
+     "level": 2
+    }
+   ],
+   "job": "Run AI trading agents in public, with every trade graded and a nightly review that needs a human OK.",
+   "stage": "complete",
+   "building": "User dashboards",
+   "tags": [
+    "AI agents"
+   ]
+  },
+  {
+   "id": "covercapy",
+   "mono": "CC",
+   "logo": "/assets/studio/brand/delivered/covercapy.svg",
+   "color": "#14525b",
+   "kind": "live",
+   "name": "CoverCapy",
+   "meta": "30 days, Supabase",
+   "title": "The CoverCapy 6,493 page dental platform build",
+   "sub": "A concierge PPO dental platform",
+   "url": "https://www.covercapy.com",
+   "stats": [
+    {
+     "label": "PAGES",
+     "value": "6,493",
+     "note": "in the sitemap"
+    },
+    {
+     "label": "BUILT IN",
+     "value": "30 days",
+     "note": "May 23 to June 21"
+    },
+    {
+     "label": "COMMITS",
+     "value": "637",
+     "note": "one per change"
+    }
+   ],
+   "verified": {
+    "how": "counted in the repo",
+    "on": "2026-06-21",
+    "by": "NJS"
+   },
+   "features": [
+    {
+     "name": "Find a Dentist",
+     "what": "Live search",
+     "shipped": "by ZIP or city on Supabase",
+     "catalog_feature": "site",
+     "level": 1
+    },
+    {
+     "name": "Plan Compare",
+     "what": "Smart match",
+     "shipped": "PPO plans side by side",
+     "level": 2
+    },
+    {
+     "name": "Cost Estimator",
+     "what": "Treatment scenarios",
+     "shipped": "what a procedure costs on a plan",
+     "level": 2
+    },
+    {
+     "name": "Dentist Portal",
+     "what": "Claims and accreditation",
+     "shipped": "the business side of the marketplace",
+     "catalog_feature": "portal",
+     "level": 2
+    },
+    {
+     "name": "Page generator",
+     "what": "Programmatic SEO",
+     "shipped": "6,493 pages across 13 states",
+     "catalog_feature": "pages",
+     "level": 3
+    },
+    {
+     "name": "Structured data",
+     "what": "Search markup",
+     "shipped": "JSON-LD on 6,610 pages",
+     "catalog_feature": "site",
+     "level": 1
+    }
+   ],
+   "job": "Help patients with PPO dental insurance find a dentist, compare plans and see costs before they book.",
+   "stage": "complete",
+   "building": "User dashboards"
+  },
   {
    "id": "bobanight",
    "mono": "BN",
@@ -98,161 +341,8 @@
      "level": 1
     }
    ],
-   "job": "A late-night boba guide that answers one question fast: where can I get a drink right now, near me?"
-  },
-  {
-   "id": "covercapy",
-   "mono": "CC",
-   "logo": "/assets/studio/brand/delivered/covercapy.svg",
-   "color": "#14525b",
-   "kind": "live",
-   "name": "CoverCapy",
-   "meta": "30 days, Supabase",
-   "title": "The CoverCapy 6,493 page dental platform build",
-   "sub": "A concierge PPO dental platform",
-   "url": "https://www.covercapy.com",
-   "stats": [
-    {
-     "label": "PAGES",
-     "value": "6,493",
-     "note": "in the sitemap"
-    },
-    {
-     "label": "BUILT IN",
-     "value": "30 days",
-     "note": "May 23 to June 21"
-    },
-    {
-     "label": "COMMITS",
-     "value": "637",
-     "note": "one per change"
-    }
-   ],
-   "verified": {
-    "how": "counted in the repo",
-    "on": "2026-06-21",
-    "by": "NJS"
-   },
-   "features": [
-    {
-     "name": "Find a Dentist",
-     "what": "Live search",
-     "shipped": "by ZIP or city on Supabase",
-     "catalog_feature": "site",
-     "level": 1
-    },
-    {
-     "name": "Plan Compare",
-     "what": "Smart match",
-     "shipped": "PPO plans side by side",
-     "level": 2
-    },
-    {
-     "name": "Cost Estimator",
-     "what": "Treatment scenarios",
-     "shipped": "what a procedure costs on a plan",
-     "level": 2
-    },
-    {
-     "name": "Dentist Portal",
-     "what": "Claims and accreditation",
-     "shipped": "the business side of the marketplace",
-     "catalog_feature": "portal",
-     "level": 2
-    },
-    {
-     "name": "Page generator",
-     "what": "Programmatic SEO",
-     "shipped": "6,493 pages across 13 states",
-     "catalog_feature": "pages",
-     "level": 3
-    },
-    {
-     "name": "Structured data",
-     "what": "Search markup",
-     "shipped": "JSON-LD on 6,610 pages",
-     "catalog_feature": "site",
-     "level": 1
-    }
-   ],
-   "job": "Help patients with PPO dental insurance find a dentist, compare plans and see costs before they book."
-  },
-  {
-   "id": "pmcountdown",
-   "mono": "PM",
-   "logo": "/assets/studio/brand/delivered/pmcountdown.svg",
-   "color": "#2459f0",
-   "kind": "live",
-   "name": "PM Countdown",
-   "meta": "Kalshi, 12+ agents",
-   "title": "The PM Countdown trading agent desk build",
-   "sub": "Trading agents that grade themselves in public",
-   "url": "https://pmcountdown.com",
-   "stats": [
-    {
-     "label": "COMMITS",
-     "value": "1,771",
-     "note": "in 40 working days"
-    },
-    {
-     "label": "MIGRATIONS",
-     "value": "170",
-     "note": "database changes"
-    },
-    {
-     "label": "TESTS",
-     "value": "142",
-     "note": "test files"
-    }
-   ],
-   "verified": {
-    "how": "counted in the repo",
-    "on": "2026-10-31",
-    "by": "NJS"
-   },
-   "features": [
-    {
-     "name": "Agent LoLo",
-     "what": "Bitcoin agent",
-     "shipped": "reads the 15-minute market every 30 seconds",
-     "catalog_feature": "agent",
-     "level": 3
-    },
-    {
-     "name": "The Brain",
-     "what": "Nightly review",
-     "shipped": "fixes need human approval",
-     "catalog_feature": "loop",
-     "level": 3
-    },
-    {
-     "name": "Public ledger",
-     "what": "Receipts",
-     "shipped": "every trade graded, losses shown",
-     "level": 2,
-     "catalog_feature": "dash"
-    },
-    {
-     "name": "Parlay tickets",
-     "what": "Shareable cards",
-     "shipped": "legs graded live from the box score",
-     "level": 2
-    },
-    {
-     "name": "Kalshi orders",
-     "what": "Signed API",
-     "shipped": "real-money orders with limits",
-     "level": 3
-    },
-    {
-     "name": "Memberships",
-     "what": "Checkout",
-     "shipped": "paid plans and an email list",
-     "catalog_feature": "deposit",
-     "level": 2
-    }
-   ],
-   "job": "Run AI trading agents in public, with every trade graded and a nightly review that needs a human OK."
+   "job": "A late-night boba guide that answers one question fast: where can I get a drink right now, near me?",
+   "stage": "production"
   },
   {
    "id": "boxvacay",
@@ -323,7 +413,8 @@
      "level": 2
     }
    ],
-   "job": "Sell fight-camp trips: pick a destination, book a trainer before you land, hold the spot with a deposit."
+   "job": "Sell fight-camp trips: pick a destination, book a trainer before you land, hold the spot with a deposit.",
+   "stage": "production"
   }
  ]
 }

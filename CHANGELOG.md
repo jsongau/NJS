@@ -2,6 +2,10 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-15
+
+- `/work` and the Delivered section — Zodi Animal added as a Premium case (facts checked on the live site). Each case now carries a stage: Complete (Zodi Animal, PM Countdown, CoverCapy) or In production (Boba Night, BoxVacay). PM Countdown and CoverCapy show "Now building: user dashboards"; PM Countdown carries an AI agents tag. Hero count is 5 products.
+
 ## 2026-11-14
 
 - `/marketing-ops` — New page: Meta ads, GoHighLevel CRM, automation, reviews and owner reporting, with results from KYT Dental and a worked example (concept, not a client) for funeral planning and senior living. Linked from the footer and the mobile menu.

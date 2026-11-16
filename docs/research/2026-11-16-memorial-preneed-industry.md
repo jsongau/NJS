@@ -280,3 +280,45 @@ Sources: [FTC dark patterns staff report summary (Venable)](https://www.venable.
 [NFDA 2023 cost vs inflation](https://funeraldirectordaily.com/?p=20091),
 [Justice in Aging, Medi-Cal asset limit FAQ](https://justiceinaging.org/reinstatement-of-medi-cal-asset-limit-faq/),
 [DHCS asset limit fact sheet](https://www.dhcs.ca.gov/Budget/Documents/DHCS-TBL-Asset-Limit-Fact-Sheet.pdf).
+
+## 10. What memorial, cremation, insurance and senior care advertisers run (added 2026-11-16)
+
+Research for the landing page builder. Patterns and angles only: the builder's wording is original, never copied
+from these brands, and no brand's name or look goes on a template.
+
+### Angles that recur, with who uses them
+
+| Angle | What it says | Seen at | Evidence it works |
+|---|---|---|---|
+| Gift to the family | Planning is something you do for them | Dignity Memorial ("6 reasons prepaid plans are the best gift"; top reason: loved ones "can focus on remembering and healing"); Leading Response playbook ("an act of love", "Give your family the gift of clarity") | Industry consensus; no controlled test found |
+| Your choices, your way | Control and autonomy | Dignity Memorial reason 1, "You get to choose exactly what you want"; Leading Response ("I get to decide this") | Same |
+| Family won't guess or rush | Avoid quick decisions in a short window | Dignity Memorial reasons 3 and 4 | Same |
+| Price lock | Today's prices | Dignity Memorial reason 5 | Honest only if the contract guarantees it; NFDA shows prices rising slower than inflation |
+| Price up front | A listed price on the page | Tulip Cremation (price on the location page, link to the General Price List) | California B&P 7685 requires the GPL online for homes with a website |
+| Situation picker | "Planning ahead" vs "need help now" | Tulip ("What best describes your current situation?") | Same pattern as our three doors |
+| Free guide | Lead magnet in exchange for contact details | Neptune Society (Cremation Planning Guide: costs, scams, talking to family); Dignity Memorial (pricing guide, "Insider's Guide"); Leading Response (checklists, questions to ask) | The standard pre-need offer |
+| Conversation starter | Help families talk about wishes | "Have the Talk of a Lifetime": a free Conversation Card deck raffle; two homes got 10 and 12 leads, spending under 50 dollars combined (Funeral Innovations) | Small test, real numbers |
+| Seminar / lunch and learn | "Getting your affairs in order" at a library or senior center | Leading Response; FrontRunner (promote as a Facebook event); Precoa lunch-and-learn guide | Common; no rates published |
+| Eligibility facts (final expense) | State, age band, no medical exam, fixed rate | Elevarus: eligibility hooks clear Meta's quality filter; fear hooks ("Don't leave your family with funeral debt") get throttled as sensational and pull low-quality leads | Meta ad standards bar content that "exploits insecurities" |
+| Lifestyle first (senior living) | Lead with daily life, put care detail on the page | WebTonic: lifestyle hooks test better; testimonial video beat static by 4% in the Brookdale test | One test, modest lift |
+| Caregiver concern (senior living) | Cost, safety, whether staff will know their parent | WebTonic (the decider is usually an adult daughter); SmartBug (awareness, consideration and decision stage copy, tours, guides) | Same |
+| Compare | "Cremation versus burial", "assisted living versus home care" | SmartBug decision-stage framing; Neptune cost comparison | Same |
+
+### Landing page structure that recurs
+Situation picker, then headline plus one subhead, the price or a price-list link, three or four steps, the free
+guide or a call, trust lines (license number, years, real reviews), a service area, FAQ, and a phone number on
+every screen (Tulip, Neptune, Dignity Memorial).
+
+### Never in the builder
+Fear or guilt hooks, countdowns, "everyone is approved", "1 dollar a month" style claims, a stated or implied
+age, health or loss of the viewer, testimonials without a disclosure, and any real brand's name or look.
+
+Sources: [Dignity Memorial, 6 reasons](https://www.dignitymemorial.com/pre-planning/funeral-costs/prepaid-funeral-plans-make-the-best-gift),
+[Leading Response preneed playbook](https://leadingresponse.com/?p=27398356),
+[Neptune Society plan page](https://neptunesociety.com/resources/cremation-planning/plan-now),
+[Tulip Cremation location page](https://www.altogetherfuneral.com/funeral-cremation/locations/tulip-northern-california),
+[Funeral Innovations, Talk of a Lifetime test](https://funeralinnovations.com/old/converting-have-the-talk-of-a-lifetime-message-into-10-leads-in-5-days),
+[FrontRunner, Facebook preneed leads](https://blog.frontrunnerpro.com/funeral-preneed-leads-facebook),
+[Elevarus, final expense hooks](https://elevarus.com/final-expense-ad-hooks-that-convert/),
+[WebTonic, senior living creative](https://www.webtonic.io/blog/senior-living-ad-creative-statistics),
+[SmartBug, senior care Facebook ads](https://www.smartbugmedia.com/blog/facebook-ads-senior-care-communities).

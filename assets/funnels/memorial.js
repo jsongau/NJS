@@ -37,6 +37,7 @@ function render(){
   var c=COPY[state.aud];
   body.dataset.aud=state.aud;
   $('#eyebrow').textContent=c.eyebrow;
+  var MB={plan:['Free planning guide','Get the guide'],need:['A director answers, day or night','Call now'],care:['Two-minute care-fit check','Check the fit']}[state.aud];$('#mbarTxt').textContent=MB[0];var mb=$('#mbarBtn');mb.firstChild.nodeValue=MB[1];mb.setAttribute('href',state.aud==='need'?'tel:+15550100144':'#card');
   $('#headline').innerHTML=c.h[state.ab];
   $('#sub').textContent=c.sub;
   $('#trust').innerHTML=c.trust.map(function(t){return '<span>'+useIco(ICON[t[0]])+t[1]+'</span>'}).join('')+(state.vet?'<span>'+useIco('i-flag')+'VA benefits help</span>':'');
@@ -90,8 +91,8 @@ function careFit(g){
 
 /* validation */
 var emailOk=function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())};
-function need(input,ok){var f=input.closest('.fm-field');var good=ok(input.value);f.classList.toggle('fm-bad',!good);if(!good)input.focus();return good}
-function needPick(form,group){var g=$('[data-group="'+group+'"]',form);var good=!!picked(form,group);g.classList.toggle('fm-bad',!good);return good}
+function need(input,ok){var f=input.closest('.fm-field');var good=ok(input.value);f.classList.toggle('fm-bad',!good);if(!good){input.focus();if(window.fmHaptic)window.fmHaptic('warn')}return good}
+function needPick(form,group){var g=$('[data-group="'+group+'"]',form);var good=!!picked(form,group);g.classList.toggle('fm-bad',!good);if(!good&&window.fmHaptic)window.fmHaptic('warn');return good}
 
 /* multi-step flows */
 $$('.fm-flow').forEach(function(form){
@@ -120,7 +121,7 @@ function slotsHtml(kind){
   while(out.length<6&&n<14){d.setDate(d.getDate()+1);n++;var wd=d.getDay();if(wd===0)continue;var day=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});var times=kind==='tour'?['10:00 AM','2:00 PM']:['9:30 AM','4:00 PM'];out.push([day,times[out.length%2]])}
   return '<div class="fm-slots" role="group" aria-label="Times">'+out.map(function(s,i){return '<button type="button" class="fm-slot" aria-pressed="false" data-slot="'+esc(s[0]+' at '+s[1])+'">'+s[0]+'<small>'+s[1]+'</small></button>'}).join('')+'</div><div class="fm-booked" aria-live="polite"></div>';
 }
-function finish(name,extra){
+function finish(name,extra){if(window.fmHaptic)window.fmHaptic('done');
   var c=COPY[state.aud];state.data=Object.assign(state.data,extra||{});
   $('#doneH').textContent=c.doneH(name);$('#doneP').textContent=c.doneP;
   var next='';
@@ -172,14 +173,14 @@ var NOTES={
   needpipe:['Behind the callback','The submission becomes an at-need opportunity, pages the director by text and app, starts a ten-minute escalation timer, and suppresses this family from every marketing list for twelve months.'],
   tour:['Optimised to tours','The care door is measured on tours booked, because a tour is the step that predicts a move-in. Slots come from the community\'s calendar, and a reminder goes out the day before.'],
   kit:['A toolkit, not a brochure','Ten tools, each answering a question families really ask. Every interaction is an event: which tools a visitor used tells the CRM what they care about (price, insurance, veterans, estate) before anyone calls them. The "for you" marks change with the door, so each ad set can deep-link to the tool that fits.'],
-  cost:['The cost builder','Price is the first question and the reason most people never call. Showing national medians line by line, and letting people remove what they would not want, builds trust and qualifies the lead: someone who unticks the casket and vault is a cremation lead.'],
+  cost:['The cost builder','Price is the first question and the reason most people never call. Showing national medians line by line, and letting people remove what they would not want, tells you who you are talking to: someone who unticks the casket and vault is a cremation lead.'],
   time:['Honest urgency','No countdown clocks. The reason to plan now is real (prices rise), so the page shows it with the visitor\'s own assumption and says plainly that a locked price only counts if the contract guarantees it. The monthly figure answers "can I afford this?", the question behind a pay-over-time plan.'],
   pay:['The ways-to-pay matcher','Pre-need insurance, final expense, trusts, savings: most families cannot tell them apart. Ranking them by what the visitor cares about is useful on its own, and the choices tell the planner which product conversation to have.'],
   cover:['Coverage estimator','The insurance-funded path needs a number. Sample rates are labeled as samples, sourced and dated, with the two-year waiting period stated, because an insurance page that hides it loses trust and breaks rules.'],
   benefits:['Benefits finder','Veteran families leave real money and honors on the table. Two taps show what may apply, and answering "served" tags the contact for a planner who knows VA paperwork.'],
   estate:['The estate check','The natural next product after a funeral plan. Three in four adults have no will. The probate calculator turns an abstract task into a dollar figure from the statute, which is what gets people to book.'],
   wishes:['The wishes builder','The engagement hook, like the quiz in a consumer funnel. People finish it because it is about them, it produces something worth keeping, and in a live funnel "save it" is where the email is asked for. Every answer maps to a CRM field the planner sees before the call.'],
-  trend:['Lead with cremation','More than six in ten deaths now end in cremation, rising toward eight in ten. The plans, ad creative and price list should be built around that, not treat cremation as the cheap option.'],
+  trend:['Lead with cremation','More than six in ten deaths now end in cremation, rising toward eight in ten. The plans, ad creative and price list are built around that. Cremation is the main product, priced and shown first.'],
   days:['The first 30 days','Content for the worst week. It answers the questions families search for, earns links and search traffic, and is the page they remember when it is time to plan their own.'],
   carecost:['Care costs','For the senior care door. Families want the number before the tour, and hiding it only sends them to a directory site that shows it.'],
   'btf-map':['The funnel map','Three entry sources feed three doors, three pipelines and three outcomes, and all of them end in reviews and family referrals. Ads only ever point at the planning and care doors.'],
@@ -361,5 +362,10 @@ function track(ev,v){try{if(window.console&&console.debug)console.debug('[funnel
 $('.fm-cm-btn').addEventListener('click',toggleCm);$$('.fm-cm-panel a').forEach(function(a){a.addEventListener('click',closeCm)});$$('.fm-brand,.fm-restart').forEach(function(b){b.addEventListener('click',function(){restart()})});
 /* deep links: ?door=need&vet=1&ab=b&notes=1 */
 try{var q=new URLSearchParams(location.search);if(COPY[q.get('door')])state.aud=q.get('door');if(q.get('ab')==='b'){$('#abSw').click()}if(q.get('vet')==='1'){$('#vetSw').click()}if(q.get('notes')==='1'){$('#cmSw').click()}if(q.get('look')==='evening'){$('[data-theme-btn="evening"]').click()}}catch(e){}
+(function(){var bar=$('#fmMbar'),card=$('#card');if(!bar||!card||!('IntersectionObserver' in window))return;var cardIn=true,past=false;
+function upd(){var on=!cardIn&&past&&!body.classList.contains('fm-done');bar.classList.toggle('fm-on',on);bar.setAttribute('aria-hidden',String(!on));$('#mbarBtn').tabIndex=on?0:-1}
+new IntersectionObserver(function(es){cardIn=es[0].isIntersecting;past=es[0].boundingClientRect.top<0;upd()}).observe(card);
+$('#mbarBtn').addEventListener('click',function(e){if(state.aud==='need')return;e.preventDefault();window.scrollTo({top:card.getBoundingClientRect().top+scrollY-84,behavior:reduceMotion?'auto':'smooth'});setTimeout(function(){var i=$('.fm-step.fm-on input, .fm-step.fm-on button',card)||$('input,button',card);if(i)i.focus({preventScroll:true})},reduceMotion?0:500)});
+new MutationObserver(upd).observe(body,{attributes:true,attributeFilter:['class']})})();
 render();
 })();

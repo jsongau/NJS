@@ -46,3 +46,22 @@
 - Not built yet (in the research backlog): the seven Bureau questions as an FAQ, a Spanish planning
   door, a Medi-Cal July 2027 explainer once DHCS rules are confirmed, live GoHighLevel capture.
 - Items marked **verify** in the research must be checked before reuse on a client page.
+
+## Wave 5 (same day): stack showcase, GoHighLevel add-ons, copy pass, phone and haptics
+
+- The stack, wired: one example lead stepped through Meta ad, page, Zapier, GoHighLevel and back to Meta by the
+  Conversions API, with an event log. Auto-play only on screen, pauses on hover or focus, final state under
+  reduced motion. No vendor logos; names only, with a not-affiliated line.
+- GoHighLevel add-ons: 20 cards from HighLevel's integrations page and SupplyGem's guide, each labelled Built in,
+  Connects or Premium, each with a funeral home or care use. Filters dim instead of hiding (no layout shift).
+  "Pick what I'd start with" adds six. Picks are copied to the clipboard; they are **not** sent with the lead form
+  yet. Sending them is a lead-intake change (plan first). No prices on the page (Studio rule).
+- Copy pass (kill-ai-tells): rewrote the toolkit lede, "Prices rise" (now NFDA's real 5.8% figure, slower than
+  inflation), the cremation line, the 30-days line, the price list line, the behind-the-funnel headline and the CTA
+  band. Rejected fake-scarcity FOMO; honest-urgency lines live in the research doc, section 9.
+- Phone: three-column door picker (no sideways scroll), left-aligned toggles, 44px targets, a floating next-step
+  bar that appears only when the intake card is off screen (call link on the help-now door), banner no longer
+  sticky on phones.
+- Haptics: `assets/funnels/haptics.js`. Android uses the Vibration API, iOS 18 and later gets the switch-input
+  tick. Touch screens only, off with reduced motion. Pick, done and warn patterns; submit buttons let the form
+  decide (done on success, warn on a missing field).

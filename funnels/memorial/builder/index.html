@@ -50,6 +50,8 @@
   <div class="fb-bar">
     <div class="fb-bar-l"><span class="fb-cur" id="fbCur">Gift to your family</span></div>
     <div class="fb-bar-r">
+      <button type="button" class="fb-tb" id="fbShare"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 12a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1 1M12 8a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1"/></svg>Share link</button>
+      <button type="button" class="fb-tb fb-tb-p" id="fbDown"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M6 9l4 4 4-4M4 16h12"/></svg>Download<span class="fb-tl"> page</span></button>
       <button type="button" class="fb-ib" id="fbUndo" aria-label="Undo" title="Undo" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5L3 9l4 4M3.5 9H12a5 5 0 0 1 0 10h-2"/></svg></button>
       <button type="button" class="fb-ib" id="fbRedo" aria-label="Redo" title="Redo" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13 5l4 4-4 4M16.5 9H8a5 5 0 0 0 0 10h2"/></svg></button>
       <div class="fb-dev" role="group" aria-label="Preview width">
@@ -68,7 +70,16 @@
     <div class="fb-stage" id="fbStage">
       <div class="fb-frame" id="fbFrameWrap" data-dev="desktop"><iframe id="fbFrame" title="Landing page preview"></iframe></div>
     </div>
-    <aside class="fb-right" id="fbInspector" aria-label="Edit"></aside>
+    <aside class="fb-right" aria-label="Edit, ad and checks">
+      <div class="fb-rtabs" role="tablist" aria-label="Panel">
+        <button type="button" role="tab" id="fbT-edit" data-pane="edit" aria-selected="true">Edit</button>
+        <button type="button" role="tab" id="fbT-ad" data-pane="ad" aria-selected="false" tabindex="-1">Meta ad</button>
+        <button type="button" role="tab" id="fbT-check" data-pane="check" aria-selected="false" tabindex="-1">Check <span class="fb-badge" id="fbBadge"></span></button>
+      </div>
+      <div id="fbInspector" role="tabpanel" aria-labelledby="fbT-edit"></div>
+      <div id="fbAd" role="tabpanel" aria-labelledby="fbT-ad" hidden></div>
+      <div id="fbCheck" role="tabpanel" aria-labelledby="fbT-check" hidden></div>
+    </aside>
   </div>
   <nav class="fb-mtabs" aria-label="Builder views">
     <button type="button" data-view="page" aria-pressed="false">Sections</button>
@@ -79,8 +90,9 @@
 </section>
 
 <section class="fb-notes">
-  <div class="fb-in">
+  <div class="fb-in fb-in4">
     <div class="fb-note"><b>Wording that is researched, not guessed</b><p>Twelve angles drawn from what memorial, cremation, insurance and senior care advertisers run, each with its source. No fear hooks, no countdowns, nothing aimed at someone who just lost a person.</p></div>
+    <div class="fb-note"><b>Every page comes with its ad and a rule check</b><p>The Meta ad tab writes the ad that would send people to this page and checks the two say the same thing. The Check tab flags fear hooks, fake urgency, impossible claims and anything that implies a viewer's age, health or loss.</p></div>
     <div class="fb-note"><b>Text in brackets is for the business to supply</b><p>Prices, dates and carrier facts are marked until the client confirms them, so nothing goes live that is not true.</p></div>
     <div class="fb-note"><b>Built for the stack behind it</b><p>Every page here is shaped for the <a href="/funnels/memorial#stack">Meta ads, Zapier and GoHighLevel setup</a> on the intake funnel template.</p></div>
   </div>

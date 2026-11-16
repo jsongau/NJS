@@ -80,3 +80,34 @@ test('builder: the page links to the funnel template and is in the funnels hub a
   assert.ok(readFileSync(new URL('../../assets/studio/meganav.js', import.meta.url), 'utf8').includes("'/funnels/memorial/builder'"));
   assert.ok(readFileSync(new URL('../../funnels/index.html', import.meta.url), 'utf8').includes('/funnels/memorial/builder'));
 });
+
+test('builder: compliance rules catch each banned pattern and pass the shipped wording', () => {
+  const bad = { fear: "Don't leave your family with funeral debt.", urgency: 'Act now: only 3 spots left.', claim: 'Everyone is approved for one dollar a month.', personal: 'Did you just lose your mother?' };
+  for (const r of FB.RULES) {
+    assert.ok(r.re.test(bad[r.id]), r.id + ' misses its own example');
+    assert.match(r.src[1], /^https:\/\//);
+    for (const [where, t] of allText()) assert.ok(!r.re.test(t), where + ' trips the ' + r.id + ' rule');
+    for (const [k, a] of Object.entries(FB.ADS)) assert.ok(!r.re.test(a.text + ' ' + a.head), 'ad ' + k + ' trips ' + r.id);
+  }
+});
+
+test('builder: every ad angle exists, follows the copy rules and names a Meta button', () => {
+  const buttons = ['Download', 'Learn more', 'Sign up', 'Get quote', 'Book now'];
+  for (const [k, a] of Object.entries(FB.ADS)) {
+    assert.ok(FB.ANGLES[k], k);
+    assert.ok(buttons.includes(a.btn), k + ' button ' + a.btn);
+    assert.ok(!DASH.test(a.text + a.head), k + ' has a dash');
+    assert.equal(((a.text + ' ' + a.head).match(HYPE) || [null])[0], null, k);
+  }
+  assert.ok(!FB.ADS.now, 'the help-now page must have no ad');
+});
+
+test('builder: the downloaded page carries working tools and no builder chrome', () => {
+  const st = { brand: FB.BRAND, sections: [{ id: 'a', type: 'costtool' }, { id: 'b', type: 'paytool' }] };
+  const html = FB.renderDoc(st);
+  assert.ok(html.includes('data-lp-tool="cost"') && html.includes('data-lp-tool="pay"'));
+  assert.ok(html.includes('<script>(function lpTools'), 'tools script is inlined');
+  assert.ok(!html.includes('fb-sel'), 'no builder selection styles in the download');
+  const total = FB.COST_ITEMS.reduce((a, i) => a + i[1], 0);
+  assert.equal(total, 9959, 'cost lines still match the NFDA medians used on the toolkit');
+});

@@ -59,7 +59,7 @@ python3 -m http.server 8765
 node tools/check-headlines.mjs http://localhost:8765/ http://localhost:8765/fitness/
 ```
 
-Rebuild pages, check none are stale, check the catalog, run the tests (expect 51 pass, 8 skipped,
+Rebuild pages, check none are stale, check the catalog, run the tests (expect 54 pass, 8 skipped,
 0 fail), build a one-file preview, serve locally at http://localhost:8765, then audit headline line
 breaks (needs the local server and Playwright; pass every page you touched, and any preview file).
 Run the tests before every commit, and the headline audit before any preview goes to Jay. The

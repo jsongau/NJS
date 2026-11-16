@@ -164,6 +164,7 @@
     d.getElementById('lp-root').innerHTML = FB.renderBody(state);
     $$('.lp-s', d).forEach(function (el) { var s = state.sections.filter(function (x) { return x.id === el.dataset.sid; })[0]; if (s) el.setAttribute('data-name', FB.SECTIONS[s.type].name); el.classList.toggle('fb-sel', el.dataset.sid === sel); });
     d.title = b.name;
+    FB.lpTools(d); renderSide();
   }
   frame.addEventListener('load', function () {
     ready = true; paint();
@@ -186,8 +187,114 @@
   addEventListener('resize', fit);
   if ('ResizeObserver' in window) new ResizeObserver(fit).observe(stage);
 
+  /* ---------- right panel: Edit, Meta ad, Check ---------- */
+  var pane = 'edit';
+  $$('.fb-rtabs [role="tab"]').forEach(function (t) { t.addEventListener('click', function () { setPane(t.dataset.pane); hap('tap'); }); });
+  $('.fb-rtabs').addEventListener('keydown', function (e) { var tabs = $$('.fb-rtabs [role="tab"]'), i = tabs.indexOf(document.activeElement); if (i < 0 || !/Arrow(Left|Right)/.test(e.key)) return; var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; n.focus(); setPane(n.dataset.pane); });
+  function setPane(p) {
+    pane = p;
+    $$('.fb-rtabs [role="tab"]').forEach(function (t) { var on = t.dataset.pane === p; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    $('#fbInspector').hidden = p !== 'edit'; $('#fbAd').hidden = p !== 'ad'; $('#fbCheck').hidden = p !== 'check';
+    renderSide();
+  }
+  function heroOf() { return state.sections.filter(function (s) { return s.type === 'hero'; })[0]; }
+  function pageText() {
+    var b = state.brand, out = [];
+    state.sections.forEach(function (s) { FB.SECTIONS[s.type].fields.forEach(function (f) { out.push([s, FB.raw(s, f[0]).replace(/\{(name|phone|area|license)\}/g, function (_, k) { return b[k] || ''; })]); }); });
+    return out;
+  }
+  function adFor() { var h = heroOf(), k = state.adAngle || (h && h.angle) || 'gift'; return { k: k, ad: FB.ADS[k] }; }
+  function checks() {
+    var res = [], txt = pageText(), a = adFor(), hero = heroOf();
+    FB.RULES.forEach(function (r) {
+      var hits = txt.filter(function (t) { return r.re.test(t[1]); });
+      if (a.ad && r.re.test(a.ad.text + ' ' + a.ad.head)) hits.push([null, a.ad.text]);
+      res.push({ level: hits.length ? r.level : 'ok', title: { fear: 'No fear or guilt hooks', urgency: 'No made-up urgency', claim: 'No impossible claims', personal: 'Nothing implies the viewer\'s age, health or loss' }[r.id], msg: hits.length ? r.msg : '', src: r.src, sec: hits[0] && hits[0][0] });
+    });
+    var need = txt.filter(function (t) { return /\[[^\]]+\]/.test(t[1]); });
+    res.push({ level: need.length ? 'warn' : 'ok', title: need.length ? need.length + ' item' + (need.length === 1 ? '' : 's') + ' to confirm before launch' : 'Nothing left to confirm', msg: need.length ? 'Text in square brackets (prices, dates, carrier facts) must come from the business before the page goes live.' : '', sec: need[0] && need[0][0] });
+    res.push({ level: state.brand.phone.trim() ? 'ok' : 'stop', title: state.brand.phone.trim() ? 'Phone number on every screen' : 'Add a phone number', msg: state.brand.phone.trim() ? '' : 'Families who are not ready for a form still call. The phone sits in the top bar and the footer.' });
+    res.push({ level: 'ok', title: 'General price list linked', msg: '', src: ['California B&P 7685', 'https://california.public.law/codes/business_and_professions_code_section_7685'] });
+    res.push({ level: hero && state.sections[0] === hero ? 'ok' : 'warn', title: hero && state.sections[0] === hero ? 'Opens with a headline' : 'The page does not open with a headline', msg: hero && state.sections[0] === hero ? '' : 'Move the Hero to the top, so the ad\'s promise is the first thing people see.', sec: hero });
+    if (hero && hero.angle === 'now') { var offers = state.sections.filter(function (s) { return /guide|seminar|prices|tour|costtool|paytool/.test(s.type); }); res.push({ level: offers.length ? 'warn' : 'ok', title: offers.length ? 'An offer appears on the help-now page' : 'Help-now page stays offer-free', msg: offers.length ? 'Someone who just lost a person should see a phone number and calm words, not a guide or a price tool.' : '', sec: offers[0] }); }
+    if (state.sections.some(function (s) { return s.angle === 'eligible'; })) res.push({ level: 'warn', title: 'Insurance claims need the carrier\'s wording', msg: 'No medical exam and fixed rates must match the policy, and a licensed agent must be named on the page.', sec: state.sections.filter(function (s) { return s.angle === 'eligible'; })[0] });
+    if (state.sections.some(function (s) { return s.type === 'reviews'; })) res.push({ level: 'info', title: 'Reviews must be real', msg: 'Only real, unedited reviews from families who agreed to be quoted (FTC Endorsement Guides).', sec: state.sections.filter(function (s) { return s.type === 'reviews'; })[0] });
+    return res;
+  }
+  function renderSide() {
+    var res = checks(), bad = res.filter(function (r) { return r.level === 'stop' || r.level === 'warn'; }).length;
+    var badge = $('#fbBadge'); badge.textContent = bad || ''; badge.className = 'fb-badge' + (res.some(function (r) { return r.level === 'stop'; }) ? ' fb-stop' : bad ? ' fb-warn' : '');
+    if (pane === 'check') renderCheck(res); else if (pane === 'ad') renderAd();
+  }
+  function renderCheck(res) {
+    var ok = res.filter(function (r) { return r.level === 'ok'; }).length;
+    var ord = { stop: 0, warn: 1, info: 2, ok: 3 };
+    res = res.slice().sort(function (a, b) { return ord[a.level] - ord[b.level]; });
+    $('#fbCheck').innerHTML = '<div class="fb-insp-h"><div><b>Rule check</b><small>Meta advertising standards, FTC guidance and California\'s price list rule, checked on every change.</small></div></div>' +
+      '<div class="fb-score"><b>' + ok + '<span> / ' + res.length + '</span></b><small>checks clear</small></div><ul class="fb-checks">' +
+      res.map(function (r) { return '<li class="fb-c-' + r.level + '"><i aria-hidden="true">' + { ok: '&#10003;', warn: '!', stop: '&#215;', info: 'i' }[r.level] + '</i><div><b>' + esc(r.title) + '</b>' + (r.msg ? '<p>' + esc(r.msg) + '</p>' : '') + (r.src && r.level !== 'ok' ? '<a href="' + r.src[1] + '" target="_blank" rel="noopener">' + esc(r.src[0]) + '</a>' : '') + (r.sec ? '<button type="button" data-goto="' + r.sec.id + '">Show me</button>' : '') + '</div></li>'; }).join('') + '</ul>';
+  }
+  function renderAd() {
+    var a = adFor(), hero = heroOf(), b = state.brand, el = $('#fbAd');
+    var chips = '<span class="fb-lab">Ad angle</span><div class="fb-angles" role="group" aria-label="Ad angle">' + Object.keys(FB.ADS).map(function (k) { return '<button type="button" data-adangle="' + k + '" aria-pressed="' + (a.k === k) + '">' + esc(FB.ANGLES[k].name) + '</button>'; }).join('') + '</div>';
+    if (!a.ad) { el.innerHTML = '<div class="fb-insp-h"><div><b>Meta ad</b><small>The ad that would send people to this page.</small></div></div><div class="fb-why"><b>No ads for this page</b>Families who just lost someone find a funeral home through search, Maps and hospice referrals. Running ads at them is the wrong move, so this page gets none.</div>' + chips; return; }
+    var dom = (b.name || 'yourbusiness').toLowerCase().replace(/[^a-z0-9]+/g, '') + '.com';
+    var fill = function (t) { return esc(t).replace(/\[([^\]]+)\]/g, '<mark>$1</mark>'); };
+    var heroAct = hero ? (FB.ADS[hero.angle] || {}).act : null;
+    var words = function (t) { return (t || '').toLowerCase().match(/[a-z]{5,}/g) || []; };
+    var pageWords = hero ? words(FB.raw(hero, 'h') + ' ' + FB.raw(hero, 'sub') + ' ' + FB.raw(hero, 'cta')) : [];
+    var shared = words(a.ad.head + ' ' + a.ad.text).filter(function (w, i, arr) { return pageWords.indexOf(w) > -1 && arr.indexOf(w) === i; });
+    var m = [
+      [hero && a.k === hero.angle, 'Ad and page lead with the same angle', hero ? (a.k === hero.angle ? 'Both say "' + FB.ANGLES[a.k].name + '".' : 'The ad says "' + FB.ANGLES[a.k].name + '" but the page opens with "' + (FB.ANGLES[hero.angle] ? FB.ANGLES[hero.angle].name : 'standard wording') + '".') : 'Add a Hero section.'],
+      [heroAct && heroAct === a.ad.act, 'The button promises what the page delivers', 'Ad button "' + a.ad.btn + '" against the page\'s main action.'],
+      [shared.length >= 2, 'The ad\'s words show up in the headline', shared.length ? 'Shared: ' + shared.slice(0, 5).join(', ') + '.' : 'No shared words. People who click should see the ad\'s promise right away.']
+    ];
+    var score = m.filter(function (x) { return x[0]; }).length;
+    el.innerHTML = '<div class="fb-insp-h"><div><b>Meta ad</b><small>The ad that would send people to this page.</small></div></div>' +
+      '<article class="fb-ad"><header><span class="fb-ad-av" aria-hidden="true"></span><span><b>' + esc(b.name) + '</b><small>Sponsored</small></span></header><p>' + fill(a.ad.text) + '</p><div class="fb-ad-img" style="--a:' + FB.PALETTES[b.palette].accent + ';--bg:' + FB.PALETTES[b.palette].soft + ';--ink:' + FB.PALETTES[b.palette].ink + '"><span>' + fill(a.ad.head) + '</span></div><footer><span><small>' + esc(dom.toUpperCase()) + '</small><b>' + fill(a.ad.head) + '</b></span><em>' + esc(a.ad.btn) + '</em></footer></article>' +
+      '<span class="fb-lab">Message match · ' + score + ' of 3</span><ul class="fb-checks">' + m.map(function (x) { return '<li class="fb-c-' + (x[0] ? 'ok' : 'warn') + '"><i aria-hidden="true">' + (x[0] ? '&#10003;' : '!') + '</i><div><b>' + esc(x[1]) + '</b><p>' + esc(x[2]) + '</p></div></li>'; }).join('') + '</ul>' +
+      '<span class="fb-lab">Who sees it</span><p class="fb-tip" style="margin-top:0">' + esc(FB.AD_WHO[a.k] || FB.AD_WHO.base) + '</p>' + chips;
+  }
+  $('.fb-right').addEventListener('click', function (e) {
+    var g = e.target.closest('[data-goto]'); if (g) { select(g.dataset.goto, true); setPane('edit'); hap('tap'); return; }
+    var aa = e.target.closest('[data-adangle]'); if (aa) { commit(); state.adAngle = aa.dataset.adangle; save(); renderSide(); hap('pick'); }
+  });
+
+  /* ---------- share link and download ---------- */
+  function b64u(bytes) { var s = ''; for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  function unb64u(t) { var s = atob(t.replace(/-/g, '+').replace(/_/g, '/')), a = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a; }
+  function pack(obj) {
+    var raw = new TextEncoder().encode(JSON.stringify(obj));
+    if (!('CompressionStream' in window)) return Promise.resolve('j' + b64u(raw));
+    return new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer().then(function (buf) { return 'z' + b64u(new Uint8Array(buf)); });
+  }
+  function unpack(t) {
+    var bytes = unb64u(t.slice(1));
+    if (t[0] === 'j') return Promise.resolve(JSON.parse(new TextDecoder().decode(bytes)));
+    return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text().then(JSON.parse);
+  }
+  function slim() { return { t: state.tpl, b: state.brand, a: state.adAngle || null, s: state.sections.map(function (s) { var o = { y: s.type }; if (s.angle) o.g = s.angle; if (s.layout) o.l = s.layout; if (s.f && Object.keys(s.f).length) o.f = s.f; return o; }) }; }
+  function unslim(o) { return { tpl: o.t, brand: Object.assign({}, FB.BRAND, o.b), adAngle: o.a, sections: (o.s || []).filter(function (x) { return FB.SECTIONS[x.y]; }).map(function (x) { return { id: uid(), type: x.y, angle: x.g || null, layout: x.l || null, f: x.f || {} }; }) }; }
+  $('#fbShare').addEventListener('click', function () {
+    pack(slim()).then(function (code) {
+      var url = location.origin + location.pathname + '#p=' + code;
+      history.replaceState(null, '', '#p=' + code);
+      var done = function () { toast('Link copied. Anyone with it opens this exact page.'); hap('done'); };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { toast('The link is in the address bar. Copy it from there.'); }); else toast('The link is in the address bar. Copy it from there.');
+    });
+  });
+  $('#fbDown').addEventListener('click', function () {
+    var html = FB.renderDoc(state), name = (state.brand.name || 'landing').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-landing-page.html';
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    toast('Downloaded ' + name + '. It opens in any browser.'); hap('done');
+  });
+  if (/^#p=[jz]/.test(location.hash)) {
+    unpack(location.hash.slice(3)).then(function (o) { var st = unslim(o); if (st.sections.length) { commit(); state = st; sel = null; all(); toast('Opened a shared page.'); } }).catch(function () { toast('That link could not be opened.'); });
+  }
+
   /* ---------- selection, phone views ---------- */
-  function select(id, scroll) { sel = id; renderOutline(); renderInspector(); paint(); if (scroll && id) scrollFrameTo(id); }
+  function markSel() { if (!ready) return; $$('.lp-s', doc()).forEach(function (el) { el.classList.toggle('fb-sel', el.dataset.sid === sel); }); }
+  function select(id, scroll) { var changed = sel !== id; sel = id; if (changed) { renderOutline(); renderInspector(); markSel(); } if (scroll && id) scrollFrameTo(id); }
   function setView(v) { app.dataset.view = v; $$('.fb-mtabs button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.view === v)); }); if (v === 'preview') fit(); }
   $$('.fb-mtabs button').forEach(function (b) { b.addEventListener('click', function () { setView(b.dataset.view); hap('tap'); }); });
 

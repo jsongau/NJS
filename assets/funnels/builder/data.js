@@ -144,6 +144,49 @@
     }
   };
 
+  FB.SECTIONS.costtool = {
+    name: 'Cost builder', group: 'Live tools', desc: 'Families untick what they would not want and watch the total move.',
+    fields: [['h', 'Heading'], ['sub', 'Line under it', 1]],
+    variants: { base: { h: 'Build a funeral, line by line.', sub: 'Untick anything you would not want. The lines are national medians for a funeral with a viewing and burial (NFDA 2023). Our own prices are on the price list.' } }
+  };
+  FB.SECTIONS.paytool = {
+    name: 'Payment plan', group: 'Live tools', desc: 'A slider that spreads a plan price over a few years.',
+    fields: [['h', 'Heading'], ['sub', 'Line under it', 1]],
+    variants: { base: { h: 'Spread it out, at your own pace.', sub: 'Move the slider to see a monthly amount. Before any plan fees or interest; your contract shows the real terms.' } }
+  };
+  /* NFDA 2023 General Price List Study medians, burial with viewing (same lines as the toolkit's cost builder) */
+  FB.COST_ITEMS = [['Basic services fee', 2459], ['Transfer to the funeral home', 395], ['Embalming', 845], ['Other preparation', 295], ['Viewing: facilities and staff', 475], ['Ceremony: facilities and staff', 550], ['Hearse', 375], ['Service car or van', 175], ['Printed materials', 195], ['Metal casket', 2500], ['Burial vault', 1695]];
+
+  /* The Meta ad that would send traffic to a page with this angle. Original copy; button names are Meta's call-to-action types. */
+  FB.ADS = {
+    gift: { text: 'Writing your wishes down is something you do for the people you love. Our free guide walks through every choice, with every price listed.', head: 'Plan it once. Spare them the guessing.', btn: 'Download', act: 'guide' },
+    choice: { text: 'Burial or cremation, big or small. Decide it yourself, on paper, and change it any time before it is needed.', head: 'Your service, your way', btn: 'Learn more', act: 'plan' },
+    noguess: { text: 'Families without a plan make every decision in the first few days. A written plan turns that into one phone call.', head: 'Plan it once', btn: 'Download', act: 'guide' },
+    price: { text: 'Cremation and funeral plans with the price on the page. See what is included before you talk to anyone.', head: 'See plans and prices', btn: 'Learn more', act: 'plan' },
+    guide: { text: 'What things cost, what to decide first, and how to bring it up with family. Free to download, and no call unless you ask.', head: 'The free planning guide', btn: 'Download', act: 'guide' },
+    talk: { text: 'The talk nobody wants to start. Free question cards make it easier, over dinner instead of a hospital hallway.', head: 'Free conversation cards', btn: 'Sign up', act: 'guide' },
+    event: { text: 'A free lunch talk on wills, funeral choices and benefits. Lunch is on us, and nothing is sold at the table.', head: 'Getting your affairs in order', btn: 'Sign up', act: 'event' },
+    eligible: { text: 'California residents 50 to 85: a funeral plan with a fixed monthly rate. No medical exam on most plans. [Confirm with the carrier]', head: 'Check your options', btn: 'Get quote', act: 'quote' },
+    lifestyle: { text: 'Mornings with friends, and help whenever they want it. Come for lunch and see an ordinary day.', head: 'Come for lunch, take a tour', btn: 'Book now', act: 'tour' },
+    caregiver: { text: 'Looking for care for Mom or Dad? A two-minute care check suggests a level of care. Then visit and ask everything.', head: 'Start the care check', btn: 'Learn more', act: 'tour' },
+    veteran: { text: 'If they served, the VA may cover burial in a national cemetery, a headstone and a flag. We help you check and file.', head: 'Veteran burial benefits', btn: 'Learn more', act: 'guide' }
+  };
+  FB.AD_WHO = {
+    base: 'Adults in the service area, broad. Let the ad set learn from booked calls, not form starts.',
+    eligible: 'Insurance-funded plans run under Meta\'s financial products special ad category: no age, gender or ZIP targeting, and no lookalike audiences.',
+    lifestyle: 'Adult children and older adults near the community, broad. Senior housing ads can fall under Meta\'s housing special ad category, which limits targeting; check before launch.',
+    caregiver: 'Adult children near the community, broad. Senior housing ads can fall under Meta\'s housing special ad category, which limits targeting; check before launch.',
+    event: 'Adults within driving distance of the venue, promoted as a Facebook event.'
+  };
+
+  /* Compliance check: patterns that read as fear, fake urgency, impossible claims or personal attributes. */
+  FB.RULES = [
+    { id: 'fear', level: 'stop', re: /funeral debt|burden (on|to) your|leave your (kids|children|family) with|before it'?s too late|fight over|don'?t leave your/i, msg: 'Fear or guilt hook. Meta can throttle these as sensational, and they pull low-quality leads.', src: ['Elevarus', 'https://elevarus.com/final-expense-ad-hooks-that-convert/'] },
+    { id: 'urgency', level: 'stop', re: /act now|limited time|only \d+ (left|spots|seats)|hurry|ends (today|tonight|soon)|last chance|countdown|while (supplies|spots) last/i, msg: 'Made-up urgency. The FTC treats false scarcity and fake timers as dark patterns.', src: ['FTC dark patterns report', 'https://www.venable.com/insights/blogs/2022/09/the-ftc-brings-more-light-to-dark-patterns-in-new'] },
+    { id: 'claim', level: 'stop', re: /everyone (is )?approved|guaranteed (approval|acceptance)|can'?t be turned down|no one is turned down|\$\s?1 a month|one dollar a month/i, msg: 'A claim most buyers cannot reasonably expect. Cut it or qualify it.', src: ['Elevarus', 'https://elevarus.com/final-expense-ad-hooks-that-convert/'] },
+    { id: 'personal', level: 'stop', re: /did you (just )?lose|are you (over \d+|a senior|sick|dying|grieving)|your (diagnosis|illness)|recently widowed|lost a loved one\?/i, msg: 'Implies the viewer\'s age, health or loss. Meta\'s personal attributes policy prohibits it.', src: ['Meta advertising standards', 'https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/'] }
+  ];
+
   /* California Cemetery and Funeral Bureau, "Preneed" consumer page: the questions are theirs, the answers are samples to edit. */
   FB.FAQ = [
     ['Are there costs not included in the contract that would be paid at the time of need?', '[Sample] Cemetery fees, flowers and death certificates are listed separately on the price list. Everything in your contract is covered.'],
@@ -177,9 +220,9 @@
     { id: 'gift', name: 'Gift to your family', desc: 'The classic pre-need page: the family benefit first, then the guide.', palette: 'lantern', font: 'modern',
       sections: [S('hero', 'gift', 'split'), S('picker'), S('trust'), S('steps'), S('guide'), S('reviews'), S('cta', 'gift')] },
     { id: 'price', name: 'Cremation, price first', desc: 'For shoppers who compare prices before they call.', palette: 'stone', font: 'modern',
-      sections: [S('hero', 'price', 'split'), S('trust', 'price'), S('prices'), S('steps'), S('compare'), S('faq'), S('cta', 'price')] },
+      sections: [S('hero', 'price', 'split'), S('trust', 'price'), S('prices'), S('costtool'), S('steps'), S('compare'), S('faq'), S('cta', 'price')] },
     { id: 'guide', name: 'Free guide download', desc: 'One clear offer, for people not ready to talk.', palette: 'sage', font: 'warm',
-      sections: [S('hero', 'guide', 'center'), S('guide'), S('trust'), S('steps'), S('faq'), S('cta')] },
+      sections: [S('hero', 'guide', 'center'), S('guide'), S('trust'), S('steps'), S('paytool'), S('faq'), S('cta')] },
     { id: 'veteran', name: 'Veteran families', desc: 'Benefits first, with the checklist as the offer.', palette: 'navy', font: 'classic',
       sections: [S('hero', 'veteran', 'band'), S('vets'), S('guide', 'veteran'), S('trust', 'veteran'), S('faq'), S('cta', 'veteran')] },
     { id: 'event', name: 'Lunch talk', desc: 'A local seminar, promoted as an event.', palette: 'plum', font: 'warm',

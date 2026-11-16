@@ -80,3 +80,19 @@
 - Tests: `tests/studio/builder.test.mjs` (7). Suite is now 51 pass, 8 skipped.
 - Not built yet (plan waves 3 to 6): the ten toolkit tools as blocks, the matching Meta ad preview and compliance
   check, download HTML and share link, phone bottom sheets, then saving and "send to Nathan" (backend, separate OK).
+
+## Wave 7 (same day): builder waves 4 and 5, first tool blocks
+
+- Right panel is now tabs: Edit, Meta ad, Check (keyboard arrows move between tabs; the Check tab shows a count).
+- Meta ad: `FB.ADS` per angle (original copy, Meta button types), a mockup in the brand's colors, message match
+  out of 3 (same angle, button fits the page's action, shared words with the headline), and who-sees-it notes,
+  including the financial products and housing special ad categories. The help-now page gets no ad, on purpose.
+- Check: `FB.RULES` (fear, urgency, impossible claims, personal attributes, each sourced) plus structural checks.
+  "Show me" jumps to the section. A test proves each rule catches its example and no shipped wording trips it.
+- Download: `FB.renderDoc` with the tools script inlined, so the file works offline. Share: slimmed state,
+  deflate-raw compressed, base64url in `#p=` (about 340 characters for an eight-section page). No backend.
+- Tool blocks: cost builder (NFDA lines, same as the toolkit, total 9,959) and payment plan. `FB.lpTools` must stay
+  free of closures because it is inlined into downloads with `toString()`.
+- Bug found and fixed: selecting a section re-rendered the preview and reset tool inputs; selection now only moves
+  the highlight.
+- Tests: 54 pass, 8 skipped. Remaining toolkit tools as blocks and saving or sending builds stay for later waves.

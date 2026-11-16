@@ -93,6 +93,31 @@
     }
   };
 
+  R.costtool = function (s, b) {
+    var total = FB.COST_ITEMS.reduce(function (a, it) { return a + it[1]; }, 0);
+    return '<section class="lp-sec lp-soft"><div class="lp-w"><h2>' + T(s, 'h', b) + '</h2><p class="lp-lede">' + T(s, 'sub', b) + '</p><div class="lp-tool lp-two" data-lp-tool="cost"><ul class="lp-lines">' + FB.COST_ITEMS.map(function (it, i) { return '<li><label><input type="checkbox" checked data-v="' + it[1] + '"><span>' + esc(it[0]) + '</span><em>$' + it[1].toLocaleString('en-US') + '</em></label></li>'; }).join('') + '</ul><div class="lp-total"><small>Your total</small><b data-out>$' + total.toLocaleString('en-US') + '</b><div class="lp-bar"><i data-bar style="width:100%"></i></div><p class="lp-fine">National median with burial and vault: $9,995. With cremation: $6,280. The lines do not add exactly to the published median.</p><a class="lp-btn" href="#price-list">See our prices</a></div></div></div></section>';
+  };
+  R.paytool = function (s, b) {
+    return '<section class="lp-sec"><div class="lp-w"><h2>' + T(s, 'h', b) + '</h2><p class="lp-lede">' + T(s, 'sub', b) + '</p><div class="lp-tool lp-pay" data-lp-tool="pay"><label class="lp-pl">Plan price<input type="number" inputmode="numeric" min="500" step="100" value="6280" data-price></label><label class="lp-pl">Pay over <b data-yrs>3 years</b><input type="range" min="1" max="10" value="3" data-years></label><div class="lp-total"><small>About</small><b data-out>$174</b><span>a month</span></div></div></div></section>';
+  };
+  /* Runs in the preview (called from the builder) and in the downloaded page (inlined), so it must not use closures. */
+  FB.lpTools = function lpTools(d) {
+    var fmt = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+    Array.prototype.forEach.call(d.querySelectorAll('[data-lp-tool="cost"]'), function (el) {
+      if (el.dataset.on) return; el.dataset.on = '1';
+      var boxes = el.querySelectorAll('input[type=checkbox]'), max = 0;
+      Array.prototype.forEach.call(boxes, function (x) { max += +x.dataset.v; });
+      var upd = function () { var t = 0; Array.prototype.forEach.call(boxes, function (x) { if (x.checked) t += +x.dataset.v; }); el.querySelector('[data-out]').textContent = fmt(t); el.querySelector('[data-bar]').style.width = (t / max * 100) + '%'; };
+      el.addEventListener('change', upd); upd();
+    });
+    Array.prototype.forEach.call(d.querySelectorAll('[data-lp-tool="pay"]'), function (el) {
+      if (el.dataset.on) return; el.dataset.on = '1';
+      var p = el.querySelector('[data-price]'), y = el.querySelector('[data-years]');
+      var upd = function () { var yrs = +y.value; el.querySelector('[data-yrs]').textContent = yrs + (yrs === 1 ? ' year' : ' years'); el.querySelector('[data-out]').textContent = fmt((+p.value || 0) / (yrs * 12)); };
+      el.addEventListener('input', upd); upd();
+    });
+  };
+
   FB.css = function (b) {
     var p = FB.PALETTES[b.palette] || FB.PALETTES.lantern, f = FB.FONTS[b.font] || FB.FONTS.modern;
     return ':root{--bg:' + p.bg + ';--soft:' + p.soft + ';--ink:' + p.ink + ';--ink2:' + p.ink2 + ';--line:' + p.line + ';--accent:' + p.accent + ';--on:' + p.on + ';--deep:' + p.deep + ';--head:' + f.head + ';--body:' + f.body + ';--hw:' + f.hw + ';--track:' + f.track + '}' +
@@ -118,12 +143,13 @@
     '.lp-vets{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px}.lp-vets div{padding:22px;border-radius:18px;border:1px solid var(--line);border-left:4px solid var(--accent)}.lp-vets p{margin-top:4px;color:var(--ink2);font-size:15.5px}' +
     '.lp-revs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}.lp-revs figure{margin:0;padding:22px;border-radius:18px;background:var(--soft);border:1px solid var(--line)}.lp-stars{color:var(--accent);letter-spacing:2px}.lp-revs blockquote{margin:10px 0}.lp-revs figcaption{font-size:14px;color:var(--ink2)}' +
     '.lp-map{width:100%;height:auto}' +
+    '.lp-tool{margin-top:24px;align-items:start}.lp-lines{list-style:none;margin:0;padding:0;display:grid;gap:6px}.lp-lines label{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line);cursor:pointer;font-size:15.5px}.lp-lines input{width:18px;height:18px;accent-color:var(--accent)}.lp-lines span{flex:1}.lp-lines em{font-style:normal;font-weight:600}.lp-total{position:sticky;top:84px;padding:24px;border-radius:20px;background:var(--bg);border:1px solid var(--line)}.lp-total small{display:block;color:var(--ink2);font-size:14px}.lp-total b{display:block;font-family:var(--head);font-size:44px;font-weight:var(--hw);letter-spacing:var(--track)}.lp-total span{color:var(--ink2)}.lp-bar{height:10px;border-radius:99px;background:var(--soft);overflow:hidden;margin:12px 0}.lp-bar i{display:block;height:100%;background:var(--accent);transition:width .35s}.lp-total .lp-btn{margin-top:16px;width:100%}.lp-pay{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:20px;align-items:end;padding:28px;border-radius:22px;background:var(--soft);border:1px solid var(--line)}.lp-pl{display:grid;gap:8px;font-weight:600}.lp-pl input[type=number]{min-height:50px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:16px var(--body)}.lp-pl input[type=range]{accent-color:var(--accent);width:100%}.lp-pay .lp-total{position:static}' +
     '.lp-cta{padding:80px 0;background:var(--ink);color:var(--bg);text-align:center}.lp-cta p{margin:14px auto 28px;max-width:34em;color:color-mix(in srgb,var(--bg) 75%,var(--ink));font-size:18px}' +
     '.lp-foot{padding:32px 0;font-size:14px;color:var(--ink2);border-top:1px solid var(--line)}.lp-foot .lp-w{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between}' +
     '.lp-need{background:color-mix(in srgb,var(--accent) 22%,transparent);color:inherit;padding:0 4px;border-radius:4px;outline:1px dashed color-mix(in srgb,var(--accent) 70%,transparent)}' +
     '.lp-pulse{animation:lpP 4s ease-in-out infinite;transform-origin:center;transform-box:fill-box}@keyframes lpP{50%{opacity:.6;transform:scale(1.06)}}.lp-flame{transform-box:fill-box;transform-origin:50% 100%;animation:lpF 2.4s ease-in-out infinite}@keyframes lpF{40%{transform:scaleY(1.1) rotate(-3deg)}70%{transform:scaleY(.95) rotate(2deg)}}.lp-float{animation:lpU 5s ease-in-out infinite}@keyframes lpU{50%{transform:translateY(-8px)}}.lp-wave{transform-box:fill-box;transform-origin:0 50%;animation:lpW 3s ease-in-out infinite}@keyframes lpW{50%{transform:skewY(-3deg)}}.lp-draw{stroke-dasharray:120;stroke-dashoffset:120;animation:lpD 1.2s .3s ease forwards}@keyframes lpD{to{stroke-dashoffset:0}}' +
     '@media (prefers-reduced-motion:reduce){*{animation:none!important}.lp-draw{stroke-dashoffset:0}}' +
-    '@media (max-width:760px){.lp-sec{padding:52px 0}.lp-hero{padding:48px 0}.lp-split .lp-w,.lp-two{grid-template-columns:1fr;gap:28px}.lp-pick-g,.lp-steps,.lp-plans,.lp-revs,.lp-vets{grid-template-columns:1fr}.lp-event{grid-template-columns:1fr}.lp-cal{width:110px}.lp-inline{grid-template-columns:1fr}.lp-btn{width:100%}.lp-ctas{flex-direction:column;align-items:stretch;text-align:center}.lp-table{font-size:14.5px}.lp-table th,.lp-table td{padding:10px 6px}}';
+    '@media (max-width:760px){.lp-sec{padding:52px 0}.lp-hero{padding:48px 0}.lp-split .lp-w,.lp-two{grid-template-columns:1fr;gap:28px}.lp-pick-g,.lp-steps,.lp-plans,.lp-revs,.lp-vets{grid-template-columns:1fr}.lp-event{grid-template-columns:1fr}.lp-cal{width:110px}.lp-pay{grid-template-columns:1fr}.lp-total{position:static}.lp-inline{grid-template-columns:1fr}.lp-btn{width:100%}.lp-ctas{flex-direction:column;align-items:stretch;text-align:center}.lp-table{font-size:14.5px}.lp-table th,.lp-table td{padding:10px 6px}}';
   };
 
   FB.renderBody = function (state) {
@@ -136,6 +162,6 @@
 
   FB.renderDoc = function (state, extraHead) {
     var f = FB.FONTS[state.brand.font] || FB.FONTS.modern;
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(state.brand.name) + '</title>' + (f.url ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="' + f.url + '">' : '') + '<style id="lp-css">' + FB.css(state.brand) + '</style>' + (extraHead || '') + '</head><body><div id="lp-root">' + FB.renderBody(state) + '</div></body></html>';
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(state.brand.name) + '</title>' + (f.url ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="' + f.url + '">' : '') + '<style id="lp-css">' + FB.css(state.brand) + '</style>' + (extraHead || '') + '</head><body><div id="lp-root">' + FB.renderBody(state) + '</div>' + (extraHead ? '' : '<script>(' + FB.lpTools.toString() + ')(document)</script>') + '</body></html>';
   };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

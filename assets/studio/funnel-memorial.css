@@ -670,3 +670,12 @@ html:has(.fm-root){scroll-padding-top:150px}
   .fm-sw{justify-content:flex-start;text-align:left}
   .fm-sw small{display:none}
 }
+/* Stacking: everything the funnel pins or floats stays under the site header (z 40), so an open mega nav panel
+   covers it. The intro bar sits over the sticky controls (30) so its Template menu can drop over them. */
+.fm-top{z-index:31}
+#nathan,.fm-banner,.fm-mbar{z-index:36}
+/* Template menu sits on ink: the site's global heading and link colors must not leak in. */
+.fm-cm-panel h2{color:#F6F2F3}
+.fm-cm-panel p{color:#C9C3C6}
+.fm-cm-panel a{color:#F6F2F3}
+.fm-cm-panel a:hover{background:rgba(255,79,154,.16)}

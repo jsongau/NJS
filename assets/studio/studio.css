@@ -1856,4 +1856,7 @@ h1, h2, h3 { text-wrap: balance; }
 .ph { display: inline-block; text-wrap: pretty; }
 @media (max-width: 360px) { .sec-h h1, .sec-h h2 { font-size: 28px; } }
 .mn-side .mn-pay { margin-bottom: 4px; }
+/* Partner card is ink: its line and kicker must stay light (the plain .mn-plan rules come later and win otherwise) */
+.mn-plan.mn-plan-run small, .mn-plan.mn-plan-run .mn-plan-k { color: #C9CCC4; }
+.mn-plan.mn-plan-run strong { color: #F3F1EA; }
 .mn-side .mn-feat .mn-sub { margin-top: 8px; }

@@ -13,10 +13,24 @@ const PLAN = {
   grow: { kick: 'Customers log in and pay', care: 'tend', line: 'Accounts, payments, an AI helper.' },
   run: { kick: 'I work alongside you', care: 'run', line: 'Your dashboard and agents, run monthly.' },
 };
-const STEPS = [['s-business', 'Your business'], ['s-package', 'Pick a plan'], ['s-features', 'Features and agents'], ['s-size', 'How big'], ['s-style', 'The look'], ['s-extras', 'Extras'], ['s-care', 'Care after launch']];
+const STEPS = [['s-business', 'Your business', 'pro', 'What you do and where'], ['s-package', 'Pick a plan', 'plan_grow', 'Basic, Premium or Partner'], ['s-features', 'Features and agents', 'bot', 'Pages, logins, agents'], ['s-size', 'How big', 'chart', 'Pages and people'], ['s-style', 'The look', 'pages', 'Colors, type and photos'], ['s-extras', 'Extras', 'bolt', 'CRM, offers and add-ons'], ['s-care', 'Care after launch', 'loop', 'Hosting and fixes, monthly']];
+// Mini scenes for the funnel template cards: plain SVG, pink on ink, moving when the card is hovered or the panel opens.
+const THUMB = {
+  doors: '<svg viewBox="0 0 160 84" aria-hidden="true"><rect width="160" height="84" rx="12" fill="#121416"/><g fill="none" stroke="#3A3E43" stroke-width="2"><rect x="14" y="18" width="24" height="40" rx="12"/><rect x="46" y="18" width="24" height="40" rx="12"/></g><rect class="tm-lit" x="78" y="18" width="24" height="40" rx="12" fill="#FF4F9A"/><path class="tm-flow" d="M104 38h18" stroke="#FF8FC0" stroke-width="2" stroke-dasharray="3 4"/><rect x="124" y="22" width="24" height="32" rx="6" fill="#2A2D31"/><rect class="tm-card" x="128" y="27" width="16" height="7" rx="2" fill="#FF8FC0"/><rect x="128" y="38" width="16" height="4" rx="2" fill="#3A3E43"/><rect x="128" y="45" width="10" height="4" rx="2" fill="#3A3E43"/><path d="M14 68h88" stroke="#2A2D31" stroke-width="2"/></svg>',
+  blocks: '<svg viewBox="0 0 160 84" aria-hidden="true"><rect width="160" height="84" rx="12" fill="#121416"/><rect x="18" y="12" width="124" height="62" rx="8" fill="#1C1F22" stroke="#3A3E43"/><rect class="tm-b1" x="26" y="20" width="70" height="8" rx="3" fill="#FF4F9A"/><rect class="tm-b2" x="26" y="33" width="108" height="10" rx="3" fill="#2A2D31"/><rect class="tm-b3" x="26" y="48" width="50" height="18" rx="4" fill="#2A2D31"/><rect class="tm-b4" x="82" y="48" width="52" height="18" rx="4" fill="#3A3E43"/><circle class="tm-cur" cx="120" cy="24" r="4" fill="#FF8FC0"/></svg>',
+  ticket: '<svg viewBox="0 0 160 84" aria-hidden="true"><rect width="160" height="84" rx="12" fill="#121416"/><path d="M28 20h104v14a8 8 0 0 0 0 16v14H28V50a8 8 0 0 0 0-16z" fill="#1C1F22" stroke="#3A3E43"/><g class="tm-dig" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#121416"><rect x="44" y="30" width="18" height="24" rx="4" fill="#FF4F9A"/><rect x="68" y="30" width="18" height="24" rx="4" fill="#FF4F9A"/><rect x="92" y="30" width="18" height="24" rx="4" fill="#FF8FC0"/><text x="53" y="47" text-anchor="middle">06</text><text x="77" y="47" text-anchor="middle">13</text><text class="tm-tick" x="101" y="47" text-anchor="middle">17</text></g><path d="M118 26v32" stroke="#3A3E43" stroke-dasharray="2 3"/></svg>'
+};
+const TEMPLATES = [
+  ['/funnels/memorial', 'doors', 'Intake funnel', 'Memorial and senior care: three doors, ten tools, one CRM'],
+  ['/funnels/memorial/builder', 'blocks', 'Landing page builder', 'Nine starting pages, wording with sources, a rule check'],
+  ['/ritual', 'ticket', 'Growth funnel', 'Sweepstakes entry, referrals, then a team buy']
+];
+// Small cards that close out a side column, so it ends where the panel content ends (no stretched empty card).
+const mini = (href, ic, k, t, s, attrs) => '<a class="mn-mini" href="' + href + '"' + (attrs || '') + '><span class="mn-ico gic">' + icon(ic) + '</span><span class="mn-mini-t"><em>' + esc(k) + '</em><strong>' + esc(t) + '</strong><small>' + esc(s) + '</small></span>' + '<svg class="mn-arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>';
 const STUDIO = [
   ['The studio', [['/care', 'team', 'Care plans', 'Hosting, fixes and updates after launch'], ['/crew', 'bot', 'The crew', 'Who builds it, human and agent'], ['/crew#runs', 'loop', 'How a build runs', 'Audit, plan, build, launch, care'], ['/resume', 'user', 'Résumé', 'Nathan J. Song, the builder']]],
-  ['Before you start', [['/plans#faq', 'msg', 'Questions', 'Straight answers on scope and payment'], ['/build?call=1', 'cal', 'Request a call', 'Twenty minutes, no pitch deck'], ['/plans', 'check', "What's included", 'Every plan, side by side']]],
+  ['Before you start', [['/plans#faq', 'msg', 'Questions', 'Straight answers on scope and payment'], ['/build?call=1', 'cal', 'Request a call', 'Twenty minutes, no pitch deck'], ['/plans', 'star', "What's included", 'Every plan, side by side'], ['/work', 'mark', 'Delivered work', 'Live projects and what each one does']]],
+  ['Templates and tools', [['/funnels', 'crm', 'Funnel templates', 'Intake and growth funnels to start from'], ['/funnels/memorial/builder', 'pages', 'Landing page builder', 'Pick a page, swap the wording'], ['/marketing-ops', 'chart', 'Ads and CRM', 'How I run Meta ads and pipelines'], ['/funnels/memorial#stack', 'bolt', 'The stack, wired', 'Meta, Zapier and GoHighLevel']]],
 ];
 
 const caret = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -46,23 +60,32 @@ function plansPanel(catalog) {
     '<span class="mn-plan-ic gic">' + icon('plan_' + t.id) + '</span><span class="mn-plan-k">' + esc(PLAN[t.id].kick) + '</span>' +
     '<strong>' + esc(t.label) + '</strong><small>' + esc(PLAN[t.id].line) + '</small><span class="mn-plan-go">Start with ' + esc(t.label) + arrow + '</span></button>').join('');
   return '<div class="mn-in mn-in-plans"><div class="mn-main"><p class="mn-hd">Three plans. Start with one, change it any time.</p>' +
-    '<div class="mn-plans">' + cards + '</div></div>' +
-    '<aside class="mn-feat"><p class="mn-kick">How paying works</p><ol class="mn-pay">' +
+    '<div class="mn-plans">' + cards + '</div>' +
+    '<p class="mn-hd mn-hd-2">Add to any plan</p><ul class="mn-adds">' +
+    link('/build#s-extras', 'crm', 'CRM lifecycle', 'Pipelines, follow-up and reviews') +
+    link('/build#s-extras', 'tag', 'Offer landing pages', 'A page per offer, tracked to bookings') +
+    link('/build#s-extras', 'search', 'Client acquisition', 'Ads and search set up for leads') +
+    '</ul></div>' +
+    '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">How paying works</p><ol class="mn-pay">' +
     '<li><b>Written plan and quote</b><span>Free. You see the scope before you pay anything.</span></li>' +
     '<li><b>Audit deposit</b><span>' + esc(catalog.deposit.label) + '.' + (dep ? '' : ' <em class="mn-soon">Opens soon</em>') + '</span></li>' +
     '<li><b>Care, month to month</b><span>Cancel any time. The site stays yours.</span></li></ol>' +
-    '<a class="mn-sub" href="/care">Compare care plans' + arrow + '</a><a class="mn-sub" href="/plans">See full plans' + arrow + '</a></aside></div>';
+    '<a class="mn-sub" href="/care">Compare care plans' + arrow + '</a><a class="mn-sub" href="/plans">See full plans' + arrow + '</a></aside>' +
+    mini('/build?call=1', 'cal', 'Not sure which?', 'Request a call', 'Twenty minutes, no pitch deck', ' data-carry') + '</div></div>';
 }
 
 function buildPanel() {
-  return '<div class="mn-in mn-in-build"><div class="mn-main"><p class="mn-hd">Seven steps, about three minutes</p><ol class="mn-steps">' +
-    STEPS.map(([id, t], i) => '<li><a href="/build#' + id + '" data-step="' + id + '"><span class="mn-n">' + String(i + 1).padStart(2, '0') + '</span>' + esc(t) + '</a></li>').join('') +
-    '</ol><p class="mn-hd mn-hd-2">Funnel build templates</p><ul class="mn-tpl">' +
-    link('/funnels/memorial', 'crm', 'Intake funnel: memorial and senior care', 'Three doors, care-fit quiz, CRM pipelines') +
-    link('/funnels/memorial/builder', 'pages', 'Landing page builder: memorial', 'Nine starting pages, researched wording') +
-    link('/ritual', 'tag', 'Growth funnel: sweepstakes to team buy', 'Email-first entry, referrals, group buy') +
-    '</ul><a class="mn-sub" href="/funnels">All funnel templates' + arrow + '</a></div><aside class="mn-feat"><p class="mn-kick">Your plan so far</p><div class="mn-so" data-mn="so"></div>' +
-    '<a class="btn btn-lime mn-go" href="/build" data-carry>Continue my plan</a><a class="mn-sub" href="/build?call=1" data-carry>Rather talk it through?' + arrow + '</a></aside></div>';
+  const steps = STEPS.map(([id, t, ic, sub], i) => '<li><a class="mn-link mn-step" href="/build#' + id + '" data-step="' + id + '"><span class="mn-ico gic">' + icon(ic) + '</span><span class="mn-txt"><strong><span class="mn-n">' + String(i + 1).padStart(2, '0') + '</span>' + esc(t) + '</strong><small>' + esc(sub) + '</small></span></a></li>').join('') +
+    '<li><a class="mn-link mn-step mn-step-call" href="/build?call=1" data-carry><span class="mn-ico gic">' + icon('cal') + '</span><span class="mn-txt"><strong>Rather talk it through?</strong><small>Twenty minutes, no pitch deck</small></span></a></li>';
+  const tpl = TEMPLATES.map(([href, th, t, sub]) => '<a class="mn-tcard" href="' + href + '"><span class="mn-thumb">' + THUMB[th] + '</span><strong>' + esc(t) + '</strong><small>' + esc(sub) + '</small></a>').join('');
+  return '<div class="mn-in mn-in-build"><div class="mn-main"><p class="mn-hd">Seven steps, about three minutes</p><ol class="mn-steps">' + steps + '</ol>' +
+    '<p class="mn-hd mn-hd-2">Funnel build templates <a class="mn-hd-link" href="/funnels">All templates' + arrow + '</a></p><div class="mn-tcards">' + tpl + '</div></div>' +
+    '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">Your plan so far</p><div class="mn-so" data-mn="so"></div>' +
+    '<a class="btn btn-lime mn-go" href="/build" data-carry>Continue my plan</a></aside>' +
+    mini('/funnels/memorial/builder', 'pages', 'New', 'Build a landing page', 'Nine starting pages, live preview') +
+    mini('/funnels/memorial#stack', 'bolt', 'See it wired', 'Meta, Zapier, GoHighLevel', 'One lead, traced end to end') +
+    mini('/work', 'mark', 'Proof', 'Delivered work', 'Live projects, each with its scope') +
+    mini('/plans#faq', 'msg', 'Before you start', 'Questions, answered', 'Scope, payment and who owns what') + '</div></div>';
 }
 
 function workPanel(projects) {
@@ -72,14 +95,17 @@ function workPanel(projects) {
     return '<li><a class="mn-case" href="/work#p-' + p.id + '"><span class="mn-logo">' + mark + '</span><span class="mn-txt"><strong>' + esc(p.name) + ' <span class="mn-tier mn-tier-' + t.id + '">' + esc(t.name) + '</span></strong><small>' + esc(p.job) + '</small></span></a></li>';
   }).join('');
   return '<div class="mn-in mn-in-work"><div class="mn-main"><p class="mn-hd">Delivered projects</p><ul class="mn-cases">' + rows + '</ul></div>' +
-    '<aside class="mn-feat"><p class="mn-kick">Every case shows its scope</p><p class="mn-p">What was delivered, the results, and which plan it maps to. Pick one and start from its scope.</p>' +
-    '<a class="btn mn-go" href="/work">See all work</a><a class="mn-sub" href="/build" data-carry>Start a project like these' + arrow + '</a></aside></div>';
+    '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">Every case shows its scope</p><p class="mn-p">What was delivered, the results, and which plan it maps to.</p>' +
+    '<a class="btn mn-go" href="/work">See all work</a></aside>' +
+    mini('/build', 'plan_launch', 'Start', 'A project like these', 'Pick the closest case and its plan', ' data-carry') +
+    mini('/funnels', 'crm', 'Templates', 'Funnel build templates', 'Intake and growth funnels') + '</div></div>';
 }
 
 function studioPanel() {
   return '<div class="mn-in mn-in-studio">' + STUDIO.map(([h, items]) => '<div class="mn-col"><p class="mn-hd">' + esc(h) + '</p><ul>' + items.map((x) => link(...x)).join('') + '</ul></div>').join('') +
-    '<aside class="mn-feat mn-who"><span class="mn-port">' + (CREW_ART.nathan || '') + '</span><p class="mn-kick">Who builds it</p><p class="mn-p">Nathan J. Song. AI writes most of the code, and I check every change before it ships.</p>' +
-    '<a class="mn-sub" href="/crew">Meet the crew' + arrow + '</a></aside></div>';
+    '<div class="mn-side"><aside class="mn-feat mn-who"><span class="mn-port">' + (CREW_ART.nathan || '') + '</span><p class="mn-kick">Who builds it</p><p class="mn-p">Nathan J. Song. AI writes most of the code, and I check every change before it ships.</p>' +
+    '<a class="mn-sub" href="/crew">Meet the crew' + arrow + '</a></aside>' +
+    mini('/build?call=1', 'cal', 'Twenty minutes', 'Request a call', 'Talk it through, no pitch deck', ' data-carry') + '</div></div>';
 }
 
 export function mountMegaNav(store) {

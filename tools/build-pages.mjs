@@ -105,6 +105,15 @@ export const PAGES = {
     skip_href: '#fn-list', skip_text: 'Skip to the templates',
     jsonld: ld('CollectionPage', { name: 'Funnel build templates', hasPart: [{ '@type': 'CreativeWork', name: 'Memorial and senior care intake funnel', url: SITE + '/funnels/memorial' }, { '@type': 'CreativeWork', name: 'Sweepstakes growth funnel', url: SITE + '/ritual' }] }),
   },
+  'funnel-builder': {
+    out: 'funnels/memorial/builder/index.html', path: '/funnels/memorial/builder', nav: null, h1: 'fb-h', css: 'funnel-builder',
+    title: 'Memorial Landing Page Builder · Funnel Build Template · NJS Studio',
+    description: 'Build a funeral pre-planning or senior care landing page in two minutes: nine starting pages, researched wording angles with sources, and live phone and desktop preview.',
+    og_title: 'Memorial landing page builder',
+    og_description: 'Nine starting pages, researched wording angles with sources, live preview.',
+    skip_href: '#builder', skip_text: 'Skip to the builder',
+    jsonld: ld('WebPage', { name: 'Memorial landing page builder', isPartOf: { '@type': 'CollectionPage', name: 'Funnel build templates', url: SITE + '/funnels' } }),
+  },
   'funnel-memorial': {
     out: 'funnels/memorial/index.html', path: '/funnels/memorial', nav: null, h1: 'headline', css: 'funnel-memorial',
     title: 'Memorial and Senior Care Intake Funnel · Funnel Build Template · NJS Studio',

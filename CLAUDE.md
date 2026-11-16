@@ -15,6 +15,7 @@ public on purpose: see the 12-pack in `partials/fitness/nf-packs.html`.)
 | `/fitness` | NJS Fitness home: hit-the-bag hero, focus picker, packs, Thursday calendar | `partials/studio/pages/fitness.html` + `partials/fitness/` |
 | `/fitness/<page>` | 15 fitness pages: hubs (personal-training, striking, clubs-and-maces, yoga-and-pilates), one page per focus (muscle-building, fat-loss, conditioning, shoulder-strength, mobility-and-yoga, reformer-pilates, boxing, kickboxing, muay-thai), coach, book | `partials/studio/pages/fit-*.html`, styles in `assets/studio/fitness.css`, behaviour in `assets/studio/fitness.js` |
 | `/funnels` `/funnels/memorial` | Funnel build templates; the memorial intake funnel with its planning toolkit | `partials/studio/pages/funnels.html`, `funnel-memorial.html`; styles `assets/studio/funnels.css`, `funnel-memorial.css`; behaviour `assets/funnels/memorial.js` |
+| `/funnels/memorial/builder` | Landing page builder: nine starting pages, wording angles with sources, live preview | `partials/studio/pages/funnel-builder.html`, styles `assets/studio/funnel-builder.css`; data, renderer and UI in `assets/funnels/builder/` (wording lives in `data.js`) |
 | `/resume` | Jay's interactive CV (the old homepage) | `resume/index.html`, hand edited |
 | `/galaxy` `/olesmoky` `/molsoncoors` `/btc` … | Portfolio demos, each self-contained | their own folder, hand edited |
 
@@ -58,7 +59,7 @@ python3 -m http.server 8765
 node tools/check-headlines.mjs http://localhost:8765/ http://localhost:8765/fitness/
 ```
 
-Rebuild pages, check none are stale, check the catalog, run the tests (expect 44 pass, 8 skipped,
+Rebuild pages, check none are stale, check the catalog, run the tests (expect 51 pass, 8 skipped,
 0 fail), build a one-file preview, serve locally at http://localhost:8765, then audit headline line
 breaks (needs the local server and Playwright; pass every page you touched, and any preview file).
 Run the tests before every commit, and the headline audit before any preview goes to Jay. The

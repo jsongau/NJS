@@ -1,0 +1,61 @@
+<!--@head-->
+<!--@skip-->
+
+<!--@header-->
+
+<main id="top" class="fb-page">
+<section class="fb-intro">
+  <div class="fb-in">
+    <p class="fb-kick">Funnel build template · Landing page builder</p>
+    <h2 id="fb-h"><span class="ph">Build a memorial</span> <span class="ph">landing page</span> <span class="ph">in two minutes.</span></h2>
+    <p class="fb-lede">Pick a starting page, then swap the wording by angle, add or move sections, and change the colors and type. Every wording choice says why it works and where that comes from.</p>
+    <div class="fb-tpls" id="fbTpl" role="group" aria-label="Starting pages"></div>
+  </div>
+</section>
+
+<section class="fb-app" id="builder" aria-label="Landing page builder" data-view="preview">
+  <div class="fb-bar">
+    <div class="fb-bar-l"><span class="fb-cur" id="fbCur">Gift to your family</span></div>
+    <div class="fb-bar-r">
+      <button type="button" class="fb-ib" id="fbUndo" aria-label="Undo" title="Undo" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5L3 9l4 4M3.5 9H12a5 5 0 0 1 0 10h-2"/></svg></button>
+      <button type="button" class="fb-ib" id="fbRedo" aria-label="Redo" title="Redo" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13 5l4 4-4 4M16.5 9H8a5 5 0 0 0 0 10h2"/></svg></button>
+      <div class="fb-dev" role="group" aria-label="Preview width">
+        <button type="button" data-dev="desktop" aria-pressed="true"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="3.5" width="16" height="10.5" rx="1.5"/><path d="M7 17h6M10 14v3"/></svg>Desktop</button>
+        <button type="button" data-dev="phone" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="6" y="2" width="8" height="16" rx="2"/><path d="M9 15h2"/></svg>Phone</button>
+      </div>
+    </div>
+  </div>
+  <div class="fb-grid">
+    <aside class="fb-left" aria-label="Page sections">
+      <div class="fb-ph"><b>Your page</b><small>Click to edit. Drag or use the arrows to move.</small></div>
+      <ol class="fb-outline" id="fbOutline"></ol>
+      <div class="fb-ph fb-ph2"><b>Add a section</b><small>It goes under the one you have selected.</small></div>
+      <div class="fb-lib" id="fbLib"></div>
+    </aside>
+    <div class="fb-stage" id="fbStage">
+      <div class="fb-frame" id="fbFrameWrap" data-dev="desktop"><iframe id="fbFrame" title="Landing page preview"></iframe></div>
+    </div>
+    <aside class="fb-right" id="fbInspector" aria-label="Edit"></aside>
+  </div>
+  <nav class="fb-mtabs" aria-label="Builder views">
+    <button type="button" data-view="page" aria-pressed="false">Sections</button>
+    <button type="button" data-view="preview" aria-pressed="true">Preview</button>
+    <button type="button" data-view="edit" aria-pressed="false">Edit</button>
+  </nav>
+  <div class="fb-toast" id="fbToast" role="status" aria-live="polite"></div>
+</section>
+
+<section class="fb-notes">
+  <div class="fb-in">
+    <div class="fb-note"><b>Wording that is researched, not guessed</b><p>Twelve angles drawn from what memorial, cremation, insurance and senior care advertisers run, each with its source. No fear hooks, no countdowns, nothing aimed at someone who just lost a person.</p></div>
+    <div class="fb-note"><b>Text in brackets is for the business to supply</b><p>Prices, dates and carrier facts are marked until the client confirms them, so nothing goes live that is not true.</p></div>
+    <div class="fb-note"><b>Built for the stack behind it</b><p>Every page here is shaped for the <a href="/funnels/memorial#stack">Meta ads, Zapier and GoHighLevel setup</a> on the intake funnel template.</p></div>
+  </div>
+</section>
+</main>
+<script src="/assets/funnels/haptics.js" defer></script>
+<script src="/assets/funnels/builder/data.js" defer></script>
+<script src="/assets/funnels/builder/render.js" defer></script>
+<script src="/assets/funnels/builder/app.js" defer></script>
+
+<!--@footer-->

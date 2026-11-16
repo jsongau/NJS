@@ -65,3 +65,18 @@
 - Haptics: `assets/funnels/haptics.js`. Android uses the Vibration API, iOS 18 and later gets the switch-input
   tick. Touch screens only, off with reduced motion. Pick, done and warn patterns; submit buttons let the form
   decide (done on success, warn on a missing field).
+
+## Wave 6 (same day): landing page builder, waves 1 and 2 of its plan
+
+- `/funnels/memorial/builder`. Jay approved the plan ("Go"). Data, renderer and UI are separate files in
+  `assets/funnels/builder/`: `data.js` (angles with sources, sections, nine templates, palettes, fonts, the Bureau's
+  seven pre-need questions), `render.js` (pure: state to a complete HTML page, used by the preview, the tests and
+  the coming download), `app.js` (UI). Plain scripts on `globalThis.FB` so Node tests can load them.
+- Preview is a same-origin iframe; updates replace the body and style in place so scroll is kept. Desktop is a
+  1240px page scaled to the stage (positioned by margin, since grid centering pushed an oversized box right).
+- Honesty built in: square brackets mark text the business must supply (prices, dates, carrier facts) and show
+  highlighted; reviews are slots for real reviews only; every template links the general price list; no fear
+  hooks or urgency words (a test enforces it). No real brand's name or look on any template.
+- Tests: `tests/studio/builder.test.mjs` (7). Suite is now 51 pass, 8 skipped.
+- Not built yet (plan waves 3 to 6): the ten toolkit tools as blocks, the matching Meta ad preview and compliance
+  check, download HTML and share link, phone bottom sheets, then saving and "send to Nathan" (backend, separate OK).

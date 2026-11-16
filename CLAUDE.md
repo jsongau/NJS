@@ -14,6 +14,7 @@ public on purpose: see the 12-pack in `partials/fitness/nf-packs.html`.)
 | `/plans` `/build` `/work` `/care` `/crew` | Studio pages | `partials/studio/pages/<name>.html` |
 | `/fitness` | NJS Fitness home: hit-the-bag hero, focus picker, packs, Thursday calendar | `partials/studio/pages/fitness.html` + `partials/fitness/` |
 | `/fitness/<page>` | 15 fitness pages: hubs (personal-training, striking, clubs-and-maces, yoga-and-pilates), one page per focus (muscle-building, fat-loss, conditioning, shoulder-strength, mobility-and-yoga, reformer-pilates, boxing, kickboxing, muay-thai), coach, book | `partials/studio/pages/fit-*.html`, styles in `assets/studio/fitness.css`, behaviour in `assets/studio/fitness.js` |
+| `/funnels` `/funnels/memorial` | Funnel build templates; the memorial intake funnel with its planning toolkit | `partials/studio/pages/funnels.html`, `funnel-memorial.html`; styles `assets/studio/funnels.css`, `funnel-memorial.css`; behaviour `assets/funnels/memorial.js` |
 | `/resume` | Jay's interactive CV (the old homepage) | `resume/index.html`, hand edited |
 | `/galaxy` `/olesmoky` `/molsoncoors` `/btc` … | Portfolio demos, each self-contained | their own folder, hand edited |
 

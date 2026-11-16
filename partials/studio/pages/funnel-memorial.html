@@ -1,0 +1,696 @@
+<!--@head-->
+<!--@skip-->
+
+<!--@header-->
+
+<main id="top" class="fm-page">
+<div id="fm" class="fm-root fm-inner" data-theme="daylight" data-aud="plan">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-lantern" viewBox="0 0 32 32"><path d="M16 3v3M11 6h10l-1.5 3h-7zM10 9h12v15a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 14c2 2.2 2 4.4 0 6.4-2-2-2-4.2 0-6.4z" fill="currentColor"/><path d="M8 27h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="M4 10.5l3.8 3.6L16 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.6 4-2 1.4a11 11 0 0 0 6.3 6.3l1.4-2 4 1.6v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 20 20"><path d="M3 3h7l7 7-7 7-7-7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="7" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 17c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-calm" viewBox="0 0 20 20"><path d="M3 12c2.3-2 4.7-2 7 0s4.7 2 7 0M3 7.5c2.3-2 4.7-2 7 0s4.7 2 7 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 32 32"><path d="M7 29V4M7 5h17l-3 5 3 5H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M11 8.5l1 .8 1-.8M15 8.5l1 .8 1-.8" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="i-why" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6.3 6.2a1.8 1.8 0 1 1 2.5 1.7c-.5.2-.8.6-.8 1.1v.4M8 11.6v.1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-home" viewBox="0 0 20 20"><path d="M3 9.5 10 3.5l7 6V17H3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 17v-4.5h4V17" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-pill" viewBox="0 0 20 20"><rect x="3" y="7" width="14" height="6" rx="3" transform="rotate(-35 10 10)" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 6.6l3.4 4.8" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-meal" viewBox="0 0 20 20"><path d="M5 3v6a2 2 0 0 0 2 2v6M5 3v4M7 3v4M9 3v6a2 2 0 0 1-2 2M14 17V3c-1.8 1-2.6 3-2.6 6H14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 20 20"><path d="M10 4.5c-1-1.6-4.6-1.4-5 1.3C3.2 6.4 3 9 4.6 10 3.6 11.8 5 14.4 7.2 14c.4 1.9 2.6 2.2 2.8.5V4.5zM10 4.5c1-1.6 4.6-1.4 5 1.3 1.8.6 2 3.2.4 4.2 1 1.8-.4 4.4-2.6 4-.4 1.9-2.6 2.2-2.8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-walk" viewBox="0 0 20 20"><circle cx="11" cy="3.8" r="1.6" fill="currentColor"/><path d="M8 18l2-5 2 2v3M7 9.5l2.5-3 3 1.5 1.5 3M9.5 6.5 9 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bath" viewBox="0 0 20 20"><path d="M3 10h14v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zM5 10V5a2 2 0 0 1 3.5-1.3M6 16l-1 2M14 16l1 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 32 32"><ellipse cx="13" cy="9" rx="8" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 9v5c0 1.9 3.6 3.5 8 3.5s8-1.6 8-3.5V9M5 14v5c0 1.9 3.6 3.5 8 3.5 1.2 0 2.3-.1 3.3-.3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="22" cy="22" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M22 19v6M20 21h3a1 1 0 0 1 0 2h-2a1 1 0 0 0 0 2h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 32 32"><path d="M5 5v22h22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 21l5-6 4 3 7-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9" r="2" fill="currentColor"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 32 32"><path d="M16 4l10 4v7c0 6.5-4.3 11-10 13-5.7-2-10-6.5-10-13V8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11.5 16l3.2 3 6-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-scroll" viewBox="0 0 32 32"><path d="M9 5h15a3 3 0 0 1 3 3v2h-5M9 5a3 3 0 0 0-3 3v16a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11 12h9M11 16h9M11 20h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 32 32"><rect x="5" y="7" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 13h22M11 4v6M21 4v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="19" r="1.6" fill="currentColor"/><circle cx="16" cy="19" r="1.6" fill="currentColor"/><circle cx="21" cy="19" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 26s-10-6-10-13a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 26 13c0 7-10 13-10 13z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 32 32"><rect x="5" y="12" width="22" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 17h22M16 12v15M16 12c-2-4-7-5-7-2s4 2 7 2c3 0 7 1 7-2s-5-2-7 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="fm-top">
+  <div class="fm-bar">
+    <button class="fm-brand" type="button" aria-label="Lanternhill, back to the start">
+      <svg aria-hidden="true" style="color:var(--brass)"><use href="#i-lantern"/></svg>
+      <span><b>Lanternhill</b><small>Memorial &amp; senior care</small></span>
+    </button>
+    <div class="fm-cm" id="cm">
+      <button class="fm-cm-btn" type="button" aria-expanded="false" aria-controls="cm-panel">Template <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      <div class="fm-cm-panel" id="cm-panel">
+        <h2>Funnel build template: memorial and senior care intake</h2>
+        <p>Built by Nathan J. Song. Lanternhill is a concept brand, not a real company. Nothing you type here is sent or stored.</p>
+        <a href="#behind">Behind the funnel: ads, CRM, automations <span>&rarr;</span></a>
+        <a href="/funnels">All funnel templates <span>&rarr;</span></a>
+        <a href="/marketing-ops">How I run ads and CRM <span>&rarr;</span></a>
+      </div>
+    </div>
+    <div class="fm-theme">
+      <span class="fm-tlab">Look</span>
+      <div class="fm-seg2" role="group" aria-label="Color theme">
+        <span class="fm-thumb" aria-hidden="true"></span>
+        <button type="button" data-theme-btn="daylight" aria-pressed="true"><span class="fm-tl-l">Light</span><span class="fm-tl-s" aria-hidden="true">Light</span></button>
+        <button type="button" data-theme-btn="evening" aria-pressed="false"><span class="fm-tl-l">Dark</span><span class="fm-tl-s" aria-hidden="true">Dark</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="fm-controls">
+    <div class="fm-in">
+      <span class="fm-lab" id="aud-lab">Visitor</span>
+      <div class="fm-seg" role="group" aria-labelledby="aud-lab">
+        <button type="button" data-aud-btn="plan" aria-pressed="true">Planning ahead</button>
+        <button type="button" data-aud-btn="need" aria-pressed="false">A death just happened</button>
+        <button type="button" data-aud-btn="care" aria-pressed="false">Care for a parent</button>
+      </div>
+      <div class="fm-toggles">
+        <button type="button" class="fm-sw" role="switch" aria-checked="false" id="vetSw"><span class="fm-tr" aria-hidden="true"></span><span>Veteran family<small>VA benefits mode</small></span></button>
+        <button type="button" class="fm-sw" role="switch" aria-checked="false" id="abSw"><span class="fm-tr" aria-hidden="true"></span>A/B: <span class="fm-abv" id="abv">A</span></button>
+        <button type="button" class="fm-sw" role="switch" aria-checked="false" id="cmSw"><span class="fm-tr" aria-hidden="true"></span>Nathan's commentary</button>
+      </div>
+    </div>
+  </div>
+
+<aside id="nathan" aria-label="Nathan's commentary">
+  <button class="fm-nchip" type="button" id="nchip" aria-label="Show or hide the current note">N</button>
+  <div class="fm-nbub" id="nbub" role="dialog" aria-live="polite" aria-label="Why it is built this way">
+    <div class="fm-who"><span>Why it's built this way</span><button type="button" id="nx" aria-label="Hide note">&times;</button></div>
+    <div id="nbody"></div>
+    <div class="fm-nav"><button type="button" id="nprev">&larr; Prev</button><button type="button" id="nnext">Next &rarr;</button></div>
+  </div>
+</aside>
+
+<div class="fm-main">
+<div id="entry">
+<section class="fm-wrap">
+  <div class="fm-hero">
+    <div>
+      <div data-note="hero" id="heroText">
+        <span class="fm-eyebrow"><i></i><span id="eyebrow"></span></span>
+        <h2 id="headline"></h2>
+        <p class="fm-sub" id="sub"></p>
+        <button type="button" class="fm-why" data-why="hero"><svg><use href="#i-why"/></svg>Why this headline?</button>
+      </div>
+      <div class="fm-trust" id="trust" data-note="trust"></div>
+      <div class="fm-vet" data-note="vet">
+        <svg aria-hidden="true"><use href="#i-flag"/></svg>
+        <div>
+          <b>Veteran families: benefits you may already have</b>
+          <p>Depending on eligibility, the VA provides burial in a national cemetery where space is available, a headstone or marker, a burial flag and a Presidential Memorial Certificate at no cost to the family. A burial allowance may also apply. We file the paperwork with you.</p>
+          <a href="https://www.aarp.org/veterans/va-burial-benefits/" rel="noopener" target="_blank">Source: AARP, VA burial benefits</a>
+        </div>
+      </div>
+      <figure class="fm-art" aria-hidden="true">
+        <svg viewBox="0 0 640 336" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <radialGradient id="g-glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF8FC0" stop-opacity=".75"/><stop offset="1" stop-color="#FF8FC0" stop-opacity="0"/></radialGradient>
+            <linearGradient id="g-hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2D31"/><stop offset="1" stop-color="#121416"/></linearGradient>
+          </defs>
+          <g fill="#F6F2F3"><circle class="fm-st" cx="80" cy="50" r="1.6"/><circle class="fm-st" cx="190" cy="34" r="1.2" style="animation-delay:.8s"/><circle class="fm-st" cx="300" cy="62" r="1.4" style="animation-delay:1.6s"/><circle class="fm-st" cx="470" cy="40" r="1.6" style="animation-delay:.4s"/><circle class="fm-st" cx="560" cy="76" r="1.2" style="animation-delay:2.2s"/><circle class="fm-st" cx="610" cy="30" r="1.4" style="animation-delay:1.2s"/></g>
+          <circle cx="520" cy="78" r="26" fill="#F6F2F3" opacity=".9"/><circle cx="531" cy="71" r="23" fill="#1C1F22"/>
+          <path d="M0 250 C120 205 220 215 330 238 S520 228 640 196 V336 H0z" fill="url(#g-hill)"/>
+          <path d="M0 290 C140 262 260 270 380 288 S560 282 640 268 V336 H0z" fill="#0E1012"/>
+          <g transform="translate(176 150)"><path d="M0 92V40M-26 92h52" stroke="#3A3E43" stroke-width="5" stroke-linecap="round"/><circle cx="0" cy="18" r="40" fill="#2A2D31"/><circle cx="-24" cy="34" r="28" fill="#26292D"/><circle cx="22" cy="36" r="26" fill="#33373C"/></g>
+          <g transform="translate(410 168)">
+            <circle class="fm-glow" cx="0" cy="40" r="70" fill="url(#g-glow)"/>
+            <path d="M0 -4v10M-15 6h30l-4 8h-22zM-18 14h36v44a6 6 0 0 1-6 6h-24a6 6 0 0 1-6-6z" fill="#1C1F22" stroke="#FF4F9A" stroke-width="3" stroke-linejoin="round"/>
+            <path class="fm-fl" d="M0 26c6 7 6 14 0 20-6-6-6-13 0-20z" fill="#FF8FC0"/>
+            <path d="M-26 70h52" stroke="#FF4F9A" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <figcaption class="fm-cap"><b id="artCap">A light left on for the people who come next</b><span>Concept artwork</span></figcaption>
+      </figure>
+    </div>
+
+    <div>
+      <div class="fm-card" id="card" data-note="card">
+        <div class="fm-ch"><small><svg width="14" height="14" aria-hidden="true"><use href="#i-lantern"/></svg><span id="chKick"></span></small><strong id="chTitle"></strong></div>
+        <div class="fm-cb">
+          <!-- PLANNING AHEAD -->
+          <form id="f-plan" class="fm-flow" data-flow="plan" novalidate>
+            <div class="fm-steps" aria-hidden="true"><i class="fm-on"></i><i></i><i></i></div>
+            <p class="fm-stepname" aria-live="polite">Step <span class="fm-sn">1</span> of 3</p>
+            <div class="fm-fs fm-on" data-s="1">
+              <div class="fm-field"><label for="p-email">Where should we send the guide?</label><input class="fm-inp" id="p-email" type="email" autocomplete="email" placeholder="you@email.com"><div class="fm-err">Please enter a valid email address.</div></div>
+              <button class="fm-cta" type="button" data-next><span class="fm-cta-t" data-ab-a="Send me the free guide" data-ab-b="Get the guide and price list"></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <p class="fm-fine">The guide includes our full price list. No call unless you ask for one.</p>
+              <button type="button" class="fm-why" data-why="email">Why ask for email first?</button>
+            </div>
+            <div class="fm-fs" data-s="2">
+              <div class="fm-field"><label for="p-name">Your first name</label><input class="fm-inp" id="p-name" autocomplete="given-name" placeholder="First name"><div class="fm-err">Please enter your first name.</div></div>
+              <div class="fm-field" data-group="for"><span class="fm-fl-lab">Who are you planning for?</span>
+                <div class="fm-choices">
+                  <button type="button" class="fm-chip-btn" data-v="myself" aria-pressed="false"><svg><use href="#i-person"/></svg>Myself</button>
+                  <button type="button" class="fm-chip-btn" data-v="spouse" aria-pressed="false"><svg><use href="#i-person"/></svg>My spouse or partner</button>
+                  <button type="button" class="fm-chip-btn" data-v="parent" aria-pressed="false"><svg><use href="#i-person"/></svg>A parent</button>
+                  <button type="button" class="fm-chip-btn" data-v="other" aria-pressed="false"><svg><use href="#i-person"/></svg>Someone else</button>
+                </div><div class="fm-err">Pick one so the guide fits.</div></div>
+              <div class="fm-field fm-vet-q" hidden data-group="served"><span class="fm-fl-lab">Did they serve in the military?</span>
+                <div class="fm-choices fm-c3"><button type="button" class="fm-chip-btn" data-v="yes" aria-pressed="false">Yes</button><button type="button" class="fm-chip-btn" data-v="no" aria-pressed="false">No</button><button type="button" class="fm-chip-btn" data-v="unsure" aria-pressed="false">Not sure</button></div></div>
+              <button class="fm-cta" type="button" data-next>Continue<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="fm-back" type="button" data-back>&larr; Back</button>
+            </div>
+            <div class="fm-fs" data-s="3">
+              <div class="fm-field" data-group="wish"><span class="fm-fl-lab">What are you leaning toward? <span class="fm-opt">(fine to skip)</span></span>
+                <div class="fm-choices fm-c3"><button type="button" class="fm-chip-btn" data-v="burial" aria-pressed="false">Burial</button><button type="button" class="fm-chip-btn" data-v="cremation" aria-pressed="false">Cremation</button><button type="button" class="fm-chip-btn" data-v="unsure" aria-pressed="false">Not sure yet</button></div></div>
+              <div class="fm-field" data-group="when"><span class="fm-fl-lab">How soon would you like to talk it through?</span>
+                <div class="fm-choices fm-c3"><button type="button" class="fm-chip-btn" data-v="research" aria-pressed="false"><svg><use href="#i-calm"/></svg>Just reading</button><button type="button" class="fm-chip-btn" data-v="months" aria-pressed="false">In a few months</button><button type="button" class="fm-chip-btn" data-v="soon" aria-pressed="false">Soon</button></div></div>
+              <div class="fm-field"><label for="p-phone">Mobile number <span class="fm-opt">(optional)</span></label><input class="fm-inp" id="p-phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div>
+              <label class="fm-consent"><input type="checkbox" id="p-sms"><span>Text me a reminder when the guide arrives and if I book a call. Not required. Msg and data rates may apply. Reply STOP to opt out.</span></label>
+              <button class="fm-cta fm-brass" type="submit">Send my guide<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="fm-back" type="button" data-back>&larr; Back</button>
+              <button type="button" class="fm-why" data-why="consent">Why is the text box unticked?</button>
+            </div>
+          </form>
+
+          <!-- AT NEED -->
+          <form id="f-need" class="fm-flow" data-flow="need" novalidate hidden>
+            <a class="fm-call-now" href="tel:+15550100144" data-note="call"><svg aria-hidden="true"><use href="#i-phone"/></svg><span><b>Call (555) 010-0144</b><span>A director answers, day or night</span></span></a>
+            <div class="fm-or">or we call you</div>
+            <div class="fm-field"><label for="n-name">Your name</label><input class="fm-inp" id="n-name" autocomplete="name" placeholder="Your name"><div class="fm-err">Please enter your name.</div></div>
+            <div class="fm-field"><label for="n-phone">Best number to reach you</label><input class="fm-inp" id="n-phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"><div class="fm-err">Please enter a phone number we can call.</div></div>
+            <div class="fm-field" data-group="where"><span class="fm-fl-lab">Where is your loved one now?</span>
+              <div class="fm-choices"><button type="button" class="fm-chip-btn" data-v="home" aria-pressed="false"><svg><use href="#i-home"/></svg>At home</button><button type="button" class="fm-chip-btn" data-v="hospital" aria-pressed="false">Hospital</button><button type="button" class="fm-chip-btn" data-v="hospice" aria-pressed="false">Hospice or care home</button><button type="button" class="fm-chip-btn" data-v="other" aria-pressed="false">Somewhere else</button></div></div>
+            <div class="fm-field fm-vet-q" hidden data-group="served"><span class="fm-fl-lab">Did they serve in the military?</span>
+              <div class="fm-choices fm-c3"><button type="button" class="fm-chip-btn" data-v="yes" aria-pressed="false">Yes</button><button type="button" class="fm-chip-btn" data-v="no" aria-pressed="false">No</button><button type="button" class="fm-chip-btn" data-v="unsure" aria-pressed="false">Not sure</button></div></div>
+            <button class="fm-cta fm-brass" type="submit"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="fm-cta-t" data-ab-a="Call me back" data-ab-b="Have a director call me"></span></button>
+            <p class="fm-fine">No email needed. Nothing to sign tonight.</p>
+            <button type="button" class="fm-why" data-why="need">Why is this one so short?</button>
+          </form>
+
+          <!-- SENIOR CARE -->
+          <form id="f-care" class="fm-flow" data-flow="care" novalidate hidden>
+            <div class="fm-steps" aria-hidden="true"><i class="fm-on"></i><i></i><i></i></div>
+            <p class="fm-stepname" aria-live="polite">Step <span class="fm-sn">1</span> of 3</p>
+            <div class="fm-fs fm-on" data-s="1">
+              <div class="fm-field" data-group="who"><span class="fm-fl-lab">Who is the care for?</span>
+                <div class="fm-choices"><button type="button" class="fm-chip-btn" data-v="mom" aria-pressed="false"><svg><use href="#i-person"/></svg>My mom</button><button type="button" class="fm-chip-btn" data-v="dad" aria-pressed="false"><svg><use href="#i-person"/></svg>My dad</button><button type="button" class="fm-chip-btn" data-v="spouse" aria-pressed="false"><svg><use href="#i-person"/></svg>My spouse</button><button type="button" class="fm-chip-btn" data-v="me" aria-pressed="false"><svg><use href="#i-person"/></svg>Myself</button></div><div class="fm-err">Pick one to continue.</div></div>
+              <button class="fm-cta" type="button" data-next>Continue<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="fm-fs" data-s="2">
+              <div class="fm-field" data-group="help" data-multi><span class="fm-fl-lab">Where do they need a hand today? <span class="fm-opt">(pick any)</span></span>
+                <div class="fm-choices"><button type="button" class="fm-chip-btn" data-v="meals" aria-pressed="false"><svg><use href="#i-meal"/></svg>Meals</button><button type="button" class="fm-chip-btn" data-v="meds" aria-pressed="false"><svg><use href="#i-pill"/></svg>Medications</button><button type="button" class="fm-chip-btn" data-v="bathing" aria-pressed="false"><svg><use href="#i-bath"/></svg>Bathing, dressing</button><button type="button" class="fm-chip-btn" data-v="walking" aria-pressed="false"><svg><use href="#i-walk"/></svg>Getting around</button><button type="button" class="fm-chip-btn" data-v="memory" aria-pressed="false"><svg><use href="#i-brain"/></svg>Memory, getting lost</button><button type="button" class="fm-chip-btn" data-v="none" aria-pressed="false"><svg><use href="#i-calm"/></svg>Mostly independent</button></div></div>
+              <div class="fm-fit" id="fit" aria-live="polite"><small>A good place to start</small><b id="fitName"></b><p id="fitWhy"></p></div>
+              <button class="fm-cta" type="button" data-next>Continue<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="fm-back" type="button" data-back>&larr; Back</button>
+              <button type="button" class="fm-why" data-why="fit">Why a care-fit step?</button>
+            </div>
+            <div class="fm-fs" data-s="3">
+              <div class="fm-field"><label for="c-name">Your first name</label><input class="fm-inp" id="c-name" autocomplete="given-name" placeholder="First name"><div class="fm-err">Please enter your first name.</div></div>
+              <div class="fm-field"><label for="c-email">Email</label><input class="fm-inp" id="c-email" type="email" autocomplete="email" placeholder="you@email.com"><div class="fm-err">Please enter a valid email address.</div></div>
+              <div class="fm-field"><label for="c-phone">Mobile number <span class="fm-opt">(to confirm the tour)</span></label><input class="fm-inp" id="c-phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div>
+              <label class="fm-consent"><input type="checkbox" id="c-sms"><span>Text me the tour time and a reminder the day before. Not required. Msg and data rates may apply. Reply STOP to opt out.</span></label>
+              <button class="fm-cta fm-brass" type="submit"><span class="fm-cta-t" data-ab-a="Pick a tour time" data-ab-b="See tour times"></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="fm-back" type="button" data-back>&larr; Back</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fm-sec" data-note="how">
+  <div class="fm-wrap">
+    <span class="fm-kick" id="howKick"></span>
+    <h2 class="fm-h2" id="howH"></h2>
+    <ol class="fm-how" id="how"></ol>
+  </div>
+</section>
+
+<section class="fm-sec" id="kit" data-note="kit" aria-labelledby="kit-h">
+  <div class="fm-wrap">
+    <span class="fm-kick">Planning toolkit</span>
+    <h2 class="fm-h2" id="kit-h"><span class="ph">Ten tools that answer</span> <span class="ph">the questions</span> <span class="ph">families ask.</span></h2>
+    <p class="fm-lede">Each one does a job in the funnel: it answers a real question, earns the next step, and tells the CRM what this family cares about. The ones marked for you change with the visitor above.</p>
+    <nav class="fm-kit-idx" aria-label="Toolkit">
+      <a href="#t-cost" data-for="plan need"><svg aria-hidden="true"><use href="#i-tag"/></svg><b>What it costs</b><small>Build a funeral line by line</small><span class="fm-for">For you</span></a>
+      <a href="#t-time" data-for="plan"><svg aria-hidden="true"><use href="#i-chart"/></svg><b>Today vs later</b><small>Price over time, monthly plans</small><span class="fm-for">For you</span></a>
+      <a href="#t-pay" data-for="plan"><svg aria-hidden="true"><use href="#i-coins"/></svg><b>Ways to pay</b><small>Match a funding option</small><span class="fm-for">For you</span></a>
+      <a href="#t-cover" data-for="plan"><svg aria-hidden="true"><use href="#i-shield"/></svg><b>Coverage estimate</b><small>How much, and sample rates</small><span class="fm-for">For you</span></a>
+      <a href="#t-ben" data-for="need plan"><svg aria-hidden="true"><use href="#i-flag"/></svg><b>Benefits finder</b><small>VA and Social Security</small><span class="fm-for">For you</span></a>
+      <a href="#t-est" data-for="plan care"><svg aria-hidden="true"><use href="#i-scroll"/></svg><b>Estate check</b><small>Readiness and probate cost</small><span class="fm-for">For you</span></a>
+      <a href="#t-wish" data-for="plan"><svg aria-hidden="true"><use href="#i-heart"/></svg><b>Wishes builder</b><small>A one-page plan to share</small><span class="fm-for">For you</span></a>
+      <a href="#t-trend" data-for=""><svg aria-hidden="true"><use href="#i-calm"/></svg><b>How families choose</b><small>Cremation vs burial</small><span class="fm-for">For you</span></a>
+      <a href="#t-days" data-for="need"><svg aria-hidden="true"><use href="#i-cal"/></svg><b>The first 30 days</b><small>What happens, in order</small><span class="fm-for">For you</span></a>
+      <a href="#t-care" data-for="care"><svg aria-hidden="true"><use href="#i-home"/></svg><b>Care costs</b><small>Home care to nursing home</small><span class="fm-for">For you</span></a>
+    </nav>
+  </div>
+</section>
+
+<!-- 1 cost builder -->
+<section class="fm-mod" id="t-cost" data-note="cost" aria-labelledby="t-cost-h">
+  <div class="fm-wrap fm-mod-g">
+    <div class="fm-mod-t">
+      <span class="fm-kick">01 · What it costs</span>
+      <h2 class="fm-h2" id="t-cost-h"><span class="ph">Build a funeral</span> <span class="ph">line by line.</span></h2>
+      <p>Untick anything you would not want and watch the total move. The lines are the national medians for a funeral with a viewing and burial.</p>
+      <p class="fm-src">Source: NFDA 2023 medians, via <a href="https://www.nerdwallet.com/article/insurance/funeral-costs" target="_blank" rel="noopener">NerdWallet</a>. Excludes cemetery fees, the grave and markers. Medians do not add exactly: these lines total 9,959 dollars, against a published median of 9,995.</p>
+      <button type="button" class="fm-why" data-why="cost"><svg><use href="#i-why"/></svg>Why a cost builder?</button>
+    </div>
+    <div class="fm-tool">
+      <div class="fm-tool-h"><b>Your total</b><span class="fm-cap2">2023 national medians</span></div>
+      <div class="fm-big" id="costTotal" aria-live="polite">9,959</div>
+      <ul class="fm-items" id="costItems"></ul>
+      <svg class="fm-stack" id="costStack" viewBox="0 0 600 132" role="img" aria-label="Your total compared with the national medians"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 2 price over time -->
+<section class="fm-mod" id="t-time" data-note="time" aria-labelledby="t-time-h">
+  <div class="fm-wrap fm-mod-g fm-flip">
+    <div class="fm-mod-t">
+      <span class="fm-kick">02 · Today vs later</span>
+      <h2 class="fm-h2" id="t-time-h"><span class="ph">What waiting</span> <span class="ph">could cost.</span></h2>
+      <p>Prices rise. Move the sliders to see what today's plan could cost when it is needed, and what spreading today's price over a few years looks like.</p>
+      <p class="fm-src">The yearly rise is your assumption, not a forecast. Monthly amounts are before any plan fees or interest. A locked price only applies if the contract guarantees it.</p>
+      <button type="button" class="fm-why" data-why="time"><svg><use href="#i-why"/></svg>Why show this?</button>
+    </div>
+    <div class="fm-tool">
+      <div class="fm-tool-h"><b>Starting from your total</b><span class="fm-cap2" id="timeBase">9,959</span></div>
+      <div class="fm-rl"><label for="yrs">Years until it is needed</label><span id="yrsV">15</span></div>
+      <input class="fm-rng" type="range" id="yrs" min="1" max="30" value="15">
+      <div class="fm-rl"><label for="rise">Yearly price rise (your assumption)</label><span id="riseV">3%</span></div>
+      <input class="fm-rng" type="range" id="rise" min="1" max="6" step="0.5" value="3">
+      <svg class="fm-chart" id="timeChart" viewBox="0 0 600 220" role="img" aria-label="Projected cost over time"></svg>
+      <div class="fm-pp">
+        <div><span class="fm-cap2">In <b style="display:inline;font:inherit" id="yrsV2">15</b> years it could cost</span><b id="future">15,572</b></div>
+        <div><span class="fm-cap2">Today's price, spread over</span>
+          <div class="fm-mini" role="group" aria-label="Payment years" id="planYrs" style="margin-top:6px"><button type="button" data-y="1" aria-pressed="false">1 yr</button><button type="button" data-y="3" aria-pressed="true">3 yrs</button><button type="button" data-y="5" aria-pressed="false">5 yrs</button><button type="button" data-y="10" aria-pressed="false">10 yrs</button></div>
+          <b id="monthly">278/mo</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ways to pay -->
+<section class="fm-mod" id="t-pay" data-note="pay" aria-labelledby="t-pay-h">
+  <div class="fm-wrap fm-mod-g">
+    <div class="fm-mod-t">
+      <span class="fm-kick">03 · Ways to pay</span>
+      <h2 class="fm-h2" id="t-pay-h"><span class="ph">Five ways to pay,</span> <span class="ph">ranked by</span> <span class="ph">what matters to you.</span></h2>
+      <p>Pick what matters most. The options re-rank, and each one says plainly what it does and does not do.</p>
+      <p class="fm-src">Sources: <a href="https://www.trustage.com/learn/life-insurance/final-expense-vs-preneed-insurance" target="_blank" rel="noopener">TruStage</a>, <a href="https://www.nerdwallet.com/insurance/life/learn/funeral-insurance" target="_blank" rel="noopener">NerdWallet</a>, <a href="https://cfb.ca.gov/consumer/pre_need.shtml" target="_blank" rel="noopener">California Cemetery and Funeral Bureau</a>. Not advice; a licensed agent confirms what fits.</p>
+      <button type="button" class="fm-why" data-why="pay"><svg><use href="#i-why"/></svg>Why a matcher?</button>
+    </div>
+    <div class="fm-tool">
+      <div class="fm-tool-h"><b>What matters to you?</b><span class="fm-cap2">pick any</span></div>
+      <div class="fm-wants" id="wants">
+        <button type="button" class="fm-chip-btn" data-k="lock" aria-pressed="true">Lock today's price</button>
+        <button type="button" class="fm-chip-btn" data-k="flex" aria-pressed="false">Family can use it for anything</button>
+        <button type="button" class="fm-chip-btn" data-k="nohealth" aria-pressed="false">No health questions</button>
+        <button type="button" class="fm-chip-btn" data-k="monthly" aria-pressed="true">Pay a little each month</button>
+        <button type="button" class="fm-chip-btn" data-k="anywhere" aria-pressed="false">Works with any provider</button>
+      </div>
+      <ul class="fm-opts" id="opts"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4 coverage -->
+<section class="fm-mod" id="t-cover" data-note="cover" aria-labelledby="t-cover-h">
+  <div class="fm-wrap fm-mod-g fm-flip">
+    <div class="fm-mod-t">
+      <span class="fm-kick">04 · Coverage estimate</span>
+      <h2 class="fm-h2" id="t-cover-h"><span class="ph">How much coverage</span> <span class="ph">would it take?</span></h2>
+      <p>Start from your plan total, add other final bills, take away savings and benefits. Then see sample monthly rates for a policy that size.</p>
+      <p class="fm-src">Sample rates: guaranteed-issue whole life, average of the three lowest per age, Choice Mutual via <a href="https://www.nerdwallet.com/insurance/life/learn/funeral-insurance" target="_blank" rel="noopener">NerdWallet</a>, as of Sept 10, 2026. Not a quote. Many of these policies pay only a refund of premiums if death from natural causes comes in the first two years.</p>
+      <button type="button" class="fm-why" data-why="cover"><svg><use href="#i-why"/></svg>Why an estimator?</button>
+    </div>
+    <div class="fm-tool">
+      <div class="fm-cov">
+        <svg class="fm-ring" id="covRing" viewBox="0 0 170 170" role="img" aria-label="Suggested coverage">
+          <circle cx="85" cy="85" r="70" fill="none" stroke="var(--line)" stroke-width="14"/>
+          <circle class="fm-arc" id="covArc" cx="85" cy="85" r="70" fill="none" stroke="var(--brass)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="439.8" stroke-dashoffset="439.8"/>
+          <text x="85" y="80" text-anchor="middle" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="600" fill="currentColor" id="covNum">0</text>
+          <text x="85" y="104" text-anchor="middle" font-size="12" fill="var(--muted)">suggested coverage</text>
+        </svg>
+        <div>
+          <div class="fm-rl"><label for="bills">Other final bills (medical, debts)</label><span id="billsV">3,000</span></div>
+          <input class="fm-rng" type="range" id="bills" min="0" max="20000" step="500" value="3000">
+          <div class="fm-rl"><label for="saved">Savings set aside</label><span id="savedV">2,000</span></div>
+          <input class="fm-rng" type="range" id="saved" min="0" max="20000" step="500" value="2000">
+          <div class="fm-chk"><button type="button" class="fm-chip-btn" data-b="ss" aria-pressed="false">Social Security 255</button><button type="button" class="fm-chip-btn" data-b="va" aria-pressed="false">VA allowance, if eligible</button></div>
+        </div>
+      </div>
+      <div class="fm-sel"><select id="age" aria-label="Age"><option value="50">Age 50</option><option value="60" selected>Age 60</option><option value="70">Age 70</option><option value="80">Age 80</option></select><select id="sex" aria-label="Sex"><option value="f">Female</option><option value="m">Male</option></select></div>
+      <div class="fm-prem" id="prem" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 benefits -->
+<section class="fm-mod" id="t-ben" data-note="benefits" aria-labelledby="t-ben-h">
+  <div class="fm-wrap fm-mod-g">
+    <div class="fm-mod-t">
+      <span class="fm-kick">05 · Benefits finder</span>
+      <h2 class="fm-h2" id="t-ben-h"><span class="ph">Money and honors</span> <span class="ph">families often miss.</span></h2>
+      <p>Two questions. The list shows what may apply, and the cash total updates.</p>
+      <p class="fm-src">Sources: <a href="https://www.aarp.org/veterans/va-burial-benefits/" target="_blank" rel="noopener">AARP, VA burial benefits</a> (allowance for non-service-connected deaths on or after Oct 1, 2025); <a href="https://www.ssa.gov/pubs/EN-05-10008.pdf" target="_blank" rel="noopener">Social Security, Survivors benefits</a>. Eligibility applies.</p>
+      <button type="button" class="fm-why" data-why="benefits"><svg><use href="#i-why"/></svg>Why a benefits finder?</button>
+    </div>
+    <div class="fm-tool">
+      <div class="fm-tool-h"><b>About the person</b><span class="fm-cap2" id="benTotal">0 in cash benefits</span></div>
+      <div class="fm-wants" id="benQ" style="margin-top:12px">
+        <button type="button" class="fm-chip-btn" data-q="vet" aria-pressed="true">Served in the military</button>
+        <button type="button" class="fm-chip-btn" data-q="spouse" aria-pressed="true">Married, living together</button>
+      </div>
+      <ul class="fm-ben" id="benList" aria-live="polite"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6 estate -->
+<section class="fm-mod" id="t-est" data-note="estate" aria-labelledby="t-est-h">
+  <div class="fm-wrap fm-mod-g fm-flip">
+    <div class="fm-mod-t">
+      <span class="fm-kick">06 · Estate check</span>
+      <h2 class="fm-h2" id="t-est-h"><span class="ph">Is the rest</span> <span class="ph">of the plan in place?</span></h2>
+      <p>Only 24% of U.S. adults had a will in early 2025, and the top reason was "just haven't gotten around to it". Tick what is done, then see what probate could cost in California without a plan.</p>
+      <p class="fm-src">Sources: <a href="https://www.caring.com/about/news/2025-will-and-estate-planning-survey" target="_blank" rel="noopener">Caring.com 2025 survey</a>; <a href="https://california.public.law/codes/probate_code_section_10810" target="_blank" rel="noopener">Probate Code 10810</a> (attorney fee; the executor's fee uses the same schedule); <a href="https://saclaw.org/faqs/how-much-can-be-transferred-using-small-estate-methods/" target="_blank" rel="noopener">small estate limit</a> for deaths on or after April 1, 2025. Not legal advice.</p>
+      <button type="button" class="fm-why" data-why="estate"><svg><use href="#i-why"/></svg>Why an estate check?</button>
+    </div>
+    <div class="fm-tool">
+      <div class="fm-est">
+        <svg class="fm-ring" id="estRing" viewBox="0 0 170 170" style="width:150px;height:150px" role="img" aria-label="Readiness score">
+          <circle cx="85" cy="85" r="70" fill="none" stroke="var(--line)" stroke-width="14"/>
+          <circle class="fm-arc" id="estArc" cx="85" cy="85" r="70" fill="none" stroke="var(--green-2)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="439.8" stroke-dashoffset="439.8"/>
+          <text x="85" y="88" text-anchor="middle" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="36" font-weight="600" fill="currentColor" id="estNum">0/7</text>
+          <text x="85" y="110" text-anchor="middle" font-size="12" fill="var(--muted)">in place</text>
+        </svg>
+        <ul id="estList">
+          <li><label><input type="checkbox">A will</label></li>
+          <li><label><input type="checkbox">A living trust</label></li>
+          <li><label><input type="checkbox">Advance health care directive</label></li>
+          <li><label><input type="checkbox">Financial power of attorney</label></li>
+          <li><label><input type="checkbox">Beneficiaries checked lately</label></li>
+          <li><label><input type="checkbox">Funeral wishes written down</label></li>
+          <li><label><input type="checkbox">Family knows where it all is</label></li>
+        </ul>
+      </div>
+      <div class="fm-probate">
+        <div class="fm-rl"><label for="estate">Gross estate value, home included (no mortgage deducted)</label><span id="estateV">600,000</span></div>
+        <input class="fm-rng" type="range" id="estate" min="50000" max="2000000" step="10000" value="600000">
+        <div class="fm-pbar" aria-hidden="true"><i id="pAtt" style="background:var(--brass)"></i><i id="pExe" style="background:var(--green-2)"></i></div>
+        <div class="fm-pkey"><span style="color:var(--brass)">Attorney fee <b id="attV"></b></span><span style="color:var(--green-2)">Executor fee <b id="exeV"></b></span></div>
+        <p class="fm-pmsg" id="pMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 wishes -->
+<section class="fm-mod" id="t-wish" data-note="wishes" aria-labelledby="t-wish-h">
+  <div class="fm-wrap">
+    <span class="fm-kick">07 · Wishes builder</span>
+    <h2 class="fm-h2" id="t-wish-h"><span class="ph">Your wishes,</span> <span class="ph">on one page.</span></h2>
+    <p class="fm-lede">A few taps make a keepsake page the family can read. In the real funnel, saving it asks for an email, and the answers fill the CRM.</p>
+    <div class="fm-wish-g" style="margin-top:24px">
+      <div class="fm-tool">
+        <div class="fm-wq"><span>For</span><input class="fm-inp" id="wName" placeholder="Your name" autocomplete="name" maxlength="40"></div>
+        <div class="fm-wq"><span>I would like</span><div class="fm-wants" data-w="disp"><button type="button" class="fm-chip-btn" data-v="Burial" aria-pressed="false">Burial</button><button type="button" class="fm-chip-btn" data-v="Cremation" aria-pressed="true">Cremation</button><button type="button" class="fm-chip-btn" data-v="A green burial, where available" aria-pressed="false">Green burial</button><button type="button" class="fm-chip-btn" data-v="Not decided yet" aria-pressed="false">Not sure</button></div></div>
+        <div class="fm-wq"><span>Gathering</span><div class="fm-wants" data-w="svc"><button type="button" class="fm-chip-btn" data-v="A traditional service" aria-pressed="false">Traditional</button><button type="button" class="fm-chip-btn" data-v="A celebration of life" aria-pressed="true">Celebration of life</button><button type="button" class="fm-chip-btn" data-v="Graveside only" aria-pressed="false">Graveside</button><button type="button" class="fm-chip-btn" data-v="Family only, private" aria-pressed="false">Private</button><button type="button" class="fm-chip-btn" data-v="No service" aria-pressed="false">None</button></div></div>
+        <div class="fm-wq"><span>Feel</span><div class="fm-wants" data-w="feel" data-multi><button type="button" class="fm-chip-btn" data-v="Faith-based" aria-pressed="false">Faith-based</button><button type="button" class="fm-chip-btn" data-v="Joyful" aria-pressed="true">Joyful</button><button type="button" class="fm-chip-btn" data-v="Quiet" aria-pressed="false">Quiet</button><button type="button" class="fm-chip-btn fm-vet-only" data-v="Military honors" aria-pressed="false" hidden>Military honors</button></div></div>
+        <div class="fm-wq"><span>A song or reading</span><input class="fm-inp" id="wSong" placeholder="Optional" maxlength="60"></div>
+        <div class="fm-wq" style="margin-bottom:0"><span>Who should help carry it out</span><input class="fm-inp" id="wWho" placeholder="Optional, a name" maxlength="40"></div>
+      </div>
+      <div>
+        <article class="fm-keep" id="keep" aria-live="polite">
+          <svg class="fm-lan" aria-hidden="true"><use href="#i-lantern"/></svg>
+          <h3 id="kName">My wishes</h3>
+          <p class="fm-who">Written with Lanternhill · <span id="kDate"></span></p>
+          <dl>
+            <div><dt>I would like</dt><dd id="kDisp"></dd></div>
+            <div><dt>Gathering</dt><dd id="kSvc"></dd></div>
+            <div><dt>The feel</dt><dd id="kFeel"></dd></div>
+            <div><dt>A song or reading</dt><dd id="kSong"></dd></div>
+            <div><dt>Please ask</dt><dd id="kWho"></dd></div>
+          </dl>
+          <svg class="fm-seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="#C2185B" stroke-width="1.5"/><circle cx="32" cy="32" r="22" fill="none" stroke="#C2185B" stroke-width="1" stroke-dasharray="2 3"/><path d="M32 18c4 5 4 10 0 14-4-4-4-9 0-14z" fill="#C2185B"/><path d="M24 40h16M27 44h10" stroke="#C2185B" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </article>
+        <div class="fm-keep-act"><button type="button" id="kPrint">Print</button><button type="button" id="kCopy">Copy as text</button></div>
+        <button type="button" class="fm-why" data-why="wishes"><svg><use href="#i-why"/></svg>Why a wishes builder?</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 trend -->
+<section class="fm-mod" id="t-trend" data-note="trend" aria-labelledby="t-trend-h">
+  <div class="fm-wrap fm-mod-g">
+    <div class="fm-mod-t">
+      <span class="fm-kick">08 · How families choose</span>
+      <h2 class="fm-h2" id="t-trend-h"><span class="ph">Cremation is now</span> <span class="ph">the usual choice.</span></h2>
+      <p>The plan mix, the ads and the price list should lead with cremation, not treat it as the budget option.</p>
+      <p class="fm-src">Source: <a href="https://www.nfda.org/nfda-releases-2025-cremation-burial-report-comprehensive-insights-to-guide-the-future-of-funeral-service/" target="_blank" rel="noopener">NFDA 2025 Cremation &amp; Burial Report</a> and <a href="https://nfda.org/news/statistics" target="_blank" rel="noopener">NFDA statistics</a>. Projections.</p>
+      <button type="button" class="fm-why" data-why="trend"><svg><use href="#i-why"/></svg>Why this chart?</button>
+    </div>
+    <div class="fm-tool fm-trend">
+      <div class="fm-tool-h"><b>U.S. share of deaths</b><div class="fm-mini" role="group" aria-label="Year" id="trendYr"><button type="button" data-y="2025" aria-pressed="true">2025</button><button type="button" data-y="2045" aria-pressed="false">2045</button></div></div>
+      <svg id="trendSvg" viewBox="0 0 600 300" role="img" aria-label="Cremation 63.4 percent and burial 31.6 percent in 2025; cremation 82.3 percent projected in 2045"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 9 days -->
+<section class="fm-mod" id="t-days" data-note="days" aria-labelledby="t-days-h">
+  <div class="fm-wrap fm-mod-g fm-flip">
+    <div class="fm-mod-t">
+      <span class="fm-kick">09 · The first 30 days</span>
+      <h2 class="fm-h2" id="t-days-h"><span class="ph">What happens,</span> <span class="ph">in order.</span></h2>
+      <p>The page families bookmark. It earns trust in the worst week and brings people back when they are ready to plan their own.</p>
+      <p class="fm-src">Sources: <a href="https://www.ssa.gov/pubs/EN-05-10008.pdf" target="_blank" rel="noopener">Social Security</a>; <a href="https://www.aarp.org/veterans/va-burial-benefits/" target="_blank" rel="noopener">AARP, VA benefits</a>; <a href="https://saclaw.org/faqs/how-much-can-be-transferred-using-small-estate-methods/" target="_blank" rel="noopener">California small estates</a>. General guidance, not legal advice.</p>
+      <button type="button" class="fm-why" data-why="days"><svg><use href="#i-why"/></svg>Why this timeline?</button>
+    </div>
+    <div class="fm-tool">
+      <div class="fm-days-tabs fm-mini" role="tablist" aria-label="When">
+        <button type="button" role="tab" data-d="d1" aria-pressed="true" aria-selected="true">First day</button><button type="button" role="tab" data-d="d7" aria-pressed="false" aria-selected="false">First week</button><button type="button" role="tab" data-d="d30" aria-pressed="false" aria-selected="false">First month</button>
+      </div>
+      <div class="fm-days-panes">
+        <div class="fm-days-pane fm-on" data-d="d1"><ol>
+          <li><i>1</i><div>Call for help<span>If the death was unexpected, 911. Under hospice, the hospice nurse.</span></div></li>
+          <li><i>2</i><div>Call the funeral provider<span>They bring your loved one into their care. Nothing needs choosing tonight.</span></div></li>
+          <li><i>3</i><div>Look for a plan<span>A prepaid plan, written wishes, or a policy. It answers most questions.</span></div></li>
+          <li><i>4</i><div>Tell close family<span>One person makes the calls, so nobody hears it secondhand.</span></div></li>
+        </ol></div>
+        <div class="fm-days-pane" data-d="d7"><ol>
+          <li><i>5</i><div>Arrangement meeting<span>Choices and the itemized price list, in writing.</span></div></li>
+          <li><i>6</i><div>Death certificates<span>Order several certified copies; banks and insurers each want one.</span></div></li>
+          <li><i>7</i><div>Social Security<span>The funeral director usually reports the death. A spouse who lived with them may get a 255-dollar payment.</span></div></li>
+          <li><i>8</i><div>Veteran?<span>Find the DD-214. Ask about national cemetery burial, a headstone and a flag.</span></div></li>
+        </ol></div>
+        <div class="fm-days-pane" data-d="d30"><ol>
+          <li><i>9</i><div>Life insurance and accounts<span>Claims, and payable-on-death accounts with the beneficiary.</span></div></li>
+          <li><i>10</i><div>The estate<span>In California, estates under 208,850 dollars may skip probate with the small estate affidavit, after a waiting period.</span></div></li>
+          <li><i>11</i><div>Bills and subscriptions<span>Cancel or transfer, and keep a list of every call.</span></div></li>
+          <li><i>12</i><div>Grief support<span>Aftercare notes at 30, 90 and 365 days, from people, not a sequence.</span></div></li>
+        </ol></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 care costs -->
+<section class="fm-mod" id="t-care" data-note="carecost" aria-labelledby="t-care-h">
+  <div class="fm-wrap fm-mod-g">
+    <div class="fm-mod-t">
+      <span class="fm-kick">10 · Care costs</span>
+      <h2 class="fm-h2" id="t-care-h"><span class="ph">What care costs,</span> <span class="ph">side by side.</span></h2>
+      <p>National medians for 2024. Families searching for a parent's care want this number before they want a tour.</p>
+      <p class="fm-src">Source: <a href="https://investor.genworth.com/news-events/press-releases/detail/982/" target="_blank" rel="noopener">Genworth and CareScout 2024 Cost of Care</a>, released March 4, 2025. Monthly figures are the annual medians divided by twelve.</p>
+      <button type="button" class="fm-why" data-why="carecost"><svg><use href="#i-why"/></svg>Why show costs?</button>
+    </div>
+    <div class="fm-tool fm-cc">
+      <div class="fm-tool-h"><b>National median</b><div class="fm-mini" role="group" aria-label="Period" id="ccPer"><button type="button" data-p="m" aria-pressed="true">Monthly</button><button type="button" data-p="y" aria-pressed="false">Yearly</button></div></div>
+      <svg id="ccSvg" viewBox="0 0 600 330" role="img" aria-label="2024 national median costs of care"></svg>
+    </div>
+  </div>
+</section>
+
+<section class="fm-sec" data-note="prices">
+  <div class="fm-wrap">
+    <span class="fm-kick">Price list</span>
+    <h2 class="fm-h2"><span class="ph">Every price,</span> <span class="ph">before you call.</span></h2>
+    <div class="fm-prices">
+      <ul class="fm-gpl" aria-label="Sample price list categories">
+        <li>Basic services of the director and staff<span>listed</span></li>
+        <li>Transfer of the deceased to the funeral home<span>listed</span></li>
+        <li>Embalming and other preparation<span>listed</span></li>
+        <li>Direct cremation<span>listed</span></li>
+        <li>Immediate burial<span>listed</span></li>
+        <li>Caskets, urns and outer burial containers<span>listed</span></li>
+      </ul>
+      <div>
+        <p>Families compare prices before they call. Showing the list builds trust and filters out calls that were only ever about price.</p>
+        <p style="margin-top:10px">In California, a funeral home with a website must post the goods and services on its general price list, linked from the homepage.</p>
+        <p class="fm-src">Source: <a href="https://california.public.law/codes/business_and_professions_code_section_7685" rel="noopener" target="_blank">California Business and Professions Code 7685</a>. Template shows categories only.</p>
+        <button type="button" class="fm-why" data-why="prices">Why put prices on a lead page?</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============ CONFIRMATION ============ -->
+<div id="done" tabindex="-1">
+  <section class="fm-wrap">
+    <div class="fm-done-h">
+      <div class="fm-tick"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.8 3.6L16 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h2 class="fm-done-t" id="doneH"></h2>
+      <p id="doneP"></p>
+      <span class="fm-demo-tag"><svg width="15" height="15" aria-hidden="true"><use href="#i-calm"/></svg>Demo: nothing you typed was sent or stored</span>
+    </div>
+    <div class="fm-next" id="next"></div>
+    <button type="button" class="fm-restart">Try another visitor path</button>
+  </section>
+</div>
+
+<!-- ============ BEHIND THE FUNNEL ============ -->
+<section class="fm-sec fm-btf" id="behind" aria-labelledby="btf-h">
+  <div class="fm-wrap">
+    <span class="fm-kick">Behind the funnel</span>
+    <h2 class="fm-h2" id="btf-h"><span class="ph">What makes it work</span> <span class="ph">is everything</span> <span class="ph">after the click.</span></h2>
+    <p class="fm-lede">The ads that send each visitor to the right door, the CRM pipeline every lead lands in, the follow-up that runs on its own, and the report the owner reads on Monday.</p>
+    <div class="fm-tabs" role="tablist" aria-label="Behind the funnel">
+      <button class="fm-tab" role="tab" id="t-map" aria-controls="p-map" aria-selected="true">Funnel map</button>
+      <button class="fm-tab" role="tab" id="t-ads" aria-controls="p-ads" aria-selected="false" tabindex="-1">Meta ads</button>
+      <button class="fm-tab" role="tab" id="t-crm" aria-controls="p-crm" aria-selected="false" tabindex="-1">CRM pipelines</button>
+      <button class="fm-tab" role="tab" id="t-auto" aria-controls="p-auto" aria-selected="false" tabindex="-1">Automations</button>
+      <button class="fm-tab" role="tab" id="t-rep" aria-controls="p-rep" aria-selected="false" tabindex="-1">Reporting</button>
+    </div>
+    <div class="fm-panes">
+      <div class="fm-pane fm-on" role="tabpanel" id="p-map" aria-labelledby="t-map">
+        <div class="fm-map">
+          <svg viewBox="0 0 980 360" font-family="Geist, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="Funnel map: Meta ads and search lead to three doors, planning ahead, help now and senior care. Each feeds its own CRM pipeline, then booking, then a signed plan, an arrangement or a move-in, then aftercare, reviews and family referrals.">
+            <g fill="none" stroke="#FF4F9A" stroke-width="2.2" stroke-linecap="round">
+              <path class="fm-flow" d="M150 90 C210 90 210 70 270 70"/><path class="fm-flow" d="M150 180 C210 180 210 180 270 180"/><path class="fm-flow" d="M150 270 C210 270 210 290 270 290"/>
+              <path class="fm-flow" d="M150 90 C210 90 210 180 270 180" opacity=".35"/>
+              <path class="fm-flow" d="M420 70H500"/><path class="fm-flow" d="M420 180H500"/><path class="fm-flow" d="M420 290H500"/>
+              <path class="fm-flow" d="M650 70H720"/><path class="fm-flow" d="M650 180H720"/><path class="fm-flow" d="M650 290H720"/>
+              <path class="fm-flow" d="M870 70C910 70 910 180 870 180M870 290C910 290 910 180 870 180" opacity=".7"/>
+            </g>
+            <g font-size="13" fill="#F6F2F3">
+              <g><rect x="20" y="60" width="130" height="60" rx="14" fill="#1C1F22" stroke="#3A3E43"/><text x="85" y="86" text-anchor="middle" font-weight="700">Meta ads</text><text x="85" y="104" text-anchor="middle" fill="#A9A3A6" font-size="11.5">planning, senior care</text></g>
+              <g><rect x="20" y="150" width="130" height="60" rx="14" fill="#1C1F22" stroke="#3A3E43"/><text x="85" y="176" text-anchor="middle" font-weight="700">Search and Maps</text><text x="85" y="194" text-anchor="middle" fill="#A9A3A6" font-size="11.5">"funeral home near me"</text></g>
+              <g><rect x="20" y="240" width="130" height="60" rx="14" fill="#1C1F22" stroke="#3A3E43"/><text x="85" y="266" text-anchor="middle" font-weight="700">Referrals</text><text x="85" y="284" text-anchor="middle" fill="#A9A3A6" font-size="11.5">hospice, families</text></g>
+              <g><rect x="270" y="40" width="150" height="60" rx="14" fill="#FBF5F6"/><text x="345" y="66" text-anchor="middle" font-weight="800" fill="#121416">Planning ahead</text><text x="345" y="84" text-anchor="middle" fill="#7A6F75" font-size="11.5">guide + price list</text></g>
+              <g><rect x="270" y="150" width="150" height="60" rx="14" fill="#FF4F9A"/><text x="345" y="176" text-anchor="middle" font-weight="800" fill="#121416">Help now</text><text x="345" y="194" text-anchor="middle" fill="#121416" font-size="11.5">call or callback</text></g>
+              <g><rect x="270" y="260" width="150" height="60" rx="14" fill="#FBF5F6"/><text x="345" y="286" text-anchor="middle" font-weight="800" fill="#121416">Senior care</text><text x="345" y="304" text-anchor="middle" fill="#7A6F75" font-size="11.5">care-fit + tour</text></g>
+              <g><rect x="500" y="40" width="150" height="60" rx="14" fill="#1C1F22" stroke="#3A3E43"/><text x="575" y="66" text-anchor="middle" font-weight="700">Pipeline: pre-need</text><text x="575" y="84" text-anchor="middle" fill="#A9A3A6" font-size="11.5">nurture, then call</text></g>
+              <g><rect x="500" y="150" width="150" height="60" rx="14" fill="#1C1F22" stroke="#3A3E43"/><text x="575" y="176" text-anchor="middle" font-weight="700">Pipeline: at-need</text><text x="575" y="194" text-anchor="middle" fill="#A9A3A6" font-size="11.5">director paged now</text></g>
+              <g><rect x="500" y="260" width="150" height="60" rx="14" fill="#1C1F22" stroke="#3A3E43"/><text x="575" y="286" text-anchor="middle" font-weight="700">Pipeline: care</text><text x="575" y="304" text-anchor="middle" fill="#A9A3A6" font-size="11.5">tour, assessment</text></g>
+              <g><rect x="720" y="40" width="150" height="60" rx="14" fill="#2A2D31"/><text x="795" y="66" text-anchor="middle" font-weight="700">Signed plan</text><text x="795" y="84" text-anchor="middle" fill="#D8D3D5" font-size="11.5">family added</text></g>
+              <g><rect x="720" y="150" width="150" height="60" rx="14" fill="#2A2D31"/><text x="795" y="176" text-anchor="middle" font-weight="700">Aftercare</text><text x="795" y="194" text-anchor="middle" fill="#D8D3D5" font-size="11.5">30, 90, 365 days</text></g>
+              <g><rect x="720" y="260" width="150" height="60" rx="14" fill="#2A2D31"/><text x="795" y="286" text-anchor="middle" font-weight="700">Move-in</text><text x="795" y="304" text-anchor="middle" fill="#D8D3D5" font-size="11.5">first-month check-ins</text></g>
+              <text x="935" y="176" text-anchor="middle" font-weight="800" fill="#FF4F9A">Reviews</text><text x="935" y="194" text-anchor="middle" fill="#FF4F9A" font-weight="800">referrals</text>
+            </g>
+            <circle r="5" fill="#FF8FC0"><animateMotion dur="6s" repeatCount="indefinite" path="M150 90 C210 90 210 70 270 70 H420 H500 H650 H720 H870"/></circle>
+            <circle r="5" fill="#FF8FC0"><animateMotion dur="4s" repeatCount="indefinite" begin="1s" path="M150 180 H270 H420 H500 H650 H720 H870"/></circle>
+            <circle r="5" fill="#FF8FC0"><animateMotion dur="7s" repeatCount="indefinite" begin="2s" path="M150 270 C210 270 210 290 270 290 H420 H500 H650 H720 H870"/></circle>
+          </svg>
+        </div>
+        <div class="fm-rule"><svg aria-hidden="true"><use href="#i-calm"/></svg><span><b>The one rule across all three:</b> nobody who just lost someone is ever shown an ad, a countdown or a sales sequence. At-need contacts are suppressed from planning ads and planning emails for twelve months.</span></div>
+      </div>
+
+      <div class="fm-pane" role="tabpanel" id="p-ads" aria-labelledby="t-ads">
+        <div class="fm-adsets">
+          <article class="fm-ad"><div class="fm-ad-h"><i><svg width="18" height="18" style="color:#FF4F9A"><use href="#i-lantern"/></svg></i><span><b>Lanternhill</b><small>Sponsored</small></span></div><p class="fm-copy">Writing your wishes down is one of the kindest things you can leave. Our free guide walks you through it, with every price listed.</p><div class="fm-img">Plan it once.<br>Spare them the guessing.</div><div class="fm-foot"><span style="border:0;background:none;padding:0"><b>Free planning guide</b>lanternhill.example</span><span>Download</span></div><dl><dt>Ad set</dt><dd>Planning ahead</dd><dt>Who</dt><dd>Adults in the service area, broad. Age and location only.</dd><dt>Goal</dt><dd>Leads, on the website (not an instant form), so every lead sees the price list</dd><dt>Lands</dt><dd>Planning ahead door</dd></dl></article>
+          <article class="fm-ad"><div class="fm-ad-h"><i><svg width="18" height="18" style="color:#FF4F9A"><use href="#i-lantern"/></svg></i><span><b>Lanternhill</b><small>Sponsored</small></span></div><p class="fm-copy">When Mom needs more help than you can give, start with a short care-fit check and an in-person tour. No pressure, no forms to sign.</p><div class="fm-img">See it in person<br>before you decide.</div><div class="fm-foot"><span style="border:0;background:none;padding:0"><b>Book a tour</b>lanternhill.example</span><span>Book now</span></div><dl><dt>Ad set</dt><dd>Senior care</dd><dt>Who</dt><dd>Adults in the service area, broad, plus a lookalike of past tour bookers</dd><dt>Goal</dt><dd>Leads, optimised for "tour booked", not "form started"</dd><dt>Lands</dt><dd>Care for a parent door</dd></dl></article>
+          <article class="fm-ad"><div class="fm-ad-h"><i><svg width="18" height="18" style="color:#FF4F9A"><use href="#i-lantern"/></svg></i><span><b>Lanternhill</b><small>Sponsored</small></span></div><p class="fm-copy">You came by last week. Your planning guide and our price list are still here whenever you want them, and a call is always optional.</p><div class="fm-img">Whenever you're ready,<br>we're here.</div><div class="fm-foot"><span style="border:0;background:none;padding:0"><b>Pick up where you left off</b>lanternhill.example</span><span>Learn more</span></div><dl><dt>Ad set</dt><dd>Retargeting, 30 days</dd><dt>Who</dt><dd>Planning and care visitors who did not finish. Excludes at-need contacts and anyone who already booked.</dd><dt>Goal</dt><dd>Leads; frequency capped low</dd><dt>Lands</dt><dd>The step they left</dd></dl></article>
+        </div>
+        <div class="fm-rule"><svg aria-hidden="true"><use href="#i-why"/></svg><span><b>Ad wording rule:</b> copy never states or implies a viewer's health, age or loss ("Did you just lose your mother?"). Meta's personal attributes policy prohibits it, and families find it cruel. <a href="https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/" rel="noopener" target="_blank">Meta's policy</a>. There are no at-need ads at all: those families find you through search, Maps and hospice referrals.</span></div>
+      </div>
+
+      <div class="fm-pane" role="tabpanel" id="p-crm" aria-labelledby="t-crm">
+        <div class="fm-pipes">
+          <div class="fm-pipe"><div class="fm-pipe-h"><h3>Pre-need pipeline</h3><small>GoHighLevel, one opportunity per family</small></div><div class="fm-stages">
+            <div class="fm-stage"><b>New lead</b><small>Guide sent, tagged by who and what they lean toward</small><div class="fm-card-mini">R. Alvarez · parent</div></div>
+            <div class="fm-stage"><b>Engaged</b><small>Opened the guide or viewed prices twice</small></div>
+            <div class="fm-stage"><b>Call booked</b><small>Planner assigned, reminder set</small></div>
+            <div class="fm-stage"><b>Plan presented</b><small>Written estimate sent, 7-day check-in task</small></div>
+            <div class="fm-stage"><b>Signed</b><small>Contract in place, family contacts added</small></div>
+            <div class="fm-stage"><b>Not now</b><small>Moved to the quarterly letter, never deleted</small></div>
+          </div></div>
+          <div class="fm-pipe"><div class="fm-pipe-h"><h3>At-need pipeline</h3><small>Speed first: the director is paged the moment it lands</small></div><div class="fm-stages">
+            <div class="fm-stage"><b>Call received</b><small>SMS and push to the on-call director</small><div class="fm-card-mini" style="animation-delay:1.5s">Callback · hospice</div></div>
+            <div class="fm-stage"><b>Director assigned</b><small>Callback logged with time to first call</small></div>
+            <div class="fm-stage"><b>Arrangement</b><small>Meeting held, price list given in person</small></div>
+            <div class="fm-stage"><b>Service held</b><small>Thank-you note task for the director</small></div>
+            <div class="fm-stage"><b>Aftercare</b><small>Grief resources at 30, 90 and 365 days</small></div>
+          </div></div>
+          <div class="fm-pipe"><div class="fm-pipe-h"><h3>Senior care pipeline</h3><small>Optimised to tours, not form fills</small></div><div class="fm-stages">
+            <div class="fm-stage"><b>Inquiry</b><small>Care-fit result saved to the contact</small><div class="fm-card-mini" style="animation-delay:3s">J. Kim · memory care</div></div>
+            <div class="fm-stage"><b>Tour booked</b><small>Confirmation, reminder the day before</small></div>
+            <div class="fm-stage"><b>Toured</b><small>Same-day follow-up from the guide who led it</small></div>
+            <div class="fm-stage"><b>Assessment</b><small>Nurse visit scheduled</small></div>
+            <div class="fm-stage"><b>Move-in</b><small>Welcome sequence for the family</small></div>
+          </div></div>
+        </div>
+        <div class="fm-rule"><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Clean data in:</b> each answer on the page maps to one custom field (planning for, leaning toward, timing, care needs, served). Staff never retype what a family already told the website.</span></div>
+      </div>
+
+      <div class="fm-pane" role="tabpanel" id="p-auto" aria-labelledby="t-auto">
+        <div class="fm-autos">
+          <div class="fm-auto"><h3>Planning ahead</h3><p>Email, plus text only if they ticked the box.</p><ol>
+            <li><b>Minute 0</b><span>Guide and price list<em>email, and a text if consented</em></span></li>
+            <li><b>Day 2</b><span>"Questions families ask us"<em>email</em></span></li>
+            <li><b>Day 5</b><span>Optional call offer, three times<em>email</em></span></li>
+            <li><b>Day 14</b><span>A worksheet to share with family<em>email</em></span></li>
+            <li><b>Day 30</b><span>Check-in from a named planner<em>email; then quarterly</em></span></li>
+          </ol></div>
+          <div class="fm-auto"><h3>Help now</h3><p>No marketing. Only care, and only from people.</p><ol>
+            <li><b>Second 0</b><span>Director paged with name, number, where<em>SMS and app push</em></span></li>
+            <li><b>Minute 10</b><span>Escalate to backup if no callback logged<em>internal alert</em></span></li>
+            <li><b>Day 30</b><span>Grief resources<em>letter or email</em></span></li>
+            <li><b>Day 45</b><span>One review request, same link for every family<em>email, never text</em></span></li>
+            <li><b>Days 90, 365</b><span>Remembrance notes<em>letter</em></span></li>
+          </ol></div>
+          <div class="fm-auto"><h3>Senior care</h3><p>Built around the tour.</p><ol>
+            <li><b>Minute 0</b><span>Tour confirmed with directions<em>email, text if consented</em></span></li>
+            <li><b>Day -1</b><span>Reminder with what to bring<em>text or email</em></span></li>
+            <li><b>Same day</b><span>Thank-you from the tour guide<em>email</em></span></li>
+            <li><b>Day 3</b><span>Pricing and care-level sheet<em>email</em></span></li>
+            <li><b>Day 10</b><span>Second visit or a meal invite<em>email</em></span></li>
+          </ol></div>
+        </div>
+        <div class="fm-rule"><svg aria-hidden="true"><use href="#i-calm"/></svg><span><b>Every workflow has an exit:</b> a booking, a reply, an opt-out or a death in the family stops the sequence at once. Review requests go to every family with the same link, and low ratings alert the owner; Google prohibits asking only happy customers.</span></div>
+      </div>
+
+      <div class="fm-pane" role="tabpanel" id="p-rep" aria-labelledby="t-rep">
+        <div class="fm-kpis">
+          <div class="fm-kpi"><small>Cost per lead</small><b>CPL</b><span>by ad set, weekly</span><svg class="fm-spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 22 22 18 42 20 62 12 82 14 102 8 118 10" fill="none" stroke="#FF4F9A" stroke-width="2"/></svg></div>
+          <div class="fm-kpi"><small>Speed to lead</small><b>Minutes</b><span>form in to first call, at-need</span><svg class="fm-spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 8 22 12 42 10 62 16 82 18 102 22 118 21" fill="none" stroke="#FF4F9A" stroke-width="2"/></svg></div>
+          <div class="fm-kpi"><small>Lead to booked</small><b>Rate</b><span>calls and tours booked per lead</span><svg class="fm-spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 24 22 21 42 22 62 16 82 15 102 11 118 9" fill="none" stroke="#FF4F9A" stroke-width="2"/></svg></div>
+          <div class="fm-kpi"><small>Booked to signed</small><b>Rate</b><span>pre-need plans and move-ins</span><svg class="fm-spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 20 22 20 42 17 62 18 82 13 102 12 118 10" fill="none" stroke="#FF4F9A" stroke-width="2"/></svg></div>
+        </div>
+        <p class="fm-note">Shown as definitions, not results. Lanternhill is a concept; real numbers come from the client's own accounts.</p>
+        <div class="fm-report"><h3><span class="ph">The Monday report,</span> <span class="ph">one page</span></h3><ul>
+          <li>Leads by door and by source, against last week</li>
+          <li>Spend, cost per lead and cost per booked call or tour, by ad set</li>
+          <li>Median time to first call on at-need callbacks, with any over ten minutes named</li>
+          <li>Pipeline movement: what advanced, what stalled, who owns the next step</li>
+          <li>One change for this week, and what we expect it to move</li>
+        </ul></div>
+        <div class="fm-rule"><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tracking:</b> the page fires one event per step to the ad platform and the CRM (door chosen, step reached, submitted, booked), so cost is measured to booked calls, not to clicks.</span></div>
+      </div>
+    </div>
+
+    <div class="fm-hire">
+      <a href="/funnels">See all funnel templates <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="fm-ghost" href="/marketing-ops">How I run ads and CRM</a>
+      <a class="fm-ghost" href="/build">Start a project</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="fm-banner" role="note"><b>Funnel build template</b> · Built by <a href="/">Nathan J. Song</a> · Lanternhill is a concept brand, not a real company · Demo only: nothing you type is sent · <a href="/funnels">All templates</a></div>
+</div>
+</main>
+<script src="/assets/funnels/memorial.js" defer></script>
+
+<!--@footer-->

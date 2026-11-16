@@ -105,6 +105,15 @@ export const PAGES = {
     skip_href: '#fn-list', skip_text: 'Skip to the templates',
     jsonld: ld('CollectionPage', { name: 'Funnel build templates', hasPart: [{ '@type': 'CreativeWork', name: 'Memorial and senior care intake funnel', url: SITE + '/funnels/memorial' }, { '@type': 'CreativeWork', name: 'Sweepstakes growth funnel', url: SITE + '/ritual' }] }),
   },
+  'funnel-memorial': {
+    out: 'funnels/memorial/index.html', path: '/funnels/memorial', nav: null, h1: 'headline', css: 'funnel-memorial',
+    title: 'Memorial and Senior Care Intake Funnel · Funnel Build Template · NJS Studio',
+    description: 'A funnel build template for funeral pre-planning and senior care: three intake paths, ten sourced planning tools, and the ads, CRM and follow-up behind them.',
+    og_title: 'Memorial and senior care intake funnel, a build template',
+    og_description: 'Three intake paths, ten planning tools, and the ads, CRM and follow-up behind them. Concept brand, demo only.',
+    skip_href: '#kit', skip_text: 'Skip to the planning toolkit',
+    jsonld: ld('WebPage', { name: 'Memorial and senior care intake funnel', isPartOf: { '@type': 'CollectionPage', name: 'Funnel build templates', url: SITE + '/funnels' } }),
+  },
   ops: {
     out: 'marketing-ops/index.html', path: '/marketing-ops', nav: null, h1: 'ops-h', css: 'ops',
     title: 'Meta Ads, GoHighLevel CRM and Marketing Automation · Nathan J. Song',
@@ -425,7 +434,7 @@ function renderFocusForm() {
 }
 
 export function sitemap() {
-  const urls = Object.values(PAGES).map((p) => p.path).concat('/funnels/memorial', '/resume');
+  const urls = Object.values(PAGES).map((p) => p.path).concat('/resume');
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     urls.map((u) => '  <url><loc>' + SITE + (u === '/' ? '/' : u) + '</loc></url>').join('\n') + '\n</urlset>\n';
 }

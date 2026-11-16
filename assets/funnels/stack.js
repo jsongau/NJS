@@ -1,6 +1,8 @@
 /* The stack, wired: steps one lead through Meta ads, the page, Zapier, GoHighLevel and back to Meta. */
 (function(){
   var root=document.getElementById('stack');if(!root)return;
+  /* fourth wall: peel and slash play once when each behind-the-page section comes into view */
+  [root,document.getElementById('behind')].forEach(function(sec){if(!sec)return;if(!('IntersectionObserver' in window)){sec.classList.add('fm-in');return}var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){sec.classList.add('fm-in');io.disconnect()}},{threshold:.12});io.observe(sec)});
   var nodes=[].slice.call(root.querySelectorAll('.fm-sk-n'));
   var logs=[].slice.call(root.querySelectorAll('.fm-sk-log li'));
   var chips=[].slice.call(root.querySelectorAll('[data-sk]'));

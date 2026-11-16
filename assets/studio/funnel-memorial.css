@@ -679,3 +679,88 @@ html:has(.fm-root){scroll-padding-top:150px}
 .fm-cm-panel p{color:#C9C3C6}
 .fm-cm-panel a{color:#F6F2F3}
 .fm-cm-panel a:hover{background:rgba(255,79,154,.16)}
+/* Controls on one row from about 980px up (Jay: the switches should not drop to their own line). */
+@media (min-width:980px){
+  .fm-controls .fm-in{flex-wrap:nowrap;gap:10px 14px;max-width:1240px}
+  .fm-seg button{padding:8px 13px;font-size:14px}
+  .fm-toggles{flex-wrap:nowrap;gap:14px;margin-left:auto}
+  .fm-sw{gap:8px;font-size:14px;white-space:nowrap}
+  .fm-sw .fm-tr{width:40px;height:24px}
+  .fm-sw .fm-tr::after{width:18px;height:18px}
+  .fm-sw[aria-checked="true"] .fm-tr::after{transform:translateX(16px)}
+  .fm-sw>span:not(.fm-tr){display:flex;align-items:baseline;gap:6px}
+  .fm-sw small{display:inline;font-size:9.5px;letter-spacing:.1em}
+}
+@media (min-width:980px) and (max-width:1279px){
+  .fm-controls .fm-lab{display:none}
+  .fm-sw small{display:none}
+}
+
+/* Fourth wall (Jay: the stack section should show it is stepping out of the client's page).
+   The light page peels up at the corner to reveal the dark workshop under it; crop marks frame the section
+   like a proof sheet; a tag says who is speaking; a strip at the end hands the reader back to the page. */
+.fm-4w{position:absolute;top:0;left:0;right:0;height:120px;pointer-events:none;z-index:0}
+.fm-4w-svg{display:block;width:100%;height:100%}
+.fm-sk.fm-in .fm-4w-curl{animation:fm4wCurl 1.4s cubic-bezier(.2,.8,.2,1) both}
+.fm-sk.fm-in .fm-4w-shade{animation:fm4wFade 1.4s ease both}
+@keyframes fm4wCurl{0%{transform:translate(160px,-60px) scale(.6);opacity:0}100%{transform:none;opacity:1}}
+@keyframes fm4wFade{from{opacity:0}to{opacity:1}}
+.fm-4w-curl{transform-box:fill-box;transform-origin:100% 0}
+.fm-sk{padding-top:150px}
+.fm-sk>.fm-wrap{position:relative;z-index:1}
+.fm-crop{position:absolute;width:22px;height:22px;z-index:1;pointer-events:none;opacity:.55}
+.fm-crop::before,.fm-crop::after{content:"";position:absolute;background:#FF8FC0}
+.fm-crop::before{width:22px;height:1.5px}
+.fm-crop::after{width:1.5px;height:22px}
+.fm-crop-tl{top:132px;left:18px}.fm-crop-tr{top:132px;right:18px}.fm-crop-tr::before{right:0}.fm-crop-tr::after{right:0}
+.fm-crop-bl{bottom:18px;left:18px}.fm-crop-bl::before{bottom:0}.fm-crop-bl::after{bottom:0}
+.fm-crop-br{bottom:18px;right:18px}.fm-crop-br::before{bottom:0;right:0}.fm-crop-br::after{bottom:0;right:0}
+.fm-4w-tag{display:flex;align-items:flex-start;gap:12px;max-width:44em;margin:0 0 26px;padding:12px 16px 12px 12px;border-radius:14px;border:1px dashed rgba(255,143,192,.55);background:rgba(255,79,154,.07);color:#D8D3D5;font-size:14px;line-height:1.5}
+.fm-4w-tag svg{flex:none;width:30px;height:30px;padding:5px;border-radius:9px;background:rgba(255,79,154,.16);fill:none;stroke:#FF8FC0;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.fm-4w-tag b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#FF8FC0;margin-bottom:2px}
+.fm-4w-slash{stroke-dasharray:19;stroke-dashoffset:19}
+.fm-sk.fm-in .fm-4w-slash,.fm-btf.fm-in .fm-4w-slash{animation:fm4wSlash .7s .6s ease forwards}
+@keyframes fm4wSlash{to{stroke-dashoffset:0}}
+.fm-btf .fm-4w-tag{margin-bottom:22px}
+.fm-4w-back{display:flex;align-items:center;gap:14px;margin-top:40px;color:#F6F2F3;text-decoration:none;font-weight:700;font-size:15px}
+.fm-4w-line{flex:1;height:1px;background:repeating-linear-gradient(90deg,rgba(255,143,192,.6) 0 8px,transparent 8px 14px)}
+.fm-4w-back svg{flex:none;width:30px;height:30px;padding:7px;border-radius:50%;border:1px solid rgba(255,143,192,.5);fill:none;stroke:#FF8FC0;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.fm-4w-back:hover svg{transform:translateY(3px)}
+@media (max-width:760px){.fm-sk{padding-top:110px}.fm-4w{height:80px}.fm-crop-tl,.fm-crop-tr{top:92px}.fm-crop{display:none}}
+@media (prefers-reduced-motion:reduce){.fm-4w-slash{stroke-dashoffset:0}}
+
+/* Demo controls as a bottom-centre dock on desktop (Jay: "a bottom center rail that doesn't distract you
+   from the funnel itself"). They drive the demo, not the funnel, so they float above the template banner
+   in the same dark as the banner; the funnel itself starts right under the site header. */
+@media (min-width:980px){
+  html:has(.fm-root){scroll-padding-top:96px}
+  .fm-root{padding-bottom:150px}
+  .fm-card{top:96px}
+  #nathan{top:110px}
+  .fm-controls{position:fixed;top:auto;left:50%;bottom:58px;transform:translateX(-50%);z-index:36;width:max-content;max-width:calc(100vw - 32px);
+    background:rgba(18,20,22,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09);border-radius:999px;
+    box-shadow:0 22px 50px -18px rgba(0,0,0,.55);animation:fmDock .5s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes fmDock{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
+  .fm-controls .fm-in{max-width:none;padding:5px 8px 5px 5px;gap:12px}
+  .fm-controls .fm-lab{display:none}
+  .fm-controls .fm-seg{background:rgba(255,255,255,.07);border-color:transparent;padding:3px}
+  .fm-controls .fm-seg button{color:#C9C3C6;padding:7px 12px;font-size:13.5px}
+  .fm-controls .fm-seg button:hover{color:#fff}
+  .fm-controls .fm-seg button[aria-pressed="true"]{background:#F6F2F3;color:#121416}
+  .fm-controls .fm-toggles{gap:14px;padding-left:12px;border-left:1px solid rgba(255,255,255,.12);margin-left:0}
+  .fm-controls .fm-sw{color:#F6F2F3;font-size:13.5px}
+  .fm-controls .fm-sw .fm-tr{background:rgba(255,255,255,.2)}
+  .fm-controls .fm-sw[aria-checked="true"] .fm-tr{background:#FF4F9A}
+  .fm-controls .fm-sw small{display:none}
+  .fm-controls .fm-abv{color:#121416}
+}
+@media (min-width:980px) and (prefers-reduced-motion:reduce){.fm-controls{animation:none}}
+/* Trust pills: one line under the hero copy (Jay: they wrapped to two lines and pushed the hero down). */
+.fm-root .fm-trust{flex-wrap:nowrap;gap:8px;margin-top:22px;max-width:100%}
+.fm-root .fm-trust span{flex:0 1 auto;min-width:0;white-space:nowrap;padding:7px 12px;font-size:13.5px;line-height:1.2;gap:6px}
+.fm-root .fm-trust svg{width:14px;height:14px;flex:none}
+@media (max-width:620px){.fm-root .fm-trust{flex-wrap:wrap}}
+@media (min-width:980px){.fm-controls .fm-abv{display:inline-grid;place-items:center;width:28px;height:26px;padding:0;line-height:1;border-radius:7px;font-size:13px}}
+.fm-controls .fm-sw>span.fm-abv{display:inline-grid;place-items:center;align-items:center}
+.fm-nbub h3{color:#F6F2F3}
+.fm-nbub p{color:#D8D3D5}

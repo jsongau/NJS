@@ -253,3 +253,30 @@ beneficiaries usually get a refund of premiums or a reduced payout, not the face
 - Jon Loomer, Meta Financial products and services category: https://www.jonloomer.com/qvt/financial-products-and-services/
 - Funeral Director Daily, SCI year-end 2025: https://funeraldirectordaily.com/sci-year-end-2025-my-dad-was-right/
 - Lookout, California human composting: https://lookout.co/californias-dead-will-have-a-new-burial-option-human-composting/story
+
+## 9. Messaging that moves people to act, without fake urgency (added 2026-11-16)
+
+Jay asked for FOMO messaging per field. Rule kept: no invented scarcity, countdowns or deadlines
+(CLAUDE.md honest-copy rule; the FTC treats false scarcity and fake timers as dark patterns, see
+the 2022 staff report). The honest version of FOMO is loss aversion grounded in a true, dated fact:
+show what the person loses by waiting, and cite it.
+
+| Field | True reason to act now | Line that uses it | Source |
+|---|---|---|---|
+| Final expense insurance | Premiums are priced by age at purchase, and most simplified or guaranteed policies have a 2-year waiting period that only starts on the day you buy | "The two-year wait starts the day you sign up, not the day you need it." | NerdWallet funeral insurance |
+| Final expense insurance | Health questions: qualifying is easier while healthy; later, only guaranteed-issue (costs more) may be left | "Answer the health questions while the answers are easy." | NerdWallet |
+| Pre-need plan | Locks today's price for the goods and services in the contract. Caution: NFDA found funeral medians rose slower than inflation 2021 to 2023 (burial +5.8%, cremation +8.1%, inflation 13.6%), so do not claim prices are "soaring" | "Lock in today's price list for the choices you make." | NFDA 2023 GPL study via Funeral Director Daily |
+| Pre-need plan, family angle | Families decide in about a day, under grief, without the wishes | "Every choice you make now is one your family won't have to guess at." | Industry norm; no stat needed |
+| Estate planning | 24% of adults have a will (Caring.com 2025); without one, California probate fees run by statute on the gross estate | "Three in four adults have no will. Fifteen minutes puts you in the other group." | Caring.com; Probate Code 10810 |
+| Veterans | VA burial allowance and honors are real money families miss; the amounts change every October 1 | "If they served, the VA may cover burial and a headstone. Most families never ask." | VA, research section 5 |
+| Senior care / Medi-Cal | The asset limit returned Jan 1, 2026 at 130,000 dollars (Justice in Aging). A further cut to 21,000 from July 2027 is reported by CalMatters but **verify with DHCS** before using it. Whether funeral trusts are exempt is **not confirmed** | Only after DHCS confirms: "Medi-Cal rules change in July 2027. See what counts before then." | Justice in Aging FAQ; CalMatters Oct 2026 |
+| Senior care | Tours and assessment take weeks; families who start early choose, families who start in a crisis take what is open | "Tour while it's a choice, not a scramble." | Plain-language claim, no stat |
+
+Never use for any field: countdown timers, "only N spots left", "price goes up Friday" unless true
+and dated, anything aimed at the bereaved (at-need visitors never see urgency), or copy that implies
+the viewer's age, health or loss (Meta personal attributes policy).
+
+Sources: [FTC dark patterns staff report summary (Venable)](https://www.venable.com/insights/blogs/2022/09/the-ftc-brings-more-light-to-dark-patterns-in-new),
+[NFDA 2023 cost vs inflation](https://funeraldirectordaily.com/?p=20091),
+[Justice in Aging, Medi-Cal asset limit FAQ](https://justiceinaging.org/reinstatement-of-medi-cal-asset-limit-faq/),
+[DHCS asset limit fact sheet](https://www.dhcs.ca.gov/Budget/Documents/DHCS-TBL-Asset-Limit-Fact-Sheet.pdf).

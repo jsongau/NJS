@@ -183,12 +183,13 @@ var NOTES={
   days:['The first 30 days','Content for the worst week. It answers the questions families search for, earns links and search traffic, and is the page they remember when it is time to plan their own.'],
   carecost:['Care costs','For the senior care door. Families want the number before the tour, and hiding it only sends them to a directory site that shows it.'],
   'btf-map':['The funnel map','Three entry sources feed three doors, three pipelines and three outcomes, and all of them end in reviews and family referrals. Ads only ever point at the planning and care doors.'],
+  stack:['The stack, end to end','One lead traced through every system: the Meta ad set for its door, the page that captures answers and consent, a Zap that routes and cleans the data, the GoHighLevel pipeline and workflow, and the booked call sent back to Meta through the Conversions API with the same event ID as the Pixel. That last step is what lets the ads optimize on booked calls instead of cheap form fills.'],
   'btf-ads':['Meta ad sets','Broad targeting by location and age, website conversion goals so every lead sees the price list, and a 30-day retargeting set that excludes anyone at-need or already booked.'],
   'btf-crm':['GoHighLevel pipelines','One opportunity per family, every page answer mapped to a custom field, and stages that match how the business really works, so the pipeline view doubles as the team\'s to-do list.'],
   'btf-auto':['Automations with exits','Every sequence stops on a booking, a reply, an opt-out or a death in the family. The at-need workflow sends no marketing at all.'],
   'btf-rep':['Reporting','Cost is tracked to booked calls and tours, not clicks. The owner gets one page on Monday with one recommended change.']
 };
-var ORDER=['hero','trust','card','email','consent','vet','ab','how','kit','cost','time','pay','cover','benefits','estate','wishes','trend','days','carecost','prices','btf-map','btf-ads','btf-crm','btf-auto','btf-rep'];
+var ORDER=['hero','trust','card','email','consent','vet','ab','how','stack','kit','cost','time','pay','cover','benefits','estate','wishes','trend','days','carecost','prices','btf-map','btf-ads','btf-crm','btf-auto','btf-rep'];
 var curKey='hero',spotEl=null;
 function currentKey(){
   if(body.classList.contains('fm-done')) return state.aud==='plan'?'book':state.aud==='need'?'hour':'tour';

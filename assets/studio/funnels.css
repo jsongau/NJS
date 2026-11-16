@@ -1,0 +1,41 @@
+/* /funnels hub (2026-11-16). Scoped to .fn, every class prefixed fn-. */
+.fn-hero { padding: 72px 0 24px; }
+.fn-hero h1, .fn-hero h2 { font-size: clamp(36px, 5.6vw, 68px); font-weight: 700; letter-spacing: -.045em; line-height: 1.02; color: var(--ink); margin-top: 14px; max-width: 13em; }
+.fn-lede { margin-top: 20px; max-width: 38em; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; color: var(--ink-2); }
+.fn .fn-sec { padding: 40px 0 72px; }
+.fn-grid { display: grid; gap: 20px; }
+@media (min-width: 900px) { .fn-grid { grid-template-columns: 1fr 1fr; } }
+.fn-card { display: grid; grid-template-rows: auto 1fr; border-radius: 26px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); transition: transform var(--t-quick) var(--ease-out), box-shadow var(--t-quick) var(--ease-out); }
+.fn-card:hover { transform: translateY(-3px); box-shadow: 0 28px 60px -30px rgba(18, 20, 22, .35); }
+.fn-shot { display: block; border-bottom: 1px solid var(--line); }
+.fn-shot svg { display: block; width: 100%; height: auto; }
+.fn-body { display: grid; gap: 12px; align-content: start; padding: 26px; }
+.fn-n { font: 600 12px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--signal-ink); }
+.fn-body h3 { font-size: clamp(24px, 2.4vw, 30px); letter-spacing: -.03em; line-height: 1.1; color: var(--ink); }
+.fn-body h3 a { color: inherit; text-decoration: none; }
+.fn-body h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.fn-body > p { color: var(--ink-2); line-height: 1.55; }
+.fn-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; }
+.fn-chips li { padding: 6px 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); font-size: 13px; color: var(--ink); }
+.fn-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.fn-dark { background: var(--ink); }
+.fn-dark .sec-h h2 { color: #F6F2F3; }
+.fn-dark .sec-h p { color: #C9C3C6; }
+.fn-dark .kick { color: var(--signal); }
+.fn-inc { display: grid; gap: 12px; margin: 28px 0 0; padding: 0; list-style: none; counter-reset: fi; }
+@media (min-width: 760px) { .fn-inc { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1080px) { .fn-inc { grid-template-columns: repeat(3, 1fr); } }
+.fn-inc li { counter-increment: fi; display: grid; gap: 8px; padding: 22px; border-radius: 20px; background: #1C1F22; border: 1px solid #2E3236; }
+.fn-inc li::before { content: "0" counter(fi); font: 600 12px/1 var(--mono); color: var(--signal); }
+.fn-inc b { color: #fff; font-size: 18px; letter-spacing: -.02em; }
+.fn-inc span { color: #D8D3D5; font-size: 15px; line-height: 1.5; }
+.fn-dark .fn-cta { margin-top: 28px; }
+.fn-dark .btn.fn-ghost { background: transparent; color: #F6F2F3; border: 1.5px solid #6A6F75; }
+.fn-dark .btn.fn-ghost:hover { border-color: #F6F2F3; }
+.fn-flame { transform-box: fill-box; transform-origin: 50% 100%; animation: fn-flick 2.6s var(--ease-io) infinite; }
+.fn-glow { animation: fn-glow 4s var(--ease-io) infinite; }
+.fn-ul { stroke-dasharray: 180; stroke-dashoffset: 180; animation: fn-draw 1.4s .3s var(--ease-out) forwards; }
+@keyframes fn-flick { 0%, 100% { transform: scaleY(1); } 40% { transform: scaleY(1.1) rotate(-3deg); } 70% { transform: scaleY(.94) rotate(2deg); } }
+@keyframes fn-glow { 0%, 100% { opacity: .12; } 50% { opacity: .26; } }
+@keyframes fn-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .fn-flame, .fn-glow { animation: none; } .fn-ul { animation: none; stroke-dashoffset: 0; } .fn-card { transition: none; } }

@@ -57,7 +57,10 @@ function plansPanel(catalog) {
 function buildPanel() {
   return '<div class="mn-in mn-in-build"><div class="mn-main"><p class="mn-hd">Seven steps, about three minutes</p><ol class="mn-steps">' +
     STEPS.map(([id, t], i) => '<li><a href="/build#' + id + '" data-step="' + id + '"><span class="mn-n">' + String(i + 1).padStart(2, '0') + '</span>' + esc(t) + '</a></li>').join('') +
-    '</ol></div><aside class="mn-feat"><p class="mn-kick">Your plan so far</p><div class="mn-so" data-mn="so"></div>' +
+    '</ol><p class="mn-hd mn-hd-2">Funnel build templates</p><ul class="mn-tpl">' +
+    link('/funnels/memorial', 'crm', 'Intake funnel: memorial and senior care', 'Three doors, care-fit quiz, CRM pipelines') +
+    link('/ritual', 'tag', 'Growth funnel: sweepstakes to team buy', 'Email-first entry, referrals, group buy') +
+    '</ul><a class="mn-sub" href="/funnels">All funnel templates' + arrow + '</a></div><aside class="mn-feat"><p class="mn-kick">Your plan so far</p><div class="mn-so" data-mn="so"></div>' +
     '<a class="btn btn-lime mn-go" href="/build" data-carry>Continue my plan</a><a class="mn-sub" href="/build?call=1" data-carry>Rather talk it through?' + arrow + '</a></aside></div>';
 }
 

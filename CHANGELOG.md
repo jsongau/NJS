@@ -2,6 +2,10 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-16
+
+- `/funnels/memorial` and `/funnels` — New funnel build template (memorial and senior care intake: three doors, care-fit quiz, veteran mode, A/B, Nathan's commentary, demo-only confirmations, plus Meta ad sets, GoHighLevel pipelines, automations and reporting) and a hub listing it beside the Ritual growth funnel. Linked from the Build mega nav panel, the phone menu, the footer and the sitemap.
+
 ## 2026-11-15
 
 - `/work` and the Delivered section — Zodi Animal added as a Premium case (facts checked on the live site). Each case now carries a stage: Complete (Zodi Animal, PM Countdown, CoverCapy) or In production (Boba Night, BoxVacay). PM Countdown and CoverCapy show "Now building: user dashboards"; PM Countdown carries an AI agents tag. Hero count is 5 products. Logos: Zodi Animal's third eye and BoxVacay's ring mark, both taken from their own repos.

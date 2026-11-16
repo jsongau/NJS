@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memorial and Senior Care Intake Funnel · Funnel Build Template by Nathan J. Song</title>
+<meta name="description" content="A working funnel build template for funeral, pre-need and senior living: three intake paths, Meta ad sets, GoHighLevel pipelines, follow-up automations and owner reporting. Concept brand, demo only.">
+<link rel="canonical" href="https://nathanjsong.com/funnels/memorial">
+<meta property="og:title" content="Memorial and senior care intake funnel, a build template">
+<meta property="og:description" content="Three intake paths, the ads behind them, the CRM pipelines and the follow-up, built by Nathan J. Song. Concept brand, demo only.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nathanjsong.com/funnels/memorial">
+<meta name="theme-color" content="#14231d">
+<link rel="icon" href="/assets/studio/brand/njs-mono.svg" type="image/svg+xml">
+<style>
+:root{
+  --bg:#f7f3ec; --paper:#fffdf8; --ink:#16211c; --ink-2:#3d4a43; --muted:#6a756e; --line:#e4dccd; --line-hi:#cfc3ac;
+  --brass:#a8823f; --brass-hi:#c9a45c; --brass-soft:#f3ead7; --green:#22392f; --green-2:#2f4c3f; --sage:#e8efe9; --rose:#f6e9e4;
+  --focus:#7a5a1f; --radius:18px; --shadow:0 24px 60px -28px rgba(22,33,28,.35);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+body[data-theme="evening"]{
+  --bg:#0f1a16; --paper:#16241e; --ink:#f3eee3; --ink-2:#cfd6cf; --muted:#9aa69e; --line:#27392f; --line-hi:#3a5044;
+  --brass:#d2ad66; --brass-hi:#e6c88a; --brass-soft:#2a3326; --green:#e6c88a; --green-2:#cfb377; --sage:#1c2c25; --rose:#2a2421; --focus:#e6c88a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:150px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip;transition:background-color .4s,color .3s;padding-bottom:56px}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.ph{display:inline-block}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- sticky top: brand bar + controls ---------- */
+.top{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;padding:12px 20px;max-width:1120px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;text-align:left;text-decoration:none;color:var(--ink);background:none;border:0;cursor:pointer}
+.brand svg{width:34px;height:34px;flex:none}
+.brand b{font-family:var(--serif);font-size:23px;font-weight:600;letter-spacing:.01em}
+.brand small{display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:-2px}
+.cm{position:relative}
+.cm-btn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:6px 13px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.cm-btn:hover,.cm.open .cm-btn{background:var(--ink);color:var(--bg)}
+.cm-btn svg{width:10px;height:10px;transition:transform .2s}.cm.open .cm-btn svg{transform:rotate(180deg)}
+.cm-panel{position:absolute;top:calc(100% + 10px);left:0;z-index:80;width:min(340px,calc(100vw - 28px));background:#14231d;color:#f3eee3;border-radius:16px;padding:18px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);display:none}
+.cm.open .cm-panel{display:block;animation:pop .22s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.cm-panel h2{font-family:var(--serif);font-size:18px;font-weight:600;line-height:1.25}
+.cm-panel p{font-size:13px;color:#c9cfc8;margin-top:8px}
+.cm-panel a{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.06);text-decoration:none;font-size:14px;font-weight:600}
+.cm-panel a:hover{background:rgba(210,173,102,.18)}
+.cm-panel a span{color:#d2ad66}
+.theme{margin-left:auto;display:flex;align-items:center;gap:10px}
+.tlab{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.seg2{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
+.seg2 button{position:relative;z-index:1;border:0;background:none;padding:7px 16px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;color:var(--ink-2);transition:color .25s}
+.seg2 button[aria-pressed="true"]{color:#16211c}
+.tl-s{display:none}
+.seg2 .thumb{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--brass-hi);transition:transform .35s cubic-bezier(.2,.8,.25,1)}
+body[data-theme="evening"] .seg2 .thumb{transform:translateX(100%)}
+.controls{border-top:1px solid var(--line)}
+.controls .in{display:flex;align-items:center;flex-wrap:wrap;gap:10px 18px;padding:10px 20px;max-width:1120px;margin:0 auto}
+.lab{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.seg{position:relative;display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px;gap:2px}
+.seg button{border:0;background:none;padding:8px 16px;border-radius:999px;font-weight:700;font-size:14.5px;cursor:pointer;color:var(--ink-2);white-space:nowrap;transition:background .25s,color .25s}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:active,.cta:active,.slot:active,.chip-btn:active{transform:scale(.97)}
+.toggles{display:flex;align-items:center;gap:16px;margin-left:auto;flex-wrap:wrap}
+.sw{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-weight:700;font-size:14.5px;background:none;border:0;padding:4px 0}
+.sw .tr{position:relative;width:46px;height:26px;border-radius:999px;background:var(--line-hi);transition:background .25s;flex:none}
+.sw .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .3s cubic-bezier(.2,.8,.25,1)}
+.sw[aria-checked="true"] .tr{background:var(--brass)}
+.sw[aria-checked="true"] .tr::after{transform:translateX(20px)}
+.sw small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);font-weight:800;line-height:1}
+.abv{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:6px;background:var(--brass-hi);color:#16211c;font-size:12px;font-weight:900}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start;padding:56px 0 40px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--brass)}
+.h1{font-family:var(--serif);font-weight:600;font-size:clamp(36px,5vw,60px);line-height:1.04;letter-spacing:-.015em;margin-top:16px;text-wrap:balance}
+.h1 em{font-style:italic;color:var(--green-2)}
+body[data-theme="evening"] .h1 em{color:var(--brass-hi)}
+.sub{font-size:19px;color:var(--ink-2);margin-top:18px;max-width:34em}
+.trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.trust span{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-hi);background:var(--paper);padding:8px 13px;border-radius:999px;font-size:13.5px;font-weight:600}
+.trust svg{width:15px;height:15px;color:var(--brass)}
+.vet{display:none;margin-top:22px;border:1px solid var(--line-hi);background:var(--brass-soft);border-radius:16px;padding:16px 18px;gap:14px;align-items:flex-start}
+body.veteran .vet{display:flex;animation:pop .3s ease-out}
+.vet svg{width:30px;height:30px;flex:none;color:var(--brass)}
+.vet b{display:block;font-size:15px}
+.vet p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.vet a{font-size:12px;color:var(--muted)}
+.art{margin-top:28px;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(180deg,#1a2b24,#22392f 55%,#2f4c3f);aspect-ratio:16/8.4;position:relative}
+.art svg{position:absolute;inset:0;width:100%;height:100%}
+.art .fl{transform-origin:50% 100%;animation:flick 2.6s ease-in-out infinite}
+@keyframes flick{0%,100%{transform:scaleY(1) rotate(0)}30%{transform:scaleY(1.08) rotate(-2deg)}60%{transform:scaleY(.95) rotate(1.5deg)}}
+.art .glow{animation:glow 4s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:.55}50%{opacity:.9}}
+.art .st{animation:tw 3.6s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.25}50%{opacity:1}}
+.art .cap{position:absolute;left:18px;bottom:16px;right:18px;color:#efe6d2;font-size:13px;display:flex;justify-content:space-between;gap:12px}
+.art .cap b{font-family:var(--serif);font-size:17px;font-weight:600}
+
+/* ---------- intake card ---------- */
+.card{position:sticky;top:156px;background:var(--paper);border:1px solid var(--line-hi);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+.ch{background:var(--green);color:#f3eee3;padding:18px 22px}
+body[data-theme="evening"] .ch{background:#22392f}
+.ch small{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#d2ad66}
+.ch strong{display:block;font-family:var(--serif);font-size:25px;font-weight:600;line-height:1.2;margin-top:6px}
+.cb{padding:20px 22px 22px}
+.steps{display:flex;gap:6px;margin-bottom:16px}
+.steps i{flex:1;height:4px;border-radius:4px;background:var(--line);overflow:hidden;position:relative}
+.steps i::after{content:"";position:absolute;inset:0;background:var(--brass);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.steps i.on::after{transform:none}
+.stepname{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.fs{display:none}
+.fs.on{display:block;animation:fsin .35s ease}
+@keyframes fsin{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+.field{margin-bottom:14px}
+.field>label,.field>.fl-lab{display:block;font-weight:700;font-size:14.5px;margin-bottom:6px}
+.opt{font-weight:500;color:var(--muted)}
+.inp{width:100%;font-size:16px;padding:13px 14px;border:1.5px solid var(--line-hi);border-radius:12px;background:var(--bg);transition:border-color .2s,box-shadow .2s}
+body[data-theme="evening"] .inp{background:#0f1a16}
+.inp:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 22%,transparent)}
+.err{display:none;color:#a3361f;font-size:13px;font-weight:600;margin-top:6px}
+body[data-theme="evening"] .err{color:#f0a48f}
+.field.bad .err{display:block}
+.field.bad .inp{border-color:#a3361f}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choices.c3{grid-template-columns:1fr 1fr 1fr}
+.chip-btn{display:flex;align-items:center;gap:9px;min-height:48px;padding:10px 12px;border:1.5px solid var(--line-hi);border-radius:12px;background:var(--bg);text-align:left;font-weight:600;font-size:14.5px;cursor:pointer;transition:border-color .2s,background .2s}
+body[data-theme="evening"] .chip-btn{background:#0f1a16}
+.chip-btn svg{width:18px;height:18px;flex:none;color:var(--brass)}
+.chip-btn[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+.chip-btn[aria-pressed="true"]::after{content:"";margin-left:auto;width:16px;height:16px;border-radius:50%;background:var(--brass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 6.3l2 2 4-4.3' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;flex:none}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--muted);margin:4px 0 14px;line-height:1.45}
+.consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--brass);flex:none}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0;border-radius:14px;background:var(--ink);color:var(--bg);font-weight:800;font-size:17px;cursor:pointer;transition:transform .12s,box-shadow .2s;box-shadow:0 8px 20px -10px rgba(0,0,0,.5)}
+.cta.brass{background:var(--brass-hi);color:#16211c}
+.cta:hover{box-shadow:0 12px 26px -10px rgba(0,0,0,.55)}
+.cta svg{width:18px;height:18px}
+.back{display:inline-flex;align-items:center;gap:6px;margin-top:10px;border:0;background:none;color:var(--muted);font-weight:600;font-size:13.5px;cursor:pointer}
+.fine{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}
+.call-now{display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;background:var(--brass-soft);border:1.5px solid var(--brass);text-decoration:none;margin-bottom:16px}
+.call-now svg{width:34px;height:34px;flex:none;padding:7px;border-radius:50%;background:var(--brass);color:#fff}
+.call-now b{display:block;font-size:19px}
+.call-now span{font-size:13px;color:var(--ink-2)}
+.or{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin:4px 0 14px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.fit{display:none;border:1.5px solid var(--brass);background:var(--brass-soft);border-radius:14px;padding:14px;margin-bottom:14px}
+.fit.on{display:block;animation:pop .3s ease}
+.fit small{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+.fit b{display:block;font-family:var(--serif);font-size:22px;font-weight:600;margin-top:2px}
+.fit p{font-size:13.5px;color:var(--ink-2);margin-top:4px}
+.why{display:none;align-items:center;gap:6px;margin-top:12px;border:0;background:#16211c;color:#e6c88a;font-size:12px;font-weight:800;padding:6px 11px;border-radius:999px;cursor:pointer}
+body[data-theme="evening"] .why{background:#e6c88a;color:#16211c}
+body.commentary .why{display:inline-flex}
+.why svg{width:13px;height:13px}
+.spot{box-shadow:0 0 0 8px var(--bg),0 0 0 11px var(--brass),0 0 0 22px color-mix(in srgb,var(--brass) 18%,transparent)!important;transition:box-shadow .35s}
+
+/* ---------- Nathan commentary bubble ---------- */
+#nathan{position:fixed;left:18px;top:170px;z-index:70;display:none}
+body.commentary #nathan{display:block}
+.nchip{width:56px;height:56px;border-radius:50%;background:var(--brass-hi);color:#16211c;border:3px solid #fff;box-shadow:var(--shadow);display:grid;place-items:center;font-weight:900;font-size:21px;cursor:pointer}
+.nbub{position:absolute;top:46px;left:32px;width:min(360px,calc(100vw - 60px));background:rgba(18,28,24,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#f3eee3;border-radius:16px;border-top-left-radius:5px;padding:16px 18px;font-size:14px;line-height:1.55;box-shadow:0 20px 50px -16px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translate(-6px,-6px) scale(.97);transform-origin:top left;transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.25,1),visibility .3s}
+.nbub.show{opacity:1;visibility:visible;transform:none}
+.nbub .who{display:flex;justify-content:space-between;gap:10px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#d2ad66;margin-bottom:8px}
+.nbub .who button{border:0;background:none;color:#aaa;cursor:pointer;font-size:16px;line-height:1}
+.nbub h3{font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:6px}
+.nbub p+p{margin-top:8px}
+.nbub .nav{display:flex;justify-content:space-between;margin-top:12px}
+.nbub .nav button{border:1px solid #4b5a52;background:transparent;color:#eee;border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer}
+.nbub .nav button:hover{background:#2a3a33}
+.nbub a{color:#e6c88a}
+
+/* ---------- sections ---------- */
+.sec{padding:72px 0;border-top:1px solid var(--line)}
+.kick{font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.01em;margin-top:10px;text-wrap:balance}
+.lede{font-size:18px;color:var(--ink-2);margin-top:12px;max-width:40em}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;counter-reset:s}
+.how li{list-style:none;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;position:relative}
+.how li::before{counter-increment:s;content:"0" counter(s);font-family:var(--mono);font-size:12px;font-weight:700;color:var(--brass)}
+.how b{display:block;font-family:var(--serif);font-size:21px;font-weight:600;margin-top:10px;line-height:1.25}
+.how p{font-size:15px;color:var(--ink-2);margin-top:6px}
+.prices{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;margin-top:30px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:28px}
+.gpl{list-style:none;display:grid;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.gpl li{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;font-size:15px;border-top:1px solid var(--line)}
+.gpl li:first-child{border-top:0}
+.gpl li span{color:var(--muted);font-family:var(--mono);font-size:12.5px}
+.prices p{font-size:15px;color:var(--ink-2)}
+.prices .src{font-size:12px;color:var(--muted);margin-top:10px}
+
+/* ---------- confirmation ---------- */
+#done{display:none}
+body.done #entry{display:none}
+body.done #done{display:block}
+.done-h{text-align:center;padding:56px 0 24px}
+.tick{width:84px;height:84px;margin:0 auto;border-radius:50%;background:var(--green-2);display:grid;place-items:center;animation:pop .45s ease}
+body[data-theme="evening"] .tick{background:#2f4c3f}
+.tick svg{width:40px;height:40px;color:#fff}
+.tick path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .6s .2s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.done-h h1{font-family:var(--serif);font-weight:600;font-size:clamp(32px,4vw,46px);margin-top:18px;line-height:1.1}
+.done-h p{font-size:18px;color:var(--ink-2);margin-top:10px}
+.demo-tag{display:inline-flex;gap:8px;align-items:center;margin-top:16px;padding:8px 14px;border-radius:999px;background:var(--sage);border:1px solid var(--line-hi);font-size:13px;font-weight:700}
+.next{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:980px;margin:18px auto 0}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:24px}
+.box h2{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.2}
+.box>p{font-size:15px;color:var(--ink-2);margin-top:6px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.slot{min-height:56px;border:1.5px solid var(--line-hi);border-radius:12px;background:var(--bg);font-weight:700;font-size:14px;cursor:pointer;line-height:1.2}
+.slot small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.slot[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+.booked{display:none;margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--sage);font-size:14px;font-weight:600}
+.booked.on{display:block;animation:pop .3s ease}
+.tl{list-style:none;margin-top:14px;position:relative}
+.tl::before{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl li{position:relative;padding-left:34px;margin-top:12px;font-size:14.5px}
+.tl li::before{content:"";position:absolute;left:5px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--paper);border:2.5px solid var(--brass)}
+.tl li b{display:block;font-size:12px;font-family:var(--mono);color:var(--brass);letter-spacing:.04em}
+.share{display:flex;gap:8px;margin-top:14px}
+.share input{flex:1;min-width:0;font-family:var(--mono);font-size:13px}
+.share button{flex:none;border:1.5px solid var(--ink);background:transparent;border-radius:12px;padding:0 16px;font-weight:700;cursor:pointer}
+.check{list-style:none;margin-top:12px}
+.check li{display:flex;gap:10px;margin-top:10px;font-size:15px}
+.check li::before{content:"";flex:none;width:20px;height:20px;margin-top:2px;border-radius:6px;border:2px solid var(--brass)}
+.restart{display:block;margin:28px auto 0;border:0;background:none;text-decoration:underline;font-weight:700;color:var(--ink-2);cursor:pointer}
+
+/* ---------- behind the funnel ---------- */
+.btf{background:#14231d;color:#efe6d2;border-top:0}
+body[data-theme="evening"] .btf{background:#0b1411}
+.btf .kick{color:#d2ad66}
+.btf .lede{color:#c6cdc6}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:28px;border-bottom:1px solid #2c4037;padding-bottom:0}
+.tab{border:0;background:none;color:#aeb8b1;font-weight:700;font-size:15px;padding:12px 14px;border-bottom:3px solid transparent;cursor:pointer;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:#fff;border-bottom-color:#d2ad66}
+.panes{display:grid;grid-template-columns:minmax(0,1fr);margin-top:26px}
+.pane{grid-area:1/1;min-width:0;visibility:hidden;opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s,visibility .3s}
+.pane.on{visibility:visible;opacity:1;transform:none}
+.map{background:#1a2c25;border:1px solid #2c4037;border-radius:20px;padding:10px;overflow:auto}
+.map svg{display:block;width:100%;min-width:760px;height:auto}
+.map .flow{stroke-dasharray:4 8;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+.adsets{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ad{background:#f7f3ec;color:#16211c;border-radius:18px;overflow:hidden}
+.ad .ad-h{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.ad .ad-h i{width:34px;height:34px;border-radius:50%;background:#22392f;display:grid;place-items:center}
+.ad .ad-h i svg{width:18px;height:18px}
+.ad .ad-h b{font-size:14px;display:block}
+.ad .ad-h small{font-size:11.5px;color:#6a756e}
+.ad .copy{padding:0 14px 12px;font-size:14px}
+.ad .img{aspect-ratio:1.4;background:linear-gradient(160deg,#22392f,#3d5a4b);display:grid;place-items:center;color:#efe6d2;font-family:var(--serif);font-size:22px;text-align:center;padding:16px;line-height:1.2}
+.ad .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 14px;background:#eee7da;font-size:13px}
+.ad .foot b{display:block}
+.ad .foot span{border:1px solid #cfc3ac;border-radius:8px;padding:6px 10px;font-weight:700;background:#fff;white-space:nowrap}
+.ad dl{padding:12px 14px;font-size:12.5px;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;border-top:1px solid #e4dccd}
+.ad dt{font-weight:800;color:#6a756e;text-transform:uppercase;font-size:10.5px;letter-spacing:.1em;padding-top:2px}
+.rule{margin-top:18px;display:flex;gap:12px;align-items:flex-start;background:#1a2c25;border:1px solid #2c4037;border-radius:14px;padding:14px 16px;font-size:14.5px;color:#d7ddd6}
+.rule svg{width:22px;height:22px;flex:none;color:#d2ad66}
+.rule a{color:#e6c88a}
+.pipes{display:grid;gap:14px}
+.pipe{background:#1a2c25;border:1px solid #2c4037;border-radius:18px;padding:16px}
+.pipe h3{font-size:15px;display:flex;justify-content:space-between;gap:10px}
+.pipe h3 small{font-weight:500;color:#9aa69e;font-size:13px}
+.stages{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(130px,1fr);gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
+.stage{background:#22392f;border-radius:12px;padding:10px;min-height:96px;position:relative}
+.stage b{display:block;font-size:13px}
+.stage small{display:block;font-size:11.5px;color:#a9b4ac;margin-top:4px;line-height:1.4}
+.stage .card-mini{margin-top:8px;background:#f7f3ec;color:#16211c;border-radius:8px;padding:6px 8px;font-size:11.5px;font-weight:700;animation:slidein 6s ease-in-out infinite}
+@keyframes slidein{0%,15%{opacity:0;transform:translateX(-8px)}25%,85%{opacity:1;transform:none}100%{opacity:0}}
+.autos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.auto{background:#1a2c25;border:1px solid #2c4037;border-radius:18px;padding:18px}
+.auto h3{font-family:var(--serif);font-size:20px;font-weight:600}
+.auto>p{font-size:13.5px;color:#a9b4ac;margin-top:4px}
+.auto ol{list-style:none;margin-top:12px}
+.auto li{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:9px 0;border-top:1px solid #2c4037;font-size:14px}
+.auto li b{font-family:var(--mono);font-size:12px;color:#d2ad66}
+.auto li em{font-style:normal;color:#a9b4ac;font-size:12.5px;display:block}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:#1a2c25;border:1px solid #2c4037;border-radius:16px;padding:16px}
+.kpi small{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9aa69e}
+.kpi b{display:block;font-family:var(--serif);font-size:30px;font-weight:600;margin-top:4px;color:#fff}
+.kpi span{font-size:12.5px;color:#a9b4ac}
+.kpi .spark{display:block;width:100%;height:30px;margin-top:8px}
+.note{margin-top:14px;font-size:13px;color:#9aa69e}
+.report{margin-top:16px;background:#f7f3ec;color:#16211c;border-radius:18px;padding:20px;font-size:14.5px}
+.report h3{font-family:var(--serif);font-size:20px;font-weight:600}
+.report ul{margin-top:8px;padding-left:18px}
+.report li{margin-top:5px}
+.hire{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hire a{display:inline-flex;align-items:center;gap:8px;min-height:50px;padding:0 20px;border-radius:14px;text-decoration:none;font-weight:800;background:#d2ad66;color:#16211c}
+.hire a.ghost{background:transparent;color:#efe6d2;border:1.5px solid #4b5a52}
+
+/* ---------- bottom banner ---------- */
+.banner{position:fixed;left:0;right:0;bottom:0;z-index:65;background:#0d1512;color:#d7ddd6;font-size:13px;padding:11px 16px;text-align:center;border-top:1px solid #24342c}
+.banner b{color:#d2ad66;letter-spacing:.12em;text-transform:uppercase;font-size:11.5px}
+.banner a{color:#fff;font-weight:700}
+
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:28px;padding-top:34px}
+  .card{position:relative;top:0}
+  .how,.adsets,.autos{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .prices,.next{grid-template-columns:1fr}
+  .theme .tlab{display:none}
+  .toggles{margin-left:0}
+  #nathan{top:auto;bottom:70px;left:12px}
+  .nbub{top:auto;bottom:46px;border-top-left-radius:16px;border-bottom-left-radius:5px}
+}
+@media (max-width:620px){
+  .bar{padding:10px 14px;gap:8px}
+  .brand{gap:6px}.brand svg{width:28px;height:28px}
+  .brand b{font-size:19px}.brand small{display:none}
+  .cm-btn{padding:5px 10px;letter-spacing:.08em;font-size:10.5px}
+  .seg2 button{padding:6px 10px;font-size:13px}
+  .tl-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.tl-s{display:inline}
+  .controls .in{padding:10px 16px}
+  .controls .lab{display:none}
+  .seg{width:100%;overflow-x:auto}
+  .seg button{padding:8px 12px;font-size:14px}
+  .toggles{gap:12px}
+  .sw{font-size:13.5px}
+  .choices.c3{grid-template-columns:1fr}
+  .slots{grid-template-columns:1fr 1fr}
+  .banner{font-size:11.5px;padding:9px 12px}
+  html{scroll-padding-top:16px}
+  .top{position:relative}
+}
+@media (max-width:400px){.bar{flex-wrap:wrap;row-gap:8px}.theme{margin-left:auto}.controls .in{gap:8px 12px}}
+</style>
+</head>
+<body data-theme="daylight" data-aud="plan">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-lantern" viewBox="0 0 32 32"><path d="M16 3v3M11 6h10l-1.5 3h-7zM10 9h12v15a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 14c2 2.2 2 4.4 0 6.4-2-2-2-4.2 0-6.4z" fill="currentColor"/><path d="M8 27h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="M4 10.5l3.8 3.6L16 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.6 4-2 1.4a11 11 0 0 0 6.3 6.3l1.4-2 4 1.6v2.6a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 20 20"><path d="M3 3h7l7 7-7 7-7-7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="7" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-person" viewBox="0 0 20 20"><circle cx="10" cy="6.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 17c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-calm" viewBox="0 0 20 20"><path d="M3 12c2.3-2 4.7-2 7 0s4.7 2 7 0M3 7.5c2.3-2 4.7-2 7 0s4.7 2 7 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 32 32"><path d="M7 29V4M7 5h17l-3 5 3 5H7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M11 8.5l1 .8 1-.8M15 8.5l1 .8 1-.8" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="i-why" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6.3 6.2a1.8 1.8 0 1 1 2.5 1.7c-.5.2-.8.6-.8 1.1v.4M8 11.6v.1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-home" viewBox="0 0 20 20"><path d="M3 9.5 10 3.5l7 6V17H3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 17v-4.5h4V17" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-pill" viewBox="0 0 20 20"><rect x="3" y="7" width="14" height="6" rx="3" transform="rotate(-35 10 10)" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 6.6l3.4 4.8" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-meal" viewBox="0 0 20 20"><path d="M5 3v6a2 2 0 0 0 2 2v6M5 3v4M7 3v4M9 3v6a2 2 0 0 1-2 2M14 17V3c-1.8 1-2.6 3-2.6 6H14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 20 20"><path d="M10 4.5c-1-1.6-4.6-1.4-5 1.3C3.2 6.4 3 9 4.6 10 3.6 11.8 5 14.4 7.2 14c.4 1.9 2.6 2.2 2.8.5V4.5zM10 4.5c1-1.6 4.6-1.4 5 1.3 1.8.6 2 3.2.4 4.2 1 1.8-.4 4.4-2.6 4-.4 1.9-2.6 2.2-2.8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-walk" viewBox="0 0 20 20"><circle cx="11" cy="3.8" r="1.6" fill="currentColor"/><path d="M8 18l2-5 2 2v3M7 9.5l2.5-3 3 1.5 1.5 3M9.5 6.5 9 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bath" viewBox="0 0 20 20"><path d="M3 10h14v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zM5 10V5a2 2 0 0 1 3.5-1.3M6 16l-1 2M14 16l1 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="bar">
+    <button class="brand" type="button" onclick="restart()" aria-label="Lanternhill, back to the start">
+      <svg aria-hidden="true" style="color:var(--brass)"><use href="#i-lantern"/></svg>
+      <span><b>Lanternhill</b><small>Memorial &amp; senior care</small></span>
+    </button>
+    <div class="cm" id="cm">
+      <button class="cm-btn" type="button" aria-expanded="false" aria-controls="cm-panel" onclick="toggleCm()">Template <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      <div class="cm-panel" id="cm-panel">
+        <h2>Funnel build template: memorial and senior care intake</h2>
+        <p>Built by Nathan J. Song. Lanternhill is a concept brand, not a real company. Nothing you type here is sent or stored.</p>
+        <a href="#behind" onclick="closeCm()">Behind the funnel: ads, CRM, automations <span>&rarr;</span></a>
+        <a href="/funnels">All funnel templates <span>&rarr;</span></a>
+        <a href="/marketing-ops">How I run ads and CRM <span>&rarr;</span></a>
+      </div>
+    </div>
+    <div class="theme">
+      <span class="tlab">Look</span>
+      <div class="seg2" role="group" aria-label="Color theme">
+        <span class="thumb" aria-hidden="true"></span>
+        <button type="button" data-theme-btn="daylight" aria-pressed="true"><span class="tl-l">Daylight</span><span class="tl-s" aria-hidden="true">Day</span></button>
+        <button type="button" data-theme-btn="evening" aria-pressed="false"><span class="tl-l">Evening</span><span class="tl-s" aria-hidden="true">Night</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="in">
+      <span class="lab" id="aud-lab">Visitor</span>
+      <div class="seg" role="group" aria-labelledby="aud-lab">
+        <button type="button" data-aud-btn="plan" aria-pressed="true">Planning ahead</button>
+        <button type="button" data-aud-btn="need" aria-pressed="false">A death just happened</button>
+        <button type="button" data-aud-btn="care" aria-pressed="false">Care for a parent</button>
+      </div>
+      <div class="toggles">
+        <button type="button" class="sw" role="switch" aria-checked="false" id="vetSw"><span class="tr" aria-hidden="true"></span><span>Veteran family<small>VA benefits mode</small></span></button>
+        <button type="button" class="sw" role="switch" aria-checked="false" id="abSw"><span class="tr" aria-hidden="true"></span>A/B: <span class="abv" id="abv">A</span></button>
+        <button type="button" class="sw" role="switch" aria-checked="false" id="cmSw"><span class="tr" aria-hidden="true"></span>Nathan's commentary</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<aside id="nathan" aria-label="Nathan's commentary">
+  <button class="nchip" type="button" id="nchip" aria-label="Show or hide the current note">N</button>
+  <div class="nbub" id="nbub" role="dialog" aria-live="polite" aria-label="Why it is built this way">
+    <div class="who"><span>Why it's built this way</span><button type="button" id="nx" aria-label="Hide note">&times;</button></div>
+    <div id="nbody"></div>
+    <div class="nav"><button type="button" id="nprev">&larr; Prev</button><button type="button" id="nnext">Next &rarr;</button></div>
+  </div>
+</aside>
+
+<main>
+<div id="entry">
+<section class="wrap">
+  <div class="hero">
+    <div>
+      <div data-note="hero" id="heroText">
+        <span class="eyebrow"><i></i><span id="eyebrow"></span></span>
+        <h1 class="h1" id="headline"></h1>
+        <p class="sub" id="sub"></p>
+        <button type="button" class="why" data-why="hero"><svg><use href="#i-why"/></svg>Why this headline?</button>
+      </div>
+      <div class="trust" id="trust" data-note="trust"></div>
+      <div class="vet" data-note="vet">
+        <svg aria-hidden="true"><use href="#i-flag"/></svg>
+        <div>
+          <b>Veteran families: benefits you may already have</b>
+          <p>Depending on eligibility, the VA provides burial in a national cemetery where space is available, a headstone or marker, a burial flag and a Presidential Memorial Certificate at no cost to the family. A burial allowance may also apply. We file the paperwork with you.</p>
+          <a href="https://www.aarp.org/veterans/va-burial-benefits/" rel="noopener" target="_blank">Source: AARP, VA burial benefits</a>
+        </div>
+      </div>
+      <figure class="art" aria-hidden="true">
+        <svg viewBox="0 0 640 336" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <radialGradient id="g-glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#f2cf86" stop-opacity=".75"/><stop offset="1" stop-color="#f2cf86" stop-opacity="0"/></radialGradient>
+            <linearGradient id="g-hill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c4a3d"/><stop offset="1" stop-color="#15241e"/></linearGradient>
+          </defs>
+          <g fill="#efe6d2"><circle class="st" cx="80" cy="50" r="1.6"/><circle class="st" cx="190" cy="34" r="1.2" style="animation-delay:.8s"/><circle class="st" cx="300" cy="62" r="1.4" style="animation-delay:1.6s"/><circle class="st" cx="470" cy="40" r="1.6" style="animation-delay:.4s"/><circle class="st" cx="560" cy="76" r="1.2" style="animation-delay:2.2s"/><circle class="st" cx="610" cy="30" r="1.4" style="animation-delay:1.2s"/></g>
+          <circle cx="520" cy="78" r="26" fill="#efe6d2" opacity=".9"/><circle cx="531" cy="71" r="23" fill="#1f332b"/>
+          <path d="M0 250 C120 205 220 215 330 238 S520 228 640 196 V336 H0z" fill="url(#g-hill)"/>
+          <path d="M0 290 C140 262 260 270 380 288 S560 282 640 268 V336 H0z" fill="#12201a"/>
+          <g transform="translate(176 150)"><path d="M0 92V40M-26 92h52" stroke="#3d5a4b" stroke-width="5" stroke-linecap="round"/><circle cx="0" cy="18" r="40" fill="#2f4c3f"/><circle cx="-24" cy="34" r="28" fill="#2a4538"/><circle cx="22" cy="36" r="26" fill="#355546"/></g>
+          <g transform="translate(410 168)">
+            <circle class="glow" cx="0" cy="40" r="70" fill="url(#g-glow)"/>
+            <path d="M0 -4v10M-15 6h30l-4 8h-22zM-18 14h36v44a6 6 0 0 1-6 6h-24a6 6 0 0 1-6-6z" fill="#1d2f27" stroke="#d2ad66" stroke-width="3" stroke-linejoin="round"/>
+            <path class="fl" d="M0 26c6 7 6 14 0 20-6-6-6-13 0-20z" fill="#f2cf86"/>
+            <path d="M-26 70h52" stroke="#d2ad66" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <figcaption class="cap"><b id="artCap">A light left on for the people who come next</b><span>Concept artwork</span></figcaption>
+      </figure>
+    </div>
+
+    <div>
+      <div class="card" id="card" data-note="card">
+        <div class="ch"><small><svg width="14" height="14" aria-hidden="true"><use href="#i-lantern"/></svg><span id="chKick"></span></small><strong id="chTitle"></strong></div>
+        <div class="cb">
+          <!-- PLANNING AHEAD -->
+          <form id="f-plan" class="flow" data-flow="plan" novalidate>
+            <div class="steps" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+            <p class="stepname" aria-live="polite">Step <span class="sn">1</span> of 3</p>
+            <div class="fs on" data-s="1">
+              <div class="field"><label for="p-email">Where should we send the guide?</label><input class="inp" id="p-email" type="email" autocomplete="email" placeholder="you@email.com"><div class="err">Please enter a valid email address.</div></div>
+              <button class="cta" type="button" data-next><span class="cta-t" data-ab-a="Send me the free guide" data-ab-b="Get the guide and price list"></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <p class="fine">The guide includes our full price list. No call unless you ask for one.</p>
+              <button type="button" class="why" data-why="email">Why ask for email first?</button>
+            </div>
+            <div class="fs" data-s="2">
+              <div class="field"><label for="p-name">Your first name</label><input class="inp" id="p-name" autocomplete="given-name" placeholder="First name"><div class="err">Please enter your first name.</div></div>
+              <div class="field" data-group="for"><span class="fl-lab">Who are you planning for?</span>
+                <div class="choices">
+                  <button type="button" class="chip-btn" data-v="myself" aria-pressed="false"><svg><use href="#i-person"/></svg>Myself</button>
+                  <button type="button" class="chip-btn" data-v="spouse" aria-pressed="false"><svg><use href="#i-person"/></svg>My spouse or partner</button>
+                  <button type="button" class="chip-btn" data-v="parent" aria-pressed="false"><svg><use href="#i-person"/></svg>A parent</button>
+                  <button type="button" class="chip-btn" data-v="other" aria-pressed="false"><svg><use href="#i-person"/></svg>Someone else</button>
+                </div><div class="err">Pick one so the guide fits.</div></div>
+              <div class="field vet-q" hidden data-group="served"><span class="fl-lab">Did they serve in the military?</span>
+                <div class="choices c3"><button type="button" class="chip-btn" data-v="yes" aria-pressed="false">Yes</button><button type="button" class="chip-btn" data-v="no" aria-pressed="false">No</button><button type="button" class="chip-btn" data-v="unsure" aria-pressed="false">Not sure</button></div></div>
+              <button class="cta" type="button" data-next>Continue<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="back" type="button" data-back>&larr; Back</button>
+            </div>
+            <div class="fs" data-s="3">
+              <div class="field" data-group="wish"><span class="fl-lab">What are you leaning toward? <span class="opt">(fine to skip)</span></span>
+                <div class="choices c3"><button type="button" class="chip-btn" data-v="burial" aria-pressed="false">Burial</button><button type="button" class="chip-btn" data-v="cremation" aria-pressed="false">Cremation</button><button type="button" class="chip-btn" data-v="unsure" aria-pressed="false">Not sure yet</button></div></div>
+              <div class="field" data-group="when"><span class="fl-lab">How soon would you like to talk it through?</span>
+                <div class="choices c3"><button type="button" class="chip-btn" data-v="research" aria-pressed="false"><svg><use href="#i-calm"/></svg>Just reading</button><button type="button" class="chip-btn" data-v="months" aria-pressed="false">In a few months</button><button type="button" class="chip-btn" data-v="soon" aria-pressed="false">Soon</button></div></div>
+              <div class="field"><label for="p-phone">Mobile number <span class="opt">(optional)</span></label><input class="inp" id="p-phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div>
+              <label class="consent"><input type="checkbox" id="p-sms"><span>Text me a reminder when the guide arrives and if I book a call. Not required. Msg and data rates may apply. Reply STOP to opt out.</span></label>
+              <button class="cta brass" type="submit">Send my guide<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="back" type="button" data-back>&larr; Back</button>
+              <button type="button" class="why" data-why="consent">Why is the text box unticked?</button>
+            </div>
+          </form>
+
+          <!-- AT NEED -->
+          <form id="f-need" class="flow" data-flow="need" novalidate hidden>
+            <a class="call-now" href="tel:+15550100144" data-note="call"><svg aria-hidden="true"><use href="#i-phone"/></svg><span><b>Call (555) 010-0144</b><span>A director answers, day or night</span></span></a>
+            <div class="or">or we call you</div>
+            <div class="field"><label for="n-name">Your name</label><input class="inp" id="n-name" autocomplete="name" placeholder="Your name"><div class="err">Please enter your name.</div></div>
+            <div class="field"><label for="n-phone">Best number to reach you</label><input class="inp" id="n-phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"><div class="err">Please enter a phone number we can call.</div></div>
+            <div class="field" data-group="where"><span class="fl-lab">Where is your loved one now?</span>
+              <div class="choices"><button type="button" class="chip-btn" data-v="home" aria-pressed="false"><svg><use href="#i-home"/></svg>At home</button><button type="button" class="chip-btn" data-v="hospital" aria-pressed="false">Hospital</button><button type="button" class="chip-btn" data-v="hospice" aria-pressed="false">Hospice or care home</button><button type="button" class="chip-btn" data-v="other" aria-pressed="false">Somewhere else</button></div></div>
+            <div class="field vet-q" hidden data-group="served"><span class="fl-lab">Did they serve in the military?</span>
+              <div class="choices c3"><button type="button" class="chip-btn" data-v="yes" aria-pressed="false">Yes</button><button type="button" class="chip-btn" data-v="no" aria-pressed="false">No</button><button type="button" class="chip-btn" data-v="unsure" aria-pressed="false">Not sure</button></div></div>
+            <button class="cta brass" type="submit"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="cta-t" data-ab-a="Call me back" data-ab-b="Have a director call me"></span></button>
+            <p class="fine">No email needed. Nothing to sign tonight.</p>
+            <button type="button" class="why" data-why="need">Why is this one so short?</button>
+          </form>
+
+          <!-- SENIOR CARE -->
+          <form id="f-care" class="flow" data-flow="care" novalidate hidden>
+            <div class="steps" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+            <p class="stepname" aria-live="polite">Step <span class="sn">1</span> of 3</p>
+            <div class="fs on" data-s="1">
+              <div class="field" data-group="who"><span class="fl-lab">Who is the care for?</span>
+                <div class="choices"><button type="button" class="chip-btn" data-v="mom" aria-pressed="false"><svg><use href="#i-person"/></svg>My mom</button><button type="button" class="chip-btn" data-v="dad" aria-pressed="false"><svg><use href="#i-person"/></svg>My dad</button><button type="button" class="chip-btn" data-v="spouse" aria-pressed="false"><svg><use href="#i-person"/></svg>My spouse</button><button type="button" class="chip-btn" data-v="me" aria-pressed="false"><svg><use href="#i-person"/></svg>Myself</button></div><div class="err">Pick one to continue.</div></div>
+              <button class="cta" type="button" data-next>Continue<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="fs" data-s="2">
+              <div class="field" data-group="help" data-multi><span class="fl-lab">Where do they need a hand today? <span class="opt">(pick any)</span></span>
+                <div class="choices"><button type="button" class="chip-btn" data-v="meals" aria-pressed="false"><svg><use href="#i-meal"/></svg>Meals</button><button type="button" class="chip-btn" data-v="meds" aria-pressed="false"><svg><use href="#i-pill"/></svg>Medications</button><button type="button" class="chip-btn" data-v="bathing" aria-pressed="false"><svg><use href="#i-bath"/></svg>Bathing, dressing</button><button type="button" class="chip-btn" data-v="walking" aria-pressed="false"><svg><use href="#i-walk"/></svg>Getting around</button><button type="button" class="chip-btn" data-v="memory" aria-pressed="false"><svg><use href="#i-brain"/></svg>Memory, getting lost</button><button type="button" class="chip-btn" data-v="none" aria-pressed="false"><svg><use href="#i-calm"/></svg>Mostly independent</button></div></div>
+              <div class="fit" id="fit" aria-live="polite"><small>A good place to start</small><b id="fitName"></b><p id="fitWhy"></p></div>
+              <button class="cta" type="button" data-next>Continue<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="back" type="button" data-back>&larr; Back</button>
+              <button type="button" class="why" data-why="fit">Why a care-fit step?</button>
+            </div>
+            <div class="fs" data-s="3">
+              <div class="field"><label for="c-name">Your first name</label><input class="inp" id="c-name" autocomplete="given-name" placeholder="First name"><div class="err">Please enter your first name.</div></div>
+              <div class="field"><label for="c-email">Email</label><input class="inp" id="c-email" type="email" autocomplete="email" placeholder="you@email.com"><div class="err">Please enter a valid email address.</div></div>
+              <div class="field"><label for="c-phone">Mobile number <span class="opt">(to confirm the tour)</span></label><input class="inp" id="c-phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div>
+              <label class="consent"><input type="checkbox" id="c-sms"><span>Text me the tour time and a reminder the day before. Not required. Msg and data rates may apply. Reply STOP to opt out.</span></label>
+              <button class="cta brass" type="submit"><span class="cta-t" data-ab-a="Pick a tour time" data-ab-b="See tour times"></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+              <button class="back" type="button" data-back>&larr; Back</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" data-note="how">
+  <div class="wrap">
+    <span class="kick" id="howKick"></span>
+    <h2 class="h2" id="howH"></h2>
+    <ol class="how" id="how"></ol>
+  </div>
+</section>
+
+<section class="sec" data-note="prices">
+  <div class="wrap">
+    <span class="kick">Price list</span>
+    <h2 class="h2"><span class="ph">Every price,</span> <span class="ph">before you call.</span></h2>
+    <div class="prices">
+      <ul class="gpl" aria-label="Sample price list categories">
+        <li>Basic services of the director and staff<span>listed</span></li>
+        <li>Transfer of the deceased to the funeral home<span>listed</span></li>
+        <li>Embalming and other preparation<span>listed</span></li>
+        <li>Direct cremation<span>listed</span></li>
+        <li>Immediate burial<span>listed</span></li>
+        <li>Caskets, urns and outer burial containers<span>listed</span></li>
+      </ul>
+      <div>
+        <p>Families compare prices before they call. Showing the list builds trust and filters out calls that were only ever about price.</p>
+        <p style="margin-top:10px">In California, a funeral home with a website must post the goods and services on its general price list, linked from the homepage.</p>
+        <p class="src">Source: <a href="https://california.public.law/codes/business_and_professions_code_section_7685" rel="noopener" target="_blank">California Business and Professions Code 7685</a>. Template shows categories only.</p>
+        <button type="button" class="why" data-why="prices">Why put prices on a lead page?</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============ CONFIRMATION ============ -->
+<div id="done" tabindex="-1">
+  <section class="wrap">
+    <div class="done-h">
+      <div class="tick"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.8 3.6L16 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h1 id="doneH"></h1>
+      <p id="doneP"></p>
+      <span class="demo-tag"><svg width="15" height="15" aria-hidden="true"><use href="#i-calm"/></svg>Demo: nothing you typed was sent or stored</span>
+    </div>
+    <div class="next" id="next"></div>
+    <button type="button" class="restart" onclick="restart()">Try another visitor path</button>
+  </section>
+</div>
+
+<!-- ============ BEHIND THE FUNNEL ============ -->
+<section class="sec btf" id="behind" aria-labelledby="btf-h">
+  <div class="wrap">
+    <span class="kick">Behind the funnel</span>
+    <h2 class="h2" id="btf-h"><span class="ph">What makes the page work</span> <span class="ph">is everything after the click.</span></h2>
+    <p class="lede">The ads that send each visitor to the right door, the CRM pipeline every lead lands in, the follow-up that runs on its own, and the report the owner reads on Monday.</p>
+    <div class="tabs" role="tablist" aria-label="Behind the funnel">
+      <button class="tab" role="tab" id="t-map" aria-controls="p-map" aria-selected="true">Funnel map</button>
+      <button class="tab" role="tab" id="t-ads" aria-controls="p-ads" aria-selected="false" tabindex="-1">Meta ads</button>
+      <button class="tab" role="tab" id="t-crm" aria-controls="p-crm" aria-selected="false" tabindex="-1">CRM pipelines</button>
+      <button class="tab" role="tab" id="t-auto" aria-controls="p-auto" aria-selected="false" tabindex="-1">Automations</button>
+      <button class="tab" role="tab" id="t-rep" aria-controls="p-rep" aria-selected="false" tabindex="-1">Reporting</button>
+    </div>
+    <div class="panes">
+      <div class="pane on" role="tabpanel" id="p-map" aria-labelledby="t-map">
+        <div class="map">
+          <svg viewBox="0 0 980 360" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" role="img" aria-label="Funnel map: Meta ads and search lead to three doors, planning ahead, help now and senior care. Each feeds its own CRM pipeline, then booking, then a signed plan, an arrangement or a move-in, then aftercare, reviews and family referrals.">
+            <g fill="none" stroke="#d2ad66" stroke-width="2.2" stroke-linecap="round">
+              <path class="flow" d="M150 90 C210 90 210 70 270 70"/><path class="flow" d="M150 180 C210 180 210 180 270 180"/><path class="flow" d="M150 270 C210 270 210 290 270 290"/>
+              <path class="flow" d="M150 90 C210 90 210 180 270 180" opacity=".35"/>
+              <path class="flow" d="M420 70H500"/><path class="flow" d="M420 180H500"/><path class="flow" d="M420 290H500"/>
+              <path class="flow" d="M650 70H720"/><path class="flow" d="M650 180H720"/><path class="flow" d="M650 290H720"/>
+              <path class="flow" d="M870 70C910 70 910 180 870 180M870 290C910 290 910 180 870 180" opacity=".7"/>
+            </g>
+            <g font-size="13" fill="#f3eee3">
+              <g><rect x="20" y="60" width="130" height="60" rx="14" fill="#22392f" stroke="#3a5044"/><text x="85" y="86" text-anchor="middle" font-weight="700">Meta ads</text><text x="85" y="104" text-anchor="middle" fill="#a9b4ac" font-size="11.5">planning, senior care</text></g>
+              <g><rect x="20" y="150" width="130" height="60" rx="14" fill="#22392f" stroke="#3a5044"/><text x="85" y="176" text-anchor="middle" font-weight="700">Search and Maps</text><text x="85" y="194" text-anchor="middle" fill="#a9b4ac" font-size="11.5">"funeral home near me"</text></g>
+              <g><rect x="20" y="240" width="130" height="60" rx="14" fill="#22392f" stroke="#3a5044"/><text x="85" y="266" text-anchor="middle" font-weight="700">Referrals</text><text x="85" y="284" text-anchor="middle" fill="#a9b4ac" font-size="11.5">hospice, families</text></g>
+              <g><rect x="270" y="40" width="150" height="60" rx="14" fill="#f7f3ec"/><text x="345" y="66" text-anchor="middle" font-weight="800" fill="#16211c">Planning ahead</text><text x="345" y="84" text-anchor="middle" fill="#6a756e" font-size="11.5">guide + price list</text></g>
+              <g><rect x="270" y="150" width="150" height="60" rx="14" fill="#d2ad66"/><text x="345" y="176" text-anchor="middle" font-weight="800" fill="#16211c">Help now</text><text x="345" y="194" text-anchor="middle" fill="#3d3420" font-size="11.5">call or callback</text></g>
+              <g><rect x="270" y="260" width="150" height="60" rx="14" fill="#f7f3ec"/><text x="345" y="286" text-anchor="middle" font-weight="800" fill="#16211c">Senior care</text><text x="345" y="304" text-anchor="middle" fill="#6a756e" font-size="11.5">care-fit + tour</text></g>
+              <g><rect x="500" y="40" width="150" height="60" rx="14" fill="#22392f" stroke="#3a5044"/><text x="575" y="66" text-anchor="middle" font-weight="700">Pipeline: pre-need</text><text x="575" y="84" text-anchor="middle" fill="#a9b4ac" font-size="11.5">nurture, then call</text></g>
+              <g><rect x="500" y="150" width="150" height="60" rx="14" fill="#22392f" stroke="#3a5044"/><text x="575" y="176" text-anchor="middle" font-weight="700">Pipeline: at-need</text><text x="575" y="194" text-anchor="middle" fill="#a9b4ac" font-size="11.5">director paged now</text></g>
+              <g><rect x="500" y="260" width="150" height="60" rx="14" fill="#22392f" stroke="#3a5044"/><text x="575" y="286" text-anchor="middle" font-weight="700">Pipeline: care</text><text x="575" y="304" text-anchor="middle" fill="#a9b4ac" font-size="11.5">tour, assessment</text></g>
+              <g><rect x="720" y="40" width="150" height="60" rx="14" fill="#2f4c3f"/><text x="795" y="66" text-anchor="middle" font-weight="700">Signed plan</text><text x="795" y="84" text-anchor="middle" fill="#cfd6cf" font-size="11.5">family added</text></g>
+              <g><rect x="720" y="150" width="150" height="60" rx="14" fill="#2f4c3f"/><text x="795" y="176" text-anchor="middle" font-weight="700">Aftercare</text><text x="795" y="194" text-anchor="middle" fill="#cfd6cf" font-size="11.5">30, 90, 365 days</text></g>
+              <g><rect x="720" y="260" width="150" height="60" rx="14" fill="#2f4c3f"/><text x="795" y="286" text-anchor="middle" font-weight="700">Move-in</text><text x="795" y="304" text-anchor="middle" fill="#cfd6cf" font-size="11.5">first-month check-ins</text></g>
+              <text x="935" y="176" text-anchor="middle" font-weight="800" fill="#d2ad66">Reviews</text><text x="935" y="194" text-anchor="middle" fill="#d2ad66" font-weight="800">referrals</text>
+            </g>
+            <circle r="5" fill="#f2cf86"><animateMotion dur="6s" repeatCount="indefinite" path="M150 90 C210 90 210 70 270 70 H420 H500 H650 H720 H870"/></circle>
+            <circle r="5" fill="#f2cf86"><animateMotion dur="4s" repeatCount="indefinite" begin="1s" path="M150 180 H270 H420 H500 H650 H720 H870"/></circle>
+            <circle r="5" fill="#f2cf86"><animateMotion dur="7s" repeatCount="indefinite" begin="2s" path="M150 270 C210 270 210 290 270 290 H420 H500 H650 H720 H870"/></circle>
+          </svg>
+        </div>
+        <div class="rule"><svg aria-hidden="true"><use href="#i-calm"/></svg><span><b>The one rule across all three:</b> nobody who just lost someone is ever shown an ad, a countdown or a sales sequence. At-need contacts are suppressed from planning ads and planning emails for twelve months.</span></div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="p-ads" aria-labelledby="t-ads">
+        <div class="adsets">
+          <article class="ad"><div class="ad-h"><i><svg width="18" height="18" style="color:#d2ad66"><use href="#i-lantern"/></svg></i><span><b>Lanternhill</b><small>Sponsored</small></span></div><p class="copy">Writing your wishes down is one of the kindest things you can leave. Our free guide walks you through it, with every price listed.</p><div class="img">Plan it once.<br>Spare them the guessing.</div><div class="foot"><span style="border:0;background:none;padding:0"><b>Free planning guide</b>lanternhill.example</span><span>Download</span></div><dl><dt>Ad set</dt><dd>Planning ahead</dd><dt>Who</dt><dd>Adults in the service area, broad. Age and location only.</dd><dt>Goal</dt><dd>Leads, on the website (not an instant form), so every lead sees the price list</dd><dt>Lands</dt><dd>Planning ahead door</dd></dl></article>
+          <article class="ad"><div class="ad-h"><i><svg width="18" height="18" style="color:#d2ad66"><use href="#i-lantern"/></svg></i><span><b>Lanternhill</b><small>Sponsored</small></span></div><p class="copy">When Mom needs more help than you can give, start with a short care-fit check and an in-person tour. No pressure, no forms to sign.</p><div class="img">See it in person<br>before you decide.</div><div class="foot"><span style="border:0;background:none;padding:0"><b>Book a tour</b>lanternhill.example</span><span>Book now</span></div><dl><dt>Ad set</dt><dd>Senior care</dd><dt>Who</dt><dd>Adults in the service area, broad, plus a lookalike of past tour bookers</dd><dt>Goal</dt><dd>Leads, optimised for "tour booked", not "form started"</dd><dt>Lands</dt><dd>Care for a parent door</dd></dl></article>
+          <article class="ad"><div class="ad-h"><i><svg width="18" height="18" style="color:#d2ad66"><use href="#i-lantern"/></svg></i><span><b>Lanternhill</b><small>Sponsored</small></span></div><p class="copy">You came by last week. Your planning guide and our price list are still here whenever you want them, and a call is always optional.</p><div class="img">Whenever you're ready,<br>we're here.</div><div class="foot"><span style="border:0;background:none;padding:0"><b>Pick up where you left off</b>lanternhill.example</span><span>Learn more</span></div><dl><dt>Ad set</dt><dd>Retargeting, 30 days</dd><dt>Who</dt><dd>Planning and care visitors who did not finish. Excludes at-need contacts and anyone who already booked.</dd><dt>Goal</dt><dd>Leads; frequency capped low</dd><dt>Lands</dt><dd>The step they left</dd></dl></article>
+        </div>
+        <div class="rule"><svg aria-hidden="true"><use href="#i-why"/></svg><span><b>Ad wording rule:</b> copy never states or implies a viewer's health, age or loss ("Did you just lose your mother?"). Meta's personal attributes policy prohibits it, and families find it cruel. <a href="https://transparency.meta.com/policies/ad-standards/objectionable-content/privacy-violations-personal-attributes/" rel="noopener" target="_blank">Meta's policy</a>. There are no at-need ads at all: those families find you through search, Maps and hospice referrals.</span></div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="p-crm" aria-labelledby="t-crm">
+        <div class="pipes">
+          <div class="pipe"><h3>Pre-need pipeline <small>GoHighLevel, one opportunity per family</small></h3><div class="stages">
+            <div class="stage"><b>New lead</b><small>Guide sent, tagged by who and what they lean toward</small><div class="card-mini">R. Alvarez · parent</div></div>
+            <div class="stage"><b>Engaged</b><small>Opened the guide or viewed prices twice</small></div>
+            <div class="stage"><b>Call booked</b><small>Planner assigned, reminder set</small></div>
+            <div class="stage"><b>Plan presented</b><small>Written estimate sent, 7-day check-in task</small></div>
+            <div class="stage"><b>Signed</b><small>Contract in place, family contacts added</small></div>
+            <div class="stage"><b>Not now</b><small>Moved to the quarterly letter, never deleted</small></div>
+          </div></div>
+          <div class="pipe"><h3>At-need pipeline <small>Speed first: the director is paged the moment it lands</small></h3><div class="stages">
+            <div class="stage"><b>Call received</b><small>SMS and push to the on-call director</small><div class="card-mini" style="animation-delay:1.5s">Callback · hospice</div></div>
+            <div class="stage"><b>Director assigned</b><small>Callback logged with time to first call</small></div>
+            <div class="stage"><b>Arrangement</b><small>Meeting held, price list given in person</small></div>
+            <div class="stage"><b>Service held</b><small>Thank-you note task for the director</small></div>
+            <div class="stage"><b>Aftercare</b><small>Grief resources at 30, 90 and 365 days</small></div>
+          </div></div>
+          <div class="pipe"><h3>Senior care pipeline <small>Optimised to tours, not form fills</small></h3><div class="stages">
+            <div class="stage"><b>Inquiry</b><small>Care-fit result saved to the contact</small><div class="card-mini" style="animation-delay:3s">J. Kim · memory care</div></div>
+            <div class="stage"><b>Tour booked</b><small>Confirmation, reminder the day before</small></div>
+            <div class="stage"><b>Toured</b><small>Same-day follow-up from the guide who led it</small></div>
+            <div class="stage"><b>Assessment</b><small>Nurse visit scheduled</small></div>
+            <div class="stage"><b>Move-in</b><small>Welcome sequence for the family</small></div>
+          </div></div>
+        </div>
+        <div class="rule"><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Clean data in:</b> each answer on the page maps to one custom field (planning for, leaning toward, timing, care needs, served). Staff never retype what a family already told the website.</span></div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="p-auto" aria-labelledby="t-auto">
+        <div class="autos">
+          <div class="auto"><h3>Planning ahead</h3><p>Email, plus text only if they ticked the box.</p><ol>
+            <li><b>Minute 0</b><span>Guide and price list<em>email, and a text if consented</em></span></li>
+            <li><b>Day 2</b><span>"Questions families ask us"<em>email</em></span></li>
+            <li><b>Day 5</b><span>Optional call offer, three times<em>email</em></span></li>
+            <li><b>Day 14</b><span>A worksheet to share with family<em>email</em></span></li>
+            <li><b>Day 30</b><span>Check-in from a named planner<em>email; then quarterly</em></span></li>
+          </ol></div>
+          <div class="auto"><h3>Help now</h3><p>No marketing. Only care, and only from people.</p><ol>
+            <li><b>Second 0</b><span>Director paged with name, number, where<em>SMS and app push</em></span></li>
+            <li><b>Minute 10</b><span>Escalate to backup if no callback logged<em>internal alert</em></span></li>
+            <li><b>Day 30</b><span>Grief resources<em>letter or email</em></span></li>
+            <li><b>Day 45</b><span>One review request, same link for every family<em>email, never text</em></span></li>
+            <li><b>Days 90, 365</b><span>Remembrance notes<em>letter</em></span></li>
+          </ol></div>
+          <div class="auto"><h3>Senior care</h3><p>Built around the tour.</p><ol>
+            <li><b>Minute 0</b><span>Tour confirmed with directions<em>email, text if consented</em></span></li>
+            <li><b>Day -1</b><span>Reminder with what to bring<em>text or email</em></span></li>
+            <li><b>Same day</b><span>Thank-you from the tour guide<em>email</em></span></li>
+            <li><b>Day 3</b><span>Pricing and care-level sheet<em>email</em></span></li>
+            <li><b>Day 10</b><span>Second visit or a meal invite<em>email</em></span></li>
+          </ol></div>
+        </div>
+        <div class="rule"><svg aria-hidden="true"><use href="#i-calm"/></svg><span><b>Every workflow has an exit:</b> a booking, a reply, an opt-out or a death in the family stops the sequence at once. Review requests go to every family with the same link, and low ratings alert the owner; Google prohibits asking only happy customers.</span></div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="p-rep" aria-labelledby="t-rep">
+        <div class="kpis">
+          <div class="kpi"><small>Cost per lead</small><b>CPL</b><span>by ad set, weekly</span><svg class="spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 22 22 18 42 20 62 12 82 14 102 8 118 10" fill="none" stroke="#d2ad66" stroke-width="2"/></svg></div>
+          <div class="kpi"><small>Speed to lead</small><b>Minutes</b><span>form in to first call, at-need</span><svg class="spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 8 22 12 42 10 62 16 82 18 102 22 118 21" fill="none" stroke="#d2ad66" stroke-width="2"/></svg></div>
+          <div class="kpi"><small>Lead to booked</small><b>Rate</b><span>calls and tours booked per lead</span><svg class="spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 24 22 21 42 22 62 16 82 15 102 11 118 9" fill="none" stroke="#d2ad66" stroke-width="2"/></svg></div>
+          <div class="kpi"><small>Booked to signed</small><b>Rate</b><span>pre-need plans and move-ins</span><svg class="spark" viewBox="0 0 120 30" aria-hidden="true"><path d="M2 20 22 20 42 17 62 18 82 13 102 12 118 10" fill="none" stroke="#d2ad66" stroke-width="2"/></svg></div>
+        </div>
+        <p class="note">Shown as definitions, not results. Lanternhill is a concept; real numbers come from the client's own accounts.</p>
+        <div class="report"><h3><span class="ph">The Monday report,</span> <span class="ph">one page</span></h3><ul>
+          <li>Leads by door and by source, against last week</li>
+          <li>Spend, cost per lead and cost per booked call or tour, by ad set</li>
+          <li>Median time to first call on at-need callbacks, with any over ten minutes named</li>
+          <li>Pipeline movement: what advanced, what stalled, who owns the next step</li>
+          <li>One change for this week, and what we expect it to move</li>
+        </ul></div>
+        <div class="rule"><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>Tracking:</b> the page fires one event per step to the ad platform and the CRM (door chosen, step reached, submitted, booked), so cost is measured to booked calls, not to clicks.</span></div>
+      </div>
+    </div>
+
+    <div class="hire">
+      <a href="/funnels">See all funnel templates <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="ghost" href="/marketing-ops">How I run ads and CRM</a>
+      <a class="ghost" href="/build">Start a project</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="banner" role="note"><b>Funnel build template</b> · Built by <a href="/">Nathan J. Song</a> · Lanternhill is a concept brand, not a real company · Demo only: nothing you type is sent · <a href="/funnels">All templates</a></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var body=document.body;
+var COPY={
+  plan:{eyebrow:'Planning ahead · Free guide',
+    h:{a:'<span class="ph">Plan it once,</span> <span class="ph">so your family</span> <span class="ph"><em>never has to guess.</em></span>',b:'<span class="ph">Your wishes,</span> <span class="ph">written down.</span> <span class="ph"><em>Your family, spared</em></span> <span class="ph"><em>the hard calls.</em></span>'},
+    sub:'A free planning guide with every price listed, and a calm call with a planner only when you want one.',
+    trust:[['tag','Every price online'],['person','A named planner, not a call center'],['calm','No pressure, ever']],
+    chKick:'Free guide · about a minute',chTitle:'Get the planning guide',art:'A light left on for the people who come next',
+    howKick:'How planning works',howH:'<span class="ph">Three quiet steps,</span> <span class="ph">at your own pace.</span>',
+    how:[['Read the guide','Every choice explained in plain words, with the full price list.'],['Talk if you want to','Book a call with a planner, or never. Both are fine.'],['Write it down','Your wishes on file, shared with the family members you choose.']],
+    doneH:function(n){return 'Your guide is on its way, '+n+'.'},doneP:'Check your inbox in the next minute. It includes the full price list.'},
+  need:{eyebrow:'Help now · Day or night',
+    h:{a:'<span class="ph">We\'re here.</span> <span class="ph">Call now, or leave</span> <span class="ph">your number.</span>',b:'<span class="ph">A director can talk</span> <span class="ph">with you right now.</span>'},
+    sub:'We\'ll take it one step at a time. Nothing needs to be decided tonight.',
+    trust:[['phone','A person answers, day or night'],['tag','Prices given in writing'],['calm','Nothing to sign tonight']],
+    chKick:'Talk to a director',chTitle:'We\'ll call you back',art:'Someone is awake and ready to help',
+    howKick:'What happens next',howH:'<span class="ph">You call,</span> <span class="ph">and we take it from there.</span>',
+    how:[['We talk','A director listens, answers your questions and explains the next few hours.'],['We bring them into our care','At a time that is right for your family.'],['We meet when you\'re ready','Choices and prices, in person, in writing.']],
+    doneH:function(n){return 'Thank you, '+n+'. A director is calling you now.'},doneP:'Keep your phone close. If you would rather call, the number is (555) 010-0144.'},
+  care:{eyebrow:'Senior living · Book a tour',
+    h:{a:'<span class="ph">Find the right care</span> <span class="ph">for Mom or Dad,</span> <span class="ph"><em>and see it in person.</em></span>',b:'<span class="ph">Not sure what level</span> <span class="ph">of care they need?</span> <span class="ph"><em>Start here.</em></span>'},
+    sub:'A two-minute care-fit check, then a tour at a time that suits you. No forms to sign.',
+    trust:[['home','Independent, assisted and memory care'],['person','Tours led by a care guide'],['calm','No deposit to visit']],
+    chKick:'Care-fit check · two minutes',chTitle:'Find the right fit',art:'Mornings that feel like home',
+    howKick:'How choosing care works',howH:'<span class="ph">From not sure</span> <span class="ph">to a visit, in a week.</span>',
+    how:[['Check the fit','Tell us where they need a hand; we suggest a level of care.'],['Visit in person','Tour with a care guide, meet the staff, stay for a meal.'],['Assessment','A nurse visits to confirm the care plan before any move.']],
+    doneH:function(n){return 'Almost done, '+n+'. Pick a tour time.'},doneP:'We sent the care-fit summary to your email.'}
+};
+var ICON={tag:'i-tag',person:'i-person',calm:'i-calm',phone:'i-phone',home:'i-home'};
+var state={aud:'plan',ab:'a',vet:false,cm:false,data:{}};
+function useIco(id){return '<svg aria-hidden="true"><use href="#'+id+'"/></svg>'}
+
+function render(){
+  var c=COPY[state.aud];
+  body.dataset.aud=state.aud;
+  $('#eyebrow').textContent=c.eyebrow;
+  $('#headline').innerHTML=c.h[state.ab];
+  $('#sub').textContent=c.sub;
+  $('#trust').innerHTML=c.trust.map(function(t){return '<span>'+useIco(ICON[t[0]])+t[1]+'</span>'}).join('')+(state.vet?'<span>'+useIco('i-flag')+'VA benefits help</span>':'');
+  $('#chKick').textContent=c.chKick; $('#chTitle').textContent=c.chTitle; $('#artCap').textContent=c.art;
+  $('#howKick').textContent=c.howKick; $('#howH').innerHTML=c.howH;
+  $('#how').innerHTML=c.how.map(function(x){return '<li><b>'+x[0]+'</b><p>'+x[1]+'</p></li>'}).join('');
+  $$('.flow').forEach(function(f){f.hidden=f.dataset.flow!==state.aud});
+  $$('.cta-t').forEach(function(s){s.textContent=s.getAttribute('data-ab-'+state.ab)});
+  $$('[data-aud-btn]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.audBtn===state.aud))});
+  $$('.vet-q').forEach(function(q){q.hidden=!state.vet});
+  if(state.cm) showNote(currentKey());
+}
+
+/* controls */
+$$('[data-aud-btn]').forEach(function(b){b.addEventListener('click',function(){state.aud=b.dataset.audBtn;if(body.classList.contains('done'))restart(true);render();track('door',state.aud)})});
+$$('[data-theme-btn]').forEach(function(b){b.addEventListener('click',function(){body.dataset.theme=b.dataset.themeBtn;$$('[data-theme-btn]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))})})});
+function sw(id,fn){var el=$(id);el.addEventListener('click',function(){var on=el.getAttribute('aria-checked')!=='true';el.setAttribute('aria-checked',String(on));fn(on)})}
+sw('#vetSw',function(on){state.vet=on;body.classList.toggle('veteran',on);render();if(state.cm&&on)showNote('vet')});
+sw('#abSw',function(on){state.ab=on?'b':'a';$('#abv').textContent=on?'B':'A';render();if(state.cm)showNote('ab')});
+sw('#cmSw',function(on){state.cm=on;body.classList.toggle('commentary',on);if(on){showNote('hero')}else{hideNote()}});
+
+/* concept menu */
+window.toggleCm=function(){var m=$('#cm'),o=!m.classList.contains('open');m.classList.toggle('open',o);$('.cm-btn').setAttribute('aria-expanded',String(o))};
+window.closeCm=function(){$('#cm').classList.remove('open');$('.cm-btn').setAttribute('aria-expanded','false')};
+document.addEventListener('click',function(e){if(!e.target.closest('#cm'))closeCm()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeCm();if(state.cm)hideNote()}});
+
+/* choices */
+$$('[data-group]').forEach(function(g){
+  var multi=g.hasAttribute('data-multi');
+  $$('.chip-btn',g).forEach(function(b){b.addEventListener('click',function(){
+    if(multi){
+      if(b.dataset.v==='none'){$$('.chip-btn',g).forEach(function(x){x.setAttribute('aria-pressed',String(x===b))})}
+      else{$('[data-v="none"]',g).setAttribute('aria-pressed','false');b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'))}
+      if(g.dataset.group==='help')careFit(g);
+    }else{$$('.chip-btn',g).forEach(function(x){x.setAttribute('aria-pressed',String(x===b))})}
+    g.classList.remove('bad');
+  })});
+});
+function picked(form,group){var g=$('[data-group="'+group+'"]',form);if(!g)return null;var v=$$('.chip-btn[aria-pressed="true"]',g).map(function(b){return b.dataset.v});return g.hasAttribute('data-multi')?v:(v[0]||null)}
+function careFit(g){
+  var v=$$('.chip-btn[aria-pressed="true"]',g).map(function(b){return b.dataset.v});var fit=$('#fit');
+  if(!v.length){fit.classList.remove('on');return}
+  var name,why;
+  if(v.indexOf('memory')>-1){name='Memory care';why='A secure neighborhood with staff trained in dementia care, and days built around routine.'}
+  else if(v.indexOf('bathing')>-1||v.indexOf('meds')>-1||v.indexOf('walking')>-1){name='Assisted living';why='Their own apartment, with help for '+v.filter(function(x){return x!=='none'}).map(function(x){return {meals:'meals',meds:'medications',bathing:'bathing and dressing',walking:'getting around'}[x]}).join(', ')+' when they need it.'}
+  else{name='Independent living';why='Their own place, with meals, activities and neighbors, and help close by if it is ever needed.'}
+  $('#fitName').textContent=name;$('#fitWhy').textContent=why;fit.classList.add('on');state.data.fit=name;
+}
+
+/* validation */
+var emailOk=function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())};
+function need(input,ok){var f=input.closest('.field');var good=ok(input.value);f.classList.toggle('bad',!good);if(!good)input.focus();return good}
+function needPick(form,group){var g=$('[data-group="'+group+'"]',form);var good=!!picked(form,group);g.classList.toggle('bad',!good);return good}
+
+/* multi-step flows */
+$$('.flow').forEach(function(form){
+  var steps=$$('.fs',form);if(!steps.length)return;
+  function go(n){steps.forEach(function(s){s.classList.toggle('on',+s.dataset.s===n)});$$('.steps i',form).forEach(function(i,k){i.classList.toggle('on',k<n)});var sn=$('.sn',form);if(sn)sn.textContent=n;form.dataset.at=n;var first=$('.fs.on input,.fs.on .chip-btn',form);if(first&&n>1)first.focus({preventScroll:true});track('step',form.dataset.flow+':'+n);if(state.cm)showNote(currentKey())}
+  form.dataset.at=1;
+  $$('[data-next]',form).forEach(function(b){b.addEventListener('click',function(){
+    var at=+form.dataset.at,ok=true;
+    if(form.id==='f-plan'){if(at===1)ok=need($('#p-email'),emailOk);if(at===2)ok=need($('#p-name'),function(v){return v.trim().length>0})&&needPick(form,'for')}
+    if(form.id==='f-care'){if(at===1)ok=needPick(form,'who')}
+    if(ok)go(at+1);
+  })});
+  $$('[data-back]',form).forEach(function(b){b.addEventListener('click',function(){go(Math.max(1,+form.dataset.at-1))})});
+  form._go=go;
+});
+$('#p-email').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();$('#f-plan [data-next]').click()}});
+
+/* submit -> confirmation (demo only: nothing leaves the page) */
+$('#f-plan').addEventListener('submit',function(e){e.preventDefault();finish($('#p-name').value.trim()||'friend',{email:$('#p-email').value.trim(),sms:$('#p-sms').checked})});
+$('#f-need').addEventListener('submit',function(e){e.preventDefault();var f=e.target;if(!need($('#n-name'),function(v){return v.trim().length>0}))return;if(!need($('#n-phone'),function(v){return v.replace(/\D/g,'').length>=10}))return;finish($('#n-name').value.trim().split(' ')[0],{where:picked(f,'where')})});
+$('#f-care').addEventListener('submit',function(e){e.preventDefault();if(!need($('#c-name'),function(v){return v.trim().length>0}))return;if(!need($('#c-email'),emailOk))return;finish($('#c-name').value.trim(),{sms:$('#c-sms').checked})});
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function slotsHtml(kind){
+  var out=[],d=new Date(),n=0;
+  while(out.length<6&&n<14){d.setDate(d.getDate()+1);n++;var wd=d.getDay();if(wd===0)continue;var day=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});var times=kind==='tour'?['10:00 AM','2:00 PM']:['9:30 AM','4:00 PM'];out.push([day,times[out.length%2]])}
+  return '<div class="slots" role="group" aria-label="Times">'+out.map(function(s,i){return '<button type="button" class="slot" aria-pressed="false" data-slot="'+esc(s[0]+' at '+s[1])+'">'+s[0]+'<small>'+s[1]+'</small></button>'}).join('')+'</div><div class="booked" aria-live="polite"></div>';
+}
+function finish(name,extra){
+  var c=COPY[state.aud];state.data=Object.assign(state.data,extra||{});
+  $('#doneH').textContent=c.doneH(name);$('#doneP').textContent=c.doneP;
+  var next='';
+  if(state.aud==='plan'){
+    next='<div class="box" data-note="book"><h2>Talk it through, if you\'d like</h2><p>A 20-minute call with a planner. Optional, and easy to move.</p>'+slotsHtml('call')+'<button type="button" class="why" data-why="book">Why offer a call now?</button></div>'+
+    '<div class="box" data-note="timeline"><h2>What you\'ll get from us</h2><p>Nothing more than this, and you can stop it any time.</p><ol class="tl"><li><b>NOW</b>The guide and price list</li><li><b>DAY 2</b>Questions families ask us</li><li><b>DAY 5</b>A call offer, if you haven\'t booked</li><li><b>DAY 14</b>A worksheet to share with family</li><li><b>DAY 30</b>A note from your planner</li></ol></div>'+
+    '<div class="box" data-note="family" style="grid-column:1/-1"><h2>Bring your family in</h2><p>Planning goes better when the people who will carry it out have seen it. Send them the same guide.</p><div class="share"><input class="inp" readonly value="lanternhill.example/guide?from='+esc(name.toLowerCase())+'" aria-label="Link to share"><button type="button" id="copyBtn">Copy link</button></div><button type="button" class="why" data-why="family">Why no reward for sharing?</button></div>';
+  }else if(state.aud==='need'){
+    var w=state.data.where;
+    next='<div class="box" data-note="hour"><h2>While you wait</h2><p>A few things that help in the first hour.</p><ul class="check">'+
+      (w==='home'?'<li>If the death was unexpected, call 911 first.</li><li>If your loved one was in hospice care, call the hospice nurse; they will guide the next step.</li>':'<li>The hospital or care home staff will keep your loved one in their care until we arrive.</li>')+
+      '<li>You do not need to choose anything before we talk.</li><li>If you can, find any written wishes or a pre-paid plan.</li>'+(state.vet?'<li>If they served, look for discharge papers (DD-214); we can request them if not.</li>':'')+'</ul></div>'+
+      '<div class="box" data-note="needpipe"><h2>What we just did</h2><ol class="tl"><li><b>0:00</b>Paged the on-call director with your name and number</li><li><b>0:10</b>A backup director is alerted if no call is logged</li><li><b>LATER</b>Prices in writing at your meeting, never by pressure</li></ol><button type="button" class="why" data-why="needpipe">What is happening in the CRM?</button></div>';
+  }else{
+    next='<div class="box" data-note="tour"><h2>Pick a tour time</h2><p>'+esc(state.data.fit?'Suggested start: '+state.data.fit+'. ':'')+'About an hour, with lunch if you\'d like.</p>'+slotsHtml('tour')+'</div>'+
+    '<div class="box"><h2>Before you visit</h2><ul class="check"><li>A list of their current medications</li><li>Questions about cost and what is included</li><li>Bring them, if they are up for it</li></ul></div>';
+  }
+  $('#next').innerHTML=next;
+  body.classList.add('done');window.scrollTo({top:0,behavior:'auto'});$('#done').focus({preventScroll:true});
+  $$('#next .slot').forEach(function(b){b.addEventListener('click',function(){$$('#next .slot').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});var bk=b.closest('.box').querySelector('.booked');bk.textContent='Booked for '+b.dataset.slot+'. A confirmation is on its way. (Demo: nothing was booked.)';bk.classList.add('on');track('booked',state.aud)})});
+  var cb=$('#copyBtn');if(cb)cb.addEventListener('click',function(){var i=cb.previousElementSibling;i.select();try{navigator.clipboard.writeText(i.value)}catch(e){}cb.textContent='Copied'});
+  bindWhy();track('submitted',state.aud);if(state.cm)showNote(currentKey());
+}
+window.restart=function(keep){body.classList.remove('done');$$('form').forEach(function(f){f.reset();if(f._go)f._go(1);$$('.chip-btn',f).forEach(function(b){b.setAttribute('aria-pressed','false')});$$('.field',f).forEach(function(x){x.classList.remove('bad')})});$('#fit').classList.remove('on');state.data={};if(!keep)window.scrollTo({top:0,behavior:'smooth'})};
+
+/* tabs (roving tabindex, arrow keys) */
+var tabs=$$('.tab');
+function selTab(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',String(on));x.tabIndex=on?0:-1;var p=$('#'+x.getAttribute('aria-controls'));p.classList.toggle('on',on);p.setAttribute('aria-hidden',String(!on))});if(state.cm)showNote('btf-'+t.id.slice(2))}
+tabs.forEach(function(t,i){t.addEventListener('click',function(){selTab(t)});t.addEventListener('keydown',function(e){var k=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(k){e.preventDefault();var n=tabs[(i+k+tabs.length)%tabs.length];n.focus();selTab(n)}})});
+
+/* ---------- Nathan's commentary ---------- */
+var NOTES={
+  hero:['Three doors, one page','Families arrive in three very different states: calmly planning, in crisis, or worried about a parent. One generic headline fails all three, so the visitor picks a door and the whole page (headline, form, steps, follow-up) changes with it. In the ads, each ad set links straight to its door.'],
+  ab:['The A/B test','Variant A leads with relief for the family; B leads with the person\'s own wishes. The test runs per door, on booked calls and tours, not on clicks or form starts, and needs a few hundred leads per arm before anyone calls a winner.'],
+  trust:['Trust before the ask','Three promises that answer the three fears: hidden prices, a pushy salesperson, and being rushed. Each one must be true for the client before it goes on the page.'],
+  vet:['Veteran mode','Veteran families qualify for VA burial benefits many don\'t know about. The toggle adds the benefits note, a "did they serve?" question and a DD-214 reminder, and tags the CRM contact so a director who knows the paperwork takes the call.'],
+  card:['A sticky intake card','The form stays in view while people read. Each door gets its own length: three short steps for planning, one screen for help now, a care-fit check before contact details for senior care.'],
+  email:['Email first, one field','The first step asks for one thing. Name and preferences come after the visitor has started, which is when completion is highest. If they leave after step one, the guide still goes out, and the CRM knows exactly where they stopped.'],
+  consent:['Unticked, on purpose','Texting needs the person\'s express written consent, so the box starts unticked and is never required to get the guide. The CRM stores the consent with a timestamp, and a reply of STOP ends texting at once.'],
+  need:['No funnel for grief','A family in crisis gets a phone number first and a three-field callback. No email gate, no countdown, no upsell. The CRM pages the on-call director instantly and escalates after ten minutes. Speed and kindness here are the whole marketing.'],
+  call:['The call button is the hero','On phones this is a tap to call. Most at-need families call rather than fill a form, so the number is the biggest thing on the card.'],
+  fit:['Care-fit before contact','Asking where Mom needs a hand earns the right to ask for an email, and the answer is useful: it suggests a level of care, sends the right brochure, and routes the lead to the right care guide.'],
+  how:['What happens next, said plainly','Fear of the unknown is the biggest reason people stall. Three steps per door, written for that door.'],
+  prices:['Prices on a lead page','In California, a funeral home website must post its price list goods and services from the homepage. It also converts: families who have seen prices are calling to choose, not to shop.'],
+  book:['The call offer on the thank-you page','The moment after a sign-up is when intent is highest. Offering an optional call here books more conversations than any later email, and nobody is pushed: skipping it is one click.'],
+  timeline:['Show the follow-up','Telling people exactly what will arrive, and that they can stop it, lowers unsubscribes and spam complaints. It is the same five-touch sequence the CRM runs.'],
+  family:['Referrals without rewards','Bribing sharing feels wrong in this category. Instead the family link is framed as part of good planning: the people who will carry it out should see it. Shared links carry a referral tag, so the CRM still counts every family introduction.'],
+  hour:['Useful, not salesy','The confirmation gives real first-hour guidance for where their loved one is. This is the screen families remember.'],
+  needpipe:['Behind the callback','The submission becomes an at-need opportunity, pages the director by text and app, starts a ten-minute escalation timer, and suppresses this family from every marketing list for twelve months.'],
+  tour:['Optimised to tours','The care door is measured on tours booked, because a tour is the step that predicts a move-in. Slots come from the community\'s calendar, and a reminder goes out the day before.'],
+  'btf-map':['The funnel map','Three entry sources feed three doors, three pipelines and three outcomes, and all of them end in reviews and family referrals. Ads only ever point at the planning and care doors.'],
+  'btf-ads':['Meta ad sets','Broad targeting by location and age, website conversion goals so every lead sees the price list, and a 30-day retargeting set that excludes anyone at-need or already booked.'],
+  'btf-crm':['GoHighLevel pipelines','One opportunity per family, every page answer mapped to a custom field, and stages that match how the business really works, so the pipeline view doubles as the team\'s to-do list.'],
+  'btf-auto':['Automations with exits','Every sequence stops on a booking, a reply, an opt-out or a death in the family. The at-need workflow sends no marketing at all.'],
+  'btf-rep':['Reporting','Cost is tracked to booked calls and tours, not clicks. The owner gets one page on Monday with one recommended change.']
+};
+var ORDER=['hero','trust','card','email','consent','vet','ab','how','prices','btf-map','btf-ads','btf-crm','btf-auto','btf-rep'];
+var curKey='hero',spotEl=null;
+function currentKey(){
+  if(body.classList.contains('done')) return state.aud==='plan'?'book':state.aud==='need'?'hour':'tour';
+  if(state.aud==='need') return 'need';
+  var f=$('#f-'+state.aud),at=f?+f.dataset.at:1;
+  if(state.aud==='care') return at===2?'fit':'card';
+  return at===1?'email':at===3?'consent':'card';
+}
+function showNote(k){
+  var n=NOTES[k];if(!n)return;curKey=k;
+  $('#nbody').innerHTML='<h3>'+n[0]+'</h3><p>'+n[1]+'</p>';
+  $('#nbub').classList.add('show');
+  if(spotEl)spotEl.classList.remove('spot');
+  spotEl=$('[data-note="'+k+'"]')||(k.indexOf('btf')===0?$('#behind .panes'):null);
+  if(spotEl)spotEl.classList.add('spot');
+}
+function hideNote(){$('#nbub').classList.remove('show');if(spotEl){spotEl.classList.remove('spot');spotEl=null}}
+$('#nchip').addEventListener('click',function(){$('#nbub').classList.contains('show')?hideNote():showNote(curKey)});
+$('#nx').addEventListener('click',hideNote);
+function step(d){var i=ORDER.indexOf(curKey);var k=ORDER[(i<0?0:i+d+ORDER.length)%ORDER.length];showNote(k);var el=$('[data-note="'+k+'"]')||(k.indexOf('btf')===0?$('#behind'):null);if(k.indexOf('btf')===0){var t=$('#t-'+k.slice(4));if(t)selTab(t)}if(el)el.scrollIntoView({behavior:'smooth',block:'center'})}
+$('#nprev').addEventListener('click',function(){step(-1)});$('#nnext').addEventListener('click',function(){step(1)});
+function bindWhy(){$$('.why').forEach(function(b){if(b._b)return;b._b=1;b.addEventListener('click',function(){showNote(b.dataset.why)})})}
+bindWhy();
+
+/* events: one per step, here only logged to the console (demo) */
+function track(ev,v){try{if(window.console&&console.debug)console.debug('[funnel]',ev,v||'')}catch(e){}}
+
+/* deep links: ?door=need&vet=1&ab=b&notes=1 */
+try{var q=new URLSearchParams(location.search);if(COPY[q.get('door')])state.aud=q.get('door');if(q.get('ab')==='b'){$('#abSw').click()}if(q.get('vet')==='1'){$('#vetSw').click()}if(q.get('notes')==='1'){$('#cmSw').click()}if(q.get('look')==='evening'){$('[data-theme-btn="evening"]').click()}}catch(e){}
+render();
+})();
+</script>
+</body>
+</html>

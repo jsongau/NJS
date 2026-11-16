@@ -96,6 +96,15 @@ export const PAGES = {
     skip_href: '#delivered', skip_text: 'Skip to the projects',
     jsonld: ld('ItemList', { name: 'Delivered projects', itemListElement: PROJECTS.map((p, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'CreativeWork', name: p.name, url: p.url, description: p.sub, creator: { '@id': ORG['@id'] } } })) }),
   },
+  funnels: {
+    out: 'funnels/index.html', path: '/funnels', nav: null, h1: 'fn-h', css: 'funnels',
+    title: 'Funnel Build Templates · Intake and Growth Funnels · NJS Studio',
+    description: 'Working funnel templates by Nathan J. Song: a memorial and senior care intake funnel and a sweepstakes growth funnel, with the ads, CRM pipelines, automations and reporting behind them.',
+    og_title: 'Funnels that end in a booked call, not a click',
+    og_description: 'Click through working funnel templates, from the first ad to the CRM pipeline and the Monday report.',
+    skip_href: '#fn-list', skip_text: 'Skip to the templates',
+    jsonld: ld('CollectionPage', { name: 'Funnel build templates', hasPart: [{ '@type': 'CreativeWork', name: 'Memorial and senior care intake funnel', url: SITE + '/funnels/memorial' }, { '@type': 'CreativeWork', name: 'Sweepstakes growth funnel', url: SITE + '/ritual' }] }),
+  },
   ops: {
     out: 'marketing-ops/index.html', path: '/marketing-ops', nav: null, h1: 'ops-h', css: 'ops',
     title: 'Meta Ads, GoHighLevel CRM and Marketing Automation · Nathan J. Song',
@@ -416,7 +425,7 @@ function renderFocusForm() {
 }
 
 export function sitemap() {
-  const urls = Object.values(PAGES).map((p) => p.path).concat('/resume');
+  const urls = Object.values(PAGES).map((p) => p.path).concat('/funnels/memorial', '/resume');
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     urls.map((u) => '  <url><loc>' + SITE + (u === '/' ? '/' : u) + '</loc></url>').join('\n') + '\n</urlset>\n';
 }

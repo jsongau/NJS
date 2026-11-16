@@ -34,3 +34,15 @@
   (no logo).
 - Optional wave: wire the page's step events to `studio_events` (needs names in track.js, the edge
   function and a new migration, per CLAUDE.md).
+
+## Wave 4 (same day): research and the planning toolkit
+- Research: `docs/research/2026-11-16-memorial-preneed-industry.md`. Key finding: Refuge Memorial is a
+  virtual, nationwide pre-planning company (not a funeral home), selling plans plus funding, with
+  veteran help and simple cremation plans. If its ads mention insurance or payment plans, Meta's
+  Financial products and services category applies: no age, gender or ZIP targeting, no lookalikes.
+- Toolkit on `/funnels/memorial`: ten tools, each with a sourced figure, a commentary note and a
+  tracking event. Medians shown as published; the cost lines add to 9,959 against NFDA's 9,995 and
+  the page says so.
+- Not built yet (in the research backlog): the seven Bureau questions as an FAQ, a Spanish planning
+  door, a Medi-Cal July 2027 explainer once DHCS rules are confirmed, live GoHighLevel capture.
+- Items marked **verify** in the research must be checked before reuse on a client page.

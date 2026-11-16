@@ -5,6 +5,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 ## 2026-11-16
 
 - `/funnels/memorial` and `/funnels` — New funnel build template (memorial and senior care intake: three doors, care-fit quiz, veteran mode, A/B, Nathan's commentary, demo-only confirmations, plus Meta ad sets, GoHighLevel pipelines, automations and reporting) and a hub listing it beside the Ritual growth funnel. Linked from the Build mega nav panel, the phone menu, the footer and the sitemap.
+- `/funnels/memorial` — Planning toolkit: ten interactive tools built on sourced figures (cost builder, price over time and payment plans, ways-to-pay matcher, coverage estimator with sample rates, benefits finder, estate check with California probate fees, wishes builder, cremation trend, first 30 days, senior care costs). Research saved at `docs/research/2026-11-16-memorial-preneed-industry.md`.
 
 ## 2026-11-15
 

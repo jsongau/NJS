@@ -34,6 +34,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 .ph{display:inline-block}
+[hidden]{display:none!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---------- sticky top: brand bar + controls ---------- */
@@ -265,10 +266,12 @@ body[data-theme="evening"] .btf{background:#0b1411}
 .rule{margin-top:18px;display:flex;gap:12px;align-items:flex-start;background:#1a2c25;border:1px solid #2c4037;border-radius:14px;padding:14px 16px;font-size:14.5px;color:#d7ddd6}
 .rule svg{width:22px;height:22px;flex:none;color:#d2ad66}
 .rule a{color:#e6c88a}
-.pipes{display:grid;gap:14px}
+.pipes{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.pipe{min-width:0}
 .pipe{background:#1a2c25;border:1px solid #2c4037;border-radius:18px;padding:16px}
-.pipe h3{font-size:15px;display:flex;justify-content:space-between;gap:10px}
-.pipe h3 small{font-weight:500;color:#9aa69e;font-size:13px}
+.pipe-h{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
+.pipe-h h3{font-size:15px}
+.pipe-h small{color:#9aa69e;font-size:13px}
 .stages{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(130px,1fr);gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
 .stage{background:#22392f;border-radius:12px;padding:10px;min-height:96px;position:relative}
 .stage b{display:block;font-size:13px}
@@ -334,6 +337,132 @@ body[data-theme="evening"] .btf{background:#0b1411}
   .top{position:relative}
 }
 @media (max-width:400px){.bar{flex-wrap:wrap;row-gap:8px}.theme{margin-left:auto}.controls .in{gap:8px 12px}}
+/* ================= planning toolkit (2026-11-16) ================= */
+.kit-idx{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:28px}
+.kit-idx a{position:relative;display:grid;gap:6px;align-content:start;padding:14px;border-radius:16px;background:var(--paper);border:1px solid var(--line);text-decoration:none;transition:transform .2s,border-color .2s}
+.kit-idx a:hover{transform:translateY(-2px);border-color:var(--brass)}
+.kit-idx svg{width:30px;height:30px;color:var(--brass)}
+.kit-idx b{font-size:14.5px;line-height:1.25}
+.kit-idx small{font-size:12.5px;color:var(--muted);line-height:1.35}
+.kit-idx .for{position:absolute;top:10px;right:10px;padding:3px 7px;border-radius:999px;background:var(--brass-hi);color:#16211c;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;opacity:0;transform:scale(.8);transition:opacity .25s,transform .25s}
+.kit-idx a.mine .for{opacity:1;transform:none}
+.mod{padding:64px 0;border-top:1px solid var(--line)}
+.mod-g{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:start}
+.mod-g.flip{grid-template-columns:1.15fr .85fr}
+.mod-g>*,.wish-g>*,.tool{min-width:0}
+.mod-g.flip>.mod-t{order:2}
+.mod-t .h2{font-size:clamp(28px,3.2vw,40px)}
+.mod-t p{font-size:16.5px;color:var(--ink-2);margin-top:12px}
+.mod-t .src{font-size:12.5px;color:var(--muted);margin-top:14px}
+.mod-t .src a{color:inherit}
+.tool{background:var(--paper);border:1px solid var(--line-hi);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+.tool-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tool-h b{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mini{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.mini button{white-space:nowrap;border:0;background:none;padding:7px 13px;border-radius:999px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--ink-2)}
+.mini button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.big{font-family:var(--serif);font-weight:600;font-size:clamp(38px,4.4vw,52px);line-height:1;letter-spacing:-.01em}
+.big small{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0;margin-left:6px}
+.cap2{font-size:12.5px;color:var(--muted)}
+.rng{width:100%;accent-color:var(--brass);height:28px}
+.rl{display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;margin-top:12px}
+.rl span{color:var(--brass);font-family:var(--mono)}
+/* cost builder */
+.items{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px}
+.items label{display:flex;align-items:center;gap:9px;padding:9px 10px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);font-size:13.5px;font-weight:600;cursor:pointer;transition:border-color .2s,opacity .2s}
+body[data-theme="evening"] .items label{background:#0f1a16}
+.items input{width:16px;height:16px;accent-color:var(--brass);flex:none}
+.items i{width:10px;height:10px;border-radius:3px;flex:none}
+.items em{margin-left:auto;font-style:normal;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.items label:has(input:not(:checked)){opacity:.55}
+.stack{display:block;width:100%;height:auto;margin-top:16px;overflow:visible}
+.stack rect.cseg{transition:x .5s cubic-bezier(.2,.8,.25,1),width .5s cubic-bezier(.2,.8,.25,1)}
+/* price over time */
+.chart{display:block;width:100%;height:auto;margin-top:10px}
+.chart .ln{transition:d .4s}
+.pp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.pp>div{padding:14px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
+body[data-theme="evening"] .pp>div{background:#0f1a16}
+.pp b{display:block;font-family:var(--serif);font-size:26px;font-weight:600;margin-top:2px}
+#planYrs button{padding:6px 10px;font-size:13px}
+/* matcher */
+.wants{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.wants .chip-btn{min-height:42px;font-size:13.5px}
+.opts{list-style:none;display:grid;gap:8px;margin-top:16px;min-height:380px}
+.opt-row{display:grid;grid-template-columns:1fr 120px;gap:12px;align-items:center;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);transition:border-color .3s,transform .4s cubic-bezier(.2,.8,.25,1)}
+body[data-theme="evening"] .opt-row{background:#0f1a16}
+.opt-row.top{border-color:var(--brass);background:var(--brass-soft)}
+.opt-row b{font-size:15px}
+.opt-row small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.35}
+.meter{height:8px;border-radius:8px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--brass);border-radius:8px;transition:width .5s cubic-bezier(.2,.8,.25,1)}
+.opt-row .sc{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:right;margin-top:4px}
+/* coverage */
+.cov{display:grid;grid-template-columns:170px 1fr;gap:20px;align-items:center;margin-top:12px}
+.ring{width:170px;height:170px}
+.ring .arc{transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.25,1)}
+.sel{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.sel select{font-size:15px;padding:10px 12px;border:1.5px solid var(--line-hi);border-radius:12px;background:var(--bg)}
+body[data-theme="evening"] .sel select{background:#0f1a16}
+.prem{margin-top:12px;padding:14px;border-radius:14px;background:var(--sage);border:1px solid var(--line-hi);min-height:84px}
+.prem b{font-family:var(--serif);font-size:24px;font-weight:600}
+.chk{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+/* benefits */
+.ben{list-style:none;display:grid;gap:8px;margin-top:16px;min-height:300px;align-content:start}
+.ben li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg);animation:fsin .35s ease both}
+body[data-theme="evening"] .ben li{background:#0f1a16}
+.ben li svg{width:22px;height:22px;flex:none;color:var(--brass);margin-top:2px}
+.ben li b{display:block;font-size:15px}
+.ben li span{font-size:13px;color:var(--muted)}
+.ben li em{margin-left:auto;font-style:normal;font-family:var(--serif);font-size:20px;font-weight:600;white-space:nowrap}
+/* estate */
+.est{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}
+.est ul{list-style:none;display:grid;gap:6px}
+.est label{display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600;cursor:pointer;padding:6px 0}
+.est input{width:18px;height:18px;accent-color:var(--brass);flex:none}
+.probate{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.pbar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:var(--line);margin-top:10px}
+.pbar i{display:block;height:100%;transition:width .5s cubic-bezier(.2,.8,.25,1)}
+.pkey{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-top:8px}
+.pkey span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:currentColor}
+.pmsg{font-size:14.5px;margin-top:10px;min-height:44px}
+/* wishes */
+.wish-g{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.wq{margin-bottom:14px}
+.wq>span{display:block;font-weight:700;font-size:14px;margin-bottom:6px}
+.wq .wants{margin-top:0}
+.keep{position:relative;border-radius:18px;padding:26px 24px;background:#fbf7ee;color:#16211c;border:1px solid #e4dccd;box-shadow:0 30px 60px -30px rgba(22,33,28,.45);min-height:420px;overflow:hidden}
+.keep::before{content:"";position:absolute;inset:10px;border:1px solid #d9c9a3;border-radius:12px;pointer-events:none}
+.keep svg.lan{width:34px;height:34px;color:#a8823f}
+.keep h3{font-family:var(--serif);font-size:24px;font-weight:600;margin-top:8px}
+.keep .who{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8a7a57;margin-top:2px}
+.keep dl{margin-top:16px;display:grid;gap:10px}
+.keep dt{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#8a7a57}
+.keep dd{font-family:var(--serif);font-size:17px;min-height:1.4em}
+.keep dd.empty{color:#b5a98d;font-style:italic}
+.keep .seal{position:absolute;right:20px;bottom:18px;width:64px;height:64px;opacity:.9}
+.keep-act{display:flex;gap:8px;margin-top:12px}
+.keep-act button{flex:1;min-height:46px;border-radius:12px;border:1.5px solid var(--ink);background:transparent;font-weight:700;cursor:pointer}
+/* trend */
+.trend svg{display:block;width:100%;height:auto}
+.trend .bar{transition:height .7s cubic-bezier(.2,.8,.25,1),y .7s cubic-bezier(.2,.8,.25,1)}
+/* days */
+.days-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.days-panes{display:grid;margin-top:14px}
+.days-pane{grid-area:1/1;visibility:hidden;opacity:0;transition:opacity .3s,visibility .3s}
+.days-pane.on{visibility:visible;opacity:1}
+.days-pane ol{list-style:none}
+.days-pane li{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14.5px}
+.days-pane li:first-child{border-top:0}
+.days-pane li i{width:24px;height:24px;border-radius:50%;border:2px solid var(--brass);display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-size:11px;font-weight:800;color:var(--brass)}
+.days-pane li span{color:var(--muted);display:block;font-size:13px}
+/* care costs */
+.cc svg{display:block;width:100%;height:auto}
+.cc .b{transition:width .6s cubic-bezier(.2,.8,.25,1)}
+@media print{body *{visibility:hidden}.keep,.keep *{visibility:visible}.keep{position:fixed;inset:20px;box-shadow:none}}
+@media (max-width:980px){.kit-idx{grid-template-columns:1fr 1fr}.mod-g,.mod-g.flip,.wish-g{grid-template-columns:1fr}.mod-g.flip>.mod-t{order:0}}
+@media (max-width:560px){.items{grid-template-columns:1fr}.cov,.est{grid-template-columns:1fr;justify-items:center}.cov>div,.est>ul{width:100%}.opt-row{grid-template-columns:1fr 80px}.pp{grid-template-columns:1fr}.opts{min-height:0}}
+
 </style>
 </head>
 <body data-theme="daylight" data-aud="plan">
@@ -354,6 +483,13 @@ body[data-theme="evening"] .btf{background:#0b1411}
     <symbol id="i-brain" viewBox="0 0 20 20"><path d="M10 4.5c-1-1.6-4.6-1.4-5 1.3C3.2 6.4 3 9 4.6 10 3.6 11.8 5 14.4 7.2 14c.4 1.9 2.6 2.2 2.8.5V4.5zM10 4.5c1-1.6 4.6-1.4 5 1.3 1.8.6 2 3.2.4 4.2 1 1.8-.4 4.4-2.6 4-.4 1.9-2.6 2.2-2.8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
     <symbol id="i-walk" viewBox="0 0 20 20"><circle cx="11" cy="3.8" r="1.6" fill="currentColor"/><path d="M8 18l2-5 2 2v3M7 9.5l2.5-3 3 1.5 1.5 3M9.5 6.5 9 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-bath" viewBox="0 0 20 20"><path d="M3 10h14v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zM5 10V5a2 2 0 0 1 3.5-1.3M6 16l-1 2M14 16l1 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 32 32"><ellipse cx="13" cy="9" rx="8" ry="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 9v5c0 1.9 3.6 3.5 8 3.5s8-1.6 8-3.5V9M5 14v5c0 1.9 3.6 3.5 8 3.5 1.2 0 2.3-.1 3.3-.3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="22" cy="22" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M22 19v6M20 21h3a1 1 0 0 1 0 2h-2a1 1 0 0 0 0 2h3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 32 32"><path d="M5 5v22h22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 21l5-6 4 3 7-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="9" r="2" fill="currentColor"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 32 32"><path d="M16 4l10 4v7c0 6.5-4.3 11-10 13-5.7-2-10-6.5-10-13V8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11.5 16l3.2 3 6-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-scroll" viewBox="0 0 32 32"><path d="M9 5h15a3 3 0 0 1 3 3v2h-5M9 5a3 3 0 0 0-3 3v16a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M11 12h9M11 16h9M11 20h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 32 32"><rect x="5" y="7" width="22" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 13h22M11 4v6M21 4v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="19" r="1.6" fill="currentColor"/><circle cx="16" cy="19" r="1.6" fill="currentColor"/><circle cx="21" cy="19" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 32 32"><path d="M16 26s-10-6-10-13a5.5 5.5 0 0 1 10-3.2A5.5 5.5 0 0 1 26 13c0 7-10 13-10 13z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 32 32"><rect x="5" y="12" width="22" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 17h22M16 12v15M16 12c-2-4-7-5-7-2s4 2 7 2c3 0 7 1 7-2s-5-2-7 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
   </defs>
 </svg>
 
@@ -546,6 +682,296 @@ body[data-theme="evening"] .btf{background:#0b1411}
   </div>
 </section>
 
+<section class="sec" id="kit" data-note="kit" aria-labelledby="kit-h">
+  <div class="wrap">
+    <span class="kick">Planning toolkit</span>
+    <h2 class="h2" id="kit-h"><span class="ph">Ten tools that answer</span> <span class="ph">the questions families ask.</span></h2>
+    <p class="lede">Each one does a job in the funnel: it answers a real question, earns the next step, and tells the CRM what this family cares about. The ones marked for you change with the visitor above.</p>
+    <nav class="kit-idx" aria-label="Toolkit">
+      <a href="#t-cost" data-for="plan need"><svg aria-hidden="true"><use href="#i-tag"/></svg><b>What it costs</b><small>Build a funeral line by line</small><span class="for">For you</span></a>
+      <a href="#t-time" data-for="plan"><svg aria-hidden="true"><use href="#i-chart"/></svg><b>Today vs later</b><small>Price over time, monthly plans</small><span class="for">For you</span></a>
+      <a href="#t-pay" data-for="plan"><svg aria-hidden="true"><use href="#i-coins"/></svg><b>Ways to pay</b><small>Match a funding option</small><span class="for">For you</span></a>
+      <a href="#t-cover" data-for="plan"><svg aria-hidden="true"><use href="#i-shield"/></svg><b>Coverage estimate</b><small>How much, and sample rates</small><span class="for">For you</span></a>
+      <a href="#t-ben" data-for="need plan"><svg aria-hidden="true"><use href="#i-flag"/></svg><b>Benefits finder</b><small>VA and Social Security</small><span class="for">For you</span></a>
+      <a href="#t-est" data-for="plan care"><svg aria-hidden="true"><use href="#i-scroll"/></svg><b>Estate check</b><small>Readiness and probate cost</small><span class="for">For you</span></a>
+      <a href="#t-wish" data-for="plan"><svg aria-hidden="true"><use href="#i-heart"/></svg><b>Wishes builder</b><small>A one-page plan to share</small><span class="for">For you</span></a>
+      <a href="#t-trend" data-for=""><svg aria-hidden="true"><use href="#i-calm"/></svg><b>How families choose</b><small>Cremation vs burial</small><span class="for">For you</span></a>
+      <a href="#t-days" data-for="need"><svg aria-hidden="true"><use href="#i-cal"/></svg><b>The first 30 days</b><small>What happens, in order</small><span class="for">For you</span></a>
+      <a href="#t-care" data-for="care"><svg aria-hidden="true"><use href="#i-home"/></svg><b>Care costs</b><small>Home care to nursing home</small><span class="for">For you</span></a>
+    </nav>
+  </div>
+</section>
+
+<!-- 1 cost builder -->
+<section class="mod" id="t-cost" data-note="cost" aria-labelledby="t-cost-h">
+  <div class="wrap mod-g">
+    <div class="mod-t">
+      <span class="kick">01 · What it costs</span>
+      <h2 class="h2" id="t-cost-h"><span class="ph">Build a funeral</span> <span class="ph">line by line.</span></h2>
+      <p>Untick anything you would not want and watch the total move. The lines are the national medians for a funeral with a viewing and burial.</p>
+      <p class="src">Source: NFDA 2023 medians, via <a href="https://www.nerdwallet.com/article/insurance/funeral-costs" target="_blank" rel="noopener">NerdWallet</a>. Excludes cemetery fees, the grave and markers. Medians do not add exactly: these lines total 9,959 dollars, against a published median of 9,995.</p>
+      <button type="button" class="why" data-why="cost"><svg><use href="#i-why"/></svg>Why a cost builder?</button>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><b>Your total</b><span class="cap2">2023 national medians</span></div>
+      <div class="big" id="costTotal" aria-live="polite">$9,959</div>
+      <ul class="items" id="costItems"></ul>
+      <svg class="stack" id="costStack" viewBox="0 0 600 132" role="img" aria-label="Your total compared with the national medians"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 2 price over time -->
+<section class="mod" id="t-time" data-note="time" aria-labelledby="t-time-h">
+  <div class="wrap mod-g flip">
+    <div class="mod-t">
+      <span class="kick">02 · Today vs later</span>
+      <h2 class="h2" id="t-time-h"><span class="ph">What waiting</span> <span class="ph">could cost.</span></h2>
+      <p>Prices rise. Move the sliders to see what today's plan could cost when it is needed, and what spreading today's price over a few years looks like.</p>
+      <p class="src">The yearly rise is your assumption, not a forecast. Monthly amounts are before any plan fees or interest. A locked price only applies if the contract guarantees it.</p>
+      <button type="button" class="why" data-why="time"><svg><use href="#i-why"/></svg>Why show this?</button>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><b>Starting from your total</b><span class="cap2" id="timeBase">$9,959</span></div>
+      <div class="rl"><label for="yrs">Years until it is needed</label><span id="yrsV">15</span></div>
+      <input class="rng" type="range" id="yrs" min="1" max="30" value="15">
+      <div class="rl"><label for="rise">Yearly price rise (your assumption)</label><span id="riseV">3%</span></div>
+      <input class="rng" type="range" id="rise" min="1" max="6" step="0.5" value="3">
+      <svg class="chart" id="timeChart" viewBox="0 0 600 220" role="img" aria-label="Projected cost over time"></svg>
+      <div class="pp">
+        <div><span class="cap2">In <b style="display:inline;font:inherit" id="yrsV2">15</b> years it could cost</span><b id="future">$15,572</b></div>
+        <div><span class="cap2">Today's price, spread over</span>
+          <div class="mini" role="group" aria-label="Payment years" id="planYrs" style="margin-top:6px"><button type="button" data-y="1" aria-pressed="false">1 yr</button><button type="button" data-y="3" aria-pressed="true">3 yrs</button><button type="button" data-y="5" aria-pressed="false">5 yrs</button><button type="button" data-y="10" aria-pressed="false">10 yrs</button></div>
+          <b id="monthly">$278/mo</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ways to pay -->
+<section class="mod" id="t-pay" data-note="pay" aria-labelledby="t-pay-h">
+  <div class="wrap mod-g">
+    <div class="mod-t">
+      <span class="kick">03 · Ways to pay</span>
+      <h2 class="h2" id="t-pay-h"><span class="ph">Five ways to pay,</span> <span class="ph">ranked by</span> <span class="ph">what matters to you.</span></h2>
+      <p>Pick what matters most. The options re-rank, and each one says plainly what it does and does not do.</p>
+      <p class="src">Sources: <a href="https://www.trustage.com/learn/life-insurance/final-expense-vs-preneed-insurance" target="_blank" rel="noopener">TruStage</a>, <a href="https://www.nerdwallet.com/insurance/life/learn/funeral-insurance" target="_blank" rel="noopener">NerdWallet</a>, <a href="https://cfb.ca.gov/consumer/pre_need.shtml" target="_blank" rel="noopener">California Cemetery and Funeral Bureau</a>. Not advice; a licensed agent confirms what fits.</p>
+      <button type="button" class="why" data-why="pay"><svg><use href="#i-why"/></svg>Why a matcher?</button>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><b>What matters to you?</b><span class="cap2">pick any</span></div>
+      <div class="wants" id="wants">
+        <button type="button" class="chip-btn" data-k="lock" aria-pressed="true">Lock today's price</button>
+        <button type="button" class="chip-btn" data-k="flex" aria-pressed="false">Family can use it for anything</button>
+        <button type="button" class="chip-btn" data-k="nohealth" aria-pressed="false">No health questions</button>
+        <button type="button" class="chip-btn" data-k="monthly" aria-pressed="true">Pay a little each month</button>
+        <button type="button" class="chip-btn" data-k="anywhere" aria-pressed="false">Works with any provider</button>
+      </div>
+      <ul class="opts" id="opts"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4 coverage -->
+<section class="mod" id="t-cover" data-note="cover" aria-labelledby="t-cover-h">
+  <div class="wrap mod-g flip">
+    <div class="mod-t">
+      <span class="kick">04 · Coverage estimate</span>
+      <h2 class="h2" id="t-cover-h"><span class="ph">How much coverage</span> <span class="ph">would it take?</span></h2>
+      <p>Start from your plan total, add other final bills, take away savings and benefits. Then see sample monthly rates for a policy that size.</p>
+      <p class="src">Sample rates: guaranteed-issue whole life, average of the three lowest per age, Choice Mutual via <a href="https://www.nerdwallet.com/insurance/life/learn/funeral-insurance" target="_blank" rel="noopener">NerdWallet</a>, as of Sept 10, 2026. Not a quote. Many of these policies pay only a refund of premiums if death from natural causes comes in the first two years.</p>
+      <button type="button" class="why" data-why="cover"><svg><use href="#i-why"/></svg>Why an estimator?</button>
+    </div>
+    <div class="tool">
+      <div class="cov">
+        <svg class="ring" id="covRing" viewBox="0 0 170 170" role="img" aria-label="Suggested coverage">
+          <circle cx="85" cy="85" r="70" fill="none" stroke="var(--line)" stroke-width="14"/>
+          <circle class="arc" id="covArc" cx="85" cy="85" r="70" fill="none" stroke="var(--brass)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="439.8" stroke-dashoffset="439.8"/>
+          <text x="85" y="80" text-anchor="middle" font-family="Iowan Old Style,Georgia,serif" font-size="30" font-weight="600" fill="currentColor" id="covNum">$0</text>
+          <text x="85" y="104" text-anchor="middle" font-size="12" fill="var(--muted)">suggested coverage</text>
+        </svg>
+        <div>
+          <div class="rl"><label for="bills">Other final bills (medical, debts)</label><span id="billsV">$3,000</span></div>
+          <input class="rng" type="range" id="bills" min="0" max="20000" step="500" value="3000">
+          <div class="rl"><label for="saved">Savings set aside</label><span id="savedV">$2,000</span></div>
+          <input class="rng" type="range" id="saved" min="0" max="20000" step="500" value="2000">
+          <div class="chk"><button type="button" class="chip-btn" data-b="ss" aria-pressed="false">Social Security 255</button><button type="button" class="chip-btn" data-b="va" aria-pressed="false">VA allowance, if eligible</button></div>
+        </div>
+      </div>
+      <div class="sel"><select id="age" aria-label="Age"><option value="50">Age 50</option><option value="60" selected>Age 60</option><option value="70">Age 70</option><option value="80">Age 80</option></select><select id="sex" aria-label="Sex"><option value="f">Female</option><option value="m">Male</option></select></div>
+      <div class="prem" id="prem" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 benefits -->
+<section class="mod" id="t-ben" data-note="benefits" aria-labelledby="t-ben-h">
+  <div class="wrap mod-g">
+    <div class="mod-t">
+      <span class="kick">05 · Benefits finder</span>
+      <h2 class="h2" id="t-ben-h"><span class="ph">Money and honors</span> <span class="ph">families often miss.</span></h2>
+      <p>Two questions. The list shows what may apply, and the cash total updates.</p>
+      <p class="src">Sources: <a href="https://www.aarp.org/veterans/va-burial-benefits/" target="_blank" rel="noopener">AARP, VA burial benefits</a> (allowance for non-service-connected deaths on or after Oct 1, 2025); <a href="https://www.ssa.gov/pubs/EN-05-10008.pdf" target="_blank" rel="noopener">Social Security, Survivors benefits</a>. Eligibility applies.</p>
+      <button type="button" class="why" data-why="benefits"><svg><use href="#i-why"/></svg>Why a benefits finder?</button>
+    </div>
+    <div class="tool">
+      <div class="tool-h"><b>About the person</b><span class="cap2" id="benTotal">$0 in cash benefits</span></div>
+      <div class="wants" id="benQ" style="margin-top:12px">
+        <button type="button" class="chip-btn" data-q="vet" aria-pressed="true">Served in the military</button>
+        <button type="button" class="chip-btn" data-q="spouse" aria-pressed="true">Married, living together</button>
+      </div>
+      <ul class="ben" id="benList" aria-live="polite"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6 estate -->
+<section class="mod" id="t-est" data-note="estate" aria-labelledby="t-est-h">
+  <div class="wrap mod-g flip">
+    <div class="mod-t">
+      <span class="kick">06 · Estate check</span>
+      <h2 class="h2" id="t-est-h"><span class="ph">Is the rest</span> <span class="ph">of the plan in place?</span></h2>
+      <p>Only 24% of U.S. adults had a will in early 2025, and the top reason was "just haven't gotten around to it". Tick what is done, then see what probate could cost in California without a plan.</p>
+      <p class="src">Sources: <a href="https://www.caring.com/about/news/2025-will-and-estate-planning-survey" target="_blank" rel="noopener">Caring.com 2025 survey</a>; <a href="https://california.public.law/codes/probate_code_section_10810" target="_blank" rel="noopener">Probate Code 10810</a> (attorney fee; the executor's fee uses the same schedule); <a href="https://saclaw.org/faqs/how-much-can-be-transferred-using-small-estate-methods/" target="_blank" rel="noopener">small estate limit</a> for deaths on or after April 1, 2025. Not legal advice.</p>
+      <button type="button" class="why" data-why="estate"><svg><use href="#i-why"/></svg>Why an estate check?</button>
+    </div>
+    <div class="tool">
+      <div class="est">
+        <svg class="ring" id="estRing" viewBox="0 0 170 170" style="width:150px;height:150px" role="img" aria-label="Readiness score">
+          <circle cx="85" cy="85" r="70" fill="none" stroke="var(--line)" stroke-width="14"/>
+          <circle class="arc" id="estArc" cx="85" cy="85" r="70" fill="none" stroke="var(--green-2)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 85 85)" stroke-dasharray="439.8" stroke-dashoffset="439.8"/>
+          <text x="85" y="88" text-anchor="middle" font-family="Iowan Old Style,Georgia,serif" font-size="36" font-weight="600" fill="currentColor" id="estNum">0/7</text>
+          <text x="85" y="110" text-anchor="middle" font-size="12" fill="var(--muted)">in place</text>
+        </svg>
+        <ul id="estList">
+          <li><label><input type="checkbox">A will</label></li>
+          <li><label><input type="checkbox">A living trust</label></li>
+          <li><label><input type="checkbox">Advance health care directive</label></li>
+          <li><label><input type="checkbox">Financial power of attorney</label></li>
+          <li><label><input type="checkbox">Beneficiaries checked lately</label></li>
+          <li><label><input type="checkbox">Funeral wishes written down</label></li>
+          <li><label><input type="checkbox">Family knows where it all is</label></li>
+        </ul>
+      </div>
+      <div class="probate">
+        <div class="rl"><label for="estate">Gross estate value, home included (no mortgage deducted)</label><span id="estateV">$600,000</span></div>
+        <input class="rng" type="range" id="estate" min="50000" max="2000000" step="10000" value="600000">
+        <div class="pbar" aria-hidden="true"><i id="pAtt" style="background:var(--brass)"></i><i id="pExe" style="background:var(--green-2)"></i></div>
+        <div class="pkey"><span style="color:var(--brass)">Attorney fee <b id="attV"></b></span><span style="color:var(--green-2)">Executor fee <b id="exeV"></b></span></div>
+        <p class="pmsg" id="pMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 wishes -->
+<section class="mod" id="t-wish" data-note="wishes" aria-labelledby="t-wish-h">
+  <div class="wrap">
+    <span class="kick">07 · Wishes builder</span>
+    <h2 class="h2" id="t-wish-h"><span class="ph">Your wishes,</span> <span class="ph">on one page.</span></h2>
+    <p class="lede">A few taps make a keepsake page the family can read. In the real funnel, saving it asks for an email, and the answers fill the CRM.</p>
+    <div class="wish-g" style="margin-top:24px">
+      <div class="tool">
+        <div class="wq"><span>For</span><input class="inp" id="wName" placeholder="Your name" autocomplete="name" maxlength="40"></div>
+        <div class="wq"><span>I would like</span><div class="wants" data-w="disp"><button type="button" class="chip-btn" data-v="Burial" aria-pressed="false">Burial</button><button type="button" class="chip-btn" data-v="Cremation" aria-pressed="true">Cremation</button><button type="button" class="chip-btn" data-v="A green burial, where available" aria-pressed="false">Green burial</button><button type="button" class="chip-btn" data-v="Not decided yet" aria-pressed="false">Not sure</button></div></div>
+        <div class="wq"><span>Gathering</span><div class="wants" data-w="svc"><button type="button" class="chip-btn" data-v="A traditional service" aria-pressed="false">Traditional</button><button type="button" class="chip-btn" data-v="A celebration of life" aria-pressed="true">Celebration of life</button><button type="button" class="chip-btn" data-v="Graveside only" aria-pressed="false">Graveside</button><button type="button" class="chip-btn" data-v="Family only, private" aria-pressed="false">Private</button><button type="button" class="chip-btn" data-v="No service" aria-pressed="false">None</button></div></div>
+        <div class="wq"><span>Feel</span><div class="wants" data-w="feel" data-multi><button type="button" class="chip-btn" data-v="Faith-based" aria-pressed="false">Faith-based</button><button type="button" class="chip-btn" data-v="Joyful" aria-pressed="true">Joyful</button><button type="button" class="chip-btn" data-v="Quiet" aria-pressed="false">Quiet</button><button type="button" class="chip-btn vet-only" data-v="Military honors" aria-pressed="false" hidden>Military honors</button></div></div>
+        <div class="wq"><span>A song or reading</span><input class="inp" id="wSong" placeholder="Optional" maxlength="60"></div>
+        <div class="wq" style="margin-bottom:0"><span>Who should help carry it out</span><input class="inp" id="wWho" placeholder="Optional, a name" maxlength="40"></div>
+      </div>
+      <div>
+        <article class="keep" id="keep" aria-live="polite">
+          <svg class="lan" aria-hidden="true"><use href="#i-lantern"/></svg>
+          <h3 id="kName">My wishes</h3>
+          <p class="who">Written with Lanternhill · <span id="kDate"></span></p>
+          <dl>
+            <div><dt>I would like</dt><dd id="kDisp"></dd></div>
+            <div><dt>Gathering</dt><dd id="kSvc"></dd></div>
+            <div><dt>The feel</dt><dd id="kFeel"></dd></div>
+            <div><dt>A song or reading</dt><dd id="kSong"></dd></div>
+            <div><dt>Please ask</dt><dd id="kWho"></dd></div>
+          </dl>
+          <svg class="seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="#a8823f" stroke-width="1.5"/><circle cx="32" cy="32" r="22" fill="none" stroke="#a8823f" stroke-width="1" stroke-dasharray="2 3"/><path d="M32 18c4 5 4 10 0 14-4-4-4-9 0-14z" fill="#a8823f"/><path d="M24 40h16M27 44h10" stroke="#a8823f" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </article>
+        <div class="keep-act"><button type="button" id="kPrint">Print</button><button type="button" id="kCopy">Copy as text</button></div>
+        <button type="button" class="why" data-why="wishes"><svg><use href="#i-why"/></svg>Why a wishes builder?</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 trend -->
+<section class="mod" id="t-trend" data-note="trend" aria-labelledby="t-trend-h">
+  <div class="wrap mod-g">
+    <div class="mod-t">
+      <span class="kick">08 · How families choose</span>
+      <h2 class="h2" id="t-trend-h"><span class="ph">Cremation is now</span> <span class="ph">the usual choice.</span></h2>
+      <p>The plan mix, the ads and the price list should lead with cremation, not treat it as the budget option.</p>
+      <p class="src">Source: <a href="https://www.nfda.org/nfda-releases-2025-cremation-burial-report-comprehensive-insights-to-guide-the-future-of-funeral-service/" target="_blank" rel="noopener">NFDA 2025 Cremation &amp; Burial Report</a> and <a href="https://nfda.org/news/statistics" target="_blank" rel="noopener">NFDA statistics</a>. Projections.</p>
+      <button type="button" class="why" data-why="trend"><svg><use href="#i-why"/></svg>Why this chart?</button>
+    </div>
+    <div class="tool trend">
+      <div class="tool-h"><b>U.S. share of deaths</b><div class="mini" role="group" aria-label="Year" id="trendYr"><button type="button" data-y="2025" aria-pressed="true">2025</button><button type="button" data-y="2045" aria-pressed="false">2045</button></div></div>
+      <svg id="trendSvg" viewBox="0 0 600 300" role="img" aria-label="Cremation 63.4 percent and burial 31.6 percent in 2025; cremation 82.3 percent projected in 2045"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 9 days -->
+<section class="mod" id="t-days" data-note="days" aria-labelledby="t-days-h">
+  <div class="wrap mod-g flip">
+    <div class="mod-t">
+      <span class="kick">09 · The first 30 days</span>
+      <h2 class="h2" id="t-days-h"><span class="ph">What happens,</span> <span class="ph">in order.</span></h2>
+      <p>The page families bookmark. It earns trust in the worst week and brings people back when they are ready to plan their own.</p>
+      <p class="src">Sources: <a href="https://www.ssa.gov/pubs/EN-05-10008.pdf" target="_blank" rel="noopener">Social Security</a>; <a href="https://www.aarp.org/veterans/va-burial-benefits/" target="_blank" rel="noopener">AARP, VA benefits</a>; <a href="https://saclaw.org/faqs/how-much-can-be-transferred-using-small-estate-methods/" target="_blank" rel="noopener">California small estates</a>. General guidance, not legal advice.</p>
+      <button type="button" class="why" data-why="days"><svg><use href="#i-why"/></svg>Why this timeline?</button>
+    </div>
+    <div class="tool">
+      <div class="days-tabs mini" role="tablist" aria-label="When">
+        <button type="button" role="tab" data-d="d1" aria-pressed="true" aria-selected="true">First day</button><button type="button" role="tab" data-d="d7" aria-pressed="false" aria-selected="false">First week</button><button type="button" role="tab" data-d="d30" aria-pressed="false" aria-selected="false">First month</button>
+      </div>
+      <div class="days-panes">
+        <div class="days-pane on" data-d="d1"><ol>
+          <li><i>1</i><div>Call for help<span>If the death was unexpected, 911. Under hospice, the hospice nurse.</span></div></li>
+          <li><i>2</i><div>Call the funeral provider<span>They bring your loved one into their care. Nothing needs choosing tonight.</span></div></li>
+          <li><i>3</i><div>Look for a plan<span>A prepaid plan, written wishes, or a policy. It answers most questions.</span></div></li>
+          <li><i>4</i><div>Tell close family<span>One person makes the calls, so nobody hears it secondhand.</span></div></li>
+        </ol></div>
+        <div class="days-pane" data-d="d7"><ol>
+          <li><i>5</i><div>Arrangement meeting<span>Choices and the itemized price list, in writing.</span></div></li>
+          <li><i>6</i><div>Death certificates<span>Order several certified copies; banks and insurers each want one.</span></div></li>
+          <li><i>7</i><div>Social Security<span>The funeral director usually reports the death. A spouse who lived with them may get a 255-dollar payment.</span></div></li>
+          <li><i>8</i><div>Veteran?<span>Find the DD-214. Ask about national cemetery burial, a headstone and a flag.</span></div></li>
+        </ol></div>
+        <div class="days-pane" data-d="d30"><ol>
+          <li><i>9</i><div>Life insurance and accounts<span>Claims, and payable-on-death accounts with the beneficiary.</span></div></li>
+          <li><i>10</i><div>The estate<span>In California, estates under 208,850 dollars may skip probate with the small estate affidavit, after a waiting period.</span></div></li>
+          <li><i>11</i><div>Bills and subscriptions<span>Cancel or transfer, and keep a list of every call.</span></div></li>
+          <li><i>12</i><div>Grief support<span>Aftercare notes at 30, 90 and 365 days, from people, not a sequence.</span></div></li>
+        </ol></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 care costs -->
+<section class="mod" id="t-care" data-note="carecost" aria-labelledby="t-care-h">
+  <div class="wrap mod-g">
+    <div class="mod-t">
+      <span class="kick">10 · Care costs</span>
+      <h2 class="h2" id="t-care-h"><span class="ph">What care costs,</span> <span class="ph">side by side.</span></h2>
+      <p>National medians for 2024. Families searching for a parent's care want this number before they want a tour.</p>
+      <p class="src">Source: <a href="https://investor.genworth.com/news-events/press-releases/detail/982/" target="_blank" rel="noopener">Genworth and CareScout 2024 Cost of Care</a>, released March 4, 2025. Monthly figures are the annual medians divided by twelve.</p>
+      <button type="button" class="why" data-why="carecost"><svg><use href="#i-why"/></svg>Why show costs?</button>
+    </div>
+    <div class="tool cc">
+      <div class="tool-h"><b>National median</b><div class="mini" role="group" aria-label="Period" id="ccPer"><button type="button" data-p="m" aria-pressed="true">Monthly</button><button type="button" data-p="y" aria-pressed="false">Yearly</button></div></div>
+      <svg id="ccSvg" viewBox="0 0 600 330" role="img" aria-label="2024 national median costs of care"></svg>
+    </div>
+  </div>
+</section>
+
 <section class="sec" data-note="prices">
   <div class="wrap">
     <span class="kick">Price list</span>
@@ -642,7 +1068,7 @@ body[data-theme="evening"] .btf{background:#0b1411}
 
       <div class="pane" role="tabpanel" id="p-crm" aria-labelledby="t-crm">
         <div class="pipes">
-          <div class="pipe"><h3>Pre-need pipeline <small>GoHighLevel, one opportunity per family</small></h3><div class="stages">
+          <div class="pipe"><div class="pipe-h"><h3>Pre-need pipeline</h3><small>GoHighLevel, one opportunity per family</small></div><div class="stages">
             <div class="stage"><b>New lead</b><small>Guide sent, tagged by who and what they lean toward</small><div class="card-mini">R. Alvarez · parent</div></div>
             <div class="stage"><b>Engaged</b><small>Opened the guide or viewed prices twice</small></div>
             <div class="stage"><b>Call booked</b><small>Planner assigned, reminder set</small></div>
@@ -650,14 +1076,14 @@ body[data-theme="evening"] .btf{background:#0b1411}
             <div class="stage"><b>Signed</b><small>Contract in place, family contacts added</small></div>
             <div class="stage"><b>Not now</b><small>Moved to the quarterly letter, never deleted</small></div>
           </div></div>
-          <div class="pipe"><h3>At-need pipeline <small>Speed first: the director is paged the moment it lands</small></h3><div class="stages">
+          <div class="pipe"><div class="pipe-h"><h3>At-need pipeline</h3><small>Speed first: the director is paged the moment it lands</small></div><div class="stages">
             <div class="stage"><b>Call received</b><small>SMS and push to the on-call director</small><div class="card-mini" style="animation-delay:1.5s">Callback · hospice</div></div>
             <div class="stage"><b>Director assigned</b><small>Callback logged with time to first call</small></div>
             <div class="stage"><b>Arrangement</b><small>Meeting held, price list given in person</small></div>
             <div class="stage"><b>Service held</b><small>Thank-you note task for the director</small></div>
             <div class="stage"><b>Aftercare</b><small>Grief resources at 30, 90 and 365 days</small></div>
           </div></div>
-          <div class="pipe"><h3>Senior care pipeline <small>Optimised to tours, not form fills</small></h3><div class="stages">
+          <div class="pipe"><div class="pipe-h"><h3>Senior care pipeline</h3><small>Optimised to tours, not form fills</small></div><div class="stages">
             <div class="stage"><b>Inquiry</b><small>Care-fit result saved to the contact</small><div class="card-mini" style="animation-delay:3s">J. Kim · memory care</div></div>
             <div class="stage"><b>Tour booked</b><small>Confirmation, reminder the day before</small></div>
             <div class="stage"><b>Toured</b><small>Same-day follow-up from the guide who led it</small></div>
@@ -775,6 +1201,7 @@ function render(){
   $$('[data-aud-btn]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.audBtn===state.aud))});
   $$('.vet-q').forEach(function(q){q.hidden=!state.vet});
   if(state.cm) showNote(currentKey());
+  markKit();kitVet();
 }
 
 /* controls */
@@ -897,13 +1324,24 @@ var NOTES={
   hour:['Useful, not salesy','The confirmation gives real first-hour guidance for where their loved one is. This is the screen families remember.'],
   needpipe:['Behind the callback','The submission becomes an at-need opportunity, pages the director by text and app, starts a ten-minute escalation timer, and suppresses this family from every marketing list for twelve months.'],
   tour:['Optimised to tours','The care door is measured on tours booked, because a tour is the step that predicts a move-in. Slots come from the community\'s calendar, and a reminder goes out the day before.'],
+  kit:['A toolkit, not a brochure','Ten tools, each answering a question families really ask. Every interaction is an event: which tools a visitor used tells the CRM what they care about (price, insurance, veterans, estate) before anyone calls them. The "for you" marks change with the door, so each ad set can deep-link to the tool that fits.'],
+  cost:['The cost builder','Price is the first question and the reason most people never call. Showing national medians line by line, and letting people remove what they would not want, builds trust and qualifies the lead: someone who unticks the casket and vault is a cremation lead.'],
+  time:['Honest urgency','No countdown clocks. The reason to plan now is real (prices rise), so the page shows it with the visitor\'s own assumption and says plainly that a locked price only counts if the contract guarantees it. The monthly figure answers "can I afford this?", the question behind a pay-over-time plan.'],
+  pay:['The ways-to-pay matcher','Pre-need insurance, final expense, trusts, savings: most families cannot tell them apart. Ranking them by what the visitor cares about is useful on its own, and the choices tell the planner which product conversation to have.'],
+  cover:['Coverage estimator','The insurance-funded path needs a number. Sample rates are labeled as samples, sourced and dated, with the two-year waiting period stated, because an insurance page that hides it loses trust and breaks rules.'],
+  benefits:['Benefits finder','Veteran families leave real money and honors on the table. Two taps show what may apply, and answering "served" tags the contact for a planner who knows VA paperwork.'],
+  estate:['The estate check','The natural next product after a funeral plan. Three in four adults have no will. The probate calculator turns an abstract task into a dollar figure from the statute, which is what gets people to book.'],
+  wishes:['The wishes builder','The engagement hook, like the quiz in a consumer funnel. People finish it because it is about them, it produces something worth keeping, and in a live funnel "save it" is where the email is asked for. Every answer maps to a CRM field the planner sees before the call.'],
+  trend:['Lead with cremation','More than six in ten deaths now end in cremation, rising toward eight in ten. The plans, ad creative and price list should be built around that, not treat cremation as the cheap option.'],
+  days:['The first 30 days','Content for the worst week. It answers the questions families search for, earns links and search traffic, and is the page they remember when it is time to plan their own.'],
+  carecost:['Care costs','For the senior care door. Families want the number before the tour, and hiding it only sends them to a directory site that shows it.'],
   'btf-map':['The funnel map','Three entry sources feed three doors, three pipelines and three outcomes, and all of them end in reviews and family referrals. Ads only ever point at the planning and care doors.'],
   'btf-ads':['Meta ad sets','Broad targeting by location and age, website conversion goals so every lead sees the price list, and a 30-day retargeting set that excludes anyone at-need or already booked.'],
   'btf-crm':['GoHighLevel pipelines','One opportunity per family, every page answer mapped to a custom field, and stages that match how the business really works, so the pipeline view doubles as the team\'s to-do list.'],
   'btf-auto':['Automations with exits','Every sequence stops on a booking, a reply, an opt-out or a death in the family. The at-need workflow sends no marketing at all.'],
   'btf-rep':['Reporting','Cost is tracked to booked calls and tours, not clicks. The owner gets one page on Monday with one recommended change.']
 };
-var ORDER=['hero','trust','card','email','consent','vet','ab','how','prices','btf-map','btf-ads','btf-crm','btf-auto','btf-rep'];
+var ORDER=['hero','trust','card','email','consent','vet','ab','how','kit','cost','time','pay','cover','benefits','estate','wishes','trend','days','carecost','prices','btf-map','btf-ads','btf-crm','btf-auto','btf-rep'];
 var curKey='hero',spotEl=null;
 function currentKey(){
   if(body.classList.contains('done')) return state.aud==='plan'?'book':state.aud==='need'?'hour':'tour';
@@ -927,6 +1365,147 @@ function step(d){var i=ORDER.indexOf(curKey);var k=ORDER[(i<0?0:i+d+ORDER.length
 $('#nprev').addEventListener('click',function(){step(-1)});$('#nnext').addEventListener('click',function(){step(1)});
 function bindWhy(){$$('.why').forEach(function(b){if(b._b)return;b._b=1;b.addEventListener('click',function(){showNote(b.dataset.why)})})}
 bindWhy();
+
+/* ================= planning toolkit ================= */
+var usd=function(n){return '$'+Math.round(n).toLocaleString('en-US')};
+var NS='http://www.w3.org/2000/svg';
+function count(el,to,fmt){fmt=fmt||usd;var from=+(el.dataset.v||0),t0=performance.now(),d=reduceMotion?0:500;el.dataset.v=to;(function f(t){var k=d?Math.min(1,(t-t0)/d):1;k=1-Math.pow(1-k,3);el.textContent=fmt(from+(to-from)*k);if(k<1)requestAnimationFrame(f)})(t0)}
+var reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function pressGroup(g,multi,cb){$$('button',g).forEach(function(b){b.addEventListener('click',function(){if(multi){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'))}else{$$('button',g).forEach(function(x){x.setAttribute('aria-pressed',String(x===b))})}cb(b)})})}
+
+/* toolkit index: mark tools for the current door */
+function markKit(){$$('.kit-idx a').forEach(function(a){a.classList.toggle('mine',(a.dataset.for||'').split(' ').indexOf(state.aud)>-1)})}
+
+/* 1. cost builder */
+var ITEMS=[['Basic services fee',2459,'#22392f'],['Transfer to the funeral home',395,'#2f4c3f'],['Embalming',845,'#3d5a4b'],['Other preparation',295,'#4f6b5c'],['Viewing: facilities and staff',475,'#6a8574'],['Ceremony: facilities and staff',550,'#86a08f'],['Hearse',375,'#a8823f'],['Service car or van',175,'#b9955a'],['Printed materials',195,'#c9a45c'],['Metal casket',2500,'#d8bb7f'],['Burial vault',1695,'#e6d1a4']];
+var costTotal=9995;
+(function(){
+  var ul=$('#costItems');
+  ul.innerHTML=ITEMS.map(function(it,i){return '<li><label><input type="checkbox" checked data-i="'+i+'"><i style="background:'+it[2]+'"></i>'+it[0]+'<em>'+usd(it[1])+'</em></label></li>'}).join('');
+  var svg=$('#costStack'),max=10500,W=600;
+  var segs=ITEMS.map(function(it){var r=document.createElementNS(NS,'rect');r.setAttribute('class','cseg');r.setAttribute('y','34');r.setAttribute('height','30');r.setAttribute('rx','3');r.setAttribute('fill',it[2]);svg.appendChild(r);return r});
+  [[6280,'Median with cremation'],[8300,'Median with burial'],[9995,'Burial with vault']].forEach(function(m,i){var x=m[0]/max*W;var l=document.createElementNS(NS,'g');l.innerHTML='<path d="M'+x+' 26V'+(80+i*16)+'" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" opacity=".5"/><text x="'+(x-6)+'" y="'+(92+i*16)+'" text-anchor="end" font-size="12" fill="var(--muted)">'+m[1]+' <tspan font-weight="700" fill="currentColor">'+usd(m[0])+'</tspan></text>';svg.appendChild(l)});
+  var you=document.createElementNS(NS,'g');you.innerHTML='<path id="youTick" d="M0 18V30" stroke="var(--brass)" stroke-width="3" stroke-linecap="round"/><text id="youTxt" x="0" y="13" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--brass)">You</text>';svg.appendChild(you);
+  function draw(){var x=0;$$('input',ul).forEach(function(c,i){var w=c.checked?ITEMS[i][1]/max*W:0;segs[i].setAttribute('x',x);segs[i].setAttribute('width',w);x+=w});costTotal=$$('input',ul).reduce(function(s,c,i){return s+(c.checked?ITEMS[i][1]:0)},0);count($('#costTotal'),costTotal);$('#youTick').setAttribute('d','M'+x+' 18V30');$('#youTxt').setAttribute('x',Math.max(14,Math.min(586,x)));drawTime();drawCover();track('tool','cost')}
+  ul.addEventListener('change',draw);draw();
+})();
+
+/* 2. price over time */
+function drawTime(){
+  var y=+$('#yrs').value,r=+$('#rise').value/100,base=costTotal||1;
+  $('#yrsV').textContent=y;$('#yrsV2').textContent=y;$('#riseV').textContent=$('#rise').value+'%';$('#timeBase').textContent=usd(base);
+  var fut=base*Math.pow(1+r,y);count($('#future'),fut);
+  var W=600,H=220,pad=34,maxV=Math.max(base*1.6,fut*1.18),pts=[];
+  for(var i=0;i<=y;i++){var v=base*Math.pow(1+r,i);pts.push([pad+(i/30)*(W-pad-10),H-26-(v/maxV)*(H-50)])}
+  var d='M'+pts.map(function(p){return p[0].toFixed(1)+' '+p[1].toFixed(1)}).join(' L');
+  var last=pts[pts.length-1],flatY=H-26-(base/maxV)*(H-50);
+  $('#timeChart').innerHTML='<line x1="'+pad+'" y1="'+(H-26)+'" x2="'+(W-10)+'" y2="'+(H-26)+'" stroke="var(--line-hi)"/>'+
+    [0,10,20,30].map(function(t){var x=pad+(t/30)*(W-pad-10);return '<text x="'+x+'" y="'+(H-8)+'" font-size="11" text-anchor="'+(t===30?'end':t?'middle':'start')+'" fill="var(--muted)">'+(t?'+'+t+' yrs':'today')+'</text>'}).join('')+
+    '<line x1="'+pad+'" y1="'+flatY+'" x2="'+last[0]+'" y2="'+flatY+'" stroke="var(--green-2)" stroke-width="2.5" stroke-dasharray="6 6"/><text x="'+(pad+6)+'" y="'+(flatY+18)+'" font-size="12" font-weight="700" fill="var(--green-2)">Planned today, if the price is guaranteed</text>'+
+    '<path d="'+d+' L'+last[0]+' '+(H-26)+' L'+pad+' '+(H-26)+'Z" fill="var(--brass)" opacity=".12"/><path class="ln" d="'+d+'" fill="none" stroke="var(--brass)" stroke-width="3" stroke-linecap="round"/>'+
+    '<circle cx="'+last[0]+'" cy="'+last[1]+'" r="6" fill="var(--brass)"/><text x="'+Math.min(last[0],W-70)+'" y="'+(last[1]-12)+'" font-size="13" font-weight="800" text-anchor="middle" fill="currentColor">'+usd(fut)+'</text>';
+  var py=+($('#planYrs [aria-pressed="true"]')||{dataset:{y:3}}).dataset.y;count($('#monthly'),base/(py*12),function(n){return usd(n)+'/mo'});
+}
+['#yrs','#rise'].forEach(function(s){$(s).addEventListener('input',function(){drawTime();track('tool','time')})});
+pressGroup($('#planYrs'),false,function(){drawTime()});
+
+/* 3. ways to pay */
+var OPTS=[
+  {n:'Pre-need insurance',d:'Pays the provider in your plan. Usually locks the price; paid in full or over time.',a:{lock:2,flex:0,nohealth:1,monthly:2,anywhere:1}},
+  {n:'Final expense life insurance',d:'Cash to a beneficiary for any bill. No price lock; many have a two-year waiting period.',a:{lock:0,flex:2,nohealth:1,monthly:2,anywhere:2}},
+  {n:'Pre-need trust',d:'Money held in trust for the contract. In California, cancel for a refund with interest, less up to 10% kept from interest.',a:{lock:1,flex:0,nohealth:2,monthly:1,anywhere:1}},
+  {n:'Payable-on-death savings',d:'Your own account, paid to a named person. Flexible, but the price is not guaranteed.',a:{lock:0,flex:2,nohealth:2,monthly:2,anywhere:2}},
+  {n:'Pay at the time',d:'The family pays from savings or the estate, at that day\'s prices.',a:{lock:0,flex:2,nohealth:2,monthly:0,anywhere:2}}
+];
+function rankPay(){
+  var ks=$$('#wants [aria-pressed="true"]').map(function(b){return b.dataset.k});var mx=Math.max(1,ks.length*2);
+  var ul=$('#opts');if(!ul.children.length){ul.innerHTML=OPTS.map(function(o,i){return '<li class="opt-row" data-i="'+i+'"><div><b>'+o.n+'</b><small>'+o.d+'</small></div><div><div class="meter"><i></i></div><div class="sc"></div></div></li>'}).join('')}
+  var rows=$$('.opt-row',ul),before={};rows.forEach(function(r){before[r.dataset.i]=r.getBoundingClientRect().top});
+  var sc=OPTS.map(function(o,i){return {i:i,s:ks.reduce(function(t,k){return t+o.a[k]},0)}}).sort(function(a,b){return b.s-a.s||a.i-b.i});
+  sc.forEach(function(x,pos){var el=ul.querySelector('[data-i="'+x.i+'"]');ul.appendChild(el);el.classList.toggle('top',pos===0&&x.s>0);$('i',el).style.width=(x.s/mx*100)+'%';$('.sc',el).textContent=ks.length?x.s+' of '+mx:''});
+  if(!reduceMotion)$$('.opt-row',ul).forEach(function(el){var d=before[el.dataset.i]-el.getBoundingClientRect().top;if(!d)return;el.style.transition='none';el.style.transform='translateY('+d+'px)';requestAnimationFrame(function(){requestAnimationFrame(function(){el.style.transition='';el.style.transform=''})})});
+  track('tool','pay');
+}
+pressGroup($('#wants'),true,rankPay);
+
+/* 4. coverage */
+var RATES={m:{50:[40,60,79],60:[57,85,113],70:[87,130,172],80:[157,235,313]},f:{50:[30,45,60],60:[43,64,84],70:[64,95,127],80:[127,190,253]}};
+function drawCover(){
+  if(typeof RATES==='undefined'||!RATES)return;
+  var bills=+$('#bills').value,saved=+$('#saved').value,ss=$('[data-b="ss"]').getAttribute('aria-pressed')==='true'?255:0,va=$('[data-b="va"]').getAttribute('aria-pressed')==='true'?2004:0;
+  $('#billsV').textContent=usd(bills);$('#savedV').textContent=usd(saved);
+  var need=Math.max(0,Math.ceil((costTotal+bills-saved-ss-va)/1000)*1000);
+  count($('#covNum'),need);$('#covArc').setAttribute('stroke-dashoffset',(439.8*(1-Math.min(1,need/25000))).toFixed(1));
+  var tier=need<=10000?0:need<=15000?1:2,amt=[10000,15000,20000][tier],r=RATES[$('#sex').value][$('#age').value][tier];
+  $('#prem').innerHTML=need>25000?'<b>Above 25,000</b><br><span class="cap2">Most final expense policies stop around 25,000. A licensed agent would look at other options.</span>':need===0?'<b>No gap</b><br><span class="cap2">Savings and benefits cover this plan. A pre-need contract could still lock the price.</span>':'<span class="cap2">Sample for a '+usd(amt).replace('$','')+'-dollar guaranteed-issue policy</span><br><b>about '+usd(r)+' a month</b> <span class="cap2">· not a quote</span>';
+}
+['#bills','#saved'].forEach(function(s){$(s).addEventListener('input',drawCover)});['#age','#sex'].forEach(function(s){$(s).addEventListener('change',drawCover)});
+$$('.chk .chip-btn').forEach(function(b){b.addEventListener('click',function(){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));drawCover();track('tool','cover')})});
+
+/* 5. benefits */
+function drawBen(){
+  var vet=$('[data-q="vet"]').getAttribute('aria-pressed')==='true',sp=$('[data-q="spouse"]').getAttribute('aria-pressed')==='true',L=[],cash=0;
+  if(vet){L.push(['i-flag','Burial in a VA national cemetery','Grave site where space is available, opening and closing, perpetual care','No cost']);L.push(['i-shield','Headstone, marker or medallion','Also for private cemeteries','Free']);L.push(['i-flag','Burial flag and Presidential Memorial Certificate','Honoring their service','Free']);L.push(['i-coins','VA burial and plot allowance','Non-service-connected death on or after Oct 1, 2025','$2,004']);cash+=2004}
+  if(sp){L.push(['i-coins','Social Security lump-sum payment','To a spouse who lived with them','$255']);cash+=255}
+  if(!vet&&!sp){L.push(['i-heart','Fewer automatic benefits','A child who receives benefits on their record may still get the Social Security payment. A plan matters more here.','—'])}
+  $('#benList').innerHTML=L.map(function(x){return '<li><svg aria-hidden="true"><use href="#'+x[0]+'"/></svg><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div><em>'+x[3]+'</em></li>'}).join('');
+  $('#benTotal').textContent=usd(cash)+' in cash benefits';track('tool','benefits');
+}
+pressGroup($('#benQ'),true,drawBen);
+
+/* 6. estate */
+function fee(v){var t=[[100000,.04],[100000,.03],[800000,.02],[9000000,.01],[15000000,.005]],f=0,left=v;for(var i=0;i<t.length&&left>0;i++){var p=Math.min(left,t[i][0]);f+=p*t[i][1];left-=p}return f}
+function drawEst(){
+  var n=$$('#estList input:checked').length;$('#estNum').textContent=n+'/7';$('#estArc').setAttribute('stroke-dashoffset',(439.8*(1-n/7)).toFixed(1));
+  var v=+$('#estate').value,f=fee(v),small=v<=208850;$('#estateV').textContent=usd(v);
+  var trust=$$('#estList input')[1].checked;
+  $('#attV').textContent=small?'none':usd(f);$('#exeV').textContent=small?'none':usd(f);
+  var w=small?0:Math.min(50,f/40000*50);$('#pAtt').style.width=w+'%';$('#pExe').style.width=w+'%';
+  $('#pMsg').innerHTML=small?'Under 208,850 dollars, heirs may use the small estate affidavit instead of probate.':trust?'Assets in a funded living trust usually skip probate, so these fees may not apply to them.':'Without a trust, probate in California could cost about <b>'+usd(f*2)+'</b> in statutory attorney and executor fees, plus court costs.';
+  track('tool','estate');
+}
+$('#estList').addEventListener('change',drawEst);$('#estate').addEventListener('input',drawEst);
+
+/* 7. wishes */
+function drawWish(){
+  var g=function(k){return $$('[data-w="'+k+'"] [aria-pressed="true"]').map(function(b){return b.dataset.v})};
+  var set=function(id,v,ph){var el=$(id);el.textContent=v||ph;el.classList.toggle('empty',!v)};
+  var nm=$('#wName').value.trim();$('#kName').textContent=nm?nm+'\'s wishes':'My wishes';
+  set('#kDisp',g('disp').join(', '),'Not chosen yet');set('#kSvc',g('svc').join(', '),'Not chosen yet');set('#kFeel',g('feel').join(', '),'Not chosen yet');
+  set('#kSong',$('#wSong').value.trim(),'Nothing chosen');set('#kWho',$('#wWho').value.trim(),'Someone I trust');
+}
+$$('[data-w]').forEach(function(g){pressGroup(g,g.hasAttribute('data-multi'),function(){drawWish();track('tool','wishes')})});
+['#wName','#wSong','#wWho'].forEach(function(s){$(s).addEventListener('input',drawWish)});
+$('#kDate').textContent=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+$('#kPrint').addEventListener('click',function(){window.print()});
+$('#kCopy').addEventListener('click',function(){var t=$('#kName').textContent+'\n'+$$('#keep dl div').map(function(d){return $('dt',d).textContent+': '+$('dd',d).textContent}).join('\n');try{navigator.clipboard.writeText(t)}catch(e){}this.textContent='Copied'});
+
+/* 8. trend */
+(function(){
+  var svg=$('#trendSvg'),D={2025:[63.4,31.6],2045:[82.3,null]};
+  svg.innerHTML='<line x1="40" y1="250" x2="580" y2="250" stroke="var(--line-hi)"/>'+[0,25,50,75,100].map(function(p){var y=250-p*2.1;return '<text x="30" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="var(--muted)">'+p+'%</text><line x1="40" y1="'+y+'" x2="580" y2="'+y+'" stroke="var(--line)" stroke-dasharray="2 6"/>'}).join('')+
+    '<rect class="bar" id="tbC" x="110" width="150" rx="10" fill="var(--brass)"/><rect class="bar" id="tbB" x="340" width="150" rx="10" fill="var(--green-2)"/>'+
+    '<text id="tlC" x="185" text-anchor="middle" font-family="Iowan Old Style,Georgia,serif" font-size="30" font-weight="600" fill="currentColor"></text><text id="tlB" x="415" text-anchor="middle" font-family="Iowan Old Style,Georgia,serif" font-size="30" font-weight="600" fill="currentColor"></text>'+
+    '<text x="185" y="276" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">Cremation</text><text x="415" y="276" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">Burial</text>';
+  function set(y){var v=D[y];[['C',v[0]],['B',v[1]]].forEach(function(p){var h=(p[1]||0)*2.1;var r=$('#tb'+p[0]);r.setAttribute('y',250-h);r.setAttribute('height',h);var t=$('#tl'+p[0]);t.setAttribute('y',250-h-10);t.textContent=p[1]==null?'':p[1]+'%';});$('#tbB').style.opacity=v[1]==null?.15:1;
+    var note=$('#trendNote');if(!note){note=document.createElementNS(NS,'text');note.id='trendNote';note.setAttribute('x','415');note.setAttribute('y','230');note.setAttribute('text-anchor','middle');note.setAttribute('font-size','12');note.setAttribute('fill','var(--muted)');svg.appendChild(note)}note.textContent=v[1]==null?'No burial projection published':'';}
+  set(2025);pressGroup($('#trendYr'),false,function(b){set(b.dataset.y);track('tool','trend')});
+})();
+
+/* 9. days */
+pressGroup($('.days-tabs'),false,function(b){$$('.days-tabs button').forEach(function(x){x.setAttribute('aria-selected',String(x===b))});$$('.days-pane').forEach(function(p){p.classList.toggle('on',p.dataset.d===b.dataset.d)});track('tool','days')});
+
+/* 10. care costs */
+(function(){
+  var C=[['Adult day care',26000],['Assisted living',70800],['Homemaker services',75504],['Home health aide',77792],['Nursing home, shared room',111325],['Nursing home, private room',127750]];
+  var svg=$('#ccSvg');svg.innerHTML=C.map(function(c,i){var y=14+i*52;return '<text x="0" y="'+(y+14)+'" font-size="14" font-weight="700" fill="currentColor">'+c[0]+'</text><rect x="0" y="'+(y+22)+'" width="600" height="16" rx="8" fill="var(--line)"/><rect class="b" data-i="'+i+'" x="0" y="'+(y+22)+'" height="16" rx="8" width="0" fill="'+(i>3?'var(--green-2)':'var(--brass)')+'"/><text class="v" data-i="'+i+'" x="600" y="'+(y+14)+'" text-anchor="end" font-size="14" font-family="ui-monospace,Menlo,monospace" fill="var(--muted)"></text>'}).join('');
+  function set(p){C.forEach(function(c,i){var v=p==='m'?c[1]/12:c[1];$('rect.b[data-i="'+i+'"]',svg).setAttribute('width',(c[1]/127750*600).toFixed(1));$('text.v[data-i="'+i+'"]',svg).textContent=usd(v)+(p==='m'?'/mo':'/yr')})}
+  set('m');pressGroup($('#ccPer'),false,function(b){set(b.dataset.p);track('tool','care')});
+})();
+
+/* veteran mode reaches the toolkit */
+function kitVet(){$$('.vet-only').forEach(function(b){b.hidden=!state.vet});var q=$('[data-q="vet"]');if(state.vet&&q.getAttribute('aria-pressed')!=='true'){q.setAttribute('aria-pressed','true');drawBen()}}
+drawCover();rankPay();drawBen();drawEst();drawWish();markKit();
 
 /* events: one per step, here only logged to the console (demo) */
 function track(ev,v){try{if(window.console&&console.debug)console.debug('[funnel]',ev,v||'')}catch(e){}}

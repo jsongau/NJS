@@ -729,38 +729,84 @@ html:has(.fm-root){scroll-padding-top:150px}
 @media (max-width:760px){.fm-sk{padding-top:110px}.fm-4w{height:80px}.fm-crop-tl,.fm-crop-tr{top:92px}.fm-crop{display:none}}
 @media (prefers-reduced-motion:reduce){.fm-4w-slash{stroke-dashoffset:0}}
 
-/* Demo controls as a bottom-centre dock on desktop (Jay: "a bottom center rail that doesn't distract you
-   from the funnel itself"). They drive the demo, not the funnel, so they float above the template banner
-   in the same dark as the banner; the funnel itself starts right under the site header. */
-@media (min-width:980px){
-  html:has(.fm-root){scroll-padding-top:96px}
-  .fm-root{padding-bottom:150px}
-  .fm-card{top:96px}
-  #nathan{top:110px}
-  .fm-controls{position:fixed;top:auto;left:50%;bottom:58px;transform:translateX(-50%);z-index:36;width:max-content;max-width:calc(100vw - 32px);
-    background:rgba(18,20,22,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09);border-radius:999px;
-    box-shadow:0 22px 50px -18px rgba(0,0,0,.55);animation:fmDock .5s cubic-bezier(.2,.8,.2,1) both}
-  @keyframes fmDock{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
-  .fm-controls .fm-in{max-width:none;padding:5px 8px 5px 5px;gap:12px}
-  .fm-controls .fm-lab{display:none}
-  .fm-controls .fm-seg{background:rgba(255,255,255,.07);border-color:transparent;padding:3px}
-  .fm-controls .fm-seg button{color:#C9C3C6;padding:7px 12px;font-size:13.5px}
-  .fm-controls .fm-seg button:hover{color:#fff}
-  .fm-controls .fm-seg button[aria-pressed="true"]{background:#F6F2F3;color:#121416}
-  .fm-controls .fm-toggles{gap:14px;padding-left:12px;border-left:1px solid rgba(255,255,255,.12);margin-left:0}
-  .fm-controls .fm-sw{color:#F6F2F3;font-size:13.5px}
-  .fm-controls .fm-sw .fm-tr{background:rgba(255,255,255,.2)}
-  .fm-controls .fm-sw[aria-checked="true"] .fm-tr{background:#FF4F9A}
-  .fm-controls .fm-sw small{display:none}
-  .fm-controls .fm-abv{color:#121416}
-}
-@media (min-width:980px) and (prefers-reduced-motion:reduce){.fm-controls{animation:none}}
+
 /* Trust pills: one line under the hero copy (Jay: they wrapped to two lines and pushed the hero down). */
 .fm-root .fm-trust{flex-wrap:nowrap;gap:8px;margin-top:22px;max-width:100%}
 .fm-root .fm-trust span{flex:0 1 auto;min-width:0;white-space:nowrap;padding:7px 12px;font-size:13.5px;line-height:1.2;gap:6px}
 .fm-root .fm-trust svg{width:14px;height:14px;flex:none}
 @media (max-width:620px){.fm-root .fm-trust{flex-wrap:wrap}}
-@media (min-width:980px){.fm-controls .fm-abv{display:inline-grid;place-items:center;width:28px;height:26px;padding:0;line-height:1;border-radius:7px;font-size:13px}}
-.fm-controls .fm-sw>span.fm-abv{display:inline-grid;place-items:center;align-items:center}
+
+.fm-controls .fm-sw>span.fm-abv{display:inline-grid;place-items:center}
 .fm-nbub h3{color:#F6F2F3}
 .fm-nbub p{color:#D8D3D5}
+
+/* Behind-the-page rail (Jay: the stack intro as a sticky bottom-centre piece that can expand, the demo
+   controls stay at the top). Collapsed it is one quiet line; expanded it opens upward (inward) with the
+   intro and three jump links. It steps aside while the stack or behind-the-funnel section is on screen. */
+.fm-bp{position:fixed;left:50%;bottom:58px;z-index:36;width:min(620px,calc(100vw - 32px));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;transition:opacity .3s,transform .35s cubic-bezier(.2,.8,.2,1)}
+.fm-bp>*{pointer-events:auto}
+.fm-bp.fm-away{opacity:0;transform:translate(-50%,16px);visibility:hidden}
+.fm-bp-bar{display:flex;align-items:center;gap:12px;max-width:100%;padding:7px 14px 7px 7px;border-radius:999px;border:1px solid rgba(255,143,192,.35);background:rgba(18,20,22,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#F6F2F3;font:inherit;text-align:left;cursor:pointer;box-shadow:0 18px 40px -16px rgba(0,0,0,.55);transition:border-color .2s}
+.fm-bp-bar:hover{border-color:#FF8FC0}
+.fm-bp-bar:focus-visible{outline:3px solid #FF8FC0;outline-offset:3px}
+.fm-bp-eye{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(255,79,154,.18)}
+.fm-bp-eye svg{width:18px;height:18px;fill:none;stroke:#FF8FC0;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.fm-bp-t{display:grid;gap:1px;min-width:0}
+.fm-bp-t b{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#FF8FC0}
+.fm-bp-t span{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fm-bp-car{flex:none;width:14px;height:14px;fill:none;stroke:#C9C3C6;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.fm-bp.fm-open .fm-bp-car{transform:rotate(180deg)}
+.fm-bp-body{width:100%;margin-bottom:10px;padding:20px 22px 18px;border-radius:20px;border:1px solid rgba(255,143,192,.3);background:rgba(18,20,22,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#D8D3D5;box-shadow:0 30px 60px -24px rgba(0,0,0,.6);transform-origin:50% 100%}
+.fm-bp-body[hidden]{display:none}
+.fm-bp.fm-open .fm-bp-body{animation:fmBpOpen .32s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fmBpOpen{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.fm-bp-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#FF8FC0}
+.fm-bp-who{margin-top:6px;font-size:14px;line-height:1.5;padding-bottom:14px;border-bottom:1px dashed rgba(255,143,192,.35)}
+.fm-bp-kick{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#FF8FC0}
+.fm-bp-h{margin-top:6px;font-size:22px;font-weight:700;letter-spacing:-.03em;line-height:1.15;color:#F6F2F3}
+.fm-bp-p{margin-top:8px;font-size:14.5px;line-height:1.55;color:#C9C3C6}
+.fm-bp-go{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.fm-bp-go a{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid #3A3E43;color:#F6F2F3;text-decoration:none;font-size:13.5px;font-weight:700;transition:border-color .2s,background .2s}
+.fm-bp-go a:first-child{background:#FF4F9A;border-color:#FF4F9A;color:#121416}
+.fm-bp-go a:hover{border-color:#FF8FC0}
+@media (max-width:979px){.fm-bp{display:none}}
+@media (prefers-reduced-motion:reduce){.fm-bp,.fm-bp-body{animation:none!important;transition:none}}
+
+/* Behind the page as its own page (/funnels/memorial/behind); the funnel links to it. */
+.fm-bp-link{text-decoration:none}
+.fm-bp-link .fm-bp-car{fill:none;stroke:#FF8FC0;stroke-width:1.8;transition:transform .25s}
+.fm-bp-link:hover .fm-bp-car{transform:translateX(3px)}
+.fm-bp-link:hover .fm-bp-bar{border-color:#FF8FC0}
+.fm-bp-link:focus-visible{outline:none}
+.fm-bp-link:focus-visible .fm-bp-bar{outline:3px solid #FF8FC0;outline-offset:3px}
+.fm-root.fm-done .fm-bp{opacity:0;visibility:hidden}
+.fm-bpl{padding:28px 0}
+.fm-bpl-card{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:20px;border:1px dashed rgba(194,24,91,.4);background:color-mix(in srgb,#FF4F9A 6%,var(--bg));color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s,box-shadow .2s}
+.fm-bpl-card:hover{border-style:solid;border-color:#FF4F9A;transform:translateY(-2px);box-shadow:0 18px 34px -24px rgba(194,24,91,.6)}
+.fm-bpl-card .fm-bp-eye{width:44px;height:44px;background:#121416}
+.fm-bpl-card .fm-bp-eye svg{width:22px;height:22px}
+.fm-bpl-t{display:grid;gap:3px;flex:1;min-width:0}
+.fm-bpl-t b{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#C2185B}
+.fm-bpl-t strong{font-size:18px;letter-spacing:-.02em;line-height:1.25}
+.fm-bpl-t small{font-size:14px;line-height:1.45;color:var(--ink-2)}
+.fm-bpl-go{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;background:#121416;color:#F6F2F3;font-weight:700;font-size:14.5px}
+.fm-bpl-go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:620px){.fm-bpl-card{flex-wrap:wrap}.fm-bpl-go{width:100%;justify-content:center}}
+.fm-4w-tag[hidden]{display:none}
+.fm-behind-page .fm-root{padding-bottom:0}
+.fm-bh-hero{padding:44px 0 40px}
+.fm-bh-back{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;margin-bottom:22px}
+.fm-bh-back svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.fm-bh-back:hover svg{transform:translateX(-3px)}
+.fm-bh-tag{background:color-mix(in srgb,#FF4F9A 7%,var(--bg));border-color:rgba(194,24,91,.4);color:var(--ink-2)}
+.fm-bh-tag b{color:#C2185B}
+.fm-bh-tag svg{background:#121416;stroke:#FF8FC0}
+.fm-bh-tag a{color:#C2185B;font-weight:700}
+#bh-h{font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-.04em;font-weight:700;max-width:16em;text-wrap:balance}
+.fm-bh-lede{margin-top:16px;font-size:18px;line-height:1.55;color:var(--ink-2);max-width:40em}
+.fm-bh-jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.fm-bh-jump a{display:inline-flex;align-items:center;min-height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line-hi);color:var(--ink);text-decoration:none;font-weight:700;font-size:14.5px;transition:border-color .2s,background .2s}
+.fm-bh-jump a:first-child{background:#121416;color:#F6F2F3;border-color:#121416}
+.fm-bh-jump a:hover{border-color:#FF4F9A}
+.fm-behind-page .fm-btf{scroll-margin-top:80px}
+.fm-behind-page :is(#stack,#addons){scroll-margin-top:72px}

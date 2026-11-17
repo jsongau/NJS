@@ -30,7 +30,7 @@ const mini = (href, ic, k, t, s, attrs) => '<a class="mn-mini" href="' + href + 
 const STUDIO = [
   ['The studio', [['/care', 'team', 'Care plans', 'Hosting, fixes and updates after launch'], ['/crew', 'bot', 'The crew', 'Who builds it, human and agent'], ['/crew#runs', 'loop', 'How a build runs', 'Audit, plan, build, launch, care'], ['/resume', 'user', 'Résumé', 'Nathan J. Song, the builder']]],
   ['Before you start', [['/plans#faq', 'msg', 'Questions', 'Straight answers on scope and payment'], ['/build?call=1', 'cal', 'Request a call', 'Twenty minutes, no pitch deck'], ['/plans', 'star', "What's included", 'Every plan, side by side'], ['/work', 'mark', 'Delivered work', 'Live projects and what each one does']]],
-  ['Templates and tools', [['/funnels', 'crm', 'Funnel templates', 'Intake and growth funnels to start from'], ['/funnels/memorial/builder', 'pages', 'Landing page builder', 'Pick a page, swap the wording'], ['/marketing-ops', 'chart', 'Ads and CRM', 'How I run Meta ads and pipelines'], ['/funnels/memorial#stack', 'bolt', 'The stack, wired', 'Meta, Zapier and GoHighLevel']]],
+  ['Templates and tools', [['/funnels', 'crm', 'Funnel templates', 'Intake and growth funnels to start from'], ['/funnels/memorial/builder', 'pages', 'Landing page builder', 'Pick a page, swap the wording'], ['/marketing-ops', 'chart', 'Ads and CRM', 'How I run Meta ads and pipelines'], ['/funnels/memorial/behind', 'bolt', 'The stack, wired', 'Meta, Zapier and GoHighLevel']]],
 ];
 
 const caret = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -83,7 +83,7 @@ function buildPanel() {
     '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">Your plan so far</p><div class="mn-so" data-mn="so"></div>' +
     '<a class="btn btn-lime mn-go" href="/build" data-carry>Continue my plan</a></aside>' +
     mini('/funnels/memorial/builder', 'pages', 'New', 'Build a landing page', 'Nine starting pages, live preview') +
-    mini('/funnels/memorial#stack', 'bolt', 'See it wired', 'Meta, Zapier, GoHighLevel', 'One lead, traced end to end') +
+    mini('/funnels/memorial/behind', 'bolt', 'See it wired', 'Meta, Zapier, GoHighLevel', 'One lead, traced end to end') +
     mini('/work', 'mark', 'Proof', 'Delivered work', 'Live projects, each with its scope') +
     mini('/plans#faq', 'msg', 'Before you start', 'Questions, answered', 'Scope, payment and who owns what') + '</div></div>';
 }

@@ -111,3 +111,15 @@ test('builder: the downloaded page carries working tools and no builder chrome',
   const total = FB.COST_ITEMS.reduce((a, i) => a + i[1], 0);
   assert.equal(total, 9959, 'cost lines still match the NFDA medians used on the toolkit');
 });
+
+test('funnel split: the family-facing funnel links to the behind-the-page page, which holds the stack, add-ons and tabs', () => {
+  const funnel = readFileSync(new URL('../../funnels/memorial/index.html', import.meta.url), 'utf8');
+  const behind = readFileSync(new URL('../../funnels/memorial/behind/index.html', import.meta.url), 'utf8');
+  for (const id of ['id="stack"', 'id="addons"', 'id="behind"']) {
+    assert.ok(!funnel.includes(id), 'funnel still has ' + id);
+    assert.ok(behind.includes(id), 'behind page is missing ' + id);
+  }
+  assert.ok(funnel.includes('href="/funnels/memorial/behind"'), 'funnel does not link to the behind page');
+  assert.ok(behind.includes('href="/funnels/memorial"'), 'behind page does not link back to the funnel');
+  assert.ok(readFileSync(new URL('../../assets/funnels/memorial.js', import.meta.url), 'utf8').includes("location.replace('/funnels/memorial/behind'"), 'old #stack links are not forwarded');
+});

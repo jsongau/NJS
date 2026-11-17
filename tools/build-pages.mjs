@@ -105,6 +105,15 @@ export const PAGES = {
     skip_href: '#fn-list', skip_text: 'Skip to the templates',
     jsonld: ld('CollectionPage', { name: 'Funnel build templates', hasPart: [{ '@type': 'CreativeWork', name: 'Memorial and senior care intake funnel', url: SITE + '/funnels/memorial' }, { '@type': 'CreativeWork', name: 'Sweepstakes growth funnel', url: SITE + '/ritual' }] }),
   },
+  'funnel-behind': {
+    out: 'funnels/memorial/behind/index.html', path: '/funnels/memorial/behind', nav: null, h1: 'bh-h', css: 'funnel-memorial',
+    title: 'Behind the Funnel: Meta Ads, Zapier and GoHighLevel · Funnel Build Template · NJS Studio',
+    description: 'What runs the memorial intake funnel: one lead traced through Meta ads, Zapier and GoHighLevel, the add-ons that plug in, and the pipelines, follow-up and reporting behind it.',
+    og_title: 'Behind the funnel: Meta ads, Zapier and GoHighLevel',
+    og_description: 'One lead traced end to end, the add-ons, the pipelines and the follow-up.',
+    skip_href: '#stack', skip_text: 'Skip to the stack',
+    jsonld: ld('WebPage', { name: 'Behind the memorial intake funnel', isPartOf: { '@type': 'CollectionPage', name: 'Funnel build templates', url: SITE + '/funnels' } }),
+  },
   'funnel-builder': {
     out: 'funnels/memorial/builder/index.html', path: '/funnels/memorial/builder', nav: null, h1: 'fb-h', css: 'funnel-builder',
     title: 'Memorial Landing Page Builder · Funnel Build Template · NJS Studio',

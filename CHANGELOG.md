@@ -4,6 +4,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-16
 
+- `/funnels/memorial/behind` — New page: the stack, GoHighLevel add-ons and the ads/CRM/automation tabs moved off the funnel, which now only shows what a family sees and links here (bottom-centre "Behind the page" link, an in-page card, the Template menu). Old `#stack`, `#addons` and `#behind` links forward. Demo controls back at the top of the funnel, on one row.
 - `/funnels/memorial` — Demo controls are a bottom-centre dock on desktop (one row), trust pills on one line, a "behind the page" fourth-wall treatment on the stack and behind-the-funnel sections (page peel, crop marks, who-is-speaking tag, back-to-the-page strip), and dark-on-dark text fixed in the Template menu, the commentary bubble and the Partner card.
 - Mega nav — Build, Plans, Delivered and Studio panels rebuilt on PM Countdown's pattern: side columns are a stack (feature card plus small cards) instead of one stretched card; step tiles with moving icons, funnel template cards with animated thumbnails, an "Add to any plan" row, a third Studio column for templates and tools.
 - `/funnels/memorial/builder` — Meta ad tab (the ad for each page, message match out of 3, who sees it and special ad category notes), Check tab (fear hooks, fake urgency, impossible claims, personal attributes, items to confirm, help-now offers, insurance wording), Download page (self-contained HTML with working tools), Share link (the whole page in a compressed link), and two live tool blocks: cost builder and payment plan.

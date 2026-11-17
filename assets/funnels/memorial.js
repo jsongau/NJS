@@ -2,6 +2,7 @@
 (function(){
 'use strict';
 var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var MOVED={'#stack':1,'#addons':1,'#behind':1};if(MOVED[location.hash]){location.replace('/funnels/memorial/behind'+location.hash);return}
 var body=document.getElementById('fm');
 var COPY={
   plan:{eyebrow:'Planning ahead · Free guide',
@@ -190,7 +191,7 @@ var NOTES={
   'btf-auto':['Automations with exits','Every sequence stops on a booking, a reply, an opt-out or a death in the family. The at-need workflow sends no marketing at all.'],
   'btf-rep':['Reporting','Cost is tracked to booked calls and tours, not clicks. The owner gets one page on Monday with one recommended change.']
 };
-var ORDER=['hero','trust','card','email','consent','vet','ab','how','stack','kit','cost','time','pay','cover','benefits','estate','wishes','trend','days','carecost','prices','btf-map','btf-ads','btf-crm','btf-auto','btf-rep'];
+var ORDER=['hero','trust','card','email','consent','vet','ab','how','kit','cost','time','pay','cover','benefits','estate','wishes','trend','days','carecost','prices'];
 var curKey='hero',spotEl=null;
 function currentKey(){
   if(body.classList.contains('fm-done')) return state.aud==='plan'?'book':state.aud==='need'?'hour':'tour';
@@ -367,5 +368,6 @@ function upd(){var on=!cardIn&&past&&!body.classList.contains('fm-done');bar.cla
 new IntersectionObserver(function(es){cardIn=es[0].isIntersecting;past=es[0].boundingClientRect.top<0;upd()}).observe(card);
 $('#mbarBtn').addEventListener('click',function(e){if(state.aud==='need')return;e.preventDefault();window.scrollTo({top:card.getBoundingClientRect().top+scrollY-84,behavior:reduceMotion?'auto':'smooth'});setTimeout(function(){var i=$('.fm-step.fm-on input, .fm-step.fm-on button',card)||$('input,button',card);if(i)i.focus({preventScroll:true})},reduceMotion?0:500)});
 new MutationObserver(upd).observe(body,{attributes:true,attributeFilter:['class']})})();
+(function(){var r=document.getElementById('fmBp'),st=$('.fm-bpl');if(!r||!st||!('IntersectionObserver' in window))return;new IntersectionObserver(function(es){r.classList.toggle('fm-away',es[0].isIntersecting)}).observe(st)})();
 render();
 })();

@@ -96,3 +96,13 @@
 - Bug found and fixed: selecting a section re-rendered the preview and reset tool inputs; selection now only moves
   the highlight.
 - Tests: 54 pass, 8 skipped. Remaining toolkit tools as blocks and saving or sending builds stay for later waves.
+
+## Wave 8 (same day, pushed 2026-11-17): behind the page gets its own page
+
+- Jay: the behind-the-page material belongs on a separate page that the funnel links to. `/funnels/memorial`
+  is now only the family's experience; `/funnels/memorial/behind` holds the stack, the add-ons and the tabs,
+  and opens with who is speaking (Nathan, to the business owner).
+- Misread logged: "that should be like a bottom center rail" was about the behind-the-page intro, not the
+  demo controls. The controls briefly became a bottom dock (live in d824455); this commit puts them back on top.
+- Old links forward with `location.replace` before render; `behind.js` opens a tab from `#map`/`#ads`/`#crm`.
+- Test added: the funnel has no stack, add-ons or tabs and links to the behind page, which links back.

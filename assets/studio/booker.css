@@ -363,3 +363,12 @@
 .bk .bk-pace input:checked + span{color:#fff}
 .bk .bk-pace input:focus-visible + span{outline:2px solid var(--coral);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.bk .bk-pace::before,.bk .bk-pace span{transition:none}}
+
+/* Booking panel (2026-11-23, Mary): it sticks below the site header, not under it, sheds its two notes on short screens, and carries the Continue button so the next step travels with the visitor. */
+.bk .sum{top:92px}
+@media (max-height:780px) and (min-width:961px){.bk .sum{gap:12px;padding:20px}.bk .sum .bk-sec,.bk .sum .pend{display:none}.bk .sum dl div{padding:9px 0;min-height:38px}}
+.bk .sum-go{display:grid;gap:8px}
+.bk .sum-go .bk-btn{width:100%;min-height:54px;font-size:16px}
+.bk .sum-go .bk-btn:disabled{opacity:.45;background:transparent;border-color:rgba(255,255,255,.3);color:#C9CCC4}
+.bk .sum-go p{font-size:13px;line-height:1.4;color:#8E938A;text-align:center}
+@media (max-width:960px){.bk .sum-go{display:none}}

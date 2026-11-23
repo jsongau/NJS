@@ -962,3 +962,31 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-push p b { color: #fff; font-weight: 650; }
 .nf-push a { flex: none; font-weight: 600; font-size: 14.5px; color: var(--nf-coral); text-underline-offset: 3px; }
 .nf-pack .nf-pips-l > div { display: grid; grid-template-columns: repeat(12, 1fr); }
+
+/* Home calendar, every gym (2026-11-23): a three-way gym switch above the days. Region names only. */
+.nf-locs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 16px 20px 0; }
+.nf-locs button { display: grid; gap: 3px; align-content: center; min-height: 56px; padding: 8px 10px; border-radius: 14px; border: 1.5px solid var(--line-hi); background: var(--surface); font: inherit; text-align: left; color: var(--ink); cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+.nf-locs button b { font-size: 15px; line-height: 1.15; letter-spacing: -.01em; }
+.nf-locs button small { font: 600 10px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.nf-locs button:hover { border-color: var(--ink); }
+.nf-locs button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.nf-locs button[aria-pressed="true"] small { color: var(--nf-coral); }
+.nf-locs button:focus-visible { outline: 3px solid var(--nf-coral); outline-offset: 2px; }
+.nf-cal .nf-cal-h { padding-top: 14px; }
+.nf-slots .nf-slot-w { grid-column: span 2; }
+.nf-cal .nf-days, .nf-cal .nf-slots { min-height: 0; }
+@media (max-width: 480px) { .nf-locs button b { font-size: 13.5px; } .nf-locs { padding: 14px 14px 0; } }
+
+/* Booking page hero (2026-11-23): the clock art fills the right side, three facts sit under the lede. */
+.nf-bkfacts { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 8px; }
+.nf-bkfacts li { display: flex; align-items: baseline; gap: 10px; font-size: 15px; color: var(--ink-2); }
+.nf-bkfacts b { flex: none; min-width: 5.2em; font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--nf-acc); }
+.nf-bk-art .nf-art { max-width: 460px; }
+@media (min-width: 720px) { .nf-bkfacts { grid-template-columns: repeat(3, auto); justify-content: start; gap: 8px 28px; } .nf-bkfacts li { display: grid; gap: 6px; } }
+@media (max-width: 1023px) { .nf-bk-art { display: none; } }
+
+/* Booking page headline (2026-11-23, Mojo): two lines, the offer then the reassurance. Sized so each line
+   stays whole beside the art. */
+.nf-bk-k { margin-top: 18px; }
+.nf-hero.sub h1.nf-bk-h1 { margin-top: 10px; font-size: clamp(22px, 7vw, 54px); letter-spacing: -.045em; line-height: 1.06; }
+@media (min-width: 1024px) { .nf-hero.sub h1.nf-bk-h1 { font-size: min(52px, 3.6vw); } .nf-hero.sub > .wrap:has(.nf-bk-art) { grid-template-columns: 1.5fr 1fr; } }

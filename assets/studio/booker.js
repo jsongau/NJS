@@ -5,6 +5,7 @@
 // Club Studio Corona; Saturday = Brea, Club Studio Corona or private; Sunday = Brea or private. Club Studio
 // has a different schedule each day (byDay) and times on the quarter hour. Markup: partials/fitness/nf-booker.html. Styles: booker.css (scoped to .bk).
 import { track } from './track.js';
+import { GYMS } from './places.js';
 
 const ENDPOINT = 'https://cedunmyttprzgslthuyk.supabase.co/functions/v1/lead-intake';
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -12,22 +13,8 @@ const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export function mountBooker() {
   const root = document.querySelector('[data-booker]');
   if (!root) return;
-  const PLACES = {
-    rsm: { name: '9Round RSM', days: [1, 2, 3, 5], member: '9Round', hours: [7, 7.5, 8, 9, 10, 10.5, 11, 12, 13, 13.5], gym: true,
-      blocks: { 8: ['class', '8:00 to 10:00 AM · My classes', 2], 11: ['class', '11:00 AM to 1:00 PM · My classes', 2] }, booked: new Set(), open: new Set([7, 7.5, 10, 10.5, 13, 13.5]),
-      note: 'Open half hours before, between and after my classes at 9Round.' },
-    brea: { name: 'UFC Gym Brea', days: [0, 1, 2, 3, 4, 5, 6], member: 'UFC Gym Brea', hours: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
-      blocks: { 6: ['class', '6:00 AM · My class', 1], 18: ['class', '6:00 PM · My class', 1] }, booked: new Set([7, 10, 13, 17]), open: new Set([8, 9, 11, 12, 14, 15, 16, 19]),
-      note: 'Classes at 6 AM and 6 PM. Open hours in between.' },
-    // Club Studio Corona (from 2026-11-23): BOX Tue 5:15 PM and Sat 9:15 AM, CS4 HIIT Sun 8:30 and 9:30 AM.
-    // Private hours: Tue 4 PM and 7:30 PM, Sat 10:30 AM. Sunday is classes only, so it is not a booking day.
-    corona: { name: 'Club Studio Corona', days: [2, 6], member: 'Club Studio', booked: new Set(),
-      byDay: {
-        2: { hours: [16, 17.25, 19.5], blocks: { 17.25: ['class', '5:15 to 6:15 PM · BOX, my class', 1, 'BOX class'] }, open: new Set([16, 19.5]) },
-        6: { hours: [9.25, 10.5], blocks: { 9.25: ['class', '9:15 to 10:15 AM · BOX, my class', 1, 'BOX class'] }, open: new Set([10.5]) },
-      },
-      note: 'Private hours beside my BOX classes. Sunday mornings I teach CS4 HIIT here at 8:30 and 9:30.' },
-  };
+  // Gym schedules live in places.js. Here Brea also takes requests on its other days (parts of the day).
+  const PLACES = { rsm: GYMS.rsm, brea: Object.assign({}, GYMS.brea, { days: [0, 1, 2, 3, 4, 5, 6] }), corona: GYMS.corona };
   // A place's schedule for one weekday: its byDay entry, when it has one, over its usual hours.
   const place = (loc, dow) => Object.assign({}, PLACES[loc], (PLACES[loc].byDay || {})[dow]);
   PLACES.home = { name: 'Private, in person', days: [0, 1, 2, 3, 5, 6], parts: true, note: 'Your home, garage gym or a park near you. Pick a day and a part of the day; I reply with an exact time. A travel fee may apply.' };
@@ -43,10 +30,10 @@ export function mountBooker() {
   const slotLen = (p) => (p.gym ? 0.5 : 1);
   const isParts = () => avail(st.loc, dates[st.date].getDay()) === 'parts';
   const $ = (s) => root.querySelector(s), $$ = (s) => [...root.querySelectorAll(s)];
-  let dates = [];
+  let dates = [], span = 14;
   function buildDates() {
     const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 1); dates = [];
-    while (dates.length < 14) { dates.push(new Date(d)); d.setDate(d.getDate() + 1); }
+    while (dates.length < span) { dates.push(new Date(d)); d.setDate(d.getDate() + 1); }
     const tag = (w) => (w === 4 ? 'Brea only' : w === 0 ? '2 places' : w === 6 ? '3 places' : w === 2 ? 'All places' : '4 places');
     $('#dates').innerHTML = dates.map((x, i) => '<button type="button" class="date' + (x.getDay() === 4 ? ' thu' : '') + '" data-i="' + i + '" aria-pressed="' + (i === st.date) + '"><b><span>' + DOW[x.getDay()] + '</span> ' + MON[x.getMonth()] + ' ' + x.getDate() + '</b><small>' + tag(x.getDay()) + '</small></button>').join('');
   }
@@ -113,11 +100,15 @@ export function mountBooker() {
     $('#bk-where').hidden = st.loc !== 'home';
     $('#next').disabled = st.step === 0 ? (st.hour === null || (st.loc === 'home' && !st.city)) : false;
     const phone = matchMedia('(max-width:760px)').matches;
-    $('#next').textContent = st.step === 2 ? (phone ? 'Send request' : 'Send my request') : 'Continue';
+    $('#next').textContent = st.step === 2 ? (phone ? 'Send request' : 'Send my request') : phone ? 'Continue' : st.step === 0 ? 'Continue to your focus' : 'Continue to your details';
     $('#back').textContent = phone ? '‹' : 'Back';
     $('#next').className = 'bk-btn ' + (st.step === 2 ? 'coral' : 'ink');
     $('#back').hidden = st.step === 0;
+    // The booking panel carries the same button, so the next step is always in reach while it follows the page.
+    const sn = $('#sum-next');
+    if (sn) { sn.disabled = $('#next').disabled; sn.textContent = $('#next').textContent; }
     $('#navnote').textContent = st.step === 0 ? (st.hour === null ? 'Pick a day, a place and a time.' : 'Next: your focus.') : st.step === 1 ? 'You can change your focus later.' : 'I confirm by email. Nothing is charged here.';
+    if ($('#sum-note')) $('#sum-note').textContent = $('#navnote').textContent;
     $$('.bk-steps button').forEach((b, i) => { b.toggleAttribute('aria-current', false); if (i === st.step) b.setAttribute('aria-current', 'step'); b.classList.toggle('bk-done', i < st.step); b.disabled = i > 0 && st.hour === null; });
     $$('.pane').forEach((p, i) => p.classList.toggle('bk-on', i === st.step));
     const when = st.hour === null ? '' : DOW[x.getDay()] + ' ' + MON[x.getMonth()] + ' ' + x.getDate() + ' · ' + (typeof st.hour === 'string' ? st.hour : fmt(st.hour));
@@ -189,6 +180,7 @@ export function mountBooker() {
   $('#qx').addEventListener('click', () => { setCity(null, ''); closeSug(); $('#q').focus(); });
   $('#chips').innerHTML = FOCUS.map((f) => '<label><input type="checkbox" value="' + f + '"><span>' + f + '</span></label>').join('');
   $('#chips').addEventListener('change', (e) => { const v = e.target.value; if (e.target.checked) { st.focus.push(v); if (st.focus.length > 2) { const old = st.focus.shift(); $$('#chips input').find((i) => i.value === old).checked = false; } } else st.focus = st.focus.filter((x) => x !== v); summary(); });
+  if ($('#sum-next')) $('#sum-next').addEventListener('click', () => $('#next').click());
   $('#next').addEventListener('click', () => { if (st.step === 2) { send(); return; } if (st.step < 2) { track('book_step', { detail: 'step' + (st.step + 2) }); st.step++; summary(); $('.bk-panel').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); } });
   $('#back').addEventListener('click', () => { if (st.step > 0) { st.step--; summary(); } });
   $('.bk-steps').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || b.disabled) return; st.step = +b.dataset.go; summary(); });
@@ -199,14 +191,19 @@ export function mountBooker() {
   const q = new URLSearchParams(location.search);
   if (q.get('pace') === '2') { st.pace = '2'; $('#bk-pace input[value="2"]').checked = true; }
   $('#bk-pace').addEventListener('change', (e) => { st.pace = e.target.value; track('fit_tab', { detail: 'pace_' + st.pace + 'x' }); summary(); });
-  // A Thursday hour from the calendar on the Fitness home (?slot=2026-11-12T08) is picked on arrival.
-  const slot = /^(\d{4})-(\d{2})-(\d{2})T(\d{2})$/.exec(q.get('slot') || '');
+  // A time picked in the calendar on the Fitness home (?loc=corona&slot=2026-11-24T16, half hours as
+  // T07:30) is picked on arrival. No loc means Brea. The date strip grows to reach a slot further out.
+  const want = { brea: 'brea', 'rancho-santa-margarita': 'rsm', corona: 'corona', 'in-home': 'home', online: 'online' }[q.get('loc')];
+  const slot = /^(\d{4})-(\d{2})-(\d{2})T(\d{2})(?::(\d{2}))?$/.exec(q.get('slot') || '');
   if (slot) {
-    const i = dates.findIndex((x) => x.getFullYear() === +slot[1] && x.getMonth() + 1 === +slot[2] && x.getDate() === +slot[3]);
-    if (i > -1 && PLACES.brea.open.has(+slot[4]) && dates[i].getDay() === 4) { st.date = i; st.loc = 'brea'; st.hour = +slot[4]; buildDates(); setLocs(); buildDay(); }
+    const loc = want && PLACES[want].member ? want : 'brea';
+    const day = new Date(+slot[1], +slot[2] - 1, +slot[3]), h = +slot[4] + (slot[5] ? +slot[5] / 60 : 0);
+    const ahead = Math.round((day - new Date(new Date().setHours(0, 0, 0, 0))) / 864e5);
+    if (ahead > 14 && ahead <= 35) { span = ahead; buildDates(); }
+    const i = dates.findIndex((x) => x.getTime() === day.getTime());
+    if (i > -1 && avail(loc, day.getDay()) === 'sched' && place(loc, day.getDay()).open.has(h)) { st.date = i; st.loc = loc; st.hour = h; buildDates(); setLocs(); buildDay(); }
   }
   // A place from a "Book in..." link (?loc=corona): pick it, on the first day that place takes bookings.
-  const want = { brea: 'brea', 'rancho-santa-margarita': 'rsm', corona: 'corona', 'in-home': 'home', online: 'online' }[q.get('loc')];
   if (want && !slot) {
     // ?dow=6 asks for a weekday too (the Club Studio weekend card lands on a Saturday).
     const dow = /^[0-6]$/.test(q.get('dow') || '') ? +q.get('dow') : null;

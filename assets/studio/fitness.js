@@ -4,11 +4,13 @@
 // request: Jay confirms each one by email. The request goes to lead-intake as a "train" lead.
 import { $, $$ } from './util.js';
 import { track } from './track.js';
+import { GYMS, daySched, slotMinutes, fmtHour, slotValue } from './places.js';
 
 const ENDPOINT = 'https://cedunmyttprzgslthuyk.supabase.co/functions/v1/lead-intake';
-const HOURS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-const CLASS = new Set([6, 18]);
-const BOOKED = new Set([7, 10, 13, 17]);
+const HOURS = GYMS.brea.hours;
+const CLASS = new Set(Object.keys(GYMS.brea.blocks).map(Number));
+const BOOKED = GYMS.brea.booked;
+const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const ERR = {
   name: 'Add your name so I know who to write back to.',
@@ -35,38 +37,77 @@ function thursdays(now = new Date()) {
   return out;
 }
 
+// The gyms with a set schedule, in the order the calendar shows them.
+const CAL_LOCS = ['brea', 'rsm', 'corona'];
+// The next four days a gym has a set schedule, from tomorrow: the booking step takes no same-day requests,
+// so a time picked here always exists there.
+function gymDays(loc, now = new Date()) {
+  const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const out = [];
+  for (let i = 0; i < 60 && out.length < 4; i++, d.setDate(d.getDate() + 1)) {
+    if (!GYMS[loc].days.includes(d.getDay())) continue;
+    if (gymOpen(loc, d, now) > 0) out.push(new Date(d));
+  }
+  return out;
+}
+const isPast = (d, h, now) => iso(d) === iso(now) && h <= now.getHours() + now.getMinutes() / 60;
+function gymOpen(loc, d, now) {
+  const p = daySched(loc, d.getDay());
+  return p.hours.filter((h) => p.open.has(h) && !p.booked.has(h) && !isPast(d, h, now)).length;
+}
+
+// The calendar on the Fitness home: pick a gym, a day and an open time, then carry it to the booking step.
 function mountCalendar(form) {
   const cal = $('[data-nf-cal]');
   if (!cal) return;
-  const days = $('[data-nf-days]', cal), slots = $('[data-nf-slots]', cal), pick = $('[data-nf-pick]', cal), go = $('[data-nf-go]', cal);
-  const bar = $('[data-nf-bar]'), barGo = $('[data-nf-bar-go]');
-  const th = thursdays();
+  const locs = $('[data-nf-locs]', cal), days = $('[data-nf-days]', cal), slots = $('[data-nf-slots]', cal), pick = $('[data-nf-pick]', cal), go = $('[data-nf-go]', cal);
+  const bar = $('[data-nf-bar]'), barGo = $('[data-nf-bar-go]'), badge = $('[data-nf-when]', cal);
   const now = new Date();
-  let day = 0, hour = null;
+  let loc = 'brea', list = gymDays(loc, now), day = 0, hour = null;
 
-  days.innerHTML = th.map((x, i) => '<button type="button" class="nf-day" aria-pressed="' + (i === 0) + '" data-i="' + i + '"><small>Thu</small><b>' + x.getDate() + '</b><small>' + MON[x.getMonth()] + '</small><small class="nf-day-n">' + openHours(x, now) + ' open</small></button>').join('');
+  const drawDays = () => {
+    days.innerHTML = list.map((x, i) => '<button type="button" class="nf-day" aria-pressed="' + (i === day) + '" data-i="' + i + '"><small>' + DOW[x.getDay()] + '</small><b>' + x.getDate() + '</b><small>' + MON[x.getMonth()] + '</small><small class="nf-day-n">' + gymOpen(loc, x, now) + ' open</small></button>').join('');
+  };
   const drawSlots = () => {
-    const today = iso(th[day]) === iso(now);
-    slots.innerHTML = HOURS.map((h) => {
-      const c = CLASS.has(h), b = BOOKED.has(h), past = today && h <= now.getHours();
-      const off = c || b || past;
-      return '<li><button type="button" class="nf-slot' + (c ? ' is-class' : '') + '" data-h="' + h + '" aria-pressed="' + (h === hour) + '"' + (off ? ' disabled' : '') + '>' + fmt(h) + '<em>' + (c ? 'Class' : b ? 'Booked' : past ? 'Past' : 'Open') + '</em></button></li>';
+    const d = list[day];
+    if (!d) { slots.innerHTML = '<li class="nf-fine" style="grid-column:1/-1">No set hours in the next weeks. <a href="/fitness/book?loc=' + GYMS[loc].slug + '">Send a request</a> and I reply with a time.</li>'; return; }
+    const p = daySched(loc, d.getDay());
+    const starts = Object.keys(p.blocks).map(Number);
+    const inside = (h) => starts.some((s0) => h > s0 && h < s0 + p.blocks[s0][2]);
+    slots.innerHTML = p.hours.filter((h) => !inside(h)).map((h) => {
+      const blk = p.blocks[h];
+      if (blk) return '<li' + (blk[2] > 1 ? ' class="nf-slot-w"' : '') + '><button type="button" class="nf-slot is-class" disabled>' + (blk[2] > 1 ? fmtHour(h).replace(':00', '') + ' to ' + fmtHour(h + blk[2]).replace(':00', '') : fmtHour(h)) + '<em>Class</em></button></li>';
+      const booked = p.booked.has(h), past = isPast(d, h, now), off = booked || past || !p.open.has(h);
+      return '<li><button type="button" class="nf-slot" data-h="' + h + '" aria-pressed="' + (h === hour) + '"' + (off ? ' disabled' : '') + '>' + fmtHour(h) + '<em>' + (booked ? 'Booked' : past ? 'Past' : off ? 'Closed' : 'Open') + '</em></button></li>';
     }).join('');
   };
   const render = () => {
+    const base = '/fitness/book?loc=' + GYMS[loc].slug;
     if (hour === null) {
-      pick.innerHTML = '<b>Pick an open hour</b>Times are Pacific. I confirm every booking by email.';
-      go.setAttribute('href', '/fitness/book');
+      pick.innerHTML = '<b>Pick an open time</b>Times are Pacific. I confirm every booking by email.';
+      go.setAttribute('href', form ? '#book' : base);
       return;
     }
-    const d = th[day], when = label(d, hour);
-    const q = 'slot=' + iso(d) + 'T' + String(hour).padStart(2, '0');
-    pick.innerHTML = '<b>' + when + '</b>Brea · 60 minutes';
-    go.setAttribute('href', form ? '#book' : '/fitness/book?' + q + '#book');
-    if (bar) { bar.innerHTML = '<b>' + when + '</b>' + (form ? 'Finish your request below' : 'Pick a pack to book it'); barGo.setAttribute('href', form ? '#book' : '/fitness/book?' + q + '#book'); }
-    if (form) setSlot(form, iso(d) + 'T' + String(hour).padStart(2, '0'), when);
+    const d = list[day], when = DOW[d.getDay()] + ' ' + MON[d.getMonth()] + ' ' + d.getDate() + ' · ' + fmtHour(hour);
+    const href = form ? '#book' : base + '&slot=' + slotValue(iso(d), hour) + '#book';
+    pick.innerHTML = '<b>' + when + '</b>' + GYMS[loc].region.split(' · ')[0] + ' · ' + slotMinutes(loc) + ' minutes';
+    go.setAttribute('href', href);
+    if (bar) { bar.innerHTML = '<b>' + when + '</b>' + (form ? 'Finish your request below' : 'Tap Start to book it'); barGo.setAttribute('href', href); }
+    if (form && loc === 'brea') setSlot(form, slotValue(iso(d), hour), when);
   };
-  drawSlots();
+  const setLoc = (next) => {
+    loc = next; list = gymDays(loc, now); day = 0; hour = null;
+    if (locs) $$('button', locs).forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.loc === loc)));
+    if (badge) badge.textContent = GYMS[loc].short;
+    days.setAttribute('aria-label', 'Choose a day in ' + GYMS[loc].region.split(' · ')[0]);
+    drawDays(); drawSlots(); render();
+  };
+  if (locs) locs.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-loc]');
+    if (!b || !CAL_LOCS.includes(b.dataset.loc) || b.dataset.loc === loc) return;
+    track('fit_tab', { detail: 'cal_' + b.dataset.loc });
+    setLoc(b.dataset.loc);
+  });
   days.addEventListener('click', (e) => {
     const b = e.target.closest('.nf-day');
     if (!b) return;
@@ -84,19 +125,7 @@ function mountCalendar(form) {
     track('fit_tab', { detail: 'slot_' + hour });
     render();
   });
-
-  // A slot passed in the link (?slot=2026-11-12T08) is picked on arrival.
-  const want = new URLSearchParams(location.search).get('slot');
-  const m = want && want.match(/^(\d{4}-\d{2}-\d{2})T(\d{2})$/);
-  if (m) {
-    const i = th.findIndex((x) => iso(x) === m[1]), h = +m[2];
-    if (i >= 0 && HOURS.includes(h) && !CLASS.has(h) && !BOOKED.has(h)) {
-      day = i; hour = h;
-      $$('.nf-day', days).forEach((x, j) => x.setAttribute('aria-pressed', String(j === i)));
-      drawSlots();
-      render();
-    }
-  }
+  setLoc('brea');
 }
 
 function setSlot(form, value, text) {

@@ -37,3 +37,13 @@
 - Privacy: position stays in the page; events record only that a filter or the locate button was used.
 - Trap: the status line changes length, so it has a fixed min-height or the list jumps on phones.
 - Next: exact coordinates (Jay can paste from Google Maps), `visited` and `partner` fields for the influencer plan, and a labelled-partner rule before any gym pays.
+
+## Research fan-out, yoga guide and graphics
+- Six research agents ran in parallel (boxing gaps, kickboxing gaps, Pilates gaps, yoga LA, yoga OC, yoga IE). Their JSON was edited by hand before it went into `guides.json`: nothing was pasted in unread.
+- Yoga guide: 27 studios (LA 8, OC 9, IE 10), all with profiles. `heat` is `hot`, `none` (no heated classes listed in its sources) or `both`.
+- Dropped as unconfirmed or wrong kind: Gloveworx (site dead twice), Santa Monica Striking, Left Hand Muay Thai, Black Beard Kickboxing, The Body Collective, The Beachouse Studio (Lagree), Class 46, CirKel Fitness, FIT with LIT, The Pilates Co., Speir Pilates Newport Beach, Pure Studio, Yoga Loft LA.
+- Kept with weak 2026 evidence, Jay to verify: Wild Card (last dated source May 2025), Westside Boxing Club (2023), Ten Goose, Trinity, Robert Garcia Boxing Academy, Boxing Lab, Bobby's Boxing, The Den, Muay Thai America Gym, Muay Thai Academy of America, Evoken, Yoga Shakti. Carrie's Pilates and SweatLogic need a check that their machines count as reformers.
+- Totals: boxing 21, kickboxing 18, reformer Pilates 18, yoga 27. 84 places, 82 profile pages.
+- Graphics: `GICON` stroke icons and `artRank` / `artNear` in `tools/build-pages.mjs`. The list art draws its bars from the guide's real region counts.
+- Traps: `.nf-ic` was already a class (icon tile), so guide icons use `.nf-gi`. The build never deletes a page folder, so a dropped gym's folder under `fitness/guides/gyms/` must be removed by hand. An ampersand in a place name trips the heading test (`&amp;` reads as a phrase break), so names use "and".
+- Still open: the partner and visited fields for the influencer plan, exact coordinates, Jay's ranks.

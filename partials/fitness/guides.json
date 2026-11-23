@@ -17,14 +17,14 @@
           "rank": null,
           "note": null,
           "p": {
-            "address": "Vine Street at Santa Monica Boulevard, Hollywood",
+            "address": "1123 Vine St, Hollywood, CA 90038",
             "people": [
               [
                 "Founder and trainer",
                 "Freddie Roach"
               ]
             ],
-            "about": "Freddie Roach opened Wild Card with money he earned training Mickey Rourke. Manny Pacquiao and Miguel Cotto trained here. The plaza it sits in was renamed Freddie Roach Square to mark the gym's 30 years.",
+            "about": "Freddie Roach opened Wild Card in 1995 with money he earned training Mickey Rourke. Manny Pacquiao and Miguel Cotto trained here. The plaza it sits in was renamed Freddie Roach Square to mark the gym's 30 years.",
             "offers": [
               "Open to the public",
               "Day rate or monthly membership"
@@ -33,9 +33,15 @@
               [
                 "BoxingScene: Hollywood celebrates 30 years of Wild Card",
                 "https://www.boxingscene.com/articles/welcome-to-freddie-roach-square-hollywood-celebrates-30-years-of-wild-card"
+              ],
+              [
+                "Hollywood Partnership: Freddie Roach's Wild Card Boxing",
+                "https://hollywoodpartnership.com/go/wild-card-boxing-1"
               ]
             ],
-            "slug": "wild-card-boxing-club"
+            "slug": "wild-card-boxing-club",
+            "since": "1995",
+            "hours": "Mon to Fri, 8 AM to 8 PM. Sat, 9 AM to 4 PM."
           },
           "lat": 34.0907,
           "lng": -118.3267
@@ -85,7 +91,7 @@
           "city": "Mid-City",
           "region": "LA",
           "known": "Run by the Saucedo family, with Golden Boy ties.",
-          "site": "https://westsideboxing.com",
+          "site": null,
           "instagram": null,
           "rank": null,
           "note": null,
@@ -155,8 +161,8 @@
           "city": "South LA",
           "region": "LA",
           "known": "Founded by former pro Alex Brenes. The LAPD boxing team trains here.",
-          "site": "https://cityofangelsboxing.com",
-          "instagram": null,
+          "site": "https://www.cityofangelsboxing.com",
+          "instagram": "https://www.instagram.com/cityofangelsbox",
           "rank": null,
           "note": null,
           "p": {
@@ -184,35 +190,6 @@
           },
           "lat": 34.019,
           "lng": -118.2745
-        },
-        {
-          "name": "Gloveworx",
-          "city": "Santa Monica",
-          "region": "LA",
-          "known": "Small-group coaching, five people per coach at most.",
-          "site": "https://gloveworx.com",
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "p": {
-            "address": "1415 Wilshire Blvd, Santa Monica, CA 90403",
-            "about": "A 5,000 square foot boxing studio and athletic performance space, described as the flagship location.",
-            "offers": [
-              "Competition boxing ring",
-              "Heavy bags and speed bags",
-              "Bikes, rowers and climbers",
-              "Turf area for core and functional training"
-            ],
-            "src": [
-              [
-                "Santa Monica Travel and Tourism: Gloveworx",
-                "https://www.santamonica.com/ar/things-to-do/gloveworx"
-              ]
-            ],
-            "slug": "gloveworx"
-          },
-          "lat": 34.0276,
-          "lng": -118.489
         },
         {
           "name": "Prevail Boxing",
@@ -284,8 +261,8 @@
           "city": "Fairfax",
           "region": "LA",
           "known": "Competitive training.",
-          "site": null,
-          "instagram": null,
+          "site": "https://www.trinityboxing.com/los-angeles",
+          "instagram": "https://www.instagram.com/trinityboxingla",
           "rank": null,
           "note": null,
           "p": {
@@ -297,17 +274,24 @@
               ]
             ],
             "offers": [
-              "Boxing classes: bag work, sparring and old-school cardio",
+              "Group training",
               "Private training",
-              "No open gym hours"
+              "Sparring",
+              "Kids classes",
+              "Bootcamp"
             ],
             "src": [
+              [
+                "Trinity Boxing Club: Los Angeles",
+                "https://www.trinityboxing.com/los-angeles"
+              ],
               [
                 "Time Out Los Angeles, December 2016: Trinity Boxing Club",
                 "https://www.timeout.com/los-angeles/sports-and-fitness/trinity-boxing-club"
               ]
             ],
-            "slug": "trinity-boxing-club"
+            "slug": "trinity-boxing-club",
+            "about": "The club says it shares an owner with Trinity Boxing Club in New York."
           },
           "lat": 34.0837,
           "lng": -118.3603
@@ -350,13 +334,46 @@
           "name": "Brickhouse Boxing Club",
           "city": "North Hollywood",
           "region": "LA",
-          "known": "Technique work for fighters.",
+          "known": "A 6,000 square foot gym opened in May 2021 by 3PM Group, led by boxer Gilberto Ramirez.",
           "site": null,
           "instagram": null,
           "rank": null,
           "note": null,
           "lat": 34.172,
-          "lng": -118.379
+          "lng": -118.379,
+          "p": {
+            "slug": "brickhouse-boxing-club",
+            "since": "2021",
+            "people": [
+              [
+                "Opened by",
+                "3PM Group, led by boxer Gilberto \"Zurdo\" Ramirez"
+              ]
+            ],
+            "address": "11116 Weddington St, North Hollywood, CA 91601",
+            "offers": [
+              "Boxing 101",
+              "Skills N' Drills",
+              "Full body athletic conditioning",
+              "Pro Perspective Boxing",
+              "Personal training"
+            ],
+            "hours": "Mon to Fri, 6 AM to 9 PM. Sat and Sun, 7 AM to 2 PM.",
+            "src": [
+              [
+                "Wellhub: Brickhouse Boxing Club",
+                "https://wellhub.com/en-us/search/partners/53833357-63e7-4aca-9b1b-28dba269f781"
+              ],
+              [
+                "ClassPass: Brickhouse Boxing Club",
+                "https://classpass.com/studios/brickhouse-boxing-club-north-hollywood"
+              ],
+              [
+                "Round By Round Boxing, June 2021: 3PM Group opens boxing gym",
+                "https://roundbyroundboxing.com/3pm-group-opens-boxing-gym-in-north-hollywoods-arts-district/"
+              ]
+            ]
+          }
         },
         {
           "name": "Outlaws Boxing Gym",
@@ -481,6 +498,211 @@
           },
           "lat": 33.931,
           "lng": -117.405
+        },
+        {
+          "name": "THEBOX Training Center",
+          "city": "Costa Mesa",
+          "region": "OC",
+          "known": "Instructors include former pros Jesus Soto Karass and Jose Armando Santa Cruz.",
+          "site": "https://theboxtrainingcenter.com",
+          "instagram": "https://www.instagram.com/thebox.training_center/",
+          "rank": null,
+          "note": null,
+          "lat": 33.647,
+          "lng": -117.919,
+          "p": {
+            "people": [
+              [
+                "Instructors",
+                "Jesus Soto Karass and Jose Armando Santa Cruz"
+              ]
+            ],
+            "address": "2000 Harbor Blvd, Unit A-116, Costa Mesa, CA 92627",
+            "offers": [
+              "Boxing",
+              "Cardio boxing",
+              "Competition boxing",
+              "Kids boxing, ages 5 to 11",
+              "Private training",
+              "Strength and conditioning"
+            ],
+            "hours": "Mon to Fri, 6 AM to 8 PM. Sat, 7 AM to noon.",
+            "src": [
+              [
+                "THEBOX Training Center, official site",
+                "https://theboxtrainingcenter.com"
+              ],
+              [
+                "THEBOX Training Center: schedule",
+                "https://theboxtrainingcenter.com/schedule"
+              ],
+              [
+                "Wellhub: THEBOX Training Center",
+                "https://wellhub.com/en-us/search/partners/thebox-training-center"
+              ]
+            ],
+            "slug": "thebox-training-center"
+          }
+        },
+        {
+          "name": "A1 Boxing Club",
+          "city": "Huntington Beach",
+          "region": "OC",
+          "known": "Coach Al Franco runs morning, pro and amateur fight team sessions here Monday to Thursday.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "lat": 33.7155,
+          "lng": -118.02,
+          "p": {
+            "people": [
+              [
+                "Programs run by",
+                "Al Franco, an independent coach who does not own the gym"
+              ]
+            ],
+            "address": "6070 Warner Ave, Huntington Beach, CA 92647",
+            "offers": [
+              "Morning adult boxing programs",
+              "Pro and elite amateur training block",
+              "Amateur fight team sessions",
+              "Private coaching by appointment"
+            ],
+            "src": [
+              [
+                "EIN Presswire, July 30, 2026: Coach Al Franco Boxing",
+                "https://www.einpresswire.com/article/930579804?promo=4400"
+              ],
+              [
+                "Patch: Coach Al Franco Boxing",
+                "https://patch.com/california/costa-mesa-ca/business/listing/584358/coach-al-franco-boxing"
+              ],
+              [
+                "ClassPass: A1 Boxing Club",
+                "https://classpass.com/studios/a1-boxing-club-huntington-beach"
+              ]
+            ],
+            "slug": "a1-boxing-club"
+          }
+        },
+        {
+          "name": "Team Medina Boxing",
+          "city": "Orange",
+          "region": "OC",
+          "known": "Sixty-minute group boxing classes on Katella Avenue.",
+          "site": null,
+          "instagram": "https://instagram.com/teammedinaboxing",
+          "rank": null,
+          "note": null,
+          "lat": 33.809,
+          "lng": -117.846
+        },
+        {
+          "name": "Capistrano Boxing Gym",
+          "city": "San Juan Capistrano",
+          "region": "OC",
+          "known": "A veteran-owned gym with youth, senior, cardio and parent-and-child boxing classes.",
+          "site": null,
+          "instagram": "https://www.instagram.com/capoboxinggym/",
+          "rank": null,
+          "note": null,
+          "lat": 33.501,
+          "lng": -117.662
+        },
+        {
+          "name": "Boxing Lab",
+          "city": "Newport Beach",
+          "region": "OC",
+          "known": "A boutique gym for boxing and functional training near the airport.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "lat": 33.659,
+          "lng": -117.866,
+          "p": {
+            "address": "4001 Westerly Pl, Newport Beach, CA 92660",
+            "offers": [
+              "Boxing Fit",
+              "Cardio boxing",
+              "Functional boxing",
+              "HIIT",
+              "Free weights"
+            ],
+            "hours": "Mon to Fri, 6 AM to 7 PM. Sat and Sun, 9 to 11 AM.",
+            "src": [
+              [
+                "Wellhub: Boxing Lab",
+                "https://wellhub.com/en-us/search/partners/boxing-lab"
+              ]
+            ],
+            "slug": "boxing-lab"
+          }
+        },
+        {
+          "name": "Bobby's Boxing and Fitness",
+          "city": "Laguna Beach",
+          "region": "OC",
+          "known": "Group classes and one-on-one boxing sessions on Laguna Canyon Road.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "lat": 33.556,
+          "lng": -117.775,
+          "p": {
+            "address": "2093 Laguna Canyon Rd, Laguna Beach, CA 92651",
+            "offers": [
+              "Group boxing classes",
+              "One-on-one sessions",
+              "Boxing-style HIIT"
+            ],
+            "hours": "Mon to Fri, 6 AM to 8 PM. Sat, 8 AM to noon.",
+            "about": "Its listing says members train alongside amateur and professional boxers.",
+            "src": [
+              [
+                "Wellhub: Bobby's Boxing Club",
+                "https://wellhub.com/en-us/search/partners/bobby-s-boxing-club/"
+              ]
+            ],
+            "slug": "bobbys-boxing-and-fitness"
+          }
+        },
+        {
+          "name": "Palm Springs Boxing Club",
+          "city": "Palm Springs",
+          "region": "IE",
+          "known": "A club dating to 1963 that trains at the Demuth Community Center under coach Steve Quinonez.",
+          "site": "https://palmspringsca.gov/government/departments/parks-recreation/demuth-community-center/palm-springs-boxing-club",
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "lat": 33.809,
+          "lng": -116.509,
+          "p": {
+            "since": "1963",
+            "people": [
+              [
+                "President and coach",
+                "Steve Quinonez"
+              ]
+            ],
+            "address": "Demuth Community Center, 3601 E Mesquite Ave, Palm Springs, CA 92264",
+            "offers": [
+              "Youth boxing training",
+              "Adult boxing training"
+            ],
+            "hours": "Mon to Fri, 3 to 6:30 PM.",
+            "price": "A yearly city recreation membership: $5 for residents, $102 for non-residents.",
+            "src": [
+              [
+                "City of Palm Springs: Palm Springs Boxing Club",
+                "https://palmspringsca.gov/government/departments/parks-recreation/demuth-community-center/palm-springs-boxing-club"
+              ]
+            ],
+            "slug": "palm-springs-boxing-club"
+          }
         }
       ],
       "sources": [
@@ -641,7 +863,7 @@
           "name": "Dynamix MMA",
           "city": "West Los Angeles",
           "region": "LA",
-          "known": "Muay Thai and kickboxing. Has trained UFC veterans.",
+          "known": "Started in 2010 by former UFC fighter Antoni Hardonk and jiu-jitsu black belt Henry Akins.",
           "site": "https://dynamixmartialarts.com",
           "instagram": "https://www.instagram.com/dynamixmma/",
           "rank": null,
@@ -649,6 +871,10 @@
           "p": {
             "address": "11870 Santa Monica Blvd, Suite 102, Los Angeles, CA 90025",
             "people": [
+              [
+                "Co-founders",
+                "Antoni Hardonk and Henry Akins"
+              ],
               [
                 "Instructors",
                 "Antoni Hardonk, Vladimir Matyushenko, Gustavo Gasperin and Jordan Wright"
@@ -667,9 +893,14 @@
               [
                 "Dynamix MMA, official site",
                 "https://dynamixmartialarts.com"
+              ],
+              [
+                "Dynamix MMA: history and lineage",
+                "https://dynamixmartialarts.com/history/"
               ]
             ],
-            "slug": "dynamix-mma"
+            "slug": "dynamix-mma",
+            "since": "2010"
           },
           "lat": 34.042,
           "lng": -118.459
@@ -729,66 +960,98 @@
               [
                 "Systems Training Center: our story",
                 "https://systemstrainingcenter.squarespace.com/our-story-hawthorne-gym"
+              ],
+              [
+                "Systems Training Center: Marcus Kowal",
+                "https://systemstrainingcenter.squarespace.com/marcus-kowal-south-bay"
               ]
             ],
-            "slug": "systems-training-center"
+            "slug": "systems-training-center",
+            "people": [
+              [
+                "Owner and CEO",
+                "Marcus Kowal"
+              ]
+            ]
           },
           "lat": 33.913,
           "lng": -118.353
         },
         {
-          "name": "Santa Monica Striking",
-          "city": "Santa Monica",
-          "region": "LA",
-          "known": "Muay Thai classes.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "lat": 34.025,
-          "lng": -118.48
-        },
-        {
           "name": "Southpaw Muay Thai Club",
-          "city": "Downtown LA",
+          "city": "Arts District",
           "region": "LA",
-          "known": "Muay Thai classes.",
+          "known": "A Muay Thai club in the Arts District that says it is built around inclusivity and community.",
           "site": null,
-          "instagram": null,
+          "instagram": "https://www.instagram.com/southpawmuaythaiclub/",
           "rank": null,
           "note": null,
           "lat": 34.044,
-          "lng": -118.25
-        },
-        {
-          "name": "Left Hand Muay Thai",
-          "city": "Valley Village",
-          "region": "LA",
-          "known": "Muay Thai classes.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "lat": 34.165,
-          "lng": -118.396
+          "lng": -118.234,
+          "p": {
+            "slug": "southpaw-muay-thai-club",
+            "address": "431 S Hewitt St, Los Angeles, CA 90013",
+            "offers": [
+              "Muay Thai classes",
+              "Mixed-level pad work",
+              "Mixed-level timing and strategy"
+            ],
+            "hours": "Mon and Tue, 6 to 8 PM. Wed, 6 to 7 PM. Thu, 7 to 8 PM. Sat, 11 AM to 12:30 PM.",
+            "src": [
+              [
+                "Wellhub: Southpaw Muay Thai Club",
+                "https://wellhub.com/en-us/search/partners/southpaw-muay-thai-club-downtown-los-angeles/"
+              ]
+            ]
+          }
         },
         {
           "name": "GKG Gil's Kickboxing Gym",
           "city": "Lomita",
           "region": "LA",
-          "known": "Muay Thai classes.",
-          "site": null,
-          "instagram": null,
+          "known": "Owned by Gil and Neveen Sanchez, with kickboxing, Art of 8 Muay Thai and Brazilian jiu-jitsu.",
+          "site": "https://gilskickboxinggym.com",
+          "instagram": "https://www.instagram.com/gilskickboxinggym/",
           "rank": null,
           "note": null,
           "lat": 33.792,
-          "lng": -118.315
+          "lng": -118.315,
+          "p": {
+            "slug": "gkg-gils-kickboxing-gym",
+            "people": [
+              [
+                "Owners",
+                "Gil and Neveen Sanchez"
+              ]
+            ],
+            "address": "1930 Pacific Coast Hwy, Lomita, CA 90717",
+            "offers": [
+              "Kickboxing and boxing, 60 minutes",
+              "GKG Training Camp",
+              "Art of 8 Muay Thai, ages 13 and up",
+              "Brazilian jiu-jitsu, ages 15 and up",
+              "Kids class, ages 7 to 12",
+              "Private training"
+            ],
+            "hours": "Mon to Thu, 6 AM to 8:30 PM. Fri, 6 AM to 6 PM. Sat, 7 AM to noon. Sun, 7 to 9:30 AM.",
+            "price": "Its site offers a one-week trial.",
+            "src": [
+              [
+                "Gil's Kickboxing Gym, official site",
+                "https://gilskickboxinggym.com"
+              ],
+              [
+                "Wellhub: GKG Gil's Kickboxing Gym",
+                "https://wellhub.com/en-us/search/partners/gkg-gil-s-kickboxing-gym"
+              ]
+            ]
+          }
         },
         {
           "name": "Team Oyama",
           "city": "Irvine",
           "region": "OC",
-          "known": "Coach Colin Oyama's gym, profiled by NBC News.",
+          "known": "Founder and head coach Colin Oyama leads this Irvine kickboxing, Muay Thai and grappling gym.",
           "site": "https://teamoyama.com",
           "instagram": "https://www.instagram.com/teamoyamairvine",
           "rank": null,
@@ -808,9 +1071,28 @@
               [
                 "Team Oyama, official site",
                 "https://teamoyama.com"
+              ],
+              [
+                "Team Oyama: instructors",
+                "https://www.teamoyama.com/instructors"
+              ],
+              [
+                "Team Oyama: pricing",
+                "https://teamoyama.com/pricing"
               ]
             ],
-            "slug": "team-oyama"
+            "slug": "team-oyama",
+            "people": [
+              [
+                "Founder and head coach",
+                "Colin Oyama"
+              ],
+              [
+                "Muay Thai instructor",
+                "Romie Adanza"
+              ]
+            ],
+            "price": "Listed on its site: single class $25, ten classes $200, free intro class."
           },
           "lat": 33.695,
           "lng": -117.84
@@ -859,26 +1141,43 @@
           "name": "Tribe Muay Thai",
           "city": "Garden Grove",
           "region": "OC",
-          "known": "Muay Thai classes.",
-          "site": "https://tribemuaythai.com",
+          "known": "Grew out of park sessions run by coach Kohl Laren and moved into its Garden Grove gym in April 2022.",
+          "site": "https://www.tribemuaythai.com/",
           "instagram": "https://www.instagram.com/tribemuaythai",
           "rank": null,
           "note": null,
           "p": {
             "address": "12812 Valley View St, Suite 18, Garden Grove, CA 92845",
-            "about": "Classes run from first-timers to professional fighters.",
+            "about": "The team trained in parks during the pandemic, ran a small Long Beach gym from January 2021 and shared a Seal Beach space before this one.",
             "offers": [
-              "Muay Thai for every level",
-              "Kids anti-bullying classes",
-              "Women-only classes"
+              "Fundamentals classes",
+              "All-level classes",
+              "Advanced classes, 90 minutes",
+              "Kids anti-bullying program",
+              "Women's class",
+              "Private training"
             ],
             "src": [
               [
-                "ClassPass: Tribe Muay Thai",
-                "https://classpass.com/studios/tribe-muay-thai-garden-grove"
+                "Tribe Muay Thai: our story",
+                "https://www.tribemuaythai.com/pages/our-story"
+              ],
+              [
+                "Tribe Muay Thai: coaches",
+                "https://www.tribemuaythai.com/pages/meet-our-coaches"
+              ],
+              [
+                "Tribe Muay Thai: classes",
+                "https://www.tribemuaythai.com/pages/classes"
               ]
             ],
-            "slug": "tribe-muay-thai"
+            "slug": "tribe-muay-thai",
+            "people": [
+              [
+                "Coaches",
+                "Kohl Laren, Sam Fournier, Jeannie Nguyen, Drake Manzo and Dorian Parker"
+              ]
+            ]
           },
           "lat": 33.775,
           "lng": -118.029
@@ -887,25 +1186,88 @@
           "name": "The Den Training Center",
           "city": "Yorba Linda",
           "region": "OC",
-          "known": "Muay Thai and kickboxing classes.",
-          "site": null,
-          "instagram": null,
+          "known": "Kickboxing, catch wrestling, jiu-jitsu, MMA and kids programs in Yorba Linda.",
+          "site": "https://badgercenter.com/",
+          "instagram": "https://www.instagram.com/theden_trainingcenter",
           "rank": null,
           "note": null,
           "lat": 33.889,
-          "lng": -117.809
+          "lng": -117.809,
+          "p": {
+            "slug": "the-den-training-center",
+            "address": "18510 Yorba Linda Blvd, Yorba Linda, CA 92886",
+            "offers": [
+              "Kickboxing",
+              "Catch wrestling",
+              "Jiu-jitsu",
+              "MMA training",
+              "Women's cardio bootcamp",
+              "Kids program"
+            ],
+            "price": "Listed on its site: memberships from $179 a month, free one-week trial pass.",
+            "src": [
+              [
+                "The Den, official site",
+                "https://badgercenter.com/"
+              ],
+              [
+                "ClassPass: The Den Training Center",
+                "https://classpass.com/studios/the-den-training-center-yorba-linda"
+              ]
+            ]
+          }
         },
         {
           "name": "Adrenaline FC",
           "city": "San Bernardino",
           "region": "IE",
-          "known": "Muay Thai in San Bernardino.",
+          "known": "Muay Thai, boxing, Brazilian jiu-jitsu, judo, wrestling and MMA in San Bernardino.",
           "site": "https://www.adrenalinefc.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/adrenalinesb",
           "rank": null,
           "note": null,
-          "lat": 34.108,
-          "lng": -117.29
+          "lat": 34.078,
+          "lng": -117.29,
+          "p": {
+            "slug": "adrenaline-fc",
+            "people": [
+              [
+                "Muay Thai coaches",
+                "Kenny Finister, Megan Moran and Mikey Guzman"
+              ],
+              [
+                "Head boxing coach",
+                "Freddie Barrera"
+              ]
+            ],
+            "address": "1465 S D St, Suite 100, San Bernardino, CA 92408",
+            "offers": [
+              "Muay Thai fundamentals for novices",
+              "Muay Thai by level",
+              "Boxing",
+              "Brazilian jiu-jitsu",
+              "Judo",
+              "Wrestling",
+              "MMA",
+              "Kids and teen programs"
+            ],
+            "hours": "Mon to Thu, 1 to 8:30 PM. Fri, 1 to 7:30 PM.",
+            "price": "Listed on its site: a two-week pass for $5, activated in person.",
+            "src": [
+              [
+                "Adrenaline: about",
+                "https://www.adrenalinefc.com/about/"
+              ],
+              [
+                "Adrenaline: trainers",
+                "https://adrenalinefc.com/trainers/"
+              ],
+              [
+                "Adrenaline: adult schedule",
+                "https://adrenalinefc.com/adult-schedules/"
+              ]
+            ]
+          }
         },
         {
           "name": "Millennia MMA",
@@ -946,16 +1308,131 @@
           "lng": -117.556
         },
         {
-          "name": "Black Beard Kickboxing",
-          "city": "Riverside",
+          "name": "Black Flag Kickboxing",
+          "city": "Hemet",
           "region": "IE",
-          "known": "Muay Thai classes.",
-          "site": null,
-          "instagram": null,
+          "known": "Muay Thai kickboxing classes for pee wee, youth, teen and adult age groups.",
+          "site": "https://blackflagkb.gymdesk.com/",
+          "instagram": "https://www.instagram.com/blackflagkickboxing",
           "rank": null,
           "note": null,
-          "lat": 33.953,
-          "lng": -117.396
+          "lat": 33.7475,
+          "lng": -116.93,
+          "p": {
+            "people": [
+              [
+                "Instructors",
+                "Joe Kimbrough, Nancy Guerrero, Lou Figueroa and Paul Vogel"
+              ]
+            ],
+            "address": "4000 E Florida Ave, Suite 118, Hemet, CA 92544",
+            "offers": [
+              "Morning Muay Thai kickboxing",
+              "Pee Wee Muay Thai, ages 4 to 6",
+              "Youth classes, ages 6 to 11",
+              "Teen classes, ages 11 to 16",
+              "Adult classes",
+              "Fight team training",
+              "Open gym and sparring"
+            ],
+            "price": "Listed on its site: memberships from $130 a month, drop-in $40, free trial.",
+            "src": [
+              [
+                "Black Flag Kickboxing, official site",
+                "https://blackflagkb.gymdesk.com/"
+              ],
+              [
+                "Black Flag Kickboxing: schedule",
+                "https://blackflagkb.gymdesk.com/schedule"
+              ],
+              [
+                "Black Flag Kickboxing: pricing",
+                "https://blackflagkb.gymdesk.com/pricing"
+              ]
+            ],
+            "slug": "black-flag-kickboxing"
+          }
+        },
+        {
+          "name": "Team Quest Athletic Center",
+          "city": "Hemet",
+          "region": "IE",
+          "known": "A Hemet gym whose instructors include UFC fighter Jared Vanderaa.",
+          "site": "https://www.teamquestathleticcenter.com",
+          "instagram": "https://www.instagram.com/teamquestac",
+          "rank": null,
+          "note": null,
+          "lat": 33.7475,
+          "lng": -116.97,
+          "p": {
+            "people": [
+              [
+                "Instructors",
+                "Jared Vanderaa and Lauren Silva"
+              ]
+            ],
+            "address": "215 E Florida Ave, Hemet, CA 92543",
+            "offers": [
+              "Muay Thai and Dutch kickboxing",
+              "Youth Muay Thai and kickboxing",
+              "Cardio kickboxing",
+              "Boxing",
+              "MMA",
+              "Jiu-jitsu",
+              "Wrestling",
+              "Kids programs from age 3"
+            ],
+            "price": "Its site offers a free three-day trial.",
+            "src": [
+              [
+                "Team Quest Athletic Center, official site",
+                "https://www.teamquestathleticcenter.com"
+              ],
+              [
+                "Team Quest Athletic Center: schedule",
+                "https://teamquestathleticcenter.com/schedule"
+              ]
+            ],
+            "slug": "team-quest-athletic-center"
+          }
+        },
+        {
+          "name": "Heart and Pride Muay Thai",
+          "city": "Ontario",
+          "region": "IE",
+          "known": "A Muay Thai and fitness gym led by head instructor Kru Mickey Rubinson.",
+          "site": "https://www.hpmuaythai.com/",
+          "instagram": "https://www.instagram.com/hpmuaythai",
+          "rank": null,
+          "note": null,
+          "lat": 34.033,
+          "lng": -117.579,
+          "p": {
+            "people": [
+              [
+                "Head instructor",
+                "Kru Mickey Rubinson"
+              ]
+            ],
+            "address": "3550 E Philadelphia St, Suites 130 to 140, Ontario, CA 91761",
+            "offers": [
+              "Muay Thai",
+              "Fitness training",
+              "Individual and group training"
+            ],
+            "price": "Its site offers a free first class.",
+            "src": [
+              [
+                "Heart and Pride, official site",
+                "https://www.hpmuaythai.com/"
+              ],
+              [
+                "ClassPass: Heart and Pride Training Center",
+                "https://classpass.com/studios/heart-and-pride-training-center-ontario"
+              ]
+            ],
+            "slug": "heart-and-pride-muay-thai"
+          }
         }
       ],
       "sources": [
@@ -1000,10 +1477,6 @@
           "https://www.modernluxury.com/best-pilates-studios-los-angeles/"
         ],
         [
-          "Newport Beach Magazine: Stretch to the Limit",
-          "https://newportbeachmagazine.com/?p=13055"
-        ],
-        [
           "Daily Bruin: Mighty Pilates in Westwood",
           "https://dailybruin.com/2024/02/19/mighty-pilates-creates-community-for-students-young-professionals-in-westwood"
         ]
@@ -1043,7 +1516,8 @@
                 "https://classpass.com/partners/lists/los-angeles-reformer-pilates/"
               ]
             ],
-            "slug": "evoken"
+            "slug": "evoken",
+            "address": "1105 N Hayworth Ave, West Hollywood, CA"
           },
           "lat": 34.09,
           "lng": -118.37
@@ -1061,7 +1535,9 @@
             "address": "7823 Melrose Ave, Los Angeles, CA 90046",
             "about": "Modern Luxury describes its classes as high-energy and low-impact.",
             "offers": [
-              "Reformer Pilates classes"
+              "Small-group reformer Pilates",
+              "Mat Pilates",
+              "Total Body Glow Up class"
             ],
             "src": [
               [
@@ -1082,23 +1558,74 @@
           "name": "Pilates Boutique",
           "city": "West Hollywood",
           "region": "LA",
-          "known": "Reformer classes on Doheny Drive.",
+          "known": "Founded in 2023 by lead instructor Vanessa Voltan. Classes use the Cadillac, reformer and chair.",
           "site": "https://pilatesboutique.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/studiopilatesboutique",
           "rank": null,
           "note": null,
           "lat": 34.079,
-          "lng": -118.389
+          "lng": -118.389,
+          "p": {
+            "slug": "pilates-boutique",
+            "since": "2023",
+            "people": [
+              [
+                "Founder and lead instructor",
+                "Vanessa Voltan"
+              ]
+            ],
+            "address": "470 N Doheny Dr, West Hollywood, CA 90048",
+            "offers": [
+              "Signature group classes",
+              "Private one-on-one sessions",
+              "Cadillac, reformer and Pilates chair"
+            ],
+            "hours": "Mon to Fri, 8 AM to 5 PM. Sat and Sun, 9 to 11 AM.",
+            "price": "Listed on its site: first class $39, drop-in $59, private session $150.",
+            "src": [
+              [
+                "Pilates Boutique, official site",
+                "https://pilatesboutique.com"
+              ],
+              [
+                "Wellhub: Pilates Boutique",
+                "https://wellhub.com/en-us/search/partners/pilates-boutique-los-angeles"
+              ]
+            ]
+          }
         },
         {
           "name": "Focus Pilates",
-          "city": "Los Angeles",
+          "city": "North Hollywood",
           "region": "LA",
-          "known": "Reformer classes limited to eight people.",
-          "site": null,
+          "known": "Group classes capped at eight reformers, from beginner Level 1 to advanced Level 3.",
+          "site": "https://www.focuspilatesstudio.com/",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.167,
+          "lng": -118.373,
+          "p": {
+            "slug": "focus-pilates",
+            "address": "11135 Weddington St, Suite 128, North Hollywood, CA 91601",
+            "offers": [
+              "Group reformer classes, Level 1 to Level 3",
+              "Private one-on-one sessions",
+              "A separate mat studio next door"
+            ],
+            "hours": "Daily, 5 AM to 9 PM.",
+            "price": "Its site offers a free 30-minute intro to the reformer.",
+            "src": [
+              [
+                "Focus Pilates, official site",
+                "https://www.focuspilatesstudio.com/"
+              ],
+              [
+                "Wellhub: Focus Pilates",
+                "https://wellhub.com/en-us/search/partners/focus-pilates-llc-north-hollywood/"
+              ]
+            ]
+          }
         },
         {
           "name": "Mighty Pilates",
@@ -1111,7 +1638,7 @@
           "note": null,
           "p": {
             "since": "2024",
-            "address": "Weyburn Avenue, Westwood Village, Los Angeles",
+            "address": "10935 Weyburn Ave, Los Angeles, CA 90024",
             "people": [
               [
                 "Founder and owner",
@@ -1120,17 +1647,24 @@
             ],
             "about": "The Westwood Village studio opened in January 2024 as the sixth and largest Mighty Pilates location. The others are across Southern California and the Bay Area, the nearest in Santa Monica.",
             "offers": [
-              "Reformer classes for every level",
-              "In-person and online classes",
-              "Student discount for UCLA students (reported in 2024)"
+              "Re:Form",
+              "Power Re:Form, advanced",
+              "Mighty Reform Mix",
+              "Booty and Core",
+              "50-minute classes"
             ],
             "src": [
               [
                 "Daily Bruin, February 19, 2024: Mighty Pilates in Westwood",
                 "https://dailybruin.com/2024/02/19/mighty-pilates-creates-community-for-students-young-professionals-in-westwood"
+              ],
+              [
+                "Wellhub: Mighty Pilates Westwood Village",
+                "https://wellhub.com/en-us/search/partners/mighty-pilates-westwood-village-presidio-heights"
               ]
             ],
-            "slug": "mighty-pilates"
+            "slug": "mighty-pilates",
+            "hours": "Mon to Thu, 7:30 AM to 7:30 PM. Fri, 7:30 AM to 6:30 PM. Sat and Sun, 8:30 AM to 1:30 PM."
           },
           "lat": 34.0625,
           "lng": -118.4455
@@ -1172,13 +1706,34 @@
         },
         {
           "name": "Bodies and Pilates LA",
-          "city": "Los Angeles",
+          "city": "North Hollywood",
           "region": "LA",
           "known": "Reformer classes that explain the anatomy behind each exercise.",
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.166,
+          "lng": -118.37,
+          "p": {
+            "slug": "bodies-and-pilates-la",
+            "address": "5251 Vineland Ave, Suite 6, North Hollywood, CA 91601",
+            "offers": [
+              "Reformer Pilates classes",
+              "Morning and evening sessions"
+            ],
+            "hours": "Mon and Wed, 7 to 11 AM and 5 to 8 PM. Tue and Thu, 8:30 to 11:30 AM and 5:30 to 8:30 PM. Fri, 7:30 to 11:30 AM and 4 to 6 PM. Sat and Sun, 9 AM to 1 PM.",
+            "src": [
+              [
+                "Wellhub: Bodies and Pilates",
+                "https://wellhub.com/en-us/search/partners/bodies-and-pilates-north-hollywood/"
+              ],
+              [
+                "ClassPass: reformer Pilates studios in Los Angeles",
+                "https://classpass.com/partners/lists/los-angeles-reformer-pilates/"
+              ]
+            ]
+          }
         },
         {
           "name": "Pom Pilates",
@@ -1190,49 +1745,22 @@
           "rank": null,
           "note": null,
           "lat": 34.101,
-          "lng": -117.768
-        },
-        {
-          "name": "Speir Pilates",
-          "city": "Newport Beach",
-          "region": "OC",
-          "known": "Andrea Speir's reformer method: toning, cardio and stretching in one class.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
+          "lng": -117.768,
           "p": {
-            "since": "2016",
-            "people": [
-              [
-                "Founder",
-                "Andrea Speir"
-              ],
-              [
-                "Founding partner",
-                "Elizabeth Polk"
-              ]
-            ],
-            "about": "Speir built the method over ten years of teaching in Los Angeles and opened the first studio in Santa Monica in spring 2016. The Newport Beach studio is listed on ClassPass.",
+            "slug": "pom-pilates",
+            "address": "1447 Foothill Blvd, La Verne, CA 91750",
             "offers": [
-              "Group reformer classes, one person per reformer",
-              "50-minute sessions",
-              "Private sessions"
+              "Reformer Pilates classes",
+              "Booking required"
             ],
+            "hours": "Mon and Wed to Fri, 7 AM to 7 PM. Tue, 6 AM to 7 PM. Sat, 8 AM to 2 PM.",
             "src": [
               [
-                "LA Yoga, July 23, 2016: Speir Pilates",
-                "https://layoga.com/practice/pilates/speir-pilates-santa-monica/"
-              ],
-              [
-                "ClassPass: Speir Pilates, Newport Beach",
-                "https://classpass.com/studios/speir-pilates-newport-beach"
+                "Wellhub: Pom Pilates",
+                "https://wellhub.com/en-us/search/partners/pom-pilates"
               ]
-            ],
-            "slug": "speir-pilates"
-          },
-          "lat": 33.618,
-          "lng": -117.929
+            ]
+          }
         },
         {
           "name": "LiveMetta Pilates",
@@ -1284,7 +1812,7 @@
           "rank": null,
           "note": null,
           "p": {
-            "address": "333 E 17th St, Suite 18, Costa Mesa, CA 92627",
+            "address": "755 W 17th St, Suite I, Costa Mesa, CA 92627",
             "about": "The studio describes its class as a total body workout on purpose-built equipment, led by certified instructors.",
             "offers": [
               "Reformer Pilates",
@@ -1293,50 +1821,53 @@
             ],
             "src": [
               [
+                "Wellhub: Escape Pilates",
+                "https://wellhub.com/en-us/search/partners/escape-pilates-westside-costa-mesa"
+              ],
+              [
                 "ClassPass: Escape Pilates",
                 "https://classpass.com/studios/escape-pilates-costa-mesa"
               ]
             ],
-            "slug": "escape-pilates"
+            "slug": "escape-pilates",
+            "hours": "Mon to Thu, 6 AM to 8:30 PM. Fri, 6 AM to 6:30 PM. Sat, 8 AM to 5:30 PM. Sun, 8 AM to noon."
           },
-          "lat": 33.636,
-          "lng": -117.912
+          "lat": 33.64,
+          "lng": -117.93
         },
         {
           "name": "Studio X",
-          "city": "Costa Mesa and Irvine",
+          "city": "Costa Mesa, Irvine and Orange",
           "region": "OC",
-          "known": "Reformer studios in Costa Mesa and Irvine, with jumpboard and stretch classes.",
-          "site": null,
-          "instagram": null,
+          "known": "Three studios with Reform X Tower classes at three progressive levels.",
+          "site": "https://www.studioxpilates.com",
+          "instagram": "https://www.instagram.com/studiox_oc",
           "rank": null,
           "note": null,
-          "lat": 33.664,
-          "lng": -117.903
-        },
-        {
-          "name": "The Body Collective",
-          "city": "Costa Mesa",
-          "region": "OC",
-          "known": "Reformer Pilates in classes limited to twelve people.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "lat": 33.664,
-          "lng": -117.903
-        },
-        {
-          "name": "The Beachouse Studio",
-          "city": "Newport Beach",
-          "region": "OC",
-          "known": "Reformer classes in Newport Beach.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "lat": 33.618,
-          "lng": -117.929
+          "lat": 33.68,
+          "lng": -117.876,
+          "p": {
+            "slug": "studio-x",
+            "address": "2915 Red Hill Ave, Suite A107, Costa Mesa, CA 92626. Also 17971 Sky Park Circle, Irvine, and 146 S Main St, Orange",
+            "offers": [
+              "Reform X Tower, levels 1 to 3",
+              "Cardio X",
+              "Reset X mat class",
+              "Reform X Chair at the Orange studio",
+              "Virtual streaming"
+            ],
+            "hours": "Costa Mesa: Mon to Fri, 6 AM to 8 PM. Sat and Sun, 7 AM to noon.",
+            "src": [
+              [
+                "Studio X, official site",
+                "https://www.studioxpilates.com"
+              ],
+              [
+                "Wellhub: Studio X Costa Mesa",
+                "https://wellhub.com/en-us/search/partners/studio-x-costa-mesa/"
+              ]
+            ]
+          }
         },
         {
           "name": "Coeur Pilates",
@@ -1401,113 +1932,1407 @@
           "name": "Carrie's Pilates",
           "city": "Rancho Santa Margarita",
           "region": "OC",
-          "known": "Reformer classes including a 45-minute Full Body Burn and a beginner class.",
+          "known": "Part of Carrie's Pilates Plus, founded by Carrie Minter Ebers in 2013, using its own Transformer reformer.",
           "site": null,
           "instagram": null,
           "rank": null,
           "note": null,
           "lat": 33.64,
-          "lng": -117.603
-        },
-        {
-          "name": "Class 46",
-          "city": "Anaheim",
-          "region": "OC",
-          "known": "Reformer classes in Anaheim.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "lat": 33.8366,
-          "lng": -117.9143
-        },
-        {
-          "name": "CirKel Fitness",
-          "city": "Tustin",
-          "region": "OC",
-          "known": "Reformer work as one part of full-body conditioning.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "lat": 33.742,
-          "lng": -117.823
-        },
-        {
-          "name": "FIT with LIT",
-          "city": "Newport Beach",
-          "region": "OC",
-          "known": "Reformer sessions in Newport Beach.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
-          "lat": 33.618,
-          "lng": -117.929
-        },
-        {
-          "name": "Pure Studio",
-          "city": "Canyon Lake",
-          "region": "IE",
-          "known": "Reformer Pilates with yoga and spin next door.",
-          "site": null,
-          "instagram": null,
-          "rank": null,
-          "note": null,
+          "lng": -117.603,
           "p": {
-            "address": "31606 Railroad Canyon Rd, Suite 204, Canyon Lake, CA",
+            "slug": "carries-pilates",
             "people": [
               [
-                "Owner",
-                "Kim Barnes"
+                "Brand founder",
+                "Carrie Minter Ebers"
               ]
             ],
-            "about": "Barnes started teaching in a shared space in the Town Center and moved to her own studio when her classes outgrew it.",
+            "address": "21612 Plano Trabuco Rd, Suite L, Trabuco Canyon, CA 92679",
             "offers": [
-              "Reformer Pilates with springboards",
-              "Mat Pilates",
-              "Yoga",
-              "Spin",
-              "Barre"
+              "Full Body Burn, 45 minutes",
+              "Beginner and all-level classes",
+              "Pilates with strength and cardio",
+              "Grip socks required"
             ],
+            "hours": "Mon to Fri, 6 AM to 1 PM and 4 to 8 PM. Sat, 7 AM to 2 PM. Sun, 9 AM to 2 PM.",
+            "about": "The brand began in West Hollywood in 2013. This studio marked its first year in July 2025.",
             "src": [
               [
-                "The Friday Flyer: rapidly growing studio expanding space",
-                "https://fridayflyer.com/article/2020-07-24/rapidly-growing-studio-expanding-space/"
+                "Wellhub: Carrie's Pilates Saddleback",
+                "https://wellhub.com/en-us/search/partners/carries-pilates-saddleback/"
               ],
               [
-                "ClassPass: Pure Studio",
-                "https://classpass.com/studios/pure-studio-canyon-lake"
+                "Athletech News: Carrie's Pilates Plus",
+                "https://athletechnews.com/carries-pilates-plus-marks-milestone-plans-franchise-expansion/"
               ]
-            ],
-            "slug": "pure-studio"
-          },
-          "lat": 33.685,
-          "lng": -117.273
+            ]
+          }
         },
         {
           "name": "SweatLogic",
           "city": "Upland",
           "region": "IE",
-          "known": "A heated Pilates studio with reformer classes.",
-          "site": null,
-          "instagram": null,
+          "known": "A heated studio on Foothill Boulevard with Pilates, yoga, barre and strength classes.",
+          "site": "https://sweat-logic.com",
+          "instagram": "https://www.instagram.com/SweatLogic_",
           "rank": null,
           "note": null,
           "lat": 34.0975,
-          "lng": -117.6484
+          "lng": -117.6484,
+          "p": {
+            "slug": "sweatlogic",
+            "address": "71 E Foothill Blvd, Upland, CA 91786",
+            "offers": [
+              "Warm Reform",
+              "Hot mat Pilates",
+              "Yoga and barre",
+              "Strength training and TRX"
+            ],
+            "hours": "Mon to Thu, 5:30 AM to 9:30 PM. Fri, 5:30 AM to 7:30 PM. Sat and Sun, 7:30 to 11:30 AM.",
+            "src": [
+              [
+                "Wellhub: SweatLogic",
+                "https://wellhub.com/en-us/search/partners/sweatlogic"
+              ],
+              [
+                "ClassPass: SweatLogic",
+                "https://classpass.com/studios/sweatlogic-llc-upland"
+              ]
+            ]
+          }
         },
         {
-          "name": "The Pilates Co.",
-          "city": "Riverside",
+          "name": "Pure Form Pilates",
+          "city": "Murrieta",
           "region": "IE",
-          "known": "A Pilates studio on Magnolia Avenue, with listings in Temecula and Corona too.",
+          "known": "A boutique studio with small-group reformer, mat and tower classes.",
           "site": null,
           "instagram": null,
           "rank": null,
           "note": null,
-          "lat": 33.923,
-          "lng": -117.446
+          "lat": 33.556,
+          "lng": -117.214,
+          "p": {
+            "address": "24910 Washington Ave, Suite 306, Murrieta, CA 92562",
+            "offers": [
+              "Small-group reformer classes",
+              "Mat Pilates",
+              "Tower Pilates"
+            ],
+            "hours": "Mon, 6:30 to 11:30 AM. Tue and Thu, mornings and 4 to 6 PM. Wed, 9 AM to noon. Fri, 6 to 10 AM. Sat, 8 to 10 AM.",
+            "src": [
+              [
+                "Wellhub: Pure Form Pilates",
+                "https://wellhub.com/en-us/search/partners/pure-form-pilates"
+              ]
+            ],
+            "slug": "pure-form-pilates"
+          }
+        },
+        {
+          "name": "The Pilates Circle",
+          "city": "Corona",
+          "region": "IE",
+          "known": "Reformer Pilates and TRX in Corona, with a second studio in Norco. Open seven days.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "lat": 33.864,
+          "lng": -117.556,
+          "p": {
+            "address": "469 Magnolia Ave, Suite 106, Corona, CA 92879. Also 1295 Hamner Ave, Suite B, Norco",
+            "offers": [
+              "Reformer Pilates",
+              "TRX"
+            ],
+            "hours": "Corona: Mon to Thu, 6 AM to 7:30 PM. Fri, 6 AM to 6:30 PM. Sat, 7:30 to 11:45 AM. Sun, 7 to 10:30 AM.",
+            "src": [
+              [
+                "Wellhub: The Pilates Circle Corona",
+                "https://wellhub.com/en-us/search/partners/the-pilates-circle-corona"
+              ],
+              [
+                "Wellhub: The Pilates Circle Norco",
+                "https://wellhub.com/en-us/search/partners/the-pilates-circle-norco"
+              ]
+            ],
+            "slug": "the-pilates-circle"
+          }
+        },
+        {
+          "name": "Neaumix Fit",
+          "city": "Temecula",
+          "region": "IE",
+          "known": "Mat and reformer Pilates on Margarita Road, open seven days a week.",
+          "site": null,
+          "instagram": "https://www.instagram.com/neaumixfit.temecula/",
+          "rank": null,
+          "note": null,
+          "lat": 33.523,
+          "lng": -117.148,
+          "p": {
+            "address": "40573 Margarita Rd, Suite A, Temecula, CA 92591",
+            "offers": [
+              "Reformer Pilates",
+              "Mat Pilates"
+            ],
+            "hours": "Mon to Fri, 6 AM to 7 PM. Sat, 7 AM to noon. Sun, 8 AM to noon.",
+            "about": "Neaumix Fit is a group with several other studios in Orange County.",
+            "src": [
+              [
+                "Wellhub: Neaumix Fit Temecula",
+                "https://wellhub.com/en-us/search/partners/neaumix-fit-temecula/"
+              ]
+            ],
+            "slug": "neaumix-fit"
+          }
+        }
+      ]
+    },
+    "yoga": {
+      "slug": "yoga-studios-socal",
+      "sport": "Yoga",
+      "noun": "yoga studios",
+      "unit": "studio",
+      "sources": [
+        [
+          "Each studio's own site and booking listing, linked on its profile",
+          "https://nathanjsong.com/fitness/guides/yoga-studios-socal"
+        ]
+      ],
+      "gyms": [
+        {
+          "name": "Santa Monica Yoga",
+          "city": "Santa Monica",
+          "region": "LA",
+          "known": "Yoga, mat Pilates and qi gong in studio, online and outdoors on Ocean Park Boulevard.",
+          "site": "https://www.santamonicayoga.com/",
+          "instagram": "https://www.instagram.com/santamonicayoga/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 34.018,
+          "lng": -118.465,
+          "p": {
+            "address": "1640 Ocean Park Blvd, Santa Monica, CA 90405",
+            "offers": [
+              "In-studio yoga",
+              "Livestream classes",
+              "Outdoor classes",
+              "Prenatal yoga",
+              "Mat Pilates",
+              "Qi gong",
+              "Restorative and gentle classes"
+            ],
+            "hours": "Mon, 7:15 AM to 9 PM. Tue and Thu, 7:30 AM to 8:45 PM. Wed, 7:15 AM to 9:15 PM. Fri, 7:15 AM to 8 PM. Sat, 8 AM to 5:15 PM. Sun, 8 AM to 8:30 PM.",
+            "price": "Listed on its site: new student three-class pass $59, single class $30.",
+            "about": "The studio says its instructors teach from their own experience, not from one set style.",
+            "src": [
+              [
+                "Santa Monica Yoga, official site",
+                "https://www.santamonicayoga.com/"
+              ],
+              [
+                "Santa Monica Yoga: prices",
+                "https://www.santamonicayoga.com/prices"
+              ],
+              [
+                "Santa Monica Yoga: schedule",
+                "https://www.santamonicayoga.com/schedule"
+              ]
+            ],
+            "slug": "santa-monica-yoga"
+          }
+        },
+        {
+          "name": "One Down Dog",
+          "city": "Echo Park",
+          "region": "LA",
+          "known": "Three studios in Echo Park, Eagle Rock and East Hollywood, open since 2013.",
+          "site": "https://www.onedowndog.com/",
+          "instagram": "https://www.instagram.com/onedowndog/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 34.068,
+          "lng": -118.26,
+          "p": {
+            "since": "2013",
+            "address": "319 Glendale Blvd, Los Angeles, CA 90026. Also 2150 Colorado Blvd, Eagle Rock, and 5531 Hollywood Blvd, East Hollywood",
+            "offers": [
+              "Flow, all-level vinyasa",
+              "Slow flow",
+              "Yin",
+              "Restorative",
+              "Somatic yoga",
+              "Mat Pilates",
+              "Fit, a HIIT class",
+              "Prenatal",
+              "200 hour teacher training"
+            ],
+            "price": "New local students, as listed on its site: 21 days unlimited for $79.",
+            "about": "A woman-owned studio group that lists more than 150 yoga and fitness classes a week, plus live online classes.",
+            "src": [
+              [
+                "One Down Dog, official site",
+                "https://www.onedowndog.com/"
+              ],
+              [
+                "One Down Dog: about",
+                "https://www.onedowndog.com/about/"
+              ],
+              [
+                "One Down Dog: classes",
+                "https://www.onedowndog.com/classes/"
+              ]
+            ],
+            "slug": "one-down-dog"
+          }
+        },
+        {
+          "name": "Yoga House",
+          "city": "Pasadena",
+          "region": "LA",
+          "known": "Opened in 1997 as a full-time Hatha yoga studio, with Iyengar, Ashtanga and vinyasa classes.",
+          "site": "https://www.yogahouse.com/",
+          "instagram": "https://www.instagram.com/yoga_house/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 34.118,
+          "lng": -118.15,
+          "p": {
+            "since": "1997",
+            "address": "11 W State St, Pasadena, CA 91105",
+            "offers": [
+              "Iyengar",
+              "Vinyasa",
+              "Ashtanga",
+              "Restorative",
+              "Yin",
+              "Gentle yoga",
+              "Prenatal and postnatal",
+              "Therapeutic yoga for cancer",
+              "Yoga 101 beginner workshop",
+              "200 hour teacher training"
+            ],
+            "price": "Listed on its site: drop-in class $30, first-time starter month $59.",
+            "about": "The studio started as a small storefront.",
+            "src": [
+              [
+                "Yoga House: about",
+                "https://www.yogahouse.com/about"
+              ],
+              [
+                "Yoga House: classes",
+                "https://www.yogahouse.com/classes"
+              ],
+              [
+                "Yoga House: new to yoga",
+                "https://www.yogahouse.com/new-to-yoga"
+              ]
+            ],
+            "slug": "yoga-house"
+          }
+        },
+        {
+          "name": "Center for Yoga LA",
+          "city": "Larchmont Village",
+          "region": "LA",
+          "known": "A Larchmont Boulevard studio that reopened under local management in August 2021.",
+          "site": "https://centerforyogala.com/",
+          "instagram": "https://www.instagram.com/centerforyogala/",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 34.076,
+          "lng": -118.3237,
+          "p": {
+            "address": "230 1/2 N Larchmont Blvd, Los Angeles, CA 90004",
+            "offers": [
+              "Vinyasa flow",
+              "Iyengar, held on Zoom",
+              "Restorative",
+              "Infrared heated yoga",
+              "Yin",
+              "Gentle yoga",
+              "Pilates",
+              "Yoga Power Sculpt",
+              "Prenatal and postnatal yoga"
+            ],
+            "price": "Listed on its site: seven-day unlimited pass $40, membership $180 a month.",
+            "about": "The neighborhood site LarchmontLA says The Center for Yoga was founded in 1967, joined YogaWorks in 2004 and reopened as Center for Yoga in August 2021.",
+            "src": [
+              [
+                "Center for Yoga LA, official site",
+                "https://centerforyogala.com/"
+              ],
+              [
+                "Center for Yoga LA: classes",
+                "https://centerforyogala.com/yoga-classes-los-angeles/"
+              ],
+              [
+                "LarchmontLA: Center for Yoga",
+                "https://larchmontla.com/center-for-yoga/"
+              ]
+            ],
+            "slug": "center-for-yoga-la"
+          }
+        },
+        {
+          "name": "Rising Lotus Yoga",
+          "city": "Sherman Oaks",
+          "region": "LA",
+          "known": "Founded in 2006 by Claire Hartley and Daniel Stewart, on Magnolia Boulevard since 2014.",
+          "site": "https://www.risinglotusyoga.com/",
+          "instagram": "https://www.instagram.com/risinglotusyoga/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 34.165,
+          "lng": -118.44,
+          "p": {
+            "since": "2006",
+            "people": [
+              [
+                "Founder and owner",
+                "Claire Hartley"
+              ],
+              [
+                "Founder",
+                "Daniel Stewart"
+              ]
+            ],
+            "address": "14148 Magnolia Blvd, 2nd Floor, Sherman Oaks, CA 91423",
+            "offers": [
+              "Yoga for all levels",
+              "Flow classes",
+              "Strength-based classes",
+              "Mobility training",
+              "Online classes on Zoom",
+              "200 hour teacher training",
+              "Retreats"
+            ],
+            "price": "Listed on its site: new student special $75 for 21 days unlimited, single class $30.",
+            "about": "The studio began on Ventura Boulevard and moved to a 3,800 square foot space in 2014. Its teacher training began in 2008.",
+            "src": [
+              [
+                "Rising Lotus Yoga: about",
+                "https://www.risinglotusyoga.com/About"
+              ],
+              [
+                "Rising Lotus Yoga: pricing",
+                "https://www.risinglotusyoga.com/Membership-pricing"
+              ],
+              [
+                "Rising Lotus Yoga: workshops and events",
+                "https://www.risinglotusyoga.com/workshops-events"
+              ]
+            ],
+            "slug": "rising-lotus-yoga"
+          }
+        },
+        {
+          "name": "SoHo Yoga",
+          "city": "Hermosa Beach",
+          "region": "LA",
+          "known": "Heated and unheated classes, plus beach yoga at 14th Street and The Strand.",
+          "site": "https://www.sohoyoga.com/",
+          "instagram": "https://www.instagram.com/sohoyoga",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 33.863,
+          "lng": -118.399,
+          "p": {
+            "address": "1242 Hermosa Ave, Hermosa Beach, CA 90254",
+            "offers": [
+              "Power flow",
+              "Hot yoga",
+              "Kundalini",
+              "Yin",
+              "Yoga flow",
+              "Yoga Barre",
+              "Sweat and Sculpt",
+              "Beach yoga",
+              "On-demand classes"
+            ],
+            "price": "Listed on its site: first 30 days for $99, membership $199 a month.",
+            "about": "The studio says it draws on yoga, functional fitness, dance and Pilates.",
+            "src": [
+              [
+                "SoHo Yoga, official site",
+                "https://www.sohoyoga.com/"
+              ],
+              [
+                "SoHo Yoga: class descriptions",
+                "https://www.sohoyoga.com/class-descriptions"
+              ]
+            ],
+            "slug": "soho-yoga"
+          }
+        },
+        {
+          "name": "Iyengar Yoga Institute of Los Angeles",
+          "city": "Mar Vista",
+          "region": "LA",
+          "known": "Run by the nonprofit Iyengar Yoga Association of Los Angeles, with certified Iyengar teachers.",
+          "site": "https://iyila.org/",
+          "instagram": "https://www.instagram.com/iyengaryogala",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 34.001,
+          "lng": -118.43,
+          "p": {
+            "people": [
+              [
+                "Run by",
+                "B.K.S. Iyengar Yoga Association of Los Angeles, a nonprofit"
+              ]
+            ],
+            "address": "12460 W Washington Blvd, Los Angeles, CA 90066",
+            "offers": [
+              "Iyengar classes by level",
+              "Community class",
+              "Free Sunday workshop",
+              "Livestream classes",
+              "Iyengar teacher training"
+            ],
+            "price": "Listed on its site: livestream drop-in $12.",
+            "about": "The association is an affiliate of the Iyengar Yoga National Association of the United States.",
+            "src": [
+              [
+                "Iyengar Yoga Institute of Los Angeles, official site",
+                "https://iyila.org/home-2"
+              ],
+              [
+                "IYILA: about",
+                "https://iyila.org/?p=10"
+              ]
+            ],
+            "slug": "iyengar-yoga-institute-of-los-angeles"
+          }
+        },
+        {
+          "name": "Hot 8 Yoga",
+          "city": "Koreatown",
+          "region": "LA",
+          "known": "A hot yoga group operating since 2010, with rooms heated to between 105 and 110 degrees.",
+          "site": "https://www.hot8yoga.com/",
+          "instagram": "https://www.instagram.com/hot8yoga/",
+          "rank": null,
+          "note": null,
+          "heat": "hot",
+          "lat": 34.0617,
+          "lng": -118.292,
+          "p": {
+            "since": "2010",
+            "address": "3150 Wilshire Blvd, Suite 200, Los Angeles, CA 90010",
+            "offers": [
+              "Power, a 60 minute vinyasa class",
+              "26 and 2, 90 minutes",
+              "Hot Power Fusion",
+              "Yin",
+              "Yoga Sculpt",
+              "Yoga Barre",
+              "Strength"
+            ],
+            "hours": "Mon to Thu, 6 AM to 10 PM. Fri, 6 AM to 7 PM. Sat and Sun, 7:30 AM to 6:30 PM.",
+            "price": "New students, as listed on its site: first seven days unlimited for $34.",
+            "about": "The group lists ten Southern California studios, including Beverly Hills, Santa Monica, Pasadena, Sherman Oaks and El Segundo.",
+            "src": [
+              [
+                "Hot 8 Yoga, official site",
+                "https://www.hot8yoga.com/"
+              ],
+              [
+                "Hot 8 Yoga: locations",
+                "https://www.hot8yoga.com/locations"
+              ],
+              [
+                "Hot 8 Yoga: Koreatown offer",
+                "https://hot8yoga.com/welcome-week-offer/koreatown"
+              ]
+            ],
+            "slug": "hot-8-yoga"
+          }
+        },
+        {
+          "name": "Kosha 5 Yoga Studio",
+          "city": "Fullerton",
+          "region": "OC",
+          "known": "Opened in downtown Fullerton in 2021 by yoga therapist Zarfeen Samani. Two class styles are heated.",
+          "site": "https://www.kosha5yogastudio.com/",
+          "instagram": "https://www.instagram.com/fullerton_kosha5studio",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 33.8704,
+          "lng": -117.921,
+          "p": {
+            "since": "2021",
+            "people": [
+              [
+                "Founder and owner",
+                "Zarfeen Samani"
+              ]
+            ],
+            "address": "229 E Commonwealth Ave, Suite C, Fullerton, CA 92832",
+            "offers": [
+              "Vinyasa and power flow",
+              "Restorative and yin",
+              "Mat Pilates",
+              "Heated sculpt, 85 to 90 degrees",
+              "Beginner classes",
+              "Teacher training"
+            ],
+            "hours": "Mon and Thu, 9 AM to 9 PM. Tue and Fri, 7:30 AM to 9 PM. Wed, 7:30 AM to 8 PM. Sat, 8 AM to 1 PM. Sun, 8 AM to 7:30 PM.",
+            "price": "New students, as listed on its site: one free trial class, or two weeks unlimited for $50.",
+            "src": [
+              [
+                "Kosha 5 Yoga Studio, official site",
+                "https://www.kosha5yogastudio.com/"
+              ],
+              [
+                "Kosha 5: our team",
+                "https://www.kosha5yogastudio.com/our-team"
+              ],
+              [
+                "Kosha 5: pricing",
+                "https://www.kosha5yogastudio.com/pricing"
+              ]
+            ],
+            "slug": "kosha-5-yoga-studio"
+          }
+        },
+        {
+          "name": "Yoga Sol Studio",
+          "city": "Yorba Linda",
+          "region": "OC",
+          "known": "A class list that runs from Kundalini and ropes work to chair yoga and kids yoga.",
+          "site": "https://yogasolstudio.com/",
+          "instagram": "https://www.instagram.com/yogasolstudio",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.888,
+          "lng": -117.813,
+          "p": {
+            "address": "18302 Imperial Hwy, Yorba Linda, CA 92886",
+            "offers": [
+              "Vinyasa",
+              "Hatha flow",
+              "Kundalini",
+              "Restorative",
+              "Yin",
+              "Meditation with sound",
+              "Chair yoga",
+              "Mat Pilates"
+            ],
+            "hours": "Mon, Tue, Thu, Fri: 6 AM to noon and 4 to 9 PM. Wed, 8:30 AM to noon. Sat, 8 AM to 1 PM. Sun, 7:30 to 11:30 AM and 4 to 6 PM.",
+            "price": "Listed on its site: two weeks unlimited for $22 for new local students, single class $26.",
+            "about": "The studio hosts a free class on the first Friday of every month at 6:30 PM.",
+            "src": [
+              [
+                "Yoga Sol Studio, official site",
+                "https://yogasolstudio.com/"
+              ],
+              [
+                "Yoga Sol: memberships and pricing",
+                "https://yogasolstudio.com/pages/memberships-pricing"
+              ],
+              [
+                "Yoga Sol: about our classes",
+                "https://yogasolstudio.com/pages/about-our-classes"
+              ],
+              [
+                "Wellhub: Yoga Sol Studio",
+                "https://wellhub.com/en-us/search/partners/yoga-sol-studio/"
+              ]
+            ],
+            "slug": "yoga-sol-studio"
+          }
+        },
+        {
+          "name": "Ra Yoga Costa Mesa",
+          "city": "Costa Mesa",
+          "region": "OC",
+          "known": "The first Ra Yoga studio opened in Orange County in March 2011. The group now lists four locations.",
+          "site": "https://rayoga.com/locations/costa-mesa/",
+          "instagram": "https://www.instagram.com/rayogastudios",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 33.683,
+          "lng": -117.886,
+          "p": {
+            "since": "2011",
+            "people": [
+              [
+                "Founders and owners",
+                "Bobby Kittleman and Jenny Vande Hei"
+              ]
+            ],
+            "address": "3077 Bristol St, Suite A, Costa Mesa, CA 92626",
+            "offers": [
+              "Ra Vinyasa, heated and unheated",
+              "Hot Ra",
+              "Yin and restorative",
+              "Yogalates",
+              "Ra Strength",
+              "Sacred Sound",
+              "Childcare"
+            ],
+            "hours": "Mon to Fri, 5:45 AM to 1 PM and 2:45 to 9 PM. Sat and Sun, 7:45 AM to 1:30 PM and 3:15 to 6 PM.",
+            "about": "The group lists 14 styles and more than 100 classes a week across four studios. Heated classes use radiant heat.",
+            "src": [
+              [
+                "Ra Yoga: Costa Mesa",
+                "https://rayoga.com/locations/costa-mesa/"
+              ],
+              [
+                "Ra Yoga: our story",
+                "https://rayoga.com/our-story/"
+              ],
+              [
+                "LA Yoga, July 18, 2016: Ra Yoga",
+                "https://layoga.com/community/new-studios/ra-yoga-opens-studio-newport-beach/"
+              ],
+              [
+                "Wellhub: Ra Yoga Costa Mesa",
+                "https://wellhub.com/en-us/search/partners/ra-yoga-costa-mesa-costa-mesa/"
+              ]
+            ],
+            "slug": "ra-yoga-costa-mesa"
+          }
+        },
+        {
+          "name": "Ekam Yoga and Pilates",
+          "city": "Newport Beach",
+          "region": "OC",
+          "known": "Open since 2014 on West Coast Highway, with heated and unheated vinyasa plus reformer Pilates.",
+          "site": "https://www.ekamyp.com",
+          "instagram": "https://www.instagram.com/ekamyogapilates",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 33.619,
+          "lng": -117.929,
+          "p": {
+            "since": "2014",
+            "address": "2700 West Coast Hwy, Newport Beach, CA 92663",
+            "offers": [
+              "Vinyasa, heated and unheated",
+              "Gentle yoga",
+              "Yin",
+              "Restorative",
+              "Breathwork and meditation",
+              "Reformer Pilates",
+              "Heated mat Pilates"
+            ],
+            "price": "New member special listed on its site: three yoga classes for $36.",
+            "src": [
+              [
+                "Ekam Yoga and Pilates, official site",
+                "https://www.ekamyp.com"
+              ],
+              [
+                "Ekam: the studio",
+                "https://ekamyp.com/about/the-studio"
+              ],
+              [
+                "ClassPass: Ekam Yoga and Pilates",
+                "https://classpass.com/studios/ekam-yoga-and-pilates-newport-beach"
+              ]
+            ],
+            "slug": "ekam-yoga-and-pilates"
+          }
+        },
+        {
+          "name": "Yoga Shakti Wellness Club",
+          "city": "Irvine",
+          "region": "OC",
+          "known": "Founded in 2002, on the second floor at 4255 Campus Drive.",
+          "site": "https://www.yogashaktistudio.com",
+          "instagram": "https://www.instagram.com/yogashaktistudio/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.65,
+          "lng": -117.838,
+          "p": {
+            "since": "2002",
+            "address": "4255 Campus Dr, Unit A235, Irvine, CA 92612",
+            "offers": [
+              "Yoga",
+              "Yoga and Pilates fusion",
+              "Restorative",
+              "Yin",
+              "Gentle yoga",
+              "Meditation",
+              "Teacher training"
+            ],
+            "hours": "Mon to Thu, 9 AM to 9:15 PM. Fri, 9 AM to 7:45 PM. Sat, 7:30 AM to 6:15 PM. Sun, 9 AM to 7:15 PM.",
+            "price": "Listed on its site: unlimited classes for $59 in the first month.",
+            "src": [
+              [
+                "Yoga Shakti, official site",
+                "https://www.yogashaktistudio.com"
+              ],
+              [
+                "Wellhub: Yoga Shakti Studio",
+                "https://wellhub.com/en-us/search/partners/yoga-shakti-studio-university-town-center-irvine"
+              ]
+            ],
+            "slug": "yoga-shakti-wellness-club"
+          }
+        },
+        {
+          "name": "LiveMetta Yoga",
+          "city": "Laguna Niguel",
+          "region": "OC",
+          "known": "One of two LiveMetta studios with yoga. The schedule lists Iyengar, Hatha, Kundalini and Yin.",
+          "site": "https://livemetta.com/studio/laguna-niguel-ca/",
+          "instagram": "https://www.instagram.com/livemetta_yoga/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.567,
+          "lng": -117.713,
+          "p": {
+            "people": [
+              [
+                "Founders",
+                "Chris and Ythy Farnsworth"
+              ]
+            ],
+            "address": "23811 Aliso Creek Rd, Suite 100, Laguna Niguel, CA 92677",
+            "offers": [
+              "Iyengar yoga",
+              "Hatha yoga",
+              "Flow for all levels",
+              "Power flow",
+              "Kundalini, breathwork and sound",
+              "Candlelight yin",
+              "Prenatal and postnatal yoga",
+              "Reformer Pilates"
+            ],
+            "hours": "Mon to Wed, 8 AM to 8:30 PM. Thu and Fri, 9 AM to 8:30 PM. Sat, 8 AM to 7 PM. Sun, 8 AM to noon.",
+            "price": "New student special listed on its site: two weeks of unlimited yoga for $35.",
+            "about": "LiveMetta was founded in 2018 and also teaches yoga at its Laguna Beach studio.",
+            "src": [
+              [
+                "LiveMetta: Laguna Niguel",
+                "https://livemetta.com/studio/laguna-niguel-ca/"
+              ],
+              [
+                "LiveMetta: yoga classes",
+                "https://livemetta.com/yoga-classes/"
+              ],
+              [
+                "LiveMetta: our team",
+                "https://livemetta.com/about/our-team/"
+              ],
+              [
+                "Wellhub: LiveMetta Laguna Niguel",
+                "https://wellhub.com/en-us/search/partners/livemetta-pilates-and-yoga-laguna-niguel-laguna-niguel/"
+              ]
+            ],
+            "slug": "livemetta-yoga"
+          }
+        },
+        {
+          "name": "Ra Yoga Mission Viejo",
+          "city": "Mission Viejo",
+          "region": "OC",
+          "known": "Heated and unheated classes, with a discount for Saddleback College students.",
+          "site": "https://rayoga.com/locations/mission-viejo/",
+          "instagram": "https://www.instagram.com/rayogastudios",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 33.562,
+          "lng": -117.661,
+          "p": {
+            "people": [
+              [
+                "Founders and owners",
+                "Bobby Kittleman and Jenny Vande Hei"
+              ]
+            ],
+            "address": "28321 Marguerite Pkwy, Suite 202, Mission Viejo, CA 92691",
+            "offers": [
+              "Hot Ra",
+              "Ra Vinyasa",
+              "Yin and restorative",
+              "Sacred Sound",
+              "Heated and unheated classes"
+            ],
+            "price": "New student special listed on its site: $35.",
+            "about": "Saddleback College students get half off their first month. The Ra Yoga group opened its first studio in Orange County in March 2011.",
+            "src": [
+              [
+                "Ra Yoga: Mission Viejo",
+                "https://rayoga.com/locations/mission-viejo/"
+              ],
+              [
+                "Ra Yoga: our story",
+                "https://rayoga.com/our-story/"
+              ]
+            ],
+            "slug": "ra-yoga-mission-viejo"
+          }
+        },
+        {
+          "name": "YNG Studios",
+          "city": "San Clemente",
+          "region": "OC",
+          "known": "Heated and unheated classes at two San Clemente studios, Downtown and North Beach.",
+          "site": "https://yngstudios.com/",
+          "instagram": "https://www.instagram.com/yng_studios/",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 33.427,
+          "lng": -117.611,
+          "p": {
+            "people": [
+              [
+                "Owners since June 2018",
+                "Deborah Miller and Todd Mace"
+              ]
+            ],
+            "address": "102 S Ola Vista, San Clemente, CA 92672",
+            "offers": [
+              "Hot 26 and 2",
+              "Hot power vinyasa",
+              "Vinyasa flow",
+              "Yin",
+              "Restorative",
+              "Gentle flow",
+              "Sound baths"
+            ],
+            "price": "Listed on its site: two weeks unlimited for $69 for new local students, single class $32.",
+            "about": "The San Clemente Journal reported in March 2023 that Miller and Mace bought the studio in June 2018. The Hot 26 and 2 class follows 26 postures and two breathing exercises in a heated room.",
+            "src": [
+              [
+                "YNG Studios, official site",
+                "https://yngstudios.com/"
+              ],
+              [
+                "YNG Studios: classes",
+                "https://yngstudios.com/yoga-classes/"
+              ],
+              [
+                "San Clemente Journal, March 20, 2023: YNG Studios",
+                "https://www.sanclementejournal.com/2023/03/20/429414/yng-studios-finding-balance-and-harmony"
+              ]
+            ],
+            "slug": "yng-studios"
+          }
+        },
+        {
+          "name": "iHeartYoga",
+          "city": "Dana Point",
+          "region": "OC",
+          "known": "Began in 2008 as a Tuesday morning class in a Dana Point park and later opened a studio on PCH.",
+          "site": "https://www.iheartyoga.org/",
+          "instagram": "https://www.instagram.com/iheartyoga_org/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.466,
+          "lng": -117.698,
+          "p": {
+            "since": "2008",
+            "people": [
+              [
+                "Founder",
+                "Elsa Stuart"
+              ]
+            ],
+            "address": "34207 Pacific Coast Hwy, Dana Point, CA 92629",
+            "offers": [
+              "Vinyasa",
+              "Yoga sculpt",
+              "Gentle flow",
+              "Yin",
+              "Restorative",
+              "Sound healing",
+              "Yoga in the Park",
+              "Paddleboard yoga in Dana Point Harbor"
+            ],
+            "price": "Listed on its site: studio class $30, Yoga in the Park $15.",
+            "src": [
+              [
+                "iHeartYoga, official site",
+                "https://www.iheartyoga.org/"
+              ],
+              [
+                "iHeartYoga: events",
+                "https://www.iheartyoga.org/events"
+              ],
+              [
+                "iHeartYoga: Elsa Stuart",
+                "https://www.iheartyoga.org/elsa-stuart"
+              ]
+            ],
+            "slug": "iheartyoga"
+          }
+        },
+        {
+          "name": "YOGADEN Health Spa",
+          "city": "Corona",
+          "region": "IE",
+          "known": "Founded in 1996 by Leeza and Humberto Villagomez, with 200 and 300 hour teacher trainings.",
+          "site": "https://yogaden.com/",
+          "instagram": "https://www.instagram.com/yogaden.corona/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.86,
+          "lng": -117.545,
+          "p": {
+            "since": "1996",
+            "people": [
+              [
+                "Founders",
+                "Leeza and Humberto Villagomez"
+              ]
+            ],
+            "address": "1255 Magnolia Ave, Suite 101, Corona, CA 92879",
+            "offers": [
+              "Yoga classes for all levels",
+              "Yoga therapy",
+              "Guided meditation",
+              "Breathwork",
+              "Sound healing",
+              "200 and 300 hour teacher training"
+            ],
+            "hours": "Daily, 8 AM to 8 PM.",
+            "src": [
+              [
+                "YOGADEN: about",
+                "https://yogaden.com/about"
+              ],
+              [
+                "YOGADEN: teacher training",
+                "https://yogaden.com/training"
+              ],
+              [
+                "Wellhub: YOGADEN Health Spa",
+                "https://wellhub.com/en-us/search/partners/yogaden-health-spa"
+              ]
+            ],
+            "slug": "yogaden-health-spa"
+          }
+        },
+        {
+          "name": "Just Yoga",
+          "city": "Corona",
+          "region": "IE",
+          "known": "Owner Lisa Salners is the senior instructor. Classes run from active to gentle and restorative.",
+          "site": "https://www.justyogaonline.com/",
+          "instagram": "https://www.instagram.com/justyoga_corona/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.849,
+          "lng": -117.572,
+          "p": {
+            "people": [
+              [
+                "Owner and senior instructor",
+                "Lisa Salners"
+              ],
+              [
+                "Studio director",
+                "Mark Salners"
+              ]
+            ],
+            "address": "163 W Ontario Ave, Suite 102, Corona, CA 92882",
+            "offers": [
+              "Active classes for all levels",
+              "Gentle yoga",
+              "Restorative yoga",
+              "Stretching",
+              "Teacher training"
+            ],
+            "price": "New student special listed on its site: four weeks unlimited for $45.",
+            "src": [
+              [
+                "Just Yoga, official site",
+                "https://www.justyogaonline.com/"
+              ],
+              [
+                "Just Yoga: new students",
+                "https://www.justyogaonline.com/new-students/"
+              ]
+            ],
+            "slug": "just-yoga"
+          }
+        },
+        {
+          "name": "Community Yoga Center",
+          "city": "Riverside",
+          "region": "IE",
+          "known": "A nonprofit that has offered free yoga and meditation classes in Riverside since 2018.",
+          "site": "https://communityyogacenter.com/",
+          "instagram": "https://www.instagram.com/communityyogacenter/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.93,
+          "lng": -117.413,
+          "p": {
+            "since": "2018",
+            "people": [
+              [
+                "Co-founders",
+                "Inga Buchbinder, Allison Hagen Kennedy, Tobias Moyneur, Cherie Robinson and Kristin Varner"
+              ]
+            ],
+            "address": "2900 Adams St, Suite A-20, Riverside, CA 92504",
+            "offers": [
+              "Free weekly classes, no registration",
+              "Vinyasa flow",
+              "Yin and restorative",
+              "Guided meditation",
+              "Sound baths",
+              "200 and 300 hour teacher training"
+            ],
+            "price": "Regular classes are free.",
+            "about": "A 501(c)(3) nonprofit run by a board that includes its five co-founders. Two classes a week are held at All Saints Episcopal Church in Riverside.",
+            "src": [
+              [
+                "Community Yoga Center, official site",
+                "https://communityyogacenter.com/"
+              ],
+              [
+                "Community Yoga Center: who we are",
+                "https://communityyogacenter.com/who-we-are"
+              ],
+              [
+                "Community Yoga Center: calendar",
+                "https://communityyogacenter.com/calendar"
+              ]
+            ],
+            "slug": "community-yoga-center"
+          }
+        },
+        {
+          "name": "MPower Yoga",
+          "city": "Rancho Cucamonga",
+          "region": "IE",
+          "known": "Founded by Johannah Bradley. Most classes are heated, with one gentle class at room temperature.",
+          "site": "https://mpoweryoga.net/",
+          "instagram": "https://www.instagram.com/mpoweryoga_studio/",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 34.1215,
+          "lng": -117.533,
+          "p": {
+            "people": [
+              [
+                "Owner and founder",
+                "Johannah Bradley"
+              ],
+              [
+                "Studio manager",
+                "Karlee Fink"
+              ]
+            ],
+            "address": "12270 Baseline Rd, Suite 153, Rancho Cucamonga, CA 91739. Second studio at 201 N Indian Hill Blvd, Claremont",
+            "offers": [
+              "MPower 1, heated to 85 to 90 degrees",
+              "MPower 2, heated to 90 to 95 degrees",
+              "Hot MPower Fusion, 95 to 100 degrees with humidity",
+              "Yoga Sculpt",
+              "Gentle Yoga at room temperature",
+              "Heated mat Pilates",
+              "Teacher training"
+            ],
+            "hours": "Mon to Thu, 10 AM to 7 PM. Fri, 10 AM to 9 PM. Sat, 9 AM to 9 PM. Sun, 9 AM to 7 PM.",
+            "price": "Listed on its site: single class $29, five classes $130, unlimited $195 a month.",
+            "src": [
+              [
+                "MPower Yoga, official site",
+                "https://mpoweryoga.net/"
+              ],
+              [
+                "MPower Yoga: class descriptions",
+                "https://mpoweryoga.net/classdescriptions"
+              ],
+              [
+                "MPower Yoga: rates",
+                "https://mpoweryoga.net/rates"
+              ]
+            ],
+            "slug": "mpower-yoga"
+          }
+        },
+        {
+          "name": "Xhale Yoga Studio",
+          "city": "Rancho Cucamonga",
+          "region": "IE",
+          "known": "The yoga room inside Xhale Fitness, founded by personal trainer Erin Tanioka.",
+          "site": "https://xhalefit.com/yoga-studio",
+          "instagram": "https://www.instagram.com/xhale.fitness/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 34.121,
+          "lng": -117.593,
+          "p": {
+            "people": [
+              [
+                "Founder and personal trainer",
+                "Erin Tanioka"
+              ]
+            ],
+            "address": "7168 Archibald Ave, Suite 270, Rancho Cucamonga, CA 91701",
+            "offers": [
+              "All-level vinyasa",
+              "Hatha",
+              "Gentle yoga",
+              "Restorative",
+              "Yin",
+              "Yoga Sculpt",
+              "Pilates Sculpt",
+              "Stretch and mobility"
+            ],
+            "hours": "Mon and Wed, 8 AM to 7:15 PM. Tue and Thu, 10 AM to 7:15 PM. Fri, 8 AM to 6 PM. Sat, 9:30 AM to noon.",
+            "price": "Listed on its site: two-week trial $24, drop-in class $20, unlimited $120 a month.",
+            "src": [
+              [
+                "Xhale: yoga studio",
+                "https://xhalefit.com/yoga-studio"
+              ],
+              [
+                "Xhale: about",
+                "https://www.xhalefit.com/about"
+              ],
+              [
+                "Wellhub: Xhale Yoga Studio",
+                "https://wellhub.com/en-us/search/partners/xhale-yoga-studio"
+              ]
+            ],
+            "slug": "xhale-yoga-studio"
+          }
+        },
+        {
+          "name": "The Mind-Body Connection",
+          "city": "Upland",
+          "region": "IE",
+          "known": "A therapeutic yoga studio with 15 class types, including aerial yoga and prenatal.",
+          "site": "https://mbcyoga.com/",
+          "instagram": "https://www.instagram.com/mindbodyconnectionyoga/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 34.108,
+          "lng": -117.69,
+          "p": {
+            "people": [
+              [
+                "Founder and certified yoga therapist",
+                "Kevala"
+              ]
+            ],
+            "address": "952 N Central Ave, Upland, CA 91786",
+            "offers": [
+              "Therapeutic Viniyoga",
+              "Ashtanga",
+              "Vinyasa",
+              "Aerial yoga and yoga trapeze",
+              "Prenatal yoga",
+              "Mat and barre Pilates",
+              "Sound baths"
+            ],
+            "hours": "Daily, 9 AM to 8 PM.",
+            "price": "First group class listed at $10.",
+            "src": [
+              [
+                "The Mind-Body Connection, official site",
+                "https://mbcyoga.com/"
+              ],
+              [
+                "The Mind-Body Connection: about",
+                "https://www.themindbodyconnectionyoga.com/about/"
+              ],
+              [
+                "Wellhub: The Mind-Body Connection",
+                "https://wellhub.com/en-us/search/partners/the-mind-body-connection/"
+              ]
+            ],
+            "slug": "the-mind-body-connection"
+          }
+        },
+        {
+          "name": "The Energy Lab",
+          "city": "Redlands",
+          "region": "IE",
+          "known": "A fitness studio open since 2011 whose Yoga Lab runs heated and unheated vinyasa, power yoga and yin.",
+          "site": "https://energylabfitness.com/yoga/",
+          "instagram": "https://www.instagram.com/the_energy_lab/",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 34.056,
+          "lng": -117.179,
+          "p": {
+            "since": "2011",
+            "address": "304 E Citrus Ave, Redlands, CA 92373",
+            "offers": [
+              "Heated and unheated vinyasa",
+              "Power yoga",
+              "Yin",
+              "Strength-based flow",
+              "Mat Pilates",
+              "Infrared heated room"
+            ],
+            "price": "Listed on its site: two weeks of unlimited yoga and Pilates for $45.",
+            "about": "The business began with its founder training clients in a garage and became The Energy Lab on May 1, 2011. Yoga runs alongside group fitness, Pilates and recovery services.",
+            "src": [
+              [
+                "The Energy Lab: yoga",
+                "https://energylabfitness.com/yoga/"
+              ],
+              [
+                "The Energy Lab: about",
+                "https://energylabfitness.com/abouttheenergylab/"
+              ]
+            ],
+            "slug": "the-energy-lab"
+          }
+        },
+        {
+          "name": "Home Yoga Studio",
+          "city": "Temecula",
+          "region": "IE",
+          "known": "A membership studio in Old Town Temecula with vinyasa, gentle and heated slow flow classes.",
+          "site": "https://homeyogatemecula.com",
+          "instagram": "https://www.instagram.com/homeyogatemecula/",
+          "rank": null,
+          "note": null,
+          "heat": "both",
+          "lat": 33.493,
+          "lng": -117.149,
+          "p": {
+            "address": "28475 Old Town Front St, Suite B, Temecula, CA 92590",
+            "offers": [
+              "Vinyasa flow",
+              "Heated slow flow",
+              "Form and Flow",
+              "Viniyoga",
+              "Gentle yoga",
+              "Spinal release yoga",
+              "Yoga Sculpt",
+              "Teacher training"
+            ],
+            "hours": "Mon to Fri, 8:30 AM to noon and 4 to 8 PM. Sat and Sun, 8:30 AM to noon.",
+            "price": "New student special listed on its site: two weeks unlimited for $49.",
+            "src": [
+              [
+                "Home Yoga Studio, official site",
+                "https://homeyogatemecula.com"
+              ],
+              [
+                "Home Yoga Studio: about",
+                "https://homeyogatemecula.com/about"
+              ]
+            ],
+            "slug": "home-yoga-studio"
+          }
+        },
+        {
+          "name": "Temecula Yoga Collective",
+          "city": "Temecula",
+          "region": "IE",
+          "known": "Run by four partners. In late 2024 the studio said it had been open for over 11 years.",
+          "site": "https://thetyc.com/",
+          "instagram": "https://www.instagram.com/temeculayoga/",
+          "rank": null,
+          "note": null,
+          "heat": "none",
+          "lat": 33.509,
+          "lng": -117.153,
+          "p": {
+            "address": "26780 Ynez Ct, Suite B, Temecula, CA 92591",
+            "offers": [
+              "Gentle yoga",
+              "Vinyasa",
+              "Restorative",
+              "Kundalini",
+              "All-level classes",
+              "Live streamed classes"
+            ],
+            "hours": "Daily, 8 AM to 7 PM.",
+            "about": "In a December 2024 interview the studio said its four partners each came from larger yoga studios.",
+            "src": [
+              [
+                "SDVoyager, December 23, 2024: Temecula Yoga Collective",
+                "https://sdvoyager.com/interview/life-work-with-temecula-yoga-collective-yoga-studio-of-temecula/"
+              ],
+              [
+                "Wellhub: Temecula Yoga Collective",
+                "https://wellhub.com/en-us/search/partners/temecula-yoga-collective"
+              ]
+            ],
+            "slug": "temecula-yoga-collective"
+          }
+        },
+        {
+          "name": "Core Movement Studios",
+          "city": "Murrieta",
+          "region": "IE",
+          "known": "Bikram classes of 60, 75 and 90 minutes plus hot vinyasa, in an infrared heated room.",
+          "site": "https://coremovementstudios.com/",
+          "instagram": "https://www.instagram.com/fitnessatsocal/",
+          "rank": null,
+          "note": null,
+          "heat": "hot",
+          "lat": 33.569,
+          "lng": -117.19,
+          "p": {
+            "people": [
+              [
+                "Studio owner and chief instructor",
+                "Keith Adams"
+              ]
+            ],
+            "address": "39621 Los Alamos Rd, Units A and C, Murrieta, CA 92563",
+            "offers": [
+              "Bikram yoga, 60, 75 and 90 minutes",
+              "Hot vinyasa flow",
+              "Hot power flow",
+              "Strength flow",
+              "Restorative yoga",
+              "Barre",
+              "Yoga teacher training"
+            ],
+            "hours": "Mon to Fri, 5 AM to 8 PM. Sat and Sun, 6:30 AM to 1 PM.",
+            "price": "Listed on its site: three free classes for new local members, drop-in $25.",
+            "about": "A studio for yoga, barre, mat Pilates, cycle and strength. Its Bikram classes are listed at about 100 to 103 degrees.",
+            "src": [
+              [
+                "Core Movement Studios: about",
+                "https://coremovementstudios.com/about/"
+              ],
+              [
+                "Core Movement Studios: yoga classes",
+                "https://coremovementstudios.com/classes-8/yoga-24/"
+              ],
+              [
+                "Core Movement Studios: pricing",
+                "https://coremovementstudios.com/pricing-6/"
+              ]
+            ],
+            "slug": "core-movement-studios"
+          }
         }
       ]
     }

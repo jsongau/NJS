@@ -220,6 +220,8 @@ export const PAGES = {
     capWord(guideN('boxing')) + ' boxing gyms across Los Angeles, Orange County and the Inland Empire, with what each is known for and its official link. Written by a working coach.', null),
   'fit-guide-kickboxing': fitPage('guides/kickboxing-gyms-socal', 'Kickboxing and Muay Thai gyms', 'Kickboxing and Muay Thai Gyms in Southern California: ' + guideN('kickboxing') + ' Worth Knowing · NJS Fitness',
     capWord(guideN('kickboxing')) + ' kickboxing and Muay Thai gyms across Los Angeles, Orange County and the Inland Empire, with what each is known for and its official link.', null),
+  'fit-guide-yoga': fitPage('guides/yoga-studios-socal', 'Yoga studios', 'Yoga Studios in Southern California: ' + guideN('yoga') + ' Worth Knowing, Hot and Not Hot · NJS Fitness',
+    capWord(guideN('yoga')) + ' yoga studios across Los Angeles, Orange County and the Inland Empire, with styles, heated or not, and each official link.', null),
   'fit-near': fitPage('guides/near-me', 'Near me', 'Boxing, Kickboxing, Pilates and Yoga Near Me in Southern California · NJS Fitness',
     'Find the closest boxing gym, kickboxing gym, reformer Pilates studio or yoga studio in Los Angeles, Orange County and the Inland Empire. Sorted by distance.', null),
   'fit-guide-pilates': fitPage('guides/reformer-pilates-studios-socal', 'Reformer Pilates studios', 'Reformer Pilates Studios in Southern California: ' + guideN('pilates') + ' Worth Knowing in LA, OC and the Inland Empire · NJS Fitness',
@@ -246,7 +248,7 @@ PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
 PAGES['fit-guides'].jsonld = [crumbs('guides', 'Guides')];
 PAGES['fit-near'].jsonld = [ld('BreadcrumbList', { itemListElement: [['Fitness', '/fitness'], ['Guides', '/fitness/guides'], ['Near me', '/fitness/guides/near-me']].map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + path })) })];
 // Gym guides: an ItemList of the gyms in page order, so the list itself is readable by search engines.
-for (const [key, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates']]) {
+for (const [key, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates'], ['yoga', 'fit-guide-yoga']]) {
   const g = GUIDES.guides[key];
   PAGES[id].jsonld = [ld('ItemList', { name: PAGES[id].og_title, numberOfItems: guideOrder(g).length, dateModified: GUIDES.checked,
     itemListElement: guideOrder(g).map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: Object.assign({ '@type': 'SportsActivityLocation', name: x.name, address: { '@type': 'PostalAddress', addressLocality: x.city, addressRegion: 'CA' } }, x.p ? { url: SITE + '/fitness/guides/gyms/' + x.p.slug } : x.site ? { url: x.site } : {}) })) }),
@@ -260,12 +262,12 @@ note('fit-note-bands', 'notes/band-workouts', 'Band workouts', 'A full resistanc
 note('fit-note-recovery', 'notes/recovery-room', 'Recovery room', 'The recovery room: what each tool is and what the research says');
 note('fit-note-ac', 'notes/ac-joint', 'AC joint', 'A sore AC joint: what helps and where acupuncture fits');
 PAGES['fit-path'].jsonld = [crumbs('path', 'The path'), ld('ItemList', { name: 'The five pillars', itemListElement: PATH.pillars.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p[1], description: p[2] })) })];
-for (const [k, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates']]) PAGES[id].count_word = guideN(k) > 20 ? String(guideN(k)) : capWord(guideN(k));
-PAGES['fit-guides'].n_boxing = capWord(guideN('boxing')); PAGES['fit-guides'].n_kick = capWord(guideN('kickboxing')); PAGES['fit-guides'].n_pilates = capWord(guideN('pilates'));
+for (const [k, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates'], ['yoga', 'fit-guide-yoga']]) PAGES[id].count_word = guideN(k) > 20 ? String(guideN(k)) : capWord(guideN(k));
+PAGES['fit-guides'].n_boxing = capWord(guideN('boxing')); PAGES['fit-guides'].n_kick = capWord(guideN('kickboxing')); PAGES['fit-guides'].n_pilates = capWord(guideN('pilates')); PAGES['fit-guides'].n_yoga = capWord(guideN('yoga'));
 // One page per gym that has a profile (`p`) in guides.json. Every fact on it comes from p.src.
-const GUIDE_META = { boxing: ['fit-guide-boxing', 'Boxing gym', 'Boxing gyms'], kickboxing: ['fit-guide-kickboxing', 'Kickboxing and Muay Thai gym', 'Kickboxing and Muay Thai gyms', 'More kickboxing and Muay Thai gyms'], pilates: ['fit-guide-pilates', 'Reformer Pilates studio', 'Reformer Pilates studios', 'More reformer Pilates studios'] };
+const GUIDE_META = { boxing: ['fit-guide-boxing', 'Boxing gym', 'Boxing gyms'], kickboxing: ['fit-guide-kickboxing', 'Kickboxing and Muay Thai gym', 'Kickboxing and Muay Thai gyms', 'More kickboxing and Muay Thai gyms'], pilates: ['fit-guide-pilates', 'Reformer Pilates studio', 'Reformer Pilates studios', 'More reformer Pilates studios'], yoga: ['fit-guide-yoga', 'Yoga studio', 'Yoga studios', 'More yoga studios'] };
 GUIDE_META.boxing[3] = 'More boxing gyms';
-const GUIDE_CTA = { boxing: ['boxing', 'A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.'], kickboxing: ['kickboxing', 'A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.'], pilates: ['pilates', 'A group reformer class moves fast. Twelve private sessions with me build the core control, breathing and spring work first, so you walk into any studio on this list ready to keep up.'] };
+const GUIDE_CTA = { boxing: ['boxing', 'A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.'], kickboxing: ['kickboxing', 'A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.'], pilates: ['pilates', 'A group reformer class moves fast. Twelve private sessions with me build the core control, breathing and spring work first, so you walk into any studio on this list ready to keep up.'], yoga: ['mobility', 'A studio class moves at the pace of the room. Twelve private sessions with me build the mobility, breathing and basic postures first, so you walk into any studio on this list at ease.'] };
 const REGION_NAME = { LA: 'Los Angeles', OC: 'Orange County', IE: 'Inland Empire' };
 const CHECKED_DAY = new Date(GUIDES.checked + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 function gymBody(key, x) {
@@ -276,6 +278,7 @@ function gymBody(key, x) {
     ...(q.people || []).map(([role, name]) => [esc(role), esc(name)]),
     q.address ? ['Address', esc(q.address)] : null,
     q.offers ? ['What it offers', '<ul>' + q.offers.map((o) => '<li>' + esc(o) + '</li>').join('') + '</ul>'] : null,
+    x.heat ? ['Room', ({ hot: 'Heated classes', none: 'No heated classes listed', both: 'Heated and unheated classes' })[x.heat]] : null,
     q.hours ? ['Hours', esc(q.hours)] : null,
     q.price ? ['Prices', esc(q.price)] : null,
     (x.site || x.instagram) ? ['Official links', [x.site ? ext(x.site, 'Official site') : '', x.instagram ? ext(x.instagram, 'Instagram') : ''].filter(Boolean).join(' · ')] : null,
@@ -285,7 +288,7 @@ function gymBody(key, x) {
   return [
     '<section class="nf-hero sub nf-gd nf-gp" aria-labelledby="gp-h" style="padding-bottom:10px">', '  <div class="wrap">', '    <div>',
     '      <p class="nf-crumb"><a href="/fitness">Fitness</a> / <a href="/fitness/guides">Guides</a> / <a href="' + PAGES[gid].path + '">' + plural + '</a> / ' + esc(x.name) + '</p>',
-    '      <p class="nf-k nf-bk-k">' + kind + ' · ' + esc(x.city) + ' · ' + REGION_NAME[x.region] + '</p>',
+    '      <p class="nf-k nf-bk-k nf-gp-k">' + gic(KEY_ICON[key]) + kind + ' · ' + esc(x.city) + ' · ' + REGION_NAME[x.region] + '</p>',
     '      <h1 id="gp-h" class="nf-gp-h1">' + esc(x.name) + '</h1>',
     '      <p class="nf-lede">' + esc(x.known) + (q.about ? ' ' + esc(q.about) : '') + '</p>',
     '      <div class="nf-ctas">' + (x.site ? ext(x.site, 'Visit the official site', 'nf-btn') : '') + (x.instagram ? ext(x.instagram, 'See its Instagram', 'nf-btn') : '') + '</div>',
@@ -322,6 +325,8 @@ for (const key of Object.keys(GUIDE_META)) for (const x of GUIDES.guides[key].gy
     ld('WebPage', { name: PAGES[id].og_title, url: SITE + PAGES[id].path, dateModified: GUIDES.checked, author: COACH, isPartOf: { '@type': 'WebPage', url: SITE + PAGES[gid].path } }),
     ld('BreadcrumbList', { itemListElement: [['Fitness', '/fitness'], ['Guides', '/fitness/guides'], [plural, PAGES[gid].path], [x.name, PAGES[id].path]].map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + path })) })];
 }
+for (const [k, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates'], ['yoga', 'fit-guide-yoga']]) PAGES[id].art = k;
+PAGES['fit-near'].art = 'near'; PAGES['fit-guides'].art = 'hub';
 for (const [id, p] of Object.entries(PAGES)) p.id = id;
 
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -556,7 +561,7 @@ function renderGuide(key) {
     : '<span class="nf-rk-none">No official site found</span>';
   const row = (x, n) => '      <li class="nf-rk-row" data-region="' + x.region + '">' +
     (n ? '<p class="nf-rk-n" aria-label="Number ' + n + '">' + pad(n) + '</p>' : '') +
-    '<div class="nf-rk-who"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3><p class="nf-rk-where">' + esc(x.city) + '</p></div>' +
+    '<div class="nf-rk-who"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3><p class="nf-rk-where">' + esc(x.city) + (x.heat ? ' · ' + ({ hot: 'Heated', none: 'Not heated', both: 'Heated and not' })[x.heat] : '') + '</p></div>' +
     '<p class="nf-rk-reg"><span>' + x.region + '</span></p>' +
     '<div class="nf-rk-what"><p>' + esc(x.known) + '</p>' + (x.note ? '<p class="nf-rk-note"><b>Nathan:</b> ' + esc(x.note) + '</p>' : '') + '</div>' +
     '<p class="nf-rk-links">' + links(x) + '</p></li>';
@@ -565,7 +570,7 @@ function renderGuide(key) {
     : regs.flatMap(([r, name]) => [band(r, name), ...g.gyms.filter((x) => x.region === r).map((x) => row(x, 0))]);
   const lists = [
     '    <div class="nf-rk' + (ranked ? ' ranked' : '') + '" data-nf-rk>',
-    '      <header class="nf-rk-mast"><p class="nf-rk-title">' + (ranked ? 'The ' + g.gyms.length : 'The list') + '</p>' +
+    '      <header class="nf-rk-mast"><p class="nf-rk-title">' + gic(KEY_ICON[key], 'nf-gi-lg') + (ranked ? 'The ' + g.gyms.length : 'The list') + '</p>' +
       '<p class="nf-rk-meta">' + esc(g.sport) + ' · Southern California · ' + pad(g.gyms.length) + ' ' + unit + 's · Checked ' + day + '</p></header>',
     '      <div class="nf-rk-bar"><div class="nf-rk-f" role="group" aria-label="Show a region">' +
       '<button type="button" data-rk-f="all" aria-pressed="true">All<small>' + pad(g.gyms.length) + '</small></button>' +
@@ -586,8 +591,49 @@ function renderGuide(key) {
     '  </div>', '</section>'].join('\n');
 }
 
+// Guide graphics (Goldsmith): one stroke icon per kind, and hero art drawn from the guide's own counts.
+const GICON = {
+  boxing: '<path d="M7 11V7a4 4 0 0 1 8 0v1h1a3 3 0 0 1 3 3v2a5 5 0 0 1-3 4.6V20H8v-3.2A4 4 0 0 1 5 13a2 2 0 0 1 2-2z"/><path d="M15 8v4M8 20v1.5h8V20"/>',
+  kick: '<circle cx="7" cy="5" r="2"/><path d="M7 8l3 5-3 7M10 13l9-2.5 1.5 2.5M7 8l-3 4"/>',
+  reformer: '<rect x="2" y="13" width="20" height="3" rx="1.5"/><path d="M5 16v3M19 16v3M7 13V9h6v4M15 11h5M17.5 9v4"/>',
+  mat: '<rect x="3" y="14" width="18" height="5" rx="2.5"/><path d="M7 14V8h12v6M10 11h6"/>',
+  yoga: '<path d="M12 5c2 2.5 2 6 0 9-2-3-2-6.5 0-9zM12 14c-1-3-4-5-7-5 0 4 3 7 7 7M12 14c1-3 4-5 7-5 0 4-3 7-7 7M4 20h16"/>',
+  hot: '<path d="M12 3c1 3.5 5 5.5 5 10.5a5 5 0 0 1-10 0c0-2 1-3.6 2-4.6 0 2 1 3 2 3 0-3-1-5 1-8.9z"/>',
+  pin: '<path d="M12 21s-6-5.6-6-10.5a6 6 0 0 1 12 0C18 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/>',
+};
+const KEY_ICON = { boxing: 'boxing', kickboxing: 'kick', pilates: 'reformer', yoga: 'yoga' };
+const gic = (name, cls) => '<svg class="nf-gi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + GICON[name] + '</svg>';
+const ART_FONT = 'font-family="Inter Tight, Inter, sans-serif"';
+function artRank(key) {
+  const g = GUIDES.guides[key]; const rows = ['LA', 'OC', 'IE'].map((r) => [r, g.gyms.filter((x) => x.region === r).length]);
+  const max = Math.max(...rows.map(([, n]) => n), 1);
+  return '    <div class="nf-hero-art nf-bk-art"><figure class="nf-art nf-art-rank" aria-hidden="true"><svg viewBox="0 0 360 260" fill="none">' +
+    '<rect x="8" y="8" width="344" height="244" rx="26" fill="#121416"/><rect x="28" y="30" width="304" height="5" rx="2.5" fill="#FF8A6B"/>' +
+    '<text x="28" y="74" ' + ART_FONT + ' font-size="28" font-weight="700" fill="#F6F3EE" letter-spacing="-1">The list</text>' +
+    '<text x="28" y="94" font-family="ui-monospace, monospace" font-size="10.5" fill="#8E9389" letter-spacing="1.4">' + String(g.gyms.length).padStart(2, '0') + ' ' + (g.unit || 'gym').toUpperCase() + 'S · SOUTHERN CALIFORNIA</text>' +
+    '<circle cx="306" cy="70" r="26" fill="#FF8A6B"/><g transform="translate(288 52) scale(1.5)" stroke="#121416" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + GICON[KEY_ICON[key]] + '</g>' +
+    rows.map(([r, n], i) => { const y = 116 + i * 42; const w = Math.max(18, Math.round((n / max) * 212));
+      return '<g class="rk-r rk-r' + i + '"><text x="28" y="' + (y + 21) + '" ' + ART_FONT + ' font-size="24" font-weight="700" fill="#F6F3EE">' + r + '</text>' +
+        '<rect x="78" y="' + (y + 3) + '" width="212" height="22" rx="11" fill="#1E2124"/><rect class="rk-bar" x="78" y="' + (y + 3) + '" width="' + w + '" height="22" rx="11" fill="' + (i === 0 ? '#FF8A6B' : i === 1 ? '#7FD3C8' : '#C9CCC4') + '"/>' +
+        '<text x="332" y="' + (y + 20) + '" text-anchor="end" font-family="ui-monospace, monospace" font-size="14" font-weight="600" fill="#C9CCC4">' + String(n).padStart(2, '0') + '</text></g>'; }).join('') +
+    '</svg></figure></div>';
+}
+function artNear() {
+  const pin = (x, y, fill, ic) => '<g class="nr-pin" transform="translate(' + x + ' ' + y + ')"><circle r="15" fill="' + fill + '"/><g transform="translate(-9.6 -9.6) scale(.8)" stroke="#121416" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + GICON[ic] + '</g></g>';
+  return '    <div class="nf-hero-art nf-bk-art"><figure class="nf-art nf-art-near" aria-hidden="true"><svg viewBox="0 0 360 260" fill="none">' +
+    '<rect x="8" y="8" width="344" height="244" rx="26" fill="#121416"/>' +
+    '<g stroke="#1E2124" stroke-width="1">' + [60, 110, 160, 210].map((y) => '<path d="M24 ' + y + 'H336"/>').join('') + [80, 140, 200, 260, 320].map((x) => '<path d="M' + x + ' 24V236"/>').join('') + '</g>' +
+    '<g stroke="#3B3F44" stroke-width="1.5"><circle cx="150" cy="140" r="38"/><circle cx="150" cy="140" r="74"/><circle cx="150" cy="140" r="110" stroke-dasharray="3 6"/></g>' +
+    '<circle class="nr-pulse" cx="150" cy="140" r="38" stroke="#FF8A6B" stroke-width="2"/>' +
+    '<path class="nr-route" d="M150 140L212 96" stroke="#FF8A6B" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6"/>' +
+    pin(212, 96, '#FF8A6B', 'boxing') + pin(92, 84, '#7FD3C8', 'yoga') + pin(254, 176, '#C9CCC4', 'reformer') + pin(84, 196, '#C9CCC4', 'kick') + pin(296, 70, '#7FD3C8', 'yoga') +
+    '<circle cx="150" cy="140" r="9" fill="#F6F3EE"/><circle cx="150" cy="140" r="4" fill="#FF8A6B"/>' +
+    '<g class="nr-tag"><rect x="222" y="112" width="74" height="26" rx="13" fill="#F6F3EE"/><text x="259" y="129.5" text-anchor="middle" ' + ART_FONT + ' font-size="13" font-weight="700" fill="#121416">1.6 miles</text></g>' +
+    '</svg></figure></div>';
+}
 // Near me: every place from every guide in one list. The page sorts it by distance in the browser;
 // the visitor's position never leaves the device.
+const HEAT = { hot: 'Heated', none: 'No heated classes listed', both: 'Heated and not heated' };
 const NEAR_CATS = [['boxing', 'Boxing'], ['kick', 'Kickboxing and Muay Thai'], ['reformer', 'Reformer Pilates'], ['mat', 'Mat Pilates'], ['yoga', 'Yoga']];
 const NEAR_AREAS = [['Brea', 33.9167, -117.9001], ['Anaheim', 33.8366, -117.9143], ['Irvine', 33.6846, -117.8265], ['Newport Beach', 33.6189, -117.9298], ['Rancho Santa Margarita', 33.6409, -117.6031], ['Corona', 33.8753, -117.5664], ['Riverside', 33.9806, -117.3755], ['Rancho Cucamonga', 34.1064, -117.5931], ['Temecula', 33.4936, -117.1484], ['Downtown Los Angeles', 34.0407, -118.2468], ['Hollywood', 34.0928, -118.3287], ['Santa Monica', 34.0195, -118.4912], ['North Hollywood', 34.1870, -118.3813], ['Pasadena', 34.1478, -118.1445], ['Long Beach', 33.7701, -118.1937]];
 function nearCats(key, x) {
@@ -604,22 +650,22 @@ function renderNear() {
   const cats = NEAR_CATS.filter(([c]) => have.has(c));
   const n = (c) => all.filter((r) => r.cats.includes(c)).length;
   const pad = (v) => String(v).padStart(2, '0');
-  const label = (r) => r.cats.map((c) => NEAR_CATS.find(([k]) => k === c)[1]).join(' · ') + (r.x.heat === 'hot' ? ' · Hot' : r.x.heat === 'none' ? ' · Not heated' : r.x.heat === 'both' ? ' · Hot and not heated' : '');
+  const label = (r) => r.cats.map((c) => NEAR_CATS.find(([k]) => k === c)[1]).join(' · ') + (r.x.heat ? ' · ' + HEAT[r.x.heat] : '');
   const dir = (x) => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(x.p && x.p.address ? x.name + ', ' + x.p.address : x.name + ', ' + x.city + ', CA');
   const row = ({ x, cats: cs }, r) => '      <li class="nf-rk-row nf-nr-row" data-cat="' + cs.join(' ') + '"' + (x.heat ? ' data-heat="' + x.heat + '"' : '') + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') + ' data-region="' + x.region + '">' +
     '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
     '<div class="nf-rk-who"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3><p class="nf-rk-where">' + esc(x.city) + '</p></div>' +
-    '<div class="nf-rk-what"><p class="nf-nr-cat">' + label(r) + '</p><p>' + esc(x.known) + '</p></div>' +
+    '<div class="nf-rk-what"><p class="nf-nr-cat">' + gic(cs[0]) + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span></p><p>' + esc(x.known) + '</p></div>' +
     '<p class="nf-rk-links"><a href="' + dir(x) + '" target="_blank" rel="noopener">Directions<span class="sr"> to ' + esc(x.name) + ', opens in a new tab</span></a>' +
     (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') + '</p></li>';
   return ['<section class="nf-sec tight" aria-label="Places near you">', '  <div class="wrap">',
     '    <div class="nf-rk nf-nr" data-nf-near>',
-    '      <div class="nf-nr-loc"><button type="button" class="nf-btn nf-coral" data-nr-geo>Use my location</button>' +
+    '      <div class="nf-nr-loc"><button type="button" class="nf-btn nf-coral" data-nr-geo>' + gic('pin') + 'Use my location</button>' +
       '<label class="nf-nr-pick"><span>or pick an area</span><select data-nr-city><option value="">Choose an area</option>' + NEAR_AREAS.map(([name, la, ln]) => '<option value="' + la + ',' + ln + '">' + name + '</option>').join('') + '</select></label></div>',
     '      <p class="nf-nr-status" data-nr-status role="status">Sorted A to Z. Share your location or pick an area to see the closest first. Your location stays on your device.</p>',
     '      <div class="nf-rk-bar"><div class="nf-rk-f" role="group" aria-label="What to show">' +
       '<button type="button" data-nr-cat="all" aria-pressed="true">Everything<small>' + pad(all.length) + '</small></button>' +
-      cats.map(([c, name]) => '<button type="button" data-nr-cat="' + c + '" aria-pressed="false">' + name + '<small>' + pad(n(c)) + '</small></button>').join('') + '</div></div>',
+      cats.map(([c, name]) => '<button type="button" data-nr-cat="' + c + '" aria-pressed="false">' + gic(c) + name + '<small>' + pad(n(c)) + '</small></button>').join('') + '</div></div>',
     have.has('yoga') ? '      <div class="nf-rk-f nf-nr-heat" role="group" aria-label="Heated or not" data-nr-heatbox aria-disabled="true"><span>Yoga room</span>' +
       '<button type="button" data-nr-heat="any" aria-pressed="true" disabled>Any</button><button type="button" data-nr-heat="hot" aria-pressed="false" disabled>Hot</button><button type="button" data-nr-heat="none" aria-pressed="false" disabled>Not hot</button></div>' : '',
     '      <div class="nf-rk-head nf-nr-head" aria-hidden="true"><span>Distance</span><span>Place</span><span>What it is</span><span>Go</span></div>',
@@ -732,7 +778,7 @@ export function renderPage(id) {
     biz_href: fit ? '/' : page.path, fit_href: '/fitness',
     biz_cur: fit ? '' : ' aria-current="true"', fit_cur: fit ? ' aria-current="true"' : '' };
   const extra = { extra_css: page.css ? '<link rel="stylesheet" href="/assets/studio/' + page.css + '.css">' : fit ? '<link rel="stylesheet" href="/assets/studio/fitness.css">' + (id === 'fit-book' ? '\n<link rel="stylesheet" href="/assets/studio/booker.css">' : '') : '' };
-  const vars = { ...page, ...cur, ...mode, ...extra, ...(page.gymref ? { gym_body: gymBody(...page.gymref) } : {}), jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
+  const vars = { ...page, ...cur, ...mode, ...extra, ...(page.gymref ? { gym_body: gymBody(...page.gymref) } : {}), ...(page.art ? { hero_art: page.art === 'near' || page.art === 'hub' ? artNear() : artRank(page.art) } : {}), jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
   let html = expand(read('pages/' + (page.tpl || id)), ['pages/' + id]);
   html = html.replace(/\{\{([a-z_]+)\}\}/g, (_, k) => {
     if (!(k in vars)) throw new Error(id + ': no value for {{' + k + '}}');

@@ -5,6 +5,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 ## 2026-11-23
 
 - `/fitness` — 12-pack, Why twice a week and Where I train: the illustration now sits beside the heading on desktop instead of on its own half-empty row; phones unchanged.
+- `/fitness`, `/fitness/book` — Club Studio Corona added: BOX Tue 5:15 PM and Sat 9:15 AM, CS4 HIIT Sun 8:30 and 9:30 AM, private hours Tue 4 PM and 7:30 PM, Sat 10:30 AM (price by email). Booker places re-sorted (gyms, then Online, Private wide); "I come to you" replaced with "In-home training" wording; research note `docs/research/2026-11-23-pt-professional-language.md`.
 
 ## 2026-11-16
 

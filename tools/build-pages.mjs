@@ -40,7 +40,7 @@ const COACH = {
   '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', alternateName: 'Jiaming Song', jobTitle: 'Personal trainer',
   url: SITE + '/fitness/coach',
   knowsAbout: ['Personal training', 'Muscle building', 'Fat loss', 'Steel club training', 'Steel mace training', 'Boxing', 'Kickboxing', 'Muay Thai', 'Yoga', 'Reformer Pilates'],
-  areaServed: ['Brea, CA', 'Rancho Santa Margarita, CA', 'Orange County, California'],
+  areaServed: ['Brea, CA', 'Rancho Santa Margarita, CA', 'Corona, CA', 'Orange County, California', 'Inland Empire, California'],
 };
 const crumbs = (slug, name) => ld('BreadcrumbList', { itemListElement: [
   { '@type': 'ListItem', position: 1, name: 'Fitness', item: SITE + '/fitness' },
@@ -162,7 +162,7 @@ export const PAGES = {
   fitness: {
     out: 'fitness/index.html', path: '/fitness', nav: null, mode: 'fitness',
     title: 'Personal Trainer in Orange County · 12-Pack Training · NJS Fitness',
-    description: 'Personal training with Nathan J. Song in Brea and Rancho Santa Margarita: muscle building, fat loss, steel clubs and maces, kickboxing and yoga. Train twice a week for six weeks.',
+    description: 'Personal training with Nathan J. Song in Brea, Rancho Santa Margarita and Corona: muscle building, fat loss, steel clubs and maces, kickboxing and yoga. Train twice a week for six weeks.',
     og_title: 'NJS Fitness: a strong mind needs a strong body',
     og_description: 'Twelve sessions, twice a week, with a three-time SHRED winner. Book a Thursday hour in Brea or a weekday in Rancho Santa Margarita.',
     skip_href: '#packs', skip_text: 'Skip to the packs',
@@ -200,7 +200,7 @@ export const PAGES = {
     'Private reformer Pilates sessions in Orange County with Nathan J. Song, who is completing his reformer certification. Core strength, alignment and control.', 'Reformer Pilates'),
   'fit-coach': {
     ...fitPage('coach', 'About Nathan', 'About Nathan J. Song, Personal Trainer in Orange County · NJS Fitness',
-      'Nathan J. Song is a personal trainer in Orange County: three-time SHRED winner, steel clubs and maces coach, kickboxing and yoga. Classes in Brea and Rancho Santa Margarita.', null),
+      'Nathan J. Song is a personal trainer in Orange County: three-time SHRED winner, steel clubs and maces coach, kickboxing and yoga. Classes in Brea, Rancho Santa Margarita and Corona.', null),
   },
   'fit-path': fitPage('path', 'The path', 'A Well-Rounded Body: Strength, Engine, Mobility, Control and Skill · NJS Fitness',
     'The five parts of a capable body and the training that builds each one: strength, conditioning, mobility, core control and striking skill, with a four-level ladder for each.', null),
@@ -216,7 +216,7 @@ export const PAGES = {
     'What each recovery room tool is, what the research says about cryotherapy, compression boots, red light therapy, HydroMassage beds and sports massage, and which gyms list them.', null),
   'fit-book': {
     ...fitPage('book', 'Book a time', 'Book a Personal Training Session · NJS Fitness',
-      'Start the 12-pack: pick an open Thursday hour in Brea, or request a time in Rancho Santa Margarita, at home or online. Nathan confirms every booking by email.', null),
+      'Start the 12-pack: pick an open Thursday hour in Brea, or request a time in Rancho Santa Margarita, Corona, at home or online. Nathan confirms every booking by email.', null),
   },
 };
 const FOCUS_PAGE = { 'fit-muscle': 'muscle', 'fit-fatloss': 'fat-loss', 'fit-conditioning': 'conditioning', 'fit-shoulders': 'shoulders', 'fit-boxing': 'boxing', 'fit-kickboxing': 'kickboxing', 'fit-muaythai': 'muay-thai', 'fit-mobility': 'mobility', 'fit-pilates': 'pilates' };

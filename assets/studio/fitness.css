@@ -214,6 +214,7 @@ body[data-mode="fitness"] footer { margin-top: 0; }
   .nf-packs { grid-template-columns: 1.15fr 1fr; }
   .nf-cards.c3 { grid-template-columns: repeat(3, 1fr); }
   .nf-cards.c2 { grid-template-columns: 1fr 1fr; }
+  .nf-cards.c2 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .nf-steps { grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .nf-steps li { grid-template-columns: 1fr; border-top: 2px solid var(--ink); }
   .nf-slots { grid-template-columns: repeat(4, 1fr); }

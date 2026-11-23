@@ -31,6 +31,7 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | Page titles, descriptions, SEO, JSON-LD, which sections a page has | `PAGES` in `tools/build-pages.mjs` and `partials/studio/pages/*.html` | rebuild pages |
 | Header, Business \| Fitness switch | `header-top.html`, `nav-biz.html` (mega nav), `nav-fit.html` | rebuild pages |
 | Mega nav panel contents | `assets/studio/meganav.js` + `nav-biz.html` | rebuild pages |
+| Fitness mega nav panel contents | `FIT` and `FIT_FILL` in `assets/studio/meganav.js` + `nav-fit.html`. Link lines reuse `focus.json`; regions only, no gym names | rebuild pages |
 | Footer | `partials/studio/footer.html` | rebuild pages |
 | The on-page call panel (days, call hours, wording) | `partials/studio/call-dlg.html` + `HOURS` in `assets/studio/callbook.js`. It sends a request, not a booking: never say a time is open or confirmed | rebuild pages |
 | FAQ | `partials/studio/faq.json` (`[question, answer]` pairs) | rebuild pages |

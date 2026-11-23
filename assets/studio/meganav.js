@@ -101,6 +101,48 @@ function workPanel(projects) {
     mini('/funnels', 'crm', 'Templates', 'Funnel build templates', 'Intake and growth funnels') + '</div></div>';
 }
 
+// ===== Fitness panels (2026-11-23). Same parts as the Business panels. Link lines reuse the approved
+// focus lines from partials/fitness/focus.json and the note titles; regions only, no gym names.
+const FIT = {
+  'f-pt': [
+    ['Build', [['/fitness/muscle-building', 'fitness', 'Muscle building', 'Get stronger and add size where you want it'], ['/fitness/fat-loss', 'chart', 'Fat loss', 'Lose fat and keep the muscle you have'], ['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders']]],
+    ['Move', [['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/reformer-pilates', 'star', 'Reformer Pilates', "Core strength on the reformer. I'm in certification"], ['/fitness/yoga-and-pilates', 'team', 'Yoga and Pilates', 'Private sessions, on the mat or the reformer'], ['/fitness/personal-training', 'user', 'Personal training', 'One goal at a time, coached rep by rep']]],
+  ],
+  'f-strike': [
+    ['Disciplines', [['/fitness/boxing', 'fist', 'Boxing', 'Footwork, a clean jab, combinations on mitts'], ['/fitness/kickboxing', 'fist', 'Kickboxing', 'Punches and kicks on Thai pads'], ['/fitness/muay-thai', 'fist', 'Muay Thai', 'Teeps, knees, elbows and the clinch'], ['/fitness/striking', 'pages', 'All striking', 'How private striking sessions run']]],
+    ['Train it with', [['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
+  ],
+  'f-clubs': [
+    ['Steel clubs and maces', [['/fitness/clubs-and-maces', 'mark', 'Clubs and maces', 'Steel club and steel mace training'], ['/fitness/shoulder-strength', 'fitness', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely']]],
+    ["Coach's notes", [['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
+  ],
+  'f-about': [
+    ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Three-time SHRED winner, clubs and maces coach'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],
+    ["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/recovery-room', 'star', 'The recovery room', "What's worth it, ranked by evidence"]]],
+    ['Where I train', [['/fitness/book?loc=brea', 'pin', 'Brea', 'North OC'], ['/fitness/book?loc=rancho-santa-margarita', 'pin', 'Rancho Santa Margarita', 'South OC'], ['/fitness/book?loc=corona', 'pin', 'Corona', 'Inland Empire'], ['/fitness/book?loc=in-home', 'home', 'In-home training', 'Home, office or a park in Southern California']]],
+  ],
+};
+const fitCols = (id) => FIT[id].map(([h, items]) => '<div class="mn-col"><p class="mn-hd">' + esc(h) + '</p><ul>' + items.map((x) => link(...x)).join('') + '</ul></div>').join('');
+// The 12-pack card that closes the training panel: once a week is the pack, twice a week is the push.
+const packCard = '<aside class="mn-feat mn-pack"><p class="mn-kick">The 12-pack</p><p class="mn-pack-n">12<small>private sessions</small></p>' +
+  '<p class="mn-p">Once a week, built around the focus you pick. <b>Twice a week is the foundation:</b> two fixed days turn training into discipline.</p>' +
+  '<a class="btn btn-lime mn-go" href="/fitness/book?pack=12">Book your first session</a><p class="mn-fine">Pay nothing today. I confirm by email.</p></aside>';
+const FIT_FILL = {
+  'f-pt': () => '<div class="mn-in mn-in-fit">' + fitCols('f-pt') + '<div class="mn-side">' + packCard + mini('/fitness#focus', 'search', 'Not sure?', 'Pick your focus', 'Choose one or two goals') + '</div></div>',
+  'f-strike': () => '<div class="mn-in mn-in-fit">' + fitCols('f-strike') + '<div class="mn-side">' +
+    mini('/fitness/book?focus=boxing', 'cal', 'Start', 'Book a striking session', 'Pay nothing today') +
+    mini('/fitness#thursday', 'pin', 'Three gyms', 'See open times', 'Brea, Rancho Santa Margarita, Corona') +
+    mini('/fitness/book?loc=in-home', 'home', 'Your place', 'In-home training', 'Home, office or a park') + '</div></div>',
+  'f-clubs': () => '<div class="mn-in mn-in-fit">' + fitCols('f-clubs') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">A specialty few train</p>' +
+    '<p class="mn-p">Rotation, stability and strength for your shoulders. I teach steel clubs and maces one on one, in person or over live video.</p>' +
+    '<a class="mn-sub" href="/fitness/clubs-and-maces">See how a session runs' + arrow + '</a></aside>' +
+    mini('/fitness/book?loc=online&focus=shoulders', 'cal', 'Live video', 'Learn it online', 'Good for clubs and maces technique') + '</div></div>',
+  'f-about': () => '<div class="mn-in mn-in-studio">' + fitCols('f-about') + '<div class="mn-side">' +
+    mini('/fitness/book', 'cal', 'Start', 'Book your first session', 'Pay nothing today') +
+    mini('/fitness#packs', 'star', 'The offer', 'The 12-pack', 'Twelve private sessions') + '</div></div>',
+};
+const FIT_GROUPS = [['f-pt', 'Personal training', '/fitness/personal-training'], ['f-strike', 'Striking', '/fitness/striking'], ['f-clubs', 'Clubs and maces', '/fitness/clubs-and-maces'], ['f-about', 'About', '/fitness/coach']];
+
 function studioPanel() {
   return '<div class="mn-in mn-in-studio">' + STUDIO.map(([h, items]) => '<div class="mn-col"><p class="mn-hd">' + esc(h) + '</p><ul>' + items.map((x) => link(...x)).join('') + '</ul></div>').join('') +
     '<div class="mn-side"><aside class="mn-feat mn-who"><span class="mn-port">' + (CREW_ART.nathan || '') + '</span><p class="mn-kick">Who builds it</p><p class="mn-p">Nathan J. Song. AI writes most of the code, and I check every change before it ships.</p>' +
@@ -113,7 +155,8 @@ export function mountMegaNav(store) {
   if (!list) return;
   const { catalog, projects, actions } = store;
   const picks = agentPicks(store);
-  const fill = { agents: agentsPanel, plans: () => plansPanel(catalog), build: buildPanel, work: () => workPanel(projects), studio: studioPanel };
+  const fit = list.dataset.mnSet === 'fit';
+  const fill = fit ? FIT_FILL : { agents: agentsPanel, plans: () => plansPanel(catalog), build: buildPanel, work: () => workPanel(projects), studio: studioPanel };
   const items = $$('.mn-item', list);
   items.forEach((li) => {
     const panel = $('.mn-panel', li);
@@ -194,17 +237,20 @@ export function mountMegaNav(store) {
   store.subscribe(paint);
   picks.subscribe(paint);
   paint();
-  mountPhoneMap(fill);
+  mountPhoneMap(fill, fit);
 }
 
 // Phones: the drawer becomes an accordion of the same panels, with agents up top.
-function mountPhoneMap(fill) {
+function mountPhoneMap(fill, fit) {
   const menu = $('#m-menu');
   if (!menu) return;
-  const groups = [['agents', 'AI agents', '/crew#agents'], ['plans', 'Plans', '/plans'], ['build', 'Build a project', '/build'], ['work', 'Delivered', '/work'], ['studio', 'Studio', '/care']];
+  const groups = fit ? FIT_GROUPS : [['agents', 'AI agents', '/crew#agents'], ['plans', 'Plans', '/plans'], ['build', 'Build a project', '/build'], ['work', 'Delivered', '/work'], ['studio', 'Studio', '/care']];
   const cta = menu.querySelector('.btn');
+  // Fitness keeps the Business or Fitness switch and a link home at the top of the drawer.
+  const mode = fit ? menu.querySelector('.mode-m') : null;
   menu.innerHTML = groups.map(([id, label, href]) => '<details class="mm-g mm-' + id + '"><summary>' + esc(label) + (id === 'agents' ? ' <span class="mn-new">New</span>' : '') + caret + '</summary>' +
     '<div class="mm-body">' + fill[id]() + '<a class="mm-all" href="' + href + '">Open ' + esc(label) + arrow + '</a></div></details>').join('');
+  if (mode) { menu.insertAdjacentHTML('afterbegin', '<a class="mm-home" href="/fitness">Fitness home</a>'); menu.prepend(mode); }
   if (cta) menu.appendChild(cta);
   menu.addEventListener('toggle', (e) => {
     if (e.target.open) $$('details.mm-g', menu).forEach((d) => { if (d !== e.target) d.open = false; });

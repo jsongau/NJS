@@ -2,6 +2,10 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-23
+
+- `/fitness` — 12-pack, Why twice a week and Where I train: the illustration now sits beside the heading on desktop instead of on its own half-empty row; phones unchanged.
+
 ## 2026-11-16
 
 - `/funnels/memorial/behind` — New page: the stack, GoHighLevel add-ons and the ads/CRM/automation tabs moved off the funnel, which now only shows what a family sees and links here (bottom-centre "Behind the page" link, an in-page card, the Template menu). Old `#stack`, `#addons` and `#behind` links forward. Demo controls back at the top of the funnel, on one row.

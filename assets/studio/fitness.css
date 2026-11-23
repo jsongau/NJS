@@ -241,6 +241,12 @@ body[data-mode="fitness"] footer { margin-top: 0; }
   .nf-split { display: grid; grid-template-columns: 1fr 1.6fr; gap: 40px; align-items: start; }
   .nf-split .nf-h { display: block; }
   .nf-split .nf-h p { margin-top: 14px; }
+  /* Header with art (2026-11-23): heading and lede on the left, the illustration beside them on the right,
+     so the section no longer leaves a half-empty row above the cards. */
+  .nf-h-art { grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .nf-h-art p { margin-top: 18px; }
+  .nf-h-art .nf-art-band { margin: 0; }
+  .nf-h-art .nf-art-band .nf-art { max-width: 500px; margin-left: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .nf-btn, a.nf-card, .nf-faq summary::after { transition: none; } }
 

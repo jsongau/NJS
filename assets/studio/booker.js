@@ -1,11 +1,11 @@
 // NJS Fitness booking: pick a day, the day opens the places, pick a time, then the 12-pack focus and
 // details. One pack only. Sends a request to lead-intake; nothing is charged on the site. Place prices
 // live on the place buttons in nf-booker.html (data-price, data-total), never in this script.
-// Day rules: Thursday = UFC Gym Brea schedule; Mon, Wed, Fri = Brea, 9Round, private, online; Tuesday adds
-// Club Studio Corona; Saturday = Brea, Club Studio Corona or private; Sunday = Brea or private. Club Studio
-// has a different schedule each day (byDay) and times on the quarter hour. Markup: partials/fitness/nf-booker.html. Styles: booker.css (scoped to .bk).
+// Day rules (places.js): Brea and Club Studio Corona take bookings every day, with set hours on Thursday
+// (Brea) and Tuesday and Saturday (Corona) and a part of the day by request otherwise. 9Round is Mon, Tue,
+// Wed and Fri only. Private in person is every day but Thursday; online is Mon, Tue, Wed and Fri. Markup: partials/fitness/nf-booker.html. Styles: booker.css (scoped to .bk).
 import { track } from './track.js';
-import { GYMS } from './places.js';
+import { GYMS, PARTS, gymMode } from './places.js';
 
 const ENDPOINT = 'https://cedunmyttprzgslthuyk.supabase.co/functions/v1/lead-intake';
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -13,19 +13,19 @@ const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export function mountBooker() {
   const root = document.querySelector('[data-booker]');
   if (!root) return;
-  // Gym schedules live in places.js. Here Brea also takes requests on its other days (parts of the day).
-  const PLACES = { rsm: GYMS.rsm, brea: Object.assign({}, GYMS.brea, { days: [0, 1, 2, 3, 4, 5, 6] }), corona: GYMS.corona };
+  // Gym schedules live in places.js: set hours on some days, a part of the day by request on the others.
+  const PLACES = { rsm: GYMS.rsm, brea: GYMS.brea, corona: GYMS.corona };
   // A place's schedule for one weekday: its byDay entry, when it has one, over its usual hours.
   const place = (loc, dow) => Object.assign({}, PLACES[loc], (PLACES[loc].byDay || {})[dow]);
   PLACES.home = { name: 'Private, in person', days: [0, 1, 2, 3, 5, 6], parts: true, note: 'Your home, garage gym or a park near you. Pick a day and a part of the day; I reply with an exact time. A travel fee may apply.' };
   PLACES.online = { name: 'Online', days: [1, 2, 3, 5], parts: true, note: 'Pick a day and a part of the day. I reply with an exact time and a video link.' };
-  const PARTS = [['Morning', '7 to 11 AM'], ['Midday', '11 AM to 3 PM'], ['Evening', '3 to 8 PM']];
   const FOCUS = ['Muscle building', 'Fat loss', 'Shoulder strength', 'Boxing', 'Kickboxing', 'Muay Thai', 'Conditioning', 'Mobility and yoga', 'Reformer Pilates'];
   const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const fmt = (h) => (Math.floor(h) % 12 || 12) + ':' + String(Math.round((h % 1) * 60)).padStart(2, '0') + ' ' + (h < 12 ? 'AM' : 'PM');
   const st = { pace: '1', city: null, loc: 'brea', date: 0, hour: null, pack: '12', focus: [], step: 0 };
+  const DAYS_PL = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'];
   const SOON = { 4: 'Not on Thursdays', 0: 'Weekdays only', 6: 'Weekdays only' };
-  const avail = (loc, dow) => (PLACES[loc].days.includes(dow) ? (loc === 'brea' && dow !== 4 ? 'parts' : PLACES[loc].parts ? 'parts' : 'sched') : null);
+  const avail = (loc, dow) => (GYMS[loc] ? gymMode(loc, dow) : PLACES[loc].days.includes(dow) ? 'parts' : null);
   // 9Round runs in 30-minute chunks: every 9Round slot is a half hour. Other places book by the hour.
   const slotLen = (p) => (p.gym ? 0.5 : 1);
   const isParts = () => avail(st.loc, dates[st.date].getDay()) === 'parts';
@@ -34,7 +34,7 @@ export function mountBooker() {
   function buildDates() {
     const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 1); dates = [];
     while (dates.length < span) { dates.push(new Date(d)); d.setDate(d.getDate() + 1); }
-    const tag = (w) => (w === 4 ? 'Brea only' : w === 0 ? '2 places' : w === 6 ? '3 places' : w === 2 ? 'All places' : '4 places');
+    const tag = (w) => { const n = Object.keys(PLACES).filter((k) => avail(k, w)).length; return n === Object.keys(PLACES).length ? 'All places' : n + ' places'; };
     $('#dates').innerHTML = dates.map((x, i) => '<button type="button" class="date' + (x.getDay() === 4 ? ' thu' : '') + '" data-i="' + i + '" aria-pressed="' + (i === st.date) + '"><b><span>' + DOW[x.getDay()] + '</span> ' + MON[x.getMonth()] + ' ' + x.getDate() + '</b><small>' + tag(x.getDay()) + '</small></button>').join('');
   }
   function setLocs() {
@@ -43,16 +43,18 @@ export function mountBooker() {
       const ok = !!avail(b.dataset.loc, w);
       b.disabled = !ok; b.classList.toggle('na', !ok);
       const small = b.querySelector('[data-s]');
-      small.textContent = b.dataset.loc === 'corona' ? (ok ? 'Set hours' : 'Tue and Sat') : !ok ? (SOON[w] || 'Not this day') : b.dataset.loc === 'brea' ? (w === 4 ? 'Thursday schedule' : 'Request a time') : b.dataset.loc === 'rsm' ? 'Half hours' : b.dataset.loc === 'home' ? 'In-home training' : 'Live video';
+      small.textContent = !ok ? (SOON[w] || 'Not this day') : b.dataset.loc === 'corona' ? (avail('corona', w) === 'sched' ? 'Set hours' : 'Request a time') : b.dataset.loc === 'brea' ? (w === 4 ? 'Thursday schedule' : 'Request a time') : b.dataset.loc === 'rsm' ? 'Half hours' : b.dataset.loc === 'home' ? 'In-home training' : 'Live video';
     });
     if (!avail(st.loc, w)) { const first = $$('.locs button.loc').find((b) => !b.disabled); st.loc = first.dataset.loc; }
     $$('.locs button.loc').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.loc === st.loc)));
-    $('#day-avail').textContent = w === 4 ? 'Thursdays: UFC Gym Brea' : w === 0 ? 'Sundays: Brea or your place' : w === 6 ? 'Saturdays: Brea, Club Studio Corona or your place' : w === 2 ? 'Every place is open' : 'Every place but Club Studio';
+    const NICK = { brea: 'Brea', rsm: '9Round', corona: 'Corona', online: 'online', home: 'your place' };
+    const on = ['brea', 'rsm', 'corona', 'online', 'home'].filter((k) => avail(k, w)).map((k) => NICK[k]);
+    $('#day-avail').textContent = on.length === 5 ? 'Every place is open' : DAYS_PL[w] + ': ' + on.slice(0, -1).join(', ') + ' or ' + on[on.length - 1];
   }
   function buildDay() {
     const x = dates[st.date], p = place(st.loc, x.getDay());
     $('#dayname').innerHTML = '<span class="nw">' + DOW[x.getDay()] + ', ' + MON[x.getMonth()] + ' ' + x.getDate() + ' ·</span> <span class="nw">' + p.name + '</span>';
-    $('#daynote').textContent = isParts() ? (st.loc === 'brea' ? 'I\'m at UFC Gym Brea by request on ' + DOW[x.getDay()] + 's. Pick a part of the day; I reply with an exact time.' : p.note) : p.note;
+    $('#daynote').textContent = isParts() ? (GYMS[st.loc] ? 'I\'m at ' + p.name + ' by request on ' + DAYS_PL[x.getDay()] + '. Pick a part of the day; I reply with an exact time.' : p.note) : p.note;
     if (isParts()) {
       $('#rows').innerHTML = PARTS.map(([k, t]) => '<li class="row part"><time>' + k.toUpperCase().slice(0, 3) + '</time><div class="cell"><button type="button" class="blk bk-open" data-part="' + k + '" aria-pressed="' + (st.hour === k) + '">' + k + ' · ' + t + '<em>Request</em></button></div></li>').join('');
       $('#tiles').innerHTML = PARTS.map(([k, t]) => '<button type="button" class="tile bk-open" data-part="' + k + '" aria-pressed="' + (st.hour === k) + '"><b>' + k + '</b><small>' + t + '</small></button>').join('');
@@ -204,7 +206,16 @@ export function mountBooker() {
     if (i > -1 && avail(loc, day.getDay()) === 'sched' && place(loc, day.getDay()).open.has(h)) { st.date = i; st.loc = loc; st.hour = h; buildDates(); setLocs(); buildDay(); }
   }
   // A place from a "Book in..." link (?loc=corona): pick it, on the first day that place takes bookings.
-  if (want && !slot) {
+  // A part of a day picked in the home calendar (?loc=brea&day=2026-11-28&part=morning) is picked on arrival.
+  const pday = /^(\d{4})-(\d{2})-(\d{2})$/.exec(q.get('day') || '');
+  const ppart = PARTS.map((x) => x[0]).find((k) => k.toLowerCase() === (q.get('part') || '').toLowerCase());
+  let partSet = false;
+  if (want && pday && ppart && !slot) {
+    const day = new Date(+pday[1], +pday[2] - 1, +pday[3]);
+    const i = dates.findIndex((x) => x.getTime() === day.getTime());
+    if (i > -1 && avail(want, day.getDay()) === 'parts') { st.date = i; st.loc = want; st.hour = ppart; partSet = true; buildDates(); setLocs(); buildDay(); }
+  }
+  if (want && !slot && !partSet) {
     // ?dow=6 asks for a weekday too (the Club Studio weekend card lands on a Saturday).
     const dow = /^[0-6]$/.test(q.get('dow') || '') ? +q.get('dow') : null;
     let i = dates.findIndex((x) => avail(want, x.getDay()) && (dow === null || x.getDay() === dow));

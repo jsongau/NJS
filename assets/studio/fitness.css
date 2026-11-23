@@ -990,3 +990,47 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-bk-k { margin-top: 18px; }
 .nf-hero.sub h1.nf-bk-h1 { margin-top: 10px; font-size: clamp(22px, 7vw, 54px); letter-spacing: -.045em; line-height: 1.06; }
 @media (min-width: 1024px) { .nf-hero.sub h1.nf-bk-h1 { font-size: min(52px, 3.6vw); } .nf-hero.sub > .wrap:has(.nf-bk-art) { grid-template-columns: 1.5fr 1fr; } }
+
+/* Home calendar, every day (2026-11-23): a gym open all week shows seven day chips; a day without set hours
+   shows three parts of the day to request. */
+.nf-days[data-n="7"] { grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.nf-days[data-n="7"] .nf-day { padding: 9px 2px; }
+.nf-days[data-n="7"] .nf-day .nf-day-n { letter-spacing: 0; }
+.nf-slots .nf-slot-p { grid-column: 1 / -1; }
+.nf-slot-p .nf-slot { min-height: 58px; }
+.nf-slot-p .nf-slot span { display: flex; align-items: baseline; gap: 10px; font-weight: 500; color: var(--ink-2); }
+.nf-slot-p .nf-slot span b { font-weight: 650; color: var(--ink); }
+.nf-slot-p .nf-slot[aria-pressed="true"] span, .nf-slot-p .nf-slot[aria-pressed="true"] span b { color: inherit; }
+@media (max-width: 560px) { .nf-days[data-n="7"] { grid-template-columns: repeat(4, 1fr); } }
+
+/* Fitness hero, stronger (2026-11-23, Mojo): one coral primary button, the reassurance under it, and three
+   facts that are true of the offer now. */
+.nf-ctas-lg .nf-btn { min-height: 58px; padding: 0 30px; font-size: 17px; }
+.nf-ctas-lg .nf-coral { box-shadow: 0 16px 32px -16px var(--nf-coral); }
+.nf-cta-note { margin-top: 14px; font-size: 14.5px; color: var(--ink-3); }
+.nf-cta-note b { color: var(--ink); font-weight: 600; }
+
+/* Tap-to-book art (2026-11-23, Goldsmith): a pointer picks a time, then presses Book. The whole card is a
+   link to the booking step. Still frame (reduced motion, or off screen): the time picked, the button ready. */
+.nf-artlink { display: block; max-width: 440px; margin-top: 22px; text-decoration: none; color: var(--ink); border-radius: 28px; transition: transform .35s var(--nf-ease); }
+.nf-artlink .nf-art { margin-top: 0; max-width: none; }
+.nf-artlink:focus-visible { outline: 3px solid var(--nf-coral); outline-offset: 4px; }
+.nf-art-cta { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 12px; padding: 12px 14px 0 18px; }
+.nf-art-cta b { font-size: 18px; letter-spacing: -.02em; }
+.nf-art-cta small { grid-column: 1; font-size: 13.5px; color: var(--ink-3); }
+.nf-art-cta i { grid-column: 2; grid-row: 1 / 3; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--nf-coral); color: var(--ink); transition: transform .3s var(--nf-ease); }
+.nf-art-cta i svg { width: 20px; height: 20px; }
+@media (hover: hover) { .nf-artlink:hover { transform: translateY(-4px); } .nf-artlink:hover .nf-art-cta i { transform: translateX(5px); } .nf-artlink:hover .nf-art-cta b { text-decoration: underline; text-underline-offset: 4px; } }
+.nf-art-tap .tp-cur { transform: translate(262px, 190px); }
+.nf-art-tap .tp-ring { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.nf-art-tap .tp-done { opacity: 0; }
+.nf-art-tap.live .tp-cur { animation: tp-cur 6s cubic-bezier(.6, 0, .2, 1) infinite; }
+.nf-art-tap.live .tp-ring { animation: tp-ring 6s ease-out infinite; }
+.nf-art-tap.live .tp-on { animation: tp-on 6s linear infinite; }
+.nf-art-tap.live .tp-done { animation: tp-done 6s linear infinite; }
+.nf-art-tap.live .tp-t1 { animation: tp-t1 6s linear infinite; }
+@keyframes tp-cur { 0% { transform: translate(310px, 232px); opacity: 0; } 8% { opacity: 1; } 26%, 44% { transform: translate(84px, 134px); opacity: 1; } 62%, 92% { transform: translate(262px, 190px); opacity: 1; } 100% { transform: translate(262px, 190px); opacity: 0; } }
+@keyframes tp-ring { 0%, 27% { opacity: 0; transform: scale(.4); } 30% { opacity: .9; transform: scale(.6); } 38% { opacity: 0; transform: scale(1.5); } 39%, 63% { opacity: 0; transform: scale(.4); } 66% { opacity: .9; transform: scale(.6); } 74%, 100% { opacity: 0; transform: scale(1.5); } }
+@keyframes tp-on { 0%, 29% { opacity: 0; } 31%, 96% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes tp-done { 0%, 66% { opacity: 0; } 69%, 94% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes tp-t1 { 0%, 66% { opacity: 1; } 69%, 94% { opacity: 0; } 100% { opacity: 1; } }

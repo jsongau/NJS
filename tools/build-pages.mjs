@@ -164,7 +164,7 @@ export const PAGES = {
     title: 'Personal Trainer in Orange County · 12-Pack Training · NJS Fitness',
     description: 'Personal training with Nathan J. Song in Brea, Rancho Santa Margarita and Corona: muscle building, fat loss, steel clubs and maces, kickboxing and yoga. Twelve private sessions.',
     og_title: 'NJS Fitness: a strong mind needs a strong body',
-    og_description: 'Twelve private sessions with a three-time SHRED winner. Book a Thursday hour in Brea or a weekday in Rancho Santa Margarita.',
+    og_description: 'Twelve private sessions with a three-time SHRED winner. Book a time in Brea, Rancho Santa Margarita or Corona.',
     skip_href: '#packs', skip_text: 'Skip to the packs',
     jsonld: [
       ld('ProfilePage', { mainEntity: COACH }),
@@ -216,7 +216,7 @@ export const PAGES = {
     'What each recovery room tool is, what the research says about cryotherapy, compression boots, red light therapy, HydroMassage beds and sports massage, and which gyms list them.', null),
   'fit-book': {
     ...fitPage('book', 'Book a time', 'Book a Personal Training Session · NJS Fitness',
-      'Start the 12-pack: pick an open Thursday hour in Brea, or request a time in Rancho Santa Margarita, Corona, at home or online. Nathan confirms every booking by email.', null),
+      'Start the 12-pack: pick a time in Brea, Rancho Santa Margarita or Corona, or request in-home or online training. Nathan confirms every booking by email.', null),
   },
 };
 const FOCUS_PAGE = { 'fit-muscle': 'muscle', 'fit-fatloss': 'fat-loss', 'fit-conditioning': 'conditioning', 'fit-shoulders': 'shoulders', 'fit-boxing': 'boxing', 'fit-kickboxing': 'kickboxing', 'fit-muaythai': 'muay-thai', 'fit-mobility': 'mobility', 'fit-pilates': 'pilates' };

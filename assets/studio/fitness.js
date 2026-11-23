@@ -4,7 +4,7 @@
 // request: Jay confirms each one by email. The request goes to lead-intake as a "train" lead.
 import { $, $$ } from './util.js';
 import { track } from './track.js';
-import { GYMS, daySched, slotMinutes, fmtHour, slotValue } from './places.js';
+import { GYMS, PARTS, gymMode, daySched, slotMinutes, fmtHour, slotValue } from './places.js';
 
 const ENDPOINT = 'https://cedunmyttprzgslthuyk.supabase.co/functions/v1/lead-intake';
 const HOURS = GYMS.brea.hours;
@@ -39,14 +39,15 @@ function thursdays(now = new Date()) {
 
 // The gyms with a set schedule, in the order the calendar shows them.
 const CAL_LOCS = ['brea', 'rsm', 'corona'];
-// The next four days a gym has a set schedule, from tomorrow: the booking step takes no same-day requests,
-// so a time picked here always exists there.
+// The days the calendar offers for a gym, from tomorrow: the booking step takes no same-day requests, so a
+// time picked here always exists there. A gym open every day shows the next seven days; 9Round shows its
+// next four.
 function gymDays(loc, now = new Date()) {
   const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const want = GYMS[loc].days.length === 7 ? 7 : 4;
   const out = [];
-  for (let i = 0; i < 60 && out.length < 4; i++, d.setDate(d.getDate() + 1)) {
-    if (!GYMS[loc].days.includes(d.getDay())) continue;
-    if (gymOpen(loc, d, now) > 0) out.push(new Date(d));
+  for (let i = 0; i < 60 && out.length < want; i++, d.setDate(d.getDate() + 1)) {
+    if (gymMode(loc, d.getDay())) out.push(new Date(d));
   }
   return out;
 }
@@ -64,13 +65,20 @@ function mountCalendar(form) {
   const bar = $('[data-nf-bar]'), barGo = $('[data-nf-bar-go]'), badge = $('[data-nf-when]', cal);
   const now = new Date();
   let loc = 'brea', list = gymDays(loc, now), day = 0, hour = null;
+  const mode = () => (list[day] ? gymMode(loc, list[day].getDay()) : null);
 
   const drawDays = () => {
-    days.innerHTML = list.map((x, i) => '<button type="button" class="nf-day" aria-pressed="' + (i === day) + '" data-i="' + i + '"><small>' + DOW[x.getDay()] + '</small><b>' + x.getDate() + '</b><small>' + MON[x.getMonth()] + '</small><small class="nf-day-n">' + gymOpen(loc, x, now) + ' open</small></button>').join('');
+    days.innerHTML = list.map((x, i) => '<button type="button" class="nf-day" aria-pressed="' + (i === day) + '" data-i="' + i + '"><small>' + DOW[x.getDay()] + '</small><b>' + x.getDate() + '</b><small>' + MON[x.getMonth()] + '</small><small class="nf-day-n">' + (gymMode(loc, x.getDay()) === 'sched' ? gymOpen(loc, x, now) + ' open' : 'Request') + '</small></button>').join('');
+    days.dataset.n = list.length;
   };
   const drawSlots = () => {
     const d = list[day];
     if (!d) { slots.innerHTML = '<li class="nf-fine" style="grid-column:1/-1">No set hours in the next weeks. <a href="/fitness/book?loc=' + GYMS[loc].slug + '">Send a request</a> and I reply with a time.</li>'; return; }
+    if (mode() === 'parts') {
+      // No set hours this day: the visitor asks for a part of the day and Jay replies with a time.
+      slots.innerHTML = PARTS.map(([k, t]) => '<li class="nf-slot-p"><button type="button" class="nf-slot" data-part="' + k + '" aria-pressed="' + (k === hour) + '"><span><b>' + k + '</b>' + t + '</span><em>Request</em></button></li>').join('');
+      return;
+    }
     const p = daySched(loc, d.getDay());
     const starts = Object.keys(p.blocks).map(Number);
     const inside = (h) => starts.some((s0) => h > s0 && h < s0 + p.blocks[s0][2]);
@@ -84,16 +92,17 @@ function mountCalendar(form) {
   const render = () => {
     const base = '/fitness/book?loc=' + GYMS[loc].slug;
     if (hour === null) {
-      pick.innerHTML = '<b>Pick an open time</b>Times are Pacific. I confirm every booking by email.';
+      pick.innerHTML = '<b>' + (mode() === 'parts' ? 'Pick a part of the day' : 'Pick an open time') + '</b>Times are Pacific. I confirm every booking by email.';
       go.setAttribute('href', form ? '#book' : base);
       return;
     }
-    const d = list[day], when = DOW[d.getDay()] + ' ' + MON[d.getMonth()] + ' ' + d.getDate() + ' · ' + fmtHour(hour);
-    const href = form ? '#book' : base + '&slot=' + slotValue(iso(d), hour) + '#book';
-    pick.innerHTML = '<b>' + when + '</b>' + GYMS[loc].region.split(' · ')[0] + ' · ' + slotMinutes(loc) + ' minutes';
+    const d = list[day], part = typeof hour === 'string';
+    const when = DOW[d.getDay()] + ' ' + MON[d.getMonth()] + ' ' + d.getDate() + ' · ' + (part ? hour.toLowerCase() : fmtHour(hour));
+    const href = form ? '#book' : base + (part ? '&day=' + iso(d) + '&part=' + hour.toLowerCase() : '&slot=' + slotValue(iso(d), hour)) + '#book';
+    pick.innerHTML = '<b>' + when + '</b>' + GYMS[loc].region.split(' · ')[0] + ' · ' + (part ? 'I reply with an exact time' : slotMinutes(loc) + ' minutes');
     go.setAttribute('href', href);
     if (bar) { bar.innerHTML = '<b>' + when + '</b>' + (form ? 'Finish your request below' : 'Tap Start to book it'); barGo.setAttribute('href', href); }
-    if (form && loc === 'brea') setSlot(form, slotValue(iso(d), hour), when);
+    if (form && loc === 'brea' && !part) setSlot(form, slotValue(iso(d), hour), when);
   };
   const setLoc = (next) => {
     loc = next; list = gymDays(loc, now); day = 0; hour = null;
@@ -120,9 +129,9 @@ function mountCalendar(form) {
   slots.addEventListener('click', (e) => {
     const b = e.target.closest('.nf-slot');
     if (!b || b.disabled) return;
-    hour = +b.dataset.h;
+    hour = b.dataset.part || +b.dataset.h;
     $$('.nf-slot', slots).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    track('fit_tab', { detail: 'slot_' + hour });
+    track('fit_tab', { detail: 'slot_' + String(hour).toLowerCase() });
     render();
   });
   setLoc('brea');

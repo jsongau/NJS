@@ -42,7 +42,7 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | The path hub `/fitness/path` | `partials/studio/pages/fit-path.html` + `path.json` | rebuild pages |
 | Gear links (hidden while empty) | `partials/fitness/gear.json` (`[id, name, brand, why, link, [focus ids]]`); only gear Jay uses; the disclosure line renders with the row | rebuild pages |
 | The fitness offer and its prices (one pack: the 12-pack, once a week; twice a week is the push, never the default; 9Round is 24 half-hour sessions; no per-session prices for Brea or 9Round; no class times on pack cards) | `partials/fitness/nf-packs.html`, the Where choices in `fit-book.html` (`data-price`), `nf-where.html`, the pay question in `fitness.html` | rebuild pages |
-| Gym hours, class blocks and open times (Brea, 9Round, Club Studio) | `assets/studio/places.js`: one schedule read by the home calendar and the booking step | none |
+| Gym hours, class blocks and open times (Brea, 9Round, Club Studio) | `assets/studio/places.js`: one schedule read by the home calendar and the booking step. `days` is when a gym takes bookings, `sched` is which of those days have set hours (the rest are by request). Brea and Corona: every day. 9Round: Mon, Tue, Wed, Fri only | none |
 | A new fitness page | copy a `fit-*.html` page, add a `fitPage(...)` line to `PAGES` in `tools/build-pages.mjs`, link it from `focus.json` or the footer | rebuild pages |
 | Delivered projects, proof, logos | `assets/studio/data/projects.json`, logos in `assets/studio/brand/delivered/` | none |
 | Industries, kinds, plans, care tiers, links (booking URL, lead form) | `docs/nathan-j-song/studio-catalog.source.json` (**private, gitignored, only on Jay's Mac**) | `node tools/build-studio-catalog.mjs` |

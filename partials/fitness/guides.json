@@ -459,14 +459,6 @@
           "https://www.boxinginsider.com/training/boxing-gyms/los-angeles-boxing-gyms-complete-directory/"
         ],
         [
-          "ExpertBoxing: La Habra Boxing Club",
-          "https://expertboxing.com/la-habra-boxing-club"
-        ],
-        [
-          "New Santa Ana: TKO Boxing fundraiser",
-          "https://newsantaana.com/tko-boxing-silent-auction-scholarship-fundraiser-on-july-10/amp"
-        ],
-        [
           "KEYT: Robert Garcia opens a boxing academy in Moreno Valley",
           "https://keyt.com/news/ventura-county/2025/03/09/robert-garcia-opens-new-boxing-academy/"
         ],
@@ -917,6 +909,498 @@
           "NBC News: Colin Oyama profile",
           "https://www.nbcnews.com/news/asian-america/legendary-mma-coach-colin-oyama-rebuilt-his-passion-hungry-fighters-n772581"
         ]
+      ]
+    },
+    "pilates": {
+      "slug": "reformer-pilates-studios-socal",
+      "sport": "Reformer Pilates",
+      "noun": "reformer Pilates studios",
+      "unit": "studio",
+      "sources": [
+        [
+          "ClassPass: reformer Pilates studios in Los Angeles",
+          "https://classpass.com/partners/lists/los-angeles-reformer-pilates/"
+        ],
+        [
+          "ClassPass: reformer Pilates classes in Orange County",
+          "https://classpass.com/partners/lists/orange-county-reformer-pilates/"
+        ],
+        [
+          "ClassPass: reformer Pilates studios in the Inland Empire",
+          "https://classpass.com/partners/lists/inland-empire-reformer-pilates/"
+        ],
+        [
+          "Modern Luxury: Pilates studios in Los Angeles",
+          "https://www.modernluxury.com/best-pilates-studios-los-angeles/"
+        ],
+        [
+          "Newport Beach Magazine: Stretch to the Limit",
+          "https://newportbeachmagazine.com/?p=13055"
+        ],
+        [
+          "Daily Bruin: Mighty Pilates in Westwood",
+          "https://dailybruin.com/2024/02/19/mighty-pilates-creates-community-for-students-young-professionals-in-westwood"
+        ]
+      ],
+      "gyms": [
+        {
+          "name": "Evoken",
+          "city": "West Hollywood",
+          "region": "LA",
+          "known": "Reformer classes capped at ten people, with yoga and monthly breathwork.",
+          "site": "https://evoken.co",
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "since": "2023",
+            "people": [
+              [
+                "Founder",
+                "Janina Washington"
+              ]
+            ],
+            "about": "The studio marked its first anniversary in October 2024. Classes run from beginner to advanced, and there is a private suite for meditation and breathwork.",
+            "offers": [
+              "Reformer Pilates, ten people at most",
+              "Yoga",
+              "Monthly breathwork and sound bath events",
+              "Private wellness suite"
+            ],
+            "src": [
+              [
+                "LA Weekly, October 16, 2024: Evoken Pilates and Wellness Studio (reads as a promotional profile)",
+                "https://www.laweekly.com/?p=649717"
+              ],
+              [
+                "ClassPass: reformer Pilates studios in Los Angeles",
+                "https://classpass.com/partners/lists/los-angeles-reformer-pilates/"
+              ]
+            ],
+            "slug": "evoken"
+          }
+        },
+        {
+          "name": "Glow Pilates Studio",
+          "city": "Melrose",
+          "region": "LA",
+          "known": "A Melrose Avenue reformer studio founded by two sisters from New York.",
+          "site": "https://glowpilatesstudio.com",
+          "instagram": "https://www.instagram.com/glowpilatesla",
+          "rank": null,
+          "note": null,
+          "p": {
+            "address": "7823 Melrose Ave, Los Angeles, CA 90046",
+            "about": "Modern Luxury describes its classes as high-energy and low-impact.",
+            "offers": [
+              "Reformer Pilates classes"
+            ],
+            "src": [
+              [
+                "ClassPass: Glow Pilates Studio",
+                "https://classpass.com/studios/glow-pilates-studio-los-angeles"
+              ],
+              [
+                "Modern Luxury: Pilates studios in Los Angeles",
+                "https://www.modernluxury.com/best-pilates-studios-los-angeles/"
+              ]
+            ],
+            "slug": "glow-pilates-studio"
+          }
+        },
+        {
+          "name": "Pilates Boutique",
+          "city": "West Hollywood",
+          "region": "LA",
+          "known": "Reformer classes on Doheny Drive.",
+          "site": "https://pilatesboutique.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Focus Pilates",
+          "city": "Los Angeles",
+          "region": "LA",
+          "known": "Reformer classes limited to eight people.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Mighty Pilates",
+          "city": "Westwood Village",
+          "region": "LA",
+          "known": "Classes that blend classical and reformer Pilates, next to UCLA.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "since": "2024",
+            "address": "Weyburn Avenue, Westwood Village, Los Angeles",
+            "people": [
+              [
+                "Founder and owner",
+                "Cricket Wardein"
+              ]
+            ],
+            "about": "The Westwood Village studio opened in January 2024 as the sixth and largest Mighty Pilates location. The others are across Southern California and the Bay Area, the nearest in Santa Monica.",
+            "offers": [
+              "Reformer classes for every level",
+              "In-person and online classes",
+              "Student discount for UCLA students (reported in 2024)"
+            ],
+            "src": [
+              [
+                "Daily Bruin, February 19, 2024: Mighty Pilates in Westwood",
+                "https://dailybruin.com/2024/02/19/mighty-pilates-creates-community-for-students-young-professionals-in-westwood"
+              ]
+            ],
+            "slug": "mighty-pilates"
+          }
+        },
+        {
+          "name": "Swan Movement Arts",
+          "city": "North Hollywood",
+          "region": "LA",
+          "known": "Classical Pilates on Gratz apparatus, four people to a class.",
+          "site": "https://swanmovementarts.com",
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "address": "4906 Lankershim Blvd, North Hollywood, CA 91601",
+            "people": [
+              [
+                "Owner",
+                "Swan, a former competitive gymnast certified in classical and contemporary Pilates"
+              ]
+            ],
+            "offers": [
+              "Group classical Pilates, four people at most",
+              "Private sessions",
+              "Reformer, tower, half Cadillac, spine corrector and mat work",
+              "Yoga classes",
+              "Sound baths"
+            ],
+            "src": [
+              [
+                "NoHo Arts District, June 29, 2026: Swan Movement Arts",
+                "https://nohoartsdistrict.com/?p=38022"
+              ]
+            ],
+            "slug": "swan-movement-arts"
+          }
+        },
+        {
+          "name": "Bodies and Pilates LA",
+          "city": "Los Angeles",
+          "region": "LA",
+          "known": "Reformer classes that explain the anatomy behind each exercise.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Pom Pilates",
+          "city": "La Verne",
+          "region": "LA",
+          "known": "Reformer classes in the east San Gabriel Valley.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Speir Pilates",
+          "city": "Newport Beach",
+          "region": "OC",
+          "known": "Andrea Speir's reformer method: toning, cardio and stretching in one class.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "since": "2016",
+            "people": [
+              [
+                "Founder",
+                "Andrea Speir"
+              ],
+              [
+                "Founding partner",
+                "Elizabeth Polk"
+              ]
+            ],
+            "about": "Speir built the method over ten years of teaching in Los Angeles and opened the first studio in Santa Monica in spring 2016. The Newport Beach studio is listed on ClassPass.",
+            "offers": [
+              "Group reformer classes, one person per reformer",
+              "50-minute sessions",
+              "Private sessions"
+            ],
+            "src": [
+              [
+                "LA Yoga, July 23, 2016: Speir Pilates",
+                "https://layoga.com/practice/pilates/speir-pilates-santa-monica/"
+              ],
+              [
+                "ClassPass: Speir Pilates, Newport Beach",
+                "https://classpass.com/studios/speir-pilates-newport-beach"
+              ]
+            ],
+            "slug": "speir-pilates"
+          }
+        },
+        {
+          "name": "LiveMetta Pilates",
+          "city": "Newport Beach",
+          "region": "OC",
+          "known": "A family-run studio with a stepped reformer program and teacher training.",
+          "site": "https://livemetta.com",
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "since": "2022",
+            "address": "1058 Irvine Ave, Newport Beach, CA 92660",
+            "people": [
+              [
+                "Owners",
+                "Ythy and Chris Farnsworth"
+              ]
+            ],
+            "about": "The Farnsworths took over Core Reform Pilates and renamed it LiveMetta Pilates in September 2022. A Laguna Beach studio followed in 2023.",
+            "offers": [
+              "Free reformer orientation for newcomers",
+              "Reformer Foundation, Reformer+, Reformer Sculpt and Reformer Power",
+              "Cardio Core on reformer trampolines",
+              "Teacher education based on the Stott Pilates curriculum"
+            ],
+            "src": [
+              [
+                "Newport Beach Magazine, March 8, 2024: Stretch to the Limit",
+                "https://newportbeachmagazine.com/?p=13055"
+              ],
+              [
+                "Irvine Company Retail: LiveMetta Pilates, Westcliff Plaza",
+                "https://irvinecompanyretail.com/centers/newport-beach/westcliff-plaza/livemetta-pilates"
+              ]
+            ],
+            "slug": "livemetta-pilates"
+          }
+        },
+        {
+          "name": "Escape Pilates",
+          "city": "Costa Mesa",
+          "region": "OC",
+          "known": "Reformer classes built on slow, controlled movement.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "address": "333 E 17th St, Suite 18, Costa Mesa, CA 92627",
+            "about": "The studio describes its class as a total body workout on purpose-built equipment, led by certified instructors.",
+            "offers": [
+              "Reformer Pilates",
+              "Reformer with jump board",
+              "HIIT Pilates"
+            ],
+            "src": [
+              [
+                "ClassPass: Escape Pilates",
+                "https://classpass.com/studios/escape-pilates-costa-mesa"
+              ]
+            ],
+            "slug": "escape-pilates"
+          }
+        },
+        {
+          "name": "Studio X",
+          "city": "Costa Mesa and Irvine",
+          "region": "OC",
+          "known": "Reformer studios in Costa Mesa and Irvine, with jumpboard and stretch classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "The Body Collective",
+          "city": "Costa Mesa",
+          "region": "OC",
+          "known": "Reformer Pilates in classes limited to twelve people.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "The Beachouse Studio",
+          "city": "Newport Beach",
+          "region": "OC",
+          "known": "Reformer classes in Newport Beach.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Coeur Pilates",
+          "city": "Laguna Hills",
+          "region": "OC",
+          "known": "A boutique reformer studio with sister studios in Aliso Viejo and Fountain Valley.",
+          "site": "https://coeurpilatesoc.com",
+          "instagram": "https://www.instagram.com/coeurpilatesoc",
+          "rank": null,
+          "note": null,
+          "p": {
+            "address": "24251 Avenida De La Carlota, Suite B4, Laguna Hills, CA 92653",
+            "about": "The studio describes itself as a boutique Pilates studio with a personal approach to movement.",
+            "offers": [
+              "Coeur x Reform reformer classes"
+            ],
+            "src": [
+              [
+                "ClassPass: Coeur Pilates, Laguna Hills",
+                "https://classpass.com/studios/coeur-pilates--lh-laguna-hills"
+              ],
+              [
+                "ClassPass: reformer Pilates classes in Orange County",
+                "https://classpass.com/partners/lists/orange-county-reformer-pilates/"
+              ]
+            ],
+            "slug": "coeur-pilates"
+          }
+        },
+        {
+          "name": "BE Fit Modern Pilates",
+          "city": "Laguna Niguel",
+          "region": "OC",
+          "known": "High-intensity, low-impact reformer classes, open from 5 AM.",
+          "site": "https://befitmp.com",
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "address": "27281 La Paz Rd, Suite G, Laguna Niguel, CA 92677",
+            "about": "Its signature class, Make It Shake, is 45 minutes of Pilates, cardio and strength work.",
+            "offers": [
+              "Reformer Pilates",
+              "Functional Pilates",
+              "Stretching"
+            ],
+            "hours": "Daily, 5 AM to 8 PM.",
+            "src": [
+              [
+                "Wellhub: BE Fit Modern Pilates, La Paz",
+                "https://wellhub.com/en-us/search/partners/be-fit-modern-pilates-la-paz-laguna-niguel"
+              ]
+            ],
+            "slug": "be-fit-modern-pilates"
+          }
+        },
+        {
+          "name": "Carrie's Pilates",
+          "city": "Rancho Santa Margarita",
+          "region": "OC",
+          "known": "Reformer classes including a 45-minute Full Body Burn and a beginner class.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Class 46",
+          "city": "Anaheim",
+          "region": "OC",
+          "known": "Reformer classes in Anaheim.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "CirKel Fitness",
+          "city": "Tustin",
+          "region": "OC",
+          "known": "Reformer work as one part of full-body conditioning.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "FIT with LIT",
+          "city": "Newport Beach",
+          "region": "OC",
+          "known": "Reformer sessions in Newport Beach.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Pure Studio",
+          "city": "Canyon Lake",
+          "region": "IE",
+          "known": "Reformer Pilates with yoga and spin next door.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null,
+          "p": {
+            "address": "31606 Railroad Canyon Rd, Suite 204, Canyon Lake, CA",
+            "people": [
+              [
+                "Owner",
+                "Kim Barnes"
+              ]
+            ],
+            "about": "Barnes started teaching in a shared space in the Town Center and moved to her own studio when her classes outgrew it.",
+            "offers": [
+              "Reformer Pilates with springboards",
+              "Mat Pilates",
+              "Yoga",
+              "Spin",
+              "Barre"
+            ],
+            "src": [
+              [
+                "The Friday Flyer: rapidly growing studio expanding space",
+                "https://fridayflyer.com/article/2020-07-24/rapidly-growing-studio-expanding-space/"
+              ],
+              [
+                "ClassPass: Pure Studio",
+                "https://classpass.com/studios/pure-studio-canyon-lake"
+              ]
+            ],
+            "slug": "pure-studio"
+          }
+        },
+        {
+          "name": "SweatLogic",
+          "city": "Upland",
+          "region": "IE",
+          "known": "A heated Pilates studio with reformer classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "The Pilates Co.",
+          "city": "Riverside",
+          "region": "IE",
+          "known": "A Pilates studio on Magnolia Avenue, with listings in Temecula and Corona too.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        }
       ]
     }
   }

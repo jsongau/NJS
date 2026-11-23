@@ -23,3 +23,10 @@
 3. Verify Instagram handles for the gyms that have none.
 4. Search Console: verify the domain, submit the sitemap, watch impressions on gym-name queries.
 5. Backend: outbound-click event per gym through `event-intake` (plan first).
+
+## Later the same day: reformer Pilates guide
+- Third guide at `/fitness/guides/reformer-pilates-studios-socal`: 23 studios, 10 with profiles. `unit: "studio"` in guides.json switches the wording from gyms to studios.
+- Left out on purpose: Lagree and megaformer studios (PlankHaus, Breeze Lagree, Lagree Ology, KV Lagree) and Core Movement Studios (mat Pilates only). Lagree is a different method from reformer Pilates.
+- Most rows come from ClassPass regional lists (reviews collected January 2025 to February 2026). The `known` lines restate facts only, never ClassPass's ranking or ratings.
+- Trap: a spelled-out count over twenty ("Twenty-three worth knowing.") overflows the h1 on phones, so counts above twenty show as numerals in the headline.
+- Next: official sites and Instagram for the 13 studios without a profile; more Inland Empire studios (only three confirmed).

@@ -117,8 +117,8 @@ const FIT = {
     ["Coach's notes", [['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
   ],
   'f-guides': [
-    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'fist', 'Boxing gyms in SoCal', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'fist', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides', 'pages', 'All guides', 'Where to train in Southern California']]],
-    ['By region', [['/fitness/guides/boxing-gyms-socal#gd-la', 'pin', 'Los Angeles', 'Boxing gyms in LA'], ['/fitness/guides/boxing-gyms-socal#gd-oc', 'pin', 'Orange County', 'Boxing gyms in OC'], ['/fitness/guides/boxing-gyms-socal#gd-ie', 'pin', 'Inland Empire', 'Boxing gyms in the IE']]],
+    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'fist', 'Boxing gyms in SoCal', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'fist', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides/reformer-pilates-studios-socal', 'star', 'Reformer Pilates studios', 'Across LA, OC and the IE'], ['/fitness/guides', 'pages', 'All guides', 'Where to train in Southern California']]],
+    ['By region', [['/fitness/guides/boxing-gyms-socal#gd-la', 'pin', 'Los Angeles', 'Boxing gyms in LA'], ['/fitness/guides/reformer-pilates-studios-socal#gd-oc', 'pin', 'Orange County', 'Reformer Pilates studios in OC'], ['/fitness/guides/boxing-gyms-socal#gd-ie', 'pin', 'Inland Empire', 'Boxing gyms in the IE']]],
   ],
   'f-about': [
     ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Three-time SHRED winner, clubs and maces coach'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],

@@ -50,7 +50,7 @@ const crumbs = (slug, name) => ld('BreadcrumbList', { itemListElement: [
 // A guide is ranked only when Jay has given every gym on it a rank. Until then it is a list grouped by region.
 function guideRanked(g) { return g.gyms.every((x) => Number.isInteger(x.rank)); }
 const NUMW = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
-const numWord = (n) => NUMW[n] || String(n);
+const numWord = (n) => NUMW[n] || (n < 30 ? 'twenty-' + NUMW[n - 20] : String(n));
 const capWord = (n) => { const w = numWord(n); return w[0].toUpperCase() + w.slice(1); };
 const guideN = (k) => GUIDES.guides[k].gyms.length;
 function guideOrder(g) { return guideRanked(g) ? [...g.gyms].sort((a, b) => a.rank - b.rank) : g.gyms; }
@@ -220,6 +220,8 @@ export const PAGES = {
     capWord(guideN('boxing')) + ' boxing gyms across Los Angeles, Orange County and the Inland Empire, with what each is known for and its official link. Written by a working coach.', null),
   'fit-guide-kickboxing': fitPage('guides/kickboxing-gyms-socal', 'Kickboxing and Muay Thai gyms', 'Kickboxing and Muay Thai Gyms in Southern California: ' + guideN('kickboxing') + ' Worth Knowing · NJS Fitness',
     capWord(guideN('kickboxing')) + ' kickboxing and Muay Thai gyms across Los Angeles, Orange County and the Inland Empire, with what each is known for and its official link.', null),
+  'fit-guide-pilates': fitPage('guides/reformer-pilates-studios-socal', 'Reformer Pilates studios', 'Reformer Pilates Studios in Southern California: ' + guideN('pilates') + ' Worth Knowing in LA, OC and the Inland Empire · NJS Fitness',
+    capWord(guideN('pilates')) + ' reformer Pilates studios across Los Angeles, Orange County and the Inland Empire, with what each offers and its official link.', null),
   'fit-note-warmup': fitPage('notes/warm-up', 'Warm-up', 'A Ten Minute Warm-Up That Works: Four Parts, With Sources · NJS Fitness',
     'A four-part warm-up for lifting and striking, and what the research says about warm-ups, injuries and static stretching.', null),
   'fit-note-bands': fitPage('notes/band-workouts', 'Band workouts', 'A Full Resistance Band Workout, and Whether Bands Build Strength · NJS Fitness',
@@ -241,7 +243,7 @@ PAGES['fit-coach'].jsonld = [ld('ProfilePage', { mainEntity: COACH }), crumbs('c
 PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
 PAGES['fit-guides'].jsonld = [crumbs('guides', 'Guides')];
 // Gym guides: an ItemList of the gyms in page order, so the list itself is readable by search engines.
-for (const [key, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing']]) {
+for (const [key, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates']]) {
   const g = GUIDES.guides[key];
   PAGES[id].jsonld = [ld('ItemList', { name: PAGES[id].og_title, numberOfItems: guideOrder(g).length, dateModified: GUIDES.checked,
     itemListElement: guideOrder(g).map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: Object.assign({ '@type': 'SportsActivityLocation', name: x.name, address: { '@type': 'PostalAddress', addressLocality: x.city, addressRegion: 'CA' } }, x.p ? { url: SITE + '/fitness/guides/gyms/' + x.p.slug } : x.site ? { url: x.site } : {}) })) }),
@@ -255,14 +257,16 @@ note('fit-note-bands', 'notes/band-workouts', 'Band workouts', 'A full resistanc
 note('fit-note-recovery', 'notes/recovery-room', 'Recovery room', 'The recovery room: what each tool is and what the research says');
 note('fit-note-ac', 'notes/ac-joint', 'AC joint', 'A sore AC joint: what helps and where acupuncture fits');
 PAGES['fit-path'].jsonld = [crumbs('path', 'The path'), ld('ItemList', { name: 'The five pillars', itemListElement: PATH.pillars.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p[1], description: p[2] })) })];
-for (const [k, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing']]) PAGES[id].count_word = capWord(guideN(k));
-PAGES['fit-guides'].n_boxing = capWord(guideN('boxing')); PAGES['fit-guides'].n_kick = capWord(guideN('kickboxing'));
+for (const [k, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates']]) PAGES[id].count_word = guideN(k) > 20 ? String(guideN(k)) : capWord(guideN(k));
+PAGES['fit-guides'].n_boxing = capWord(guideN('boxing')); PAGES['fit-guides'].n_kick = capWord(guideN('kickboxing')); PAGES['fit-guides'].n_pilates = capWord(guideN('pilates'));
 // One page per gym that has a profile (`p`) in guides.json. Every fact on it comes from p.src.
-const GUIDE_META = { boxing: ['fit-guide-boxing', 'Boxing gym', 'Boxing gyms'], kickboxing: ['fit-guide-kickboxing', 'Kickboxing and Muay Thai gym', 'Kickboxing and Muay Thai gyms'] };
+const GUIDE_META = { boxing: ['fit-guide-boxing', 'Boxing gym', 'Boxing gyms'], kickboxing: ['fit-guide-kickboxing', 'Kickboxing and Muay Thai gym', 'Kickboxing and Muay Thai gyms', 'More kickboxing and Muay Thai gyms'], pilates: ['fit-guide-pilates', 'Reformer Pilates studio', 'Reformer Pilates studios', 'More reformer Pilates studios'] };
+GUIDE_META.boxing[3] = 'More boxing gyms';
+const GUIDE_CTA = { boxing: ['boxing', 'A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.'], kickboxing: ['kickboxing', 'A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.'], pilates: ['pilates', 'A group reformer class moves fast. Twelve private sessions with me build the core control, breathing and spring work first, so you walk into any studio on this list ready to keep up.'] };
 const REGION_NAME = { LA: 'Los Angeles', OC: 'Orange County', IE: 'Inland Empire' };
 const CHECKED_DAY = new Date(GUIDES.checked + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 function gymBody(key, x) {
-  const [gid, kind, plural] = GUIDE_META[key]; const g = GUIDES.guides[key]; const q = x.p;
+  const [gid, kind, plural] = GUIDE_META[key]; const g = GUIDES.guides[key]; const q = x.p; const unit = g.unit || 'gym';
   const ext = (href, text, cls) => '<a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + href + '" target="_blank" rel="noopener">' + text + '<span class="sr"> (opens in a new tab)</span></a>';
   const rows = [
     q.since ? ['Since', esc(q.since)] : null,
@@ -288,18 +292,18 @@ function gymBody(key, x) {
     '    <div>',
     '      <h2 id="gp-facts" class="nf-gp-h2">The facts</h2>',
     '      <dl class="nf-gp-dl">' + rows.map(([k, v]) => '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>',
-    '      <p class="nf-note nf-gp-src"><b>Where this comes from:</b> ' + q.src.map(([t, u]) => ext(u, esc(t))).join(' · ') + '. Hours, prices and coaches change, so confirm with the gym before you go. NJS Fitness is not affiliated with ' + esc(x.name) + '. Something wrong or out of date? <a href="/fitness/book">Tell me</a>.</p>',
+    '      <p class="nf-note nf-gp-src"><b>Where this comes from:</b> ' + q.src.map(([t, u]) => ext(u, esc(t))).join(' · ') + '. Hours, prices and coaches change, so confirm with the ' + unit + ' before you go. NJS Fitness is not affiliated with ' + esc(x.name) + '. Something wrong or out of date? <a href="/fitness/book">Tell me</a>.</p>',
     '    </div>',
     '    <aside class="nf-gp-me" aria-labelledby="gp-me">',
     '      <p class="nf-k">From the coach who wrote this</p>',
     '      <h2 id="gp-me">Learn the basics one on one first.</h2>',
-    '      <p>A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.</p>',
+    '      <p>' + GUIDE_CTA[key][1] + '</p>',
     '      <a class="nf-btn nf-coral" href="/fitness/book?pack=12&focus=' + (key === 'boxing' ? 'boxing' : 'kickboxing') + '">Book your first session</a>',
     '      <p class="nf-gp-me-n">Pay nothing today. I confirm by email.</p>',
     '    </aside>',
     '  </div>', '</section>', '',
     '<section class="nf-sec tight" aria-labelledby="gp-more">', '  <div class="wrap">',
-    '    <div class="nf-h"><div><p class="nf-k">Keep looking</p><h2 id="gp-more">More ' + plural.toLowerCase().replace('muay thai', 'Muay Thai') + '</h2></div><p><a class="nf-gp-all" href="' + PAGES[gid].path + '">See the full list</a></p></div>',
+    '    <div class="nf-h"><div><p class="nf-k">Keep looking</p><h2 id="gp-more">' + GUIDE_META[key][3] + '</h2></div><p><a class="nf-gp-all" href="' + PAGES[gid].path + '">See the full list</a></p></div>',
     '    <div class="nf-cards c2">' + near.map((y) => '<a class="nf-card" href="/fitness/guides/gyms/' + y.p.slug + '"><p class="nf-k">' + esc(y.city) + ' · ' + y.region + '</p><h3>' + esc(y.name) + '</h3><p>' + esc(y.known) + '</p><span class="nf-more">Open the profile</span></a>').join('') + '</div>',
     '  </div>', '</section>'].join('\n');
 }
@@ -539,7 +543,7 @@ const REGIONS = [['LA', 'Los Angeles'], ['OC', 'Orange County'], ['IE', 'Inland 
 function renderGuide(key) {
   const g = GUIDES.guides[key];
   if (!g) throw new Error('no guide ' + key);
-  const ranked = guideRanked(g);
+  const ranked = guideRanked(g); const unit = g.unit || 'gym'; const Unit = unit[0].toUpperCase() + unit.slice(1);
   const day = new Date(GUIDES.checked + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
   const count = (r) => g.gyms.filter((x) => x.region === r).length;
   const regs = REGIONS.filter(([r]) => count(r));
@@ -553,21 +557,21 @@ function renderGuide(key) {
     '<p class="nf-rk-reg"><span>' + x.region + '</span></p>' +
     '<div class="nf-rk-what"><p>' + esc(x.known) + '</p>' + (x.note ? '<p class="nf-rk-note"><b>Nathan:</b> ' + esc(x.note) + '</p>' : '') + '</div>' +
     '<p class="nf-rk-links">' + links(x) + '</p></li>';
-  const band = (r, name) => '      <li class="nf-rk-band" data-region="' + r + '"><h2 id="gd-' + r.toLowerCase() + '">' + name + '</h2><span>' + pad(count(r)) + ' gyms</span></li>';
+  const band = (r, name) => '      <li class="nf-rk-band" data-region="' + r + '"><h2 id="gd-' + r.toLowerCase() + '">' + name + '</h2><span>' + pad(count(r)) + ' ' + unit + 's</span></li>';
   const rows = ranked ? guideOrder(g).map((x, i) => row(x, i + 1))
     : regs.flatMap(([r, name]) => [band(r, name), ...g.gyms.filter((x) => x.region === r).map((x) => row(x, 0))]);
   const lists = [
     '    <div class="nf-rk' + (ranked ? ' ranked' : '') + '" data-nf-rk>',
     '      <header class="nf-rk-mast"><p class="nf-rk-title">' + (ranked ? 'The ' + g.gyms.length : 'The list') + '</p>' +
-      '<p class="nf-rk-meta">' + esc(g.sport) + ' · Southern California · ' + pad(g.gyms.length) + ' gyms · Checked ' + day + '</p></header>',
+      '<p class="nf-rk-meta">' + esc(g.sport) + ' · Southern California · ' + pad(g.gyms.length) + ' ' + unit + 's · Checked ' + day + '</p></header>',
     '      <div class="nf-rk-bar"><div class="nf-rk-f" role="group" aria-label="Show a region">' +
       '<button type="button" data-rk-f="all" aria-pressed="true">All<small>' + pad(g.gyms.length) + '</small></button>' +
       regs.map(([r, name]) => '<button type="button" data-rk-f="' + r + '" aria-pressed="false">' + name + '<small>' + pad(count(r)) + '</small></button>').join('') + '</div>' +
       '<p class="nf-rk-how">' + (ranked ? 'Ranked by a working coach. <a href="#method">How</a>' : 'Grouped by region, not ranked yet. <a href="#method">Why</a>') + '</p></div>',
-    '      <div class="nf-rk-head" aria-hidden="true">' + (ranked ? '<span>Rank</span>' : '') + '<span>Gym</span><span>Region</span><span>Known for</span><span>Links</span></div>',
+    '      <div class="nf-rk-head" aria-hidden="true">' + (ranked ? '<span>Rank</span>' : '') + '<span>' + Unit + '</span><span>Region</span><span>Known for</span><span>Links</span></div>',
     '      <ol class="nf-rk-list">', ...rows, '      </ol>',
     '    </div>'];
-  return ['<section class="nf-sec tight" aria-label="' + esc(g.sport) + ' gyms">', '  <div class="wrap">', ...lists, '  </div>', '</section>', '',
+  return ['<section class="nf-sec tight" aria-label="' + esc(g.sport) + ' ' + unit + 's">', '  <div class="wrap">', ...lists, '  </div>', '</section>', '',
     '<section class="nf-sec tight" id="method" aria-labelledby="gd-method">', '  <div class="wrap">',
     '    <div class="nf-h"><div><p class="nf-k">Method</p><h2 id="gd-method"><span>How this list</span><span>is made.</span></h2></div><p>Last checked ' + day + '.</p></div>',
     '    <div class="nf-cards c3">',

@@ -244,7 +244,7 @@ PAGES['fit-guides'].jsonld = [crumbs('guides', 'Guides')];
 for (const [key, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing']]) {
   const g = GUIDES.guides[key];
   PAGES[id].jsonld = [ld('ItemList', { name: PAGES[id].og_title, numberOfItems: guideOrder(g).length, dateModified: GUIDES.checked,
-    itemListElement: guideOrder(g).map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: Object.assign({ '@type': 'SportsActivityLocation', name: x.name, address: { '@type': 'PostalAddress', addressLocality: x.city, addressRegion: 'CA' } }, x.site ? { url: x.site } : {}) })) }),
+    itemListElement: guideOrder(g).map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: Object.assign({ '@type': 'SportsActivityLocation', name: x.name, address: { '@type': 'PostalAddress', addressLocality: x.city, addressRegion: 'CA' } }, x.p ? { url: SITE + '/fitness/guides/gyms/' + x.p.slug } : x.site ? { url: x.site } : {}) })) }),
   ld('BreadcrumbList', { itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Fitness', item: SITE + '/fitness' }, { '@type': 'ListItem', position: 2, name: 'Guides', item: SITE + '/fitness/guides' }, { '@type': 'ListItem', position: 3, name: PAGES[id].og_title, item: SITE + PAGES[id].path }] })];
 }
 const note = (key, slug, name, headline) => { PAGES[key].jsonld = [ld('Article', { headline, author: COACH, datePublished: '2026-11-10', mainEntityOfPage: SITE + '/fitness/' + slug }), ld('BreadcrumbList', { itemListElement: [
@@ -257,6 +257,64 @@ note('fit-note-ac', 'notes/ac-joint', 'AC joint', 'A sore AC joint: what helps a
 PAGES['fit-path'].jsonld = [crumbs('path', 'The path'), ld('ItemList', { name: 'The five pillars', itemListElement: PATH.pillars.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p[1], description: p[2] })) })];
 for (const [k, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing']]) PAGES[id].count_word = capWord(guideN(k));
 PAGES['fit-guides'].n_boxing = capWord(guideN('boxing')); PAGES['fit-guides'].n_kick = capWord(guideN('kickboxing'));
+// One page per gym that has a profile (`p`) in guides.json. Every fact on it comes from p.src.
+const GUIDE_META = { boxing: ['fit-guide-boxing', 'Boxing gym', 'Boxing gyms'], kickboxing: ['fit-guide-kickboxing', 'Kickboxing and Muay Thai gym', 'Kickboxing and Muay Thai gyms'] };
+const REGION_NAME = { LA: 'Los Angeles', OC: 'Orange County', IE: 'Inland Empire' };
+const CHECKED_DAY = new Date(GUIDES.checked + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+function gymBody(key, x) {
+  const [gid, kind, plural] = GUIDE_META[key]; const g = GUIDES.guides[key]; const q = x.p;
+  const ext = (href, text, cls) => '<a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + href + '" target="_blank" rel="noopener">' + text + '<span class="sr"> (opens in a new tab)</span></a>';
+  const rows = [
+    q.since ? ['Since', esc(q.since)] : null,
+    ...(q.people || []).map(([role, name]) => [esc(role), esc(name)]),
+    q.address ? ['Address', esc(q.address)] : null,
+    q.offers ? ['What it offers', '<ul>' + q.offers.map((o) => '<li>' + esc(o) + '</li>').join('') + '</ul>'] : null,
+    q.hours ? ['Hours', esc(q.hours)] : null,
+    q.price ? ['Prices', esc(q.price)] : null,
+    (x.site || x.instagram) ? ['Official links', [x.site ? ext(x.site, 'Official site') : '', x.instagram ? ext(x.instagram, 'Instagram') : ''].filter(Boolean).join(' · ')] : null,
+    ['Last checked', '<time datetime="' + GUIDES.checked + '">' + CHECKED_DAY + '</time>'],
+  ].filter(Boolean);
+  const near = g.gyms.filter((y) => y.p && y !== x).sort((a, b) => (b.region === x.region) - (a.region === x.region)).slice(0, 4);
+  return [
+    '<section class="nf-hero sub nf-gd nf-gp" aria-labelledby="gp-h" style="padding-bottom:10px">', '  <div class="wrap">', '    <div>',
+    '      <p class="nf-crumb"><a href="/fitness">Fitness</a> / <a href="/fitness/guides">Guides</a> / <a href="' + PAGES[gid].path + '">' + plural + '</a> / ' + esc(x.name) + '</p>',
+    '      <p class="nf-k nf-bk-k">' + kind + ' · ' + esc(x.city) + ' · ' + REGION_NAME[x.region] + '</p>',
+    '      <h1 id="gp-h" class="nf-gp-h1">' + esc(x.name) + '</h1>',
+    '      <p class="nf-lede">' + esc(x.known) + (q.about ? ' ' + esc(q.about) : '') + '</p>',
+    '      <div class="nf-ctas">' + (x.site ? ext(x.site, 'Visit the official site', 'nf-btn') : '') + (x.instagram ? ext(x.instagram, 'See its Instagram', 'nf-btn') : '') + '</div>',
+    '      <p class="nf-gp-ck">Checked ' + CHECKED_DAY + ' · Independent profile · No paid placement</p>',
+    '    </div>', '  </div>', '</section>', '',
+    '<section class="nf-sec tight" aria-labelledby="gp-facts">', '  <div class="wrap nf-gp-grid">',
+    '    <div>',
+    '      <h2 id="gp-facts" class="nf-gp-h2">The facts</h2>',
+    '      <dl class="nf-gp-dl">' + rows.map(([k, v]) => '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>').join('') + '</dl>',
+    '      <p class="nf-note nf-gp-src"><b>Where this comes from:</b> ' + q.src.map(([t, u]) => ext(u, esc(t))).join(' · ') + '. Hours, prices and coaches change, so confirm with the gym before you go. NJS Fitness is not affiliated with ' + esc(x.name) + '. Something wrong or out of date? <a href="/fitness/book">Tell me</a>.</p>',
+    '    </div>',
+    '    <aside class="nf-gp-me" aria-labelledby="gp-me">',
+    '      <p class="nf-k">From the coach who wrote this</p>',
+    '      <h2 id="gp-me">Learn the basics one on one first.</h2>',
+    '      <p>A gym class moves fast. Twelve private sessions with me cover stance, footwork and conditioning, so you walk into any gym on this list ready to keep up.</p>',
+    '      <a class="nf-btn nf-coral" href="/fitness/book?pack=12&focus=' + (key === 'boxing' ? 'boxing' : 'kickboxing') + '">Book your first session</a>',
+    '      <p class="nf-gp-me-n">Pay nothing today. I confirm by email.</p>',
+    '    </aside>',
+    '  </div>', '</section>', '',
+    '<section class="nf-sec tight" aria-labelledby="gp-more">', '  <div class="wrap">',
+    '    <div class="nf-h"><div><p class="nf-k">Keep looking</p><h2 id="gp-more">More ' + plural.toLowerCase().replace('muay thai', 'Muay Thai') + '</h2></div><p><a class="nf-gp-all" href="' + PAGES[gid].path + '">See the full list</a></p></div>',
+    '    <div class="nf-cards c2">' + near.map((y) => '<a class="nf-card" href="/fitness/guides/gyms/' + y.p.slug + '"><p class="nf-k">' + esc(y.city) + ' · ' + y.region + '</p><h3>' + esc(y.name) + '</h3><p>' + esc(y.known) + '</p><span class="nf-more">Open the profile</span></a>').join('') + '</div>',
+    '  </div>', '</section>'].join('\n');
+}
+for (const key of Object.keys(GUIDE_META)) for (const x of GUIDES.guides[key].gyms) {
+  if (!x.p) continue;
+  const [gid, kind, plural] = GUIDE_META[key]; const slug = 'guides/gyms/' + x.p.slug; const id = 'fit-gym-' + x.p.slug;
+  PAGES[id] = { ...fitPage(slug, x.name, x.name + ', ' + x.city + ': Coaches, Classes and Official Links · NJS Fitness',
+    x.name + ' in ' + x.city + ': who runs it, what it offers, the address and its official links. Checked ' + CHECKED_DAY + '. An independent profile by a working coach.', null), tpl: 'fit-gym', gymref: [key, x] };
+  const founder = (x.p.people || []).find(([role]) => /^Founder/.test(role));
+  PAGES[id].jsonld = [
+    ld('SportsActivityLocation', Object.assign({ name: x.name, description: x.known, address: Object.assign({ '@type': 'PostalAddress', addressLocality: x.city, addressRegion: 'CA', addressCountry: 'US' }, x.p.address ? { streetAddress: x.p.address } : {}) },
+      x.site ? { url: x.site } : {}, x.instagram ? { sameAs: [x.instagram] } : {}, x.p.since ? { foundingDate: x.p.since } : {}, founder ? { founder: { '@type': 'Person', name: founder[1].split(',')[0] } } : {})),
+    ld('WebPage', { name: PAGES[id].og_title, url: SITE + PAGES[id].path, dateModified: GUIDES.checked, author: COACH, isPartOf: { '@type': 'WebPage', url: SITE + PAGES[gid].path } }),
+    ld('BreadcrumbList', { itemListElement: [['Fitness', '/fitness'], ['Guides', '/fitness/guides'], [plural, PAGES[gid].path], [x.name, PAGES[id].path]].map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + path })) })];
+}
 for (const [id, p] of Object.entries(PAGES)) p.id = id;
 
 const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -486,12 +544,12 @@ function renderGuide(key) {
   const count = (r) => g.gyms.filter((x) => x.region === r).length;
   const regs = REGIONS.filter(([r]) => count(r));
   const pad = (n) => String(n).padStart(2, '0');
-  const links = (x) => (x.site || x.instagram)
-    ? (x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') + (x.instagram ? '<a href="' + x.instagram + '" target="_blank" rel="noopener">Instagram<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '')
+  const links = (x) => (x.site || x.instagram || x.p)
+    ? (x.p ? '<a class="nf-rk-prof" href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : '') + (x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') + (x.instagram ? '<a href="' + x.instagram + '" target="_blank" rel="noopener">Instagram<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '')
     : '<span class="nf-rk-none">No official site found</span>';
   const row = (x, n) => '      <li class="nf-rk-row" data-region="' + x.region + '">' +
     (n ? '<p class="nf-rk-n" aria-label="Number ' + n + '">' + pad(n) + '</p>' : '') +
-    '<div class="nf-rk-who"><h3>' + esc(x.name) + '</h3><p class="nf-rk-where">' + esc(x.city) + '</p></div>' +
+    '<div class="nf-rk-who"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3><p class="nf-rk-where">' + esc(x.city) + '</p></div>' +
     '<p class="nf-rk-reg"><span>' + x.region + '</span></p>' +
     '<div class="nf-rk-what"><p>' + esc(x.known) + '</p>' + (x.note ? '<p class="nf-rk-note"><b>Nathan:</b> ' + esc(x.note) + '</p>' : '') + '</div>' +
     '<p class="nf-rk-links">' + links(x) + '</p></li>';
@@ -624,8 +682,8 @@ export function renderPage(id) {
     biz_href: fit ? '/' : page.path, fit_href: '/fitness',
     biz_cur: fit ? '' : ' aria-current="true"', fit_cur: fit ? ' aria-current="true"' : '' };
   const extra = { extra_css: page.css ? '<link rel="stylesheet" href="/assets/studio/' + page.css + '.css">' : fit ? '<link rel="stylesheet" href="/assets/studio/fitness.css">' + (id === 'fit-book' ? '\n<link rel="stylesheet" href="/assets/studio/booker.css">' : '') : '' };
-  const vars = { ...page, ...cur, ...mode, ...extra, jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
-  let html = expand(read('pages/' + id), ['pages/' + id]);
+  const vars = { ...page, ...cur, ...mode, ...extra, ...(page.gymref ? { gym_body: gymBody(...page.gymref) } : {}), jsonld: page.jsonld ? '<script type="application/ld+json">' + JSON.stringify(page.jsonld).replace(/</g, '\\u003c') + '</script>' : '' };
+  let html = expand(read('pages/' + (page.tpl || id)), ['pages/' + id]);
   html = html.replace(/\{\{([a-z_]+)\}\}/g, (_, k) => {
     if (!(k in vars)) throw new Error(id + ': no value for {{' + k + '}}');
     return String(vars[k]);

@@ -1,5 +1,5 @@
 {
-  "_readme": "Gym guides for /fitness/guides. rank: Jay's own order, 1 to N (null until he ranks; the page shows a ranked list only when every gym on it has a rank). note: Jay's own words about a gym he knows firsthand. known: a fact from a source that was read, never an opinion. site and instagram: official links only, null until checked. Never paste star ratings from Google or Yelp. checked: the day every entry was last verified.",
+  "_readme": "Gym guides for /fitness/guides. rank: Jay's own order, 1 to N (null until he ranks; the page shows a ranked list only when every gym on it has a rank). note: Jay's own words about a gym he knows firsthand. known: a fact from a source that was read, never an opinion. site and instagram: official links only, null until checked. Never paste star ratings from Google or Yelp. checked: the day every entry was last verified. p: the gym profile behind its own page at /fitness/guides/gyms/<slug>; a gym gets a page only with at least three sourced facts (address, since, people, offers, hours, price, about), each from a page listed in p.src that was read on the checked date. No p, no page.",
   "checked": "2026-11-23",
   "guides": {
     "boxing": {
@@ -15,7 +15,28 @@
           "site": "https://wildcardbc.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "Vine Street at Santa Monica Boulevard, Hollywood",
+            "people": [
+              [
+                "Founder and trainer",
+                "Freddie Roach"
+              ]
+            ],
+            "about": "Freddie Roach opened Wild Card with money he earned training Mickey Rourke. Manny Pacquiao and Miguel Cotto trained here. The plaza it sits in was renamed Freddie Roach Square to mark the gym's 30 years.",
+            "offers": [
+              "Open to the public",
+              "Day rate or monthly membership"
+            ],
+            "src": [
+              [
+                "BoxingScene: Hollywood celebrates 30 years of Wild Card",
+                "https://www.boxingscene.com/articles/welcome-to-freddie-roach-square-hollywood-celebrates-30-years-of-wild-card"
+              ]
+            ],
+            "slug": "wild-card-boxing-club"
+          }
         },
         {
           "name": "Ten Goose Boxing",
@@ -25,7 +46,35 @@
           "site": "https://tengooseboxing.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "people": [
+              [
+                "Runs the gym",
+                "Ricky Funez"
+              ],
+              [
+                "Founding trainer",
+                "Joe Goossen"
+              ]
+            ],
+            "about": "Ricky Funez took over the direction of the gym after working under trainer Joe Goossen.",
+            "offers": [
+              "Private one-on-one sessions, by appointment",
+              "Semi-private sessions",
+              "Group boxing classes",
+              "Youth boxing",
+              "Conditioning",
+              "Sparring"
+            ],
+            "src": [
+              [
+                "Ten Goose Boxing, official site",
+                "https://tengooseboxing.com"
+              ]
+            ],
+            "slug": "ten-goose-boxing"
+          }
         },
         {
           "name": "Westside Boxing Club",
@@ -35,7 +84,25 @@
           "site": "https://westsideboxing.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "since": "2007",
+            "address": "Pico Boulevard at West Boulevard, Mid-City, Los Angeles",
+            "people": [
+              [
+                "Founder",
+                "Jose Manuel Saucedo"
+              ]
+            ],
+            "about": "In June 2023 the city named the intersection outside the gym Jose Manuel Saucedo Square after its founder. Shane Mosley, Canelo Alvarez and Victor Ortiz have trained here, and Robert De Niro trained here for the 2013 film Grudge Match.",
+            "src": [
+              [
+                "MyNewsLA, June 24, 2023: intersection dedicated to the club's founder",
+                "https://mynewsla.com/weather/2023/06/24/mid-city-intersection-dedicated-in-honor-of-westside-boxing-club-founder/"
+              ]
+            ],
+            "slug": "westside-boxing-club"
+          }
         },
         {
           "name": "Fortune Gym",
@@ -45,7 +112,35 @@
           "site": "https://fortunegym.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "7801 Melrose Ave, Suite 3, Los Angeles",
+            "people": [
+              [
+                "Runs the gym",
+                "Justin Fortune, former heavyweight contender"
+              ],
+              [
+                "Co-owner",
+                "Tamara Frapasella"
+              ]
+            ],
+            "offers": [
+              "Boxing",
+              "Brazilian jiu-jitsu",
+              "Muay Thai",
+              "Mixed martial arts",
+              "Strength and conditioning"
+            ],
+            "hours": "Mon to Fri, 6:30 AM to 7 PM. Sat, 8 AM to 2 PM.",
+            "src": [
+              [
+                "Fortune Gym, official site",
+                "https://fortunegym.com"
+              ]
+            ],
+            "slug": "fortune-gym"
+          }
         },
         {
           "name": "City of Angels Boxing",
@@ -55,7 +150,30 @@
           "site": "https://cityofangelsboxing.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "since": "2012",
+            "address": "3006 S Main St, Los Angeles, CA 90007",
+            "people": [
+              [
+                "Founder and instructor",
+                "Alex Brenes"
+              ]
+            ],
+            "offers": [
+              "One-hour boxing workouts for every level",
+              "Technique, speed, strength and endurance work",
+              "Corporate events and private parties"
+            ],
+            "hours": "Mon to Fri, 11:30 AM to 1:30 PM and 5 to 8:30 PM. Sat, 10:30 AM to 1:30 PM.",
+            "src": [
+              [
+                "City of Angels Boxing, official site",
+                "https://cityofangelsboxing.com"
+              ]
+            ],
+            "slug": "city-of-angels-boxing"
+          }
         },
         {
           "name": "Gloveworx",
@@ -65,7 +183,24 @@
           "site": "https://gloveworx.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "1415 Wilshire Blvd, Santa Monica, CA 90403",
+            "about": "A 5,000 square foot boxing studio and athletic performance space, described as the flagship location.",
+            "offers": [
+              "Competition boxing ring",
+              "Heavy bags and speed bags",
+              "Bikes, rowers and climbers",
+              "Turf area for core and functional training"
+            ],
+            "src": [
+              [
+                "Santa Monica Travel and Tourism: Gloveworx",
+                "https://www.santamonica.com/ar/things-to-do/gloveworx"
+              ]
+            ],
+            "slug": "gloveworx"
+          }
         },
         {
           "name": "Prevail Boxing",
@@ -73,19 +208,60 @@
           "region": "LA",
           "known": "Group sessions with a technique focus.",
           "site": "https://prevailboxing.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/prevailboxing",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "5859 W 3rd St, Los Angeles, CA 90036",
+            "offers": [
+              "Group boxing classes that pair technique with full-body fitness"
+            ],
+            "price": "Intro offer listed on its site: two weeks unlimited for $79.",
+            "src": [
+              [
+                "Prevail Boxing, official site",
+                "https://prevailboxing.com"
+              ]
+            ],
+            "slug": "prevail-boxing"
+          }
         },
         {
           "name": "Lobos Boxing Club",
-          "city": "Downtown LA",
+          "city": "Melrose",
           "region": "LA",
           "known": "A competitor-focused gym.",
           "site": "https://lobosboxingclub.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/lobosboxingclub",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "7162 Melrose Ave, Los Angeles, CA 90046",
+            "people": [
+              [
+                "Founder and head coach",
+                "Eddie Arrazola"
+              ],
+              [
+                "Coaches",
+                "Jesse Neil, David Liske, Shein Mompremier, Alex Robinson, Ali Nance"
+              ]
+            ],
+            "offers": [
+              "Group boxing classes",
+              "Youth boxing (The Wolf Pack)",
+              "Private training",
+              "Muay Thai kickboxing",
+              "Mobility classes"
+            ],
+            "src": [
+              [
+                "Lobos Boxing Club, official site",
+                "https://lobosboxingclub.com/about-boxing-gym"
+              ]
+            ],
+            "slug": "lobos-boxing-club"
+          }
         },
         {
           "name": "Trinity Boxing Club",
@@ -95,7 +271,28 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "7817 Melrose Ave, Los Angeles, CA 90046",
+            "people": [
+              [
+                "Owner and trainer",
+                "Martin Snow"
+              ]
+            ],
+            "offers": [
+              "Boxing classes: bag work, sparring and old-school cardio",
+              "Private training",
+              "No open gym hours"
+            ],
+            "src": [
+              [
+                "Time Out Los Angeles, December 2016: Trinity Boxing Club",
+                "https://www.timeout.com/los-angeles/sports-and-fitness/trinity-boxing-club"
+              ]
+            ],
+            "slug": "trinity-boxing-club"
+          }
         },
         {
           "name": "Eastside Eddie Heredia Boxing Club",
@@ -105,7 +302,29 @@
           "site": "https://locator.lacounty.gov/lac/Location/3179857/eastside-eddie-heredia-boxing-club",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "5127 E Olympic Blvd, Los Angeles, CA 90022",
+            "people": [
+              [
+                "Run by",
+                "Los Angeles County"
+              ]
+            ],
+            "about": "A county-run club where children and teens learn to box. It is named after its first champion, who died of leukemia at 17. A former member boxed for the United States at the 2008 Beijing Olympics.",
+            "offers": [
+              "Youth boxing",
+              "Weight room",
+              "Computer lab"
+            ],
+            "src": [
+              [
+                "Los Angeles County: Eastside Eddie Heredia Boxing Club",
+                "https://locator.lacounty.gov/lac/Location/3179857/eastside-eddie-heredia-boxing-club"
+              ]
+            ],
+            "slug": "eastside-eddie-heredia-boxing-club"
+          }
         },
         {
           "name": "Brickhouse Boxing Club",
@@ -125,7 +344,25 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "6025 Reseda Blvd, Tarzana, CA 91356",
+            "people": [
+              [
+                "Coaches",
+                "Brandon Krause and Jerry Bradford"
+              ]
+            ],
+            "about": "The gym says it has trained people in Tarzana for more than 30 years. Its coaches list backgrounds in boxing, kinesiology and athletic training.",
+            "hours": "Mon to Thu, 2 to 8 PM. Fri, 3 to 7 PM. Sat and Sun, 9 AM to noon.",
+            "src": [
+              [
+                "Wellhub: Outlaws Boxing Gym, Tarzana",
+                "https://wellhub.com/en-us/search/partners/outlaws-boxing-gym-tarzana/"
+              ]
+            ],
+            "slug": "outlaws-boxing-gym"
+          }
         },
         {
           "name": "Robert Garcia Boxing Academy",
@@ -135,7 +372,29 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "since": "2025",
+            "address": "22500 Town Circle, Moreno Valley, CA",
+            "people": [
+              [
+                "Founder",
+                "Robert Garcia, former IBF junior world champion and trainer"
+              ]
+            ],
+            "about": "Opened on March 8, 2025. Garcia was The Ring's Trainer of the Year for 2024 and has trained Mikey Garcia, Vergil Ortiz Jr., Nonito Donaire and Marcos Maidana.",
+            "offers": [
+              "Youth program, Mon to Thu afternoons (at opening)",
+              "Open sessions on Fridays (at opening)"
+            ],
+            "src": [
+              [
+                "CBS Los Angeles: Robert Garcia opens boxing gym in Moreno Valley",
+                "https://www.cbsnews.com/losangeles/news/former-champ-renowned-trainer-robert-garcia-opens-boxing-gym-in-moreno-valley"
+              ]
+            ],
+            "slug": "robert-garcia-boxing-academy"
+          }
         },
         {
           "name": "Ontario Boxing Club",
@@ -143,9 +402,26 @@
           "region": "IE",
           "known": "A boxing club in Ontario.",
           "site": "https://ontarioboxingclub.rxgym.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/ontarioboxingclub/",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "207 W B St, Ontario, CA 91762",
+            "offers": [
+              "Membership required to train",
+              "Private sessions, 30 minutes or one hour",
+              "Eight-session training packages",
+              "Group classes on a posted schedule"
+            ],
+            "price": "Private sessions listed on its site: $40 for 30 minutes, $70 for one hour.",
+            "src": [
+              [
+                "Ontario Boxing Club, official site",
+                "https://ontarioboxingclub.rxgym.com/index.asp?pageid=102"
+              ]
+            ],
+            "slug": "ontario-boxing-club"
+          }
         },
         {
           "name": "Villegas Park boxing club",
@@ -155,7 +431,26 @@
           "site": "https://riversideca.gov/park_rec/programs-sports/youth/boxing-0",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "Villegas Park, 3091 Esperanza St, Riverside, CA",
+            "people": [
+              [
+                "Run by",
+                "City of Riverside Parks, Recreation and Community Services"
+              ]
+            ],
+            "about": "A city youth program for ages 10 to 17: stance, footwork and punching on heavy bags and mitts, with situation sparring and conditioning. Registration is on-site only.",
+            "hours": "Intermediate: Mon to Thu, 5:30 to 7 PM. Conditioning: Mon and Wed, 6:15 to 7:45 PM.",
+            "price": "$15 a month for Riverside residents, $30 for non-residents.",
+            "src": [
+              [
+                "City of Riverside: youth boxing",
+                "https://riversideca.gov/park_rec/programs-sports/youth/boxing-0"
+              ]
+            ],
+            "slug": "villegas-park-boxing-club"
+          }
         }
       ],
       "sources": [
@@ -194,7 +489,38 @@
           "site": "https://theyardmuaythai.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "241 W Avenue 26, Los Angeles, CA 90031",
+            "people": [
+              [
+                "Head instructor",
+                "Mark Komuro"
+              ],
+              [
+                "Assisting",
+                "Joe Schilling and Yoshi Hisataka"
+              ]
+            ],
+            "offers": [
+              "Every session: cardio, technique and application",
+              "Bag work, pad work, partner drills and sparring",
+              "Beginners and advanced students train together"
+            ],
+            "hours": "Mon to Fri, sessions at 8 AM, 10 AM, 4 PM and 6 PM. Sat, 9 AM to 12:30 PM.",
+            "price": "Listed on its site: $150 a month, no contract, no enrollment fee, first session free.",
+            "src": [
+              [
+                "The Yard Muay Thai, official site",
+                "https://theyardmuaythai.com"
+              ],
+              [
+                "MuayThai.com: best Muay Thai gyms in Los Angeles",
+                "https://muaythai.com/?p=6047"
+              ]
+            ],
+            "slug": "the-yard-muay-thai"
+          }
         },
         {
           "name": "Muay Thai America Gym",
@@ -204,7 +530,24 @@
           "site": "http://www.muaythaiamerica.net",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "10654 Magnolia Blvd, North Hollywood, CA 91601",
+            "people": [
+              [
+                "Led by",
+                "Kru Santi Sakkomkai"
+              ]
+            ],
+            "about": "MuayThai.com describes it as a top school for almost two decades, training both fighters and hobbyists.",
+            "src": [
+              [
+                "MuayThai.com: best Muay Thai gyms in Los Angeles",
+                "https://muaythai.com/?p=6047"
+              ]
+            ],
+            "slug": "muay-thai-america-gym"
+          }
         },
         {
           "name": "Muay Thai Academy of America",
@@ -214,7 +557,24 @@
           "site": "https://www.muaythaiacademy.net",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "11024 Vanowen St, North Hollywood, CA 91605",
+            "people": [
+              [
+                "Founder",
+                "Surapuk Jamjuntr (Kru Puk)"
+              ]
+            ],
+            "about": "MuayThai.com describes it as one of the first Muay Thai schools in Los Angeles.",
+            "src": [
+              [
+                "MuayThai.com: best Muay Thai gyms in Los Angeles",
+                "https://muaythai.com/?p=6047"
+              ]
+            ],
+            "slug": "muay-thai-academy-of-america"
+          }
         },
         {
           "name": "MTK Muay Thai Kickboxing Gym",
@@ -222,39 +582,123 @@
           "region": "LA",
           "known": "Described as one of the longest-running gyms in Los Angeles.",
           "site": "https://mtkgym.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/mtkgymla/",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "7405 Bellaire Ave, North Hollywood, CA 91605. Second gym at 107 W Wilson Ave, Glendale, CA 91203",
+            "offers": [
+              "Muay Thai and kickboxing",
+              "Fundamentals and advanced classes",
+              "Sparring",
+              "Little Trunks, kids ages 5 to 12",
+              "Strength training",
+              "Private training",
+              "Drop-in and open gym",
+              "Camps and seminars with visiting fighters"
+            ],
+            "hours": "Mon to Fri, 6 AM to 10 PM. Sat and Sun, 8 AM to 2 PM.",
+            "src": [
+              [
+                "MTK Gym, official site",
+                "https://mtkgym.com"
+              ]
+            ],
+            "slug": "mtk-muay-thai-kickboxing-gym"
+          }
         },
         {
           "name": "Dynamix MMA",
-          "city": "Culver City",
+          "city": "West Los Angeles",
           "region": "LA",
           "known": "Muay Thai and kickboxing. Has trained UFC veterans.",
           "site": "https://dynamixmartialarts.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/dynamixmma/",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "11870 Santa Monica Blvd, Suite 102, Los Angeles, CA 90025",
+            "people": [
+              [
+                "Instructors",
+                "Antoni Hardonk, Vladimir Matyushenko, Gustavo Gasperin and Jordan Wright"
+              ]
+            ],
+            "offers": [
+              "Kickboxing, Dutch style and Muay Thai",
+              "Mixed martial arts",
+              "Brazilian jiu-jitsu, gi and no-gi",
+              "Wrestling",
+              "Kids MMA",
+              "Personal training",
+              "Free trial class"
+            ],
+            "src": [
+              [
+                "Dynamix MMA, official site",
+                "https://dynamixmartialarts.com"
+              ]
+            ],
+            "slug": "dynamix-mma"
+          }
         },
         {
           "name": "Forj LA",
-          "city": "Downtown LA",
+          "city": "Los Angeles",
           "region": "LA",
           "known": "Boxing, Muay Thai and MMA in one facility.",
           "site": "https://forjla.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/forj_la",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "333 N Mission Rd, Los Angeles, CA 90033",
+            "offers": [
+              "Muay Thai",
+              "Boxing skills and fitness",
+              "Combat jiu-jitsu",
+              "Drop-in classes",
+              "Morning and evening classes"
+            ],
+            "price": "Its site offers a free first class.",
+            "src": [
+              [
+                "Forj LA, official site",
+                "https://forjla.com"
+              ]
+            ],
+            "slug": "forj-la"
+          }
         },
         {
           "name": "Systems Training Center",
           "city": "Hawthorne",
           "region": "LA",
           "known": "Muay Thai classes.",
-          "site": "https://systemstrainingcenter.squarespace.com",
-          "instagram": null,
+          "site": "https://systemstrainingcenter.com",
+          "instagram": "https://www.instagram.com/systemstrainingcenter/",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "since": "2013",
+            "address": "13040 Hawthorne Blvd, Hawthorne, CA 90250",
+            "offers": [
+              "Kickboxing",
+              "Mixed martial arts",
+              "Brazilian jiu-jitsu",
+              "Kids martial arts",
+              "Private one-on-one training",
+              "Nutrition coaching",
+              "Free trial"
+            ],
+            "src": [
+              [
+                "Systems Training Center: our story",
+                "https://systemstrainingcenter.squarespace.com/our-story-hawthorne-gym"
+              ]
+            ],
+            "slug": "systems-training-center"
+          }
         },
         {
           "name": "Santa Monica Striking",
@@ -302,29 +746,92 @@
           "region": "OC",
           "known": "Coach Colin Oyama's gym, profiled by NBC News.",
           "site": "https://teamoyama.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/teamoyamairvine",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "16632 Hale Ave, Suite 100, Irvine, CA 92606",
+            "offers": [
+              "Muay Thai, intermediate and advanced",
+              "Kickboxing and cardio kickboxing",
+              "No-gi jiu-jitsu",
+              "Wrestling",
+              "Kids MMA",
+              "Fight teams, by invitation"
+            ],
+            "hours": "Mon, Wed, Fri: 11:30 AM to 1 PM and 4 to 8 PM. Tue, Thu: 11:30 AM to 1 PM and 4:30 to 8 PM. Sat, 9:30 AM to 12:30 PM.",
+            "src": [
+              [
+                "Team Oyama, official site",
+                "https://teamoyama.com"
+              ]
+            ],
+            "slug": "team-oyama"
+          }
         },
         {
           "name": "Kings MMA",
           "city": "Huntington Beach",
           "region": "OC",
-          "known": "Muay Thai classes.",
+          "known": "Rafael Cordeiro's gym, home to a long line of MMA champions.",
           "site": "https://kingsmma.com",
-          "instagram": null,
+          "instagram": "https://www.instagram.com/kingsmmaacademy",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "since": "2010",
+            "address": "7391 Warner Ave, Huntington Beach, CA 92647",
+            "people": [
+              [
+                "Founder and head coach",
+                "Rafael Cordeiro"
+              ]
+            ],
+            "about": "Cordeiro taught at Chute Boxe in Brazil before moving to the United States in 2008. He won Coach of the Year at the World MMA Awards in 2012 and 2016. Former champions Mauricio Rua, Wanderlei Silva, Fabricio Werdum and Rafael dos Anjos have trained here.",
+            "offers": [
+              "Muay Thai",
+              "Jiu-jitsu",
+              "MMA program",
+              "Kids program"
+            ],
+            "src": [
+              [
+                "Kings MMA, official site",
+                "https://kingsmma.com/ourstory"
+              ],
+              [
+                "Wikipedia: Kings MMA",
+                "https://en.wikipedia.org/wiki/Kings_MMA"
+              ]
+            ],
+            "slug": "kings-mma"
+          }
         },
         {
           "name": "Tribe Muay Thai",
           "city": "Garden Grove",
           "region": "OC",
           "known": "Muay Thai classes.",
-          "site": null,
-          "instagram": null,
+          "site": "https://tribemuaythai.com",
+          "instagram": "https://www.instagram.com/tribemuaythai",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "address": "12812 Valley View St, Suite 18, Garden Grove, CA 92845",
+            "about": "Classes run from first-timers to professional fighters.",
+            "offers": [
+              "Muay Thai for every level",
+              "Kids anti-bullying classes",
+              "Women-only classes"
+            ],
+            "src": [
+              [
+                "ClassPass: Tribe Muay Thai",
+                "https://classpass.com/studios/tribe-muay-thai-garden-grove"
+              ]
+            ],
+            "slug": "tribe-muay-thai"
+          }
         },
         {
           "name": "The Den Training Center",
@@ -351,10 +858,36 @@
           "city": "Rancho Cucamonga",
           "region": "IE",
           "known": "A mixed martial arts gym in Rancho Cucamonga.",
-          "site": null,
-          "instagram": null,
+          "site": "https://millenniamma.com",
+          "instagram": "https://www.instagram.com/millenniamma/",
           "rank": null,
-          "note": null
+          "note": null,
+          "p": {
+            "since": "1999",
+            "address": "8423 Rochester Ave, Suite 102, Rancho Cucamonga, CA 91730. Second gym at 5475 Philadelphia St, Suite G, Chino, CA 91710",
+            "people": [
+              [
+                "Instructors",
+                "Romie Aram, Manny Tapia, Rick McCorkell and Danny Garcia"
+              ]
+            ],
+            "offers": [
+              "Muay Thai kickboxing",
+              "Boxing",
+              "Brazilian jiu-jitsu, gi and no-gi",
+              "Wrestling",
+              "MMA",
+              "Strength and conditioning",
+              "Youth classes"
+            ],
+            "src": [
+              [
+                "Millennia MMA: about",
+                "https://triangle-semicircle.squarespace.com/about"
+              ]
+            ],
+            "slug": "millennia-mma"
+          }
         },
         {
           "name": "Black Beard Kickboxing",

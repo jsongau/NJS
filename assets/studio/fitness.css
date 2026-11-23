@@ -828,6 +828,21 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-inc .nf-inc-p { margin-top: 8px; color: var(--ink-2); }
 .nf-inc-p b { margin-right: 8px; font: 700 20px/1 var(--sans); letter-spacing: -.02em; color: var(--ink); }
 .nf-price .nf-price-n { font-size: 30px; letter-spacing: -.03em; }
+/* Four places (2026-11-23, Mary): the cards run tighter so the column is no taller than the pack card
+   beside it and both fit one laptop screen. Price and the book link share a row; the link drops under
+   the price when the card is narrow. */
+.nf-inc { padding: 18px 20px; gap: 0; grid-template-columns: 52px 1fr; column-gap: 14px; }
+.nf-inc-i { width: 52px; height: 52px; }
+.nf-inc > div { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 16px; row-gap: 4px; min-width: 0; }
+.nf-inc > div > * { flex: 0 0 100%; min-width: 0; }
+.nf-inc h3 { margin-top: 2px; font-size: 18px; }
+.nf-inc > div > .nf-inc-p { flex: 1 1 auto; margin-top: 6px; }
+.nf-inc > div > .nf-more { flex: 0 0 auto; margin-top: 6px; margin-left: auto; }
+/* The pack card matches the column's height; its spare room sits above the price row, so the two
+   bottoms line up and the button stays at the foot of the card. */
+.nf-pack { align-content: start; }
+.nf-pack .nf-push { align-self: end; }
+.nf-pack { grid-template-rows: auto auto auto auto auto 1fr auto auto; }
 .inc-shine { animation: inc-shine 3.4s ease-in-out infinite; }
 .inc-dot { animation: inc-go 3s var(--nf-ease) infinite; }
 .inc-route { animation: inc-march 1.2s linear infinite; }
@@ -940,3 +955,10 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-pips-l span { font: 600 10px/1 var(--mono); color: #8E938A; letter-spacing: .06em; }
 .nf-tag[data-pace-tag] { min-width: 9.5em; text-align: center; }
 @media (prefers-reduced-motion: reduce) { .nf-pace::before, .nf-pace span, .nf-pips i { transition: none; } }
+
+/* Once a week is the pack; twice a week is the push (2026-11-23). A quiet callout inside the dark pack card. */
+.nf-push { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .05); }
+.nf-push p { flex: 1 1 16em; font-size: 14.5px; line-height: 1.45; color: #C9CCC4; }
+.nf-push p b { color: #fff; font-weight: 650; }
+.nf-push a { flex: none; font-weight: 600; font-size: 14.5px; color: var(--nf-coral); text-underline-offset: 3px; }
+.nf-pack .nf-pips-l > div { display: grid; grid-template-columns: repeat(12, 1fr); }

@@ -36,7 +36,7 @@ export function mountBooker() {
   const FOCUS = ['Muscle building', 'Fat loss', 'Shoulder strength', 'Boxing', 'Kickboxing', 'Muay Thai', 'Conditioning', 'Mobility and yoga', 'Reformer Pilates'];
   const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const fmt = (h) => (Math.floor(h) % 12 || 12) + ':' + String(Math.round((h % 1) * 60)).padStart(2, '0') + ' ' + (h < 12 ? 'AM' : 'PM');
-  const st = { pace: '2', city: null, loc: 'brea', date: 0, hour: null, pack: '12', focus: [], step: 0 };
+  const st = { pace: '1', city: null, loc: 'brea', date: 0, hour: null, pack: '12', focus: [], step: 0 };
   const SOON = { 4: 'Not on Thursdays', 0: 'Weekdays only', 6: 'Weekdays only' };
   const avail = (loc, dow) => (PLACES[loc].days.includes(dow) ? (loc === 'brea' && dow !== 4 ? 'parts' : PLACES[loc].parts ? 'parts' : 'sched') : null);
   // 9Round runs in 30-minute chunks: every 9Round slot is a half hour. Other places book by the hour.
@@ -101,7 +101,7 @@ export function mountBooker() {
     const once = st.pace === '1';
     const packName = 'The 12-pack · ' + (once ? 'once a week' : 'twice a week');
     $('#bk-pace').dataset.pace = st.pace;
-    $('#bk-pace-p').textContent = once ? 'One session a week for twelve weeks. The same twelve sessions at a steadier pace.' : 'Two sessions a week for six weeks. Long enough to see it and make it a habit.';
+    $('#bk-pace-p').textContent = once ? 'One session a week for twelve weeks. A steady pace that fits a full schedule.' : 'Two sessions a week for six weeks. Two fixed days turn training into discipline.';
     set('#s-pack', packName, '');
     set('#s-focus', st.focus.join(' + '), 'Pick in step 2');
     $('#s-total').textContent = (placeBtn && placeBtn.dataset.total) || 'By email';
@@ -197,13 +197,22 @@ export function mountBooker() {
 
   // URL entry: ?focus=muscle,boxing (and ?slot= from the home calendar) from the CTAs on every fitness page.
   const q = new URLSearchParams(location.search);
-  if (q.get('pace') === '1') { st.pace = '1'; $('#bk-pace input[value="1"]').checked = true; }
+  if (q.get('pace') === '2') { st.pace = '2'; $('#bk-pace input[value="2"]').checked = true; }
   $('#bk-pace').addEventListener('change', (e) => { st.pace = e.target.value; track('fit_tab', { detail: 'pace_' + st.pace + 'x' }); summary(); });
   // A Thursday hour from the calendar on the Fitness home (?slot=2026-11-12T08) is picked on arrival.
   const slot = /^(\d{4})-(\d{2})-(\d{2})T(\d{2})$/.exec(q.get('slot') || '');
   if (slot) {
     const i = dates.findIndex((x) => x.getFullYear() === +slot[1] && x.getMonth() + 1 === +slot[2] && x.getDate() === +slot[3]);
     if (i > -1 && PLACES.brea.open.has(+slot[4]) && dates[i].getDay() === 4) { st.date = i; st.loc = 'brea'; st.hour = +slot[4]; buildDates(); setLocs(); buildDay(); }
+  }
+  // A place from a "Book in..." link (?loc=corona): pick it, on the first day that place takes bookings.
+  const want = { brea: 'brea', 'rancho-santa-margarita': 'rsm', corona: 'corona', 'in-home': 'home', online: 'online' }[q.get('loc')];
+  if (want && !slot) {
+    // ?dow=6 asks for a weekday too (the Club Studio weekend card lands on a Saturday).
+    const dow = /^[0-6]$/.test(q.get('dow') || '') ? +q.get('dow') : null;
+    let i = dates.findIndex((x) => avail(want, x.getDay()) && (dow === null || x.getDay() === dow));
+    if (i < 0) i = dates.findIndex((x) => avail(want, x.getDay()));
+    if (i > -1) { st.date = i; st.loc = want; st.hour = null; buildDates(); setLocs(); buildDay(); }
   }
   const SLUG = { muscle: 'Muscle building', 'fat-loss': 'Fat loss', shoulders: 'Shoulder strength', boxing: 'Boxing', kickboxing: 'Kickboxing', 'muay-thai': 'Muay Thai', conditioning: 'Conditioning', mobility: 'Mobility and yoga', pilates: 'Reformer Pilates' };
   (q.get('focus') || '').split(',').slice(0, 2).forEach((id) => { const f = SLUG[id]; const box = f && $$('#chips input').find((i) => i.value === f); if (box) { box.checked = true; st.focus.push(f); } });

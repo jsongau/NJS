@@ -4,6 +4,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-23
 
+- `/fitness`, `/fitness/book` — The 12-pack is once a week (twelve weeks); twice a week is the push, as a callout on the pack card and an option in the booking step. 9Round pack is 24 private 30-minute sessions; new Club Studio card (Corona, price on request); per-session prices dropped for Brea and 9Round; place cards tightened so the section fits one laptop screen; "Book in..." links now preselect their place (`?loc=`, `?dow=`, `?pace=2`).
 - `/`, `/build` — Lighter homepage top: sub nav removed, ticker under the hero, two hero buttons (book a call, build a plan). New on-page call panel (`assets/studio/callbook.js`, `partials/studio/call-dlg.html`) sends a call request with a day and time to `lead-intake`; every call button and `/build?call=1` opens it. Fixed the hero jumping and centering on a first touch (class `final` collided with the closing section; hero now uses `settled`).
 - `/fitness` — 12-pack, Why twice a week and Where I train: the illustration now sits beside the heading on desktop instead of on its own half-empty row; phones unchanged.
 - `/fitness`, `/fitness/book` — Club Studio Corona added: BOX Tue 5:15 PM and Sat 9:15 AM, CS4 HIIT Sun 8:30 and 9:30 AM, private hours Tue 4 PM and 7:30 PM, Sat 10:30 AM (price by email). Booker places re-sorted (gyms, then Online, Private wide); "I come to you" replaced with "In-home training" wording; research note `docs/research/2026-11-23-pt-professional-language.md`.

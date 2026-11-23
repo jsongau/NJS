@@ -162,9 +162,9 @@ export const PAGES = {
   fitness: {
     out: 'fitness/index.html', path: '/fitness', nav: null, mode: 'fitness',
     title: 'Personal Trainer in Orange County · 12-Pack Training · NJS Fitness',
-    description: 'Personal training with Nathan J. Song in Brea, Rancho Santa Margarita and Corona: muscle building, fat loss, steel clubs and maces, kickboxing and yoga. Train twice a week for six weeks.',
+    description: 'Personal training with Nathan J. Song in Brea, Rancho Santa Margarita and Corona: muscle building, fat loss, steel clubs and maces, kickboxing and yoga. Twelve private sessions.',
     og_title: 'NJS Fitness: a strong mind needs a strong body',
-    og_description: 'Twelve sessions, twice a week, with a three-time SHRED winner. Book a Thursday hour in Brea or a weekday in Rancho Santa Margarita.',
+    og_description: 'Twelve private sessions with a three-time SHRED winner. Book a Thursday hour in Brea or a weekday in Rancho Santa Margarita.',
     skip_href: '#packs', skip_text: 'Skip to the packs',
     jsonld: [
       ld('ProfilePage', { mainEntity: COACH }),
@@ -173,7 +173,7 @@ export const PAGES = {
     ],
   },
   'fit-pt': fitPage('personal-training', 'Personal training', 'Personal Training for Muscle Building and Fat Loss in Orange County · NJS Fitness',
-    'One on one personal training for muscle building and fat loss in Brea and Rancho Santa Margarita, with a three-time SHRED winner. Twice a week for six weeks.', 'Personal training'),
+    'One on one personal training for muscle building and fat loss in Brea and Rancho Santa Margarita, with a three-time SHRED winner. Twelve private sessions.', 'Personal training'),
   'fit-clubs': fitPage('clubs-and-maces', 'Clubs and maces', 'Steel Club and Steel Mace Training in Orange County · NJS Fitness',
     'Learn the shield cast, the mill, the reverse mill and the mace 360 with coach Nathan J. Song. Steel clubs and maces for strong, durable shoulders and grip, in Orange County.', 'Steel club and steel mace training'),
   'fit-striking': fitPage('striking', 'Striking', 'Boxing, Kickboxing and Muay Thai Coach in Orange County · NJS Fitness',
@@ -187,13 +187,13 @@ export const PAGES = {
   'fit-yoga': fitPage('yoga-and-pilates', 'Yoga and Pilates', 'Private Yoga and Reformer Pilates in Orange County · NJS Fitness',
     'Private yoga with 400+ hours of training behind it, and reformer Pilates sessions while Nathan J. Song completes his certification. Orange County, at home or online.', 'Private yoga and reformer Pilates'),
   'fit-muscle': fitPage('muscle-building', 'Muscle building', 'Muscle Building Personal Trainer in Orange County · NJS Fitness',
-    'Private strength training for building muscle in Brea and across Orange County. Clean form, load that goes up each week, twice a week for six weeks.', 'Muscle building personal training'),
+    'Private strength training for building muscle in Brea and across Orange County. Clean form, load that goes up each week, in a 12-session pack.', 'Muscle building personal training'),
   'fit-fatloss': fitPage('fat-loss', 'Fat loss', 'Fat Loss Personal Trainer in Orange County · NJS Fitness',
-    'Private training for fat loss in Brea and across Orange County. Strength work that keeps your muscle, conditioning rounds and simple eating habits, twice a week for six weeks.', 'Fat loss personal training'),
+    'Private training for fat loss in Brea and across Orange County. Strength work that keeps your muscle, conditioning rounds and simple eating habits, in a 12-session pack.', 'Fat loss personal training'),
   'fit-conditioning': fitPage('conditioning', 'Conditioning', 'Private Conditioning Coach in Orange County · NJS Fitness',
-    'Private conditioning sessions in Brea and across Orange County: timed rounds and intervals on pads, the bag and bodyweight, twice a week for six weeks.', 'Conditioning training'),
+    'Private conditioning sessions in Brea and across Orange County: timed rounds and intervals on pads, the bag and bodyweight, in a 12-session pack.', 'Conditioning training'),
   'fit-shoulders': fitPage('shoulder-strength', 'Shoulder strength', 'Shoulder Strength and Mobility Training in Orange County · Steel Clubs and Maces · NJS Fitness',
-    'Private shoulder training in Brea and across Orange County with steel clubs and maces: rotation, stability and strength, twice a week for six weeks.', 'Shoulder strength training'),
+    'Private shoulder training in Brea and across Orange County with steel clubs and maces: rotation, stability and strength, in a 12-session pack.', 'Shoulder strength training'),
   'fit-mobility': fitPage('mobility-and-yoga', 'Mobility and yoga', 'Private Yoga and Mobility Sessions in Orange County · NJS Fitness',
     'Private yoga and mobility sessions in Brea and across Orange County, with 400+ hours of yoga training behind them. Hips, back and shoulders that move freely.', 'Private yoga and mobility'),
   'fit-pilates': fitPage('reformer-pilates', 'Reformer Pilates', 'Private Reformer Pilates in Orange County · NJS Fitness',
@@ -441,7 +441,7 @@ function renderQa(id) {
 function renderFocus() {
   const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" data-p="' + [PATH.focus[id].main].concat(PATH.focus[id].also).join(' ') + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '" aria-label="Learn more about ' + esc(name) + '">Learn more</a></li>';
   return ['<section class="nf-sec" id="focus" aria-labelledby="focus-h">', '  <div class="wrap">',
-    '    <div class="nf-h"><div><p class="nf-k">Your focus</p><h2 id="focus-h"><span>Your 12 sessions,</span><span>your choice.</span></h2></div><p>Pick one or two things you want from the next six weeks. I build every session around them. Change your mind later and we change the plan.</p></div>',
+    '    <div class="nf-h"><div><p class="nf-k">Your focus</p><h2 id="focus-h"><span>Your 12 sessions,</span><span>your choice.</span></h2></div><p>Pick one or two things you want from your 12 sessions. I build every session around them. Change your mind later and we change the plan.</p></div>',
     '    <ul class="nf-focus" data-nf-focus>', ...FOCUS.map(card), '    </ul>',
     '    <div class="nf-fbar" data-nf-fbar data-n="0"><svg class="nf-mini" viewBox="-40 -40 80 80" aria-hidden="true" data-nf-mini><polygon points="' + PATH.pillars.map((_, k) => wpt(k, 30).map((n, j) => Math.round((n - WC[j]) * 10) / 10).join(',')).join(' ') + '"/>' + PATH.pillars.map(([pid, name], k) => { const [x, y] = wpt(k, 30); return '<circle data-pl="' + pid + '" data-name="' + name + '" cx="' + Math.round((x - WC[0]) * 10) / 10 + '" cy="' + Math.round((y - WC[1]) * 10) / 10 + '" r="7"/>'; }).join('') + '</svg><p data-nf-fsum><b>Pick up to two</b>Tap a card to add it to your plan.</p><a class="nf-btn nf-ink" href="/fitness/book?pack=12" data-nf-fgo>Build my 12-pack</a></div>',
     '  </div>', '</section>'].join('\n');

@@ -116,6 +116,10 @@ const FIT = {
     ['Steel clubs and maces', [['/fitness/clubs-and-maces', 'mark', 'Clubs and maces', 'Steel club and steel mace training'], ['/fitness/shoulder-strength', 'fitness', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely']]],
     ["Coach's notes", [['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
   ],
+  'f-guides': [
+    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'fist', 'Boxing gyms in SoCal', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'fist', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides', 'pages', 'All guides', 'Where to train in Southern California']]],
+    ['By region', [['/fitness/guides/boxing-gyms-socal#gd-la', 'pin', 'Los Angeles', 'Boxing gyms in LA'], ['/fitness/guides/boxing-gyms-socal#gd-oc', 'pin', 'Orange County', 'Boxing gyms in OC'], ['/fitness/guides/boxing-gyms-socal#gd-ie', 'pin', 'Inland Empire', 'Boxing gyms in the IE']]],
+  ],
   'f-about': [
     ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Three-time SHRED winner, clubs and maces coach'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],
     ["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/recovery-room', 'star', 'The recovery room', "What's worth it, ranked by evidence"]]],
@@ -137,11 +141,15 @@ const FIT_FILL = {
     '<p class="mn-p">Rotation, stability and strength for your shoulders. I teach steel clubs and maces one on one, in person or over live video.</p>' +
     '<a class="mn-sub" href="/fitness/clubs-and-maces">See how a session runs' + arrow + '</a></aside>' +
     mini('/fitness/book?loc=online&focus=shoulders', 'cal', 'Live video', 'Learn it online', 'Good for clubs and maces technique') + '</div></div>',
+  'f-guides': () => '<div class="mn-in mn-in-fit">' + fitCols('f-guides') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">Written by a working coach</p>' +
+    '<p class="mn-p">What each gym is known for, with its official link. No paid placements and no copied star ratings.</p>' +
+    '<a class="mn-sub" href="/fitness/guides">See how the lists are made' + arrow + '</a></aside>' +
+    mini('/fitness/book', 'cal', 'One on one', 'Book your first session', 'Pay nothing today') + '</div></div>',
   'f-about': () => '<div class="mn-in mn-in-studio">' + fitCols('f-about') + '<div class="mn-side">' +
     mini('/fitness/book', 'cal', 'Start', 'Book your first session', 'Pay nothing today') +
     mini('/fitness#packs', 'star', 'The offer', 'The 12-pack', 'Twelve private sessions') + '</div></div>',
 };
-const FIT_GROUPS = [['f-pt', 'Personal training', '/fitness/personal-training'], ['f-strike', 'Striking', '/fitness/striking'], ['f-clubs', 'Clubs and maces', '/fitness/clubs-and-maces'], ['f-about', 'About', '/fitness/coach']];
+const FIT_GROUPS = [['f-pt', 'Personal training', '/fitness/personal-training'], ['f-strike', 'Striking', '/fitness/striking'], ['f-clubs', 'Clubs and maces', '/fitness/clubs-and-maces'], ['f-guides', 'Guides', '/fitness/guides'], ['f-about', 'About', '/fitness/coach']];
 
 function studioPanel() {
   return '<div class="mn-in mn-in-studio">' + STUDIO.map(([h, items]) => '<div class="mn-col"><p class="mn-hd">' + esc(h) + '</p><ul>' + items.map((x) => link(...x)).join('') + '</ul></div>').join('') +

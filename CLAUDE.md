@@ -38,6 +38,7 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | Fitness goals (5K, fight, Pilates…) | `partials/fitness/goals.json` (`[id, name, how, tags, who]`) | rebuild pages |
 | Fitness focus cards and where each links | `partials/fitness/focus.json` (`[id, name, line, page link]`); every focus needs its own page | rebuild pages |
 | The five pillars, and each focus page's wheel, health notes (with source links), ladder levels and questions | `partials/fitness/path.json` | rebuild pages |
+| Gym guides (`/fitness/guides/...`): the list, links, Jay's rank and note per gym | `partials/fitness/guides.json`. Counts in titles and copy come from the data. A page shows rank numerals only when every gym on it has a `rank`. `known` is a sourced fact, never an opinion; drop a gym that cannot be confirmed open; no copied star ratings; the gyms Jay coaches at stay off the lists and are disclosed | rebuild pages |
 | Coach's notes (sourced articles: warm-up, band workouts, AC joint) | `partials/studio/pages/fit-note-*.html`, hub `fit-notes.html`. Every health claim needs a source link that was read, and no claim that a treatment heals an injury | rebuild pages |
 | The path hub `/fitness/path` | `partials/studio/pages/fit-path.html` + `path.json` | rebuild pages |
 | Gear links (hidden while empty) | `partials/fitness/gear.json` (`[id, name, brand, why, link, [focus ids]]`); only gear Jay uses; the disclosure line renders with the row | rebuild pages |

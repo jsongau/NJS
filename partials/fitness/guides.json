@@ -1,0 +1,390 @@
+{
+  "_readme": "Gym guides for /fitness/guides. rank: Jay's own order, 1 to N (null until he ranks; the page shows a ranked list only when every gym on it has a rank). note: Jay's own words about a gym he knows firsthand. known: a fact from a source that was read, never an opinion. site and instagram: official links only, null until checked. Never paste star ratings from Google or Yelp. checked: the day every entry was last verified.",
+  "checked": "2026-11-23",
+  "guides": {
+    "boxing": {
+      "slug": "boxing-gyms-socal",
+      "sport": "Boxing",
+      "noun": "boxing gyms",
+      "gyms": [
+        {
+          "name": "Wild Card Boxing Club",
+          "city": "Hollywood",
+          "region": "LA",
+          "known": "Trainer Freddie Roach's gym. Manny Pacquiao trained here.",
+          "site": "https://wildcardbc.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Ten Goose Boxing",
+          "city": "Van Nuys",
+          "region": "LA",
+          "known": "Founded by trainer Joe Goossen.",
+          "site": "https://tengooseboxing.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Westside Boxing Club",
+          "city": "Mid-City",
+          "region": "LA",
+          "known": "Run by the Saucedo family, with Golden Boy ties.",
+          "site": "https://westsideboxing.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Fortune Gym",
+          "city": "Hollywood",
+          "region": "LA",
+          "known": "Run by former heavyweight contender Justin Fortune.",
+          "site": "https://fortunegym.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "City of Angels Boxing",
+          "city": "South LA",
+          "region": "LA",
+          "known": "Founded by former pro Alex Brenes. The LAPD boxing team trains here.",
+          "site": "https://cityofangelsboxing.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Gloveworx",
+          "city": "Santa Monica",
+          "region": "LA",
+          "known": "Small-group coaching, five people per coach at most.",
+          "site": "https://gloveworx.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Prevail Boxing",
+          "city": "West Hollywood and North Hollywood",
+          "region": "LA",
+          "known": "Group sessions with a technique focus.",
+          "site": "https://prevailboxing.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Lobos Boxing Club",
+          "city": "Downtown LA",
+          "region": "LA",
+          "known": "A competitor-focused gym.",
+          "site": "https://lobosboxingclub.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Trinity Boxing Club",
+          "city": "Fairfax",
+          "region": "LA",
+          "known": "Competitive training.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Eastside Eddie Heredia Boxing Club",
+          "city": "East LA",
+          "region": "LA",
+          "known": "A long-running neighborhood gym with youth programs.",
+          "site": "https://locator.lacounty.gov/lac/Location/3179857/eastside-eddie-heredia-boxing-club",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Brickhouse Boxing Club",
+          "city": "North Hollywood",
+          "region": "LA",
+          "known": "Technique work for fighters.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Outlaws Boxing Gym",
+          "city": "Tarzana",
+          "region": "LA",
+          "known": "Pro-style sessions.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Robert Garcia Boxing Academy",
+          "city": "Moreno Valley",
+          "region": "IE",
+          "known": "Opened in 2025 by trainer Robert Garcia.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Ontario Boxing Club",
+          "city": "Ontario",
+          "region": "IE",
+          "known": "A boxing club in Ontario.",
+          "site": "https://ontarioboxingclub.rxgym.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Villegas Park boxing club",
+          "city": "Riverside",
+          "region": "IE",
+          "known": "The City of Riverside hosts its annual boxing show.",
+          "site": "https://riversideca.gov/park_rec/programs-sports/youth/boxing-0",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        }
+      ],
+      "sources": [
+        [
+          "Boxing Insider: Los Angeles boxing gyms directory",
+          "https://www.boxinginsider.com/training/boxing-gyms/los-angeles-boxing-gyms-complete-directory/"
+        ],
+        [
+          "ExpertBoxing: La Habra Boxing Club",
+          "https://expertboxing.com/la-habra-boxing-club"
+        ],
+        [
+          "New Santa Ana: TKO Boxing fundraiser",
+          "https://newsantaana.com/tko-boxing-silent-auction-scholarship-fundraiser-on-july-10/amp"
+        ],
+        [
+          "KEYT: Robert Garcia opens a boxing academy in Moreno Valley",
+          "https://keyt.com/news/ventura-county/2025/03/09/robert-garcia-opens-new-boxing-academy/"
+        ],
+        [
+          "City of Riverside: Villegas Park boxing club show",
+          "https://riversideca.gov/press/villegas-park-host-annual-boxing-club-show"
+        ]
+      ]
+    },
+    "kickboxing": {
+      "slug": "kickboxing-gyms-socal",
+      "sport": "Kickboxing and Muay Thai",
+      "noun": "kickboxing and Muay Thai gyms",
+      "gyms": [
+        {
+          "name": "The Yard Muay Thai",
+          "city": "Los Angeles",
+          "region": "LA",
+          "known": "Head instructor Mark Komuro, with Joe Schilling and Yoshi Hisataka assisting.",
+          "site": "https://theyardmuaythai.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Muay Thai America Gym",
+          "city": "North Hollywood",
+          "region": "LA",
+          "known": "Led by Kru Santi Sakkomkai for nearly two decades.",
+          "site": "http://www.muaythaiamerica.net",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Muay Thai Academy of America",
+          "city": "North Hollywood",
+          "region": "LA",
+          "known": "Founded by Kru Puk. Described as one of the first Muay Thai schools in Los Angeles.",
+          "site": "https://www.muaythaiacademy.net",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "MTK Muay Thai Kickboxing Gym",
+          "city": "North Hollywood",
+          "region": "LA",
+          "known": "Described as one of the longest-running gyms in Los Angeles.",
+          "site": "https://mtkgym.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Dynamix MMA",
+          "city": "Culver City",
+          "region": "LA",
+          "known": "Muay Thai and kickboxing. Has trained UFC veterans.",
+          "site": "https://dynamixmartialarts.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Forj LA",
+          "city": "Downtown LA",
+          "region": "LA",
+          "known": "Boxing, Muay Thai and MMA in one facility.",
+          "site": "https://forjla.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Systems Training Center",
+          "city": "Hawthorne",
+          "region": "LA",
+          "known": "Muay Thai classes.",
+          "site": "https://systemstrainingcenter.squarespace.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Santa Monica Striking",
+          "city": "Santa Monica",
+          "region": "LA",
+          "known": "Muay Thai classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Southpaw Muay Thai Club",
+          "city": "Downtown LA",
+          "region": "LA",
+          "known": "Muay Thai classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Left Hand Muay Thai",
+          "city": "Valley Village",
+          "region": "LA",
+          "known": "Muay Thai classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "GKG Gil's Kickboxing Gym",
+          "city": "Lomita",
+          "region": "LA",
+          "known": "Muay Thai classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Team Oyama",
+          "city": "Irvine",
+          "region": "OC",
+          "known": "Coach Colin Oyama's gym, profiled by NBC News.",
+          "site": "https://teamoyama.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Kings MMA",
+          "city": "Huntington Beach",
+          "region": "OC",
+          "known": "Muay Thai classes.",
+          "site": "https://kingsmma.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Tribe Muay Thai",
+          "city": "Garden Grove",
+          "region": "OC",
+          "known": "Muay Thai classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "The Den Training Center",
+          "city": "Yorba Linda",
+          "region": "OC",
+          "known": "Muay Thai and kickboxing classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Adrenaline FC",
+          "city": "San Bernardino",
+          "region": "IE",
+          "known": "Muay Thai in San Bernardino.",
+          "site": "https://www.adrenalinefc.com",
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Millennia MMA",
+          "city": "Rancho Cucamonga",
+          "region": "IE",
+          "known": "A mixed martial arts gym in Rancho Cucamonga.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        },
+        {
+          "name": "Black Beard Kickboxing",
+          "city": "Riverside",
+          "region": "IE",
+          "known": "Muay Thai classes.",
+          "site": null,
+          "instagram": null,
+          "rank": null,
+          "note": null
+        }
+      ],
+      "sources": [
+        [
+          "MuayThai.com: best Muay Thai gyms in California",
+          "https://muaythai.com/best-muay-thai-gyms-in-california/"
+        ],
+        [
+          "Boxing Insider: Los Angeles gyms directory",
+          "https://www.boxinginsider.com/training/boxing-gyms/los-angeles-boxing-gyms-complete-directory/"
+        ],
+        [
+          "ClassPass: Muay Thai studios",
+          "https://classpass.com/search/inland-empire/muay-thai"
+        ],
+        [
+          "NBC News: Colin Oyama profile",
+          "https://www.nbcnews.com/news/asian-america/legendary-mma-coach-colin-oyama-rebuilt-his-passion-hungry-fighters-n772581"
+        ]
+      ]
+    }
+  }
+}

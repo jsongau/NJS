@@ -3,6 +3,7 @@
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-23
+- `/fitness/guides`, `/fitness/guides/boxing-gyms-socal`, `/fitness/guides/kickboxing-gyms-socal` — gym guides as an editorial ranking table (region filter, big rank numerals once Jay ranks), Guides tab in the fitness mega nav. 15 boxing and 18 kickboxing gyms after an open-and-operating check; seven dropped as unconfirmed. Data in `partials/fitness/guides.json`. First pass of SoCal luxury clubs in `docs/research/2026-11-23-socal-luxury-gyms.md`.
 
 - `/fitness`, `/fitness/book` — Brea and Club Studio Corona take bookings every day (set hours on Thursday for Brea, Tuesday and Saturday for Corona; a part of the day by request otherwise); 9Round stays Mon, Tue, Wed, Fri. Home calendar shows seven days for those gyms and carries a requested part of the day into the booking step (`?day=`, `?part=`). Stronger hero (coral "Book your first session", reassurance line, facts that match the once-a-week pack; the Brea open-hours line is gone). New tap-to-book art beside the calendar (`partials/fitness/art/art-tap.html`), linked to the booking step.
 - `/fitness/*` — Fitness mega nav: Personal training, Striking, Clubs and maces and About each open a panel (focus pages, coach's notes, where I train, the 12-pack card), with the same groups as an accordion in the phone menu. Panels live in `FIT` and `FIT_FILL` in `assets/studio/meganav.js`; markup in `partials/studio/nav-fit.html`.

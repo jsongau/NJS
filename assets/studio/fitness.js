@@ -395,6 +395,20 @@ function mountPace() {
   box.addEventListener('change', (e) => { if (e.target.name !== 'nf-pace') return; set(e.target.value); track('fit_tab', { detail: 'pace_' + e.target.value + 'x' }); });
 }
 
+// Gym guides: region filter. Rows below the buttons hide; nothing above the click moves.
+function mountRank() {
+  $$('[data-nf-rk]').forEach((box) => {
+    const btns = $$('[data-rk-f]', box);
+    box.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-rk-f]'); if (!b) return;
+      const v = b.dataset.rkF;
+      btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      $$('[data-region]', box).forEach((r) => { r.hidden = v !== 'all' && r.dataset.region !== v; });
+      track('fit_tab', { detail: 'guide_' + v.toLowerCase() });
+    });
+  });
+}
+
 export function mountFitness() {
   mountPace();
   if (document.body.dataset.mode !== 'fitness') return;
@@ -410,6 +424,7 @@ export function mountFitness() {
   reveal($$('.nf-art'));
   reveal($$('.nf-pairc'));
   mountPath();
+  mountRank();
   // Focus page mark: a click stamps the tile and sends out a ring.
   $$('[data-nf-fart]').forEach((f) => f.addEventListener('click', () => replay(f, 'hit')));
 }

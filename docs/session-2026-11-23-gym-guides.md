@@ -56,3 +56,10 @@
 - Pins use the hand-typed neighborhood coordinates, which is visible on a street map. `tools/geocode-guides.mjs` replaces them from the US Census Geocoder; it was written but could not be run here (no network to that host).
 - Traps: the site's global `svg { max-width: 100% }` collapses Leaflet vector layers in custom panes (fixed with `.nf-nr-map .leaflet-pane > svg`); Leaflet adds 17px margins to popup paragraphs; a vector layer in a custom pane needs its own renderer.
 - CoverCapy review (agent): its finder uses geolocation with a typed fallback, a map with "search this area", and a mobile Filters / Map / Sort bar. The agent could not see its scripts or SVGs, so the map library and animations there are unknown.
+
+## Map, second pass
+- Jay asked for no more scraping, so the two running research agents (map and tile research, jiu-jitsu and MMA gyms) were stopped. No phone numbers were collected. Tile licensing for a commercial site is therefore still unresearched: read the OpenStreetMap tile usage policy before traffic grows.
+- Added: flyTo and flyToBounds moves, rings at 2, 5 and 10 miles around the visitor, a dashed route line to the selected place, tooltips, a map button bar (Me, All, LA, OC, IE, Surprise me), an on-screen count, and Navigate links (`dir_action=navigate`) on the address, the row and the popup.
+- Phone: filter rows scroll sideways (so the reserved sub-row is one line), the List / Map switch floats at the bottom with `position: sticky`, zoom buttons and the popup close button are 40px, links are 44px.
+- Traps: `startMap` must hand back the same promise every time, or a tap during loading runs before the map exists; Leaflet's touch styles beat single-class overrides, so size overrides use `.nf-nr-map.leaflet-container ...`.
+- A one-file preview of the map page can be built by inlining Leaflet next to the usual CSS and modules; `loadLeaflet` returns early when `window.L` already exists so that works.

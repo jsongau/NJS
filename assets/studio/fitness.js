@@ -414,6 +414,7 @@ function mountRank() {
 const LEAFLET = '/assets/vendor/leaflet/leaflet';
 let leafletReady;
 function loadLeaflet() {
+  if (window.L) return Promise.resolve(window.L);
   if (!leafletReady) leafletReady = new Promise((resolve, reject) => {
     const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = LEAFLET + '.css'; document.head.appendChild(css);
     const js = document.createElement('script'); js.src = LEAFLET + '.js'; js.onload = () => resolve(window.L); js.onerror = reject; document.head.appendChild(js);
@@ -422,6 +423,8 @@ function loadLeaflet() {
 }
 // A rough Southern California coastline, drawn under the street tiles so the map still reads if tiles are slow.
 const COAST = [[34.6, -120.6], [34.45, -120.45], [34.4, -119.7], [34.27, -119.3], [34.1, -119.1], [34.03, -118.78], [34.01, -118.5], [33.85, -118.4], [33.74, -118.41], [33.71, -118.28], [33.75, -118.19], [33.72, -118.08], [33.65, -118.0], [33.6, -117.9], [33.54, -117.78], [33.46, -117.7], [33.42, -117.61], [33.2, -117.39], [32.9, -117.26], [32.7, -117.25], [32.53, -117.12]];
+const REGION_BOX = { LA: [[33.7, -118.7], [34.3, -117.75]], OC: [[33.4, -118.1], [33.95, -117.5]], IE: [[33.45, -117.75], [34.2, -116.85]] };
+const RINGS = [2, 5, 10];
 const PLACE_NAMES = [['Los Angeles', 34.06, -118.25], ['Orange County', 33.72, -117.83], ['Inland Empire', 33.98, -117.4], ['San Fernando Valley', 34.22, -118.47], ['Temecula Valley', 33.5, -117.1], ['Pacific Ocean', 33.55, -118.35]];
 
 function mountNear() {
@@ -442,12 +445,39 @@ function mountNear() {
   const fmt = (d) => (d < 10 ? d.toFixed(1) : String(Math.round(d)));
 
   const popup = (r) => {
-    const name = $('h3', r).textContent; const links = $$('.nf-rk-links a', r).map((a) => '<a href="' + a.getAttribute('href') + '"' + (a.target ? ' target="_blank" rel="noopener"' : '') + '>' + a.firstChild.textContent + '</a>').join('');
-    return '<div class="nf-pop"><p class="nf-pop-k">' + $('.nf-nr-cat span', r).textContent + '</p><p class="nf-pop-n">' + name + '</p><p class="nf-pop-w">' + $('.nf-nr-where', r).textContent + (r.dist < Infinity && st.at ? ' · ' + fmt(r.dist) + ' miles' : '') + '</p><p class="nf-pop-l">' + links + '</p></div>';
+    const name = $('h3', r).textContent; const more = $$('.nf-rk-links a:not([data-nr-nav])', r).map((a) => '<a href="' + a.getAttribute('href') + '"' + (a.target ? ' target="_blank" rel="noopener"' : '') + '>' + a.firstChild.textContent + '</a>').join('');
+    const nav = r.dataset.nav; const addr = r.dataset.addr;
+    return '<div class="nf-pop"><p class="nf-pop-k">' + $('.nf-nr-cat span', r).textContent + '</p><p class="nf-pop-n">' + name + '</p><p class="nf-pop-w">' + $('.nf-nr-where', r).textContent + (r.dist < Infinity && st.at ? ' · ' + fmt(r.dist) + ' miles away' : '') + '</p>' +
+      (addr ? '<p class="nf-pop-a"><a href="' + nav + '" target="_blank" rel="noopener">' + addr + '</a></p>' : '') +
+      '<p class="nf-pop-l"><a class="nf-pop-go" href="' + nav + '" target="_blank" rel="noopener">Navigate</a>' + more + '</p></div>';
   };
   const focusRow = (r, scroll) => {
-    rows.forEach((x) => x.classList.toggle('on', x === r));
+    rows.forEach((x) => { x.classList.toggle('on', x === r); if (x.pin && x.pin.getElement()) x.pin.getElement().classList.toggle('sel', x === r); });
+    drawRoute(r);
     if (scroll && r && split.dataset.view !== 'map' && matchMedia('(min-width: 1024px)').matches) r.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  };
+  const drawRoute = (r) => {
+    if (!st.map) return; if (st.route) { st.map.removeLayer(st.route); st.route = null; }
+    if (!r || !st.at || !r.pin) return;
+    st.route = st.L.polyline([st.at, pos(r)], { color: '#E0563A', weight: 3, dashArray: '6 9', className: 'nf-route', interactive: false }).addTo(st.map);
+  };
+  const drawRings = () => {
+    if (!st.map || !st.at) return; const L = st.L;
+    if (st.rings) st.map.removeLayer(st.rings); st.rings = L.layerGroup().addTo(st.map);
+    RINGS.forEach((mi) => {
+      L.circle(st.at, { radius: mi * 1609.34, color: '#1B6FE8', weight: 1.5, opacity: .55, dashArray: '4 7', fill: mi === RINGS[0], fillColor: '#1B6FE8', fillOpacity: .05, interactive: false, className: 'nf-ring' }).addTo(st.rings);
+      L.marker([st.at[0] + mi / 69.05, st.at[1]], { interactive: false, keyboard: false, icon: L.divIcon({ className: 'nf-ringname', html: mi + ' mi', iconSize: [48, 16], iconAnchor: [24, 8] }) }).addTo(st.rings);
+    });
+  };
+  const inView = () => {
+    const out = $('[data-nr-inview]', box); if (!out || !st.map) return;
+    const b = st.map.getBounds(); const n = shown().filter((r) => r.pin && b.contains(pos(r))).length;
+    out.textContent = n + ' on screen';
+  };
+  const flyToRow = (r) => {
+    if (!st.map || !r.pin) return; st.map.invalidateSize();
+    st.map.once('moveend', () => { r.pin.openPopup(); });
+    st.map.flyTo(pos(r), Math.max(st.map.getZoom(), 13), { duration: 0.9 }); focusRow(r, false);
   };
   const syncMap = (fit) => {
     if (!st.map) return; const L = st.L; const vis = shown().filter((r) => r.pin);
@@ -457,29 +487,38 @@ function mountNear() {
     if (st.at) {
       if (!st.you) st.you = L.marker(st.at, { icon: L.divIcon({ className: 'nf-you', html: '<i></i>', iconSize: [22, 22], iconAnchor: [11, 11] }), interactive: false, keyboard: false, zIndexOffset: 900 }).addTo(st.map);
       else st.you.setLatLng(st.at);
+      drawRings();
     }
+    inView();
     if (!fit || !vis.length) return;
     const pts = st.at ? [st.at, ...vis.slice().sort((a, b) => a.dist - b.dist).slice(0, 6).map(pos)] : vis.map(pos);
-    st.map.fitBounds(L.latLngBounds(pts), { padding: [36, 36], maxZoom: 13 });
+    st.map.flyToBounds(L.latLngBounds(pts), { padding: [40, 40], maxZoom: 13, duration: 0.8 });
   };
   const startMap = () => {
-    if (st.map || st.starting) return Promise.resolve(); st.starting = true;
-    return loadLeaflet().then((L) => {
-      st.L = L; const map = L.map(mapEl, { zoomControl: true, scrollWheelZoom: false, attributionControl: true, minZoom: 8, maxZoom: 17 }).setView([33.9, -117.85], 9);
+    if (st.ready) return st.ready;
+    st.ready = loadLeaflet().then((L) => {
+      st.L = L; const map = L.map(mapEl, { zoomControl: false, scrollWheelZoom: false, attributionControl: true, minZoom: 8, maxZoom: 17 }).setView([33.9, -117.85], 9);
       map.attributionControl.setPrefix(false);
+      L.control.zoom({ position: 'topright' }).addTo(map);
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { map.flyTo = (c, z) => map.setView(c, z, { animate: false }); map.flyToBounds = (b, opt) => map.fitBounds(b, Object.assign({}, opt, { animate: false })); }
       map.createPane('base').style.zIndex = 100; map.createPane('names').style.zIndex = 110;
       L.polygon([...COAST, [32.53, -114.4], [35.6, -114.4], [35.6, -120.6]], { pane: 'base', renderer: L.svg({ pane: 'base' }), stroke: false, fillColor: '#F1EBE2', fillOpacity: 1, interactive: false }).addTo(map);
       PLACE_NAMES.forEach(([n, la, ln]) => L.marker([la, ln], { pane: 'names', interactive: false, keyboard: false, icon: L.divIcon({ className: 'nf-mapname', html: n, iconSize: [160, 16], iconAnchor: [80, 8] }) }).addTo(map));
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors' }).addTo(map);
       map.on('click', () => map.scrollWheelZoom.enable());
+      map.on('moveend zoomend', inView);
+      map.on('popupclose', () => { focusRow(null, false); });
       rows.forEach((r) => {
         if (!r.dataset.lat) return;
         r.pin = L.marker(pos(r), { title: $('h3', r).textContent, riseOnHover: true, icon: L.divIcon({ className: 'nf-pin nf-pin-' + r.dataset.top, html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
-        r.pin.bindPopup(() => popup(r), { maxWidth: 260, minWidth: 200, closeButton: true });
+        r.pin.bindPopup(() => popup(r), { maxWidth: 270, minWidth: 210, closeButton: true, autoPanPadding: [24, 70] });
+        r.pin.bindTooltip($('h3', r).textContent, { direction: 'top', offset: [0, -20], className: 'nf-tip' });
+        r.pin.on('popupopen', () => r.pin.closeTooltip());
         r.pin.on('click', () => { focusRow(r, true); track('fit_tab', { detail: 'near_pin' }); });
       });
       st.map = map; syncMap(true);
     }).catch(() => { mapEl.innerHTML = '<p class="nf-nr-maperr">The map could not load. The list below still works.</p>'; });
+    return st.ready;
   };
 
   const draw = (fit) => {
@@ -504,9 +543,9 @@ function mountNear() {
     if (st.map) st.map.closePopup();
     syncMap(fit !== false);
   };
-  const setView = (v) => {
+  const setView = (v, fit) => {
     split.dataset.view = v; $$('[data-nr-view]', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.nrView === v)));
-    if (v === 'map') startMap().then(() => { if (st.map) { st.map.invalidateSize(); syncMap(true); } });
+    if (v === 'map') startMap().then(() => { if (st.map) { st.map.invalidateSize(); syncMap(fit !== false); } });
   };
 
   box.addEventListener('click', (e) => {
@@ -525,8 +564,23 @@ function mountNear() {
     const view = e.target.closest('[data-nr-view]'); if (view) { setView(view.dataset.nrView); return; }
     const show = e.target.closest('[data-nr-show]');
     if (show) {
-      const r = show.closest('li'); if (!matchMedia('(min-width: 1024px)').matches) setView('map');
-      startMap().then(() => { if (!st.map || !r.pin) return; st.map.invalidateSize(); st.map.setView(pos(r), Math.max(st.map.getZoom(), 13)); r.pin.openPopup(); focusRow(r, false); });
+      const r = show.closest('li'); if (!matchMedia('(min-width: 1024px)').matches) { setView('map', false); mapEl.scrollIntoView({ block: 'center' }); }
+      startMap().then(() => flyToRow(r));
+      return;
+    }
+    const fly = e.target.closest('[data-nr-fly]');
+    if (fly) {
+      const to = fly.dataset.nrFly;
+      startMap().then(() => {
+        if (!st.map) return; const L = st.L; const vis = shown().filter((r) => r.pin);
+        if (to === 'me') { if (st.at) st.map.flyTo(st.at, 12, { duration: 0.8 }); else status.textContent = 'Tap Use my location or pick an area first, then Me brings the map back to you.'; }
+        else if (to === 'all') { if (vis.length) st.map.flyToBounds(L.latLngBounds(vis.map(pos)), { padding: [40, 40], duration: 0.9 }); }
+        else if (to === 'lucky') {
+          const pool = st.at ? vis.slice().sort((a, b) => a.dist - b.dist).slice(0, 12) : vis;
+          if (pool.length) flyToRow(pool[Math.floor(Math.random() * pool.length)]);
+        } else if (REGION_BOX[to]) st.map.flyToBounds(L.latLngBounds(REGION_BOX[to]), { duration: 0.9 });
+        track('fit_tab', { detail: 'near_fly_' + to.toLowerCase() });
+      });
       return;
     }
     if (e.target.closest('[data-nr-geo]')) {

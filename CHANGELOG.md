@@ -3,6 +3,7 @@
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-23
+- Near-me map, second pass: fly-to moves, distance rings at 2, 5 and 10 miles, a dashed route to the chosen place, name tooltips, Me / All / LA / OC / IE / Surprise me buttons, an on-screen count, and addresses that open Google Maps navigation. Phone layout: swipeable filter rows, a floating List / Map switch, 44px tap targets.
 - `/fitness/guides/near-me` — now an interactive map with a filter tree: Striking and MMA (boxing, kickboxing, jiu-jitsu, MMA), Pilates (reformer, mat), Yoga (hot, not hot). List and map stay in sync; phones get a List / Map switch. Leaflet 1.9.4 vendored in `assets/vendor/leaflet/`, OpenStreetMap tiles. `tools/geocode-guides.mjs` swaps the hand-typed coordinates for Census ones.
 - `/fitness/guides/yoga-studios-socal` — fourth guide: 27 yoga studios, each marked heated, not heated or both; the near-me finder gains Yoga with a Hot / Not hot switch. Research merge across all guides: Orange County boxing gyms added, unconfirmed places dropped, 82 profile pages in total. New guide graphics: kind icons, list art built from each guide's counts, radar art on near-me.
 - `/fitness/guides/near-me` — near-me finder: every guide place in one list, filter by kind, sort by distance from the visitor's location or a picked area. Location is used in the browser only. Coordinates in `guides.json` are approximate (hand typed).

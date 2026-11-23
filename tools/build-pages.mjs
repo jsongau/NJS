@@ -670,14 +670,15 @@ function renderNear() {
   const n = (c) => all.filter((r) => r.kinds.includes(c) || r.tops.includes(c)).length;
   const pad = (v) => String(v).padStart(2, '0');
   const label = (r) => r.kinds.filter((c) => NEAR_LABEL[c]).map((c) => NEAR_LABEL[c]).join(' · ') + (r.x.heat ? ' · ' + HEAT[r.x.heat] : '');
-  const dir = (x) => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(x.p && x.p.address ? x.name + ', ' + x.p.address.split('. ')[0] : x.name + ', ' + x.city + ', CA');
+  const addr = (x) => (x.p && x.p.address && /\d/.test(x.p.address) ? x.p.address.split('. ')[0] : '');
+  const dir = (x) => 'https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=' + encodeURIComponent(addr(x) ? x.name + ', ' + addr(x) : x.name + ', ' + x.city + ', CA');
   const row = (r) => { const x = r.x; const top = KEY_TOP[r.key];
-    return '        <li class="nf-nr-row" data-top="' + top + '" data-ic="' + (r.kinds.find((c) => GICON[c]) || 'pin') + '" data-cat="' + [...new Set([...r.tops, ...r.kinds])].join(' ') + '"' + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') + ' data-region="' + x.region + '">' +
+    return '        <li class="nf-nr-row" data-top="' + top + '" data-ic="' + (r.kinds.find((c) => GICON[c]) || 'pin') + '" data-cat="' + [...new Set([...r.tops, ...r.kinds])].join(' ') + '"' + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') + ' data-region="' + x.region + '" data-nav="' + dir(x) + '"' + (addr(x) ? ' data-addr="' + esc(addr(x)) + '"' : '') + '>' +
       '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
       '<div class="nf-nr-main"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3>' +
       '<p class="nf-nr-cat nf-top-' + top + '">' + gic(r.kinds.find((c) => GICON[c]) || 'pin') + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span></p>' +
-      '<p class="nf-nr-where">' + esc(x.city) + '</p><p class="nf-nr-known">' + esc(x.known) + '</p>' +
-      '<p class="nf-rk-links">' + (x.lat ? '<button type="button" data-nr-show>Show on map</button>' : '') + '<a href="' + dir(x) + '" target="_blank" rel="noopener">Directions<span class="sr"> to ' + esc(x.name) + ', opens in a new tab</span></a>' +
+      '<p class="nf-nr-where">' + esc(x.city) + '</p>' + (addr(x) ? '<p class="nf-nr-addr"><a href="' + dir(x) + '" target="_blank" rel="noopener">' + gic('pin') + '<span>' + esc(addr(x)) + '</span><span class="sr">, start navigation in Google Maps, opens in a new tab</span></a></p>' : '') + '<p class="nf-nr-known">' + esc(x.known) + '</p>' +
+      '<p class="nf-rk-links">' + (x.lat ? '<button type="button" data-nr-show>Show on map</button>' : '') + '<a href="' + dir(x) + '" target="_blank" rel="noopener" data-nr-nav>Navigate<span class="sr"> to ' + esc(x.name) + ', opens in a new tab</span></a>' +
       (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') + '</p></div></li>'; };
   const icons = '<template data-nr-icons>' + Object.keys(GICON).map((k) => '<span data-k="' + k + '">' + gic(k) + '</span>').join('') + '</template>';
   return ['<section class="nf-sec tight" aria-label="Places near you">', '  <div class="wrap">',
@@ -695,12 +696,15 @@ function renderNear() {
         '<button type="button" data-nr-kind="all" aria-pressed="true">All ' + ({ strike: 'striking and MMA', pilates: 'Pilates', yoga: 'yoga' })[id] + '</button>' +
         subs.map(([c, sn]) => '<button type="button" data-nr-kind="' + c + '" aria-pressed="false">' + (GICON[c] ? gic(c) : c === 'nothot' ? '' : '') + sn + '<small>' + pad(n(c)) + '</small></button>').join('') + '</div>').join('') + '</div>',
     '      </div>',
-    '      <div class="nf-nr-view" role="group" aria-label="List or map"><button type="button" data-nr-view="list" aria-pressed="true">List</button><button type="button" data-nr-view="map" aria-pressed="false">Map</button></div>',
     '      <div class="nf-nr-split" data-nr-split data-view="list">',
     '        <ol class="nf-nr-list" data-nr-list>', ...all.map(row), '        </ol>',
-    '        <div class="nf-nr-mapbox"><div class="nf-nr-map" data-nr-map role="application" aria-label="Map of gyms and studios. Every place on it is also in the list."></div>' +
-      '<p class="nf-nr-mapnote">Pins are placed by neighborhood, so use Directions for the exact door.</p></div>',
+    '        <div class="nf-nr-mapbox"><div class="nf-nr-mapbar" role="group" aria-label="Move the map">' +
+      '<button type="button" data-nr-fly="me">' + gic('pin') + 'Me</button><button type="button" data-nr-fly="all">All</button><button type="button" data-nr-fly="LA">LA</button><button type="button" data-nr-fly="OC">OC</button><button type="button" data-nr-fly="IE">IE</button>' +
+      '<button type="button" class="nf-nr-lucky" data-nr-fly="lucky">Surprise me</button><span class="nf-nr-inview" data-nr-inview aria-live="polite"></span></div>' +
+      '<div class="nf-nr-map" data-nr-map role="application" aria-label="Map of gyms and studios. Every place on it is also in the list."></div>' +
+      '<p class="nf-nr-mapnote">Pins are placed by neighborhood, so tap Navigate for the exact door. Click the map once to zoom with the wheel.</p></div>',
     '      </div>',
+    '      <div class="nf-nr-view" role="group" aria-label="List or map"><button type="button" data-nr-view="list" aria-pressed="true">List</button><button type="button" data-nr-view="map" aria-pressed="false">Map</button></div>',
     '      ' + icons,
     '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate. Your position is used on this page only: I never receive or store it. The map loads street tiles from OpenStreetMap for the area you look at. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
     '    </div>', '  </div>', '</section>'].join('\n');

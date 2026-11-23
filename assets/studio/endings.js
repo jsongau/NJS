@@ -5,6 +5,7 @@ import { $, plural, weeksText } from './util.js';
 import { resolveBusiness } from './engine.js';
 import { sheet, planSentence } from './summary.js';
 import { track } from './track.js';
+import { openCall } from './callbook.js';
 
 export function planMessage(store, extra = {}) {
   const { catalog } = store;
@@ -101,15 +102,16 @@ export function mountEndings(store) {
   $('#final-send').addEventListener('click', openForm);
 
   const calls = [$('#call-btn'), $('#final-call')];
-  // Until the booking link exists (call_url_todo), the call buttons open the plan form instead,
-  // so no button on the live page leads to a dead link.
+  // Until the booking link exists (call_url_todo), the call buttons open the on-page call panel
+  // (callbook.js), so no button leads to a dead link and nobody leaves the page to book.
   const callLive = !(catalog.links && catalog.links.call_url_todo);
-  if (!callLive) calls.forEach((a) => { a.textContent = 'Request a 20-minute call'; a.removeAttribute('target'); });
+  if (!callLive) calls.forEach((a) => a.removeAttribute('target'));
   calls.forEach((a) => a.addEventListener('click', (e) => {
     if (a.getAttribute('aria-disabled') === 'true') { e.preventDefault(); return; }
-    track('call_click', { detail: a.id });
-    if (callLive) return;
+    if (callLive) { track('call_click', { detail: a.id }); return; }
     e.preventDefault();
+    if (openCall(a.id)) return;
+    track('call_click', { detail: a.id });
     const note = form.elements.note;
     if (note && !note.value) note.value = "I'd like a 20-minute call. Best times: ";
     openForm();
@@ -168,11 +170,12 @@ export function mountEndings(store) {
     sendBtn.disabled = !enabled;
     $('#final-send').disabled = !enabled;
     calls.forEach((a) => {
-      a.setAttribute('aria-disabled', String(!enabled));
+      // The on-page call panel needs no plan, so the call buttons stay live without one.
+      a.setAttribute('aria-disabled', String(callLive && !enabled));
       if (!sent) a.href = callLive ? callUrl(store) : '#plan';
     });
     $('#ppo-field').hidden = sel.business_type !== 'dental';
-    if (askCall && !asked && !sent && !callLive) { asked = true; forceForm(); }
+    if (askCall && !asked && !sent && !callLive) { asked = true; if (!openCall('link')) forceForm(); }
     if (!enabled && !callMode && form.classList.contains('open')) hideForm();
   });
 }

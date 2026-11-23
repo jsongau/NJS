@@ -36,14 +36,10 @@
 </header>
 
 <main id="top">
-<div class="marq" aria-hidden="true"><div class="marq-t" id="marq"></div></div>
-<nav class="subnav" id="subnav" aria-label="On this page">
-  <div class="wrap"><a href="#pricing">Plans</a><a href="#build">Build your plan</a><a href="#s-care">Care</a><a href="#delivered">Delivered</a><a href="#runs">How it runs</a><a href="#crew">Crew</a><a href="#final">Start</a></div>
-</nav>
 <section class="hero" id="hero" aria-labelledby="h1">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow" id="eyebrow">NJS Studio · Websites, portals and AI agents · Orange County</p>
+      <p class="eyebrow" id="eyebrow">Websites, portals and AI agents · Orange County</p>
       <h1 id="h1"><span class="ln ln-a">Tell me what you run.</span><span class="ln ln-b">I'll show you what to build.</span></h1>
       <div class="madlib" id="madlib">
         <p class="ml-line">I run <button type="button" class="slot" id="slot-biz" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-biz"><span class="slot-ic" id="slot-biz-ic"></span><span class="slot-t" id="slot-biz-t">a gym</span><span class="slot-c" aria-hidden="true"></span></button> and I want <span class="ml-end"><button type="button" class="slot" id="slot-plan" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-plan"><span class="slot-ic" id="slot-plan-ic"></span><span class="slot-t" id="slot-plan-t">customers who book and pay online</span><span class="slot-c" aria-hidden="true"></span></button>.</span></p>
@@ -55,12 +51,14 @@
         <div class="ml-pop ml-pop-plan" id="pop-plan" role="dialog" aria-label="What do you want?" hidden><div id="ml-plans"></div></div>
       </div>
       <p class="lede">Websites, customer portals and AI agents for local businesses. <b>AI writes most of the code. I decide what it builds and check every change.</b></p>
-      <div class="ctas"><a class="btn btn-lime" href="#build">See my plan</a><a class="tlink" href="#delivered">See delivered projects</a></div>
+      <div class="ctas ctas-2"><button type="button" class="btn btn-lime" data-call="hero">Book a 20-minute call</button><a class="btn" href="#build">Build my plan first</a></div>
+      <p class="cta-note"><b>In a hurry?</b> Pick a time for a free call. <b>Want a number first?</b> Build your plan in about two minutes.</p>
     </div>
     <div class="stage" id="stage" role="region" aria-label="Live preview of your project"></div>
   </div>
   <div class="wrap"><div class="proof" id="proof"></div></div>
 </section>
+<div class="marq" aria-hidden="true"><div class="marq-t" id="marq"></div></div>
 <section class="tiers-sec" id="pricing" aria-labelledby="pl-h">
   <div class="wrap">
     <div class="sec-h"><div><span class="kick">Three ways to work together</span><h2 id="pl-h"><span class="ph">A website.</span> <span class="ph">A system.</span> <span class="ph">Or me,</span> <span class="ph">alongside you.</span></h2></div><p>Every plan starts with a short audit and ends with something live. Pick one to load its starting set below, then change anything.</p></div>
@@ -201,6 +199,27 @@
     </div>
   </div>
 </section>
+<dialog class="lead-dlg call-dlg" id="call-dlg" aria-labelledby="call-dlg-h">
+  <div class="lead-dlg-in">
+    <div class="lead-dlg-h"><div><h3 id="call-dlg-h">Book a 20-minute call</h3><p>Pick a day and a time. I confirm by email. Times are Pacific.</p></div><button type="button" class="lead-dlg-x" id="call-dlg-x" aria-label="Close">Close</button></div>
+    <form class="form" id="call-form" novalidate>
+      <fieldset class="cb-f"><legend>Day</legend><div class="cb-days" id="cb-days"></div></fieldset>
+      <fieldset class="cb-f"><legend>Time</legend><div class="cb-times" id="cb-times"></div></fieldset>
+      <div class="form-2"><label>Name<input name="name" autocomplete="name" required></label>
+      <label>Email<input name="email" type="email" autocomplete="email" required></label></div>
+      <label>What do you run? (optional)<input name="biz" maxlength="80" autocomplete="organization" placeholder="A boxing gym in Brea"></label>
+      <span class="hp" aria-hidden="true"><input name="company_website" tabindex="-1" autocomplete="off"></span>
+      <p class="err" id="call-err" role="alert"></p>
+      <button type="submit" class="btn btn-lime btn-block" id="call-submit">Request this time</button>
+      <p class="hint">Free, and no prep needed. I use what you send only to reply to you.</p>
+    </form>
+    <div class="cb-done" id="cb-done" tabindex="-1" hidden>
+      <p class="cb-done-h" id="cb-done-h"></p>
+      <p id="cb-done-p"></p>
+      <div class="cb-done-b"><a class="btn btn-lime" href="#build" id="cb-done-build">Build my plan while I wait</a><button type="button" class="btn" id="cb-done-x">Done</button></div>
+    </div>
+  </div>
+</dialog>
 <dialog class="lead-dlg" id="lead-dlg" aria-labelledby="lead-dlg-h">
   <div class="lead-dlg-in">
     <div class="lead-dlg-h"><div><h3 id="lead-dlg-h">Send my plan</h3><p id="lead-dlg-sum"></p></div><button type="button" class="lead-dlg-x" id="lead-dlg-x" aria-label="Close">Close</button></div>

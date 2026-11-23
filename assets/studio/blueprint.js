@@ -223,7 +223,9 @@ export function mountBlueprint(store) {
     running = false;
     stage.classList.remove('run');
     stage.classList.add('final', 'filled');
-    hero.classList.add('final');
+    // Not 'final': that class belongs to the closing section, whose paragraph margins would leak in
+    // here and push the hero buttons down mid-click.
+    hero.classList.add('settled');
     $('#madlib').classList.remove('invite');
     if (current) { paintChips(current); paintTotal(current); }
     markPlayed();

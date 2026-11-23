@@ -1,0 +1,21 @@
+<dialog class="lead-dlg call-dlg" id="call-dlg" aria-labelledby="call-dlg-h">
+  <div class="lead-dlg-in">
+    <div class="lead-dlg-h"><div><h3 id="call-dlg-h">Book a 20-minute call</h3><p>Pick a day and a time. I confirm by email. Times are Pacific.</p></div><button type="button" class="lead-dlg-x" id="call-dlg-x" aria-label="Close">Close</button></div>
+    <form class="form" id="call-form" novalidate>
+      <fieldset class="cb-f"><legend>Day</legend><div class="cb-days" id="cb-days"></div></fieldset>
+      <fieldset class="cb-f"><legend>Time</legend><div class="cb-times" id="cb-times"></div></fieldset>
+      <div class="form-2"><label>Name<input name="name" autocomplete="name" required></label>
+      <label>Email<input name="email" type="email" autocomplete="email" required></label></div>
+      <label>What do you run? (optional)<input name="biz" maxlength="80" autocomplete="organization" placeholder="A boxing gym in Brea"></label>
+      <span class="hp" aria-hidden="true"><input name="company_website" tabindex="-1" autocomplete="off"></span>
+      <p class="err" id="call-err" role="alert"></p>
+      <button type="submit" class="btn btn-lime btn-block" id="call-submit">Request this time</button>
+      <p class="hint">Free, and no prep needed. I use what you send only to reply to you.</p>
+    </form>
+    <div class="cb-done" id="cb-done" tabindex="-1" hidden>
+      <p class="cb-done-h" id="cb-done-h"></p>
+      <p id="cb-done-p"></p>
+      <div class="cb-done-b"><a class="btn btn-lime" href="#build" id="cb-done-build">Build my plan while I wait</a><button type="button" class="btn" id="cb-done-x">Done</button></div>
+    </div>
+  </div>
+</dialog>

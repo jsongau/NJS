@@ -32,6 +32,7 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 | Header, Business \| Fitness switch | `header-top.html`, `nav-biz.html` (mega nav), `nav-fit.html` | rebuild pages |
 | Mega nav panel contents | `assets/studio/meganav.js` + `nav-biz.html` | rebuild pages |
 | Footer | `partials/studio/footer.html` | rebuild pages |
+| The on-page call panel (days, call hours, wording) | `partials/studio/call-dlg.html` + `HOURS` in `assets/studio/callbook.js`. It sends a request, not a booking: never say a time is open or confirmed | rebuild pages |
 | FAQ | `partials/studio/faq.json` (`[question, answer]` pairs) | rebuild pages |
 | Fitness goals (5K, fight, Pilates…) | `partials/fitness/goals.json` (`[id, name, how, tags, who]`) | rebuild pages |
 | Fitness focus cards and where each links | `partials/fitness/focus.json` (`[id, name, line, page link]`); every focus needs its own page | rebuild pages |
@@ -127,7 +128,7 @@ opening the Mac folder will not have these; ask Jay to attach them.
 
 ## Open items (as of 2026-11-06)
 
-- Booking link: `call_url` is still `cal.com/TODO…` in the catalog source.
+- Booking link: `call_url` is still `cal.com/TODO…` in the catalog source. Until it exists, call buttons open the on-page call panel (a request Jay confirms by email). Next step: real availability from a calendar.
 - `leads` has never received a row. Submit one test request and confirm it lands.
 - Fitness waves 2 to 5 need Jay's input first: class schedule per gym, which goals he coaches himself,
   gym manager approvals, session pricing, photos. The fitness footer still shows Business links.

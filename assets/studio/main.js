@@ -6,6 +6,7 @@ import { mountConfigurator } from './configurator.js';
 import { mountCare } from './care.js';
 import { mountSummary, sheet } from './summary.js';
 import { mountEndings } from './endings.js';
+import { mountCallBook } from './callbook.js';
 import { mountDelivered, mountProof } from './delivered.js';
 import { mountBlueprint } from './blueprint.js';
 import { mountPlans } from './plans.js';
@@ -136,6 +137,7 @@ async function boot() {
   mountPlans(store);
   if (on('#s-business')) mountConfigurator(store);
   if (on('#s-care')) mountCare(store);
+  mountCallBook(store);
   if (on('#plan')) { mountSummary(store); sheet.init(); mountEndings(store); }
   if (on('#wall')) mountDelivered(store);
   mountTracking(store);

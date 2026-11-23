@@ -409,6 +409,74 @@ function mountRank() {
   });
 }
 
+// Near me: filter by kind, sort by distance. The position is used here and nowhere else:
+// it is never sent, stored or tracked.
+function mountNear() {
+  const box = $('[data-nf-near]'); if (!box) return;
+  const list = $('[data-nr-list]', box); const rows = $$('li', list); const status = $('[data-nr-status]', box);
+  const heatBox = $('[data-nr-heatbox]', box);
+  const st = { cat: 'all', heat: 'any', at: null, from: '' };
+  const rad = (d) => (d * Math.PI) / 180;
+  const miles = (a, b) => {
+    const dLat = rad(b[0] - a[0]); const dLng = rad(b[1] - a[1]);
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a[0])) * Math.cos(rad(b[0])) * Math.sin(dLng / 2) ** 2;
+    return 3958.8 * 2 * Math.asin(Math.sqrt(h));
+  };
+  const draw = () => {
+    let shown = 0;
+    rows.forEach((r) => {
+      let ok = st.cat === 'all' || r.dataset.cat.split(' ').includes(st.cat);
+      if (ok && st.cat === 'yoga' && st.heat !== 'any') { const h = r.dataset.heat || ''; ok = st.heat === 'hot' ? (h === 'hot' || h === 'both') : (h === 'none' || h === 'both'); }
+      r.hidden = !ok; if (ok) shown++;
+    });
+    if (st.at) {
+      rows.forEach((r) => {
+        const has = !!r.dataset.lat; r.dist = has ? miles(st.at, [Number(r.dataset.lat), Number(r.dataset.lng)]) : Infinity;
+        $('.nf-nr-d b', r).textContent = has ? (r.dist < 10 ? r.dist.toFixed(1) : String(Math.round(r.dist))) : r.dataset.region;
+        $('.nf-nr-d small', r).textContent = has ? 'miles' : 'no address';
+        r.classList.toggle('near', has && r.dist <= 5);
+      });
+      [...rows].sort((a, b) => a.dist - b.dist).forEach((r) => list.appendChild(r));
+      status.textContent = shown + (shown === 1 ? ' place' : ' places') + ', closest to ' + st.from + ' first. Distances are approximate.';
+    } else if (st.cat !== 'all' || st.heat !== 'any') {
+      status.textContent = shown + (shown === 1 ? ' place' : ' places') + ', A to Z. Share your location or pick an area to see the closest first.';
+    }
+  };
+  box.addEventListener('click', (e) => {
+    const c = e.target.closest('[data-nr-cat]');
+    if (c) {
+      st.cat = c.dataset.nrCat; st.heat = 'any';
+      $$('[data-nr-cat]', box).forEach((b) => b.setAttribute('aria-pressed', String(b === c)));
+      if (heatBox) {
+        const on = st.cat === 'yoga'; heatBox.setAttribute('aria-disabled', String(!on));
+        $$('[data-nr-heat]', heatBox).forEach((b) => { b.disabled = !on; b.setAttribute('aria-pressed', String(b.dataset.nrHeat === 'any')); });
+      }
+      track('fit_tab', { detail: 'near_' + st.cat }); draw(); return;
+    }
+    const h = e.target.closest('[data-nr-heat]');
+    if (h && !h.disabled) {
+      st.heat = h.dataset.nrHeat; $$('[data-nr-heat]', heatBox).forEach((b) => b.setAttribute('aria-pressed', String(b === h)));
+      track('fit_tab', { detail: 'near_heat_' + st.heat }); draw(); return;
+    }
+    if (e.target.closest('[data-nr-geo]')) {
+      if (!navigator.geolocation) { status.textContent = 'This browser cannot share a location. Pick an area instead.'; return; }
+      status.textContent = 'Finding you…';
+      navigator.geolocation.getCurrentPosition((pos) => {
+        st.at = [pos.coords.latitude, pos.coords.longitude]; st.from = 'you';
+        const sel = $('[data-nr-city]', box); if (sel) sel.value = '';
+        track('fit_tab', { detail: 'near_located' }); draw();
+      }, () => { status.textContent = 'I could not get your location. Pick an area instead, or allow location for this site and try again.'; },
+      { maximumAge: 300000, timeout: 12000 });
+    }
+  });
+  const sel = $('[data-nr-city]', box);
+  if (sel) sel.addEventListener('change', () => {
+    if (!sel.value) return;
+    st.at = sel.value.split(',').map(Number); st.from = sel.options[sel.selectedIndex].textContent;
+    track('fit_tab', { detail: 'near_area' }); draw();
+  });
+}
+
 export function mountFitness() {
   mountPace();
   if (document.body.dataset.mode !== 'fitness') return;
@@ -425,6 +493,7 @@ export function mountFitness() {
   reveal($$('.nf-pairc'));
   mountPath();
   mountRank();
+  mountNear();
   // Focus page mark: a click stamps the tile and sends out a ring.
   $$('[data-nf-fart]').forEach((f) => f.addEventListener('click', () => replay(f, 'hit')));
 }

@@ -3,6 +3,7 @@
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-23
+- `/fitness/guides/near-me` — near-me finder: every guide place in one list, filter by kind, sort by distance from the visitor's location or a picked area. Location is used in the browser only. Coordinates in `guides.json` are approximate (hand typed).
 - `/fitness/guides/reformer-pilates-studios-socal` — third guide: 23 reformer Pilates studios (LA 8, OC 12, IE 3) with 10 studio profiles; Lagree and mat-only studios left out. Guides hub and mega nav updated; a guide can now set `unit` (gym or studio).
 - `/fitness/guides/gyms/<slug>` — 25 gym profile pages (who runs it, what it offers, address, hours, official links, last checked, sources), generated from `p` in `guides.json`; list rows link to them. Eight gyms have no page yet: fewer than three sourced facts.
 - `/fitness/guides`, `/fitness/guides/boxing-gyms-socal`, `/fitness/guides/kickboxing-gyms-socal` — gym guides as an editorial ranking table (region filter, big rank numerals once Jay ranks), Guides tab in the fitness mega nav. 15 boxing and 18 kickboxing gyms after an open-and-operating check; seven dropped as unconfirmed. Data in `partials/fitness/guides.json`. First pass of SoCal luxury clubs in `docs/research/2026-11-23-socal-luxury-gyms.md`.

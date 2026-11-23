@@ -220,6 +220,8 @@ export const PAGES = {
     capWord(guideN('boxing')) + ' boxing gyms across Los Angeles, Orange County and the Inland Empire, with what each is known for and its official link. Written by a working coach.', null),
   'fit-guide-kickboxing': fitPage('guides/kickboxing-gyms-socal', 'Kickboxing and Muay Thai gyms', 'Kickboxing and Muay Thai Gyms in Southern California: ' + guideN('kickboxing') + ' Worth Knowing · NJS Fitness',
     capWord(guideN('kickboxing')) + ' kickboxing and Muay Thai gyms across Los Angeles, Orange County and the Inland Empire, with what each is known for and its official link.', null),
+  'fit-near': fitPage('guides/near-me', 'Near me', 'Boxing, Kickboxing, Pilates and Yoga Near Me in Southern California · NJS Fitness',
+    'Find the closest boxing gym, kickboxing gym, reformer Pilates studio or yoga studio in Los Angeles, Orange County and the Inland Empire. Sorted by distance.', null),
   'fit-guide-pilates': fitPage('guides/reformer-pilates-studios-socal', 'Reformer Pilates studios', 'Reformer Pilates Studios in Southern California: ' + guideN('pilates') + ' Worth Knowing in LA, OC and the Inland Empire · NJS Fitness',
     capWord(guideN('pilates')) + ' reformer Pilates studios across Los Angeles, Orange County and the Inland Empire, with what each offers and its official link.', null),
   'fit-note-warmup': fitPage('notes/warm-up', 'Warm-up', 'A Ten Minute Warm-Up That Works: Four Parts, With Sources · NJS Fitness',
@@ -242,6 +244,7 @@ for (const [key, id] of Object.entries(FOCUS_PAGE)) {
 PAGES['fit-coach'].jsonld = [ld('ProfilePage', { mainEntity: COACH }), crumbs('coach', 'About Nathan')];
 PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
 PAGES['fit-guides'].jsonld = [crumbs('guides', 'Guides')];
+PAGES['fit-near'].jsonld = [ld('BreadcrumbList', { itemListElement: [['Fitness', '/fitness'], ['Guides', '/fitness/guides'], ['Near me', '/fitness/guides/near-me']].map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + path })) })];
 // Gym guides: an ItemList of the gyms in page order, so the list itself is readable by search engines.
 for (const [key, id] of [['boxing', 'fit-guide-boxing'], ['kickboxing', 'fit-guide-kickboxing'], ['pilates', 'fit-guide-pilates']]) {
   const g = GUIDES.guides[key];
@@ -583,6 +586,48 @@ function renderGuide(key) {
     '  </div>', '</section>'].join('\n');
 }
 
+// Near me: every place from every guide in one list. The page sorts it by distance in the browser;
+// the visitor's position never leaves the device.
+const NEAR_CATS = [['boxing', 'Boxing'], ['kick', 'Kickboxing and Muay Thai'], ['reformer', 'Reformer Pilates'], ['mat', 'Mat Pilates'], ['yoga', 'Yoga']];
+const NEAR_AREAS = [['Brea', 33.9167, -117.9001], ['Anaheim', 33.8366, -117.9143], ['Irvine', 33.6846, -117.8265], ['Newport Beach', 33.6189, -117.9298], ['Rancho Santa Margarita', 33.6409, -117.6031], ['Corona', 33.8753, -117.5664], ['Riverside', 33.9806, -117.3755], ['Rancho Cucamonga', 34.1064, -117.5931], ['Temecula', 33.4936, -117.1484], ['Downtown Los Angeles', 34.0407, -118.2468], ['Hollywood', 34.0928, -118.3287], ['Santa Monica', 34.0195, -118.4912], ['North Hollywood', 34.1870, -118.3813], ['Pasadena', 34.1478, -118.1445], ['Long Beach', 33.7701, -118.1937]];
+function nearCats(key, x) {
+  const offers = ((x.p && x.p.offers) || []).join(' ') + ' ' + x.known;
+  if (key === 'boxing') return ['boxing'];
+  if (key === 'kickboxing') return ['kick'];
+  if (key === 'pilates') return ['reformer'].concat(/\bmat (pilates|work)\b/i.test(offers) ? ['mat'] : []);
+  return ['yoga'].concat(/\bmat pilates\b/i.test(offers) ? ['mat'] : [], /\breformer\b/i.test(offers) ? ['reformer'] : []);
+}
+function renderNear() {
+  const all = Object.entries(GUIDES.guides).flatMap(([key, g]) => g.gyms.map((x) => ({ key, x, cats: nearCats(key, x) })))
+    .sort((a, b) => a.x.name.localeCompare(b.x.name));
+  const have = new Set(all.flatMap((r) => r.cats));
+  const cats = NEAR_CATS.filter(([c]) => have.has(c));
+  const n = (c) => all.filter((r) => r.cats.includes(c)).length;
+  const pad = (v) => String(v).padStart(2, '0');
+  const label = (r) => r.cats.map((c) => NEAR_CATS.find(([k]) => k === c)[1]).join(' · ') + (r.x.heat === 'hot' ? ' · Hot' : r.x.heat === 'none' ? ' · Not heated' : r.x.heat === 'both' ? ' · Hot and not heated' : '');
+  const dir = (x) => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(x.p && x.p.address ? x.name + ', ' + x.p.address : x.name + ', ' + x.city + ', CA');
+  const row = ({ x, cats: cs }, r) => '      <li class="nf-rk-row nf-nr-row" data-cat="' + cs.join(' ') + '"' + (x.heat ? ' data-heat="' + x.heat + '"' : '') + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') + ' data-region="' + x.region + '">' +
+    '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
+    '<div class="nf-rk-who"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3><p class="nf-rk-where">' + esc(x.city) + '</p></div>' +
+    '<div class="nf-rk-what"><p class="nf-nr-cat">' + label(r) + '</p><p>' + esc(x.known) + '</p></div>' +
+    '<p class="nf-rk-links"><a href="' + dir(x) + '" target="_blank" rel="noopener">Directions<span class="sr"> to ' + esc(x.name) + ', opens in a new tab</span></a>' +
+    (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') + '</p></li>';
+  return ['<section class="nf-sec tight" aria-label="Places near you">', '  <div class="wrap">',
+    '    <div class="nf-rk nf-nr" data-nf-near>',
+    '      <div class="nf-nr-loc"><button type="button" class="nf-btn nf-coral" data-nr-geo>Use my location</button>' +
+      '<label class="nf-nr-pick"><span>or pick an area</span><select data-nr-city><option value="">Choose an area</option>' + NEAR_AREAS.map(([name, la, ln]) => '<option value="' + la + ',' + ln + '">' + name + '</option>').join('') + '</select></label></div>',
+    '      <p class="nf-nr-status" data-nr-status role="status">Sorted A to Z. Share your location or pick an area to see the closest first. Your location stays on your device.</p>',
+    '      <div class="nf-rk-bar"><div class="nf-rk-f" role="group" aria-label="What to show">' +
+      '<button type="button" data-nr-cat="all" aria-pressed="true">Everything<small>' + pad(all.length) + '</small></button>' +
+      cats.map(([c, name]) => '<button type="button" data-nr-cat="' + c + '" aria-pressed="false">' + name + '<small>' + pad(n(c)) + '</small></button>').join('') + '</div></div>',
+    have.has('yoga') ? '      <div class="nf-rk-f nf-nr-heat" role="group" aria-label="Heated or not" data-nr-heatbox aria-disabled="true"><span>Yoga room</span>' +
+      '<button type="button" data-nr-heat="any" aria-pressed="true" disabled>Any</button><button type="button" data-nr-heat="hot" aria-pressed="false" disabled>Hot</button><button type="button" data-nr-heat="none" aria-pressed="false" disabled>Not hot</button></div>' : '',
+    '      <div class="nf-rk-head nf-nr-head" aria-hidden="true"><span>Distance</span><span>Place</span><span>What it is</span><span>Go</span></div>',
+    '      <ol class="nf-rk-list" data-nr-list>', ...all.map((r) => row(r, r)), '      </ol>',
+    '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate, measured to the neighborhood, so use Directions for the real drive. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
+    '    </div>', '  </div>', '</section>'].filter(Boolean).join('\n');
+}
+
 export function sitemap() {
   const urls = Object.values(PAGES).map((p) => p.path).concat('/resume');
   return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
@@ -612,6 +657,7 @@ function expand(text, seen = []) {
     if (m[1].startsWith('nf-health-')) return renderHealth(m[1].slice(10));
     if (m[1].startsWith('nf-qa-')) return renderQa(m[1].slice(6));
     if (m[1].startsWith('nf-gear-')) return renderGear(m[1].slice(8));
+    if (m[1] === 'nf-near') return renderNear();
     if (m[1].startsWith('nf-guide-')) return renderGuide(m[1].slice(9));
     if (m[1] === 'nf-path-wheel') return renderPathWheel();
     if (m[1] === 'nf-path-pillars') return renderPathPillars();

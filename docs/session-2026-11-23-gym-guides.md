@@ -30,3 +30,10 @@
 - Most rows come from ClassPass regional lists (reviews collected January 2025 to February 2026). The `known` lines restate facts only, never ClassPass's ranking or ratings.
 - Trap: a spelled-out count over twenty ("Twenty-three worth knowing.") overflows the h1 on phones, so counts above twenty show as numerals in the headline.
 - Next: official sites and Instagram for the 13 studios without a profile; more Inland Empire studios (only three confirmed).
+
+## Near-me finder
+- `/fitness/guides/near-me`: one list of every guide place, kind filters, distance sort from browser geolocation or a picked area. Yoga gets a Hot / Not hot row once yoga data exists (`heat` per studio).
+- Decision: no maps or geocoding service. Distances are straight-line from approximate hand-typed coordinates, labelled as approximate, with a Google Maps directions link per row. The shell and the Mac bridge had no network for geocoding.
+- Privacy: position stays in the page; events record only that a filter or the locate button was used.
+- Trap: the status line changes length, so it has a fixed min-height or the list jumps on phones.
+- Next: exact coordinates (Jay can paste from Google Maps), `visited` and `partner` fields for the influencer plan, and a labelled-partner rule before any gym pays.

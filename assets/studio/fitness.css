@@ -1099,6 +1099,30 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-gp-me .nf-btn { justify-self: start; margin-top: 4px; }
 .nf-gp-me .nf-gp-me-n { font-size: 13px; color: rgba(255,255,255,.65); }
 @media (max-width: 860px) { .nf-gp-grid { grid-template-columns: 1fr; gap: 28px; } .nf-gp-dl > div { grid-template-columns: 1fr; gap: 4px; } }
+/* Near me: the ranking table with distance in the first column. */
+.nf-nr-loc { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding: 18px 0 6px; }
+.nf-nr-pick { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; color: var(--ink-2); }
+.nf-nr-pick select { min-height: 48px; padding: 0 14px; border-radius: 999px; border: 1.5px solid var(--line-hi); background: var(--surface); color: var(--ink); font: 600 15px/1 var(--sans); }
+.nf-nr-status { min-height: 3em; padding: 6px 0 4px; font-size: 14.5px; color: var(--ink-2); }
+.nf-nr-heat { align-items: center; padding-bottom: 14px; }
+.nf-nr-heat > span { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
+.nf-nr-heat[aria-disabled="true"] { opacity: .45; }
+.nf-nr-heat button:disabled { cursor: default; }
+.nf-rk-head.nf-nr-head, .nf-rk-row.nf-nr-row { grid-template-columns: 96px minmax(0, 1.2fr) minmax(0, 1.7fr) 130px; }
+.nf-nr-d { display: grid; gap: 4px; }
+.nf-nr-d b { font: 700 34px/.95 var(--sans); letter-spacing: -.05em; font-variant-numeric: tabular-nums; color: var(--ink); }
+.nf-nr-d small { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); min-height: 11px; }
+.nf-nr-row.near .nf-nr-d b { color: var(--nf-acc); }
+.nf-nr-cat { font: 500 11px/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--nf-acc); }
+@media (max-width: 860px) {
+  .nf-rk-row.nf-nr-row { grid-template-columns: 64px minmax(0, 1fr); column-gap: 14px; row-gap: 10px; }
+  .nf-nr-row .nf-nr-d { grid-row: span 3; }
+  .nf-nr-row .nf-nr-d b { font-size: 26px; }
+  .nf-nr-row .nf-rk-what, .nf-nr-row .nf-rk-links { grid-column: 2; }
+  .nf-nr-loc .nf-btn { width: 100%; justify-content: center; }
+  .nf-nr-status { min-height: 6.2em; }
+  .nf-nr-pick { width: 100%; } .nf-nr-pick select { flex: 1; min-width: 0; }
+}
 .nf-gym-src { margin-top: 22px; max-width: 70em; }
 .nf-gym-src a { color: var(--ink-2); }
 @media (max-width: 860px) {

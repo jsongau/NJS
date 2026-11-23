@@ -1,5 +1,5 @@
 {
-  "_readme": "Gym guides for /fitness/guides. rank: Jay's own order, 1 to N (null until he ranks; the page shows a ranked list only when every gym on it has a rank). note: Jay's own words about a gym he knows firsthand. known: a fact from a source that was read, never an opinion. site and instagram: official links only, null until checked. Never paste star ratings from Google or Yelp. checked: the day every entry was last verified. p: the gym profile behind its own page at /fitness/guides/gyms/<slug>; a gym gets a page only with at least three sourced facts (address, since, people, offers, hours, price, about), each from a page listed in p.src that was read on the checked date. No p, no page.",
+  "_readme": "Gym guides for /fitness/guides. rank: Jay's own order, 1 to N (null until he ranks; the page shows a ranked list only when every gym on it has a rank). note: Jay's own words about a gym he knows firsthand. known: a fact from a source that was read, never an opinion. site and instagram: official links only, null until checked. Never paste star ratings from Google or Yelp. checked: the day every entry was last verified. p: the gym profile behind its own page at /fitness/guides/gyms/<slug>; a gym gets a page only with at least three sourced facts (address, since, people, offers, hours, price, about), each from a page listed in p.src that was read on the checked date. No p, no page. lat and lng: approximate coordinates (neighborhood level, typed by hand, not geocoded) used only to sort the near-me page by distance; null hides the distance. heat (yoga only): hot, none or both.",
   "checked": "2026-11-23",
   "guides": {
     "boxing": {
@@ -36,7 +36,9 @@
               ]
             ],
             "slug": "wild-card-boxing-club"
-          }
+          },
+          "lat": 34.0907,
+          "lng": -118.3267
         },
         {
           "name": "Ten Goose Boxing",
@@ -74,7 +76,9 @@
               ]
             ],
             "slug": "ten-goose-boxing"
-          }
+          },
+          "lat": 34.1867,
+          "lng": -118.449
         },
         {
           "name": "Westside Boxing Club",
@@ -102,7 +106,9 @@
               ]
             ],
             "slug": "westside-boxing-club"
-          }
+          },
+          "lat": 34.0473,
+          "lng": -118.3445
         },
         {
           "name": "Fortune Gym",
@@ -140,7 +146,9 @@
               ]
             ],
             "slug": "fortune-gym"
-          }
+          },
+          "lat": 34.0837,
+          "lng": -118.3598
         },
         {
           "name": "City of Angels Boxing",
@@ -173,7 +181,9 @@
               ]
             ],
             "slug": "city-of-angels-boxing"
-          }
+          },
+          "lat": 34.019,
+          "lng": -118.2745
         },
         {
           "name": "Gloveworx",
@@ -200,7 +210,9 @@
               ]
             ],
             "slug": "gloveworx"
-          }
+          },
+          "lat": 34.0276,
+          "lng": -118.489
         },
         {
           "name": "Prevail Boxing",
@@ -224,7 +236,9 @@
               ]
             ],
             "slug": "prevail-boxing"
-          }
+          },
+          "lat": 34.069,
+          "lng": -118.3535
         },
         {
           "name": "Lobos Boxing Club",
@@ -261,7 +275,9 @@
               ]
             ],
             "slug": "lobos-boxing-club"
-          }
+          },
+          "lat": 34.0836,
+          "lng": -118.345
         },
         {
           "name": "Trinity Boxing Club",
@@ -292,7 +308,9 @@
               ]
             ],
             "slug": "trinity-boxing-club"
-          }
+          },
+          "lat": 34.0837,
+          "lng": -118.3603
         },
         {
           "name": "Eastside Eddie Heredia Boxing Club",
@@ -324,7 +342,9 @@
               ]
             ],
             "slug": "eastside-eddie-heredia-boxing-club"
-          }
+          },
+          "lat": 34.018,
+          "lng": -118.156
         },
         {
           "name": "Brickhouse Boxing Club",
@@ -334,7 +354,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.172,
+          "lng": -118.379
         },
         {
           "name": "Outlaws Boxing Gym",
@@ -362,7 +384,9 @@
               ]
             ],
             "slug": "outlaws-boxing-gym"
-          }
+          },
+          "lat": 34.18,
+          "lng": -118.536
         },
         {
           "name": "Robert Garcia Boxing Academy",
@@ -394,7 +418,9 @@
               ]
             ],
             "slug": "robert-garcia-boxing-academy"
-          }
+          },
+          "lat": 33.939,
+          "lng": -117.276
         },
         {
           "name": "Ontario Boxing Club",
@@ -421,7 +447,9 @@
               ]
             ],
             "slug": "ontario-boxing-club"
-          }
+          },
+          "lat": 34.065,
+          "lng": -117.652
         },
         {
           "name": "Villegas Park boxing club",
@@ -450,7 +478,9 @@
               ]
             ],
             "slug": "villegas-park-boxing-club"
-          }
+          },
+          "lat": 33.931,
+          "lng": -117.405
         }
       ],
       "sources": [
@@ -512,7 +542,9 @@
               ]
             ],
             "slug": "the-yard-muay-thai"
-          }
+          },
+          "lat": 34.083,
+          "lng": -118.22
         },
         {
           "name": "Muay Thai America Gym",
@@ -539,7 +571,9 @@
               ]
             ],
             "slug": "muay-thai-america-gym"
-          }
+          },
+          "lat": 34.165,
+          "lng": -118.364
         },
         {
           "name": "Muay Thai Academy of America",
@@ -566,7 +600,9 @@
               ]
             ],
             "slug": "muay-thai-academy-of-america"
-          }
+          },
+          "lat": 34.194,
+          "lng": -118.372
         },
         {
           "name": "MTK Muay Thai Kickboxing Gym",
@@ -597,7 +633,9 @@
               ]
             ],
             "slug": "mtk-muay-thai-kickboxing-gym"
-          }
+          },
+          "lat": 34.205,
+          "lng": -118.412
         },
         {
           "name": "Dynamix MMA",
@@ -632,7 +670,9 @@
               ]
             ],
             "slug": "dynamix-mma"
-          }
+          },
+          "lat": 34.042,
+          "lng": -118.459
         },
         {
           "name": "Forj LA",
@@ -660,7 +700,9 @@
               ]
             ],
             "slug": "forj-la"
-          }
+          },
+          "lat": 34.0535,
+          "lng": -118.2255
         },
         {
           "name": "Systems Training Center",
@@ -690,7 +732,9 @@
               ]
             ],
             "slug": "systems-training-center"
-          }
+          },
+          "lat": 33.913,
+          "lng": -118.353
         },
         {
           "name": "Santa Monica Striking",
@@ -700,7 +744,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.025,
+          "lng": -118.48
         },
         {
           "name": "Southpaw Muay Thai Club",
@@ -710,7 +756,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.044,
+          "lng": -118.25
         },
         {
           "name": "Left Hand Muay Thai",
@@ -720,7 +768,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.165,
+          "lng": -118.396
         },
         {
           "name": "GKG Gil's Kickboxing Gym",
@@ -730,7 +780,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.792,
+          "lng": -118.315
         },
         {
           "name": "Team Oyama",
@@ -759,7 +811,9 @@
               ]
             ],
             "slug": "team-oyama"
-          }
+          },
+          "lat": 33.695,
+          "lng": -117.84
         },
         {
           "name": "Kings MMA",
@@ -797,7 +851,9 @@
               ]
             ],
             "slug": "kings-mma"
-          }
+          },
+          "lat": 33.715,
+          "lng": -117.999
         },
         {
           "name": "Tribe Muay Thai",
@@ -823,7 +879,9 @@
               ]
             ],
             "slug": "tribe-muay-thai"
-          }
+          },
+          "lat": 33.775,
+          "lng": -118.029
         },
         {
           "name": "The Den Training Center",
@@ -833,7 +891,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.889,
+          "lng": -117.809
         },
         {
           "name": "Adrenaline FC",
@@ -843,7 +903,9 @@
           "site": "https://www.adrenalinefc.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.108,
+          "lng": -117.29
         },
         {
           "name": "Millennia MMA",
@@ -879,7 +941,9 @@
               ]
             ],
             "slug": "millennia-mma"
-          }
+          },
+          "lat": 34.099,
+          "lng": -117.556
         },
         {
           "name": "Black Beard Kickboxing",
@@ -889,7 +953,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.953,
+          "lng": -117.396
         }
       ],
       "sources": [
@@ -978,7 +1044,9 @@
               ]
             ],
             "slug": "evoken"
-          }
+          },
+          "lat": 34.09,
+          "lng": -118.37
         },
         {
           "name": "Glow Pilates Studio",
@@ -1006,7 +1074,9 @@
               ]
             ],
             "slug": "glow-pilates-studio"
-          }
+          },
+          "lat": 34.0837,
+          "lng": -118.3606
         },
         {
           "name": "Pilates Boutique",
@@ -1016,7 +1086,9 @@
           "site": "https://pilatesboutique.com",
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.079,
+          "lng": -118.389
         },
         {
           "name": "Focus Pilates",
@@ -1059,7 +1131,9 @@
               ]
             ],
             "slug": "mighty-pilates"
-          }
+          },
+          "lat": 34.0625,
+          "lng": -118.4455
         },
         {
           "name": "Swan Movement Arts",
@@ -1092,7 +1166,9 @@
               ]
             ],
             "slug": "swan-movement-arts"
-          }
+          },
+          "lat": 34.159,
+          "lng": -118.372
         },
         {
           "name": "Bodies and Pilates LA",
@@ -1112,7 +1188,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.101,
+          "lng": -117.768
         },
         {
           "name": "Speir Pilates",
@@ -1152,7 +1230,9 @@
               ]
             ],
             "slug": "speir-pilates"
-          }
+          },
+          "lat": 33.618,
+          "lng": -117.929
         },
         {
           "name": "LiveMetta Pilates",
@@ -1190,7 +1270,9 @@
               ]
             ],
             "slug": "livemetta-pilates"
-          }
+          },
+          "lat": 33.629,
+          "lng": -117.908
         },
         {
           "name": "Escape Pilates",
@@ -1216,7 +1298,9 @@
               ]
             ],
             "slug": "escape-pilates"
-          }
+          },
+          "lat": 33.636,
+          "lng": -117.912
         },
         {
           "name": "Studio X",
@@ -1226,7 +1310,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.664,
+          "lng": -117.903
         },
         {
           "name": "The Body Collective",
@@ -1236,7 +1322,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.664,
+          "lng": -117.903
         },
         {
           "name": "The Beachouse Studio",
@@ -1246,7 +1334,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.618,
+          "lng": -117.929
         },
         {
           "name": "Coeur Pilates",
@@ -1274,7 +1364,9 @@
               ]
             ],
             "slug": "coeur-pilates"
-          }
+          },
+          "lat": 33.61,
+          "lng": -117.706
         },
         {
           "name": "BE Fit Modern Pilates",
@@ -1301,7 +1393,9 @@
               ]
             ],
             "slug": "be-fit-modern-pilates"
-          }
+          },
+          "lat": 33.563,
+          "lng": -117.706
         },
         {
           "name": "Carrie's Pilates",
@@ -1311,7 +1405,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.64,
+          "lng": -117.603
         },
         {
           "name": "Class 46",
@@ -1321,7 +1417,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.8366,
+          "lng": -117.9143
         },
         {
           "name": "CirKel Fitness",
@@ -1331,7 +1429,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.742,
+          "lng": -117.823
         },
         {
           "name": "FIT with LIT",
@@ -1341,7 +1441,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.618,
+          "lng": -117.929
         },
         {
           "name": "Pure Studio",
@@ -1379,7 +1481,9 @@
               ]
             ],
             "slug": "pure-studio"
-          }
+          },
+          "lat": 33.685,
+          "lng": -117.273
         },
         {
           "name": "SweatLogic",
@@ -1389,7 +1493,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 34.0975,
+          "lng": -117.6484
         },
         {
           "name": "The Pilates Co.",
@@ -1399,7 +1505,9 @@
           "site": null,
           "instagram": null,
           "rank": null,
-          "note": null
+          "note": null,
+          "lat": 33.923,
+          "lng": -117.446
         }
       ]
     }

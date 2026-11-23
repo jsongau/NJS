@@ -565,7 +565,7 @@ function renderGuide(key) {
     '<p class="nf-rk-reg"><span>' + x.region + '</span></p>' +
     '<div class="nf-rk-what"><p>' + esc(x.known) + '</p>' + (x.note ? '<p class="nf-rk-note"><b>Nathan:</b> ' + esc(x.note) + '</p>' : '') + '</div>' +
     '<p class="nf-rk-links">' + links(x) + '</p></li>';
-  const band = (r, name) => '      <li class="nf-rk-band" data-region="' + r + '"><h2 id="gd-' + r.toLowerCase() + '">' + name + '</h2><span>' + pad(count(r)) + ' ' + unit + 's</span></li>';
+  const band = (r, name) => '      <li class="nf-rk-band" data-region="' + r + '">' + regArt(r) + '<h2 id="gd-' + r.toLowerCase() + '">' + name + '</h2><span>' + pad(count(r)) + ' ' + unit + 's</span></li>';
   const rows = ranked ? guideOrder(g).map((x, i) => row(x, i + 1))
     : regs.flatMap(([r, name]) => [band(r, name), ...g.gyms.filter((x) => x.region === r).map((x) => row(x, 0))]);
   const lists = [
@@ -574,7 +574,7 @@ function renderGuide(key) {
       '<p class="nf-rk-meta">' + esc(g.sport) + ' · Southern California · ' + pad(g.gyms.length) + ' ' + unit + 's · Checked ' + day + '</p></header>',
     '      <div class="nf-rk-bar"><div class="nf-rk-f" role="group" aria-label="Show a region">' +
       '<button type="button" data-rk-f="all" aria-pressed="true">All<small>' + pad(g.gyms.length) + '</small></button>' +
-      regs.map(([r, name]) => '<button type="button" data-rk-f="' + r + '" aria-pressed="false">' + name + '<small>' + pad(count(r)) + '</small></button>').join('') + '</div>' +
+      regs.map(([r, name]) => '<button type="button" data-rk-f="' + r + '" aria-pressed="false">' + gic(r) + name + '<small>' + pad(count(r)) + '</small></button>').join('') + '</div>' +
       '<p class="nf-rk-how"><a class="nf-rk-tomap" href="/fitness/guides/near-me?show=' + KEY_TOP[key] + (key === 'boxing' ? '&kind=boxing' : key === 'kickboxing' ? '&kind=kick' : '') + '">' + gic('pin') + 'See them on the map</a>' + (ranked ? 'Ranked by a working coach. <a href="#method">How</a>' : 'Grouped by region, not ranked yet. <a href="#method">Why</a>') + '</p></div>',
     '      <div class="nf-rk-head" aria-hidden="true">' + (ranked ? '<span>Rank</span>' : '') + '<span>' + Unit + '</span><span>Region</span><span>Known for</span><span>Links</span></div>',
     '      <ol class="nf-rk-list">', ...rows, '      </ol>',
@@ -600,7 +600,18 @@ const GICON = {
   yoga: '<path d="M12 5c2 2.5 2 6 0 9-2-3-2-6.5 0-9zM12 14c-1-3-4-5-7-5 0 4 3 7 7 7M12 14c1-3 4-5 7-5 0 4-3 7-7 7M4 20h16"/>',
   hot: '<path d="M12 3c1 3.5 5 5.5 5 10.5a5 5 0 0 1-10 0c0-2 1-3.6 2-4.6 0 2 1 3 2 3 0-3-1-5 1-8.9z"/>',
   pin: '<path d="M12 21s-6-5.6-6-10.5a6 6 0 0 1 12 0C18 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/>',
+  // The three regions: a palm for Los Angeles, surf for Orange County, mountains for the Inland Empire.
+  LA: '<path d="M13 21c0-5-.5-8-2-11"/><path d="M11 10c-2.5-2-5-1.5-6.5.5M11 10c-.5-3 1-5 3.5-5.5M11 10c2.5-1.5 5.5-.5 6.5 2M11 10c-3 .5-4.5 3-4.5 5"/><path d="M5 21h14"/><circle cx="18.5" cy="5.5" r="1.8"/>',
+  OC: '<path d="M7 11a5 5 0 0 1 10 0"/><path d="M12 3v1.5M5.5 5.5l1 1M18.5 5.5l-1 1"/><path d="M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 19.5c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/>',
+  IE: '<path d="M2 19l6-10 4 6 3-4 7 8z"/><path d="M6.6 11.4l1.4 1.2 1.6-1"/><circle cx="18" cy="6" r="2"/>',
 };
+// Larger, moving art for each region heading on a guide.
+const REGION_ART = {
+  LA: '<circle class="ra-sun" cx="74" cy="15" r="9" fill="#FF8A6B"/><path d="M40 44V26h8v18M50 44V18h9v26M61 44V30h7v14M70 44V24h8v20M80 44V32h8v12" fill="currentColor" opacity=".9"/><path d="M4 44h88" stroke="currentColor" stroke-width="2"/><path d="M22 44c0-12-1-19-4-26" stroke="currentColor" stroke-width="2.5"/><g class="ra-frond" stroke="#1F8A7D" stroke-width="2.5"><path d="M18 18c-5-4-10-3-13 1M18 18c-1-6 2-10 7-11M18 18c5-3 11-1 13 4M18 18c-6 1-9 6-9 10M18 18c4 1 7 5 7 9"/></g>',
+  OC: '<path class="ra-sun" d="M36 27a12 12 0 0 1 24 0z" fill="#FF8A6B"/><path d="M48 6v4M30 12l3 3M66 12l-3 3" stroke="#FF8A6B" stroke-width="2.5"/><g class="ra-wave" stroke="#1F8A7D" stroke-width="2.5"><path d="M-12 33c6-5 12-5 18 0s12 5 18 0 12-5 18 0 12 5 18 0 12-5 18 0 12 5 18 0 12-5 18 0"/></g><g class="ra-wave ra-w2" stroke="currentColor" stroke-width="2.5"><path d="M-12 42c6-5 12-5 18 0s12 5 18 0 12-5 18 0 12 5 18 0 12-5 18 0 12 5 18 0 12-5 18 0"/></g>',
+  IE: '<circle class="ra-sun" cx="20" cy="13" r="8" fill="#FF8A6B"/><path d="M2 44l24-30 14 18 10-12 22 24z" fill="currentColor"/><path d="M26 14l-7 8.8 5 3 3-3.4 4 3 1.6-2.8z" fill="#fff"/><path d="M82 44V22" stroke="currentColor" stroke-width="2.5"/><g class="ra-blades" stroke="#7A5BD0" stroke-width="2.5"><path d="M82 22V10M82 22v12M82 22H70M82 22h12"/></g><circle cx="82" cy="22" r="2.4" fill="currentColor"/><path d="M0 44h96" stroke="currentColor" stroke-width="2"/>',
+};
+const regArt = (r) => '<svg class="nf-ra nf-ra-' + r.toLowerCase() + '" viewBox="0 0 96 48" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + REGION_ART[r] + '</svg>';
 const KEY_ICON = { boxing: 'boxing', kickboxing: 'kick', pilates: 'reformer', yoga: 'yoga' };
 const gic = (name, cls) => '<svg class="nf-gi' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + GICON[name] + '</svg>';
 const ART_FONT = 'font-family="Inter Tight, Inter, sans-serif"';
@@ -723,7 +734,7 @@ function renderNear() {
       '<p class="nf-nr-subhint" data-nr-sub="all">Pick Striking, Pilates or Yoga to choose kinds: boxing or jiu-jitsu, reformer or mat, hot or not.</p>' +
       NEAR_TREE.map(([id, name, , subs]) => '<div class="nf-nr-checks nf-top-' + id + '" role="group" aria-label="' + name + ' kinds" data-nr-sub="' + id + '" hidden>' +
         subs.map(([c, sn]) => '<button type="button" data-nr-kind="' + c + '" aria-pressed="false">' + (GICON[c] ? gic(c) : gic('yoga')) + '<span>' + sn + '</span><small>' + pad(n(c)) + '</small></button>').join('') + '</div>').join('') + '</div></fieldset>',
-    '        <fieldset class="nf-nr-fs"><legend>Region</legend><div class="nf-nr-checks">' + regs.map(([r, name, c]) => '<button type="button" data-nr-reg="' + r + '" aria-pressed="false"><span>' + name + '</span><small>' + pad(c) + '</small></button>').join('') + '</div></fieldset>',
+    '        <fieldset class="nf-nr-fs"><legend>Region</legend><div class="nf-nr-checks">' + regs.map(([r, name, c]) => '<button type="button" data-nr-reg="' + r + '" aria-pressed="false">' + gic(r) + '<span>' + name + '</span><small>' + pad(c) + '</small></button>').join('') + '</div></fieldset>',
     '        <fieldset class="nf-nr-fs nf-nr-fdist"><legend>Distance</legend><label class="nf-nr-range"><input type="range" min="0" max="4" step="1" value="0" data-nr-dist disabled aria-describedby="nr-dist-note"><output data-nr-distout>Any distance</output></label>' +
       '<p class="nf-nr-rnote" id="nr-dist-note" data-nr-distnote>Share your location or pick an area to use this.</p></fieldset>',
     '        <div class="nf-nr-pfoot"><button type="button" class="nf-nr-clear" data-nr-clear>Clear all</button><button type="button" class="nf-btn nf-coral" data-nr-done>Show places</button></div>',
@@ -731,7 +742,7 @@ function renderNear() {
     '      <div class="nf-nr-split" data-nr-split data-view="list">',
     '        <ol class="nf-nr-list" data-nr-list>', ...all.map(row), '        </ol>',
     '        <div class="nf-nr-mapbox"><div class="nf-nr-mapbar" role="group" aria-label="Move the map">' +
-      '<button type="button" data-nr-fly="me">' + gic('pin') + 'Me</button><button type="button" data-nr-fly="all">All</button><button type="button" data-nr-fly="LA">LA</button><button type="button" data-nr-fly="OC">OC</button><button type="button" data-nr-fly="IE">IE</button>' +
+      '<button type="button" data-nr-fly="me">' + gic('pin') + 'Me</button><button type="button" data-nr-fly="all">All</button>' + ['LA', 'OC', 'IE'].map((r) => '<button type="button" data-nr-fly="' + r + '" aria-label="Move the map to ' + REGION_NAME[r] + '">' + gic(r) + r + '</button>').join('') + '' +
       '<button type="button" class="nf-nr-lucky" data-nr-fly="lucky">Surprise me</button><span class="nf-nr-inview" data-nr-inview aria-live="polite"></span></div>' +
       '<div class="nf-nr-mapwrap"><div class="nf-nr-map" data-nr-map role="application" aria-label="Map of gyms and studios. Every place on it is also in the list."></div>' +
       '<div class="nf-nr-cards" data-nr-cards aria-label="Places on the map, swipe to move the map"></div></div>' +
@@ -745,7 +756,7 @@ function renderNear() {
     '    <div class="nf-h"><div><p class="nf-k">The full lists</p><h2 id="nr-lists">Every place on this map is in a guide</h2></div><p>Each guide lists its places by region, with a profile page for nearly every one.</p></div>',
     '    <div class="nf-cards c2">' + Object.entries(GUIDES.guides).map(([key, g]) => { const [gid] = GUIDE_OF[key];
       return '<div class="nf-card nf-nr-gcard"><p class="nf-k">' + pad(g.gyms.length) + ' ' + (g.unit || 'gym') + 's</p><h3><a href="' + PAGES[gid].path + '">' + esc(GUIDE_META[key][2]) + ' in Southern California</a></h3>' +
-        '<p class="nf-nr-glinks">' + REGIONS.filter(([r]) => g.gyms.some((x) => x.region === r)).map(([r, name]) => '<a href="' + PAGES[gid].path + '#gd-' + r.toLowerCase() + '">' + name + '</a>').join('') + '</p></div>'; }).join('') + '</div>',
+        '<p class="nf-nr-glinks">' + REGIONS.filter(([r]) => g.gyms.some((x) => x.region === r)).map(([r, name]) => '<a href="' + PAGES[gid].path + '#gd-' + r.toLowerCase() + '">' + gic(r) + name + '</a>').join('') + '</p></div>'; }).join('') + '</div>',
     '  </div>', '</section>'].join('\n');
 }
 

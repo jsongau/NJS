@@ -1067,10 +1067,11 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-rk-links a { font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--nf-acc); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .nf-rk-links a:hover { color: var(--nf-acc); }
 .nf-rk-none { font-size: 13px; color: var(--ink-3); }
-.nf-rk-band { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 34px 0 12px; border-bottom: 2px solid var(--ink); }
+.nf-rk-band { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; padding: 34px 0 12px; border-bottom: 2px solid var(--ink); }
 .nf-rk-band:first-child { padding-top: 22px; }
 .nf-rk-band h2 { font-size: clamp(24px, 3vw, 34px); letter-spacing: -.035em; scroll-margin-top: 150px; }
-.nf-rk-band span { font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.nf-rk-band h2 { margin-right: auto; line-height: 1; }
+.nf-rk-band span { padding-bottom: 4px; font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
 .nf-rk [hidden] { display: none; }
 .nf-rk .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .nf-rk-who h3 a { color: inherit; text-decoration: none; }
@@ -1139,7 +1140,8 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-nr-mapbar button { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid var(--line-hi); background: var(--surface); color: var(--ink); font: 600 13.5px/1 var(--sans); cursor: pointer; transition: transform .12s, border-color .12s; }
 .nf-nr-mapbar button:hover { border-color: var(--ink); transform: translateY(-1px); }
 .nf-nr-mapbar button:active { transform: scale(.96); }
-.nf-nr-mapbar .nf-gi { width: 15px; height: 15px; color: #1B6FE8; }
+.nf-nr-mapbar .nf-gi { width: 16px; height: 16px; color: var(--ink-2); }
+.nf-nr-mapbar [data-nr-fly="me"] .nf-gi { color: #1B6FE8; }
 .nf-nr-mapbar .nf-nr-lucky { background: var(--ink); border-color: var(--ink); color: #fff; }
 .nf-nr-inview { margin-left: auto; font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); min-width: 9em; text-align: right; }
 .nf-nr-addr a { display: inline-flex; align-items: flex-start; gap: 6px; font-size: 14px; line-height: 1.35; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-hi); text-underline-offset: 3px; }
@@ -1328,6 +1330,22 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 }
 @keyframes nr-fade { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .nf-tile, .nf-nr-panel, .nf-nr-shade, .nf-nr-checks button { transition: none !important; animation: none !important; } }
+/* Region art: palm, surf, mountains. */
+.nf-ra { flex: none; width: 88px; height: 44px; color: var(--ink); overflow: hidden; }
+.nf-ra g { transform-box: fill-box; }
+.nf-ra .ra-frond { transform-origin: 62% 100%; animation: ra-sway 4s ease-in-out infinite; }
+.nf-ra .ra-wave { animation: ra-roll 3.2s linear infinite; }
+.nf-ra .ra-w2 { animation-duration: 4.4s; animation-direction: reverse; }
+.nf-ra .ra-blades { transform-origin: center; animation: ra-spin 6s linear infinite; }
+.nf-ra .ra-sun { transform-box: fill-box; transform-origin: center; animation: ra-glow 4s ease-in-out infinite; }
+@keyframes ra-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }
+@keyframes ra-roll { to { transform: translateX(-24px); } }
+@keyframes ra-spin { to { transform: rotate(360deg); } }
+@keyframes ra-glow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+.nf-nr-glinks a { gap: 7px; }
+.nf-nr-glinks .nf-gi { width: 17px; height: 17px; color: var(--nf-acc); }
+@media (max-width: 719px) { .nf-ra { width: 68px; height: 34px; } }
+@media (prefers-reduced-motion: reduce) { .nf-ra * { animation: none !important; } }
 /* Guide graphics */
 .nf-gi { display: inline-block; width: 20px; height: 20px; flex: none; }
 .nf-gi-lg { width: .72em; height: .72em; margin-right: .18em; vertical-align: -.06em; color: var(--nf-acc); stroke-width: 1.6; }

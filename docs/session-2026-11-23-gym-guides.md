@@ -63,3 +63,12 @@
 - Phone: filter rows scroll sideways (so the reserved sub-row is one line), the List / Map switch floats at the bottom with `position: sticky`, zoom buttons and the popup close button are 40px, links are 44px.
 - Traps: `startMap` must hand back the same promise every time, or a tap during loading runs before the map exists; Leaflet's touch styles beat single-class overrides, so size overrides use `.nf-nr-map.leaflet-container ...`.
 - A one-file preview of the map page can be built by inlining Leaflet next to the usual CSS and modules; `loadLeaflet` returns early when `window.L` already exists so that works.
+
+## Map, third pass: the filter
+- Jay called the pill rows a bad filter. Replaced with: four branch tiles with animated art, a panel (Kind multi-select, Region multi-select, Distance slider with steps Any, 25, 10, 5, 2 miles), a sort select, an active-filter count on the phone Filters button, and Clear all. On phones the panel is a bottom sheet with a "Show N places" button.
+- Decided: "highest ratings" is not built from other sites' stars (the no-copied-ratings rule stands, and there is no rating data). Sort offers Closest, A to Z and Longest running (from `p.since`). A My rating option appears on its own once any gym has a `score` Jay set. Rejected: scraping Google or Yelp stars.
+- Phone map: popups are off; a swipe strip of cards sits under the map. Swiping flies the map to that pin, tapping a pin scrolls the strip. The strip sits below the map, not over it, so the OpenStreetMap credit stays visible.
+- Haptics use `navigator.vibrate`. Android browsers honor it; iPhone Safari ignores it. Nothing breaks either way.
+- Crawl links: every row links to its guide and region anchor, the page ends with a section linking all four guides, guide pages link to the map filtered to that sport, profile pages link to the map focused on that gym.
+- Traps: a default custom property on `.nf-tile` overrode the per-branch color (same specificity, later rule), so the default lives on `.nf-top-all` only; the floating List / Map switch covered the card buttons until the map box got bottom padding.
+- Next: Jay's own scores and visit notes per gym (the `visited` and `partner` fields are still waiting on his go), run the geocode script on the Mac, check real tiles on the live page.

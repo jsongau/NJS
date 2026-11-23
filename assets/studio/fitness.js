@@ -430,59 +430,74 @@ const PLACE_NAMES = [['Los Angeles', 34.06, -118.25], ['Orange County', 33.72, -
 function mountNear() {
   const box = $('[data-nf-near]'); if (!box) return;
   const list = $('[data-nr-list]', box); const rows = $$('li', list); const status = $('[data-nr-status]', box);
-  const split = $('[data-nr-split]', box); const mapEl = $('[data-nr-map]', box);
+  const split = $('[data-nr-split]', box); const mapEl = $('[data-nr-map]', box); const cards = $('[data-nr-cards]', box);
+  const panel = $('[data-nr-panel]', box); const shade = $('[data-nr-shade]', box); const sortSel = $('[data-nr-sort]', box);
+  const distIn = $('[data-nr-dist]', box); const distOut = $('[data-nr-distout]', box);
   const icons = {}; const tpl = $('[data-nr-icons]', box);
   if (tpl) $$('[data-k]', tpl.content).forEach((s) => { icons[s.dataset.k] = s.innerHTML; });
-  const st = { top: 'all', kind: 'all', at: null, from: '', map: null, L: null, you: null, open: null };
+  const MILES = [null, 25, 10, 5, 2];
+  const st = { top: 'all', kinds: new Set(), regs: new Set(), max: null, sort: 'near', at: null, from: '', map: null, L: null, you: null, sel: null };
+  const wide = () => matchMedia('(min-width: 1024px)').matches;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // A short tap you can feel, on phones that support it (Android; iPhones ignore it).
+  const buzz = (ms) => { try { if (navigator.vibrate) navigator.vibrate(ms || 8); } catch (e) { /* not supported */ } };
   const rad = (d) => (d * Math.PI) / 180;
-  const miles = (a, b) => {
-    const dLat = rad(b[0] - a[0]); const dLng = rad(b[1] - a[1]);
-    const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a[0])) * Math.cos(rad(b[0])) * Math.sin(dLng / 2) ** 2;
+  const miles = (p1, p2) => {
+    const dLat = rad(p2[0] - p1[0]); const dLng = rad(p2[1] - p1[1]);
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(p1[0])) * Math.cos(rad(p2[0])) * Math.sin(dLng / 2) ** 2;
     return 3958.8 * 2 * Math.asin(Math.sqrt(h));
   };
   const pos = (r) => [Number(r.dataset.lat), Number(r.dataset.lng)];
-  const shown = () => rows.filter((r) => !r.hidden);
+  const shown = () => $$('li', list).filter((r) => !r.hidden);
   const fmt = (d) => (d < 10 ? d.toFixed(1) : String(Math.round(d)));
+  const nameOf = (r) => $('h3', r).textContent;
+  const awayOf = (r) => (st.at && r.dist < Infinity ? fmt(r.dist) + ' miles away' : '');
 
-  const popup = (r) => {
-    const name = $('h3', r).textContent; const more = $$('.nf-rk-links a:not([data-nr-nav])', r).map((a) => '<a href="' + a.getAttribute('href') + '"' + (a.target ? ' target="_blank" rel="noopener"' : '') + '>' + a.firstChild.textContent + '</a>').join('');
-    const nav = r.dataset.nav; const addr = r.dataset.addr;
-    return '<div class="nf-pop"><p class="nf-pop-k">' + $('.nf-nr-cat span', r).textContent + '</p><p class="nf-pop-n">' + name + '</p><p class="nf-pop-w">' + $('.nf-nr-where', r).textContent + (r.dist < Infinity && st.at ? ' · ' + fmt(r.dist) + ' miles away' : '') + '</p>' +
-      (addr ? '<p class="nf-pop-a"><a href="' + nav + '" target="_blank" rel="noopener">' + addr + '</a></p>' : '') +
-      '<p class="nf-pop-l"><a class="nf-pop-go" href="' + nav + '" target="_blank" rel="noopener">Navigate</a>' + more + '</p></div>';
-  };
-  const focusRow = (r, scroll) => {
-    rows.forEach((x) => { x.classList.toggle('on', x === r); if (x.pin && x.pin.getElement()) x.pin.getElement().classList.toggle('sel', x === r); });
-    drawRoute(r);
-    if (scroll && r && split.dataset.view !== 'map' && matchMedia('(min-width: 1024px)').matches) r.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  const cardHtml = (r) => {
+    const more = $('.nf-rk-links a[href^="/fitness/guides/gyms/"]', r);
+    return '<p class="nf-pop-k">' + $('.nf-nr-cat span', r).textContent + '</p><p class="nf-pop-n">' + nameOf(r) + '</p><p class="nf-pop-w">' + $('.nf-nr-where', r).textContent + (awayOf(r) ? ' · ' + awayOf(r) : '') + '</p>' +
+      (r.dataset.addr ? '<p class="nf-pop-a"><a href="' + r.dataset.nav + '" target="_blank" rel="noopener">' + r.dataset.addr + '</a></p>' : '') +
+      '<p class="nf-pop-l"><a class="nf-pop-go" href="' + r.dataset.nav + '" target="_blank" rel="noopener">Navigate</a>' + (more ? '<a href="' + more.getAttribute('href') + '">Full profile</a>' : '') + '</p>';
   };
   const drawRoute = (r) => {
     if (!st.map) return; if (st.route) { st.map.removeLayer(st.route); st.route = null; }
     if (!r || !st.at || !r.pin) return;
     st.route = st.L.polyline([st.at, pos(r)], { color: '#E0563A', weight: 3, dashArray: '6 9', className: 'nf-route', interactive: false }).addTo(st.map);
   };
+  const select = (r, scroll) => {
+    st.sel = r;
+    rows.forEach((x) => { x.classList.toggle('on', x === r); if (x.pin && x.pin.getElement()) x.pin.getElement().classList.toggle('sel', x === r); });
+    drawRoute(r);
+    if (scroll && r && wide()) r.scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
+  };
   const drawRings = () => {
     if (!st.map || !st.at) return; const L = st.L;
     if (st.rings) st.map.removeLayer(st.rings); st.rings = L.layerGroup().addTo(st.map);
     RINGS.forEach((mi) => {
-      L.circle(st.at, { radius: mi * 1609.34, color: '#1B6FE8', weight: 1.5, opacity: .55, dashArray: '4 7', fill: mi === RINGS[0], fillColor: '#1B6FE8', fillOpacity: .05, interactive: false, className: 'nf-ring' }).addTo(st.rings);
+      L.circle(st.at, { radius: mi * 1609.34, color: '#1B6FE8', weight: 1.5, opacity: 0.55, dashArray: '4 7', fill: mi === RINGS[0], fillColor: '#1B6FE8', fillOpacity: 0.05, interactive: false }).addTo(st.rings);
       L.marker([st.at[0] + mi / 69.05, st.at[1]], { interactive: false, keyboard: false, icon: L.divIcon({ className: 'nf-ringname', html: mi + ' mi', iconSize: [48, 16], iconAnchor: [24, 8] }) }).addTo(st.rings);
     });
   };
   const inView = () => {
     const out = $('[data-nr-inview]', box); if (!out || !st.map) return;
-    const b = st.map.getBounds(); const n = shown().filter((r) => r.pin && b.contains(pos(r))).length;
-    out.textContent = n + ' on screen';
+    const bb = st.map.getBounds(); out.textContent = shown().filter((r) => r.pin && bb.contains(pos(r))).length + ' on screen';
   };
-  const flyToRow = (r) => {
-    if (!st.map || !r.pin) return; st.map.invalidateSize();
-    st.map.once('moveend', () => { r.pin.openPopup(); });
-    st.map.flyTo(pos(r), Math.max(st.map.getZoom(), 13), { duration: 0.9 }); focusRow(r, false);
+  // Phones: a swipeable strip of cards under the map. Swiping moves the map; tapping a pin moves the strip.
+  const fillCards = () => {
+    if (!cards) return; const vis = shown().filter((r) => r.dataset.lat).slice(0, 40);
+    cards.innerHTML = vis.map((r, i) => '<article class="nf-nr-card" data-i="' + i + '">' + cardHtml(r) + '</article>').join('');
+    cards.rows = vis; cards.scrollLeft = 0;
+  };
+  const cardTo = (r) => { if (!cards || !cards.rows) return; const i = cards.rows.indexOf(r); const el = i >= 0 && cards.children[i]; if (el) { cards.lock = true; el.scrollIntoView({ inline: 'center', block: 'nearest', behavior: calm ? 'auto' : 'smooth' }); setTimeout(() => { cards.lock = false; }, 600); } };
+  const flyToRow = (r, openPopup) => {
+    if (!st.map || !r || !r.pin) return; st.map.invalidateSize(); select(r, false);
+    if (openPopup && wide()) st.map.once('moveend', () => r.pin.openPopup());
+    st.map.flyTo(pos(r), Math.max(st.map.getZoom(), 13), { duration: 0.8 });
   };
   const syncMap = (fit) => {
     if (!st.map) return; const L = st.L; const vis = shown().filter((r) => r.pin);
     rows.forEach((r) => { if (!r.pin) return; if (r.hidden) st.map.removeLayer(r.pin); else r.pin.addTo(st.map); });
-    const near = st.at ? vis.slice().sort((a, b) => a.dist - b.dist)[0] : null;
+    const near = st.at ? vis.slice().sort((x, y) => x.dist - y.dist)[0] : null;
     rows.forEach((r) => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.toggle('nearest', r === near); });
     if (st.at) {
       if (!st.you) st.you = L.marker(st.at, { icon: L.divIcon({ className: 'nf-you', html: '<i></i>', iconSize: [22, 22], iconAnchor: [11, 11] }), interactive: false, keyboard: false, zIndexOffset: 900 }).addTo(st.map);
@@ -491,7 +506,7 @@ function mountNear() {
     }
     inView();
     if (!fit || !vis.length) return;
-    const pts = st.at ? [st.at, ...vis.slice().sort((a, b) => a.dist - b.dist).slice(0, 6).map(pos)] : vis.map(pos);
+    const pts = st.at ? [st.at, ...vis.slice().sort((x, y) => x.dist - y.dist).slice(0, 6).map(pos)] : vis.map(pos);
     st.map.flyToBounds(L.latLngBounds(pts), { padding: [40, 40], maxZoom: 13, duration: 0.8 });
   };
   const startMap = () => {
@@ -499,22 +514,24 @@ function mountNear() {
     st.ready = loadLeaflet().then((L) => {
       st.L = L; const map = L.map(mapEl, { zoomControl: false, scrollWheelZoom: false, attributionControl: true, minZoom: 8, maxZoom: 17 }).setView([33.9, -117.85], 9);
       map.attributionControl.setPrefix(false);
+      if (calm) { map.flyTo = (c, z) => map.setView(c, z, { animate: false }); map.flyToBounds = (bb, opt) => map.fitBounds(bb, Object.assign({}, opt, { animate: false })); }
       L.control.zoom({ position: 'topright' }).addTo(map);
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { map.flyTo = (c, z) => map.setView(c, z, { animate: false }); map.flyToBounds = (b, opt) => map.fitBounds(b, Object.assign({}, opt, { animate: false })); }
       map.createPane('base').style.zIndex = 100; map.createPane('names').style.zIndex = 110;
       L.polygon([...COAST, [32.53, -114.4], [35.6, -114.4], [35.6, -120.6]], { pane: 'base', renderer: L.svg({ pane: 'base' }), stroke: false, fillColor: '#F1EBE2', fillOpacity: 1, interactive: false }).addTo(map);
       PLACE_NAMES.forEach(([n, la, ln]) => L.marker([la, ln], { pane: 'names', interactive: false, keyboard: false, icon: L.divIcon({ className: 'nf-mapname', html: n, iconSize: [160, 16], iconAnchor: [80, 8] }) }).addTo(map));
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors' }).addTo(map);
       map.on('click', () => map.scrollWheelZoom.enable());
       map.on('moveend zoomend', inView);
-      map.on('popupclose', () => { focusRow(null, false); });
+      map.on('popupclose', () => select(null, false));
       rows.forEach((r) => {
         if (!r.dataset.lat) return;
-        r.pin = L.marker(pos(r), { title: $('h3', r).textContent, riseOnHover: true, icon: L.divIcon({ className: 'nf-pin nf-pin-' + r.dataset.top, html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
-        r.pin.bindPopup(() => popup(r), { maxWidth: 270, minWidth: 210, closeButton: true, autoPanPadding: [24, 70] });
-        r.pin.bindTooltip($('h3', r).textContent, { direction: 'top', offset: [0, -20], className: 'nf-tip' });
-        r.pin.on('popupopen', () => r.pin.closeTooltip());
-        r.pin.on('click', () => { focusRow(r, true); track('fit_tab', { detail: 'near_pin' }); });
+        r.pin = L.marker(pos(r), { title: nameOf(r), riseOnHover: true, icon: L.divIcon({ className: 'nf-pin nf-pin-' + r.dataset.top, html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
+        r.pin.bindTooltip(nameOf(r), { direction: 'top', offset: [0, -20], className: 'nf-tip' });
+        r.pin.on('click', () => {
+          buzz(10); select(r, true); track('fit_tab', { detail: 'near_pin' });
+          if (wide()) { r.pin.unbindPopup(); r.pin.bindPopup('<div class="nf-pop">' + cardHtml(r) + '</div>', { maxWidth: 270, minWidth: 210, autoPanPadding: [24, 70] }).openPopup(); r.pin.closeTooltip(); }
+          else cardTo(r);
+        });
       });
       st.map = map; syncMap(true);
     }).catch(() => { mapEl.innerHTML = '<p class="nf-nr-maperr">The map could not load. The list below still works.</p>'; });
@@ -522,90 +539,122 @@ function mountNear() {
   };
 
   const draw = (fit) => {
+    if (st.at) rows.forEach((r) => {
+      const has = !!r.dataset.lat; r.dist = has ? miles(st.at, pos(r)) : Infinity;
+      $('.nf-nr-d b', r).textContent = has ? fmt(r.dist) : r.dataset.region;
+      $('.nf-nr-d small', r).textContent = has ? 'miles' : 'no address';
+      r.classList.toggle('near', has && r.dist <= 5);
+    });
     let count = 0;
     rows.forEach((r) => {
       const c = r.dataset.cat.split(' ');
-      const ok = (st.top === 'all' || c.includes(st.top)) && (st.kind === 'all' || c.includes(st.kind));
+      const ok = (st.top === 'all' || c.includes(st.top)) && (!st.kinds.size || [...st.kinds].some((k) => c.includes(k))) &&
+        (!st.regs.size || st.regs.has(r.dataset.region)) && (st.max === null || !st.at || r.dist <= st.max);
       r.hidden = !ok; if (ok) count++;
     });
-    if (st.at) {
-      rows.forEach((r) => {
-        const has = !!r.dataset.lat; r.dist = has ? miles(st.at, pos(r)) : Infinity;
-        $('.nf-nr-d b', r).textContent = has ? fmt(r.dist) : r.dataset.region;
-        $('.nf-nr-d small', r).textContent = has ? 'miles' : 'no address';
-        r.classList.toggle('near', has && r.dist <= 5);
-      });
-      [...rows].sort((a, b) => a.dist - b.dist).forEach((r) => list.appendChild(r));
-      status.textContent = count + (count === 1 ? ' place' : ' places') + ', closest to ' + st.from + ' first. Distances are approximate.';
-    } else if (st.top !== 'all') {
-      status.textContent = count + (count === 1 ? ' place' : ' places') + ', A to Z. Share your location or pick an area to see the closest first.';
-    } else status.textContent = 'Sorted A to Z. Share your location or pick an area to see the closest first.';
+    const sort = st.sort === 'near' && !st.at ? 'az' : st.sort;
+    const by = { near: (x, y) => x.dist - y.dist, az: (x, y) => nameOf(x).localeCompare(nameOf(y)),
+      old: (x, y) => (Number(x.dataset.since) || 9999) - (Number(y.dataset.since) || 9999) || nameOf(x).localeCompare(nameOf(y)),
+      score: (x, y) => (Number(y.dataset.score) || 0) - (Number(x.dataset.score) || 0) }[sort];
+    [...rows].sort(by).forEach((r) => list.appendChild(r));
+    const how = { near: 'closest to ' + st.from + ' first', az: 'A to Z', old: 'longest running first', score: 'my rating, highest first' }[sort];
+    status.textContent = count + (count === 1 ? ' place, ' : ' places, ') + how + '.' + (st.sort === 'near' && !st.at ? ' Share your location to see the closest first.' : '') + (count === 0 ? ' Nothing matches: loosen a filter.' : '');
+    const active = st.kinds.size + st.regs.size + (st.max !== null ? 1 : 0);
+    const badge = $('[data-nr-badge]', box); if (badge) { badge.hidden = !active; badge.textContent = String(active); }
+    const done = $('[data-nr-done]', box); if (done) done.textContent = 'Show ' + count + (count === 1 ? ' place' : ' places');
     if (st.map) st.map.closePopup();
-    syncMap(fit !== false);
+    fillCards(); syncMap(fit !== false);
+  };
+  const setTop = (id) => {
+    st.top = id; st.kinds.clear();
+    $$('[data-nr-top]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(bt.dataset.nrTop === id)));
+    $$('[data-nr-sub]', box).forEach((g) => { g.hidden = g.dataset.nrSub !== id; });
+    $$('[data-nr-kind]', box).forEach((bt) => bt.setAttribute('aria-pressed', 'false'));
   };
   const setView = (v, fit) => {
-    split.dataset.view = v; $$('[data-nr-view]', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.nrView === v)));
+    split.dataset.view = v; $$('[data-nr-view]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(bt.dataset.nrView === v)));
     if (v === 'map') startMap().then(() => { if (st.map) { st.map.invalidateSize(); syncMap(fit !== false); } });
+  };
+  const sheet = (open) => {
+    panel.classList.toggle('open', open); shade.hidden = !open; $('[data-nr-sheet]', box).setAttribute('aria-expanded', String(open));
+    if (open) { const f = $('button:not([hidden]), input', panel); if (f) f.focus({ preventScroll: true }); } else if (!wide()) $('[data-nr-sheet]', box).focus({ preventScroll: true });
+  };
+  const located = (at, from) => {
+    st.at = at; st.from = from; distIn.disabled = false; const note = $('[data-nr-distnote]', box); if (note) note.textContent = 'Measured from ' + from + ', in a straight line.';
+    buzz(14); draw();
   };
 
   box.addEventListener('click', (e) => {
-    const top = e.target.closest('[data-nr-top]');
-    if (top) {
-      st.top = top.dataset.nrTop; st.kind = 'all';
-      $$('[data-nr-top]', box).forEach((b) => b.setAttribute('aria-pressed', String(b === top)));
-      $$('[data-nr-sub]', box).forEach((g) => { g.hidden = g.dataset.nrSub !== st.top; $$('[data-nr-kind]', g).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.nrKind === 'all'))); });
-      track('fit_tab', { detail: 'near_' + st.top }); draw(); return;
-    }
-    const kind = e.target.closest('[data-nr-kind]');
-    if (kind) {
-      st.kind = kind.dataset.nrKind; $$('[data-nr-kind]', kind.parentElement).forEach((b) => b.setAttribute('aria-pressed', String(b === kind)));
-      track('fit_tab', { detail: 'near_' + st.top + '_' + st.kind }); draw(); return;
-    }
-    const view = e.target.closest('[data-nr-view]'); if (view) { setView(view.dataset.nrView); return; }
-    const show = e.target.closest('[data-nr-show]');
+    const hit = (sel) => e.target.closest(sel);
+    const top = hit('[data-nr-top]');
+    if (top) { buzz(); setTop(top.dataset.nrTop); track('fit_tab', { detail: 'near_' + st.top }); draw(); return; }
+    const kind = hit('[data-nr-kind]');
+    if (kind) { buzz(); const k = kind.dataset.nrKind; if (st.kinds.has(k)) st.kinds.delete(k); else st.kinds.add(k); kind.setAttribute('aria-pressed', String(st.kinds.has(k))); track('fit_tab', { detail: 'near_kind_' + k }); draw(); return; }
+    const reg = hit('[data-nr-reg]');
+    if (reg) { buzz(); const k = reg.dataset.nrReg; if (st.regs.has(k)) st.regs.delete(k); else st.regs.add(k); reg.setAttribute('aria-pressed', String(st.regs.has(k))); draw(); return; }
+    if (hit('[data-nr-clear]')) { buzz(); st.kinds.clear(); st.regs.clear(); st.max = null; distIn.value = 0; distOut.textContent = 'Any distance'; $$('[data-nr-kind], [data-nr-reg]', box).forEach((bt) => bt.setAttribute('aria-pressed', 'false')); draw(); return; }
+    if (hit('[data-nr-sheet]')) { buzz(); sheet(!panel.classList.contains('open')); return; }
+    if (hit('[data-nr-done]') || hit('[data-nr-shade]')) { sheet(false); return; }
+    const view = hit('[data-nr-view]'); if (view) { buzz(); setView(view.dataset.nrView); return; }
+    const show = hit('[data-nr-show]');
     if (show) {
-      const r = show.closest('li'); if (!matchMedia('(min-width: 1024px)').matches) { setView('map', false); mapEl.scrollIntoView({ block: 'center' }); }
-      startMap().then(() => flyToRow(r));
-      return;
+      buzz(10); const r = show.closest('li'); if (!wide()) { setView('map', false); mapEl.scrollIntoView({ block: 'center' }); }
+      startMap().then(() => { flyToRow(r, true); if (!wide()) cardTo(r); }); return;
     }
-    const fly = e.target.closest('[data-nr-fly]');
+    const fly = hit('[data-nr-fly]');
     if (fly) {
-      const to = fly.dataset.nrFly;
+      buzz(); const to = fly.dataset.nrFly;
       startMap().then(() => {
         if (!st.map) return; const L = st.L; const vis = shown().filter((r) => r.pin);
         if (to === 'me') { if (st.at) st.map.flyTo(st.at, 12, { duration: 0.8 }); else status.textContent = 'Tap Use my location or pick an area first, then Me brings the map back to you.'; }
         else if (to === 'all') { if (vis.length) st.map.flyToBounds(L.latLngBounds(vis.map(pos)), { padding: [40, 40], duration: 0.9 }); }
-        else if (to === 'lucky') {
-          const pool = st.at ? vis.slice().sort((a, b) => a.dist - b.dist).slice(0, 12) : vis;
-          if (pool.length) flyToRow(pool[Math.floor(Math.random() * pool.length)]);
-        } else if (REGION_BOX[to]) st.map.flyToBounds(L.latLngBounds(REGION_BOX[to]), { duration: 0.9 });
+        else if (to === 'lucky') { const pool = st.at ? vis.slice().sort((x, y) => x.dist - y.dist).slice(0, 12) : vis; const r = pool[Math.floor(Math.random() * pool.length)]; if (r) { buzz([8, 40, 14]); flyToRow(r, true); cardTo(r); } }
+        else if (REGION_BOX[to]) st.map.flyToBounds(L.latLngBounds(REGION_BOX[to]), { duration: 0.9 });
         track('fit_tab', { detail: 'near_fly_' + to.toLowerCase() });
       });
       return;
     }
-    if (e.target.closest('[data-nr-geo]')) {
+    if (hit('[data-nr-geo]')) {
       if (!navigator.geolocation) { status.textContent = 'This browser cannot share a location. Pick an area instead.'; return; }
       status.textContent = 'Finding you…';
       navigator.geolocation.getCurrentPosition((p) => {
-        st.at = [p.coords.latitude, p.coords.longitude]; st.from = 'you';
         const sel = $('[data-nr-city]', box); if (sel) sel.value = '';
-        track('fit_tab', { detail: 'near_located' }); draw();
+        track('fit_tab', { detail: 'near_located' }); located([p.coords.latitude, p.coords.longitude], 'you');
       }, () => { status.textContent = 'I could not get your location. Pick an area instead, or allow location for this site and try again.'; },
       { maximumAge: 300000, timeout: 12000 });
     }
   });
-  const sel = $('[data-nr-city]', box);
-  if (sel) sel.addEventListener('change', () => {
-    if (!sel.value) return;
-    st.at = sel.value.split(',').map(Number); st.from = sel.options[sel.selectedIndex].textContent;
-    track('fit_tab', { detail: 'near_area' }); draw();
-  });
+  const city = $('[data-nr-city]', box);
+  const pickCity = () => { if (!city.value) return; track('fit_tab', { detail: 'near_area' }); located(city.value.split(',').map(Number), city.options[city.selectedIndex].textContent); };
+  if (city) city.addEventListener('change', pickCity);
+  sortSel.addEventListener('change', () => { st.sort = sortSel.value; buzz(); track('fit_tab', { detail: 'near_sort_' + st.sort }); draw(false); });
+  distIn.addEventListener('input', () => { st.max = MILES[Number(distIn.value)]; distOut.textContent = st.max === null ? 'Any distance' : 'Within ' + st.max + ' miles'; buzz(4); draw(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('open')) sheet(false); });
   rows.forEach((r) => {
     r.addEventListener('mouseenter', () => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.add('hot'); });
     r.addEventListener('mouseleave', () => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.remove('hot'); });
   });
+  if (cards) {
+    let timer; cards.addEventListener('scroll', () => {
+      if (cards.lock) return; clearTimeout(timer);
+      timer = setTimeout(() => {
+        const mid = cards.scrollLeft + cards.clientWidth / 2; let best = null; let gap = Infinity;
+        [...cards.children].forEach((el) => { const g = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid); if (g < gap) { gap = g; best = el; } });
+        const r = best && cards.rows[Number(best.dataset.i)]; if (r && r !== st.sel) { buzz(6); flyToRow(r, false); }
+      }, 140);
+    }, { passive: true });
+  }
+  // Links from the guides and profiles can open the map already filtered: ?show=strike&kind=boxing, ?area=Brea, ?focus=slug
+  const qs = new URLSearchParams(location.search);
+  if ($('[data-nr-top="' + qs.get('show') + '"]', box)) setTop(qs.get('show'));
+  const k0 = qs.get('kind') && $('[data-nr-sub="' + st.top + '"] [data-nr-kind="' + qs.get('kind') + '"]', box); if (k0) { st.kinds.add(qs.get('kind')); k0.setAttribute('aria-pressed', 'true'); }
+  const a0 = qs.get('area') && city && [...city.options].find((o) => o.textContent.toLowerCase() === qs.get('area').toLowerCase());
+  if (a0) { city.value = a0.value; st.at = a0.value.split(',').map(Number); st.from = a0.textContent; distIn.disabled = false; }
+  draw(false);
+  const f0 = qs.get('focus') && rows.find((r) => r.dataset.slug === qs.get('focus'));
+  if (f0) { if (!wide()) setView('map', false); startMap().then(() => { flyToRow(f0, true); cardTo(f0); }); }
   // Desktop shows list and map side by side, so the map starts when it scrolls near. Phones start it on the Map tab.
-  if (matchMedia('(min-width: 1024px)').matches && 'IntersectionObserver' in window) {
+  if (wide() && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((en) => { if (en.some((x) => x.isIntersecting)) { io.disconnect(); startMap(); } }, { rootMargin: '300px' });
     io.observe(mapEl);
   }

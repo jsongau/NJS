@@ -436,7 +436,7 @@ function mountNear() {
   const icons = {}; const tpl = $('[data-nr-icons]', box);
   if (tpl) $$('[data-k]', tpl.content).forEach((s) => { icons[s.dataset.k] = s.innerHTML; });
   const MILES = [null, 25, 10, 5, 2];
-  const st = { top: 'all', kinds: new Set(), regs: new Set(), max: null, sort: 'near', at: null, from: '', map: null, L: null, you: null, sel: null };
+  const st = { top: 'all', kinds: new Set(), regs: new Set(), brands: new Set(), max: null, sort: 'near', at: null, from: '', map: null, L: null, you: null, sel: null };
   const wide = () => matchMedia('(min-width: 1024px)').matches;
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // A short tap you can feel, on phones that support it (Android; iPhones ignore it).
@@ -549,7 +549,7 @@ function mountNear() {
     rows.forEach((r) => {
       const c = r.dataset.cat.split(' ');
       const ok = (st.top === 'all' || c.includes(st.top)) && (!st.kinds.size || [...st.kinds].some((k) => c.includes(k))) &&
-        (!st.regs.size || st.regs.has(r.dataset.region)) && (st.max === null || !st.at || r.dist <= st.max);
+        (!st.regs.size || st.regs.has(r.dataset.region)) && (!st.brands.size || st.brands.has(r.dataset.brand)) && (st.max === null || !st.at || r.dist <= st.max);
       r.hidden = !ok; if (ok) count++;
     });
     const sort = st.sort === 'near' && !st.at ? 'az' : st.sort;
@@ -559,7 +559,7 @@ function mountNear() {
     [...rows].sort(by).forEach((r) => list.appendChild(r));
     const how = { near: 'closest to ' + st.from + ' first', az: 'A to Z', old: 'longest running first', score: 'my rating, highest first' }[sort];
     status.textContent = count + (count === 1 ? ' place, ' : ' places, ') + how + '.' + (st.sort === 'near' && !st.at ? ' Share your location to see the closest first.' : '') + (count === 0 ? ' Nothing matches: loosen a filter.' : '');
-    const active = st.kinds.size + st.regs.size + (st.max !== null ? 1 : 0);
+    const active = st.kinds.size + st.regs.size + st.brands.size + (st.max !== null ? 1 : 0);
     const badge = $('[data-nr-badge]', box); if (badge) { badge.hidden = !active; badge.textContent = String(active); }
     const done = $('[data-nr-done]', box); if (done) done.textContent = 'Show ' + count + (count === 1 ? ' place' : ' places');
     if (st.map) st.map.closePopup();
@@ -570,6 +570,8 @@ function mountNear() {
     $$('[data-nr-top]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(bt.dataset.nrTop === id)));
     $$('[data-nr-sub]', box).forEach((g) => { g.hidden = g.dataset.nrSub !== id; });
     $$('[data-nr-kind]', box).forEach((bt) => bt.setAttribute('aria-pressed', 'false'));
+    // Run by: only the names that have places in this branch stay visible.
+    $$('[data-nr-brand]', box).forEach((bt) => { const fits = id === 'all' || bt.dataset.tops.split(' ').includes(id); bt.hidden = !fits; if (!fits) { st.brands.delete(bt.dataset.nrBrand); bt.setAttribute('aria-pressed', 'false'); } });
   };
   const setView = (v, fit) => {
     split.dataset.view = v; $$('[data-nr-view]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(bt.dataset.nrView === v)));
@@ -590,9 +592,11 @@ function mountNear() {
     if (top) { buzz(); setTop(top.dataset.nrTop); track('fit_tab', { detail: 'near_' + st.top }); draw(); return; }
     const kind = hit('[data-nr-kind]');
     if (kind) { buzz(); const k = kind.dataset.nrKind; if (st.kinds.has(k)) st.kinds.delete(k); else st.kinds.add(k); kind.setAttribute('aria-pressed', String(st.kinds.has(k))); track('fit_tab', { detail: 'near_kind_' + k }); draw(); return; }
+    const brand = hit('[data-nr-brand]');
+    if (brand) { buzz(); const k = brand.dataset.nrBrand; if (st.brands.has(k)) st.brands.delete(k); else st.brands.add(k); brand.setAttribute('aria-pressed', String(st.brands.has(k))); track('fit_tab', { detail: 'near_brand_' + k }); draw(); return; }
     const reg = hit('[data-nr-reg]');
     if (reg) { buzz(); const k = reg.dataset.nrReg; if (st.regs.has(k)) st.regs.delete(k); else st.regs.add(k); reg.setAttribute('aria-pressed', String(st.regs.has(k))); draw(); return; }
-    if (hit('[data-nr-clear]')) { buzz(); st.kinds.clear(); st.regs.clear(); st.max = null; distIn.value = 0; distOut.textContent = 'Any distance'; $$('[data-nr-kind], [data-nr-reg]', box).forEach((bt) => bt.setAttribute('aria-pressed', 'false')); draw(); return; }
+    if (hit('[data-nr-clear]')) { buzz(); st.kinds.clear(); st.regs.clear(); st.brands.clear(); st.max = null; distIn.value = 0; distOut.textContent = 'Any distance'; $$('[data-nr-kind], [data-nr-reg], [data-nr-brand]', box).forEach((bt) => bt.setAttribute('aria-pressed', 'false')); draw(); return; }
     if (hit('[data-nr-sheet]')) { buzz(); sheet(!panel.classList.contains('open')); return; }
     if (hit('[data-nr-done]') || hit('[data-nr-shade]')) { sheet(false); return; }
     const view = hit('[data-nr-view]'); if (view) { buzz(); setView(view.dataset.nrView); return; }
@@ -648,6 +652,7 @@ function mountNear() {
   const qs = new URLSearchParams(location.search);
   if ($('[data-nr-top="' + qs.get('show') + '"]', box)) setTop(qs.get('show'));
   const k0 = qs.get('kind') && $('[data-nr-sub="' + st.top + '"] [data-nr-kind="' + qs.get('kind') + '"]', box); if (k0) { st.kinds.add(qs.get('kind')); k0.setAttribute('aria-pressed', 'true'); }
+  const b0 = qs.get('brand') && $('[data-nr-brand="' + qs.get('brand') + '"]:not([hidden])', box); if (b0) { st.brands.add(qs.get('brand')); b0.setAttribute('aria-pressed', 'true'); }
   const a0 = qs.get('area') && city && [...city.options].find((o) => o.textContent.toLowerCase() === qs.get('area').toLowerCase());
   if (a0) { city.value = a0.value; st.at = a0.value.split(',').map(Number); st.from = a0.textContent; distIn.disabled = false; }
   draw(false);

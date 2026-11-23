@@ -23,6 +23,8 @@ const FOCUS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/focus.json'),
 // Gear Jay uses: [id, name, brand, why, link, [focus ids]]. Empty until he fills it; nothing renders while it is empty.
 const GEAR = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/gear.json'), 'utf8'));
 const GUIDES = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/guides.json'), 'utf8'));
+// Chain studios (CorePower, Orangetheory and so on): map only, never ranked, no profile pages.
+const CHAINS = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/chains.json'), 'utf8'));
 const PATH = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/path.json'), 'utf8'));
 const TECH = JSON.parse(readFileSync(join(ROOT, 'partials/fitness/techniques.json'), 'utf8'));
 const PROJECTS = JSON.parse(readFileSync(join(ROOT, 'assets/studio/data/projects.json'), 'utf8')).projects;
@@ -600,6 +602,7 @@ const GICON = {
   yoga: '<path d="M12 5c2 2.5 2 6 0 9-2-3-2-6.5 0-9zM12 14c-1-3-4-5-7-5 0 4 3 7 7 7M12 14c1-3 4-5 7-5 0 4-3 7-7 7M4 20h16"/>',
   hot: '<path d="M12 3c1 3.5 5 5.5 5 10.5a5 5 0 0 1-10 0c0-2 1-3.6 2-4.6 0 2 1 3 2 3 0-3-1-5 1-8.9z"/>',
   pin: '<path d="M12 21s-6-5.6-6-10.5a6 6 0 0 1 12 0C18 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/>',
+  run: '<circle cx="14" cy="4.5" r="2"/><path d="M13 8l-4 2.5-1.5 3.5M13 8l1.5 5-3.5 3-2 4.5M14.5 13l3.5 2 .5 4M13 8l4 1.5 2.5-2"/>',
   // The three regions: a palm for Los Angeles, surf for Orange County, mountains for the Inland Empire.
   LA: '<path d="M13 21c0-5-.5-8-2-11"/><path d="M11 10c-2.5-2-5-1.5-6.5.5M11 10c-.5-3 1-5 3.5-5.5M11 10c2.5-1.5 5.5-.5 6.5 2M11 10c-3 .5-4.5 3-4.5 5"/><path d="M5 21h14"/><circle cx="18.5" cy="5.5" r="1.8"/>',
   OC: '<path d="M7 11a5 5 0 0 1 10 0"/><path d="M12 3v1.5M5.5 5.5l1 1M18.5 5.5l-1 1"/><path d="M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 19.5c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/>',
@@ -692,28 +695,35 @@ const TILE_ART = {
     '<g class="ta-sit"><circle cx="60" cy="24" r="8" fill="currentColor"/><path d="M60 34c-9 0-14 8-15 20h30c-1-12-6-20-15-20z" fill="var(--top)"/><path d="M45 50c-10 3-16 7-20 12M75 50c10 3 16 7 20 12" stroke="currentColor" stroke-width="5"/>' +
     '<path d="M28 68c12-8 24-10 32-10s20 2 32 10" stroke="currentColor" stroke-width="7"/></g><path d="M14 78h92" stroke="currentColor" stroke-width="2" opacity=".35"/></svg>',
 };
+TILE_ART.run = '<svg viewBox="0 0 120 84" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M96 66V30l10-6" stroke="currentColor" stroke-width="3"/><rect x="10" y="62" width="92" height="9" rx="4.5" fill="currentColor"/>' +
+  '<g class="ta-belt" stroke="#fff" stroke-width="2" opacity=".7"><path d="M20 66.5h6M36 66.5h6M52 66.5h6M68 66.5h6M84 66.5h6"/></g>' +
+  '<g class="ta-run"><circle cx="58" cy="16" r="7" fill="currentColor"/><path d="M56 26l-10 8-4 10M56 26l4 16-12 8-6 11M60 42l12 5 2 13M56 26l12 5 8-7" stroke="var(--top)" stroke-width="5"/></g>' +
+  '<g class="ta-hit" stroke="var(--top)" stroke-width="2.5"><path d="M30 24H18M26 36H12M30 48H20"/></g></svg>';
 const GUIDE_OF = { boxing: ['fit-guide-boxing', 'Boxing guide'], kickboxing: ['fit-guide-kickboxing', 'Kickboxing guide'], pilates: ['fit-guide-pilates', 'Pilates guide'], yoga: ['fit-guide-yoga', 'Yoga guide'] };
 function renderNear() {
-  const all = Object.entries(GUIDES.guides).flatMap(([key, g]) => g.gyms.map((x) => ({ key, x, ...nearCats(key, x) })))
-    .sort((a, b) => a.x.name.localeCompare(b.x.name));
+  const indie = Object.entries(GUIDES.guides).flatMap(([key, g]) => g.gyms.map((x) => ({ key, x, ...nearCats(key, x) })));
+  const chained = Object.entries(CHAINS.chains).flatMap(([id, c]) => c.places.map(([name, city, region, address, lat, lng, url]) =>
+    ({ chain: id, c, kinds: c.kinds, tops: [c.top], x: { name: c.name + ' ' + name, city, region, lat, lng, addr: address, site: url, known: c.label } })));
+  const all = [...indie, ...chained].sort((a, b) => a.x.name.localeCompare(b.x.name));
+  const brands = [['indie', 'Independent', indie.length, 'strike pilates yoga'], ...Object.entries(CHAINS.chains).map(([id, c]) => [id, c.name, c.places.length, c.top])];
   const n = (c) => all.filter((r) => r.kinds.includes(c) || r.tops.includes(c)).length;
   const pad = (v) => String(v).padStart(2, '0');
   const scored = all.some((r) => typeof r.x.score === 'number');
-  const label = (r) => r.kinds.filter((c) => NEAR_LABEL[c]).map((c) => NEAR_LABEL[c]).join(' · ') + (r.x.heat ? ' · ' + HEAT[r.x.heat] : '');
-  const addr = (x) => (x.p && x.p.address && /\d/.test(x.p.address) ? x.p.address.split('. ')[0] : '');
+  const label = (r) => r.chain ? r.c.label : r.kinds.filter((c) => NEAR_LABEL[c]).map((c) => NEAR_LABEL[c]).join(' · ') + (r.x.heat ? ' · ' + HEAT[r.x.heat] : '');
+  const addr = (x) => x.addr ? x.addr : (x.p && x.p.address && /\d/.test(x.p.address) ? x.p.address.split('. ')[0] : '');
   const dir = (x) => 'https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=' + encodeURIComponent(addr(x) ? x.name + ', ' + addr(x) : x.name + ', ' + x.city + ', CA');
-  const row = (r) => { const x = r.x; const top = KEY_TOP[r.key]; const ic = r.kinds.find((c) => GICON[c]) || 'pin'; const [gid, gname] = GUIDE_OF[r.key];
+  const row = (r) => { const x = r.x; const top = r.chain ? r.c.top : KEY_TOP[r.key]; const ic = r.chain ? r.c.ic : r.kinds.find((c) => GICON[c]) || 'pin'; const [gid, gname] = r.chain ? [] : GUIDE_OF[r.key];
     return '        <li class="nf-nr-row" data-top="' + top + '" data-ic="' + ic + '" data-cat="' + [...new Set([...r.tops, ...r.kinds])].join(' ') + '"' + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') +
-      ' data-region="' + x.region + '" data-nav="' + dir(x) + '"' + (addr(x) ? ' data-addr="' + esc(addr(x)) + '"' : '') + (x.p ? ' data-slug="' + x.p.slug + '"' + (x.p.since ? ' data-since="' + x.p.since + '"' : '') : '') + (typeof x.score === 'number' ? ' data-score="' + x.score + '"' : '') + '>' +
+      ' data-region="' + x.region + '" data-brand="' + (r.chain || 'indie') + '" data-nav="' + dir(x) + '"' + (addr(x) ? ' data-addr="' + esc(addr(x)) + '"' : '') + (x.p ? ' data-slug="' + x.p.slug + '"' + (x.p.since ? ' data-since="' + x.p.since + '"' : '') : '') + (typeof x.score === 'number' ? ' data-score="' + x.score + '"' : '') + '>' +
       '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
       '<div class="nf-nr-main"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3>' +
       '<p class="nf-nr-cat nf-top-' + top + '">' + gic(ic) + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span></p>' +
       '<p class="nf-nr-where">' + esc(x.city) + (x.p && x.p.since ? ' · since ' + esc(x.p.since) : '') + '</p>' +
       (addr(x) ? '<p class="nf-nr-addr"><a href="' + dir(x) + '" target="_blank" rel="noopener">' + gic('pin') + '<span>' + esc(addr(x)) + '</span><span class="sr">, start navigation in Google Maps, opens in a new tab</span></a></p>' : '') +
-      '<p class="nf-nr-known">' + esc(x.known) + '</p>' +
+      (r.chain ? '' : '<p class="nf-nr-known">' + esc(x.known) + '</p>') +
       '<p class="nf-rk-links">' + (x.lat ? '<button type="button" data-nr-show>Show on map</button>' : '') + '<a href="' + dir(x) + '" target="_blank" rel="noopener" data-nr-nav>Navigate<span class="sr"> to ' + esc(x.name) + ', opens in a new tab</span></a>' +
-      (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') +
-      '<a class="nf-nr-rank" href="' + PAGES[gid].path + '#gd-' + x.region.toLowerCase() + '">' + gname + '</a></p></div></li>'; };
+      (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">' + (r.chain ? 'Studio page' : 'Official site') + '<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') +
+      (r.chain ? '' : '<a class="nf-nr-rank" href="' + PAGES[gid].path + '#gd-' + x.region.toLowerCase() + '">' + gname + '</a>') + '</p></div></li>'; };
   const icons = '<template data-nr-icons>' + Object.keys(GICON).map((k) => '<span data-k="' + k + '">' + gic(k) + '</span>').join('') + '</template>';
   const tile = (id, name, sub) => '<button type="button" class="nf-tile nf-top-' + id + '" data-nr-top="' + id + '" aria-pressed="' + (id === 'all') + '">' + TILE_ART[id] +
     '<span class="nf-tile-t"><b>' + name + '</b><small>' + sub + '</small></span><span class="nf-tile-n">' + pad(id === 'all' ? all.length : n(id)) + '</span></button>';
@@ -723,7 +733,7 @@ function renderNear() {
     '      <div class="nf-nr-loc"><button type="button" class="nf-btn nf-coral" data-nr-geo>' + gic('pin') + 'Use my location</button>' +
       '<label class="nf-nr-pick"><span>or pick an area</span><select data-nr-city><option value="">Choose an area</option>' + NEAR_AREAS.map(([name, la, ln]) => '<option value="' + la + ',' + ln + '">' + name + '</option>').join('') + '</select></label></div>',
     '      <div class="nf-nr-tiles" role="group" aria-label="What are you looking for">' + tile('all', 'Everything', 'All ' + all.length + ' places') +
-      tile('strike', 'Striking and MMA', 'Boxing, kickboxing, jiu-jitsu') + tile('pilates', 'Pilates', 'Reformer and mat') + tile('yoga', 'Yoga', 'Hot and not hot') + '</div>',
+      tile('strike', 'Striking and MMA', 'Boxing, kickboxing, jiu-jitsu') + tile('pilates', 'Pilates', 'Reformer and mat') + tile('yoga', 'Yoga', 'Hot and not hot') + tile('run', 'Running and HIIT', 'Treadmill interval studios') + '</div>',
     '      <div class="nf-nr-tools"><button type="button" class="nf-nr-open" data-nr-sheet aria-expanded="false"><svg class="nf-gi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg>Filters<b data-nr-badge hidden>0</b></button>' +
       '<label class="nf-nr-sort"><span>Sort by</span><select data-nr-sort><option value="near">Closest first</option><option value="az">A to Z</option><option value="old">Longest running</option>' + (scored ? '<option value="score">My rating</option>' : '') + '</select></label>' +
       '<p class="nf-nr-status" data-nr-status role="status">' + all.length + ' places, A to Z. Share your location to see the closest first.</p></div>',
@@ -732,8 +742,10 @@ function renderNear() {
     '        <div class="nf-nr-grab" aria-hidden="true"></div><p class="nf-nr-ptitle">Filters</p>',
     '        <fieldset class="nf-nr-fs nf-nr-fkind"><legend>Kind</legend><div class="nf-nr-kinds">' +
       '<p class="nf-nr-subhint" data-nr-sub="all">Pick Striking, Pilates or Yoga to choose kinds: boxing or jiu-jitsu, reformer or mat, hot or not.</p>' +
+      '<p class="nf-nr-subhint" data-nr-sub="run" hidden>Treadmill and interval studios. Use Run by to pick Orangetheory or STRIDE.</p>' +
       NEAR_TREE.map(([id, name, , subs]) => '<div class="nf-nr-checks nf-top-' + id + '" role="group" aria-label="' + name + ' kinds" data-nr-sub="' + id + '" hidden>' +
         subs.map(([c, sn]) => '<button type="button" data-nr-kind="' + c + '" aria-pressed="false">' + (GICON[c] ? gic(c) : gic('yoga')) + '<span>' + sn + '</span><small>' + pad(n(c)) + '</small></button>').join('') + '</div>').join('') + '</div></fieldset>',
+    '        <fieldset class="nf-nr-fs nf-nr-fbrand"><legend>Run by</legend><div class="nf-nr-checks nf-nr-brands">' + brands.map(([id, name, c, tops]) => '<button type="button" data-nr-brand="' + id + '" data-tops="' + tops + '" aria-pressed="false"><span>' + name + '</span><small>' + pad(c) + '</small></button>').join('') + '</div></fieldset>',
     '        <fieldset class="nf-nr-fs"><legend>Region</legend><div class="nf-nr-checks">' + regs.map(([r, name, c]) => '<button type="button" data-nr-reg="' + r + '" aria-pressed="false">' + gic(r) + '<span>' + name + '</span><small>' + pad(c) + '</small></button>').join('') + '</div></fieldset>',
     '        <fieldset class="nf-nr-fs nf-nr-fdist"><legend>Distance</legend><label class="nf-nr-range"><input type="range" min="0" max="4" step="1" value="0" data-nr-dist disabled aria-describedby="nr-dist-note"><output data-nr-distout>Any distance</output></label>' +
       '<p class="nf-nr-rnote" id="nr-dist-note" data-nr-distnote>Share your location or pick an area to use this.</p></fieldset>',
@@ -750,10 +762,10 @@ function renderNear() {
     '      </div>',
     '      <div class="nf-nr-view" role="group" aria-label="List or map"><button type="button" data-nr-view="list" aria-pressed="true">List</button><button type="button" data-nr-view="map" aria-pressed="false">Map</button></div>',
     '      ' + icons,
-    '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate. Your position is used on this page only: I never receive or store it. The map loads street tiles from OpenStreetMap for the area you look at. There are no star ratings here: I do not copy other sites\' scores. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
+    '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate. Your position is used on this page only: I never receive or store it. The map loads street tiles from OpenStreetMap for the area you look at. There are no star ratings here: I do not copy other sites\' scores. Chain studios come from each company\'s own location pages, checked ' + new Date(CHAINS.checked + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '; they are not ranked. I teach at UFC Gym Brea and 9Round in Rancho Santa Margarita, so I left those two off. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
     '    </div>', '  </div>', '</section>', '',
     '<section class="nf-sec tight" aria-labelledby="nr-lists">', '  <div class="wrap">',
-    '    <div class="nf-h"><div><p class="nf-k">The full lists</p><h2 id="nr-lists">Every place on this map is in a guide</h2></div><p>Each guide lists its places by region, with a profile page for nearly every one.</p></div>',
+    '    <div class="nf-h"><div><p class="nf-k">The full lists</p><h2 id="nr-lists">Every independent place is in a guide</h2></div><p>Each guide lists its places by region, with a profile page for nearly every one. Chain studios are on the map only.</p></div>',
     '    <div class="nf-cards c2">' + Object.entries(GUIDES.guides).map(([key, g]) => { const [gid] = GUIDE_OF[key];
       return '<div class="nf-card nf-nr-gcard"><p class="nf-k">' + pad(g.gyms.length) + ' ' + (g.unit || 'gym') + 's</p><h3><a href="' + PAGES[gid].path + '">' + esc(GUIDE_META[key][2]) + ' in Southern California</a></h3>' +
         '<p class="nf-nr-glinks">' + REGIONS.filter(([r]) => g.gyms.some((x) => x.region === r)).map(([r, name]) => '<a href="' + PAGES[gid].path + '#gd-' + r.toLowerCase() + '">' + gic(r) + name + '</a>').join('') + '</p></div>'; }).join('') + '</div>',

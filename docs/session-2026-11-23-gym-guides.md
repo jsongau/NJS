@@ -72,3 +72,12 @@
 - Crawl links: every row links to its guide and region anchor, the page ends with a section linking all four guides, guide pages link to the map filtered to that sport, profile pages link to the map focused on that gym.
 - Traps: a default custom property on `.nf-tile` overrode the per-branch color (same specificity, later rule), so the default lives on `.nf-top-all` only; the floating List / Map switch covered the card buttons until the map box got bottom padding.
 - Next: Jay's own scores and visit notes per gym (the `visited` and `partner` fields are still waiting on his go), run the geocode script on the Mac, check real tiles on the live page.
+
+## Chains on the map
+- Jay asked for CorePower, YogaSix, 9Round, Rumble, UFC Gym, Orangetheory and STRIDE as filters, and lifted the earlier no-scraping instruction. 104 chain studios added from company location pages only (no ClassPass, no directories). Data: `partials/fitness/chains.json`.
+- Decided: chains are map only. They are not ranked, get no profile page and do not appear in the guides, so the editorial lists stay independent. A new branch, Running and HIIT, holds Orangetheory and STRIDE. A Run by filter picks Independent or any chain.
+- Complete for LA, OC and IE: Orangetheory (full company list), UFC Gym (full list), 9Round (full list). Not complete: CorePower (21 found through search; the site has no crawlable index), YogaSix (11), Rumble (2 confirmed; Long Beach and West Hollywood pages gave no address), STRIDE (2; Pasadena page gave no address).
+- Exact coordinates came from the CorePower and 9Round pages. Every other chain pin is hand placed from the address (`approx` 1) and needs the geocode script extended to `chains.json`.
+- Left off on purpose: UFC Gym Brea and 9Round Rancho Santa Margarita, where Jay coaches. The page says so.
+- CorePower and YogaSix are tagged heated only, because that is what their pages state. They do not show under Not hot.
+- Not done, needs Jay's OK first (plan in chat): swap Leaflet raster tiles for MapLibre vector tiles, and publish the place data as one JSON feed so a phone app can read the same source.

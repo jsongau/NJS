@@ -409,60 +409,131 @@ function mountRank() {
   });
 }
 
-// Near me: filter by kind, sort by distance. The position is used here and nowhere else:
-// it is never sent, stored or tracked.
+// Near me: a filter tree, a distance sort and a map. The position is used here and nowhere else:
+// it is never sent, stored or tracked. Leaflet loads only when the map is first shown.
+const LEAFLET = '/assets/vendor/leaflet/leaflet';
+let leafletReady;
+function loadLeaflet() {
+  if (!leafletReady) leafletReady = new Promise((resolve, reject) => {
+    const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = LEAFLET + '.css'; document.head.appendChild(css);
+    const js = document.createElement('script'); js.src = LEAFLET + '.js'; js.onload = () => resolve(window.L); js.onerror = reject; document.head.appendChild(js);
+  });
+  return leafletReady;
+}
+// A rough Southern California coastline, drawn under the street tiles so the map still reads if tiles are slow.
+const COAST = [[34.6, -120.6], [34.45, -120.45], [34.4, -119.7], [34.27, -119.3], [34.1, -119.1], [34.03, -118.78], [34.01, -118.5], [33.85, -118.4], [33.74, -118.41], [33.71, -118.28], [33.75, -118.19], [33.72, -118.08], [33.65, -118.0], [33.6, -117.9], [33.54, -117.78], [33.46, -117.7], [33.42, -117.61], [33.2, -117.39], [32.9, -117.26], [32.7, -117.25], [32.53, -117.12]];
+const PLACE_NAMES = [['Los Angeles', 34.06, -118.25], ['Orange County', 33.72, -117.83], ['Inland Empire', 33.98, -117.4], ['San Fernando Valley', 34.22, -118.47], ['Temecula Valley', 33.5, -117.1], ['Pacific Ocean', 33.55, -118.35]];
+
 function mountNear() {
   const box = $('[data-nf-near]'); if (!box) return;
   const list = $('[data-nr-list]', box); const rows = $$('li', list); const status = $('[data-nr-status]', box);
-  const heatBox = $('[data-nr-heatbox]', box);
-  const st = { cat: 'all', heat: 'any', at: null, from: '' };
+  const split = $('[data-nr-split]', box); const mapEl = $('[data-nr-map]', box);
+  const icons = {}; const tpl = $('[data-nr-icons]', box);
+  if (tpl) $$('[data-k]', tpl.content).forEach((s) => { icons[s.dataset.k] = s.innerHTML; });
+  const st = { top: 'all', kind: 'all', at: null, from: '', map: null, L: null, you: null, open: null };
   const rad = (d) => (d * Math.PI) / 180;
   const miles = (a, b) => {
     const dLat = rad(b[0] - a[0]); const dLng = rad(b[1] - a[1]);
     const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a[0])) * Math.cos(rad(b[0])) * Math.sin(dLng / 2) ** 2;
     return 3958.8 * 2 * Math.asin(Math.sqrt(h));
   };
-  const draw = () => {
-    let shown = 0;
+  const pos = (r) => [Number(r.dataset.lat), Number(r.dataset.lng)];
+  const shown = () => rows.filter((r) => !r.hidden);
+  const fmt = (d) => (d < 10 ? d.toFixed(1) : String(Math.round(d)));
+
+  const popup = (r) => {
+    const name = $('h3', r).textContent; const links = $$('.nf-rk-links a', r).map((a) => '<a href="' + a.getAttribute('href') + '"' + (a.target ? ' target="_blank" rel="noopener"' : '') + '>' + a.firstChild.textContent + '</a>').join('');
+    return '<div class="nf-pop"><p class="nf-pop-k">' + $('.nf-nr-cat span', r).textContent + '</p><p class="nf-pop-n">' + name + '</p><p class="nf-pop-w">' + $('.nf-nr-where', r).textContent + (r.dist < Infinity && st.at ? ' · ' + fmt(r.dist) + ' miles' : '') + '</p><p class="nf-pop-l">' + links + '</p></div>';
+  };
+  const focusRow = (r, scroll) => {
+    rows.forEach((x) => x.classList.toggle('on', x === r));
+    if (scroll && r && split.dataset.view !== 'map' && matchMedia('(min-width: 1024px)').matches) r.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  };
+  const syncMap = (fit) => {
+    if (!st.map) return; const L = st.L; const vis = shown().filter((r) => r.pin);
+    rows.forEach((r) => { if (!r.pin) return; if (r.hidden) st.map.removeLayer(r.pin); else r.pin.addTo(st.map); });
+    const near = st.at ? vis.slice().sort((a, b) => a.dist - b.dist)[0] : null;
+    rows.forEach((r) => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.toggle('nearest', r === near); });
+    if (st.at) {
+      if (!st.you) st.you = L.marker(st.at, { icon: L.divIcon({ className: 'nf-you', html: '<i></i>', iconSize: [22, 22], iconAnchor: [11, 11] }), interactive: false, keyboard: false, zIndexOffset: 900 }).addTo(st.map);
+      else st.you.setLatLng(st.at);
+    }
+    if (!fit || !vis.length) return;
+    const pts = st.at ? [st.at, ...vis.slice().sort((a, b) => a.dist - b.dist).slice(0, 6).map(pos)] : vis.map(pos);
+    st.map.fitBounds(L.latLngBounds(pts), { padding: [36, 36], maxZoom: 13 });
+  };
+  const startMap = () => {
+    if (st.map || st.starting) return Promise.resolve(); st.starting = true;
+    return loadLeaflet().then((L) => {
+      st.L = L; const map = L.map(mapEl, { zoomControl: true, scrollWheelZoom: false, attributionControl: true, minZoom: 8, maxZoom: 17 }).setView([33.9, -117.85], 9);
+      map.attributionControl.setPrefix(false);
+      map.createPane('base').style.zIndex = 100; map.createPane('names').style.zIndex = 110;
+      L.polygon([...COAST, [32.53, -114.4], [35.6, -114.4], [35.6, -120.6]], { pane: 'base', renderer: L.svg({ pane: 'base' }), stroke: false, fillColor: '#F1EBE2', fillOpacity: 1, interactive: false }).addTo(map);
+      PLACE_NAMES.forEach(([n, la, ln]) => L.marker([la, ln], { pane: 'names', interactive: false, keyboard: false, icon: L.divIcon({ className: 'nf-mapname', html: n, iconSize: [160, 16], iconAnchor: [80, 8] }) }).addTo(map));
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors' }).addTo(map);
+      map.on('click', () => map.scrollWheelZoom.enable());
+      rows.forEach((r) => {
+        if (!r.dataset.lat) return;
+        r.pin = L.marker(pos(r), { title: $('h3', r).textContent, riseOnHover: true, icon: L.divIcon({ className: 'nf-pin nf-pin-' + r.dataset.top, html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
+        r.pin.bindPopup(() => popup(r), { maxWidth: 260, minWidth: 200, closeButton: true });
+        r.pin.on('click', () => { focusRow(r, true); track('fit_tab', { detail: 'near_pin' }); });
+      });
+      st.map = map; syncMap(true);
+    }).catch(() => { mapEl.innerHTML = '<p class="nf-nr-maperr">The map could not load. The list below still works.</p>'; });
+  };
+
+  const draw = (fit) => {
+    let count = 0;
     rows.forEach((r) => {
-      let ok = st.cat === 'all' || r.dataset.cat.split(' ').includes(st.cat);
-      if (ok && st.cat === 'yoga' && st.heat !== 'any') { const h = r.dataset.heat || ''; ok = st.heat === 'hot' ? (h === 'hot' || h === 'both') : (h === 'none' || h === 'both'); }
-      r.hidden = !ok; if (ok) shown++;
+      const c = r.dataset.cat.split(' ');
+      const ok = (st.top === 'all' || c.includes(st.top)) && (st.kind === 'all' || c.includes(st.kind));
+      r.hidden = !ok; if (ok) count++;
     });
     if (st.at) {
       rows.forEach((r) => {
-        const has = !!r.dataset.lat; r.dist = has ? miles(st.at, [Number(r.dataset.lat), Number(r.dataset.lng)]) : Infinity;
-        $('.nf-nr-d b', r).textContent = has ? (r.dist < 10 ? r.dist.toFixed(1) : String(Math.round(r.dist))) : r.dataset.region;
+        const has = !!r.dataset.lat; r.dist = has ? miles(st.at, pos(r)) : Infinity;
+        $('.nf-nr-d b', r).textContent = has ? fmt(r.dist) : r.dataset.region;
         $('.nf-nr-d small', r).textContent = has ? 'miles' : 'no address';
         r.classList.toggle('near', has && r.dist <= 5);
       });
       [...rows].sort((a, b) => a.dist - b.dist).forEach((r) => list.appendChild(r));
-      status.textContent = shown + (shown === 1 ? ' place' : ' places') + ', closest to ' + st.from + ' first. Distances are approximate.';
-    } else if (st.cat !== 'all' || st.heat !== 'any') {
-      status.textContent = shown + (shown === 1 ? ' place' : ' places') + ', A to Z. Share your location or pick an area to see the closest first.';
-    }
+      status.textContent = count + (count === 1 ? ' place' : ' places') + ', closest to ' + st.from + ' first. Distances are approximate.';
+    } else if (st.top !== 'all') {
+      status.textContent = count + (count === 1 ? ' place' : ' places') + ', A to Z. Share your location or pick an area to see the closest first.';
+    } else status.textContent = 'Sorted A to Z. Share your location or pick an area to see the closest first.';
+    if (st.map) st.map.closePopup();
+    syncMap(fit !== false);
   };
+  const setView = (v) => {
+    split.dataset.view = v; $$('[data-nr-view]', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.nrView === v)));
+    if (v === 'map') startMap().then(() => { if (st.map) { st.map.invalidateSize(); syncMap(true); } });
+  };
+
   box.addEventListener('click', (e) => {
-    const c = e.target.closest('[data-nr-cat]');
-    if (c) {
-      st.cat = c.dataset.nrCat; st.heat = 'any';
-      $$('[data-nr-cat]', box).forEach((b) => b.setAttribute('aria-pressed', String(b === c)));
-      if (heatBox) {
-        const on = st.cat === 'yoga'; heatBox.setAttribute('aria-disabled', String(!on));
-        $$('[data-nr-heat]', heatBox).forEach((b) => { b.disabled = !on; b.setAttribute('aria-pressed', String(b.dataset.nrHeat === 'any')); });
-      }
-      track('fit_tab', { detail: 'near_' + st.cat }); draw(); return;
+    const top = e.target.closest('[data-nr-top]');
+    if (top) {
+      st.top = top.dataset.nrTop; st.kind = 'all';
+      $$('[data-nr-top]', box).forEach((b) => b.setAttribute('aria-pressed', String(b === top)));
+      $$('[data-nr-sub]', box).forEach((g) => { g.hidden = g.dataset.nrSub !== st.top; $$('[data-nr-kind]', g).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.nrKind === 'all'))); });
+      track('fit_tab', { detail: 'near_' + st.top }); draw(); return;
     }
-    const h = e.target.closest('[data-nr-heat]');
-    if (h && !h.disabled) {
-      st.heat = h.dataset.nrHeat; $$('[data-nr-heat]', heatBox).forEach((b) => b.setAttribute('aria-pressed', String(b === h)));
-      track('fit_tab', { detail: 'near_heat_' + st.heat }); draw(); return;
+    const kind = e.target.closest('[data-nr-kind]');
+    if (kind) {
+      st.kind = kind.dataset.nrKind; $$('[data-nr-kind]', kind.parentElement).forEach((b) => b.setAttribute('aria-pressed', String(b === kind)));
+      track('fit_tab', { detail: 'near_' + st.top + '_' + st.kind }); draw(); return;
+    }
+    const view = e.target.closest('[data-nr-view]'); if (view) { setView(view.dataset.nrView); return; }
+    const show = e.target.closest('[data-nr-show]');
+    if (show) {
+      const r = show.closest('li'); if (!matchMedia('(min-width: 1024px)').matches) setView('map');
+      startMap().then(() => { if (!st.map || !r.pin) return; st.map.invalidateSize(); st.map.setView(pos(r), Math.max(st.map.getZoom(), 13)); r.pin.openPopup(); focusRow(r, false); });
+      return;
     }
     if (e.target.closest('[data-nr-geo]')) {
       if (!navigator.geolocation) { status.textContent = 'This browser cannot share a location. Pick an area instead.'; return; }
       status.textContent = 'Finding you…';
-      navigator.geolocation.getCurrentPosition((pos) => {
-        st.at = [pos.coords.latitude, pos.coords.longitude]; st.from = 'you';
+      navigator.geolocation.getCurrentPosition((p) => {
+        st.at = [p.coords.latitude, p.coords.longitude]; st.from = 'you';
         const sel = $('[data-nr-city]', box); if (sel) sel.value = '';
         track('fit_tab', { detail: 'near_located' }); draw();
       }, () => { status.textContent = 'I could not get your location. Pick an area instead, or allow location for this site and try again.'; },
@@ -475,6 +546,15 @@ function mountNear() {
     st.at = sel.value.split(',').map(Number); st.from = sel.options[sel.selectedIndex].textContent;
     track('fit_tab', { detail: 'near_area' }); draw();
   });
+  rows.forEach((r) => {
+    r.addEventListener('mouseenter', () => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.add('hot'); });
+    r.addEventListener('mouseleave', () => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.remove('hot'); });
+  });
+  // Desktop shows list and map side by side, so the map starts when it scrolls near. Phones start it on the Map tab.
+  if (matchMedia('(min-width: 1024px)').matches && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((en) => { if (en.some((x) => x.isIntersecting)) { io.disconnect(); startMap(); } }, { rootMargin: '300px' });
+    io.observe(mapEl);
+  }
 }
 
 export function mountFitness() {

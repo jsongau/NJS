@@ -47,3 +47,12 @@
 - Graphics: `GICON` stroke icons and `artRank` / `artNear` in `tools/build-pages.mjs`. The list art draws its bars from the guide's real region counts.
 - Traps: `.nf-ic` was already a class (icon tile), so guide icons use `.nf-gi`. The build never deletes a page folder, so a dropped gym's folder under `fitness/guides/gyms/` must be removed by hand. An ampersand in a place name trips the heading test (`&amp;` reads as a phrase break), so names use "and".
 - Still open: the partner and visited fields for the influencer plan, exact coordinates, Jay's ranks.
+
+## Interactive map
+- `/fitness/guides/near-me` is now list plus map. Filter tree: Striking and MMA (boxing, kickboxing and Muay Thai, jiu-jitsu, MMA), Pilates (reformer, mat), Yoga (hot, not hot). Kinds are derived at build time from each place's `offers`, so a kickboxing gym that lists jiu-jitsu shows under both.
+- Decision: Leaflet 1.9.4, vendored (no CDN), with OpenStreetMap raster tiles and no API key. Rejected: Google Maps and Mapbox (keys, billing), and a hand-drawn SVG map (no streets, so no use when driving).
+- A rough coastline polygon and region names sit under the tile layer, so the map still reads when tiles are slow or blocked. The sandbox blocks tile hosts, so every screenshot from this session shows that fallback: the live street tiles were NOT seen rendering here and need a check on the real site.
+- Privacy wording changed: the old line said the location never leaves the phone. With map tiles that is too strong, because tile requests show the tile host which area is viewed. The page now says the position is never sent to Jay or stored.
+- Pins use the hand-typed neighborhood coordinates, which is visible on a street map. `tools/geocode-guides.mjs` replaces them from the US Census Geocoder; it was written but could not be run here (no network to that host).
+- Traps: the site's global `svg { max-width: 100% }` collapses Leaflet vector layers in custom panes (fixed with `.nf-nr-map .leaflet-pane > svg`); Leaflet adds 17px margins to popup paragraphs; a vector layer in a custom pane needs its own renderer.
+- CoverCapy review (agent): its finder uses geolocation with a typed fallback, a map with "search this area", and a mobile Filters / Map / Sort bar. The agent could not see its scripts or SVGs, so the map library and animations there are unknown.

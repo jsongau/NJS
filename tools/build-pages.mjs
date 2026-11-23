@@ -222,8 +222,8 @@ export const PAGES = {
     capWord(guideN('kickboxing')) + ' kickboxing and Muay Thai gyms across Los Angeles, Orange County and the Inland Empire, with what each is known for and its official link.', null),
   'fit-guide-yoga': fitPage('guides/yoga-studios-socal', 'Yoga studios', 'Yoga Studios in Southern California: ' + guideN('yoga') + ' Worth Knowing, Hot and Not Hot · NJS Fitness',
     capWord(guideN('yoga')) + ' yoga studios across Los Angeles, Orange County and the Inland Empire, with styles, heated or not, and each official link.', null),
-  'fit-near': fitPage('guides/near-me', 'Near me', 'Boxing, Kickboxing, Pilates and Yoga Near Me in Southern California · NJS Fitness',
-    'Find the closest boxing gym, kickboxing gym, reformer Pilates studio or yoga studio in Los Angeles, Orange County and the Inland Empire. Sorted by distance.', null),
+  'fit-near': fitPage('guides/near-me', 'Near me', 'Map of Boxing, Kickboxing, Jiu-Jitsu, Pilates and Yoga Near Me in Southern California · NJS Fitness',
+    'An interactive map of boxing, kickboxing, jiu-jitsu, Pilates and yoga in Los Angeles, Orange County and the Inland Empire. Filter by kind and sort by distance.', null),
   'fit-guide-pilates': fitPage('guides/reformer-pilates-studios-socal', 'Reformer Pilates studios', 'Reformer Pilates Studios in Southern California: ' + guideN('pilates') + ' Worth Knowing in LA, OC and the Inland Empire · NJS Fitness',
     capWord(guideN('pilates')) + ' reformer Pilates studios across Los Angeles, Orange County and the Inland Empire, with what each offers and its official link.', null),
   'fit-note-warmup': fitPage('notes/warm-up', 'Warm-up', 'A Ten Minute Warm-Up That Works: Four Parts, With Sources · NJS Fitness',
@@ -636,42 +636,74 @@ function artNear() {
 const HEAT = { hot: 'Heated', none: 'No heated classes listed', both: 'Heated and not heated' };
 const NEAR_CATS = [['boxing', 'Boxing'], ['kick', 'Kickboxing and Muay Thai'], ['reformer', 'Reformer Pilates'], ['mat', 'Mat Pilates'], ['yoga', 'Yoga']];
 const NEAR_AREAS = [['Brea', 33.9167, -117.9001], ['Anaheim', 33.8366, -117.9143], ['Irvine', 33.6846, -117.8265], ['Newport Beach', 33.6189, -117.9298], ['Rancho Santa Margarita', 33.6409, -117.6031], ['Corona', 33.8753, -117.5664], ['Riverside', 33.9806, -117.3755], ['Rancho Cucamonga', 34.1064, -117.5931], ['Temecula', 33.4936, -117.1484], ['Downtown Los Angeles', 34.0407, -118.2468], ['Hollywood', 34.0928, -118.3287], ['Santa Monica', 34.0195, -118.4912], ['North Hollywood', 34.1870, -118.3813], ['Pasadena', 34.1478, -118.1445], ['Long Beach', 33.7701, -118.1937]];
+// The filter tree: a branch, then its kinds. Tokens land in each row's data-cat.
+const NEAR_TREE = [
+  ['strike', 'Striking and MMA', 'boxing', [['boxing', 'Boxing'], ['kick', 'Kickboxing and Muay Thai'], ['bjj', 'Jiu-jitsu'], ['mma', 'MMA']]],
+  ['pilates', 'Pilates', 'reformer', [['reformer', 'Reformer'], ['mat', 'Mat']]],
+  ['yoga', 'Yoga', 'yoga', [['hot', 'Hot yoga'], ['nothot', 'Not hot']]],
+];
+const NEAR_LABEL = { boxing: 'Boxing', kick: 'Kickboxing and Muay Thai', bjj: 'Jiu-jitsu', mma: 'MMA', reformer: 'Reformer Pilates', mat: 'Mat Pilates', yoga: 'Yoga' };
+const KEY_TOP = { boxing: 'strike', kickboxing: 'strike', grappling: 'strike', pilates: 'pilates', yoga: 'yoga' };
 function nearCats(key, x) {
-  const offers = ((x.p && x.p.offers) || []).join(' ') + ' ' + x.known;
-  if (key === 'boxing') return ['boxing'];
-  if (key === 'kickboxing') return ['kick'];
-  if (key === 'pilates') return ['reformer'].concat(/\bmat (pilates|work)\b/i.test(offers) ? ['mat'] : []);
-  return ['yoga'].concat(/\bmat pilates\b/i.test(offers) ? ['mat'] : [], /\breformer\b/i.test(offers) ? ['reformer'] : []);
+  const t = ((x.p && x.p.offers) || []).join(' | ') + ' | ' + x.known;
+  const has = (re) => re.test(t);
+  const out = [];
+  if (x.kinds) out.push(...x.kinds);
+  if (key === 'boxing') out.push('boxing');
+  if (key === 'kickboxing') out.push('kick');
+  if (KEY_TOP[key] === 'strike') {
+    if (has(/muay thai|kickboxing/i)) out.push('kick');
+    if (has(/(^|[^k])boxing/i)) out.push('boxing');
+    if (has(/jiu.?jitsu|\bbjj\b/i)) out.push('bjj');
+    if (has(/\bmma\b|mixed martial/i)) out.push('mma');
+  }
+  if (key === 'pilates') out.push('reformer');
+  if (key === 'yoga') { out.push('yoga'); if (x.heat === 'hot' || x.heat === 'both') out.push('hot'); if (x.heat === 'none' || x.heat === 'both') out.push('nothot'); }
+  if (key === 'pilates' || key === 'yoga') { if (has(/\bmat (pilates|work|class)\b|mat pilates/i)) out.push('mat'); if (key === 'yoga' && has(/reformer/i)) out.push('reformer'); }
+  const kinds = [...new Set(out)];
+  const tops = NEAR_TREE.filter(([, , , subs]) => subs.some(([c]) => kinds.includes(c)) || kinds.includes('yoga') && subs.some(([c]) => c === 'hot')).map(([id]) => id);
+  return { kinds, tops: [...new Set([KEY_TOP[key], ...tops])] };
 }
 function renderNear() {
-  const all = Object.entries(GUIDES.guides).flatMap(([key, g]) => g.gyms.map((x) => ({ key, x, cats: nearCats(key, x) })))
+  const all = Object.entries(GUIDES.guides).flatMap(([key, g]) => g.gyms.map((x) => ({ key, x, ...nearCats(key, x) })))
     .sort((a, b) => a.x.name.localeCompare(b.x.name));
-  const have = new Set(all.flatMap((r) => r.cats));
-  const cats = NEAR_CATS.filter(([c]) => have.has(c));
-  const n = (c) => all.filter((r) => r.cats.includes(c)).length;
+  const n = (c) => all.filter((r) => r.kinds.includes(c) || r.tops.includes(c)).length;
   const pad = (v) => String(v).padStart(2, '0');
-  const label = (r) => r.cats.map((c) => NEAR_CATS.find(([k]) => k === c)[1]).join(' · ') + (r.x.heat ? ' · ' + HEAT[r.x.heat] : '');
-  const dir = (x) => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(x.p && x.p.address ? x.name + ', ' + x.p.address : x.name + ', ' + x.city + ', CA');
-  const row = ({ x, cats: cs }, r) => '      <li class="nf-rk-row nf-nr-row" data-cat="' + cs.join(' ') + '"' + (x.heat ? ' data-heat="' + x.heat + '"' : '') + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') + ' data-region="' + x.region + '">' +
-    '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
-    '<div class="nf-rk-who"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3><p class="nf-rk-where">' + esc(x.city) + '</p></div>' +
-    '<div class="nf-rk-what"><p class="nf-nr-cat">' + gic(cs[0]) + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span></p><p>' + esc(x.known) + '</p></div>' +
-    '<p class="nf-rk-links"><a href="' + dir(x) + '" target="_blank" rel="noopener">Directions<span class="sr"> to ' + esc(x.name) + ', opens in a new tab</span></a>' +
-    (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') + '</p></li>';
+  const label = (r) => r.kinds.filter((c) => NEAR_LABEL[c]).map((c) => NEAR_LABEL[c]).join(' · ') + (r.x.heat ? ' · ' + HEAT[r.x.heat] : '');
+  const dir = (x) => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(x.p && x.p.address ? x.name + ', ' + x.p.address.split('. ')[0] : x.name + ', ' + x.city + ', CA');
+  const row = (r) => { const x = r.x; const top = KEY_TOP[r.key];
+    return '        <li class="nf-nr-row" data-top="' + top + '" data-ic="' + (r.kinds.find((c) => GICON[c]) || 'pin') + '" data-cat="' + [...new Set([...r.tops, ...r.kinds])].join(' ') + '"' + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') + ' data-region="' + x.region + '">' +
+      '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
+      '<div class="nf-nr-main"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3>' +
+      '<p class="nf-nr-cat nf-top-' + top + '">' + gic(r.kinds.find((c) => GICON[c]) || 'pin') + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span></p>' +
+      '<p class="nf-nr-where">' + esc(x.city) + '</p><p class="nf-nr-known">' + esc(x.known) + '</p>' +
+      '<p class="nf-rk-links">' + (x.lat ? '<button type="button" data-nr-show>Show on map</button>' : '') + '<a href="' + dir(x) + '" target="_blank" rel="noopener">Directions<span class="sr"> to ' + esc(x.name) + ', opens in a new tab</span></a>' +
+      (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">Full profile<span class="sr"> of ' + esc(x.name) + '</span></a>' : x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">Official site<span class="sr"> for ' + esc(x.name) + ', opens in a new tab</span></a>' : '') + '</p></div></li>'; };
+  const icons = '<template data-nr-icons>' + Object.keys(GICON).map((k) => '<span data-k="' + k + '">' + gic(k) + '</span>').join('') + '</template>';
   return ['<section class="nf-sec tight" aria-label="Places near you">', '  <div class="wrap">',
     '    <div class="nf-rk nf-nr" data-nf-near>',
     '      <div class="nf-nr-loc"><button type="button" class="nf-btn nf-coral" data-nr-geo>' + gic('pin') + 'Use my location</button>' +
       '<label class="nf-nr-pick"><span>or pick an area</span><select data-nr-city><option value="">Choose an area</option>' + NEAR_AREAS.map(([name, la, ln]) => '<option value="' + la + ',' + ln + '">' + name + '</option>').join('') + '</select></label></div>',
-    '      <p class="nf-nr-status" data-nr-status role="status">Sorted A to Z. Share your location or pick an area to see the closest first. Your location stays on your device.</p>',
-    '      <div class="nf-rk-bar"><div class="nf-rk-f" role="group" aria-label="What to show">' +
-      '<button type="button" data-nr-cat="all" aria-pressed="true">Everything<small>' + pad(all.length) + '</small></button>' +
-      cats.map(([c, name]) => '<button type="button" data-nr-cat="' + c + '" aria-pressed="false">' + gic(c) + name + '<small>' + pad(n(c)) + '</small></button>').join('') + '</div></div>',
-    have.has('yoga') ? '      <div class="nf-rk-f nf-nr-heat" role="group" aria-label="Heated or not" data-nr-heatbox aria-disabled="true"><span>Yoga room</span>' +
-      '<button type="button" data-nr-heat="any" aria-pressed="true" disabled>Any</button><button type="button" data-nr-heat="hot" aria-pressed="false" disabled>Hot</button><button type="button" data-nr-heat="none" aria-pressed="false" disabled>Not hot</button></div>' : '',
-    '      <div class="nf-rk-head nf-nr-head" aria-hidden="true"><span>Distance</span><span>Place</span><span>What it is</span><span>Go</span></div>',
-    '      <ol class="nf-rk-list" data-nr-list>', ...all.map((r) => row(r, r)), '      </ol>',
-    '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate, measured to the neighborhood, so use Directions for the real drive. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
-    '    </div>', '  </div>', '</section>'].filter(Boolean).join('\n');
+    '      <p class="nf-nr-status" data-nr-status role="status">Sorted A to Z. Share your location or pick an area to see the closest first.</p>',
+    '      <div class="nf-nr-tree">',
+    '        <div class="nf-rk-f nf-nr-tops" role="group" aria-label="What to show">' +
+      '<button type="button" data-nr-top="all" aria-pressed="true">Everything<small>' + pad(all.length) + '</small></button>' +
+      NEAR_TREE.map(([id, name, ic]) => '<button type="button" class="nf-top-' + id + '" data-nr-top="' + id + '" aria-pressed="false">' + gic(ic, 'nf-gi-anim nf-gi-' + ic) + name + '<small>' + pad(n(id)) + '</small></button>').join('') + '</div>',
+    '        <div class="nf-nr-subs">' +
+      '<p class="nf-nr-subhint" data-nr-sub="all">Pick a branch to break it down: boxing or jiu-jitsu, reformer or mat, hot or not.</p>' +
+      NEAR_TREE.map(([id, name, , subs]) => '<div class="nf-rk-f" role="group" aria-label="' + name + ' kinds" data-nr-sub="' + id + '" hidden>' +
+        '<button type="button" data-nr-kind="all" aria-pressed="true">All ' + ({ strike: 'striking and MMA', pilates: 'Pilates', yoga: 'yoga' })[id] + '</button>' +
+        subs.map(([c, sn]) => '<button type="button" data-nr-kind="' + c + '" aria-pressed="false">' + (GICON[c] ? gic(c) : c === 'nothot' ? '' : '') + sn + '<small>' + pad(n(c)) + '</small></button>').join('') + '</div>').join('') + '</div>',
+    '      </div>',
+    '      <div class="nf-nr-view" role="group" aria-label="List or map"><button type="button" data-nr-view="list" aria-pressed="true">List</button><button type="button" data-nr-view="map" aria-pressed="false">Map</button></div>',
+    '      <div class="nf-nr-split" data-nr-split data-view="list">',
+    '        <ol class="nf-nr-list" data-nr-list>', ...all.map(row), '        </ol>',
+    '        <div class="nf-nr-mapbox"><div class="nf-nr-map" data-nr-map role="application" aria-label="Map of gyms and studios. Every place on it is also in the list."></div>' +
+      '<p class="nf-nr-mapnote">Pins are placed by neighborhood, so use Directions for the exact door.</p></div>',
+    '      </div>',
+    '      ' + icons,
+    '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate. Your position is used on this page only: I never receive or store it. The map loads street tiles from OpenStreetMap for the area you look at. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
+    '    </div>', '  </div>', '</section>'].join('\n');
 }
 
 export function sitemap() {

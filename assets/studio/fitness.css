@@ -1836,3 +1836,23 @@ html.nf-lock { overflow: hidden; }
 .nf-two-l { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 10px 0 0; }
 .nf-two-l a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--nf-acc); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .nf-two-l a:hover { text-decoration-thickness: 3px; }
+
+/* ===== Kind jewels in the mega nav and on the home (2026-11-24) ===== */
+.mn-ico.mn-kx { background: none; }
+.mn-ico.mn-kx .nf-kx { width: 36px; height: 36px; border-radius: 11px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28), inset 0 0 0 2.5px rgba(233, 211, 160, .65), 0 3px 8px color-mix(in srgb, var(--top) 30%, transparent); }
+.mn-link:hover .nf-kx svg, .nf-two-k a:hover .nf-kx svg { scale: 1.1; rotate: -4deg; }
+.mn-link:hover .nf-kx::after, .nf-two-k a:hover .nf-kx::after { animation: kx-sheen .9s ease-out; }
+.nf-two-kh { margin: 28px 0 12px; font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.nf-two-k { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.nf-two-k a { --top: var(--ink); position: relative; display: flex; align-items: center; gap: 14px; min-height: 84px; padding: 14px 16px; border-radius: 20px; border: 1.5px solid var(--line-hi); background: linear-gradient(105deg, color-mix(in srgb, var(--top) 10%, var(--surface)) 0, var(--surface) 60%); color: var(--ink); text-decoration: none; overflow: hidden; transition: border-color .2s, box-shadow .2s, translate .2s var(--nf-ease); }
+.nf-two-k a.nf-top-strike { --top: #E0563A; } .nf-two-k a.nf-top-pilates { --top: #1F8A7D; } .nf-two-k a.nf-top-yoga { --top: #7A5BD0; } .nf-two-k a.nf-top-run { --top: #B8730A; }
+.nf-two-k a::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--top); }
+.nf-two-k a:hover { border-color: var(--top); translate: 0 -2px; box-shadow: 0 10px 24px color-mix(in srgb, var(--top) 18%, transparent); }
+.nf-two-k a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.nf-two-k span:last-child { display: grid; gap: 4px; min-width: 0; }
+.nf-two-k b { font: 700 17px/1.15 var(--sans); letter-spacing: -.02em; }
+.nf-two-k small { font: 500 10.5px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: color-mix(in srgb, var(--top) 82%, #121416); }
+.nf-two-k .nf-kx { width: 52px; height: 52px; border-radius: 16px; }
+@media (max-width: 1023px) { .nf-two-k { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .nf-two-k a { gap: 10px; padding: 12px 10px 12px 14px; } .nf-two-k .nf-kx { width: 44px; height: 44px; border-radius: 14px; } .nf-two-k b { font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) { .nf-two-k a { transition: none; } .nf-two-k a:hover { translate: none; } }

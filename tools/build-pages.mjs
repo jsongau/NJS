@@ -12,7 +12,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { GYMS as COACH_GYMS } from '../assets/studio/places.js';
+import { GYMS as COACH_GYMS, KIND_SYM, kindJewel } from '../assets/studio/places.js';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const P = join(ROOT, 'partials/studio');
 export const SITE = 'https://nathanjsong.com';
@@ -719,12 +719,6 @@ const MARK_INDIE = '<span class="nf-mark nf-mark-indie"><i></i></span>';
 // One emblem per kind of place (Goldsmith): champagne line art on a jewel in the kind's colour. Drawn once as a
 // sprite, used by every card, the colour key and the map cards. Coral strikes, teal Pilates, violet yoga, amber runs.
 const KIND_NAME = { strike: 'Striking', pilates: 'Pilates', yoga: 'Yoga', run: 'Run and HIIT' };
-const KIND_SYM = {
-  strike: '<path d="M15 26c-3.200 0-4-5-1-6.200"/><path d="M15.500 29c-2.600-9 1.600-16 9.500-16 5.600 0 9.500 3.800 9.500 9v5.500c0 4.200-3 7.500-7.500 7.500h-5c-3.200 0-5.600-2.400-6.500-6z"/><path d="M19 35h14v5.500H19z"/><path d="M22 20c2.400-1.800 5.600-1.800 8 0" opacity=".7"/><path d="M38.500 14l3-3M40.500 20h4M38.500 26l3 3" opacity=".8"/>',
-  pilates: '<path d="M6 33h36"/><path d="M9 33v6M39 33v6"/><path d="M37 33V19h4v14"/><path d="M37 26l-3-2.500-3 5-3-5-3 5" opacity=".8"/><rect x="11" y="26" width="14" height="7" rx="2.500"/><path d="M13 26v-4h6v4" opacity=".7"/><circle cx="24" cy="13" r="5.500"/><path d="M24 10v6M21 13h6" opacity=".6"/>',
-  yoga: '<path d="M24 34c-5-4-5-13 0-19 5 6 5 15 0 19z"/><path d="M24 34c-7 0-12-5-13-12 5 0 10 3 13 12z"/><path d="M24 34c7 0 12-5 13-12-5 0-10 3-13 12z"/><path d="M19 36c-6 1-11-1-14-5 3-1 6-1 8 0M29 36c6 1 11-1 14-5-3-1-6-1-8 0" opacity=".75"/><path d="M14 40h20" opacity=".6"/><circle cx="24" cy="9" r="1.400" fill="currentColor" stroke="none"/>',
-  run: '<circle cx="24" cy="27" r="13"/><path d="M21 9h6M24 9v5M34.500 15l2.500-2.500"/><path d="M12 27h6l2.500-6 4 11 3-8 1.500 3h7" /><path d="M24 17v1.500M34 27h-1" opacity=".5"/>',
-};
 const KIND_SPRITE = ('<svg class="nf-kx-sprite" width="0" height="0" aria-hidden="true" focusable="false">' + Object.entries(KIND_SYM).map(([k, d]) => '<symbol id="kx-' + k + '" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.700" stroke-linecap="round" stroke-linejoin="round">' + d + '</symbol>').join('') +
   '<symbol id="kx-laurel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20c-3-2-4.500-5.500-4-10M17 20c3-2 4.500-5.500 4-10"/><path d="M3.200 13.500c1.800-.400 3 .300 3.600 1.800M4.200 9.500c1.700.100 2.700 1 3 2.600M19.800 9.500c-1.700.100-2.700 1-3 2.600M20.800 13.500c-1.800-.400-3 .300-3.600 1.800M8.500 21h7"/><path d="M12 6.500l1.500 3 3.300.500-2.400 2.300.600 3.200-3-1.600-3 1.600.600-3.200-2.400-2.300 3.300-.500z" fill="currentColor" stroke="none"/></symbol></svg>').replace(/(\d\.\d)00\b/g, '$1');
 const kx = (top, cls) => '<span class="nf-kx nf-top-' + top + (cls ? ' ' + cls : '') + '" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#kx-' + top + '"/></svg></span>';
@@ -865,6 +859,7 @@ function expand(text, seen = []) {
     if (m[1].startsWith('nf-qa-')) return renderQa(m[1].slice(6));
     if (m[1].startsWith('nf-gear-')) return renderGear(m[1].slice(8));
     if (m[1] === 'nf-near') return renderNear();
+    if (m[1] === 'nf-kinds') return '<ul class="nf-two-k">' + Object.keys(KIND_NAME).map((k) => '<li><a class="nf-top-' + k + '" href="/fitness/guides/near-me?show=' + k + '">' + kindJewel(k) + '<span><b>' + KIND_NAME[k] + '</b><small>' + ADDS[k] + '</small></span></a></li>').join('') + '</ul>';
     if (m[1].startsWith('nf-guide-')) return renderGuide(m[1].slice(9));
     if (m[1] === 'nf-path-wheel') return renderPathWheel();
     if (m[1] === 'nf-path-pillars') return renderPathPillars();

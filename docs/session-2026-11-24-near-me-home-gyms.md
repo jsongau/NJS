@@ -112,3 +112,12 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
 - Trap found: the fitness header already overflowed by 60px at 860 wide before this change. Fixed for 860 to 1179;
   between 860 and 939 the Business and Fitness switch hides to make room (the footer still crosses over).
 - Rejected: a sixth tab for the map. The bar is full; the tools belong under one name.
+
+## Seventh pass: one emblem set everywhere
+
+- Review of the sixth pass: the new nav panel used generic icons (a star for Pilates, a loop for yoga) right after
+  the map taught four colours and emblems. Fixed: the emblem line art moved to `assets/studio/places.js`
+  (`KIND_SYM`, `kindJewel`), read by both the builder and `meganav.js`. A nav link asks for one with `kx-yoga`.
+- Fitness home gained four cards under the two ways: Striking, Pilates, Yoga, Run and HIIT, each opening the map
+  filtered to that kind (`<!--@nf-kinds-->`).
+- Still weak, not fixed: the default list order is A to Z, so nine 9Round rows lead the map until a spot is picked.

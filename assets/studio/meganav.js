@@ -7,6 +7,7 @@ import { icon } from './icons.js';
 import { CLIENT_AGENTS, AGENT_FACES, CREW_ART } from './crewart.js';
 import { ticketTier } from './delivered.js';
 import { agentPicks } from './picks.js';
+import { kindJewel } from './places.js';
 
 const PLAN = {
   launch: { kick: 'A website, hosted', care: 'keep', line: 'Found nearby, takes bookings.' },
@@ -35,7 +36,7 @@ const STUDIO = [
 
 const caret = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const arrow = '<svg class="mn-arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const link = (href, ic, t, s) => '<li><a class="mn-link" href="' + href + '"><span class="mn-ico gic">' + icon(ic) + '</span><span class="mn-txt"><strong>' + esc(t) + '</strong><small>' + esc(s) + '</small></span></a></li>';
+const link = (href, ic, t, s) => '<li><a class="mn-link" href="' + href + '">' + (ic.startsWith('kx-') ? '<span class="mn-ico mn-kx">' + kindJewel(ic.slice(3)) + '</span>' : '<span class="mn-ico gic">' + icon(ic) + '</span>') + '<span class="mn-txt"><strong>' + esc(t) + '</strong><small>' + esc(s) + '</small></span></a></li>';
 
 function agentsPanel() {
   const cards = CLIENT_AGENTS.map((a) => '<button type="button" class="mn-ag" data-ag="' + a.id + '" aria-pressed="false">' +
@@ -110,15 +111,15 @@ const FIT = {
   ],
   'f-strike': [
     ['Disciplines', [['/fitness/boxing', 'fist', 'Boxing', 'Footwork, a clean jab, combinations on mitts'], ['/fitness/kickboxing', 'fist', 'Kickboxing', 'Punches and kicks on Thai pads'], ['/fitness/muay-thai', 'fist', 'Muay Thai', 'Teeps, knees, elbows and the clinch'], ['/fitness/striking', 'pages', 'All striking', 'How private striking sessions run']]],
-    ['Train it with', [['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/guides/near-me?show=strike', 'pin', 'Fight gyms near you', 'For the days you train alone']]],
+    ['Train it with', [['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/guides/near-me?show=strike', 'kx-strike', 'Fight gyms near you', 'For the days you train alone']]],
   ],
   'f-clubs': [
     ['Steel clubs and maces', [['/fitness/clubs-and-maces', 'mark', 'Clubs and maces', 'Steel club and steel mace training'], ['/fitness/shoulder-strength', 'fitness', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely']]],
     ["Coach's notes", [['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
   ],
   'f-guides': [
-    ['The map', [['/fitness/guides/near-me', 'pin', 'Studios near me', 'Every place on one map, by distance'], ['/fitness/guides/near-me?show=yoga&area=Brea', 'loop', 'Yoga near Brea', 'Adds mobility to your week'], ['/fitness/guides/near-me?show=pilates&area=Rancho+Santa+Margarita', 'star', 'Pilates near Rancho Santa Margarita', 'Adds control'], ['/fitness/guides/near-me?show=run&area=Corona', 'bolt', 'Intervals near Corona', 'Adds engine']]],
-    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'fist', 'Boxing gyms', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'fist', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides/reformer-pilates-studios-socal', 'star', 'Reformer Pilates studios', 'Across LA, OC and the IE'], ['/fitness/guides/yoga-studios-socal', 'loop', 'Yoga studios', 'Hot and not heated']]],
+    ['The map', [['/fitness/guides/near-me', 'pin', 'Studios near me', 'Every place on one map, by distance'], ['/fitness/guides/near-me?show=yoga&area=Brea', 'kx-yoga', 'Yoga near Brea', 'Adds mobility to your week'], ['/fitness/guides/near-me?show=pilates&area=Rancho+Santa+Margarita', 'kx-pilates', 'Pilates near Rancho Santa Margarita', 'Adds control'], ['/fitness/guides/near-me?show=run&area=Corona', 'kx-run', 'Intervals near Corona', 'Adds engine']]],
+    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'kx-strike', 'Boxing gyms', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'kx-strike', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides/reformer-pilates-studios-socal', 'kx-pilates', 'Reformer Pilates studios', 'Across LA, OC and the IE'], ['/fitness/guides/yoga-studios-socal', 'kx-yoga', 'Yoga studios', 'Hot and not heated']]],
     ["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/recovery-room', 'star', 'The recovery room', "What's worth it, ranked by evidence"], ['/fitness/path', 'chart', 'The path', 'What getting better looks like']]],
   ],
   'f-about': [

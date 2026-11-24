@@ -33,3 +33,13 @@ export const slotMinutes = (loc) => (GYMS[loc].gym ? 30 : 60);
 export const fmtHour = (h) => (Math.floor(h) % 12 || 12) + ':' + String(Math.round((h % 1) * 60)).padStart(2, '0') + ' ' + (h < 12 ? 'AM' : 'PM');
 // "2026-11-24T07:30" style value for links and the lead form.
 export const slotValue = (isoDay, h) => isoDay + 'T' + String(Math.floor(h)).padStart(2, '0') + (h % 1 ? ':' + String(Math.round((h % 1) * 60)).padStart(2, '0') : '');
+
+// One emblem per kind of place (Goldsmith): line art for the jewel. Read by the page builder (map cards, colour key)
+// and by the mega nav, so a kind looks the same everywhere.
+export const KIND_SYM = {
+  strike: '<path d="M15 26c-3.2 0-4-5-1-6.2"/><path d="M15.5 29c-2.6-9 1.6-16 9.5-16 5.6 0 9.5 3.8 9.5 9v5.500c0 4.2-3 7.5-7.5 7.500h-5c-3.2 0-5.6-2.4-6.5-6z"/><path d="M19 35h14v5.500H19z"/><path d="M22 20c2.4-1.8 5.6-1.8 8 0" opacity=".7"/><path d="M38.5 14l3-3M40.5 20h4M38.5 26l3 3" opacity=".8"/>',
+  pilates: '<path d="M6 33h36"/><path d="M9 33v6M39 33v6"/><path d="M37 33V19h4v14"/><path d="M37 26l-3-2.5-3 5-3-5-3 5" opacity=".8"/><rect x="11" y="26" width="14" height="7" rx="2.5"/><path d="M13 26v-4h6v4" opacity=".7"/><circle cx="24" cy="13" r="5.5"/><path d="M24 10v6M21 13h6" opacity=".6"/>',
+  yoga: '<path d="M24 34c-5-4-5-13 0-19 5 6 5 15 0 19z"/><path d="M24 34c-7 0-12-5-13-12 5 0 10 3 13 12z"/><path d="M24 34c7 0 12-5 13-12-5 0-10 3-13 12z"/><path d="M19 36c-6 1-11-1-14-5 3-1 6-1 8 0M29 36c6 1 11-1 14-5-3-1-6-1-8 0" opacity=".75"/><path d="M14 40h20" opacity=".6"/><circle cx="24" cy="9" r="1.4" fill="currentColor" stroke="none"/>',
+  run: '<circle cx="24" cy="27" r="13"/><path d="M21 9h6M24 9v5M34.5 15l2.5-2.5"/><path d="M12 27h6l2.5-6 4 11 3-8 1.5 3h7" /><path d="M24 17v1.500M34 27h-1" opacity=".5"/>',
+};
+export const kindJewel = (k) => '<span class="nf-kx nf-top-' + k + '" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + KIND_SYM[k] + '</svg></span>';

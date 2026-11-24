@@ -2021,7 +2021,7 @@ html.nf-lock { overflow: hidden; }
 .nf-pl-pair a { min-height: 44px; }
 .nf-pl-nav button { height: 44px; width: 48px; }
 .nf-pl-body .nf-nr-pick, .nf-nr-home-k { position: relative; }
-.nf-pl-body .nf-nr-pick::after, .nf-nr-home-k::after { content: ''; position: absolute; inset: -8px -4px; }
+.nf-pl-body .nf-nr-pick::after, .nf-nr-home-k::after { content: ''; position: absolute; inset: -8px 0; }
 .nf-pl-from { min-height: 44px; }
 /* The place card clears the zoom buttons and, on narrower wide screens, the From dock */
 @media (min-width: 1024px) { .nf-nr.full .nf-nr-place { top: 104px; max-height: calc(100% - 124px); } }
@@ -2053,3 +2053,18 @@ html.nf-lock { overflow: hidden; }
 .nf-nr-map .leaflet-bar a { width: 44px; height: 44px; line-height: 44px; }
 @media (min-width: 1024px) and (max-width: 1279px) { .nf-nr.full.placed .nf-nr-fullbar { left: 14px; transform: none; width: min(520px, calc(100% - 388px)); } }
 .nf-nr .leaflet-touch .leaflet-bar a, .nf-nr .leaflet-bar a { width: 44px !important; height: 44px !important; line-height: 44px !important; }
+
+/* ===== Mary's site audit (2026-11-24) ===== */
+/* The map's filter tiles (buttons) had taken over the content tiles (articles) on the focus pages: on phones the
+   text was squeezed into a 54px column. Content tiles get their own layout back. */
+article.nf-tile { position: static; display: grid; grid-template: none; gap: 6px; align-content: start; align-items: stretch; min-height: 0; padding: 18px; border-radius: var(--nf-r); border: 1px solid var(--line); background: var(--surface); cursor: auto; text-align: left; }
+article.nf-tile:active, article.nf-tile:hover { transform: none; border-color: var(--line); }
+@media (max-width: 359px) { .nf-tiles { grid-template-columns: minmax(0, 1fr); } }
+.nf-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 720px) { .nf-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* The focus bar title wraps instead of cutting off on the smallest phones */
+@media (max-width: 359px) { .nf-fbar p b { white-space: normal; overflow: visible; font-size: 15px; } }
+/* Map: the laurel tag and the address links get a full thumb everywhere, not only on the place card */
+.nf-nr-pick { position: relative; }
+.nf-nr-pick::after { content: ''; position: absolute; inset: -9px 0; }
+@media (max-width: 1023px) { .nf-nr-addr a { position: relative; } .nf-nr-addr a::after { content: ''; position: absolute; inset: -12px 0; } }

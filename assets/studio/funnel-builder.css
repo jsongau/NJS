@@ -163,3 +163,6 @@
 @media (max-width:900px){.fb-bar{flex-wrap:wrap}.fb-bar-r{flex-wrap:wrap}.fb-in4{grid-template-columns:1fr!important}.fb-app[data-view="edit"] .fb-right{display:block}.fb-rtabs{top:0}}
 @media (max-width:520px){.fb-bar-l{width:100%}.fb-tb{flex:1;justify-content:center}}
 @media (max-width:520px){.fb-tl{display:none}}
+
+/* Mary, 2026-11-24: outline labels wrap to two lines instead of being cut with an ellipsis */
+.fb-o-main b,.fb-o-main small{white-space:normal;overflow:hidden;text-overflow:clip;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}

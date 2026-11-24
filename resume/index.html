@@ -1077,6 +1077,12 @@
     .dock-sep{margin:0 3px}
     .dock-label{left:12px}
   }
+
+  /* Mary, 2026-11-24: on touch widths the small bar buttons keep their look and grow their hit area to a full thumb */
+  @media (max-width:1023px){
+    .dl-btn,.theme-toggle,.dock-project{position:relative}
+    .dl-btn::after,.theme-toggle::after,.dock-project::after,.twin-fab::after{content:'';position:absolute;inset:-8px 0}
+  }
 </style>
 
 <style id="elpick-css">

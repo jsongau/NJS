@@ -1926,3 +1926,28 @@ h1, h2, h3 { text-wrap: balance; }
 @media (min-width: 860px) and (max-width: 939px) { body[data-mode="fitness"] .top .wrap > .mode a { padding: 0 6px; font-size: 11.5px; } body[data-mode="fitness"] .top .mn-list[data-mn-set="fit"] .mn-top { font-size: 12.5px; padding-left: 2px; } body[data-mode="fitness"] .top .mn-list[data-mn-set="fit"] .mn-caret { width: 16px; } body[data-mode="fitness"] .top nav .btn { padding: 10px 10px; font-size: 13px; } }
 @media (max-width: 519px) { .top .mn-cta .cta-x { display: none; } .top nav .mn-cta { padding: 10px 14px; font-size: 14.5px; } }
 @media (max-width: 349px) { .top nav .mn-cta { padding: 10px 10px; font-size: 13.5px; } .top .wrap { gap: 6px; } }
+
+/* ===== Mary: touch targets, site-wide (2026-11-24). On touch widths every control gives a thumb 44px. Chrome
+   (header, footer, menus) grows for real; small links and compact widget buttons keep their look and grow only
+   their hit area, through a pseudo-element, so no frame changes size. ===== */
+@media (max-width: 1023px) {
+  .top .logo { position: relative; }
+  .top .logo::after { content: ''; position: absolute; inset: -6px 0; }
+  .top .wrap > .mode a { min-height: 44px; }
+  .menu-btn { width: 44px; height: 44px; }
+  .top nav .btn { min-height: 44px; }
+  footer a { display: flex; align-items: center; min-height: 44px; padding: 4px 0; }
+  .subnav a { position: relative; }
+  .subnav a::before { content: ''; position: absolute; inset: -5px 0; }
+  :where(.nf-more, .nf-rk-prof, .nf-flink, .tlink, .proofl, .bt-exp, .slot, .fm-cm-btn, .fm-brand, .nf-rk-links a, .nf-rk-links button, .pl-ex-l, .fm-bh-back, .fm-4w-back, .fm-bh-jump a, .nf-pack a:not(.nf-btn):not(.btn)) { position: relative; }
+  :where(.nf-more, .nf-rk-prof, .nf-flink, .tlink, .proofl, .bt-exp, .slot, .fm-cm-btn, .fm-brand, .nf-rk-links a, .nf-rk-links button, .pl-ex-l, .fm-bh-back, .fm-4w-back, .fm-bh-jump a, .nf-pack a:not(.nf-btn):not(.btn))::before { content: ''; position: absolute; inset: -12px 0; }
+  :where(.nf-src) { position: relative; }
+  .nf-src::before { content: ''; position: absolute; inset: -12px 0; }
+  :where(button:not([class])) { position: relative; }
+  :where(button:not([class]))::after { content: ''; position: absolute; inset: -6px 0; }
+  :is(button.kind, .pl-more, .bp-use, .fm-chip-btn, .mode-sw .b, button.b, main select, .theme-toggle, .dl-btn, .twin-fab, .fb-tb, .fb-ib, .fm-sw, .fm-sk-play, .dock-project, button.z) { min-height: 44px; }
+  :is(.theme-toggle, .twin-fab, .fb-ib, .fm-sk-play) { min-width: 44px; }
+}
+@media (max-width: 1023px) { button.fm-chip-btn { min-height: 44px; } main input:not([type="range"]):not([type="checkbox"]):not([type="radio"]) { min-width: 44px; } }
+@media (max-width: 349px) { .top .wrap { gap: 5px; padding-left: 12px; padding-right: 12px; } .top .wrap > .mode a { padding: 0 6px; } }
+@media (max-width: 349px) { .top .wrap > .mode a { padding: 0 4px; font-size: 11.5px; } .top nav .mn-cta { padding: 10px 8px; font-size: 13px; } .top .wrap { gap: 4px; } }

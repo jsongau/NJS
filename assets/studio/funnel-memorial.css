@@ -810,3 +810,6 @@ html:has(.fm-root){scroll-padding-top:150px}
 .fm-bh-jump a:hover{border-color:#FF4F9A}
 .fm-behind-page .fm-btf{scroll-margin-top:80px}
 .fm-behind-page :is(#stack,#addons){scroll-margin-top:72px}
+
+/* Mary, 2026-11-24: the wants chips give a full thumb */
+.fm-wants .fm-chip-btn{min-height:44px}

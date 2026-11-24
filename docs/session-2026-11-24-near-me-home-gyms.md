@@ -173,3 +173,19 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
   tick when a search applies, ticks on place open, step and deck fold. iPhone path uses the switch-control trick;
   not verified here, it needs a real iPhone.
 - Search suggestions capped at eight and now use `pointerdown`, both from Mary's combobox rule.
+
+## Twelfth pass: Mary audits the whole site
+
+- New tool `tools/audit-mary.mjs`: every page in the sitemap (three gym profiles stand in for the 82 that share a
+  template) at 320, 390, 768, 1024 and 1440 wide. First run: 131 of 215 checks failed. Last run: 6, all two known
+  exceptions.
+- **Worst find, live on phones today:** the "what a session covers" tiles on the focus pages were squeezed into a
+  54px column by the map's unscoped `.nf-tile` rules (another session's change). Fixed with `article.nf-tile`.
+- Sideways scroll fixed: `/fitness/boxing` at 320 (36px, same cause), sixteen fitness pages at 320 (5px, caused by
+  my own first attempt at hit areas with a sideways inset; corrected), the home page at 320.
+- Cut-offs fixed: "Pick up to two" on the fitness home at 320; five outline labels in the funnel builder.
+- Touch targets: header (logo, switch, button, menu), footer links, sub-menu links, text links on cards, guide
+  links, funnel chips, classless widget buttons, the `/resume` bar buttons.
+- Not fixed, on purpose: "Search again" inside a fixed-size home page widget (23px tall) and "Get in touch" on
+  `/resume` (40px, in a fixed dock). Both need a design decision, not a CSS patch.
+- The audit checks pages as they load. Screens with states still need a walk-through like the map's.

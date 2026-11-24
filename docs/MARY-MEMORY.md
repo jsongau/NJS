@@ -5,6 +5,16 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-24 · **A class name belongs to one component.** (Found by the site audit.) The map's filter buttons
+  reused `.nf-tile`, already the class of the "what a session covers" cards on twelve pages, and its unscoped phone
+  rule squeezed those cards' text into a 54px column. A new component takes a new prefix (`nf-nr-…`) or scopes
+  every rule to its own root. `node tools/audit-mary.mjs http://localhost:8765` after any shared CSS change
+  catches this.
+- 2026-11-24 · **Grow the hit area, not the frame.** Site chrome (header, footer, menus) is really 44px tall on
+  touch widths. A small link or a compact widget button keeps its look and gets a pseudo-element with a negative
+  top and bottom inset. Never a negative left or right inset (it causes sideways scroll at the screen edge), and
+  never on an element with `overflow: hidden` (the extra area is clipped and the text reads as cut off).
+
 - 2026-11-24 · **A map screen is audited by script in every state, not by eye in one.** (Jay: "fix cut offs".)
   The near-me map has six states (list, map, expanded, typing, applied, place open). At 320, 360, 390, 430, 768,
   1024 and 1440 wide each state must pass: no sideways scroll, no clipped text, no control outside the screen,

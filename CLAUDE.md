@@ -66,12 +66,16 @@ node --test tests/studio/*.test.mjs
 node tools/build-preview.mjs /tmp/njs-preview.html
 python3 -m http.server 8765
 node tools/check-headlines.mjs http://localhost:8765/ http://localhost:8765/fitness/
+node tools/audit-mary.mjs http://localhost:8765
 ```
 
 Rebuild pages, check none are stale, check the catalog, run the tests (expect 55 pass, 8 skipped,
 0 fail), build a one-file preview, serve locally at http://localhost:8765, then audit headline line
 breaks (needs the local server and Playwright; pass every page you touched, and any preview file).
-Run the tests before every commit, and the headline audit before any preview goes to Jay. The
+Run the tests before every commit, and the headline audit before any preview goes to Jay. The last command is
+Mary's layout audit (sideways scroll, cut-off text, things off screen, touch targets under 44px) over every page
+in `sitemap.xml` at five widths; run it after any change to shared CSS, the header or the footer. Two known
+exceptions remain: the "Search again" button in a home page widget and "Get in touch" on `/resume`. The
 copy-lint test fails on any `$` followed by a digit on Studio pages: no Studio prices on the site. Fitness
 pages are exempt.
 

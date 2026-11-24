@@ -39,6 +39,20 @@
   for real. Check it on the live page, and read Nominatim's usage policy before traffic grows.
 - The avatar pin popup has "Measure from here"; the ring on the map follows the chosen distance.
 
+## Third pass: ruler, chain marks, map-only expand
+- Jay rejected the row of mile buttons. The distance is now a drawn ruler (`.nf-nr-ruler`): an invisible native
+  range input sits over it, so dragging, tapping the track, touch and the keyboard all work; the numbers under
+  it are plain buttons. `syncDist` sets `--p` on the ruler and the bubble text.
+- Chains are marked apart from independents everywhere: a rounded-square pin with initials (`CHAIN_MONO`, letters
+  only, never a company logo) and the branch icon as a badge; a "Chain" tag on list rows; a legend on the map.
+- Run by left the Filters panel. It is a one-row strip of brand cards under the tiles (`.nf-nr-by`), filtered to
+  the branch: Yoga shows Independent, CorePower Yoga and YogaSix.
+- Expand now shows only the map. The ruler and the tiles are moved into `.nf-nr-fullbar` over the map and put
+  back on close (comment nodes hold their places). Pins open popups in this mode on phones too.
+- Trap: the base pin has a drop animation that ends rotated 45 degrees, so a non-teardrop pin must set
+  `animation: none` as well as `transform: none`.
+- Trap: Playwright's `boundingBox` is in viewport coordinates; scroll the ruler into view before a mouse drag.
+
 ## Decisions
 - The places around a home gym are described as "close by" and by what they add. They are not called
   recommendations: Jay has not ranked or visited-tagged them yet, and chains are map only.

@@ -467,18 +467,21 @@ function mountNear() {
     distOut.textContent = st.max === null ? 'any distance' : st.max + (st.max === 1 ? ' mile' : ' miles');
     const note = $('[data-nr-distnote]', box); if (note) note.textContent = st.at ? 'of ' + (st.from === 'you' ? 'you' : st.from) : 'Pick a spot first.';
     $$('[data-nr-mi]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(Number(bt.dataset.nrMi) === i)));
+    const ruler = $('[data-nr-ruler]', box); const bub = $('[data-nr-bub]', box);
+    if (ruler) ruler.style.setProperty('--p', String(i / (MILES.length - 1)));
+    if (bub) { const txt = st.max === null ? 'Any' : st.max + ' mi'; if (bub.textContent !== txt) { bub.textContent = txt; replay(bub, 'pop'); } }
   };
   // Drop a pin: the next click on the map becomes the spot.
   const arm = (on) => { st.dropping = on; $$('[data-nr-drop]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(on))); mapEl.classList.toggle('dropping', on); };
   // Expanded map: the controls become a side column and the map takes the rest of the screen. On phones the map
   // takes the whole screen and the distance control moves in with it.
-  const distBox = $('[data-nr-distbox]', box); const distHome = document.createComment('distance');
+  const distBox = $('[data-nr-distbox]', box); const tilesBox = $('.nf-nr-tiles', box); const fullBar = $('[data-nr-fullbar]', box);
+  const distHome = document.createComment('distance'); const tilesHome = document.createComment('tiles');
   const full = (on) => {
     box.classList.toggle('full', on); document.documentElement.classList.toggle('nf-lock', on);
     $$('[data-nr-full]', box).forEach((bt) => { bt.setAttribute('aria-pressed', String(on)); $('span', bt).textContent = on ? 'Close' : 'Expand'; });
-    const mapbox = $('.nf-nr-mapbox', box);
-    if (on && !wide()) { distBox.before(distHome); mapbox.insertBefore(distBox, $('.nf-nr-mapwrap', mapbox)); setView('map', false); }
-    else if (distHome.parentNode) { distHome.replaceWith(distBox); }
+    if (on) { distBox.before(distHome); tilesBox.before(tilesHome); fullBar.append(tilesBox, distBox); if (!wide()) setView('map', false); }
+    else { if (distHome.parentNode) distHome.replaceWith(distBox); if (tilesHome.parentNode) tilesHome.replaceWith(tilesBox); }
     startMap().then(() => { if (st.map) { st.map.invalidateSize(); if (on) st.map.scrollWheelZoom.enable(); syncMap(true); } });
   };
   const setHome = (g) => {
@@ -594,11 +597,13 @@ function mountNear() {
       map.on('popupclose', () => select(null, false));
       rows.forEach((r) => {
         if (!r.dataset.lat) return;
-        r.pin = L.marker(pos(r), { title: nameOf(r), riseOnHover: true, icon: L.divIcon({ className: 'nf-pin nf-pin-' + r.dataset.top, html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
+        r.pin = L.marker(pos(r), { title: nameOf(r), riseOnHover: true, icon: L.divIcon(r.dataset.mono
+          ? { className: 'nf-pin nf-pin-chain nf-pin-' + r.dataset.top, html: '<span><b>' + r.dataset.mono + '</b></span><i>' + (icons[r.dataset.ic] || '') + '</i>', iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -18] }
+          : { className: 'nf-pin nf-pin-' + r.dataset.top, html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
         r.pin.bindTooltip(nameOf(r), { direction: 'top', offset: [0, -20], className: 'nf-tip' });
         r.pin.on('click', () => {
           buzz(10); select(r, true); track('fit_tab', { detail: 'near_pin' });
-          if (wide()) { r.pin.unbindPopup(); r.pin.bindPopup('<div class="nf-pop">' + cardHtml(r) + '</div>', { maxWidth: 270, minWidth: 210, autoPanPadding: [24, 70] }).openPopup(); r.pin.closeTooltip(); }
+          if (wide() || box.classList.contains('full')) { r.pin.unbindPopup(); r.pin.bindPopup('<div class="nf-pop">' + cardHtml(r) + '</div>', { maxWidth: 270, minWidth: 210, autoPanPadding: [24, 70] }).openPopup(); r.pin.closeTooltip(); }
           else cardTo(r);
         });
       });

@@ -710,6 +710,12 @@ const HOME_ART = {
 };
 // What each branch adds to training with Jay, in the words of the five pillars on /fitness/path.
 const ADDS = { yoga: 'Adds mobility', pilates: 'Adds control', run: 'Adds engine', strike: 'Adds skill' };
+// Who runs a place shows in its mark: independents keep the teardrop pin, chains get a rounded square with initials
+// (letters, not the company's logo) and a small link badge. The same marks are used on the map, in the list and in Run by.
+const CHAIN_MONO = { corepower: 'CP', yogasix: 'Y6', ufc: 'UFC', '9round': '9R', rumble: 'RB', orangetheory: 'OT', stride: 'ST' };
+const LINK_SVG = '<svg class="nf-link" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 9.5l3-3M7 4.500l1-1a3 3 0 0 1 4.500 4.500l-1 1M9 11.500l-1 1A3 3 0 0 1 3.500 8l1-1"/></svg>'.replace(/(\d\.\d)00\b/g, '$1');
+const markChain = (id) => '<span class="nf-mark nf-mark-chain"><b>' + CHAIN_MONO[id] + '</b>' + LINK_SVG + '</span>';
+const MARK_INDIE = '<span class="nf-mark nf-mark-indie"><i></i></span>';
 // Distance stops in miles: every mile up to five, then every five up to thirty. Index 0 is any distance.
 const NEAR_MILES = [null, 1, 2, 3, 4, 5, 10, 15, 20, 25, 30];
 const TRY_WORD = { yoga: 'Yoga', pilates: 'Pilates', run: 'Intervals', strike: 'Striking' };
@@ -727,10 +733,10 @@ function renderNear() {
   const dir = (x) => 'https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=' + encodeURIComponent(addr(x) ? x.name + ', ' + addr(x) : x.name + ', ' + x.city + ', CA');
   const row = (r) => { const x = r.x; const top = r.chain ? r.c.top : KEY_TOP[r.key]; const ic = r.chain ? r.c.ic : r.kinds.find((c) => GICON[c]) || 'pin'; const [gid, gname] = r.chain ? [] : GUIDE_OF[r.key];
     return '        <li class="nf-nr-row" data-top="' + top + '" data-ic="' + ic + '" data-cat="' + [...new Set([...r.tops, ...r.kinds])].join(' ') + '"' + (x.lat ? ' data-lat="' + x.lat + '" data-lng="' + x.lng + '"' : '') +
-      ' data-region="' + x.region + '" data-brand="' + (r.chain || 'indie') + '" data-nav="' + dir(x) + '"' + (addr(x) ? ' data-addr="' + esc(addr(x)) + '"' : '') + (x.p ? ' data-slug="' + x.p.slug + '"' + (x.p.since ? ' data-since="' + x.p.since + '"' : '') : '') + (typeof x.score === 'number' ? ' data-score="' + x.score + '"' : '') + '>' +
+      ' data-region="' + x.region + '" data-brand="' + (r.chain || 'indie') + '"' + (r.chain ? ' data-mono="' + CHAIN_MONO[r.chain] + '"' : '') + ' data-nav="' + dir(x) + '"' + (addr(x) ? ' data-addr="' + esc(addr(x)) + '"' : '') + (x.p ? ' data-slug="' + x.p.slug + '"' + (x.p.since ? ' data-since="' + x.p.since + '"' : '') : '') + (typeof x.score === 'number' ? ' data-score="' + x.score + '"' : '') + '>' +
       '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
       '<div class="nf-nr-main"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3>' +
-      '<p class="nf-nr-cat nf-top-' + top + '">' + gic(ic) + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span>' + (ADDS[top] ? '<em class="nf-nr-adds">' + ADDS[top] + '</em>' : '') + '</p>' +
+      '<p class="nf-nr-cat nf-top-' + top + '">' + gic(ic) + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span>' + (ADDS[top] ? '<em class="nf-nr-adds">' + ADDS[top] + '</em>' : '') + (r.chain ? '<em class="nf-nr-own">' + LINK_SVG + 'Chain</em>' : '') + '</p>' +
       '<p class="nf-nr-where">' + esc(x.city) + (x.p && x.p.since ? ' · since ' + esc(x.p.since) : '') + '</p>' +
       (addr(x) ? '<p class="nf-nr-addr"><a href="' + dir(x) + '" target="_blank" rel="noopener">' + gic('pin') + '<span>' + esc(addr(x)) + '</span><span class="sr">, start navigation in Google Maps, opens in a new tab</span></a></p>' : '') +
       (r.chain ? '' : '<p class="nf-nr-known">' + esc(x.known) + '</p>') +
@@ -751,17 +757,21 @@ function renderNear() {
     return { id, g, tryTop, tryMi, tryN: within(tryMi), near: [['yoga', 'yoga'], ['pilates', 'Pilates'], ['run', 'interval'], ['strike', 'striking']].map(([top, w]) => [close.filter((r) => topOf(r) === top).length, w]) }; });
   return ['<section class="nf-sec tight" aria-label="Places near you">', '  <div class="wrap">',
     '    <div class="nf-rk nf-nr" data-nf-near>',
-    '      <div class="nf-nr-try" role="group" aria-label="Examples"><span>New here? Try one:</span>' + homes.map((h) => '<button type="button" data-nr-try data-slug="' + h.g.slug + '" data-top="' + h.tryTop + '" data-mi="' + NEAR_MILES.indexOf(h.tryMi) + '">' + TRY_WORD[h.tryTop] + ' within ' + h.tryMi + ' miles of ' + esc(h.g.name) + '</button>').join('') + '</div>',
+    '      <div class="nf-nr-try" role="group" aria-label="Examples"><span>New here? Try one:</span>' + homes.map((h) => '<button type="button" data-nr-try data-slug="' + h.g.slug + '" data-top="' + h.tryTop + '" data-mi="' + NEAR_MILES.indexOf(h.tryMi) + '" style="--hg:' + HOME_ART[h.id][0] + '">' + HOME_ART[h.id][1].split('gx-' + h.id).join('gx-' + h.id + '-try') + '<span><b>' + TRY_WORD[h.tryTop] + ' within ' + h.tryMi + ' miles</b><small>of ' + esc(h.g.name) + '</small></span></button>').join('') + '</div>',
     '      <div class="nf-nr-loc"><p class="nf-nr-step"><b>1</b>Pick a spot: one of my gyms above, or your own</p>' +
       '<button type="button" class="nf-btn nf-coral" data-nr-geo>' + gic('pin') + 'Use my location</button><button type="button" class="nf-btn" data-nr-drop aria-pressed="false">Drop a pin</button>' +
       '<label class="nf-nr-pick"><span>or an area</span><select data-nr-city><option value="">Choose an area</option>' + NEAR_AREAS.map(([name, la, ln]) => '<option value="' + la + ',' + ln + '">' + name + '</option>').join('') + '</select></label>' +
       '<form class="nf-nr-addr" data-nr-addr role="search"><input type="search" name="q" placeholder="Or type an address or a city" aria-label="Address or city" autocomplete="street-address" enterkeyhint="search"><button type="submit" class="nf-btn">Find</button></form></div>',
     '      <div class="nf-nr-dist" data-nr-distbox><p class="nf-nr-step"><b>2</b>Set the distance</p>' +
       '<p class="nf-nr-dist-h"><span>Within</span><output data-nr-distout>any distance</output><span class="nf-nr-dist-of" data-nr-distnote>Pick a spot first.</span></p>' +
-      '<input type="range" min="0" max="' + (NEAR_MILES.length - 1) + '" step="1" value="0" data-nr-dist aria-label="Distance">' +
-      '<div class="nf-nr-ticks" role="group" aria-label="Distance in miles">' + NEAR_MILES.map((m, i) => '<button type="button" data-nr-mi="' + i + '" aria-pressed="' + (i === 0) + '"' + (m ? ' aria-label="' + m + (m === 1 ? ' mile' : ' miles') + '"' : '') + '>' + (m || 'Any') + '</button>').join('') + '</div></div>',
+      '<div class="nf-nr-ruler" data-nr-ruler style="--p:0"><div class="nf-nr-ruler-track"><i class="nf-nr-ruler-fill"></i>' + NEAR_MILES.map((m, i) => '<i class="nf-nr-ruler-tick' + (i === 0 || i >= 5 ? ' big' : '') + '" style="--q:' + (i / (NEAR_MILES.length - 1)) + '"></i>').join('') +
+      '<b class="nf-nr-ruler-thumb"><output class="nf-nr-ruler-bub" data-nr-bub>Any</output></b></div>' +
+      '<input type="range" min="0" max="' + (NEAR_MILES.length - 1) + '" step="1" value="0" data-nr-dist aria-label="Distance in miles, drag to set">' +
+      '<div class="nf-nr-ruler-nums">' + NEAR_MILES.map((m, i) => '<button type="button" data-nr-mi="' + i + '" style="--q:' + (i / (NEAR_MILES.length - 1)) + '" aria-pressed="' + (i === 0) + '" aria-label="' + (m ? m + (m === 1 ? ' mile' : ' miles') : 'Any distance') + '">' + (m || 'Any') + '</button>').join('') + '</div>' +
+      '<p class="nf-nr-ruler-zones" aria-hidden="true"><span>Walk or a short drive</span><span>A drive</span></p></div></div>',
     '      <div class="nf-nr-tiles" role="group" aria-label="What are you looking for"><p class="nf-nr-step"><b>3</b>Choose what you want</p>' + tile('all', 'Everything', 'All ' + all.length + ' places') +
       tile('strike', 'Striking and MMA', 'Skill · boxing, jiu-jitsu') + tile('pilates', 'Pilates', 'Control · reformer, mat') + tile('yoga', 'Yoga', 'Mobility · hot or not') + tile('run', 'Running and HIIT', 'Engine · intervals') + '</div>',
+    '      <div class="nf-nr-by" role="group" aria-label="Run by"><p class="nf-nr-by-h">Run by</p><div class="nf-nr-by-s">' + brands.map(([id, name, c, tops]) => '<button type="button" class="nf-nr-brand" data-nr-brand="' + id + '" data-tops="' + tops + '" aria-pressed="false">' + (id === 'indie' ? MARK_INDIE : markChain(id)) + '<span><b>' + name + '</b><small>' + c + (id === 'indie' ? ' places' : ' studios') + '</small></span></button>').join('') + '</div></div>',
     '      <div class="nf-nr-tools"><button type="button" class="nf-nr-open" data-nr-sheet aria-expanded="false"><svg class="nf-gi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg>Filters<b data-nr-badge hidden>0</b></button>' +
       '<label class="nf-nr-sort"><span>Sort by</span><select data-nr-sort><option value="near">Closest first</option><option value="az">A to Z</option><option value="old">Longest running</option>' + (scored ? '<option value="score">My rating</option>' : '') + '</select></label>' +
       '<p class="nf-nr-status" data-nr-status role="status">' + all.length + ' places, A to Z. Share your location to see the closest first.</p></div>',
@@ -773,7 +783,6 @@ function renderNear() {
       '<p class="nf-nr-subhint" data-nr-sub="run" hidden>Treadmill and interval studios. Use Run by to pick Orangetheory or STRIDE.</p>' +
       NEAR_TREE.map(([id, name, , subs]) => '<div class="nf-nr-checks nf-top-' + id + '" role="group" aria-label="' + name + ' kinds" data-nr-sub="' + id + '" hidden>' +
         subs.map(([c, sn]) => '<button type="button" data-nr-kind="' + c + '" aria-pressed="false">' + (GICON[c] ? gic(c) : gic('yoga')) + '<span>' + sn + '</span><small>' + pad(n(c)) + '</small></button>').join('') + '</div>').join('') + '</div></fieldset>',
-    '        <fieldset class="nf-nr-fs nf-nr-fbrand"><legend>Run by</legend><div class="nf-nr-checks nf-nr-brands">' + brands.map(([id, name, c, tops]) => '<button type="button" data-nr-brand="' + id + '" data-tops="' + tops + '" aria-pressed="false"><span>' + name + '</span><small>' + pad(c) + '</small></button>').join('') + '</div></fieldset>',
     '        <fieldset class="nf-nr-fs"><legend>Region</legend><div class="nf-nr-checks">' + regs.map(([r, name, c]) => '<button type="button" data-nr-reg="' + r + '" aria-pressed="false">' + gic(r) + '<span>' + name + '</span><small>' + pad(c) + '</small></button>').join('') + '</div></fieldset>',
     '        <div class="nf-nr-pfoot"><button type="button" class="nf-nr-clear" data-nr-clear>Clear all</button><button type="button" class="nf-btn nf-coral" data-nr-done>Show places</button></div>',
     '      </div>',
@@ -793,6 +802,8 @@ function renderNear() {
       '<div class="nf-nr-mapwrap"><div class="nf-nr-mapbtns"><button type="button" data-nr-full aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Expand</span></button>' +
       '<button type="button" data-nr-drop aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6-5.5 6-10a6 6 0 0 0-12 0c0 4.5 6 10 6 10z"/><path d="M12 8v6M9 11h6"/></svg><span>Drop a pin</span></button></div>' +
       '<div class="nf-nr-map" data-nr-map role="application" aria-label="Map of gyms and studios. Every place on it is also in the list."></div>' +
+      '<div class="nf-nr-legend" aria-label="What the pins mean"><span><i class="lg-home"></i>My home gyms</span><span>' + MARK_INDIE + 'Independent</span><span><span class="nf-mark nf-mark-chain lg-chain">' + LINK_SVG + '</span>Chain</span></div>' +
+      '<div class="nf-nr-fullbar" data-nr-fullbar></div>' +
       '<div class="nf-nr-cards" data-nr-cards aria-label="Places on the map, swipe to move the map"></div></div>' +
       '<p class="nf-nr-mapnote">Pins are placed by neighborhood, so tap Navigate for the exact door. Click the map once to zoom with the wheel. Drop a pin to measure from anywhere, and drag it to move.</p></div>',
     '      </div>',

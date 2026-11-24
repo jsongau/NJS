@@ -1557,10 +1557,6 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-nr-dist-of { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 .nf-nr-dist input[type="range"] { width: 100%; min-height: 34px; margin: 0; accent-color: var(--nf-acc); cursor: grab; }
 .nf-nr-dist input[type="range"]:active { cursor: grabbing; }
-.nf-nr-ticks { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 4px; }
-.nf-nr-ticks button { min-height: 38px; padding: 0; border-radius: 10px; border: 1.5px solid var(--line-hi); background: var(--surface); font: 600 13px/1 var(--mono); color: var(--ink); cursor: pointer; transition: background .15s, border-color .15s, color .15s, transform .2s var(--nf-ease); }
-.nf-nr-ticks button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; animation: nf-pop .3s var(--nf-ease); }
-@media (hover: hover) { .nf-nr-ticks button:hover { border-color: var(--ink); transform: translateY(-2px); } }
 .nf-nr-tiles .nf-nr-step { padding-bottom: 2px; }
 /* Buttons on the map: expand, drop a pin */
 .nf-nr-mapwrap { position: relative; }
@@ -1585,34 +1581,124 @@ html.nf-lock { overflow: hidden; }
   .nf-nr > .nf-note { grid-column: 1 / -1; grid-row: 8; }
   .nf-nr-panel { grid-row: 7; }
   /* Expanded: controls and list in a side column, the map takes the rest of the screen */
-  .nf-nr.full { position: fixed; inset: 0; z-index: 900; grid-template-columns: 440px minmax(0, 1fr); grid-template-rows: 0 auto auto auto auto auto minmax(0, 1fr); column-gap: 18px; padding: 14px 18px; background: var(--bg); overflow: hidden; }
-  .nf-nr.full .nf-nr-homes, .nf-nr.full > .nf-note, .nf-nr.full .nf-nr-mapnote { display: none; }
-  .nf-nr.full .nf-nr-listcol { overflow-y: auto; min-height: 0; padding-right: 6px; overscroll-behavior: contain; }
-  .nf-nr.full .nf-nr-mapbox { grid-row: 1 / -1; position: static; height: 100%; min-height: 0; grid-template-rows: auto minmax(0, 1fr); }
-  .nf-nr.full .nf-nr-mapwrap { min-height: 0; height: 100%; }
-  .nf-nr.full .nf-nr-map { height: 100%; min-height: 0; }
-  .nf-nr.full .nf-nr-loc { padding-top: 4px; }
-  .nf-nr.full .nf-tile-t small { display: none; }
-  .nf-nr.full .nf-nr .nf-tile, .nf-nr.full .nf-tile { min-height: 52px; }
 }
 @media (max-width: 1023px) {
-  .nf-nr-ticks { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .nf-nr-ticks button:first-child { grid-column: span 1; }
   .nf-nr-addr { grid-column: 1 / -1; }
   .nf-nr-try { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 10px 16px 2px; }
   .nf-nr-try::-webkit-scrollbar { display: none; }
   .nf-nr-try span, .nf-nr-try button { flex: none; white-space: nowrap; }
   /* Expanded on a phone: the map, the distance and the card strip fill the screen */
-  .nf-nr.full .nf-nr-mapbox { position: fixed; inset: 0; z-index: 900; display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 8px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--bg); }
-  .nf-nr.full .nf-nr-mapbox .nf-nr-dist { padding: 0; }
-  .nf-nr.full .nf-nr-mapbox .nf-nr-step, .nf-nr.full .nf-nr-mapnote, .nf-nr.full .nf-nr-view { display: none; }
-  .nf-nr.full .nf-nr-mapwrap { min-height: 0; grid-template-rows: minmax(0, 1fr) auto; }
-  .nf-nr.full .nf-nr-map { height: 100%; min-height: 0; }
 }
-@media (prefers-reduced-motion: reduce) { .nf-nr-ticks button, .nf-droppin > span, .nf-nr-try button, .nf-nr-mapbtns button { animation: none !important; transition: none !important; } }
 @media (min-width: 1024px) {
   /* Expanded: only the working controls stay, so the list keeps room */
-  .nf-nr.full .nf-nr-try, .nf-nr.full .nf-nr-step, .nf-nr.full .nf-nr-pick { display: none; }
-  .nf-nr.full .nf-nr-dist { padding-top: 6px; }
-  .nf-nr.full .nf-nr-tools { padding-top: 6px; }
 }
+
+/* ===== Near-me: ruler, brand marks, map-only expand (2026-11-24, later) ===== */
+/* The distance ruler: a real range input sits invisibly over a drawn scale, so dragging, tapping and the keyboard all work. */
+.nf-nr-ruler { position: relative; padding: 34px 0 0; --w: 30px; }
+.nf-nr-ruler-track { position: relative; height: 12px; border-radius: 999px; background: linear-gradient(90deg, #EFE6DD 0 50%, #E6DCD2 50% 100%); box-shadow: inset 0 0 0 1.5px var(--line-hi); }
+.nf-nr-ruler-fill { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--w) / 2 + var(--p) * (100% - var(--w))); border-radius: 999px; background: linear-gradient(90deg, #FFB199, #FF6F61); transition: width .28s var(--nf-ease); }
+.nf-nr-ruler-tick { position: absolute; top: 50%; left: calc(var(--w) / 2 + var(--q) * (100% - var(--w))); width: 2px; height: 6px; margin: -3px 0 0 -1px; border-radius: 2px; background: rgba(18, 20, 22, .35); }
+.nf-nr-ruler-tick.big { height: 22px; margin-top: -11px; background: rgba(18, 20, 22, .55); }
+.nf-nr-ruler-thumb { position: absolute; top: 50%; left: calc(var(--w) / 2 + var(--p) * (100% - var(--w))); width: var(--w); height: var(--w); margin: calc(var(--w) / -2) 0 0 calc(var(--w) / -2); border-radius: 50%; background: #121416; border: 3px solid #fff; box-shadow: 0 0 0 2px #FF6F61, 0 6px 14px rgba(18, 20, 22, .35); transition: left .28s var(--nf-ease), transform .2s var(--nf-ease); }
+.nf-nr-ruler-thumb::after { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: #FF8A6B; }
+.nf-nr-ruler-bub { position: absolute; left: 50%; bottom: calc(100% + 9px); transform: translateX(-50%); padding: 5px 9px; border-radius: 9px; background: #121416; color: #fff; font: 700 12.5px/1 var(--mono); white-space: nowrap; }
+.nf-nr-ruler-bub::after { content: ''; position: absolute; left: 50%; top: 100%; margin-left: -5px; border: 5px solid transparent; border-top-color: #121416; }
+.nf-nr-ruler-bub.pop { animation: rl-pop .3s var(--nf-ease); }
+@keyframes rl-pop { 0% { transform: translateX(-50%) scale(.7); } 60% { transform: translateX(-50%) scale(1.12); } 100% { transform: translateX(-50%) scale(1); } }
+.nf-nr-ruler input[type="range"] { position: absolute; left: 0; right: 0; top: 18px; width: 100%; height: 44px; min-height: 0; margin: 0; opacity: 0; cursor: grab; touch-action: pan-y; }
+.nf-nr-ruler input[type="range"]:active { cursor: grabbing; }
+.nf-nr-ruler input[type="range"]::-webkit-slider-thumb { width: 30px; height: 44px; }
+.nf-nr-ruler input[type="range"]::-moz-range-thumb { width: 30px; height: 44px; border: 0; }
+.nf-nr-ruler:has(input:active) .nf-nr-ruler-thumb { transform: scale(1.18); }
+.nf-nr-ruler:has(input:focus-visible) .nf-nr-ruler-thumb { outline: 3px solid var(--ink); outline-offset: 4px; }
+.nf-nr-ruler-nums { position: relative; height: 30px; margin-top: 8px; }
+.nf-nr-ruler-nums button { position: absolute; left: calc(var(--w) / 2 + var(--q) * (100% - var(--w))); top: 0; transform: translateX(-50%); min-width: 26px; height: 30px; padding: 0 2px; border: 0; background: none; font: 500 12px/1 var(--mono); color: var(--ink-3); cursor: pointer; transition: color .15s, transform .2s var(--nf-ease); }
+.nf-nr-ruler-nums button[aria-pressed="true"] { color: var(--ink); font-weight: 700; transform: translateX(-50%) scale(1.25); }
+@media (hover: hover) { .nf-nr-ruler-nums button:hover { color: var(--ink); } }
+.nf-nr-ruler-zones { display: grid; grid-template-columns: 1fr 1fr; margin: 0; font: 500 10.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.nf-nr-ruler-zones span + span { text-align: right; }
+/* Marks: who runs a place */
+.nf-mark { position: relative; display: inline-grid; place-items: center; flex: none; width: 34px; height: 34px; color: #fff; }
+.nf-mark-indie i { width: 24px; height: 24px; border-radius: 50% 50% 50% 5px; transform: rotate(-45deg); background: #121416; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(18, 20, 22, .3); }
+.nf-mark-chain { border-radius: 10px; background: #121416; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(18, 20, 22, .3); }
+.nf-mark-chain b { font: 800 11px/1 var(--sans); letter-spacing: -.02em; }
+.nf-mark-chain .nf-link, .nf-pin-chain > i { position: absolute; right: -7px; top: -7px; width: 16px; height: 16px; padding: 2px; border-radius: 50%; background: #fff; color: #121416; box-shadow: 0 1px 4px rgba(18, 20, 22, .35); }
+.nf-nr-own { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; padding: 3px 7px 3px 5px; border-radius: 6px; background: #121416; color: #fff; font: 600 10.5px/1 var(--mono); font-style: normal; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.nf-nr-own .nf-link { width: 11px; height: 11px; }
+/* Chain pins: a rounded square with the chain's initials and its branch icon as a badge. Independents keep the teardrop. */
+.nf-nr-map .nf-pin.nf-pin-chain > span { width: 36px; height: 36px; border-radius: 11px; transform: none; display: grid; place-items: center; }
+.nf-nr-map .nf-pin.nf-pin-chain > span b { font: 800 12px/1 var(--sans); letter-spacing: -.03em; color: #fff; }
+.nf-nr-map .nf-pin.nf-pin-chain > i { display: grid; place-items: center; width: 18px; height: 18px; padding: 0; color: var(--top); }
+.nf-nr-map .nf-pin.nf-pin-chain > i svg { width: 12px; height: 12px; transform: none; color: inherit; }
+.nf-nr-map .nf-pin.nf-pin-chain.sel > span, .nf-nr-map .nf-pin.nf-pin-chain.hot > span { transform: scale(1.15); }
+.nf-nr-legend { position: absolute; left: 12px; bottom: 12px; z-index: 1100; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 8px 12px; border-radius: 14px; background: rgba(255, 255, 255, .94); border: 1.5px solid var(--ink); font: 600 12px/1 var(--sans); color: var(--ink); box-shadow: 0 6px 16px rgba(18, 20, 22, .18); }
+.nf-nr-legend > span { display: inline-flex; align-items: center; gap: 7px; }
+.nf-nr-legend .nf-mark { width: 22px; height: 22px; }
+.nf-nr-legend .nf-mark-indie i { width: 15px; height: 15px; border-width: 1.5px; }
+.nf-nr-legend .nf-mark-chain { border-radius: 7px; border-width: 1.5px; }
+.nf-nr-legend .nf-mark-chain b { font-size: 8px; }
+.nf-nr-legend .nf-mark-chain .nf-link { width: 11px; height: 11px; right: -5px; top: -5px; padding: 1.5px; }
+.nf-nr-legend .lg-home { width: 20px; height: 20px; border-radius: 50%; background: #1D2126; border: 2.5px solid #FF8A6B; box-shadow: 0 0 0 2px rgba(255, 138, 107, .3); }
+/* Run by: one strip of brand cards, always one row tall */
+.nf-nr-by { display: grid; gap: 8px; padding: 10px 0 2px; min-width: 0; }
+.nf-nr-by-h { margin: 0; font: 500 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.nf-nr-by-s { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; padding: 8px 2px 8px; margin: -8px -2px 0; }
+.nf-nr-brand { position: relative; flex: none; display: grid; grid-template-columns: 34px auto; align-items: center; gap: 10px; min-height: 58px; padding: 8px 16px 8px 10px; border-radius: 16px; border: 1.5px solid var(--line-hi); background: var(--surface); color: var(--ink); font: inherit; text-align: left; cursor: pointer; scroll-snap-align: start; transition: border-color .15s, background .2s, transform .25s var(--nf-ease), box-shadow .25s; }
+.nf-nr-brand[hidden] { display: none; }
+.nf-nr-brand span:last-child { display: grid; gap: 3px; }
+.nf-nr-brand b { font: 700 14.5px/1.1 var(--sans); letter-spacing: -.01em; white-space: nowrap; }
+.nf-nr-brand small { font: 500 11.5px/1 var(--mono); color: var(--ink-3); }
+.nf-nr-brand[aria-pressed="true"] { border-color: var(--ink); background: #121416; color: #fff; box-shadow: 0 10px 20px -12px rgba(18, 20, 22, .7); }
+.nf-nr-brand[aria-pressed="true"] small { color: rgba(255, 255, 255, .7); }
+.nf-nr-brand[aria-pressed="true"] .nf-mark-chain, .nf-nr-brand[aria-pressed="true"] .nf-mark-indie i { background: #FF8A6B; }
+.nf-nr-brand[aria-pressed="true"] .nf-mark { color: #121416; animation: nf-pop .35s var(--nf-ease); }
+@media (hover: hover) { .nf-nr-brand:hover { border-color: var(--ink); transform: translateY(-2px); } .nf-nr-brand:hover .nf-mark { transform: rotate(-6deg) scale(1.08); } }
+.nf-nr-brand .nf-mark { transition: transform .3s var(--nf-ease); }
+/* Examples: small cards with the gym's emblem */
+.nf-nr-try button { display: grid; grid-template-columns: 36px auto; align-items: center; gap: 10px; min-height: 52px; padding: 6px 16px 6px 8px; border-radius: 16px; border: 1.5px solid var(--line-hi); background: var(--surface); text-align: left; }
+.nf-nr-try button .nf-gx { width: 36px; height: 36px; }
+.nf-nr-try button span { display: grid; gap: 2px; }
+.nf-nr-try button b { font: 700 13.5px/1.1 var(--sans); color: var(--ink); white-space: nowrap; }
+.nf-nr-try button small { font-size: 12px; font-weight: 500; color: var(--ink-2); white-space: nowrap; }
+@media (hover: hover) { .nf-nr-try button:hover { background: var(--surface); border-color: var(--hg, var(--ink)); box-shadow: 0 10px 20px -14px var(--hg, #121416); } }
+.nf-nr-fullbar { display: none; }
+@media (min-width: 1024px) {
+  .nf-nr-by { grid-column: 1; grid-row: 6; }
+  .nf-nr-tools { grid-column: 1; grid-row: 7; }
+  .nf-nr-listcol { grid-column: 1; grid-row: 8; }
+  .nf-nr-mapbox { grid-column: 2; grid-row: 2 / 9; }
+  .nf-nr > .nf-note { grid-column: 1 / -1; grid-row: 9; }
+  .nf-nr-panel { grid-row: 8; }
+}
+/* Expanded: only the map. The distance ruler and the branch tiles float over it; everything else waits behind. */
+.nf-nr.full .nf-nr-mapbox { position: fixed; inset: 0; z-index: 900; display: block; padding: 0; background: var(--bg); }
+.nf-nr.full .nf-nr-mapwrap { display: block; height: 100%; }
+.nf-nr.full .nf-nr-map { height: 100% !important; min-height: 0; border-radius: 0; border: 0; }
+.nf-nr.full .nf-nr-mapbar { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 1100; max-width: calc(100% - 330px); padding: 6px; border-radius: 999px; background: rgba(255, 255, 255, .94); border: 1.5px solid var(--ink); box-shadow: 0 8px 20px rgba(18, 20, 22, .2); flex-wrap: nowrap; margin: 0; }
+.nf-nr.full .nf-nr-mapnote, .nf-nr.full .nf-nr-cards, .nf-nr.full .nf-nr-view, .nf-nr.full .nf-nr-inview { display: none; }
+.nf-nr.full .nf-nr-legend { bottom: auto; top: 118px; left: 12px; display: grid; gap: 8px; }
+.nf-nr.full .nf-nr-fullbar { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 1100; display: grid; gap: 4px; width: min(760px, calc(100% - 24px)); padding: 12px 18px 12px; border-radius: 24px; background: rgba(255, 255, 255, .96); border: 1.5px solid var(--ink); box-shadow: 0 20px 44px -18px rgba(18, 20, 22, .55); }
+.nf-nr.full .nf-nr-fullbar .nf-nr-step { display: none; }
+.nf-nr.full .nf-nr-fullbar .nf-nr-tiles { display: flex; gap: 6px; padding: 0; overflow-x: auto; scrollbar-width: none; }
+.nf-nr.full .nf-nr-fullbar .nf-tile { flex: 1 0 auto; grid-template-rows: none; grid-template-columns: 34px auto; gap: 8px; align-items: center; min-height: 44px; padding: 5px 12px 5px 8px; border-radius: 14px; }
+.nf-nr.full .nf-nr-fullbar .nf-tile > svg { width: 34px; height: 24px; }
+.nf-nr.full .nf-nr-fullbar .nf-tile-t b { font-size: 13px; white-space: nowrap; }
+.nf-nr.full .nf-nr-fullbar .nf-tile-t small, .nf-nr.full .nf-nr-fullbar .nf-tile-n { display: none; }
+.nf-nr.full .nf-nr-fullbar .nf-nr-dist { padding: 4px 0 0; gap: 2px; }
+.nf-nr.full .nf-nr-fullbar .nf-nr-ruler-zones { display: none; }
+.nf-nr.full .leaflet-bottom.leaflet-right { bottom: 0; }
+@media (max-width: 1023px) {
+  .nf-nr.full .nf-nr-mapbar { top: 62px; left: 0; right: 0; transform: none; max-width: none; border-radius: 0; border-width: 1.5px 0; padding: 6px 12px; overflow-x: auto; }
+  .nf-nr.full .nf-nr-legend { display: none; }
+  .nf-nr.full .nf-nr-fullbar { bottom: calc(22px + env(safe-area-inset-bottom)); padding: 10px 12px; border-radius: 20px; }
+  .nf-nr.full .nf-nr-fullbar .nf-tile { grid-template-columns: 28px; padding: 6px 8px; }
+  .nf-nr.full .nf-nr-fullbar .nf-tile-t { display: none; }
+  .nf-nr.full .nf-nr-mapbtns { grid-auto-flow: column; }
+  .nf-nr-ruler-nums button { font-size: 11px; min-width: 20px; }
+  .nf-nr-legend { font-size: 11px; gap: 4px 10px; padding: 6px 9px; }
+}
+@media (prefers-reduced-motion: reduce) { .nf-nr-ruler-fill, .nf-nr-ruler-thumb, .nf-nr-ruler-bub, .nf-nr-brand, .nf-nr-brand .nf-mark { animation: none !important; transition: none !important; } }
+.nf-nr-map .nf-pin.nf-pin-chain > span { animation: none; }
+.nf-nr-map .nf-pin.nf-pin-chain:hover > span { transform: scale(1.15); }
+.nf-nr-legend .nf-mark-chain.lg-chain .nf-link { position: static; width: 13px; height: 13px; padding: 0; background: none; color: #fff; box-shadow: none; }

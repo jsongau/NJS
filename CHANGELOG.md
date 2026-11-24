@@ -12,6 +12,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   Then: one emblem per home gym (ring and bag, round clock, studio lights) that moves on hover, and a
   spot, distance, kind flow: any spot (a gym, your location, a typed address, a dropped pin you can drag),
   a distance scale of 1 to 5 then 10 to 30 miles to drag or tap, three one-tap examples, and an expanded map.
+  Later: the distance is a drag ruler with a live readout, Run by is a strip of brand cards, chains get a
+  square pin with their initials (independents keep the teardrop) plus a legend, and Expand shows only the map
+  with the ruler and branch tiles floating over it.
 
 ## 2026-11-23
 - `/fitness/guides/near-me` — chain studios on the map: CorePower Yoga (21), YogaSix (11), UFC Gym (9), 9Round (11), Rumble Boxing (2), Orangetheory Fitness (48) and STRIDE Fitness (2), from each company's own location pages, in `partials/fitness/chains.json`. New Running and HIIT branch tile and a Run by filter (Independent or a chain). Chains are map only: no rank, no profile page. UFC Gym Brea and 9Round RSM are left off and disclosed. Orangetheory, UFC Gym, YogaSix, Rumble and STRIDE pins are hand placed (`approx` 1); CorePower, YogaSix, Rumble and STRIDE lists are not complete yet.

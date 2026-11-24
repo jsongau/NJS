@@ -100,3 +100,15 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
 - **Philosophy** written to `docs/NJS-FITNESS-PHILOSOPHY.md`; one paragraph of it opens the colour key.
 - **Not built, plan sent to Jay:** the fitness mega nav. It has no link to the map at all today.
 - Trap: ruler violet (fives) and yoga violet are close. Different places on the page, but do not add a third violet.
+
+## Sixth pass: the mega nav says how to use the site
+
+- The Guides tab is now **Train on your own**: three columns (the map with three filtered links, the four gym
+  guides, coach's notes and the path) and a side card with the philosophy line. Still five tabs.
+- Personal training and Striking each gained one link to the map for "your own days". The phone menu gained
+  Studios near me and Coach's notes.
+- New section on the fitness home, `partials/fitness/nf-two.html`: "I train you. The tools are yours." With me,
+  and On your own days.
+- Trap found: the fitness header already overflowed by 60px at 860 wide before this change. Fixed for 860 to 1179;
+  between 860 and 939 the Business and Fitness switch hides to make room (the footer still crosses over).
+- Rejected: a sixth tab for the map. The bar is full; the tools belong under one name.

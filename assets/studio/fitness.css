@@ -1831,3 +1831,8 @@ html.nf-lock { overflow: hidden; }
 @media (max-width: 1023px) { .nf-nr:not(.full) .nf-nr-legend { position: static; margin: 8px 0 0; border-width: 1px; border-color: var(--line-hi); background: var(--surface); box-shadow: none; } }
 .nf-nr-key-why { margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--line-hi); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
 .nf-nr-key-why b { display: block; margin-bottom: 4px; font: 700 17px/1.25 var(--sans); letter-spacing: -.02em; color: var(--ink); }
+
+/* ===== Two ways to use the site (2026-11-24) ===== */
+.nf-two-l { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 10px 0 0; }
+.nf-two-l a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-color: var(--nf-acc); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.nf-two-l a:hover { text-decoration-thickness: 3px; }

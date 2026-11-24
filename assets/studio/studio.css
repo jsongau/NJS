@@ -1910,3 +1910,8 @@ h1, h2, h3 { text-wrap: balance; }
 @media (max-width: 1180px) { .mn-in-fit { grid-template-columns: 1fr 1fr; } .mn-in-fit .mn-side { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; } .mn-in-fit .mn-side .mn-pack { grid-row: span 2; } }
 .mm-body .mn-in-fit { grid-template-columns: 1fr; gap: 14px; padding: 4px 0 0; }
 .mm-body .mn-in-fit .mn-side { display: flex; }
+/* Fitness nav: the longer "Train on your own" tab still fits between 1024 and 1240 wide */
+@media (max-width: 1240px) { .mn-list[data-mn-set="fit"] .mn-top { font-size: 14px; padding-left: 6px; padding-right: 2px; } .mn-list[data-mn-set="fit"] { gap: 0; } }
+@media (min-width: 1025px) and (max-width: 1179px) { .top .mn-list[data-mn-set="fit"] .mn-top { font-size: 13.5px; padding: 0 0 0 4px; gap: 3px; } .top .mn-list[data-mn-set="fit"] .mn-caret { width: 22px; } }
+@media (min-width: 860px) and (max-width: 1024px) { .top .mn-list[data-mn-set="fit"] .mn-top { font-size: 13px; padding: 0 0 0 3px; gap: 2px; } .top .mn-list[data-mn-set="fit"] .mn-caret { width: 18px; } .top .mn-list[data-mn-set="fit"] { gap: 0; } body[data-mode="fitness"] .top .wrap { gap: 8px; } body[data-mode="fitness"] .top nav .btn { padding: 10px 12px; font-size: 14px; } }
+@media (min-width: 860px) and (max-width: 939px) { body[data-mode="fitness"] .top .wrap > .mode { display: none; } }

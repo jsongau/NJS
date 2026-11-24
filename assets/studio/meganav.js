@@ -106,19 +106,20 @@ function workPanel(projects) {
 const FIT = {
   'f-pt': [
     ['Build', [['/fitness/muscle-building', 'fitness', 'Muscle building', 'Get stronger and add size where you want it'], ['/fitness/fat-loss', 'chart', 'Fat loss', 'Lose fat and keep the muscle you have'], ['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders']]],
-    ['Move', [['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/reformer-pilates', 'star', 'Reformer Pilates', "Core strength on the reformer. I'm in certification"], ['/fitness/yoga-and-pilates', 'team', 'Yoga and Pilates', 'Private sessions, on the mat or the reformer'], ['/fitness/personal-training', 'user', 'Personal training', 'One goal at a time, coached rep by rep']]],
+    ['Move', [['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/reformer-pilates', 'star', 'Reformer Pilates', "Core strength on the reformer. I'm in certification"], ['/fitness/yoga-and-pilates', 'team', 'Yoga and Pilates', 'Private sessions, on the mat or the reformer'], ['/fitness/personal-training', 'user', 'Personal training', 'One goal at a time, coached rep by rep'], ['/fitness/guides/near-me', 'pin', 'Studios near you', 'Yoga, Pilates and intervals for your own days']]],
   ],
   'f-strike': [
     ['Disciplines', [['/fitness/boxing', 'fist', 'Boxing', 'Footwork, a clean jab, combinations on mitts'], ['/fitness/kickboxing', 'fist', 'Kickboxing', 'Punches and kicks on Thai pads'], ['/fitness/muay-thai', 'fist', 'Muay Thai', 'Teeps, knees, elbows and the clinch'], ['/fitness/striking', 'pages', 'All striking', 'How private striking sessions run']]],
-    ['Train it with', [['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
+    ['Train it with', [['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/guides/near-me?show=strike', 'pin', 'Fight gyms near you', 'For the days you train alone']]],
   ],
   'f-clubs': [
     ['Steel clubs and maces', [['/fitness/clubs-and-maces', 'mark', 'Clubs and maces', 'Steel club and steel mace training'], ['/fitness/shoulder-strength', 'fitness', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely']]],
     ["Coach's notes", [['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
   ],
   'f-guides': [
-    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'fist', 'Boxing gyms in SoCal', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'fist', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides/reformer-pilates-studios-socal', 'star', 'Reformer Pilates studios', 'Across LA, OC and the IE'], ['/fitness/guides/yoga-studios-socal', 'loop', 'Yoga studios', 'Hot and not hot, across LA, OC and the IE'], ['/fitness/guides/near-me', 'pin', 'Near me', 'The closest gyms and studios, sorted by distance'], ['/fitness/guides', 'pages', 'All guides', 'Where to train in Southern California']]],
-    ['By region', [['/fitness/guides/boxing-gyms-socal#gd-la', 'pin', 'Los Angeles', 'Boxing gyms in LA'], ['/fitness/guides/reformer-pilates-studios-socal#gd-oc', 'pin', 'Orange County', 'Reformer Pilates studios in OC'], ['/fitness/guides/boxing-gyms-socal#gd-ie', 'pin', 'Inland Empire', 'Boxing gyms in the IE']]],
+    ['The map', [['/fitness/guides/near-me', 'pin', 'Studios near me', 'Every place on one map, by distance'], ['/fitness/guides/near-me?show=yoga&area=Brea', 'loop', 'Yoga near Brea', 'Adds mobility to your week'], ['/fitness/guides/near-me?show=pilates&area=Rancho+Santa+Margarita', 'star', 'Pilates near Rancho Santa Margarita', 'Adds control'], ['/fitness/guides/near-me?show=run&area=Corona', 'bolt', 'Intervals near Corona', 'Adds engine']]],
+    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'fist', 'Boxing gyms', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'fist', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides/reformer-pilates-studios-socal', 'star', 'Reformer Pilates studios', 'Across LA, OC and the IE'], ['/fitness/guides/yoga-studios-socal', 'loop', 'Yoga studios', 'Hot and not heated']]],
+    ["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/recovery-room', 'star', 'The recovery room', "What's worth it, ranked by evidence"], ['/fitness/path', 'chart', 'The path', 'What getting better looks like']]],
   ],
   'f-about': [
     ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Three-time SHRED winner, clubs and maces coach'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],
@@ -141,15 +142,15 @@ const FIT_FILL = {
     '<p class="mn-p">Rotation, stability and strength for your shoulders. I teach steel clubs and maces one on one, in person or over live video.</p>' +
     '<a class="mn-sub" href="/fitness/clubs-and-maces">See how a session runs' + arrow + '</a></aside>' +
     mini('/fitness/book?loc=online&focus=shoulders', 'cal', 'Live video', 'Learn it online', 'Good for clubs and maces technique') + '</div></div>',
-  'f-guides': () => '<div class="mn-in mn-in-fit">' + fitCols('f-guides') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">Written by a working coach</p>' +
-    '<p class="mn-p">What each gym is known for, with its official link. No paid placements and no copied star ratings.</p>' +
-    '<a class="mn-sub" href="/fitness/guides">See how the lists are made' + arrow + '</a></aside>' +
+  'f-guides': () => '<div class="mn-in mn-in-studio">' + fitCols('f-guides') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">How to use this site</p>' +
+    '<p class="mn-p"><b>I train you, and I give you the tools to keep learning.</b> Sessions with me, then a map, guides and notes for the days you train alone.</p>' +
+    '<a class="mn-sub" href="/fitness/path">See the whole path' + arrow + '</a></aside>' +
     mini('/fitness/book', 'cal', 'One on one', 'Book your first session', 'Pay nothing today') + '</div></div>',
   'f-about': () => '<div class="mn-in mn-in-studio">' + fitCols('f-about') + '<div class="mn-side">' +
     mini('/fitness/book', 'cal', 'Start', 'Book your first session', 'Pay nothing today') +
     mini('/fitness#packs', 'star', 'The offer', 'The 12-pack', 'Twelve private sessions') + '</div></div>',
 };
-const FIT_GROUPS = [['f-pt', 'Personal training', '/fitness/personal-training'], ['f-strike', 'Striking', '/fitness/striking'], ['f-clubs', 'Clubs and maces', '/fitness/clubs-and-maces'], ['f-guides', 'Guides', '/fitness/guides'], ['f-about', 'About', '/fitness/coach']];
+const FIT_GROUPS = [['f-pt', 'Personal training', '/fitness/personal-training'], ['f-strike', 'Striking', '/fitness/striking'], ['f-clubs', 'Clubs and maces', '/fitness/clubs-and-maces'], ['f-guides', 'Train on your own', '/fitness/guides/near-me'], ['f-about', 'About', '/fitness/coach']];
 
 function studioPanel() {
   return '<div class="mn-in mn-in-studio">' + STUDIO.map(([h, items]) => '<div class="mn-col"><p class="mn-hd">' + esc(h) + '</p><ul>' + items.map((x) => link(...x)).join('') + '</ul></div>').join('') +

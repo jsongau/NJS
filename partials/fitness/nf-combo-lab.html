@@ -1,0 +1,63 @@
+<section class="nf-sec tight xl-sl" id="combo-lab" aria-labelledby="cl-cl-h">
+  <div class="wrap">
+    <div class="nf-h"><div><p class="nf-k">Combo lab</p><h2 id="cl-cl-h"><span>Throw each combo on screen.</span><span>Then learn it <em>on the mitts.</em></span></h2></div><p>Pick a combination, then tap the fighter to throw it one shot at a time. Each one shows why it works and what it sets up.</p></div>
+    <div class="xl-mode" id="cl-mode" role="group" aria-label="Discipline"><button type="button" data-m="box" aria-pressed="true">Boxing only<small>Hands, slips, rolls, blocks, parries</small></button><button type="button" data-m="kick" aria-pressed="false">Kickboxing<small>Everything, plus kicks and knees</small></button><button type="button" data-m="muay" aria-pressed="false">Muay Thai<small>Teeps, elbows, knees, clinch</small></button></div>
+    <div class="xl-libbar"><div class="xl-grips" id="cl-grips" role="group" aria-label="Show"></div><label class="xl-sortl">Sort <select id="cl-sort"><option value="easy">Easiest first</option><option value="hard">Hardest first</option><option value="short">Shortest first</option><option value="group">By type</option></select></label><span class="xl-libn" id="cl-lib-n"></span></div>
+    <div class="xl-tabs" id="cl-tabs" role="group" aria-label="Combination"></div>
+    <div class="xl-lab">
+      <div>
+        <div class="xl-stage" id="cl-stage" role="button" tabindex="0" aria-label="Fighter. Tap to throw the next shot.">
+          <svg id="cl-fig" viewBox="0 0 360 340" aria-hidden="true">
+            <defs>
+              <linearGradient id="cl-ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2E3238"/><stop offset="1" stop-color="#0E0F11"/></linearGradient>
+              <linearGradient id="cl-inkf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A8088"/><stop offset="1" stop-color="#565B62"/></linearGradient>
+              <radialGradient id="cl-glv" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFB29C"/><stop offset=".6" stop-color="#FF8A6B"/><stop offset="1" stop-color="#D9603F"/></radialGradient>
+            </defs>
+            <ellipse id="cl-f-shadow" cx="150" cy="326" rx="78" ry="8" fill="#121416" opacity=".12"/>
+            <g id="cl-f-bag"><path d="M316 0V34" stroke="#6A6F75" stroke-width="3"/><rect x="292" y="34" width="48" height="206" rx="22" fill="#121416"/><rect x="292" y="62" width="48" height="12" fill="#FF8A6B"/><rect x="292" y="196" width="48" height="12" fill="#FF8A6B"/><path d="M302 88v96" stroke="#fff" stroke-opacity=".12" stroke-width="5" stroke-linecap="round"/></g>
+            <g id="cl-fx-ink"></g>
+            <g id="cl-f-trail"></g>
+            <path id="cl-f-far" fill="url(#cl-inkf)"/><path id="cl-f-fshoe" fill="#D9603F"/><path id="cl-f-gr" fill="#D9603F"/>
+            <path id="cl-f-torso" fill="url(#cl-ink)" stroke="url(#cl-ink)" stroke-width="30" stroke-linejoin="round"/>
+            <path id="cl-f-lines" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="2" stroke-linecap="round"/>
+            <path id="cl-f-head" fill="url(#cl-ink)"/><path id="cl-f-band" fill="none" stroke="#7FD3C8" stroke-width="5" stroke-linecap="round"/>
+            <path id="cl-f-shorts" fill="#FF8A6B" stroke="#FF8A6B" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="cl-f-near" fill="url(#cl-ink)"/><path id="cl-f-hi" fill="#fff" fill-opacity=".16"/>
+            <path id="cl-f-shoe" fill="#FF8A6B"/>
+            <path id="cl-f-gl" fill="url(#cl-glv)"/>
+            <g id="cl-fx-in"><g class="in"><path d="M0 0c0-9 7-14 16-14h8c8 0 13 6 13 14v6c0 8-6 12-13 12H15C7 18 0 12 0 4z" fill="#121416" opacity=".55"/><path d="M40 2h40M44 -8h26M44 12h26" stroke="#121416" stroke-opacity=".3" stroke-width="3" stroke-linecap="round"/></g></g>
+            <g id="cl-fx-lines"><path d="M-12 0H-64M-10 -8L-58 -34M-10 8L-58 34M-6 -14L-34 -62M-6 14L-34 62M2 -16L-4 -70M2 16L-4 70" stroke="#121416" stroke-width="3.5" stroke-linecap="round"/></g>
+            <g id="cl-fx-spark"><path d="M0 -24l6 13 14-6-6 14 13 5-13 6 6 14-14-6-6 13-6-13-14 6 6-14-13-6 13-5-6-14 14 6z" fill="#FF8A6B" stroke="#121416" stroke-width="2" stroke-linejoin="round"/></g>
+            <rect id="cl-fx-flash" width="360" height="340" fill="#fff" opacity="0" pointer-events="none"/>
+          </svg>
+          <span class="xl-hits" id="cl-hits" aria-hidden="true"><b id="cl-hitn">0</b><span id="cl-hitw">hits</span></span>
+          <button type="button" class="xl-mute" id="cl-mute" aria-pressed="false">🔊</button>
+          <span class="xl-breath" id="cl-breath" data-b="out"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="2"/><circle id="cl-b-ring" cx="28" cy="28" r="13" fill="currentColor"/></svg><span><b id="cl-b-word">Exhale</b><small id="cl-b-how">sharp, on every shot</small></span></span>
+          <span class="xl-reps" id="cl-reps"><b id="cl-repn">0</b>combos</span>
+          <div class="xl-seq" id="cl-seq" aria-hidden="true"></div>
+          <p class="xl-cue"><i>Cue</i><span id="cl-cue"></span></p>
+        </div>
+        <p class="xl-bnote">Breathe out sharply through the mouth on every shot. Breathe in through the nose as you reset. Turn the sound on to hear it.</p>
+      </div>
+      <div class="xl-info">
+        <p class="nf-k"><span id="cl-m-kind"></span> · <span id="cl-m-level"></span></p>
+        <h3 id="cl-m-name"></h3>
+        <p class="xl-why"><b>Why it works</b><span id="cl-m-why"></span></p>
+        <ul class="xl-key" id="cl-key-n" aria-label="Punch numbers"><li><b>1</b>Jab</li><li><b>2</b>Cross</li><li><b>3</b>Lead hook</li><li><b>4</b>Rear hook</li><li><b>5</b>Lead uppercut</li><li><b>6</b>Rear uppercut</li></ul>
+        <ul class="xl-key xl-k2" id="cl-key-d" aria-label="Defense letters"><li><b>S</b>Slip</li><li><b>R</b>Roll</li><li><b>P</b>Pull</li><li><b>B</b>Block</li><li><b>Pa</b>Parry</li><li><b>F</b>Feint</li></ul>
+        <ul class="xl-key" id="cl-key-m" hidden aria-label="Muay Thai letters"><li><b>T</b>Teep</li><li><b>RK</b>Rear kick</li><li><b>SK</b>Switch kick</li><li><b>LK</b>Low kick</li><li><b>Kn</b>Knee</li><li><b>E</b>Elbow</li><li><b>CL</b>Clinch</li><li><b>CH</b>Check</li><li><b>1</b>Jab</li><li><b>2</b>Cross</li><li><b>3</b>Hook</li><li><b>B / Pa / P</b>Block, parry, lean</li></ul>
+        <ul class="xl-key xl-k2" id="cl-key-k" hidden aria-label="Kick letters"><li><b>T</b>Teep</li><li><b>RK</b>Rear kick</li><li><b>LK</b>Low kick</li><li><b>Kn</b>Knee</li></ul>
+        <ol class="xl-steps" id="cl-steps"></ol>
+        <a class="nf-btn nf-ink" href="/fitness/book?pack=12&amp;focus=boxing">Start the 12-pack</a>
+        <p class="xl-note">Shown in orthodox stance (left foot forward). Southpaws mirror it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="xl-ready" id="cl-ready" role="dialog" aria-label="Ready to learn it?"><div>
+  <p class="nf-k"><span id="cl-r-n">5</span> combos thrown</p>
+  <h3>Now throw it at something that moves.</h3>
+  <p>The screen shows the order. On the mitts I'll fix your feet, your hips and your timing.</p>
+  <a class="nf-btn nf-ink" href="/fitness/book?pack=12&amp;focus=boxing" id="cl-r-go">Start the 12-pack</a>
+  <button type="button" class="xl-no" id="cl-r-no">Keep throwing</button>
+</div></div>

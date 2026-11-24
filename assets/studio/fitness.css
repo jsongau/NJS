@@ -2068,3 +2068,144 @@ article.nf-tile:active, article.nf-tile:hover { transform: none; border-color: v
 .nf-nr-pick { position: relative; }
 .nf-nr-pick::after { content: ''; position: absolute; inset: -9px 0; }
 @media (max-width: 1023px) { .nf-nr-addr a { position: relative; } .nf-nr-addr a::after { content: ''; position: absolute; inset: -12px 0; } }
+/* Movement labs (2026-11-24): the Swing Lab on /fitness/clubs-and-maces and the Combo Lab on /fitness/boxing
+   and /fitness/kickboxing. Markup in partials/fitness/nf-swing-lab.html and nf-combo-lab.html, behaviour in
+   swinglab.js and combolab.js. Every class is prefixed xl- so nothing here touches the rest of the site. */
+.xl-sl,.xl-ready{--coral:var(--signal);--coral-soft:#FFE6DC;--teal:#7FD3C8;--ease:cubic-bezier(.22,1,.36,1);--snap:cubic-bezier(.34,1.56,.64,1)}
+.xl-sl [hidden],.xl-ready [hidden]{display:none!important}
+.xl-ready .nf-btn{width:100%}
+.xl-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none}
+.xl-tabs::-webkit-scrollbar{display:none}
+.xl-tab{flex:none;display:grid;gap:3px;text-align:left;min-height:56px;padding:10px 16px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);font:600 15.5px/1.1 var(--sans);color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s,transform .25s var(--snap)}
+.xl-tab small{font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.xl-tab:hover{border-color:var(--ink)}
+.xl-tab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;transform:translateY(-2px)}
+.xl-tab[aria-pressed="true"] small{color:var(--coral)}
+.xl-libbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:12px}
+.xl-grips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.xl-grips::-webkit-scrollbar{display:none}
+.xl-gchip{flex:none;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font:600 14.5px/1 var(--sans);color:var(--ink);cursor:pointer}
+.xl-gchip b{font:600 11px/1 var(--mono);color:var(--ink-3);margin-left:4px}
+.xl-gchip[aria-pressed="true"]{background:var(--coral);border-color:var(--ink)}
+.xl-gchip[aria-pressed="true"] b{color:var(--ink)}
+.xl-sortl{display:flex;align-items:center;gap:8px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.xl-sortl select{min-height:44px;padding:0 34px 0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5l3 3 3-3' fill='none' stroke='%23121416' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center/12px;font:600 14.5px/1 var(--sans);color:var(--ink);appearance:none;-webkit-appearance:none}
+.xl-libn{margin-left:auto;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.xl-lv{display:flex;align-items:center;gap:3px;margin-top:4px;font:600 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.xl-lv i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+.xl-lv i:last-of-type{margin-right:4px}
+.xl-lv[data-l="1"] i:nth-child(-n+1),.xl-lv[data-l="2"] i:nth-child(-n+2),.xl-lv[data-l="3"] i:nth-child(-n+3){background:var(--coral)}
+.xl-tab[aria-pressed="true"] .xl-lv{color:#C9CCC4}
+.xl-tab[aria-pressed="true"] .xl-lv i{background:#3A3F45}
+.xl-tab[aria-pressed="true"] .xl-lv[data-l="1"] i:nth-child(-n+1),.xl-tab[aria-pressed="true"] .xl-lv[data-l="2"] i:nth-child(-n+2),.xl-tab[aria-pressed="true"] .xl-lv[data-l="3"] i:nth-child(-n+3){background:var(--coral)}
+.xl-lab{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:28px;align-items:start}
+.xl-stage{position:relative;border-radius:28px;background:radial-gradient(240px 200px at 50% 45%,#FFF,#FFF4EF 70%);border:1px solid var(--line);overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+.xl-stage.drag{cursor:grabbing}
+.xl-stage svg{display:block;width:100%;height:auto}
+.xl-cue{position:relative;margin:0 14px 14px;min-height:58px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:rgba(18,20,22,.92);color:#fff;font:600 14.5px/1.25 var(--sans)}
+.xl-cue i{flex:none;font:600 10px/1 var(--mono);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--coral);padding:5px 7px;border-radius:6px}
+.xl-cue span{transition:opacity .2s}
+.xl-reps{position:absolute;right:14px;top:12px;text-align:right;font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.xl-reps b{display:block;font:700 40px/1 var(--sans);letter-spacing:-.04em;color:var(--ink)}
+.xl-reps.tk b{animation:xl-bump .35s var(--snap)}
+@keyframes xl-bump{40%{transform:scale(1.35)}}
+.xl-reps b{transform-origin:right center}
+.xl-mute{position:absolute;left:12px;top:12px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:17px;cursor:pointer}
+.xl-how{position:absolute;left:66px;top:24px;font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:8px;align-items:center}
+.xl-how i{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:xl-ping 1.5s infinite}
+@keyframes xl-ping{0%{box-shadow:0 0 0 0 rgba(255,138,107,.7)}70%,100%{box-shadow:0 0 0 8px rgba(255,138,107,0)}}
+.xl-btrack{position:relative;height:30px;margin-top:10px;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.xl-btrack i{position:absolute;top:0;bottom:0;display:grid;place-items:center;font-style:normal}
+.xl-btrack i.in{background:var(--teal)}.xl-btrack i.out{background:var(--coral)}
+.xl-btrack em{font:600 10.5px/1 var(--mono);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.xl-btrack b{position:absolute;top:0;bottom:0;width:3px;margin-left:-1.5px;background:var(--ink);border-radius:2px}
+.xl-bnote{margin:8px 0 0;font-size:13px;color:var(--ink-3)}
+.xl-breath{position:absolute;left:50%;top:10px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--signal-ink);transition:color .4s}
+.xl-breath[data-b="in"]{color:#2E9C8E}
+.xl-breath svg{width:44px;height:44px}
+.xl-breath b{display:block;font:700 16px/1 var(--sans);color:var(--ink)}
+.xl-breath small{display:block;font:500 11.5px/1.2 var(--sans);color:var(--ink-3)}
+.xl-how{display:none}
+@media (max-width:560px){.xl-breath{padding:4px 10px 4px 4px;gap:6px}.xl-breath svg{width:36px;height:36px}.xl-breath b{font-size:14.5px}.xl-breath small{font-size:10.5px}.xl-reps b{font-size:32px}}
+.xl-info h3{font:700 34px/1.05 var(--sans);letter-spacing:-.03em;margin:6px 0 10px}
+.xl-info p{margin:0 0 16px;color:var(--ink-2)}
+.xl-musc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px;padding:0;list-style:none}
+.xl-musc li{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font:600 14px/1 var(--sans);transition:background .25s,border-color .25s,transform .25s var(--snap)}
+.xl-musc li i{width:10px;height:10px;border-radius:50%;background:var(--line);transition:background .25s}
+.xl-musc li.on{background:var(--coral-soft);border-color:var(--coral);transform:translateY(-2px)}
+.xl-musc li.on i{background:var(--coral)}
+.xl-steps{margin:0 0 20px;padding:0;list-style:none;display:grid;gap:8px;counter-reset:s}
+.xl-steps li{counter-increment:s;display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);font-size:15.5px;transition:border-color .2s,background .2s}
+.xl-steps li::before{content:counter(s);display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--surface-2);font:700 14px/1 var(--sans);transition:background .2s,color .2s}
+.xl-steps li.on{border-color:var(--ink);background:#fff}
+.xl-steps li.on::before{background:var(--ink);color:var(--coral)}
+.xl-note{margin-top:14px;font-size:13px;color:var(--ink-3)}
+.xl-ready{position:fixed;inset:0;z-index:90;display:grid;place-items:end center;padding:16px;background:rgba(18,20,22,.5);opacity:0;visibility:hidden;transition:opacity .25s}
+.xl-ready.on{opacity:1;visibility:visible}
+.xl-ready div{width:min(440px,100%);background:var(--surface);border-radius:28px;padding:26px;text-align:center;transform:translateY(40px) scale(.96);transition:transform .4s var(--snap)}
+.xl-ready.on div{transform:none}
+.xl-ready div{pointer-events:none}.xl-ready.armed div{pointer-events:auto}
+.xl-ready h3{font:700 32px/1.05 var(--sans);letter-spacing:-.03em;margin:10px 0 8px}
+.xl-ready p{margin:0 0 18px;color:var(--ink-2)}
+.xl-ready .nf-btn{width:100%}
+.xl-ready button.xl-no{display:block;margin:10px auto 0;min-height:44px;background:none;border:0;font:600 15px var(--sans);color:var(--ink-3);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+@media (min-width:700px){.xl-ready{place-items:center}}
+@media (max-width:900px){.xl-lab{grid-template-columns:1fr;gap:18px}.xl-info h3{font-size:28px}}
+@media (prefers-reduced-motion:reduce){.xl-sl *,.xl-ready *{animation:none!important;transition:none!important}}
+.xl-stage{cursor:pointer}
+.xl-mode{display:inline-grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:6px;border-radius:20px;background:var(--surface-2);margin-bottom:14px;max-width:100%}
+.xl-mode button{display:grid;gap:3px;text-align:left;min-height:56px;padding:10px 18px;border-radius:15px;border:0;background:transparent;font:700 17px/1.1 var(--sans);color:var(--ink-2);cursor:pointer}
+.xl-mode button small{font:500 12px/1.2 var(--sans);color:var(--ink-3)}
+.xl-mode button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.xl-mode button[aria-pressed="true"] small{color:var(--coral)}
+.xl-key.xl-k2{margin-top:-10px}
+.xl-key.xl-k2 li b{font-size:15px}
+#cl-fx-in .in{opacity:0;transform:translateX(330px)}
+#cl-fx-in.go .in{animation:xl-inmiss .42s linear}
+#cl-fx-in.land .in{animation:xl-inland .34s linear}
+@keyframes xl-inmiss{0%{opacity:0;transform:translateX(330px)}15%{opacity:1}100%{opacity:0;transform:translateX(120px)}}
+@keyframes xl-inland{0%{opacity:0;transform:translateX(330px)}20%{opacity:1}60%{opacity:1;transform:translateX(196px)}100%{opacity:0;transform:translateX(214px)}}
+.xl-hits{position:absolute;left:14px;top:132px;display:flex;align-items:baseline;gap:6px;font:700 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);opacity:0;transform:skewX(-10deg);pointer-events:none}
+.xl-hits b{font:700 italic 54px/1 var(--sans);letter-spacing:-.05em;color:var(--ink);-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--coral)}
+.xl-hits.on{animation:xl-hitslam .9s var(--snap) forwards}
+.xl-hits.big b{font-size:72px;text-shadow:4px 4px 0 var(--teal),8px 8px 0 var(--coral)}
+@keyframes xl-hitslam{0%{opacity:0;transform:skewX(-10deg) scale(2.2)}16%{opacity:1;transform:skewX(-10deg) scale(.92)}28%{transform:skewX(-10deg) scale(1.06)}40%,100%{opacity:1;transform:skewX(-10deg) scale(1)}}
+#cl-fx-lines{opacity:0}
+#cl-fx-lines path{transform-box:fill-box;transform-origin:right center}
+#cl-fx-lines.go{animation:xl-linesf .26s ease-out}
+#cl-fx-lines.go path{animation:xl-linesg .26s ease-out}
+@keyframes xl-linesf{0%{opacity:.9}100%{opacity:0}}
+@keyframes xl-linesg{from{transform:scale(.3)}to{transform:scale(1.15)}}
+#cl-fx-flash.go{animation:xl-flash .2s ease-out}
+@keyframes xl-flash{0%{opacity:.75}100%{opacity:0}}
+.xl-stage.quake svg{animation:xl-quake .18s}
+.xl-stage.quake2 svg{animation:xl-quake2 .3s}
+@keyframes xl-quake{25%{transform:translate(3px,-1px)}60%{transform:translate(-2px,1px)}}
+@keyframes xl-quake2{15%{transform:translate(7px,-3px) scale(1.02)}35%{transform:translate(-6px,3px) scale(1.03)}55%{transform:translate(4px,-2px) scale(1.01)}80%{transform:translate(-2px,1px)}}
+.xl-key#cl-key-m{grid-template-columns:repeat(4,1fr)}
+@media (max-width:560px){.xl-hits{top:118px}.xl-hits b{font-size:44px}.xl-hits.big b{font-size:56px}.xl-mode{display:grid}.xl-mode button{padding:10px 12px;font-size:15.5px}.xl-mode button small{font-size:11px}}
+.xl-info p.xl-why{color:#fff}
+.xl-reps{right:auto;left:16px;top:66px;text-align:left}
+.xl-reps b{transform-origin:left center}
+.xl-seq{display:flex;flex-wrap:wrap;gap:6px;margin:0 14px 12px}
+.xl-seq b{display:grid;place-items:center;min-width:44px;height:44px;padding:0 10px;border-radius:12px;background:var(--surface);border:1.5px solid var(--line);font:700 17px/1 var(--sans);color:var(--ink-3);transition:background .15s,border-color .15s,color .15s,transform .25s var(--snap)}
+.xl-seq b small{font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:3px}
+.xl-seq b.done{background:var(--coral-soft);border-color:var(--coral);color:var(--ink)}
+.xl-seq b.now{background:var(--ink);border-color:var(--ink);color:var(--coral);transform:translateY(-3px) scale(1.08)}
+.xl-tab .xl-code{font:600 12px/1 var(--mono);color:var(--ink-3);letter-spacing:.04em}
+.xl-tab[aria-pressed="true"] .xl-code{color:var(--coral)}
+.xl-why{padding:14px 16px;border-radius:16px;background:var(--ink);color:#fff;margin:0 0 16px}
+.xl-why b{display:block;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--coral);margin-bottom:6px}
+.xl-why span{font-size:16px;line-height:1.45}
+.xl-key{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:0 0 18px;padding:0;list-style:none}
+.xl-key li{padding:8px 6px;border-radius:10px;background:var(--surface);border:1px solid var(--line);text-align:center;font:500 11.5px/1.2 var(--sans);color:var(--ink-2)}
+.xl-key li b{display:block;font:700 18px/1 var(--sans);color:var(--ink);margin-bottom:3px}
+#cl-fx-spark{opacity:0}
+#cl-fx-spark path{transform-box:fill-box;transform-origin:center}
+#cl-fx-spark.go{animation:xl-fsp .3s ease-out}
+#cl-fx-spark.go path{animation:xl-fspp .3s var(--snap)}
+@keyframes xl-fsp{0%,70%{opacity:1}100%{opacity:0}}
+@keyframes xl-fspp{from{transform:scale(.3) rotate(-30deg)}to{transform:scale(1.15) rotate(10deg)}}
+#cl-fig.shake{animation:xl-fshake .2s}
+@keyframes xl-fshake{25%{transform:translateX(3px)}60%{transform:translateX(-2px)}}
+@media (max-width:560px){.xl-key{grid-template-columns:repeat(3,1fr)}}

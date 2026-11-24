@@ -17,6 +17,8 @@ import { $ } from './util.js';
 import { mountTracking, track } from './track.js';
 import { mountFitness } from './fitness.js';
 import { mountBooker } from './booker.js';
+import { mountSwingLab } from './swinglab.js';
+import { mountComboLab } from './combolab.js';
 
 const BASE = '/assets/studio/data/';
 
@@ -143,6 +145,8 @@ async function boot() {
   mountTracking(store);
   carryLinks();
   mountFitness();
+  mountSwingLab();
+  mountComboLab();
   mountBooker();
   clock();
   // Logo: the j dot hops once on arrival (CSS); hovering the header logo snaps the S straight

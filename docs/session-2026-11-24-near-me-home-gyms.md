@@ -72,3 +72,14 @@
 3. City pages from the same data (plan first): only cities with three or more places.
 4. `visited` and `score` per place, so "close by" can become "I recommend".
 5. Tile hosting: the map still uses OpenStreetMap's public tile server.
+
+## Fourth pass: the ruler shows its two scales
+
+Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tells you the step changed.
+
+- Kept the even spacing (eleven stops, each easy to hit with a thumb) and made the change of scale visible instead.
+- Coral half counts single miles up to 5. Violet half, hatched, with taller ticks and bolder numbers, counts fives.
+  A small gap and a two-colour flag sit at 5. Captions under each half: "1 mile at a time", "5 miles at a time".
+- Past 5 the handle, the bubble and the ring on the map turn violet (`data-zone` on the ruler, set in `syncDist`).
+- Rejected: a true-to-scale ruler (1 to 5 would be a sixth of the width, too small to drag on a phone).
+- Trap: the fill is one gradient revealed with `clip-path`, so it never changes the layout. Height checked steady.

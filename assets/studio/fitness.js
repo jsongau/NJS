@@ -468,7 +468,7 @@ function mountNear() {
     const note = $('[data-nr-distnote]', box); if (note) note.textContent = st.at ? 'of ' + (st.from === 'you' ? 'you' : st.from) : 'Pick a spot first.';
     $$('[data-nr-mi]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(Number(bt.dataset.nrMi) === i)));
     const ruler = $('[data-nr-ruler]', box); const bub = $('[data-nr-bub]', box);
-    if (ruler) ruler.style.setProperty('--p', String(i / (MILES.length - 1)));
+    if (ruler) { ruler.style.setProperty('--p', String(i / (MILES.length - 1))); ruler.dataset.zone = st.max > 5 ? '2' : '1'; }
     if (bub) { const txt = st.max === null ? 'Any' : st.max + ' mi'; if (bub.textContent !== txt) { bub.textContent = txt; replay(bub, 'pop'); } }
   };
   // Drop a pin: the next click on the map becomes the spot.
@@ -529,7 +529,7 @@ function mountNear() {
     if (!st.map || !st.at) return; const L = st.L;
     if (st.rings) st.map.removeLayer(st.rings); st.rings = L.layerGroup().addTo(st.map);
     (st.max ? [st.max] : RINGS).forEach((mi) => {
-      L.circle(st.at, { radius: mi * 1609.34, color: '#1B6FE8', weight: 1.5, opacity: 0.55, dashArray: '4 7', fill: st.max ? true : mi === RINGS[0], fillColor: '#1B6FE8', fillOpacity: 0.05, interactive: false }).addTo(st.rings);
+      L.circle(st.at, { radius: mi * 1609.34, color: st.max > 5 ? '#6B4FE0' : '#1B6FE8', weight: 1.5, opacity: 0.55, dashArray: '4 7', fill: st.max ? true : mi === RINGS[0], fillColor: '#1B6FE8', fillOpacity: 0.05, interactive: false }).addTo(st.rings);
       L.marker([st.at[0] + mi / 69.05, st.at[1]], { interactive: false, keyboard: false, icon: L.divIcon({ className: 'nf-ringname', html: mi + ' mi', iconSize: [48, 16], iconAnchor: [24, 8] }) }).addTo(st.rings);
     });
   };

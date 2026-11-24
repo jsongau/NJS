@@ -8,7 +8,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   each with an avatar pin no filter hides and a triangle between them. Picking one centres the map on it,
   draws spokes to what is within 10 miles and sums it up by what it adds (mobility, control, engine, skill).
   On desktop the map sits beside the controls from the top; filters open as a card. The list shows twenty at
-  a time. On phones the Map button now scrolls to the map. See `docs/session-2026-11-24-near-me-home-gyms.md`.
+  a time. On phones the Map button now scrolls to the map. The distance ruler now shows its two scales: coral for single miles up to 5, violet for fives after, with a flag at the turn. See `docs/session-2026-11-24-near-me-home-gyms.md`.
   Then: one emblem per home gym (ring and bag, round clock, studio lights) that moves on hover, and a
   spot, distance, kind flow: any spot (a gym, your location, a typed address, a dropped pin you can drag),
   a distance scale of 1 to 5 then 10 to 30 miles to drag or tap, three one-tap examples, and an expanded map.

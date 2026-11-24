@@ -1704,3 +1704,36 @@ html.nf-lock { overflow: hidden; }
 .nf-nr-legend .nf-mark-chain.lg-chain .nf-link { position: static; width: 13px; height: 13px; padding: 0; background: none; color: #fff; box-shadow: none; }
 /* The closing note stays in the left column, so the sticky map never slides over it when the list is short. */
 @media (min-width: 1024px) { .nf-nr > .nf-note { grid-column: 1; } }
+
+/* ===== Ruler, two scales (2026-11-24): coral counts single miles up to 5, violet counts fives from there ===== */
+.nf-nr-ruler { --z1: #FF6F61; --z2: #6B4FE0; --gap: 5px; }
+.nf-nr-ruler-track { height: 14px; background: none; box-shadow: none; }
+.nf-nr-ruler-track::before, .nf-nr-ruler-track::after { content: ''; position: absolute; top: 0; bottom: 0; }
+.nf-nr-ruler-track::before { left: 0; right: calc(50% + var(--gap)); border-radius: 999px 3px 3px 999px; background: #F6E1D7; box-shadow: inset 0 0 0 1.5px #E9BFB0; }
+.nf-nr-ruler-track::after { left: calc(50% + var(--gap)); right: 0; border-radius: 3px 999px 999px 3px; background: #E4DEF8; box-shadow: inset 0 0 0 1.5px #BDB0EE; background-image: repeating-linear-gradient(90deg, transparent 0 9px, rgba(107, 79, 224, .16) 9px 10px); }
+.nf-nr-ruler-fill { z-index: 1; left: 0; right: 0; width: auto; border-radius: 999px; background: linear-gradient(90deg, #FFB199 0, #FF6F61 calc(50% - var(--gap)), transparent calc(50% - var(--gap)) calc(50% + var(--gap)), #9A82F2 calc(50% + var(--gap)), #5B3FD6 100%); clip-path: inset(0 calc(100% - (var(--w) / 2 + var(--p) * (100% - var(--w)))) 0 0); transition: clip-path .28s var(--nf-ease); }
+.nf-nr-ruler-tick { z-index: 2; }
+.nf-nr-ruler-tick.z2 { width: 3px; margin-left: -1.5px; height: 26px; margin-top: -13px; background: rgba(75, 52, 190, .7); }
+.nf-nr-ruler-tick.turn { width: 0; height: 0; margin: 0; background: none; }
+/* The turn at 5: a small flag where the scale changes */
+.nf-nr-ruler-track > .turn::before { content: ''; position: absolute; left: -1.5px; top: -17px; width: 3px; height: 34px; border-radius: 2px; background: linear-gradient(#FF6F61 0 50%, #6B4FE0 50% 100%); }
+.nf-nr-ruler-thumb { z-index: 3; transition: left .28s var(--nf-ease), transform .2s var(--nf-ease), box-shadow .25s; }
+.nf-nr-ruler[data-zone="2"] .nf-nr-ruler-thumb { box-shadow: 0 0 0 2px var(--z2), 0 6px 14px rgba(18, 20, 22, .35); }
+.nf-nr-ruler[data-zone="2"] .nf-nr-ruler-thumb::after { background: #9A82F2; }
+.nf-nr-ruler-bub { transition: background .25s; }
+.nf-nr-ruler[data-zone="2"] .nf-nr-ruler-bub { background: var(--z2); }
+.nf-nr-ruler[data-zone="2"] .nf-nr-ruler-bub::after { border-top-color: var(--z2); }
+.nf-nr-ruler-nums button { color: #B4553F; }
+.nf-nr-ruler-nums button:first-child { color: var(--ink-3); }
+.nf-nr-ruler-nums button.z2 { color: var(--z2); font-weight: 700; font-size: 13px; }
+.nf-nr-ruler-nums button.turn { color: var(--ink); font-weight: 700; }
+.nf-nr-ruler-nums button[aria-pressed="true"] { color: var(--ink); }
+.nf-nr-ruler-nums button.z2[aria-pressed="true"] { color: #4B34BE; }
+.nf-nr-ruler-zones { margin-top: 2px; gap: calc(var(--gap) * 2); }
+.nf-nr-ruler-zones span { display: flex; align-items: center; gap: 6px; padding-top: 6px; border-top: 2px solid; white-space: nowrap; overflow: hidden; }
+.nf-nr-ruler-zones .z1 { color: #B4553F; border-color: #FF6F61; }
+.nf-nr-ruler-zones .z2 { color: #4B34BE; border-color: #6B4FE0; justify-content: flex-end; text-align: right; }
+.nf-nr-ruler-zones i { flex: none; width: 14px; height: 8px; border-left: 2px solid; border-right: 2px solid; background: linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat; }
+.nf-nr-ruler-zones .z2 i { width: 26px; }
+.nf-nr.full .nf-nr-fullbar .nf-nr-ruler-zones { display: grid; }
+@media (prefers-reduced-motion: reduce) { .nf-nr-ruler-fill, .nf-nr-ruler-bub { transition: none !important; } }

@@ -121,3 +121,11 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
 - Fitness home gained four cards under the two ways: Striking, Pilates, Yoga, Run and HIIT, each opening the map
   filtered to that kind (`<!--@nf-kinds-->`).
 - Still weak, not fixed: the default list order is A to Z, so nine 9Round rows lead the map until a spot is picked.
+
+## Eighth pass: the switch on phones
+
+- Jay: the Business and Fitness switch must be available on phones. It was only inside the menu, and my sixth pass
+  had hidden it between 860 and 939 wide. Both fixed: it is in the header at every width now.
+- To make room under 860px the wordmark text hides (the switch already names the side), and under 520px the header
+  button reads Book or Build (`.cta-x` holds the dropped words). Checked on four pages at eleven widths from 320 to
+  1024: switch visible, nothing overlapping, no sideways scroll.

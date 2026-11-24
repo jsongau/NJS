@@ -1914,4 +1914,15 @@ h1, h2, h3 { text-wrap: balance; }
 @media (max-width: 1240px) { .mn-list[data-mn-set="fit"] .mn-top { font-size: 14px; padding-left: 6px; padding-right: 2px; } .mn-list[data-mn-set="fit"] { gap: 0; } }
 @media (min-width: 1025px) and (max-width: 1179px) { .top .mn-list[data-mn-set="fit"] .mn-top { font-size: 13.5px; padding: 0 0 0 4px; gap: 3px; } .top .mn-list[data-mn-set="fit"] .mn-caret { width: 22px; } }
 @media (min-width: 860px) and (max-width: 1024px) { .top .mn-list[data-mn-set="fit"] .mn-top { font-size: 13px; padding: 0 0 0 3px; gap: 2px; } .top .mn-list[data-mn-set="fit"] .mn-caret { width: 18px; } .top .mn-list[data-mn-set="fit"] { gap: 0; } body[data-mode="fitness"] .top .wrap { gap: 8px; } body[data-mode="fitness"] .top nav .btn { padding: 10px 12px; font-size: 14px; } }
-@media (min-width: 860px) and (max-width: 939px) { body[data-mode="fitness"] .top .wrap > .mode { display: none; } }
+/* The Business and Fitness switch stays in the header on phones and small tablets: it takes the place of the wordmark,
+   so crossing between the two sides never needs the menu. */
+@media (max-width: 859px) {
+  .top .wrap > .mode { display: inline-grid; margin-left: 0; }
+  .top .logo span:not(.logo-m) { display: none; }
+  .top .wrap > .mode a { min-height: 36px; padding: 0 11px; font-size: 13px; }
+}
+@media (max-width: 399px) { .top .wrap { gap: 8px; } .top .wrap > .mode a { padding: 0 8px; font-size: 12px; } .top nav .btn { padding: 10px 11px; font-size: 13.5px; } }
+@media (max-width: 349px) { .top .wrap > .mode a { padding: 0 6px; font-size: 11.5px; } .top nav .btn { padding: 10px 9px; font-size: 12.5px; } }
+@media (min-width: 860px) and (max-width: 939px) { body[data-mode="fitness"] .top .wrap > .mode a { padding: 0 6px; font-size: 11.5px; } body[data-mode="fitness"] .top .mn-list[data-mn-set="fit"] .mn-top { font-size: 12.5px; padding-left: 2px; } body[data-mode="fitness"] .top .mn-list[data-mn-set="fit"] .mn-caret { width: 16px; } body[data-mode="fitness"] .top nav .btn { padding: 10px 10px; font-size: 13px; } }
+@media (max-width: 519px) { .top .mn-cta .cta-x { display: none; } .top nav .mn-cta { padding: 10px 14px; font-size: 14.5px; } }
+@media (max-width: 349px) { .top nav .mn-cta { padding: 10px 10px; font-size: 13.5px; } .top .wrap { gap: 6px; } }

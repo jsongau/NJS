@@ -29,7 +29,7 @@ The Studio and Fitness pages are **generated**. Never edit `index.html`, `plans/
 |---|---|---|
 | Any Studio or Fitness copy (headlines, sections) | the section file in `partials/studio/` or `partials/fitness/` | rebuild pages |
 | Page titles, descriptions, SEO, JSON-LD, which sections a page has | `PAGES` in `tools/build-pages.mjs` and `partials/studio/pages/*.html` | rebuild pages |
-| Header, Business \| Fitness switch | `header-top.html`, `nav-biz.html` (mega nav), `nav-fit.html` | rebuild pages |
+| Header, Business \| Fitness switch | `header-top.html`, `nav-biz.html` (mega nav), `nav-fit.html`. The switch must stay visible in the header at every width; under 860px it replaces the wordmark and the header button drops its `.cta-x` words | rebuild pages |
 | Mega nav panel contents | `assets/studio/meganav.js` + `nav-biz.html` | rebuild pages |
 | Fitness mega nav panel contents | `FIT` and `FIT_FILL` in `assets/studio/meganav.js` + `nav-fit.html`. Link lines reuse `focus.json`; regions only, no gym names. Five tabs, never more: the fourth, Train on your own, holds the tools (map, guides, notes) and must keep a link to the near-me map | rebuild pages |
 | Footer | `partials/studio/footer.html` | rebuild pages |

@@ -160,3 +160,16 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
   with `pointer-events: none`.
 - Trap: a later `--top` default on a component silently beats the `.nf-top-*` class; set the kind colour on the
   component itself.
+
+## Eleventh pass: Mary's phone audit and haptics
+
+- Scripted audit of six map states at seven widths (the rule is now in `docs/MARY-MEMORY.md`). First run: 40 of 41
+  checks failed on something; last run: all pass except inline address links, which are text links by design.
+- Fixed: 21px sideways scroll in the phone map view at 320 wide (the map box could not shrink); kind labels cut by
+  an ellipsis on the swipe cards; the picked pin hidden under the sheet on a 568px tall phone; the place card
+  overlapping the zoom buttons, the From dock and the folded deck on 1024 wide; every control under 44px (clear,
+  close, dock, ruler numbers, deck, map buttons, zoom, region chips).
+- Haptics: per-stop tick on the ruler, a firmer double tick where it turns from single miles to fives, a double
+  tick when a search applies, ticks on place open, step and deck fold. iPhone path uses the switch-control trick;
+  not verified here, it needs a real iPhone.
+- Search suggestions capped at eight and now use `pointerdown`, both from Mary's combobox rule.

@@ -485,7 +485,7 @@ function mountNear() {
     else { if (distHome.parentNode) distHome.replaceWith(distBox); if (tilesHome.parentNode) tilesHome.replaceWith(tilesBox); deck(true); }
     startMap().then(() => { if (st.map) {
       // Adaptive: the controls fold to one line while the visitor drags the map, and come back on a tap.
-      if (!st.deckHook) { st.deckHook = true; st.map.on('dragstart', () => { if (box.classList.contains('full')) deck(false); }); } st.map.invalidateSize(); if (on) st.map.scrollWheelZoom.enable(); syncMap(true); } });
+      if (!st.deckHook) { st.deckHook = true; st.map.on('dragstart', () => { if (box.classList.contains('full') && !box.classList.contains('mini')) { buzz(4); deck(false); } }); } st.map.invalidateSize(); if (on) st.map.scrollWheelZoom.enable(); syncMap(true); } });
   };
   const setHome = (g) => {
     st.home = g === st.home ? null : g; st.spot = st.home ? 'home' : null;
@@ -497,7 +497,18 @@ function mountNear() {
   const wide = () => matchMedia('(min-width: 1024px)').matches;
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // A short tap you can feel, on phones that support it (Android; iPhones ignore it).
-  const buzz = (ms) => { try { if (navigator.vibrate) navigator.vibrate(ms || 8); } catch (e) { /* not supported */ } };
+  // Haptics. Android: the Vibration API. iPhone has no such API, so a hidden switch control is tapped instead (Safari
+  // 17.4 and later gives a system tick when a switch flips). Both only fire from a real touch, never on their own,
+  // and not at all for visitors who ask for reduced motion.
+  let tick = null;
+  const buzz = (ms) => {
+    if (calm) return;
+    try {
+      if (navigator.vibrate) { navigator.vibrate(ms || 8); return; }
+      if (!tick) { tick = document.createElement('label'); tick.setAttribute('aria-hidden', 'true'); tick.style.cssText = 'position:fixed;left:-99px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none'; tick.innerHTML = '<input type="checkbox" switch tabindex="-1">'; document.body.appendChild(tick); }
+      tick.click();
+    } catch (e) { /* not supported */ }
+  };
   const rad = (d) => (d * Math.PI) / 180;
   const miles = (p1, p2) => {
     const dLat = rad(p2[0] - p1[0]); const dLng = rad(p2[1] - p1[1]);
@@ -562,7 +573,7 @@ function mountNear() {
   const keepSeen = (r) => {
     if (!st.map || !r || placeEl.hidden) return; const fullOn = box.classList.contains('full'); const fb = $('[data-nr-fullbar]', box);
     const pad = wide() ? (fullOn ? { paddingTopLeft: [180, 160], paddingBottomRight: [placeEl.offsetWidth + 70, (fb ? fb.offsetHeight : 0) + 60] } : { paddingTopLeft: [50, 70], paddingBottomRight: [50, Math.min(placeEl.offsetHeight, mapEl.offsetHeight - 150) + 50] })
-      : { paddingTopLeft: [50, 150], paddingBottomRight: [50, Math.min(placeEl.offsetHeight, mapEl.offsetHeight - 260) + 50] };
+      : (() => { const bottom = placeEl.offsetHeight + 46; return { paddingTopLeft: [40, Math.max(70, Math.min(160, mapEl.offsetHeight - bottom - 40))], paddingBottomRight: [40, bottom] }; })();
     st.map.panInside(pos(r), Object.assign({ animate: !calm }, pad));
   };
   const openPlace = (r, flying) => {
@@ -586,7 +597,7 @@ function mountNear() {
         : fromHome ? '<p class="nf-pl-pair" style="--hg:' + st.home.dataset.hg + '"><i></i><span>Pair it with a session at ' + st.home.dataset.name + '.</span><a href="/fitness/book">Book</a></p>' : '') + '</div>' +
       (list.length > 1 && at >= 0 ? '<div class="nf-pl-nav"><button type="button" data-nr-place-step="-1" aria-label="Previous place">' + ARROW(-1) + '</button><span>' + (at + 1) + ' of ' + list.length + '</span><button type="button" data-nr-place-step="1" aria-label="Next place">' + ARROW(1) + '</button></div>' : '');
     placeEl.innerHTML = placeEl.innerHTML.replace(/(\d\.\d)00\b/g, (m, a) => a);
-    const was = !placeEl.hidden; placeEl.hidden = false; box.classList.add('placed'); st.place = r;
+    const was = !placeEl.hidden; if (!was) buzz(10); placeEl.hidden = false; box.classList.add('placed'); st.place = r;
     placeEl.classList.remove('in', 'swap'); void placeEl.offsetWidth; placeEl.classList.add(was ? 'swap' : 'in');
     if (box.classList.contains('full') && wide() && window.innerWidth < 1560) deck(false);
     if (!flying) keepSeen(r);
@@ -802,7 +813,9 @@ function mountNear() {
   if (city) city.addEventListener('change', pickCity);
   sortSel.addEventListener('change', () => { st.sort = sortSel.value; buzz(); track('fit_tab', { detail: 'near_sort_' + st.sort }); draw(false); });
   distIn.addEventListener('input', () => {
-    st.max = MILES[Number(distIn.value)]; buzz(4);
+    const was = st.max; st.max = MILES[Number(distIn.value)];
+    // A light tick per stop; a firmer one when the scale turns from single miles to fives.
+    if (was !== st.max) buzz((was === null ? 0 : was) <= 5 !== (st.max === null ? 0 : st.max) <= 5 ? [14, 30, 14] : 5);
     draw();
     if (!st.at && st.max !== null) status.textContent = 'Pick a spot first: one of my gyms, your location, an address or a pin. Then the distance applies.';
   });
@@ -854,7 +867,7 @@ function mountNear() {
       if (p.brand) { const b = $('[data-nr-brand="' + p.brand + '"]', box); if (b && !b.hidden) { st.brands.clear(); $$('[data-nr-brand]', box).forEach((x) => x.setAttribute('aria-pressed', 'false')); st.brands.add(p.brand); b.setAttribute('aria-pressed', 'true'); } }
       if (p.home) { if (st.home !== p.home) setHome(p.home); } else if (p.area) { city.value = p.area.value; located(p.area.value.split(',').map(Number), p.area.name, 'area'); } else if (p.me) { const geo = $('[data-nr-geo]', box); if (geo) geo.click(); }
       if (p.max) { st.max = p.max; distIn.value = MILES.indexOf(p.max); }
-      track('fit_tab', { detail: 'near_search' }); draw(); startMap();
+      buzz([8, 40, 12]); track('fit_tab', { detail: 'near_search' }); draw(); startMap();
       if (p.max && !st.at && !p.me) status.textContent = 'Pick a spot to measure from: one of my gyms, an area, your location or a pin.';
     };
     let items = []; let act = -1;
@@ -877,11 +890,11 @@ function mountNear() {
       if (rest.length >= 2) {
         // A place by name: every word typed (kind words included, so "ra yoga" finds Ra Yoga) starts a word in the name.
         const words = norm(q).split(' ').filter((w) => !STOP.has(w) && !/^\d+$/.test(w));
-        const hits = rows.filter((r) => { const n = norm(nameOf(r)).split(' '); return words.every((w) => n.some((x) => x.startsWith(w))); }).slice(0, 5);
+        const hits = rows.filter((r) => { const n = norm(nameOf(r)).split(' '); return words.every((w) => n.some((x) => x.startsWith(w))); }).slice(0, 4);
         const nameFirst = hits.length && !p.max && !p.home && !p.area && !p.me && !p.brand;
         hits.forEach((r, i) => items.push({ head: i ? '' : 'Places', icon: jewel(r.dataset.top), t: esc2(nameOf(r)), s: esc2((r.dataset.addr || '').split(',').slice(-2, -1)[0] || r.dataset.region).trim(), go: 'Go', fn: () => { close(); qIn.blur(); r.hidden = false; startMap().then(() => flyToRow(r, true)); } }));
         const sp = homesQ.filter((h) => !p.home && h.keys.some((k) => k.startsWith(rest))).map((h) => ({ t: h.g.dataset.name, s: 'My home gym in ' + h.g.dataset.city, p2: { home: h.g } }))
-          .concat(areas.filter((a) => !p.area && a.key.startsWith(rest) && !homesQ.some((h) => h.keys.includes(a.key))).map((a) => ({ t: a.name, s: 'Area', p2: { area: a } }))).slice(0, 4);
+          .concat(areas.filter((a) => !p.area && a.key.startsWith(rest) && !homesQ.some((h) => h.keys.includes(a.key))).map((a) => ({ t: a.name, s: 'Area', p2: { area: a } }))).slice(0, 2);
         sp.forEach((x, i) => items.push({ head: i ? '' : 'Measure from', icon: ico('spot'), t: esc2(x.t), s: x.s, go: 'Set', fn: () => { run(Object.assign({}, p, x.p2, { rest: '' })); close(); qIn.blur(); } }));
         if (rest.length >= 4 && addr) items.push({ head: 'Somewhere else', icon: ico('addr'), t: 'Look up “' + esc2(rest) + '” as an address', s: 'Searches OpenStreetMap for this text only', go: 'Find', fn: () => { if (p.any) run(Object.assign({}, p, { home: null, area: null, me: false })); addr.elements.q.value = rest; close(); qIn.blur(); startMap(); addr.requestSubmit(); } });
         if (act < 0 && items.length) act = 0;
@@ -892,7 +905,7 @@ function mountNear() {
     };
     qIn.addEventListener('input', build); qIn.addEventListener('focus', build);
     qIn.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== qIn) close(); }, 120));
-    sug.addEventListener('mousedown', (e) => e.preventDefault());
+    sug.addEventListener('pointerdown', (e) => e.preventDefault());
     sug.addEventListener('click', (e) => { const o = e.target.closest('[data-nr-opt]'); if (o) { e.stopPropagation(); buzz(10); items[Number(o.dataset.nrOpt)].fn(); } });
     qx.addEventListener('click', (e) => { e.stopPropagation(); qIn.value = ''; qIn.focus(); build(); });
     qIn.addEventListener('keydown', (e) => {

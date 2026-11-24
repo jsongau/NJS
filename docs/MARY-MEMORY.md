@@ -5,6 +5,20 @@ interactive part of the studio pages. Newest rules first.
 
 ## Rules
 
+- 2026-11-24 · **A map screen is audited by script in every state, not by eye in one.** (Jay: "fix cut offs".)
+  The near-me map has six states (list, map, expanded, typing, applied, place open). At 320, 360, 390, 430, 768,
+  1024 and 1440 wide each state must pass: no sideways scroll, no clipped text, no control outside the screen,
+  every button or link 44px or more on its short side (a small tag may grow its hit area with a pseudo-element),
+  no two overlay controls overlapping, and the picked pin never under its card. What the first run found: a grid
+  column that could not shrink (use `minmax(0, 1fr)` and `min-width: 0` on the children), an ellipsis hiding a
+  kind label (clamp to two lines instead), a pulsing ring that swallowed taps on the pins beside it
+  (`pointer-events: none` on anything decorative), and 36 to 42px buttons that looked big enough.
+- 2026-11-24 · **Haptics are a whisper, and tied to meaning.** One light tick for a step (a ruler stop, next
+  place), a firmer double tick when something changes kind (the ruler crossing from single miles to fives, a
+  search applied), nothing for decoration. Only from a real touch, never when reduced motion is on. Android uses
+  the Vibration API; iPhone has none, so `buzz()` in `fitness.js` flips a hidden switch control, which Safari 17.4
+  and later answers with a system tick. Every tappable thing also gets press feedback (scale .95 on `:active`).
+
 - 2026-11-14 · **A form never opens inside a sticky rail.** (Jay: the name field was cut off and could not scroll.)
   A rail has no spare height, so a form goes in a `<dialog>` opened with `showModal()`: centered on desktop, a bottom
   sheet on phones, its own scroll, Esc and backdrop close, focus on the first field. The button that opens it stays put.

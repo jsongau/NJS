@@ -477,12 +477,15 @@ function mountNear() {
   // takes the whole screen and the distance control moves in with it.
   const distBox = $('[data-nr-distbox]', box); const tilesBox = $('.nf-nr-tiles', box); const fullBar = $('[data-nr-fullbar]', box);
   const distHome = document.createComment('distance'); const tilesHome = document.createComment('tiles');
+  const deck = (open) => { box.classList.toggle('mini', !open); const bt = $('[data-nr-deck]', box); if (bt) bt.setAttribute('aria-expanded', String(open)); };
   const full = (on) => {
     box.classList.toggle('full', on); document.documentElement.classList.toggle('nf-lock', on);
     $$('[data-nr-full]', box).forEach((bt) => { bt.setAttribute('aria-pressed', String(on)); $('span', bt).textContent = on ? 'Close' : 'Expand'; });
     if (on) { distBox.before(distHome); tilesBox.before(tilesHome); fullBar.append(tilesBox, distBox); if (!wide()) setView('map', false); }
-    else { if (distHome.parentNode) distHome.replaceWith(distBox); if (tilesHome.parentNode) tilesHome.replaceWith(tilesBox); }
-    startMap().then(() => { if (st.map) { st.map.invalidateSize(); if (on) st.map.scrollWheelZoom.enable(); syncMap(true); } });
+    else { if (distHome.parentNode) distHome.replaceWith(distBox); if (tilesHome.parentNode) tilesHome.replaceWith(tilesBox); deck(true); }
+    startMap().then(() => { if (st.map) {
+      // Adaptive: the controls fold to one line while the visitor drags the map, and come back on a tap.
+      if (!st.deckHook) { st.deckHook = true; st.map.on('dragstart', () => { if (box.classList.contains('full')) deck(false); }); } st.map.invalidateSize(); if (on) st.map.scrollWheelZoom.enable(); syncMap(true); } });
   };
   const setHome = (g) => {
     st.home = g === st.home ? null : g; st.spot = st.home ? 'home' : null;
@@ -550,6 +553,8 @@ function mountNear() {
     if (openPopup && wide()) st.map.once('moveend', () => r.pin.openPopup());
     st.map.flyTo(pos(r), Math.max(st.map.getZoom(), 13), { duration: 0.8 });
   };
+  // Expanded: keep what was asked for clear of the search on top and the deck at the bottom.
+  const deckPad = (n) => { if (!box.classList.contains('full')) return { padding: [n, n] }; const fb = $('[data-nr-fullbar]', box); return { paddingTopLeft: [n, 140], paddingBottomRight: [n, (fb ? fb.offsetHeight : 0) + 40] }; };
   const syncMap = (fit) => {
     if (!st.map) return; const L = st.L; const vis = shown().filter((r) => r.pin);
     rows.forEach((r) => { if (!r.pin) return; if (r.hidden) st.map.removeLayer(r.pin); else r.pin.addTo(st.map); });
@@ -574,9 +579,9 @@ function mountNear() {
     }
     inView();
     if (!fit || !vis.length) return;
-    if (st.at && st.max) { st.map.flyToBounds(L.latLng(st.at).toBounds(st.max * 1609.34 * 2.15), { padding: [16, 16], maxZoom: 14, duration: 0.8 }); return; }
+    if (st.at && st.max) { st.map.flyToBounds(L.latLng(st.at).toBounds(st.max * 1609.34 * 2.15), Object.assign({ maxZoom: 14, duration: 0.8 }, deckPad(16))); return; }
     const pts = st.at ? [st.at, ...vis.slice().sort((x, y) => x.dist - y.dist).slice(0, 6).map(pos)] : vis.map(pos);
-    st.map.flyToBounds(L.latLngBounds(pts), { padding: [40, 40], maxZoom: 13, duration: 0.8 });
+    st.map.flyToBounds(L.latLngBounds(pts), Object.assign({ maxZoom: 13, duration: 0.8 }, deckPad(40)));
   };
   const startMap = () => {
     if (st.ready) return st.ready;
@@ -647,6 +652,10 @@ function mountNear() {
     if (more) { const left = count - Math.min(count, st.limit); more.hidden = left <= 0; more.textContent = 'Show ' + Math.min(STEP, left) + ' more · ' + left + ' left'; }
     drawHomes(); syncDist();
     const how = { near: 'closest to ' + st.from + ' first', az: 'A to Z', old: 'longest running first', score: 'my rating, highest first' }[sort];
+    const sumEl = $('[data-nr-sum]', box);
+    if (sumEl) { const w = { strike: 'striking ', pilates: 'Pilates ', yoga: 'yoga ', run: 'run and HIIT ' }[st.top] || '';
+      sumEl.textContent = count + ' ' + w + (count === 1 ? 'place' : 'places') + (st.at && st.max !== null ? ' within ' + st.max + (st.max === 1 ? ' mile of ' : ' miles of ') + st.from : st.at ? ', closest to ' + st.from + ' first' : ' on the map'); }
+    $$('[data-nr-spotbtn]', box).forEach((bt) => bt.setAttribute('aria-pressed', String(bt.dataset.nrSpotbtn === 'you' ? st.spot === 'you' : !!st.home && st.home.dataset.slug === bt.dataset.nrSpotbtn)));
     status.textContent = count + (count === 1 ? ' place, ' : ' places, ') + how + '.' + (st.sort === 'near' && !st.at ? ' Share your location to see the closest first.' : '') + (count === 0 ? ' Nothing matches: loosen a filter.' : '');
     const active = st.kinds.size + st.regs.size + st.brands.size + (st.max !== null ? 1 : 0);
     const badge = $('[data-nr-badge]', box); if (badge) { badge.hidden = !active; badge.textContent = String(active); }
@@ -693,6 +702,7 @@ function mountNear() {
     if (hit('[data-nr-more]')) { buzz(); st.limit += STEP; track('fit_tab', { detail: 'near_more' }); draw(false, true); return; }
     const mi = hit('[data-nr-mi]');
     if (mi) { distIn.value = mi.dataset.nrMi; distIn.dispatchEvent(new Event('input')); return; }
+    if (hit('[data-nr-deck]')) { buzz(6); deck(box.classList.contains('mini')); return; }
     if (hit('[data-nr-full]')) { buzz(10); full(!box.classList.contains('full')); track('fit_tab', { detail: 'near_expand' }); return; }
     if (hit('[data-nr-drop]')) {
       buzz(); const on = !st.dropping; if (on && !wide()) { setView('map', false); split.scrollIntoView({ block: 'start' }); }
@@ -764,6 +774,90 @@ function mountNear() {
         const sel = $('[data-nr-city]', box); if (sel) sel.value = ''; located([Number(h.lat), Number(h.lon)], q.length > 28 ? q.slice(0, 27) + '…' : q, 'addr'); })
       .catch(() => { status.textContent = 'The address search did not answer. Pick an area or drop a pin on the map instead.'; });
   });
+  // ---- Smart search: one box that reads a kind, a distance, a spot, a chain or a place name. Nothing typed here is
+  // put in an event; only an address the visitor chooses to look up goes to OpenStreetMap's search. ----
+  const qIn = $('[data-nr-q]', box); const sug = $('[data-nr-sug]', box); const qx = $('[data-nr-qx]', box);
+  if (qIn && sug) {
+    const norm = (s) => s.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+    const KW = [['yoga', ['hot yoga', 'yoga', 'vinyasa']], ['pilates', ['reformer pilates', 'pilates', 'reformer', 'lagree']], ['strike', ['muay thai', 'kickboxing', 'boxing', 'fight gym', 'striking', 'mma']], ['run', ['running', 'intervals', 'interval', 'treadmill', 'hiit', 'run', 'cardio']]];
+    const TOPN = { yoga: 'Yoga', pilates: 'Pilates', strike: 'Striking', run: 'Run and HIIT' };
+    const BRAND = { corepower: ['corepower yoga', 'corepower', 'core power'], yogasix: ['yogasix', 'yoga six'], ufc: ['ufc gym', 'ufc'], '9round': ['9round', '9 round', 'nine round'], rumble: ['rumble boxing', 'rumble'], orangetheory: ['orangetheory', 'orange theory'], stride: ['stride fitness', 'stride'] };
+    const BRANDN = { corepower: 'CorePower Yoga', yogasix: 'YogaSix', ufc: 'UFC Gym', '9round': '9Round', rumble: 'Rumble', orangetheory: 'Orangetheory', stride: 'Stride' };
+    const areas = city ? [...city.options].filter((o) => o.value).map((o) => ({ name: o.textContent, key: norm(o.textContent), value: o.value })) : [];
+    const homesQ = mine.map((g) => ({ g, keys: [norm(g.dataset.name), norm(g.dataset.city)].concat(g.dataset.slug === 'rancho-santa-margarita' ? ['rsm'] : []) }));
+    const STOP = new Set(['near', 'nearby', 'from', 'within', 'of', 'next', 'to', 'by', 'in', 'around', 'at', 'a', 'an', 'the', 'studio', 'studios', 'gym', 'gyms', 'place', 'places', 'class', 'classes', 'miles', 'mile', 'mi', 'close', 'closest', 'nearest', 'find', 'show', 'for', 'and', 'after', 'my']);
+    const jewel = (top) => '<span class="nf-kx nf-top-' + top + '" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#kx-' + top + '"/></svg></span>';
+    const ICO = { read: '<path d="M5 12l5 5 9-10"/>', spot: '<path d="M12 21s-6-5.6-6-10.500a6 6 0 0 1 12 0C18 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/>', addr: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>', tip: '<path d="M12 3l2.4 5.6 6 .6-4.5 4 1.3 5.900L12 16l-5.2 3.1 1.3-5.9-4.5-4 6-.600z"/>' };
+    const ico = (k) => '<span class="nf-nr-sug-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICO[k] + '</svg></span>';
+    const parse = (q) => {
+      let s = ' ' + norm(q) + ' '; const p = {};
+      const take = (words) => { for (const w of words) { const i = s.indexOf(' ' + w + ' '); if (i >= 0) { s = s.slice(0, i) + ' ' + s.slice(i + w.length + 1); return w; } } return null; };
+      for (const h of homesQ) if (take([h.keys[0]])) { p.home = h.g; break; }
+      for (const id of Object.keys(BRAND)) if ($('[data-nr-brand="' + id + '"]', box) && take(BRAND[id])) { p.brand = id; break; }
+      for (const [top, words] of KW) if (take(words)) { p.top = top; break; }
+      const m = s.match(/ (\d{1,2}) ?(?:mi|mile|miles) /) || s.match(/ within (\d{1,2}) /);
+      if (m) { const n = Number(m[1]); p.max = MILES.filter((x) => x !== null).reduce((a, b) => (Math.abs(b - n) < Math.abs(a - n) ? b : a)); s = s.replace(m[0], ' '); }
+      if (!p.home) for (const h of homesQ) if (take(h.keys.slice(1))) { p.home = h.g; break; }
+      if (!p.home) for (const a of areas) if (take([a.key])) { p.area = a; break; }
+      if (!p.home && !p.area && take(['near me', 'my location', 'around me', 'me'])) p.me = true;
+      if (p.brand && !p.top) { const b = $('[data-nr-brand="' + p.brand + '"]', box); const tops = b ? b.dataset.tops.split(' ') : []; if (tops.length === 1) p.top = tops[0]; }
+      p.rest = s.split(' ').filter((w) => w && !STOP.has(w)).join(' ');
+      p.any = !!(p.top || p.brand || p.max || p.home || p.area || p.me);
+      return p;
+    };
+    const say = (p) => [p.brand ? BRANDN[p.brand] : p.top ? TOPN[p.top] : 'Every kind', p.max ? 'within ' + p.max + (p.max === 1 ? ' mile' : ' miles') : null, (p.max ? 'of ' : 'near ') + (p.home ? p.home.dataset.name : p.area ? p.area.name : p.me ? 'you' : st.at && p.max ? st.from : '')].map((x) => (x === 'of ' || x === 'near ' ? null : x)).filter(Boolean).join(' ');
+    const run = (p) => {
+      if (p.top || p.brand) setTop(p.top || 'all');
+      if (p.brand) { const b = $('[data-nr-brand="' + p.brand + '"]', box); if (b && !b.hidden) { st.brands.clear(); $$('[data-nr-brand]', box).forEach((x) => x.setAttribute('aria-pressed', 'false')); st.brands.add(p.brand); b.setAttribute('aria-pressed', 'true'); } }
+      if (p.home) { if (st.home !== p.home) setHome(p.home); } else if (p.area) { city.value = p.area.value; located(p.area.value.split(',').map(Number), p.area.name, 'area'); } else if (p.me) { const geo = $('[data-nr-geo]', box); if (geo) geo.click(); }
+      if (p.max) { st.max = p.max; distIn.value = MILES.indexOf(p.max); }
+      track('fit_tab', { detail: 'near_search' }); draw(); startMap();
+      if (p.max && !st.at && !p.me) status.textContent = 'Pick a spot to measure from: one of my gyms, an area, your location or a pin.';
+    };
+    let items = []; let act = -1;
+    const close = () => { sug.hidden = true; qIn.setAttribute('aria-expanded', 'false'); qIn.removeAttribute('aria-activedescendant'); act = -1; };
+    const paint = () => {
+      sug.innerHTML = items.map((it, i) => (it.head ? '<p class="nf-nr-sug-h">' + it.head + '</p>' : '') + '<button type="button" role="option" id="nr-o-' + i + '" data-nr-opt="' + i + '" aria-selected="' + (i === act) + '"' + (it.cls ? ' class="' + it.cls + '"' : '') + '>' + it.icon + '<span><b>' + it.t + '</b>' + (it.s ? '<small>' + it.s + '</small>' : '') + '</span>' + (it.go ? '<em>' + it.go + '</em>' : '') + '</button>').join('');
+      sug.hidden = !items.length; qIn.setAttribute('aria-expanded', String(!!items.length));
+      if (act >= 0) qIn.setAttribute('aria-activedescendant', 'nr-o-' + act); else qIn.removeAttribute('aria-activedescendant');
+    };
+    const esc2 = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const build = () => {
+      const q = qIn.value.trim(); qx.hidden = !q; items = []; act = -1;
+      if (!q) {
+        [['Yoga 4 miles from Brea', 'yoga'], ['Pilates near RSM', 'pilates'], ['Intervals within 10 miles of Corona', 'run'], ['Boxing near me', 'strike']].forEach(([t, top], i) => items.push({ head: i ? '' : 'Try typing', icon: jewel(top), t, s: '', go: 'Try', fn: () => { qIn.value = t; run(parse(t)); close(); qx.hidden = false; } }));
+        return paint();
+      }
+      const p = parse(q);
+      if (p.any) { items.push({ head: 'I read that as', cls: 'read', icon: p.top ? jewel(p.top) : ico('read'), t: esc2(say(p)), s: p.max && !p.home && !p.area && !p.me && !st.at ? 'Add a spot: Brea, RSM, Corona, a city or “near me”' : '', go: 'Show', fn: () => { run(p); close(); qIn.blur(); } }); act = 0; }
+      const rest = p.rest;
+      if (rest.length >= 2) {
+        // A place by name: every word typed (kind words included, so "ra yoga" finds Ra Yoga) starts a word in the name.
+        const words = norm(q).split(' ').filter((w) => !STOP.has(w) && !/^\d+$/.test(w));
+        const hits = rows.filter((r) => { const n = norm(nameOf(r)).split(' '); return words.every((w) => n.some((x) => x.startsWith(w))); }).slice(0, 5);
+        const nameFirst = hits.length && !p.max && !p.home && !p.area && !p.me && !p.brand;
+        hits.forEach((r, i) => items.push({ head: i ? '' : 'Places', icon: jewel(r.dataset.top), t: esc2(nameOf(r)), s: esc2((r.dataset.addr || '').split(',').slice(-2, -1)[0] || r.dataset.region).trim(), go: 'Go', fn: () => { close(); qIn.blur(); r.hidden = false; startMap().then(() => flyToRow(r, true)); } }));
+        const sp = homesQ.filter((h) => !p.home && h.keys.some((k) => k.startsWith(rest))).map((h) => ({ t: h.g.dataset.name, s: 'My home gym in ' + h.g.dataset.city, p2: { home: h.g } }))
+          .concat(areas.filter((a) => !p.area && a.key.startsWith(rest) && !homesQ.some((h) => h.keys.includes(a.key))).map((a) => ({ t: a.name, s: 'Area', p2: { area: a } }))).slice(0, 4);
+        sp.forEach((x, i) => items.push({ head: i ? '' : 'Measure from', icon: ico('spot'), t: esc2(x.t), s: x.s, go: 'Set', fn: () => { run(Object.assign({}, p, x.p2, { rest: '' })); close(); qIn.blur(); } }));
+        if (rest.length >= 4 && addr) items.push({ head: 'Somewhere else', icon: ico('addr'), t: 'Look up “' + esc2(rest) + '” as an address', s: 'Searches OpenStreetMap for this text only', go: 'Find', fn: () => { if (p.any) run(Object.assign({}, p, { home: null, area: null, me: false })); addr.elements.q.value = rest; close(); qIn.blur(); startMap(); addr.requestSubmit(); } });
+        if (act < 0 && items.length) act = 0;
+        if (nameFirst && p.any) { const read = items.shift(); const at = items.findIndex((x, i) => i >= hits.length); items.splice(at < 0 ? items.length : at, 0, read); read.head = 'Or every one'; items[0].head = 'Places'; act = 0; }
+      }
+      if (!items.length) items.push({ head: 'No match yet', icon: ico('tip'), t: 'Type a kind, a distance or a place', s: 'For example: hot yoga 5 miles from Irvine', go: '', fn: () => {} });
+      paint();
+    };
+    qIn.addEventListener('input', build); qIn.addEventListener('focus', build);
+    qIn.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== qIn) close(); }, 120));
+    sug.addEventListener('mousedown', (e) => e.preventDefault());
+    sug.addEventListener('click', (e) => { const o = e.target.closest('[data-nr-opt]'); if (o) { e.stopPropagation(); buzz(10); items[Number(o.dataset.nrOpt)].fn(); } });
+    qx.addEventListener('click', (e) => { e.stopPropagation(); qIn.value = ''; qIn.focus(); build(); });
+    qIn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (sug.hidden) return build(); act = (act + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length; paint(); const o = $('#nr-o-' + act, sug); if (o) o.scrollIntoView({ block: 'nearest' }); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (sug.hidden) build(); const it = items[act >= 0 ? act : 0]; if (it) it.fn(); }
+      else if (e.key === 'Escape' && !sug.hidden) { e.stopPropagation(); close(); }
+    });
+  }
   document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (panel.classList.contains('open')) sheet(false); else if (st.dropping) arm(false); else if (box.classList.contains('full')) full(false); });
   // Desktop: the filters open as a card over the page, and a click anywhere else closes it.
   document.addEventListener('click', (e) => { if (wide() && panel.classList.contains('open') && !e.target.closest('[data-nr-panel], [data-nr-sheet]')) sheet(false); });

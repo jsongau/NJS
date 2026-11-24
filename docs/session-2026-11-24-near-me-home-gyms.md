@@ -129,3 +129,20 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
 - To make room under 860px the wordmark text hides (the switch already names the side), and under 520px the header
   button reads Book or Build (`.cta-x` holds the dropped words). Checked on four pages at eleven widths from 320 to
   1024: switch visible, nothing overlapping, no sideways scroll.
+
+## Ninth pass: smart search and the expanded view
+
+- **One search box** above the map and at the top of the expanded view. It reads a line like "yoga 4 miles from
+  brea" into kind, distance and spot, shows "I read that as: Yoga within 4 miles of UFC Gym Brea", and Enter applies
+  it. It also finds a place by name ("ra yoga"), a chain ("corepower near irvine"), offers spots to measure from,
+  and as a last resort looks the text up as an address. Arrow keys, Enter and Escape work.
+- A city that holds a home gym resolves to the gym (Brea means UFC Gym Brea): the three gyms stay the centre.
+- **Expanded view:** search on top, a dark From dock (RSM, Brea, Corona, Me), a one-line summary on the deck
+  ("3 yoga places within 4 miles of UFC Gym Brea"). Adaptive: dragging the map folds the deck to that one line; a
+  tap brings it back. The map now frames results clear of the search and the deck. Phones drop the zoom buttons
+  (pinch works) and the duplicate distance header.
+- Privacy kept: typed text is never tracked; the event is only `near_search`.
+- Traps: a regex replacement with a dollar sign and a digit in page script trips the price lint; a button that is
+  a flex row needs its label in one span or the shortened header button gets a double gap (fixed, it shipped in
+  the eighth pass commit).
+- Not verified here: the address lookup against the real service, and real map tiles.

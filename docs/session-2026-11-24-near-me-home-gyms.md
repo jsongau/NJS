@@ -146,3 +146,17 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
   a flex row needs its label in one span or the shortened header button gets a double gap (fixed, it shipped in
   the eighth pass commit).
 - Not verified here: the address lookup against the real service, and real map tiles.
+
+## Tenth pass: the place card, jewel pins, research
+
+- Read three sources on map UX (NN/g, Apple HIG Maps, Google store finder) and wrote the rules and how we follow
+  them to `docs/UX-MAP-RESEARCH.md`.
+- **Place card** replaces the small Leaflet popup: kind-colour hero with the emblem, tags, miles from the spot,
+  the sourced "known for" line, address, Navigate, profile link, "Measure from here instead", a "Pair it with a
+  session" line for the nearest home gym, and previous and next through the results. Side card when expanded on a
+  wide screen, short card beside the list, bottom sheet on phones. The map slides so the pin stays in view.
+- **Pins** now carry the kind emblem on a jewel; the picked pin pulses in its colour.
+- **Real bug found by the test:** the home gym pin's pulsing ring was catching taps meant for pins near it. Fixed
+  with `pointer-events: none`.
+- Trap: a later `--top` default on a component silently beats the `.nf-top-*` class; set the kind colour on the
+  component itself.

@@ -550,9 +550,48 @@ function mountNear() {
   const cardTo = (r) => { if (!cards || !cards.rows) return; const i = cards.rows.indexOf(r); const el = i >= 0 && cards.children[i]; if (el) { cards.lock = true; el.scrollIntoView({ inline: 'center', block: 'nearest', behavior: calm ? 'auto' : 'smooth' }); setTimeout(() => { cards.lock = false; }, 600); } };
   const flyToRow = (r, openPopup) => {
     if (!st.map || !r || !r.pin) return; st.map.invalidateSize(); select(r, false);
-    if (openPopup && wide()) st.map.once('moveend', () => r.pin.openPopup());
+    if (openPopup && (wide() || box.classList.contains('full'))) { openPlace(r, true); st.map.once('moveend', () => keepSeen(r)); }
     st.map.flyTo(pos(r), Math.max(st.map.getZoom(), 13), { duration: 0.8 });
   };
+  // ---- The place card: what shows when a pin or a row is picked. A side card on wide screens, a sheet on phones.
+  // It never covers the pin (the map slides to keep it in view), and it steps through the results in list order. ----
+  const placeEl = $('[data-nr-place]', box);
+  const X_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  const ARROW = (d) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + (d < 0 ? 'M14.5 6l-6 6 6 6' : 'M9.5 6l6 6-6 6') + '"/></svg>';
+  const shownRows = () => $$('.nf-nr-row', box).filter((x) => !x.hidden && x.dataset.lat);
+  const keepSeen = (r) => {
+    if (!st.map || !r || placeEl.hidden) return; const fullOn = box.classList.contains('full'); const fb = $('[data-nr-fullbar]', box);
+    const pad = wide() ? (fullOn ? { paddingTopLeft: [180, 160], paddingBottomRight: [placeEl.offsetWidth + 70, (fb ? fb.offsetHeight : 0) + 60] } : { paddingTopLeft: [50, 70], paddingBottomRight: [50, Math.min(placeEl.offsetHeight, mapEl.offsetHeight - 150) + 50] })
+      : { paddingTopLeft: [50, 150], paddingBottomRight: [50, Math.min(placeEl.offsetHeight, mapEl.offsetHeight - 260) + 50] };
+    st.map.panInside(pos(r), Object.assign({ animate: !calm }, pad));
+  };
+  const openPlace = (r, flying) => {
+    if (!placeEl || !r) return; const top = r.dataset.top; const list = shownRows(); const at = list.indexOf(r);
+    const near = mine.map((g) => [g, miles(pos(r), minePos(g))]).sort((a, b) => a[1] - b[1])[0];
+    const fromHome = st.at && st.spot === 'home' && st.home;
+    const far = st.at && r.dist < Infinity ? [fmt(r.dist), (r.dist === 1 ? 'mile from ' : 'miles from ') + st.from] : near ? [fmt(near[1]), 'miles from ' + near[0].dataset.name + ', my nearest gym'] : null;
+    const known = $('.nf-nr-known', r); const tags = $('.nf-nr-tags', r); const sub = $('.nf-nr-cat span', r).textContent;
+    const links = $$('.nf-rk-links a:not([data-nr-nav])', r).map((a) => '<a href="' + a.getAttribute('href') + '"' + (a.target ? ' target="_blank" rel="noopener"' : '') + '>' + a.childNodes[0].textContent.trim() + '</a>').join('');
+    placeEl.className = 'nf-nr-place nf-top-' + top;
+    placeEl.innerHTML = '<div class="nf-pl-hero"><svg class="nf-pl-wm" viewBox="0 0 48 48" aria-hidden="true"><use href="#kx-' + top + '"/></svg><span class="nf-kx nf-top-' + top + '" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#kx-' + top + '"/></svg></span>' +
+      '<div class="nf-pl-t"><p class="nf-pl-k"><b>' + $('.nf-nr-kind', r).textContent + '</b>' + (sub ? '<span>' + sub + '</span>' : '') + '</p><h3 tabindex="-1">' + nameOf(r) + '</h3><p class="nf-pl-w">' + $('.nf-nr-where', r).textContent + '</p></div>' +
+      '<button type="button" class="nf-pl-x" data-nr-place-x aria-label="Close this place">' + X_SVG + '</button></div>' +
+      '<div class="nf-pl-body">' + (tags && tags.innerHTML ? '<p class="nf-nr-tags">' + tags.innerHTML + '</p>' : '') +
+      (far ? '<p class="nf-pl-far"><b>' + far[0] + '</b><span>' + far[1] + '<small>Straight line, not drive time</small></span></p>' : '') +
+      (known ? '<p class="nf-pl-known"><span>Known for</span>' + known.textContent + '</p>' : '') +
+      (r.dataset.addr ? '<p class="nf-pl-addr">' + r.dataset.addr + '</p>' : '') +
+      '<p class="nf-pl-act"><a class="nf-pl-go" href="' + r.dataset.nav + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 11.2L20.5 3.500 12.800 21l-2.100-7.700z"/></svg>Navigate<span class="sr">, opens Google Maps in a new tab</span></a>' + links + '</p>' +
+      '<button type="button" class="nf-pl-from" data-nr-place-from><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8.500" stroke-dasharray="3 3.500"/></svg>Measure from here instead</button>' +
+      (near && !(fromHome && st.home === near[0]) ? '<p class="nf-pl-pair" style="--hg:' + near[0].dataset.hg + '"><i></i><span>Pair it with a session. I coach <b>' + fmt(near[1]) + ' miles away</b> at ' + near[0].dataset.name + '.</span><a href="/fitness/book">Book</a></p>'
+        : fromHome ? '<p class="nf-pl-pair" style="--hg:' + st.home.dataset.hg + '"><i></i><span>Pair it with a session at ' + st.home.dataset.name + '.</span><a href="/fitness/book">Book</a></p>' : '') + '</div>' +
+      (list.length > 1 && at >= 0 ? '<div class="nf-pl-nav"><button type="button" data-nr-place-step="-1" aria-label="Previous place">' + ARROW(-1) + '</button><span>' + (at + 1) + ' of ' + list.length + '</span><button type="button" data-nr-place-step="1" aria-label="Next place">' + ARROW(1) + '</button></div>' : '');
+    placeEl.innerHTML = placeEl.innerHTML.replace(/(\d\.\d)00\b/g, (m, a) => a);
+    const was = !placeEl.hidden; placeEl.hidden = false; box.classList.add('placed'); st.place = r;
+    placeEl.classList.remove('in', 'swap'); void placeEl.offsetWidth; placeEl.classList.add(was ? 'swap' : 'in');
+    if (box.classList.contains('full') && wide() && window.innerWidth < 1560) deck(false);
+    if (!flying) keepSeen(r);
+  };
+  const closePlace = (keep) => { if (!placeEl || placeEl.hidden) return; placeEl.hidden = true; box.classList.remove('placed'); st.place = null; if (!keep) select(null, false); };
   // Expanded: keep what was asked for clear of the search on top and the deck at the bottom.
   const deckPad = (n) => { if (!box.classList.contains('full')) return { padding: [n, n] }; const fb = $('[data-nr-fullbar]', box); return { paddingTopLeft: [n, 140], paddingBottomRight: [n, (fb ? fb.offsetHeight : 0) + 40] }; };
   const syncMap = (fit) => {
@@ -596,7 +635,7 @@ function mountNear() {
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors' }).addTo(map);
       map.on('click', (e) => {
         map.scrollWheelZoom.enable();
-        if (!st.dropping) return;
+        if (!st.dropping) { closePlace(); return; }
         arm(false); buzz(14); track('fit_tab', { detail: 'near_pin_drop' }); located([e.latlng.lat, e.latlng.lng], 'your pin', 'pin');
       });
       map.on('moveend zoomend', inView);
@@ -605,11 +644,11 @@ function mountNear() {
         if (!r.dataset.lat) return;
         r.pin = L.marker(pos(r), { title: nameOf(r), riseOnHover: true, icon: L.divIcon(r.dataset.mono
           ? { className: 'nf-pin nf-pin-chain nf-pin-' + r.dataset.top, html: '<span><b>' + r.dataset.mono + '</b></span><i>' + (icons[r.dataset.ic] || '') + '</i>', iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -18] }
-          : { className: 'nf-pin nf-pin-' + r.dataset.top + (r.dataset.pick ? ' pick' : ''), html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
+          : { className: 'nf-pin nf-pin-' + r.dataset.top + (r.dataset.pick ? ' pick' : ''), html: '<span><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#kx-' + r.dataset.top + '"/></svg></span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
         r.pin.bindTooltip(nameOf(r), { direction: 'top', offset: [0, -20], className: 'nf-tip' });
         r.pin.on('click', () => {
           buzz(10); select(r, true); track('fit_tab', { detail: 'near_pin' });
-          if (wide() || box.classList.contains('full')) { r.pin.unbindPopup(); r.pin.bindPopup('<div class="nf-pop nf-top-' + r.dataset.top + '">' + cardHtml(r) + '</div>', { maxWidth: 270, minWidth: 210, autoPanPadding: [24, 70] }).openPopup(); r.pin.closeTooltip(); }
+          if (wide() || box.classList.contains('full')) { r.pin.closeTooltip(); openPlace(r); }
           else cardTo(r);
         });
       });
@@ -726,6 +765,10 @@ function mountNear() {
       if (st.home && (wide() || split.dataset.view === 'map')) startMap().then(() => { if (st.map && wide()) st.map.once('moveend', () => g.pin && g.pin.openPopup()); });
       return;
     }
+    if (hit('[data-nr-place-x]')) { buzz(6); closePlace(); return; }
+    const stepBt = hit('[data-nr-place-step]');
+    if (stepBt && st.place) { buzz(8); const list = shownRows(); const n = list[(list.indexOf(st.place) + Number(stepBt.dataset.nrPlaceStep) + list.length) % list.length]; if (n) { flyToRow(n, true); track('fit_tab', { detail: 'near_place_step' }); } return; }
+    if (hit('[data-nr-place-from]') && st.place) { buzz(12); const r = st.place; closePlace(); track('fit_tab', { detail: 'near_from_place' }); located(pos(r), nameOf(r), 'addr'); return; }
     const show = hit('[data-nr-show]');
     if (show) {
       buzz(10); const r = show.closest('li'); if (!wide()) { setView('map', false); mapEl.scrollIntoView({ block: 'center' }); }
@@ -858,7 +901,7 @@ function mountNear() {
       else if (e.key === 'Escape' && !sug.hidden) { e.stopPropagation(); close(); }
     });
   }
-  document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (panel.classList.contains('open')) sheet(false); else if (st.dropping) arm(false); else if (box.classList.contains('full')) full(false); });
+  document.addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (panel.classList.contains('open')) sheet(false); else if (st.dropping) arm(false); else if (placeEl && !placeEl.hidden) closePlace(); else if (box.classList.contains('full')) full(false); });
   // Desktop: the filters open as a card over the page, and a click anywhere else closes it.
   document.addEventListener('click', (e) => { if (wide() && panel.classList.contains('open') && !e.target.closest('[data-nr-panel], [data-nr-sheet]')) sheet(false); });
   rows.forEach((r) => {

@@ -83,3 +83,20 @@ Jay's note: 4 to 5 and 5 to 10 take the same width on the ruler, so nothing tell
 - Past 5 the handle, the bubble and the ring on the map turn violet (`data-zone` on the ruler, set in `syncDist`).
 - Rejected: a true-to-scale ruler (1 to 5 would be a sixth of the width, too small to drag on a phone).
 - Trap: the fill is one gradient revealed with `clip-path`, so it never changes the layout. Height checked steady.
+
+## Fifth pass: cards by kind, the laurel, Mary's phone audit
+
+- **Kind colour and emblem.** Four kinds, four colours, four emblems (Goldsmith): coral glove, teal reformer,
+  violet lotus, amber stopwatch. Drawn once as an SVG sprite (`KIND_SPRITE`) and reused with `<use>` on 188 cards,
+  the colour key and the map cards, so the page did not grow by 188 drawings. The jewel behind each is CSS.
+- **Rows are cards now:** colour rail, tint, a solid kind chip, tags, links. Selecting or hovering changes no
+  height (checked).
+- **The laurel.** Jay asked for a tag on places "ranked in our ranking page". No guide is ranked yet (every `rank`
+  is null), so the tag says "In my boxing guide" and links to the guide. It switches by itself to
+  "No. 3 in my boxing ranking" when every gym on that guide has a rank. Pins of guide places carry a gold dot.
+- **Mary, phones:** the spot step overflowed by 13px at 360 wide (a grid column that could not shrink): fixed.
+  Card links are 44px tall and sit on one line down to 320. The map legend sits under the map on phones instead of
+  over the swipe cards.
+- **Philosophy** written to `docs/NJS-FITNESS-PHILOSOPHY.md`; one paragraph of it opens the colour key.
+- **Not built, plan sent to Jay:** the fitness mega nav. It has no link to the map at all today.
+- Trap: ruler violet (fives) and yoga violet are close. Different places on the page, but do not add a third violet.

@@ -509,7 +509,8 @@ function mountNear() {
 
   const cardHtml = (r) => {
     const more = $('.nf-rk-links a[href^="/fitness/guides/gyms/"]', r);
-    return '<p class="nf-pop-k">' + $('.nf-nr-cat span', r).textContent + '</p><p class="nf-pop-n">' + nameOf(r) + '</p><p class="nf-pop-w">' + $('.nf-nr-where', r).textContent + (awayOf(r) ? ' · ' + awayOf(r) : '') + '</p>' +
+    const top = r.dataset.top;
+    return '<p class="nf-pop-k nf-top-' + top + '"><span class="nf-kx nf-top-' + top + '" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#kx-' + top + '"/></svg></span><b>' + $('.nf-nr-kind', r).textContent + '</b><span>' + $('.nf-nr-cat span', r).textContent + '</span></p>' + (r.dataset.pick ? '<p class="nf-pop-pick"><svg class="nf-laurel" viewBox="0 0 24 24" aria-hidden="true"><use href="#kx-laurel"/></svg>' + r.dataset.pick + '</p>' : '') + '<p class="nf-pop-n">' + nameOf(r) + '</p><p class="nf-pop-w">' + $('.nf-nr-where', r).textContent + (awayOf(r) ? ' · ' + awayOf(r) : '') + '</p>' +
       (r.dataset.addr ? '<p class="nf-pop-a"><a href="' + r.dataset.nav + '" target="_blank" rel="noopener">' + r.dataset.addr + '</a></p>' : '') +
       '<p class="nf-pop-l"><a class="nf-pop-go" href="' + r.dataset.nav + '" target="_blank" rel="noopener">Navigate</a>' + (more ? '<a href="' + more.getAttribute('href') + '">Full profile</a>' : '') + '</p>';
   };
@@ -540,7 +541,7 @@ function mountNear() {
   // Phones: a swipeable strip of cards under the map. Swiping moves the map; tapping a pin moves the strip.
   const fillCards = () => {
     if (!cards) return; const vis = shown().filter((r) => r.dataset.lat).slice(0, 40);
-    cards.innerHTML = vis.map((r, i) => '<article class="nf-nr-card" data-i="' + i + '">' + cardHtml(r) + '</article>').join('');
+    cards.innerHTML = vis.map((r, i) => '<article class="nf-nr-card nf-top-' + r.dataset.top + '" data-i="' + i + '">' + cardHtml(r) + '</article>').join('');
     cards.rows = vis; cards.scrollLeft = 0;
   };
   const cardTo = (r) => { if (!cards || !cards.rows) return; const i = cards.rows.indexOf(r); const el = i >= 0 && cards.children[i]; if (el) { cards.lock = true; el.scrollIntoView({ inline: 'center', block: 'nearest', behavior: calm ? 'auto' : 'smooth' }); setTimeout(() => { cards.lock = false; }, 600); } };
@@ -599,11 +600,11 @@ function mountNear() {
         if (!r.dataset.lat) return;
         r.pin = L.marker(pos(r), { title: nameOf(r), riseOnHover: true, icon: L.divIcon(r.dataset.mono
           ? { className: 'nf-pin nf-pin-chain nf-pin-' + r.dataset.top, html: '<span><b>' + r.dataset.mono + '</b></span><i>' + (icons[r.dataset.ic] || '') + '</i>', iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -18] }
-          : { className: 'nf-pin nf-pin-' + r.dataset.top, html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
+          : { className: 'nf-pin nf-pin-' + r.dataset.top + (r.dataset.pick ? ' pick' : ''), html: '<span>' + (icons[r.dataset.ic] || icons.pin || '') + '</span>', iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -16] }) });
         r.pin.bindTooltip(nameOf(r), { direction: 'top', offset: [0, -20], className: 'nf-tip' });
         r.pin.on('click', () => {
           buzz(10); select(r, true); track('fit_tab', { detail: 'near_pin' });
-          if (wide() || box.classList.contains('full')) { r.pin.unbindPopup(); r.pin.bindPopup('<div class="nf-pop">' + cardHtml(r) + '</div>', { maxWidth: 270, minWidth: 210, autoPanPadding: [24, 70] }).openPopup(); r.pin.closeTooltip(); }
+          if (wide() || box.classList.contains('full')) { r.pin.unbindPopup(); r.pin.bindPopup('<div class="nf-pop nf-top-' + r.dataset.top + '">' + cardHtml(r) + '</div>', { maxWidth: 270, minWidth: 210, autoPanPadding: [24, 70] }).openPopup(); r.pin.closeTooltip(); }
           else cardTo(r);
         });
       });

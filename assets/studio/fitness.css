@@ -1702,3 +1702,5 @@ html.nf-lock { overflow: hidden; }
 .nf-nr-map .nf-pin.nf-pin-chain > span { animation: none; }
 .nf-nr-map .nf-pin.nf-pin-chain:hover > span { transform: scale(1.15); }
 .nf-nr-legend .nf-mark-chain.lg-chain .nf-link { position: static; width: 13px; height: 13px; padding: 0; background: none; color: #fff; box-shadow: none; }
+/* The closing note stays in the left column, so the sticky map never slides over it when the list is short. */
+@media (min-width: 1024px) { .nf-nr > .nf-note { grid-column: 1; } }

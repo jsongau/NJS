@@ -2,6 +2,14 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-24
+
+- `/fitness/guides/near-me` — Three home gyms lead the page: UFC Gym Brea, 9Round RSM and Club Studio Corona,
+  each with an avatar pin no filter hides and a triangle between them. Picking one centres the map on it,
+  draws spokes to what is within 10 miles and sums it up by what it adds (mobility, control, engine, skill).
+  On desktop the map sits beside the controls from the top; filters open as a card. The list shows twenty at
+  a time. On phones the Map button now scrolls to the map. See `docs/session-2026-11-24-near-me-home-gyms.md`.
+
 ## 2026-11-23
 - `/fitness/guides/near-me` — chain studios on the map: CorePower Yoga (21), YogaSix (11), UFC Gym (9), 9Round (11), Rumble Boxing (2), Orangetheory Fitness (48) and STRIDE Fitness (2), from each company's own location pages, in `partials/fitness/chains.json`. New Running and HIIT branch tile and a Run by filter (Independent or a chain). Chains are map only: no rank, no profile page. UFC Gym Brea and 9Round RSM are left off and disclosed. Orangetheory, UFC Gym, YogaSix, Rumble and STRIDE pins are hand placed (`approx` 1); CorePower, YogaSix, Rumble and STRIDE lists are not complete yet.
 - `/fitness/guides/*`, `/fitness/guides/near-me` — region art: a palm and skyline for Los Angeles, sun and surf for Orange County, mountains and a windmill for the Inland Empire, moving on each guide's region heading, with matching small icons on the region filters, map buttons and guide links (`GICON.LA/OC/IE`, `REGION_ART` in `tools/build-pages.mjs`).

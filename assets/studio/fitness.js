@@ -436,7 +436,39 @@ function mountNear() {
   const icons = {}; const tpl = $('[data-nr-icons]', box);
   if (tpl) $$('[data-k]', tpl.content).forEach((s) => { icons[s.dataset.k] = s.innerHTML; });
   const MILES = [null, 25, 10, 5, 2];
-  const st = { top: 'all', kinds: new Set(), regs: new Set(), brands: new Set(), max: null, sort: 'near', at: null, from: '', map: null, L: null, you: null, sel: null };
+  const st = { top: 'all', kinds: new Set(), regs: new Set(), brands: new Set(), max: null, sort: 'near', at: null, from: '', map: null, L: null, you: null, sel: null, limit: 20 };
+  const STEP = 20; const more = $('[data-nr-more]', box);
+  // Three home gyms (where Jay coaches). Each has an avatar pin no filter hides. Picking one makes it the
+  // centre: distances, rings and spokes all start from it, so the rest of the map reads as what surrounds it.
+  const homesBox = $('[data-nr-homes]', box); const mine = homesBox ? $$('.nf-nr-home', homesBox) : [];
+  const homeSum = homesBox && $('[data-nr-home-sum]', homesBox); const homeSum0 = homeSum ? homeSum.textContent : '';
+  const minePos = (g) => [Number(g.dataset.lat), Number(g.dataset.lng)];
+  const SPOKE = { strike: '#E0563A', pilates: '#1F8A7A', yoga: '#7A5AE0', run: '#B8730A' };
+  const PILLAR = [['yoga', 'mobility'], ['pilates', 'control'], ['run', 'engine'], ['strike', 'skill']];
+  const mineHtml = (g) => '<p class="nf-pop-k">Home gym · I coach here</p><p class="nf-pop-n">' + g.dataset.name + '</p><p class="nf-pop-w">' + g.dataset.city + ' · ' + g.dataset.short + '</p>' +
+    '<p class="nf-pop-l"><a class="nf-pop-go" href="/fitness/book?loc=' + g.dataset.slug + '">Book here</a><a href="' + g.dataset.nav + '" target="_blank" rel="noopener">Navigate</a></p>';
+  const drawHomes = () => {
+    if (!mine.length) return;
+    mine.forEach((g) => {
+      const on = g === st.home; $('[data-nr-home]', g).setAttribute('aria-pressed', String(on)); g.classList.toggle('on', on);
+      if (g.pin && g.pin.getElement()) g.pin.getElement().classList.toggle('home', on);
+      const d = $('[data-nr-home-d]', g); const far = st.at && !st.home ? miles(st.at, minePos(g)) : null;
+      d.textContent = on ? 'Centre of the map' : far !== null ? (far < 10 ? far.toFixed(1) : Math.round(far)) + ' miles from ' + (st.from === 'you' ? 'you' : st.from) : '';
+    });
+    const closest = st.at && !st.home ? mine.slice().sort((x, y) => miles(st.at, minePos(x)) - miles(st.at, minePos(y)))[0] : null;
+    mine.forEach((g) => g.classList.toggle('closest', g === closest));
+    if (!homeSum) return;
+    if (!st.home) { homeSum.textContent = closest ? closest.dataset.name + ' is my closest gym to ' + (st.from === 'you' ? 'you' : st.from) + '. Pick it to see what sits around it.' : homeSum0; return; }
+    const vis = shown(); const parts = PILLAR.map(([top, w]) => [vis.filter((r) => r.dataset.top === top).length, w]).filter(([n]) => n);
+    homeSum.textContent = parts.length ? 'Around ' + st.home.dataset.name + (st.max ? ', within ' + st.max + ' miles' : '') + ': ' + parts.map(([n, w]) => n + ' for ' + w).join(', ') + '.' : 'Nothing matches around ' + st.home.dataset.name + '. Loosen a filter.';
+  };
+  const setHome = (g) => {
+    st.home = g === st.home ? null : g;
+    const sel = $('[data-nr-city]', box); if (sel) sel.value = '';
+    const note = $('[data-nr-distnote]', box);
+    if (st.home) { st.at = minePos(g); st.from = g.dataset.name; distIn.disabled = false; if (st.max === null) { st.max = 10; distIn.value = 2; distOut.textContent = 'Within 10 miles'; } if (note) note.textContent = 'Measured from ' + st.from + ', in a straight line.'; }
+    else { st.at = null; st.from = ''; st.max = null; distIn.value = 0; distIn.disabled = true; distOut.textContent = 'Any distance'; if (note) note.textContent = 'Share your location or pick an area to use this.'; rows.forEach((r) => { r.dist = Infinity; $('.nf-nr-d b', r).textContent = r.dataset.region; $('.nf-nr-d small', r).textContent = ''; r.classList.remove('near'); }); }
+  };
   const wide = () => matchMedia('(min-width: 1024px)').matches;
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // A short tap you can feel, on phones that support it (Android; iPhones ignore it).
@@ -468,6 +500,7 @@ function mountNear() {
     st.sel = r;
     rows.forEach((x) => { x.classList.toggle('on', x === r); if (x.pin && x.pin.getElement()) x.pin.getElement().classList.toggle('sel', x === r); });
     drawRoute(r);
+    if (r) r.classList.remove('nf-nr-cut');
     if (scroll && r && wide()) r.scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
   };
   const drawRings = () => {
@@ -499,8 +532,15 @@ function mountNear() {
     rows.forEach((r) => { if (!r.pin) return; if (r.hidden) st.map.removeLayer(r.pin); else r.pin.addTo(st.map); });
     const near = st.at ? vis.slice().sort((x, y) => x.dist - y.dist)[0] : null;
     rows.forEach((r) => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.toggle('nearest', r === near); });
+    // Spokes: from the chosen home gym out to what sits around it, coloured by what each place adds.
+    if (st.spokes) { st.map.removeLayer(st.spokes); st.spokes = null; }
+    if (st.home) {
+      st.spokes = L.layerGroup().addTo(st.map); const reach = st.max || 10;
+      vis.filter((r) => r.dist <= reach).sort((x, y) => x.dist - y.dist).slice(0, 40).forEach((r) => L.polyline([st.at, pos(r)], { color: SPOKE[r.dataset.top] || '#121416', weight: 1.6, opacity: 0.55, dashArray: '3 7', className: 'nf-spoke', interactive: false }).addTo(st.spokes));
+    }
+    if (st.you) st.you.setOpacity(st.home ? 0 : 1);
     if (st.at) {
-      if (!st.you) st.you = L.marker(st.at, { icon: L.divIcon({ className: 'nf-you', html: '<i></i>', iconSize: [22, 22], iconAnchor: [11, 11] }), interactive: false, keyboard: false, zIndexOffset: 900 }).addTo(st.map);
+      if (!st.you) st.you = L.marker(st.at, { opacity: st.home ? 0 : 1, icon: L.divIcon({ className: 'nf-you', html: '<i></i>', iconSize: [22, 22], iconAnchor: [11, 11] }), interactive: false, keyboard: false, zIndexOffset: 900 }).addTo(st.map);
       else st.you.setLatLng(st.at);
       drawRings();
     }
@@ -533,12 +573,21 @@ function mountNear() {
           else cardTo(r);
         });
       });
+      // The three home gyms: a triangle between them, and an avatar pin with its name on each.
+      if (mine.length === 3) L.polygon(mine.map(minePos), { color: '#FF8A6B', weight: 2, opacity: 0.9, dashArray: '2 8', fillColor: '#FF8A6B', fillOpacity: 0.05, interactive: false, className: 'nf-tri' }).addTo(map);
+      const face = $('.nf-av', homesBox); const faceHtml = face ? face.outerHTML.replace(/av-[a-z-]+/g, (m) => (m === 'av-glow' ? m : 'av-pin')) : '<b>NJ</b>';
+      mine.forEach((g) => {
+        g.pin = L.marker(minePos(g), { title: 'Home gym: ' + g.dataset.name, zIndexOffset: 800, riseOnHover: true, icon: L.divIcon({ className: 'nf-pin nf-pin-coach', html: '<i></i><span>' + faceHtml + '</span><em>' + g.dataset.name + '</em>', iconSize: [52, 52], iconAnchor: [26, 26], popupAnchor: [0, -26] }) }).addTo(map);
+        g.pin.bindPopup('<div class="nf-pop nf-pop-coach">' + mineHtml(g) + '</div>', { maxWidth: 270, minWidth: 210, autoPanPadding: [24, 70] });
+        g.pin.on('click', () => { buzz(10); track('fit_tab', { detail: 'near_home_pin' }); });
+      });
       st.map = map; syncMap(true);
     }).catch(() => { mapEl.innerHTML = '<p class="nf-nr-maperr">The map could not load. The list below still works.</p>'; });
     return st.ready;
   };
 
-  const draw = (fit) => {
+  const draw = (fit, keep) => {
+    if (!keep) st.limit = STEP;
     if (st.at) rows.forEach((r) => {
       const has = !!r.dataset.lat; r.dist = has ? miles(st.at, pos(r)) : Infinity;
       $('.nf-nr-d b', r).textContent = has ? fmt(r.dist) : r.dataset.region;
@@ -556,7 +605,11 @@ function mountNear() {
     const by = { near: (x, y) => x.dist - y.dist, az: (x, y) => nameOf(x).localeCompare(nameOf(y)),
       old: (x, y) => (Number(x.dataset.since) || 9999) - (Number(y.dataset.since) || 9999) || nameOf(x).localeCompare(nameOf(y)),
       score: (x, y) => (Number(y.dataset.score) || 0) - (Number(x.dataset.score) || 0) }[sort];
-    [...rows].sort(by).forEach((r) => list.appendChild(r));
+    // The list shows twenty at a time. Every row stays in the page (and on the map); the rest wait behind Show more.
+    let seen = 0;
+    [...rows].sort(by).forEach((r) => { list.appendChild(r); const cut = !r.hidden && ++seen > st.limit; r.classList.toggle('nf-nr-cut', cut); });
+    if (more) { const left = count - Math.min(count, st.limit); more.hidden = left <= 0; more.textContent = 'Show ' + Math.min(STEP, left) + ' more · ' + left + ' left'; }
+    drawHomes();
     const how = { near: 'closest to ' + st.from + ' first', az: 'A to Z', old: 'longest running first', score: 'my rating, highest first' }[sort];
     status.textContent = count + (count === 1 ? ' place, ' : ' places, ') + how + '.' + (st.sort === 'near' && !st.at ? ' Share your location to see the closest first.' : '') + (count === 0 ? ' Nothing matches: loosen a filter.' : '');
     const active = st.kinds.size + st.regs.size + st.brands.size + (st.max !== null ? 1 : 0);
@@ -582,7 +635,7 @@ function mountNear() {
     if (open) { const f = $('button:not([hidden]), input', panel); if (f) f.focus({ preventScroll: true }); } else if (!wide()) $('[data-nr-sheet]', box).focus({ preventScroll: true });
   };
   const located = (at, from) => {
-    st.at = at; st.from = from; distIn.disabled = false; const note = $('[data-nr-distnote]', box); if (note) note.textContent = 'Measured from ' + from + ', in a straight line.';
+    st.home = null; st.at = at; st.from = from; distIn.disabled = false; const note = $('[data-nr-distnote]', box); if (note) note.textContent = 'Measured from ' + from + ', in a straight line.';
     buzz(14); draw();
   };
 
@@ -599,7 +652,16 @@ function mountNear() {
     if (hit('[data-nr-clear]')) { buzz(); st.kinds.clear(); st.regs.clear(); st.brands.clear(); st.max = null; distIn.value = 0; distOut.textContent = 'Any distance'; $$('[data-nr-kind], [data-nr-reg], [data-nr-brand]', box).forEach((bt) => bt.setAttribute('aria-pressed', 'false')); draw(); return; }
     if (hit('[data-nr-sheet]')) { buzz(); sheet(!panel.classList.contains('open')); return; }
     if (hit('[data-nr-done]') || hit('[data-nr-shade]')) { sheet(false); return; }
-    const view = hit('[data-nr-view]'); if (view) { buzz(); setView(view.dataset.nrView); return; }
+    const view = hit('[data-nr-view]');
+    if (view) { buzz(); setView(view.dataset.nrView); if (!wide()) split.scrollIntoView({ block: 'start', behavior: calm ? 'auto' : 'smooth' }); return; }
+    if (hit('[data-nr-more]')) { buzz(); st.limit += STEP; track('fit_tab', { detail: 'near_more' }); draw(false, true); return; }
+    const home = hit('[data-nr-home]');
+    if (home) {
+      buzz(12); const g = home.closest('.nf-nr-home'); setHome(g); track('fit_tab', { detail: 'near_home_' + g.dataset.slug }); draw();
+      // Phones start the map only on the Map tab, when it has a size; starting it hidden breaks its maths.
+      if (st.home && (wide() || split.dataset.view === 'map')) startMap().then(() => { if (st.map && wide()) st.map.once('moveend', () => g.pin && g.pin.openPopup()); });
+      return;
+    }
     const show = hit('[data-nr-show]');
     if (show) {
       buzz(10); const r = show.closest('li'); if (!wide()) { setView('map', false); mapEl.scrollIntoView({ block: 'center' }); }
@@ -634,6 +696,8 @@ function mountNear() {
   sortSel.addEventListener('change', () => { st.sort = sortSel.value; buzz(); track('fit_tab', { detail: 'near_sort_' + st.sort }); draw(false); });
   distIn.addEventListener('input', () => { st.max = MILES[Number(distIn.value)]; distOut.textContent = st.max === null ? 'Any distance' : 'Within ' + st.max + ' miles'; buzz(4); draw(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('open')) sheet(false); });
+  // Desktop: the filters open as a card over the page, and a click anywhere else closes it.
+  document.addEventListener('click', (e) => { if (wide() && panel.classList.contains('open') && !e.target.closest('[data-nr-panel], [data-nr-sheet]')) sheet(false); });
   rows.forEach((r) => {
     r.addEventListener('mouseenter', () => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.add('hot'); });
     r.addEventListener('mouseleave', () => { if (r.pin && r.pin.getElement()) r.pin.getElement().classList.remove('hot'); });

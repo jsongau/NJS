@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { GYMS as COACH_GYMS } from '../assets/studio/places.js';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const P = join(ROOT, 'partials/studio');
 export const SITE = 'https://nathanjsong.com';
@@ -700,6 +701,9 @@ TILE_ART.run = '<svg viewBox="0 0 120 84" fill="none" stroke-linecap="round" str
   '<g class="ta-run"><circle cx="58" cy="16" r="7" fill="currentColor"/><path d="M56 26l-10 8-4 10M56 26l4 16-12 8-6 11M60 42l12 5 2 13M56 26l12 5 8-7" stroke="var(--top)" stroke-width="5"/></g>' +
   '<g class="ta-hit" stroke="var(--top)" stroke-width="2.5"><path d="M30 24H18M26 36H12M30 48H20"/></g></svg>';
 const GUIDE_OF = { boxing: ['fit-guide-boxing', 'Boxing guide'], kickboxing: ['fit-guide-kickboxing', 'Kickboxing guide'], pilates: ['fit-guide-pilates', 'Pilates guide'], yoga: ['fit-guide-yoga', 'Yoga guide'] };
+const AVATAR = '<svg class="nf-av" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#121416" stroke="#FF8A6B" stroke-width="3"/><clipPath id="av-c"><circle cx="24" cy="24" r="20.5"/></clipPath><g clip-path="url(#av-c)"><path d="M6 50c0-11 8-17 18-17s18 6 18 17z" fill="#FF8A6B"/><path d="M19.5 30h9v6h-9z" fill="#F5B894"/><circle cx="24" cy="21" r="10" fill="#FFD9BF"/><path d="M13.5 20c-1-9 6-13 12-12 4 .6 7.5 3 9 7-7-2.5-14-1-21 5z" fill="#121416"/><path d="M14 21.500c6.5-4 13.5-5 20-3" fill="none" stroke="#FF6F61" stroke-width="3" stroke-linecap="round"/><circle cx="20.5" cy="23" r="1.3" fill="#121416"/><circle cx="28" cy="23" r="1.3" fill="#121416"/><path d="M21 27.500c2 1.5 4 1.5 6 0" fill="none" stroke="#121416" stroke-width="1.5" stroke-linecap="round"/></g></svg>';
+// What each branch adds to training with Jay, in the words of the five pillars on /fitness/path.
+const ADDS = { yoga: 'Adds mobility', pilates: 'Adds control', run: 'Adds engine', strike: 'Adds skill' };
 function renderNear() {
   const indie = Object.entries(GUIDES.guides).flatMap(([key, g]) => g.gyms.map((x) => ({ key, x, ...nearCats(key, x) })));
   const chained = Object.entries(CHAINS.chains).flatMap(([id, c]) => c.places.map(([name, city, region, address, lat, lng, url]) =>
@@ -717,7 +721,7 @@ function renderNear() {
       ' data-region="' + x.region + '" data-brand="' + (r.chain || 'indie') + '" data-nav="' + dir(x) + '"' + (addr(x) ? ' data-addr="' + esc(addr(x)) + '"' : '') + (x.p ? ' data-slug="' + x.p.slug + '"' + (x.p.since ? ' data-since="' + x.p.since + '"' : '') : '') + (typeof x.score === 'number' ? ' data-score="' + x.score + '"' : '') + '>' +
       '<p class="nf-nr-d"><b>' + x.region + '</b><small></small></p>' +
       '<div class="nf-nr-main"><h3>' + (x.p ? '<a href="/fitness/guides/gyms/' + x.p.slug + '">' + esc(x.name) + '</a>' : esc(x.name)) + '</h3>' +
-      '<p class="nf-nr-cat nf-top-' + top + '">' + gic(ic) + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span></p>' +
+      '<p class="nf-nr-cat nf-top-' + top + '">' + gic(ic) + (x.heat === 'hot' || x.heat === 'both' ? gic('hot') : '') + '<span>' + label(r) + '</span>' + (ADDS[top] ? '<em class="nf-nr-adds">' + ADDS[top] + '</em>' : '') + '</p>' +
       '<p class="nf-nr-where">' + esc(x.city) + (x.p && x.p.since ? ' · since ' + esc(x.p.since) : '') + '</p>' +
       (addr(x) ? '<p class="nf-nr-addr"><a href="' + dir(x) + '" target="_blank" rel="noopener">' + gic('pin') + '<span>' + esc(addr(x)) + '</span><span class="sr">, start navigation in Google Maps, opens in a new tab</span></a></p>' : '') +
       (r.chain ? '' : '<p class="nf-nr-known">' + esc(x.known) + '</p>') +
@@ -728,12 +732,17 @@ function renderNear() {
   const tile = (id, name, sub) => '<button type="button" class="nf-tile nf-top-' + id + '" data-nr-top="' + id + '" aria-pressed="' + (id === 'all') + '">' + TILE_ART[id] +
     '<span class="nf-tile-t"><b>' + name + '</b><small>' + sub + '</small></span><span class="nf-tile-n">' + pad(id === 'all' ? all.length : n(id)) + '</span></button>';
   const regs = REGIONS.map(([r, name]) => [r, name, all.filter((q) => q.x.region === r).length]);
+  // What sits within 10 straight-line miles of each gym Jay coaches at, by what it adds.
+  const mi = (p, q) => { const R = (d) => d * Math.PI / 180; const h = Math.sin(R(q[0] - p[0]) / 2) ** 2 + Math.cos(R(p[0])) * Math.cos(R(q[0])) * Math.sin(R(q[1] - p[1]) / 2) ** 2; return 3958.8 * 2 * Math.asin(Math.sqrt(h)); };
+  const topOf = (r) => r.chain ? r.c.top : KEY_TOP[r.key];
+  const homes = Object.values(COACH_GYMS).map((g) => { const close = all.filter((r) => r.x.lat && mi(g.at, [r.x.lat, r.x.lng]) <= 10);
+    return { g, near: [['yoga', 'yoga'], ['pilates', 'Pilates'], ['run', 'interval'], ['strike', 'striking']].map(([top, w]) => [close.filter((r) => topOf(r) === top).length, w]) }; });
   return ['<section class="nf-sec tight" aria-label="Places near you">', '  <div class="wrap">',
     '    <div class="nf-rk nf-nr" data-nf-near>',
     '      <div class="nf-nr-loc"><button type="button" class="nf-btn nf-coral" data-nr-geo>' + gic('pin') + 'Use my location</button>' +
       '<label class="nf-nr-pick"><span>or pick an area</span><select data-nr-city><option value="">Choose an area</option>' + NEAR_AREAS.map(([name, la, ln]) => '<option value="' + la + ',' + ln + '">' + name + '</option>').join('') + '</select></label></div>',
     '      <div class="nf-nr-tiles" role="group" aria-label="What are you looking for">' + tile('all', 'Everything', 'All ' + all.length + ' places') +
-      tile('strike', 'Striking and MMA', 'Boxing, kickboxing, jiu-jitsu') + tile('pilates', 'Pilates', 'Reformer and mat') + tile('yoga', 'Yoga', 'Hot and not hot') + tile('run', 'Running and HIIT', 'Treadmill interval studios') + '</div>',
+      tile('strike', 'Striking and MMA', 'Skill · boxing, jiu-jitsu') + tile('pilates', 'Pilates', 'Control · reformer, mat') + tile('yoga', 'Yoga', 'Mobility · hot or not') + tile('run', 'Running and HIIT', 'Engine · intervals') + '</div>',
     '      <div class="nf-nr-tools"><button type="button" class="nf-nr-open" data-nr-sheet aria-expanded="false"><svg class="nf-gi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg>Filters<b data-nr-badge hidden>0</b></button>' +
       '<label class="nf-nr-sort"><span>Sort by</span><select data-nr-sort><option value="near">Closest first</option><option value="az">A to Z</option><option value="old">Longest running</option>' + (scored ? '<option value="score">My rating</option>' : '') + '</select></label>' +
       '<p class="nf-nr-status" data-nr-status role="status">' + all.length + ' places, A to Z. Share your location to see the closest first.</p></div>',
@@ -751,8 +760,16 @@ function renderNear() {
       '<p class="nf-nr-rnote" id="nr-dist-note" data-nr-distnote>Share your location or pick an area to use this.</p></fieldset>',
     '        <div class="nf-nr-pfoot"><button type="button" class="nf-nr-clear" data-nr-clear>Clear all</button><button type="button" class="nf-btn nf-coral" data-nr-done>Show places</button></div>',
     '      </div>',
+    // Three home gyms: the places Jay coaches at. Picking one centres the map on it; everything else is what sits around it.
+    '      <section class="nf-nr-homes" data-nr-homes aria-labelledby="nr-homes-h">' +
+      '<div class="nf-nr-homes-t"><p class="nf-k">Train with me</p><h2 id="nr-homes-h">Three home gyms.</h2>' +
+      '<p class="nf-nr-homes-s" data-nr-home-sum>Pick one. The map centres on it and shows what is close by to round you out.</p></div>' +
+      '<div class="nf-nr-homes-g">' + homes.map((h) => '<article class="nf-nr-home" data-lat="' + h.g.at[0] + '" data-lng="' + h.g.at[1] + '" data-name="' + esc(h.g.name) + '" data-city="' + esc(h.g.city) + '" data-short="' + esc(h.g.short) + '" data-slug="' + h.g.slug + '" data-nav="https://www.google.com/maps/dir/?api=1&amp;travelmode=driving&amp;dir_action=navigate&amp;destination=' + encodeURIComponent(h.g.name + ', ' + h.g.city + ', CA') + '">' +
+        '<button type="button" class="nf-nr-home-b" data-nr-home aria-pressed="false">' + AVATAR.replace(/av-c/g, 'av-' + h.g.slug) + '<span class="nf-nr-home-n"><b>' + esc(h.g.name) + '</b><small>' + esc(h.g.region) + ' · ' + esc(h.g.short) + '</small><small class="nf-nr-home-d" data-nr-home-d></small></span></button>' +
+        '<p class="nf-nr-home-c">Within 10 miles: ' + h.near.map(([n, w]) => '<b>' + n + '</b> ' + w).join(', ') + '</p>' +
+        '<a class="nf-nr-home-k" href="/fitness/book?loc=' + h.g.slug + '">Book here<span class="sr"> at ' + esc(h.g.name) + '</span></a></article>').join('') + '</div></section>',
     '      <div class="nf-nr-split" data-nr-split data-view="list">',
-    '        <ol class="nf-nr-list" data-nr-list>', ...all.map(row), '        </ol>',
+    '        <div class="nf-nr-listcol"><ol class="nf-nr-list" data-nr-list>', ...all.map(row), '        </ol><button type="button" class="nf-btn nf-nr-more" data-nr-more hidden>Show more</button></div>',
     '        <div class="nf-nr-mapbox"><div class="nf-nr-mapbar" role="group" aria-label="Move the map">' +
       '<button type="button" data-nr-fly="me">' + gic('pin') + 'Me</button><button type="button" data-nr-fly="all">All</button>' + ['LA', 'OC', 'IE'].map((r) => '<button type="button" data-nr-fly="' + r + '" aria-label="Move the map to ' + REGION_NAME[r] + '">' + gic(r) + r + '</button>').join('') + '' +
       '<button type="button" class="nf-nr-lucky" data-nr-fly="lucky">Surprise me</button><span class="nf-nr-inview" data-nr-inview aria-live="polite"></span></div>' +
@@ -762,7 +779,7 @@ function renderNear() {
     '      </div>',
     '      <div class="nf-nr-view" role="group" aria-label="List or map"><button type="button" data-nr-view="list" aria-pressed="true">List</button><button type="button" data-nr-view="map" aria-pressed="false">Map</button></div>',
     '      ' + icons,
-    '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate. Your position is used on this page only: I never receive or store it. The map loads street tiles from OpenStreetMap for the area you look at. There are no star ratings here: I do not copy other sites\' scores. Chain studios come from each company\'s own location pages, checked ' + new Date(CHAINS.checked + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '; they are not ranked. I teach at UFC Gym Brea and 9Round in Rancho Santa Margarita, so I left those two off. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
+    '      <p class="nf-note nf-gym-src">Distances are straight-line and approximate. Your position is used on this page only: I never receive or store it. The map loads street tiles from OpenStreetMap for the area you look at. There are no star ratings here: I do not copy other sites\' scores. Chain studios come from each company\'s own location pages, checked ' + new Date(CHAINS.checked + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '; they are not ranked. The three gyms I coach at carry their own pin and are not ranked. Their pins sit at the city centre until I add each street address, so the counts around them are close, not exact. A place missing? <a href="/fitness/book">Tell me</a>.</p>',
     '    </div>', '  </div>', '</section>', '',
     '<section class="nf-sec tight" aria-labelledby="nr-lists">', '  <div class="wrap">',
     '    <div class="nf-h"><div><p class="nf-k">The full lists</p><h2 id="nr-lists">Every independent place is in a guide</h2></div><p>Each guide lists its places by region, with a profile page for nearly every one. Chain studios are on the map only.</p></div>',

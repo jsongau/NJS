@@ -23,6 +23,22 @@
   beside the controls from the top. Filters open as an absolutely placed card. The list shows 20 rows and a
   Show more button; hidden rows stay in the page and on the map (class `nf-nr-cut`, not `hidden`).
 
+## Later the same session: emblems, and spot, distance, kind
+- Jay rejected the human avatar. Each gym now has its own emblem in `HOME_ART` (`tools/build-pages.mjs`): a
+  ring and heavy bag (Brea, coral), a nine-station round clock with a glove (9Round, teal), studio lights over a
+  dumbbell (Corona, violet). Drawn for this site: no gym logos. They idle gently and run on hover or when chosen.
+- The filter is now three numbered steps. 1 Spot: a home gym, Use my location, an area, a typed address, or
+  Drop a pin (click the map; the pin can be dragged). 2 Distance: `NEAR_MILES` is any, 1 to 5, then 10 to 30
+  by fives; a slider and tap stops share one state (`syncDist`). 3 Kind: the tiles.
+- Three examples are computed at build time (the smallest radius around each gym that finds two places), for
+  instance "Yoga within 4 miles of UFC Gym Brea".
+- Expand: on desktop `.nf-nr.full` becomes a fixed two-column screen (controls and list beside the map); on
+  phones the map box goes full screen and the distance control is moved into it, then put back on close.
+- Address search calls OpenStreetMap's Nominatim from the browser, bounded to Southern California. **It could
+  not be reached from this workspace**: the success path was tested with a mocked answer and the failure path
+  for real. Check it on the live page, and read Nominatim's usage policy before traffic grows.
+- The avatar pin popup has "Measure from here"; the ring on the map follows the chosen distance.
+
 ## Decisions
 - The places around a home gym are described as "close by" and by what they add. They are not called
   recommendations: Jay has not ranked or visited-tagged them yet, and chains are map only.

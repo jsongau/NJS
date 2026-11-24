@@ -1400,9 +1400,9 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-nr-homes-s { min-height: 66px; margin-top: 8px; font-size: 14.5px; line-height: 1.5; color: rgba(255, 255, 255, .78); }
 .nf-nr-homes-g { display: grid; gap: 8px; }
 .nf-nr-home { position: relative; display: grid; gap: 6px; padding: 10px; border-radius: 20px; background: rgba(255, 255, 255, .06); border: 1.5px solid rgba(255, 255, 255, .14); transition: background .25s, border-color .25s, transform .3s var(--nf-ease); }
-.nf-nr-home.on { background: #FF8A6B; border-color: #FF8A6B; color: #121416; }
-.nf-nr-home.closest:not(.on) { border-color: #FF8A6B; }
-.nf-nr-home-b { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 12px; align-items: center; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.nf-nr-home.on { background: var(--hg, #FF8A6B); border-color: var(--hg, #FF8A6B); color: #121416; }
+.nf-nr-home.closest:not(.on) { border-color: var(--hg, #FF8A6B); }
+.nf-nr-home-b { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center; width: 100%; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .nf-nr-home-b::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
 .nf-nr-home-b:focus-visible::after { outline: 3px solid #fff; outline-offset: 2px; }
 .nf-av { width: 52px; height: 52px; overflow: visible; filter: drop-shadow(0 0 0 rgba(255, 138, 107, 0)); animation: av-glow 2.6s ease-in-out infinite; }
@@ -1411,7 +1411,7 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 .nf-nr-home-n { display: grid; gap: 2px; min-width: 0; }
 .nf-nr-home-n b { font: 700 17px/1.15 var(--sans); letter-spacing: -.02em; }
 .nf-nr-home-n small { font-size: 12.5px; line-height: 1.3; opacity: .78; }
-.nf-nr-home-d { min-height: 16px; font-weight: 700; opacity: 1 !important; color: #FF8A6B; }
+.nf-nr-home-d { min-height: 16px; font-weight: 700; opacity: 1 !important; color: var(--hg, #FF8A6B); }
 .nf-nr-home.on .nf-nr-home-d { color: #121416; }
 .nf-nr-home-c { font-size: 12.5px; line-height: 1.45; opacity: .82; }
 .nf-nr-home-c b { font-weight: 700; }
@@ -1422,12 +1422,12 @@ body[data-mode="fitness"] footer { margin-top: 0; }
 @media (min-width: 1100px) { .nf-nr-homes { grid-template-columns: minmax(0, .8fr) minmax(0, 2.6fr); align-items: center; gap: 22px; padding: 20px 22px; } .nf-nr-homes-s { min-height: 88px; } }
 /* Avatar pins: bigger than every other pin, with a halo and the gym's name underneath. */
 .nf-nr-map .nf-pin.nf-pin-coach { overflow: visible; }
-.nf-pin.nf-pin-coach > span { display: block; width: 52px; height: 52px; border-radius: 50%; background: none; border: 0; box-shadow: 0 8px 18px rgba(18, 20, 22, .4); transform: none; animation: none; }
+.nf-pin.nf-pin-coach > span { display: block; width: 56px; height: 56px; border-radius: 50%; background: none; border: 0; box-shadow: 0 8px 18px rgba(18, 20, 22, .4); transform: none; animation: none; }
 .nf-pin.nf-pin-coach > span .nf-av { width: 52px; height: 52px; animation: none; }
 .nf-pin.nf-pin-coach > i { position: absolute; inset: -6px; border-radius: 50%; border: 2px solid #FF8A6B; opacity: 0; animation: wh-pulse 2.4s ease-out infinite; }
-.nf-pin.nf-pin-coach > em { position: absolute; left: 50%; top: 56px; transform: translateX(-50%); padding: 4px 9px; border-radius: 999px; background: #121416; color: #fff; font: 700 11.5px/1 var(--sans); font-style: normal; white-space: nowrap; box-shadow: 0 4px 10px rgba(18, 20, 22, .3); }
+.nf-pin.nf-pin-coach > em { position: absolute; left: 50%; top: 61px; transform: translateX(-50%); padding: 4px 9px; border-radius: 999px; background: #121416; color: #fff; font: 700 11.5px/1 var(--sans); font-style: normal; white-space: nowrap; box-shadow: 0 4px 10px rgba(18, 20, 22, .3); }
 .nf-pin.nf-pin-coach.home > i { border-width: 3px; animation-duration: 1.5s; }
-.nf-pin.nf-pin-coach.home > em { background: #FF8A6B; color: #121416; }
+.nf-pin.nf-pin-coach.home > em { background: var(--hg, #FF8A6B); color: #121416; }
 .nf-pop-coach .nf-pop-k { color: #E0563A; }
 .nf-spoke { animation: nr-dash 1.6s linear infinite; }
 .nf-nr-adds { margin-left: 8px; padding: 3px 7px; border-radius: 999px; background: color-mix(in srgb, currentColor 12%, transparent); font: 600 10.5px/1 var(--mono); font-style: normal; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
@@ -1484,3 +1484,135 @@ body[data-mode="fitness"] footer { margin-top: 0; }
   .nf-nr-home { scroll-snap-align: start; }
 }
 .nf-nr-map .nf-pin.nf-pin-coach > span .nf-av { transform: none; rotate: none; }
+
+/* ===== Home gym emblems (2026-11-24): one per gym, alive at rest and louder on hover or when chosen ===== */
+.nf-gx { width: 60px; height: 60px; overflow: visible; }
+.nf-gx * { transform-box: view-box; }
+.nf-pin.nf-pin-coach > span .nf-gx { width: 56px; height: 56px; transform: none; rotate: none; color: inherit; }
+.nf-nr-home.on .nf-gx > circle:nth-of-type(2) { stroke: #121416; }
+.nf-nr-home.on .gx-orbit { stroke: #121416; }
+.gx-orbit { transform-origin: 32px 32px; animation: ar-spin 18s linear infinite; }
+.gx-bag { transform-origin: 32px 2px; animation: gx-sway 3.2s ease-in-out infinite; }
+.gx-hit { opacity: 0; }
+.gx-hand { transform-origin: 32px 32px; animation: ar-spin 9s linear infinite; }
+.gx-st { fill: #3A4048; }
+.gx-st:nth-child(-n+3) { fill: #7FD3C8; }
+.gx-glove { transform-origin: 32px 34px; }
+.gx-beam1 { transform-origin: 12px 6px; }
+.gx-beam2 { transform-origin: 52px 6px; }
+.gx-eq { transform-box: fill-box; transform-origin: 50% 100%; animation: gx-eq 1.3s ease-in-out infinite; animation-delay: calc(var(--i) * -.23s); }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-orbit { animation-duration: 4s; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-bag { animation: gx-swing .7s ease-in-out infinite; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-hit { animation: gx-hit .7s ease-out infinite; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-hand { animation-duration: 1.8s; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-st { animation: gx-chase 1.8s linear infinite; animation-delay: calc(var(--i) * .2s); }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-glove { animation: gx-punch .9s var(--nf-ease) infinite; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-beam1 { animation: gx-b1 1.8s ease-in-out infinite; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-beam2 { animation: gx-b2 1.8s ease-in-out infinite; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-db { animation: gx-lift 1.1s ease-in-out infinite; }
+:is(.nf-nr-home:hover, .nf-nr-home.on, .nf-pin-coach:hover, .nf-pin-coach.home) .gx-eq { animation-duration: .5s; }
+@keyframes gx-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+@keyframes gx-swing { 0%, 100% { transform: rotate(13deg); } 50% { transform: rotate(-12deg); } }
+@keyframes gx-hit { 0%, 30% { opacity: 0; } 48% { opacity: 1; } 78%, 100% { opacity: 0; } }
+@keyframes gx-chase { 0%, 30% { fill: #7FD3C8; } 31%, 100% { fill: #3A4048; } }
+@keyframes gx-punch { 0%, 100% { transform: none; } 40% { transform: translate(3px, -3px) scale(1.14); } }
+@keyframes gx-b1 { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(12deg); } }
+@keyframes gx-b2 { 0%, 100% { transform: rotate(10deg); } 50% { transform: rotate(-12deg); } }
+@keyframes gx-lift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes gx-eq { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+@media (prefers-reduced-motion: reduce) { .nf-gx * { animation: none !important; } }
+/* Bigger emblems: 84px on the cards, 64px on the map, so the home gyms outweigh every other mark on the page. */
+.nf-nr-home { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 8px; padding: 12px; }
+.nf-nr-home-b { grid-template-columns: 84px minmax(0, 1fr); gap: 14px; }
+.nf-nr-home .nf-gx { width: 84px; height: 84px; }
+.nf-nr-home-n b { font-size: 19px; }
+.nf-nr-home-c { grid-column: auto; }
+.nf-nr-home-k { justify-self: start; }
+.nf-pin.nf-pin-coach > span, .nf-pin.nf-pin-coach > span .nf-gx { width: 64px; height: 64px; }
+.nf-pin.nf-pin-coach > em { top: 69px; font-size: 12px; }
+.nf-pin.nf-pin-coach > span { box-shadow: 0 10px 22px rgba(18, 20, 22, .45); }
+@media (hover: hover) { .nf-nr-home:hover .nf-gx { transform: scale(1.06) rotate(-3deg); } }
+.nf-nr-home .nf-gx { transition: transform .35s var(--nf-ease); }
+
+/* ===== Near-me: spot, distance, kind (2026-11-24) ===== */
+.nf-nr-step { flex: 1 0 100%; grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; margin: 0; font: 600 12px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.nf-nr-step b { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: #fff; font: 700 12px/1 var(--sans); letter-spacing: 0; }
+/* Examples: one tap sets a spot, a distance and a kind */
+.nf-nr-try { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 0 2px; }
+.nf-nr-try span { font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.nf-nr-try button { min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px dashed var(--ink); background: transparent; font: 600 13.5px/1.2 var(--sans); color: var(--ink); cursor: pointer; transition: background .2s, transform .25s var(--nf-ease); }
+.nf-nr-try button:active { transform: scale(.97); }
+@media (hover: hover) { .nf-nr-try button:hover { background: var(--nf-coral-soft); border-style: solid; transform: translateY(-2px); } }
+/* Step 1: more ways to pick a spot */
+.nf-nr-loc .nf-btn { min-height: 48px; }
+.nf-nr-loc [data-nr-drop][aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.nf-nr-addr { display: flex; gap: 8px; flex: 1 1 100%; }
+.nf-nr-addr input { flex: 1; min-width: 0; min-height: 48px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line-hi); background: var(--surface); font: 500 15px/1 var(--sans); color: var(--ink); }
+.nf-nr-addr input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.nf-nr-addr .nf-btn { padding: 0 20px; }
+/* Step 2: the distance scale. Drag the slider or tap a stop. */
+.nf-nr-dist { display: grid; gap: 8px; padding: 12px 0 6px; }
+.nf-nr-dist-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 8px; min-height: 30px; margin: 0; font-size: 15px; color: var(--ink-2); }
+.nf-nr-dist-h output { font: 700 24px/1 var(--sans); letter-spacing: -.03em; color: var(--ink); }
+.nf-nr-dist-of { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.nf-nr-dist input[type="range"] { width: 100%; min-height: 34px; margin: 0; accent-color: var(--nf-acc); cursor: grab; }
+.nf-nr-dist input[type="range"]:active { cursor: grabbing; }
+.nf-nr-ticks { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 4px; }
+.nf-nr-ticks button { min-height: 38px; padding: 0; border-radius: 10px; border: 1.5px solid var(--line-hi); background: var(--surface); font: 600 13px/1 var(--mono); color: var(--ink); cursor: pointer; transition: background .15s, border-color .15s, color .15s, transform .2s var(--nf-ease); }
+.nf-nr-ticks button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; animation: nf-pop .3s var(--nf-ease); }
+@media (hover: hover) { .nf-nr-ticks button:hover { border-color: var(--ink); transform: translateY(-2px); } }
+.nf-nr-tiles .nf-nr-step { padding-bottom: 2px; }
+/* Buttons on the map: expand, drop a pin */
+.nf-nr-mapwrap { position: relative; }
+.nf-nr-mapbtns { position: absolute; left: 12px; top: 12px; z-index: 1100; display: grid; gap: 8px; justify-items: start; }
+.nf-nr-mapbtns button { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 14px 0 12px; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--surface); font: 600 13.5px/1 var(--sans); color: var(--ink); cursor: pointer; box-shadow: 0 6px 16px rgba(18, 20, 22, .2); transition: background .2s, color .2s, transform .25s var(--nf-ease); }
+.nf-nr-mapbtns svg { width: 18px; height: 18px; }
+.nf-nr-mapbtns button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+@media (hover: hover) { .nf-nr-mapbtns button:hover { transform: translateY(-2px); } }
+.nf-nr-map.dropping, .nf-nr-map.dropping .leaflet-grab, .nf-nr-map.dropping .leaflet-interactive { cursor: crosshair !important; }
+.nf-droppin > span { display: block; width: 30px; height: 30px; border-radius: 50% 50% 50% 6px; transform: rotate(-45deg); background: #1B6FE8; border: 3px solid #fff; box-shadow: 0 6px 14px rgba(18, 20, 22, .4); animation: nf-pop .35s var(--nf-ease); }
+.nf-droppin { cursor: grab; }
+.nf-pop-l button { min-height: 40px; padding: 0 2px; border: 0; background: none; font: 600 14px/1 var(--sans); color: var(--ink); text-decoration: underline; text-decoration-color: var(--nf-acc); text-decoration-thickness: 2px; text-underline-offset: 4px; cursor: pointer; }
+html.nf-lock { overflow: hidden; }
+@media (min-width: 1024px) {
+  .nf-nr-try { grid-column: 1; grid-row: 2; }
+  .nf-nr-loc { grid-column: 1; grid-row: 3; }
+  .nf-nr-dist { grid-column: 1; grid-row: 4; }
+  .nf-nr-tiles { grid-column: 1; grid-row: 5; }
+  .nf-nr-tools { grid-column: 1; grid-row: 6; }
+  .nf-nr-listcol { grid-column: 1; grid-row: 7; }
+  .nf-nr-mapbox { grid-column: 2; grid-row: 2 / 8; }
+  .nf-nr > .nf-note { grid-column: 1 / -1; grid-row: 8; }
+  .nf-nr-panel { grid-row: 7; }
+  /* Expanded: controls and list in a side column, the map takes the rest of the screen */
+  .nf-nr.full { position: fixed; inset: 0; z-index: 900; grid-template-columns: 440px minmax(0, 1fr); grid-template-rows: 0 auto auto auto auto auto minmax(0, 1fr); column-gap: 18px; padding: 14px 18px; background: var(--bg); overflow: hidden; }
+  .nf-nr.full .nf-nr-homes, .nf-nr.full > .nf-note, .nf-nr.full .nf-nr-mapnote { display: none; }
+  .nf-nr.full .nf-nr-listcol { overflow-y: auto; min-height: 0; padding-right: 6px; overscroll-behavior: contain; }
+  .nf-nr.full .nf-nr-mapbox { grid-row: 1 / -1; position: static; height: 100%; min-height: 0; grid-template-rows: auto minmax(0, 1fr); }
+  .nf-nr.full .nf-nr-mapwrap { min-height: 0; height: 100%; }
+  .nf-nr.full .nf-nr-map { height: 100%; min-height: 0; }
+  .nf-nr.full .nf-nr-loc { padding-top: 4px; }
+  .nf-nr.full .nf-tile-t small { display: none; }
+  .nf-nr.full .nf-nr .nf-tile, .nf-nr.full .nf-tile { min-height: 52px; }
+}
+@media (max-width: 1023px) {
+  .nf-nr-ticks { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .nf-nr-ticks button:first-child { grid-column: span 1; }
+  .nf-nr-addr { grid-column: 1 / -1; }
+  .nf-nr-try { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 10px 16px 2px; }
+  .nf-nr-try::-webkit-scrollbar { display: none; }
+  .nf-nr-try span, .nf-nr-try button { flex: none; white-space: nowrap; }
+  /* Expanded on a phone: the map, the distance and the card strip fill the screen */
+  .nf-nr.full .nf-nr-mapbox { position: fixed; inset: 0; z-index: 900; display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 8px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--bg); }
+  .nf-nr.full .nf-nr-mapbox .nf-nr-dist { padding: 0; }
+  .nf-nr.full .nf-nr-mapbox .nf-nr-step, .nf-nr.full .nf-nr-mapnote, .nf-nr.full .nf-nr-view { display: none; }
+  .nf-nr.full .nf-nr-mapwrap { min-height: 0; grid-template-rows: minmax(0, 1fr) auto; }
+  .nf-nr.full .nf-nr-map { height: 100%; min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .nf-nr-ticks button, .nf-droppin > span, .nf-nr-try button, .nf-nr-mapbtns button { animation: none !important; transition: none !important; } }
+@media (min-width: 1024px) {
+  /* Expanded: only the working controls stay, so the list keeps room */
+  .nf-nr.full .nf-nr-try, .nf-nr.full .nf-nr-step, .nf-nr.full .nf-nr-pick { display: none; }
+  .nf-nr.full .nf-nr-dist { padding-top: 6px; }
+  .nf-nr.full .nf-nr-tools { padding-top: 6px; }
+}

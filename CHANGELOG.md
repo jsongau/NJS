@@ -9,6 +9,9 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   draws spokes to what is within 10 miles and sums it up by what it adds (mobility, control, engine, skill).
   On desktop the map sits beside the controls from the top; filters open as a card. The list shows twenty at
   a time. On phones the Map button now scrolls to the map. See `docs/session-2026-11-24-near-me-home-gyms.md`.
+  Then: one emblem per home gym (ring and bag, round clock, studio lights) that moves on hover, and a
+  spot, distance, kind flow: any spot (a gym, your location, a typed address, a dropped pin you can drag),
+  a distance scale of 1 to 5 then 10 to 30 miles to drag or tap, three one-tap examples, and an expanded map.
 
 ## 2026-11-23
 - `/fitness/guides/near-me` — chain studios on the map: CorePower Yoga (21), YogaSix (11), UFC Gym (9), 9Round (11), Rumble Boxing (2), Orangetheory Fitness (48) and STRIDE Fitness (2), from each company's own location pages, in `partials/fitness/chains.json`. New Running and HIIT branch tile and a Run by filter (Independent or a chain). Chains are map only: no rank, no profile page. UFC Gym Brea and 9Round RSM are left off and disclosed. Orangetheory, UFC Gym, YogaSix, Rumble and STRIDE pins are hand placed (`approx` 1); CorePower, YogaSix, Rumble and STRIDE lists are not complete yet.

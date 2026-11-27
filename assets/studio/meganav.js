@@ -8,6 +8,7 @@ import { CLIENT_AGENTS, AGENT_FACES, CREW_ART } from './crewart.js';
 import { ticketTier } from './delivered.js';
 import { agentPicks } from './picks.js';
 import { kindJewel } from './places.js';
+import { RIGS } from './breathrigs.js';
 
 const PLAN = {
   launch: { kick: 'A website, hosted', care: 'keep', line: 'Found nearby, takes bookings.' },
@@ -104,57 +105,137 @@ function workPanel(projects) {
 
 // ===== Fitness panels (2026-11-23). Same parts as the Business panels. Link lines reuse the approved
 // focus lines from partials/fitness/focus.json and the note titles; regions only, no gym names.
-// Train on your own: 'four' keeps two coach's notes beside the labs; 'three' leaves the notes to the About tab.
-const OWN_LAYOUT = 'three';
+// Fitness mega nav (2026-11-27). Five tabs, never more: Personal training, What I teach, Nathan's guide,
+// Practice free, About. Three of the panels are interactive on desktop (hover, focus or tap swaps a pane and plays
+// a small scene); the phone drawer shows the same links as plain lists. The voice is first person and generous:
+// Jay teaches, and he hands over the map, the guides and the free tools without holding anything back.
 const FIT = {
   'f-pt': [
     ['Build', [['/fitness/muscle-building', 'fitness', 'Muscle building', 'Get stronger and add size where you want it'], ['/fitness/fat-loss', 'chart', 'Fat loss', 'Lose fat and keep the muscle you have'], ['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders']]],
     ['Move', [['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/reformer-pilates', 'star', 'Reformer Pilates', "Core strength on the reformer. I'm in certification"], ['/fitness/yoga-and-pilates', 'team', 'Yoga and Pilates', 'Private sessions, on the mat or the reformer'], ['/fitness/personal-training', 'user', 'Personal training', 'One goal at a time, coached rep by rep'], ['/fitness/guides/near-me', 'pin', 'Studios near you', 'Yoga, Pilates and intervals for your own days']]],
   ],
-  'f-strike': [
-    ['Disciplines', [['/fitness/boxing', 'fist', 'Boxing', 'Footwork, a clean jab, combinations on mitts'], ['/fitness/kickboxing', 'fist', 'Kickboxing', 'Punches and kicks on Thai pads'], ['/fitness/muay-thai', 'fist', 'Muay Thai', 'Teeps, knees, elbows and the clinch'], ['/fitness/striking', 'pages', 'All striking', 'How private striking sessions run']]],
-    ['Train it with', [['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/guides/near-me?show=strike', 'kx-strike', 'Fight gyms near you', 'For the days you train alone']]],
-  ],
-  'f-clubs': [
-    ['Steel clubs and maces', [['/fitness/clubs-and-maces', 'mark', 'Clubs and maces', 'Steel club and steel mace training'], ['/fitness/shoulder-strength', 'fitness', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely']]],
-    ["Coach's notes", [['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts']]],
-  ],
-  'f-guides': [
-    ['The map', [['/fitness/guides/near-me', 'pin', 'Studios near me', 'Every place on one map, by distance'], ['/fitness/guides/near-me?show=yoga&area=Brea', 'kx-yoga', 'Yoga near Brea', 'Adds mobility to your week'], ['/fitness/guides/near-me?show=pilates&area=Rancho+Santa+Margarita', 'kx-pilates', 'Pilates near Rancho Santa Margarita', 'Adds control'], ['/fitness/guides/near-me?show=run&area=Corona', 'kx-run', 'Intervals near Corona', 'Adds engine']]],
-    ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'kx-strike', 'Boxing gyms', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'kx-strike', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides/reformer-pilates-studios-socal', 'kx-pilates', 'Reformer Pilates studios', 'Across LA, OC and the IE'], ['/fitness/guides/yoga-studios-socal', 'kx-yoga', 'Yoga studios', 'Hot and not heated']]],
-    ...(OWN_LAYOUT === 'four' ? [["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe']]]] : []),
-    ['Play and practice', [['/fitness/boxing#combo-lab', 'kx-strike', 'Combo Lab: boxing', 'Throw each combo, one shot per tap'], ['/fitness/kickboxing#combo-lab', 'kx-strike', 'Combo Lab: kickboxing', 'Punches, kicks and knees'], ['/fitness/muay-thai#combo-lab', 'kx-strike', 'Combo Lab: Muay Thai', 'Teeps, elbows, knees and the clinch'], ['/fitness/clubs-and-maces#swing-lab', 'mark', 'Swing Lab', 'Eighteen club and mace swings'], ['/fitness/mobility-and-yoga#breath-lab', 'kx-yoga', 'Yoga breath game', 'Sixteen poses, on the breath'], ['/fitness/reformer-pilates#breath-lab', 'kx-pilates', 'Pilates breath game', 'Six reformer moves, on the breath']]],
-  ],
   'f-about': [
     ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Three-time SHRED winner, clubs and maces coach'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],
-    ["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/recovery-room', 'star', 'The recovery room', "What's worth it, ranked by evidence"]]],
     ['Where I train', [['/fitness/book?loc=brea', 'pin', 'Brea', 'North OC'], ['/fitness/book?loc=rancho-santa-margarita', 'pin', 'Rancho Santa Margarita', 'South OC'], ['/fitness/book?loc=corona', 'pin', 'Corona', 'Inland Empire'], ['/fitness/book?loc=in-home', 'home', 'In-home training', 'Home, office or a park in Southern California']]],
   ],
 };
+// What I teach: three hubs. [id, hub page, name, line, kind jewel or icon, pages]
+const HUBS = [
+  ['strike', '/fitness/striking', 'Striking', 'Boxing, kickboxing and Muay Thai', 'kx-strike', [['/fitness/boxing', 'fist', 'Boxing', 'Footwork, a clean jab, combinations on mitts'], ['/fitness/kickboxing', 'fist', 'Kickboxing', 'Punches and kicks on Thai pads'], ['/fitness/muay-thai', 'fist', 'Muay Thai', 'Teeps, knees, elbows and the clinch'], ['/fitness/boxing#combo-lab', 'kx-strike', 'Try it: Combo Lab', 'Throw each combo, one shot per tap']]],
+  ['clubs', '/fitness/clubs-and-maces', 'Clubs and maces', 'Steel clubs and steel maces', 'mark', [['/fitness/clubs-and-maces', 'mark', 'Clubs and maces', 'Steel club and steel mace training'], ['/fitness/shoulder-strength', 'fitness', 'Shoulder strength', 'Strong, mobile shoulders'], ['/fitness/clubs-and-maces#swing-lab', 'mark', 'Try it: Swing Lab', 'Eighteen club and mace swings']]],
+  ['flow', '/fitness/yoga-and-pilates', 'Yoga and Pilates', 'On the mat and on the reformer', 'kx-yoga', [['/fitness/mobility-and-yoga', 'kx-yoga', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/reformer-pilates', 'kx-pilates', 'Reformer Pilates', "Core strength on the reformer. I'm in certification"], ['/fitness/mobility-and-yoga#breath-lab', 'kx-yoga', 'Try it: yoga breath game', 'Sixteen poses, on the breath'], ['/fitness/reformer-pilates#breath-lab', 'kx-pilates', 'Try it: Pilates breath game', 'Six reformer moves, on the breath']]],
+];
+// Nathan's guide: what a week can be missing, and the kind of studio that adds it. [id, name, kind, colour, studio, guides]
+const ADDS = [
+  ['mobility', 'Mobility', 'yoga', '#7A5BD0', 'a yoga studio', [['/fitness/guides/yoga-studios-socal', 'Yoga studios', 'Hot and not heated']]],
+  ['control', 'Control', 'pilates', '#1F8A7D', 'a reformer Pilates studio', [['/fitness/guides/reformer-pilates-studios-socal', 'Reformer Pilates studios', 'Across LA, OC and the IE']]],
+  ['engine', 'Engine', 'run', '#B8730A', 'a run or interval studio', []],
+  ['skill', 'Skill', 'strike', '#E0563A', 'a boxing or Muay Thai gym', [['/fitness/guides/boxing-gyms-socal', 'Boxing gyms', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE']]],
+];
+const HOMES = [['Brea', 'Brea', 'North OC'], ['Rancho+Santa+Margarita', 'Rancho Santa Margarita', 'South OC'], ['Corona', 'Corona', 'Inland Empire']];
+// Practice free: the six labs. [href, scene, name, line]
+const LABS = [
+  ['/fitness/boxing#combo-lab', 'box', 'Combo Lab: boxing', 'Throw each combo, one shot per tap'],
+  ['/fitness/kickboxing#combo-lab', 'kick', 'Combo Lab: kickboxing', 'Punches, kicks and knees'],
+  ['/fitness/muay-thai#combo-lab', 'knee', 'Combo Lab: Muay Thai', 'Teeps, elbows, knees and the clinch'],
+  ['/fitness/clubs-and-maces#swing-lab', 'clubs', 'Swing Lab', 'Eighteen club and mace swings'],
+  ['/fitness/mobility-and-yoga#breath-lab', 'yoga', 'Yoga breath game', 'Sixteen poses, on the breath'],
+  ['/fitness/reformer-pilates#breath-lab', 'reformer', 'Pilates breath game', 'Six reformer moves, on the breath'],
+];
+const NOTES = [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/ac-joint', 'search', 'A sore AC joint', 'What helps, and when to train'], ['/fitness/notes/recovery-room', 'star', 'The recovery room', "What's worth it, ranked by evidence"]];
+
+// Small scenes (Goldsmith): plain SVG that moves only while its card is live. The yoga and reformer scenes are the
+// Breath Lab figures themselves, drawn by breathrigs.js.
+const SC = 'viewBox="0 0 240 150" aria-hidden="true"';
+const bag = '<g class="fx-bag"><path d="M172 0v30" stroke="#16181C" stroke-width="3"/><rect x="150" y="30" width="44" height="92" rx="20" fill="#16181C"/><rect x="150" y="48" width="44" height="8" fill="#E0563A"/><rect x="150" y="96" width="44" height="8" fill="#E0563A"/></g>';
+const pow = (y) => '<path class="fx-pow" transform="translate(146 ' + y + ')" d="M0-17l5 9 11-5-5 11 9 5-10 3 3 11-10-6-8 9-1-12-11-2 9-7-6-10 11 2z" fill="#FFD166" stroke="#16181C" stroke-width="2.5" stroke-linejoin="round"/>';
+const SCENE = {
+  box: '<svg class="fx-sc" ' + SC + '><rect width="240" height="150" rx="16" fill="#FCEDE8"/><ellipse cx="172" cy="136" rx="34" ry="5" fill="#E9D5CC"/>' + bag + '<g class="fx-hit fx-jab"><rect x="14" y="66" width="62" height="16" rx="8" fill="#16181C"/><circle cx="88" cy="74" r="17" fill="#E0563A" stroke="#16181C" stroke-width="3"/><path d="M80 66q8-5 15 1" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/></g>' + pow(74) + '</svg>',
+  kick: '<svg class="fx-sc" ' + SC + '><rect width="240" height="150" rx="16" fill="#FCEDE8"/><ellipse cx="172" cy="136" rx="34" ry="5" fill="#E9D5CC"/>' + bag + '<g class="fx-hit fx-kick"><path d="M30 132L70 96" stroke="#16181C" stroke-width="18" stroke-linecap="round"/><path d="M70 96L116 86" stroke="#16181C" stroke-width="15" stroke-linecap="round"/><path d="M112 86l22-4" stroke="#E0563A" stroke-width="13" stroke-linecap="round"/></g>' + pow(86) + '</svg>',
+  knee: '<svg class="fx-sc" ' + SC + '><rect width="240" height="150" rx="16" fill="#FCEDE8"/><ellipse cx="172" cy="136" rx="34" ry="5" fill="#E9D5CC"/>' + bag + '<g class="fx-hit fx-knee"><path d="M66 138L84 100" stroke="#16181C" stroke-width="15" stroke-linecap="round"/><path d="M56 62L84 100" stroke="#E0563A" stroke-width="20" stroke-linecap="round"/><circle cx="86" cy="101" r="12" fill="#16181C"/></g>' + pow(98) + '</svg>',
+  clubs: '<svg class="fx-sc" ' + SC + '><rect width="240" height="150" rx="16" fill="#F1ECE4"/><circle cx="120" cy="72" r="52" fill="none" stroke="#16181C" stroke-opacity=".18" stroke-width="2" stroke-dasharray="3 7"/><g class="fx-mace"><path d="M120 72V28" stroke="#16181C" stroke-width="6" stroke-linecap="round"/><circle cx="120" cy="20" r="12" fill="#16181C"/><circle cx="116" cy="16" r="3.5" fill="#E9D3A0"/></g><g class="fx-club"><path d="M120 72v30" stroke="#16181C" stroke-width="5" stroke-linecap="round"/><path d="M120 98v22" stroke="#B9935A" stroke-width="13" stroke-linecap="round"/></g><circle cx="120" cy="72" r="10" fill="#E9D3A0" stroke="#16181C" stroke-width="3"/></svg>',
+  yoga: '<svg class="fx-sc fx-rig" data-rig="yoga" viewBox="0 0 360 225" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>',
+  reformer: '<svg class="fx-sc fx-rig" data-rig="reformer" viewBox="0 0 360 225" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>',
+  // The three home gyms as a triangle; the dots around each take the colour of what was picked.
+  map: '<svg class="fx-sc fx-map" ' + SC + '><rect width="240" height="150" rx="16" fill="#F3EFE8"/><path d="M0 50h240M0 100h240M80 0v150M160 0v150" stroke="#16181C" stroke-opacity=".06"/><path d="M66 44L178 58L126 118Z" fill="none" stroke="#16181C" stroke-opacity=".35" stroke-width="1.6" stroke-dasharray="4 5"/>' +
+    [[66, 44, 'North OC', -1], [178, 58, 'Inland Empire', -1], [126, 118, 'South OC', 1]].map(([x, y, n, s], i) => '<g class="fx-home" style="--i:' + i + '"><circle class="fx-ring" cx="' + x + '" cy="' + y + '" r="20"/>' +
+      [[-22, -9], [19, -15], [24, 10], [-12, 20]].map(([dx, dy], k) => '<circle class="fx-dot" style="--k:' + k + '" cx="' + (x + dx) + '" cy="' + (y + dy) + '" r="4"/>').join('') +
+      '<circle cx="' + x + '" cy="' + y + '" r="7" fill="#16181C"/><circle cx="' + x + '" cy="' + y + '" r="2.6" fill="#E9D3A0"/><text x="' + x + '" y="' + (y + (s > 0 ? 25 : -27)) + '" text-anchor="middle">' + n + '</text></g>').join('') + '</svg>',
+};
+const jewel = (ic) => (ic.startsWith('kx-') ? '<span class="mn-ico mn-kx">' + kindJewel(ic.slice(3)) + '</span>' : '<span class="mn-ico gic">' + icon(ic) + '</span>');
 const fitCols = (id) => FIT[id].map(([h, items]) => '<div class="mn-col"><p class="mn-hd">' + esc(h) + '</p><ul>' + items.map((x) => link(...x)).join('') + '</ul></div>').join('');
 // The 12-pack card that closes the training panel: once a week is the pack, twice a week is the push.
 const packCard = '<aside class="mn-feat mn-pack"><p class="mn-kick">The 12-pack</p><p class="mn-pack-n">12<small>private sessions</small></p>' +
   '<p class="mn-p">Once a week, built around the focus you pick. <b>Twice a week is the foundation:</b> two fixed days turn training into discipline.</p>' +
   '<a class="btn btn-lime mn-go" href="/fitness/book?pack=12">Book your first session</a><p class="mn-fine">Pay nothing today. I confirm by email.</p></aside>';
+
+function teachPanel() {
+  return '<div class="mn-in fx fx-teach" data-fx>' +
+    '<div class="fx-picks"><p class="mn-hd">Three disciplines, one coach</p>' + HUBS.map(([id, , name, line, ic], i) => '<button type="button" class="fx-pick" data-fx-pick="' + id + '" aria-pressed="' + (i === 0) + '">' + jewel(ic) + '<span class="mn-txt"><strong>' + esc(name) + '</strong><small>' + esc(line) + '</small></span>' + arrow + '</button>').join('') + '</div>' +
+    '<div class="fx-panes">' + HUBS.map(([id, href, name, , , pages], i) => '<div class="fx-pane' + (i === 0 ? ' on' : '') + '" data-fx-pane="' + id + '"><p class="mn-hd">' + esc(name) + '</p><ul>' + pages.map((x) => link(...x)).join('') + '</ul><a class="mn-sub fx-open" href="' + href + '">Open the ' + esc(name[0].toLowerCase() + name.slice(1)) + ' hub' + arrow + '</a></div>').join('') + '</div>' +
+    '<aside class="fx-stage">' + [['strike', 'box'], ['clubs', 'clubs'], ['flow', 'yoga']].map(([id, sc], i) => '<div class="fx-view' + (i === 0 ? ' on' : '') + '" data-fx-view="' + id + '">' + SCENE[sc] + '</div>').join('') +
+    '<p class="mn-p"><b>Most trainers pick one.</b> I teach all three, one on one, and build your week from the mix.</p>' +
+    '<a class="btn btn-lime mn-go" href="/fitness/book?pack=12">Book your first session</a><p class="mn-fine">Pay nothing today. I confirm by email.</p></aside></div>';
+}
+function guidePanel() {
+  const near = (kind) => HOMES.map(([area, city, region]) => '<li><a class="mn-link" href="/fitness/guides/near-me?show=' + kind + '&area=' + area + '">' + jewel('kx-' + kind) + '<span class="mn-txt"><strong>Near ' + esc(city) + '</strong><small>' + esc(region) + ', by distance</small></span></a></li>').join('');
+  return '<div class="mn-in fx fx-guide" data-fx>' +
+    '<div class="fx-picks"><p class="mn-hd">What is your week missing?</p>' + ADDS.map(([id, name, kind, , studio], i) => '<button type="button" class="fx-pick" data-fx-pick="' + id + '" aria-pressed="' + (i === 0) + '">' + jewel('kx-' + kind) + '<span class="mn-txt"><strong>' + esc(name) + '</strong><small>Add ' + esc(studio) + '</small></span>' + arrow + '</button>').join('') + '</div>' +
+    '<div class="fx-panes">' + ADDS.map(([id, name, kind, , studio, guides], i) => '<div class="fx-pane' + (i === 0 ? ' on' : '') + '" data-fx-pane="' + id + '"><p class="mn-hd">' + esc(name) + ': ' + esc(studio) + '</p><ul>' + near(kind) +
+      guides.map(([href, t, s]) => link(href, 'pages', 'Guide: ' + t, s)).join('') + '</ul></div>').join('') +
+    '<a class="mn-sub fx-open" href="/fitness/guides/near-me">Open the whole map' + arrow + '</a></div>' +
+    '<aside class="fx-stage" style="--fx-c:' + ADDS[0][3] + '"><div class="fx-view on">' + SCENE.map + '</div>' +
+    '<p class="mn-p"><b>I would rather you train well than train only with me.</b> These are the studios near where I teach, and what each one adds.</p>' +
+    '<a class="mn-sub" href="/fitness/guides">See every gym guide' + arrow + '</a></aside></div>';
+}
+function freePanel() {
+  return '<div class="mn-in fx fx-free" data-fx>' +
+    '<div class="fx-labs-w"><p class="mn-hd">Six labs: tap, swing, breathe</p><div class="fx-labs">' + LABS.map(([href, sc, name, line]) => '<a class="fx-lab" href="' + href + '" data-fx-lab>' + '<span class="fx-thumb">' + SCENE[sc] + '</span><strong>' + esc(name) + '</strong><small>' + esc(line) + '</small></a>').join('') + '</div></div>' +
+    '<div class="mn-col"><p class="mn-hd">Coach\'s notes</p><ul>' + NOTES.map((x) => link(...x)).join('') + '</ul></div>' +
+    '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">No gatekeeping</p><p class="mn-p"><b>Everything here is free.</b> Use it between sessions, or without ever booking one. The labs teach the rhythm; I teach the rest in person.</p>' +
+    '<a class="mn-sub" href="/fitness/path">See the whole path' + arrow + '</a></aside>' + mini('/fitness/book', 'cal', 'One on one', 'Book your first session', 'Pay nothing today') + '</div></div>';
+}
 const FIT_FILL = {
   'f-pt': () => '<div class="mn-in mn-in-fit">' + fitCols('f-pt') + '<div class="mn-side">' + packCard + mini('/fitness#focus', 'search', 'Not sure?', 'Pick your focus', 'Choose one or two goals') + '</div></div>',
-  'f-strike': () => '<div class="mn-in mn-in-fit">' + fitCols('f-strike') + '<div class="mn-side">' +
-    mini('/fitness/book?focus=boxing', 'cal', 'Start', 'Book a striking session', 'Pay nothing today') +
-    mini('/fitness#thursday', 'pin', 'Three gyms', 'See open times', 'Brea, Rancho Santa Margarita, Corona') +
-    mini('/fitness/book?loc=in-home', 'home', 'Your place', 'In-home training', 'Home, office or a park') + '</div></div>',
-  'f-clubs': () => '<div class="mn-in mn-in-fit">' + fitCols('f-clubs') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">A specialty few train</p>' +
-    '<p class="mn-p">Rotation, stability and strength for your shoulders. I teach steel clubs and maces one on one, in person or over live video.</p>' +
-    '<a class="mn-sub" href="/fitness/clubs-and-maces">See how a session runs' + arrow + '</a></aside>' +
-    mini('/fitness/book?loc=online&focus=shoulders', 'cal', 'Live video', 'Learn it online', 'Good for clubs and maces technique') + '</div></div>',
-  'f-guides': () => '<div class="mn-in mn-in-studio mn-in-own mn-own-' + OWN_LAYOUT + '">' + fitCols('f-guides') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">How to use this site</p>' +
-    '<p class="mn-p"><b>I train you, and I give you the tools to keep learning.</b> Sessions with me, then a map, guides and notes for the days you train alone.</p>' +
-    '<a class="mn-sub" href="/fitness/path">See the whole path' + arrow + '</a></aside>' +
-    mini('/fitness/book', 'cal', 'One on one', 'Book your first session', 'Pay nothing today') + '</div></div>',
-  'f-about': () => '<div class="mn-in mn-in-studio">' + fitCols('f-about') + '<div class="mn-side">' +
-    mini('/fitness/book', 'cal', 'Start', 'Book your first session', 'Pay nothing today') +
-    mini('/fitness#packs', 'star', 'The offer', 'The 12-pack', 'Twelve private sessions') + '</div></div>',
+  'f-teach': teachPanel,
+  'f-guide': guidePanel,
+  'f-free': freePanel,
+  'f-about': () => '<div class="mn-in mn-in-fit">' + fitCols('f-about') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">The coach</p>' +
+    '<p class="mn-p"><b>Nathan J. Song.</b> Three-time SHRED winner. I coach one on one at three gyms across North OC, South OC and the Inland Empire.</p>' +
+    '<a class="mn-sub" href="/fitness/coach">Read my story' + arrow + '</a></aside>' +
+    mini('/fitness/book', 'cal', 'Start', 'Book your first session', 'Pay nothing today') + '</div></div>',
 };
-const FIT_GROUPS = [['f-pt', 'Personal training', '/fitness/personal-training'], ['f-strike', 'Striking', '/fitness/striking'], ['f-clubs', 'Clubs and maces', '/fitness/clubs-and-maces'], ['f-guides', 'Train on your own', '/fitness/guides/near-me'], ['f-about', 'About', '/fitness/coach']];
+const FIT_GROUPS = [['f-pt', 'Personal training', '/fitness/personal-training'], ['f-teach', 'What I teach', '/fitness#focus'], ['f-guide', "Nathan's guide", '/fitness/guides'], ['f-free', 'Practice free', '/fitness/notes'], ['f-about', 'About', '/fitness/coach']];
+
+// The interactive panels. A pick swaps its pane and its scene; a lab card plays while it is hovered or focused.
+// Scenes move only while their panel is open, and not at all for visitors who ask for reduced motion.
+function mountFitFx(list) {
+  const calm = reduced();
+  const pick = (b) => { const fx = b.closest('[data-fx]'); const id = b.dataset.fxPick; if (b.getAttribute('aria-pressed') === 'true') return;
+    $$('.fx-pick', fx).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    $$('.fx-pane', fx).forEach((x) => x.classList.toggle('on', x.dataset.fxPane === id));
+    $$('.fx-view[data-fx-view]', fx).forEach((x) => x.classList.toggle('on', x.dataset.fxView === id));
+    const add = ADDS.find((a) => a[0] === id); const stage = $('.fx-stage', fx);
+    if (add && stage) { stage.style.setProperty('--fx-c', add[3]); const m = $('.fx-map', stage); if (m) { m.classList.remove('go'); void m.getBoundingClientRect(); m.classList.add('go'); } } };
+  list.addEventListener('pointerover', (e) => { const b = e.target.closest('.fx-pick'); if (b && e.pointerType === 'mouse') pick(b); });
+  list.addEventListener('focusin', (e) => { const b = e.target.closest('.fx-pick'); if (b) pick(b); });
+  list.addEventListener('click', (e) => { const b = e.target.closest('.fx-pick'); if (b) pick(b); });
+  // The breath figures: one slow breath in and out, then the next move.
+  const rigs = {}; const plays = { yoga: ['warrior-two', 'down-dog', 'triangle', 'cat-and-cow'], reformer: ['footwork', 'bridge', 'long-stretch'] };
+  const rig = (k) => rigs[k] || (rigs[k] = RIGS[k]());
+  const paintRig = (svg, t) => { const r = rig(svg.dataset.rig); const ids = plays[svg.dataset.rig]; const n = Math.floor(t / 3.6) % ids.length; const m = r.moves.find((x) => x.id === ids[n]) || r.moves[0];
+    const u = (1 - Math.cos(((t % 3.6) / 3.6) * Math.PI * 2)) / 2; svg.innerHTML = '<g transform="translate(0 12)">' + r.draw(m, u, 0, true) + '</g>'; };
+  $$('.fx-rig', list).forEach((svg) => paintRig(svg, 0.9));
+  if (calm) return;
+  let raf = 0; const t0 = performance.now();
+  const live = () => $$('.fx-rig', list).filter((s) => s.closest('.mn-panel:not([hidden])') && (s.closest('.fx-view.on') || s.closest('.fx-lab.live')));
+  const loop = (now) => { const on = live(); on.forEach((s) => paintRig(s, (now - t0) / 1000)); raf = on.length ? requestAnimationFrame(loop) : 0; };
+  const wake = () => { if (!raf) raf = requestAnimationFrame(loop); };
+  list.addEventListener('pointerover', (e) => { const c = e.target.closest('.fx-lab'); $$('.fx-lab.live', list).forEach((x) => { if (x !== c) x.classList.remove('live'); }); if (c) c.classList.add('live'); wake(); });
+  list.addEventListener('pointerleave', () => $$('.fx-lab.live', list).forEach((x) => x.classList.remove('live')));
+  list.addEventListener('focusin', (e) => { const c = e.target.closest('.fx-lab'); $$('.fx-lab.live', list).forEach((x) => x.classList.remove('live')); if (c) c.classList.add('live'); wake(); });
+  list.addEventListener('click', wake);
+}
 
 function studioPanel() {
   return '<div class="mn-in mn-in-studio">' + STUDIO.map(([h, items]) => '<div class="mn-col"><p class="mn-hd">' + esc(h) + '</p><ul>' + items.map((x) => link(...x)).join('') + '</ul></div>').join('') +
@@ -251,6 +332,7 @@ export function mountMegaNav(store) {
   picks.subscribe(paint);
   paint();
   mountPhoneMap(fill, fit);
+  if (fit) mountFitFx(list);
 }
 
 // Phones: the drawer becomes an accordion of the same panels, with agents up top.

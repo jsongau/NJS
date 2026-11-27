@@ -11,6 +11,18 @@ corrects it, and his corrections win.
 A coach who only sells sessions keeps you dependent. This site does both jobs: it books the sessions, and it
 hands over what a client needs on the days Jay is not in the room.
 
+## No gatekeeping (added 2026-11-27, from Jay)
+
+Jay promotes other modalities and other studios on his own site, and that is the point: he is the coach who does
+not gatekeep. Everything on the site still serves him. The generosity is what makes him the source: his name is on
+the guide, his voice is on every panel, and the free tools carry his teaching.
+
+- The menu says it in his words: "What I teach", "Nathan's guide", "Practice free".
+- No discipline gets its own tab. Striking, clubs and maces, and yoga and Pilates are three hubs under What I teach.
+- Praise stays true: three disciplines, three gyms, three-time SHRED winner, free tools. No invented stats.
+- "Guide" until every list is ranked; then it can say rankings. A place is "near where I teach" until Jay has been
+  there; then it can be "I recommend".
+
 ## The three home gyms
 
 Jay coaches at three gyms, and they are the three corners of the map:

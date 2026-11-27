@@ -1960,3 +1960,83 @@ h1, h2, h3 { text-wrap: balance; }
   .mn-panel .mn-in-own.mn-own-four .mn-side { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
 }
 .mm-body .mn-in-own.mn-own-four { grid-template-columns: 1fr; }
+
+/* Fitness mega nav, interactive panels (2026-11-27): What I teach, Nathan's guide, Practice free.
+   A pick (.fx-pick) swaps its pane and its scene. Scenes move only while live, and never for reduced motion. */
+.mn-in.fx { align-items: start; }
+.fx-teach, .fx-guide { grid-template-columns: 290px minmax(0, 1fr) 300px; gap: 26px; }
+.fx-free { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) 270px; gap: 26px; }
+.fx-picks { display: grid; gap: 6px; align-content: start; }
+.fx-picks .mn-hd { margin-bottom: 8px; }
+.top .fx-pick { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 64px; padding: 12px 14px; border: 1px solid transparent; border-radius: var(--r-md); background: none; font: inherit; color: var(--ink); text-align: left; cursor: pointer; transition: background var(--t-quick), border-color var(--t-quick), box-shadow var(--t-quick); }
+.fx-pick .mn-arr { margin-left: auto; width: 16px; height: 16px; flex: none; opacity: 0; translate: -6px 0; transition: opacity var(--t-quick), translate var(--t-quick); }
+.fx-pick[aria-pressed="true"] { background: var(--surface-2); border-color: var(--line); box-shadow: inset 3px 0 0 var(--ink); }
+.fx-pick[aria-pressed="true"] .mn-arr { opacity: 1; translate: 0 0; }
+.fx-pick:focus-visible { outline: 3px solid var(--signal, #FF8A6B); outline-offset: 2px; }
+.fx-panes { min-width: 0; display: grid; align-content: start; }
+.fx-pane { display: none; }
+.fx-pane.on { display: block; animation: fx-in .22s var(--ease-out, ease-out); }
+.fx-pane ul, .fx-free .mn-col ul { list-style: none; margin: 0; padding: 0; }
+.fx-open { margin: 10px 0 0 10px; }
+@keyframes fx-in { from { opacity: 0; translate: 8px 0; } }
+.fx-stage { display: grid; gap: 12px; align-content: start; padding: 14px; border-radius: var(--r-lg); background: var(--surface-2); min-width: 0; }
+.fx-stage .mn-p { margin: 2px 4px 0; }
+.fx-stage .mn-go { justify-self: stretch; text-align: center; }
+.fx-stage .mn-fine { margin: -4px 4px 0; }
+.fx-stage .mn-sub { margin: 0 4px 4px; }
+.fx-view { display: none; }
+.fx-view.on { display: block; }
+.fx-sc { display: block; width: 100%; height: auto; border-radius: 16px; }
+.fx-rig { background: linear-gradient(#F0EBFB, #EFE8DF 78%); aspect-ratio: 240 / 150; }
+.fx-rig[data-rig="reformer"] { background: linear-gradient(#E7F3F1, #EFE8DF 78%); }
+/* Scene motion: runs for the stage scene on show, and for a lab card while it is hovered or focused. */
+.fx-bag { transform-origin: 172px 0; }
+.fx-pow { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.fx-mace, .fx-club { transform-origin: 120px 72px; }
+@media (prefers-reduced-motion: no-preference) {
+  .mn-panel:not([hidden]) .fx-view.on .fx-bag, .fx-lab.live .fx-bag { animation: fx-bag 1.2s ease-in-out infinite; }
+  .mn-panel:not([hidden]) .fx-view.on .fx-jab, .fx-lab.live .fx-jab { animation: fx-jab 1.2s cubic-bezier(.3, 0, .2, 1) infinite; }
+  .fx-lab.live .fx-kick { animation: fx-kick 1.2s cubic-bezier(.3, 0, .2, 1) infinite; transform-origin: 30px 132px; }
+  .fx-lab.live .fx-knee { animation: fx-knee 1.2s cubic-bezier(.3, 0, .2, 1) infinite; }
+  .mn-panel:not([hidden]) .fx-view.on .fx-pow, .fx-lab.live .fx-pow { animation: fx-pow 1.2s linear infinite; }
+  .mn-panel:not([hidden]) .fx-view.on .fx-mace, .fx-lab.live .fx-mace { animation: fx-spin 2.6s cubic-bezier(.5, .1, .5, .9) infinite; }
+  .mn-panel:not([hidden]) .fx-view.on .fx-club, .fx-lab.live .fx-club { animation: fx-swing 2.6s ease-in-out infinite; }
+  .fx-map.go .fx-dot, .mn-panel:not([hidden]) .fx-map .fx-dot { animation: fx-dot .5s calc(var(--i) * 90ms + var(--k) * 60ms) both cubic-bezier(.2, 1.4, .4, 1); }
+  .mn-panel:not([hidden]) .fx-map .fx-ring { animation: fx-ring 2.4s calc(var(--i) * .5s) ease-out infinite; }
+}
+@keyframes fx-jab { 0%, 100% { translate: 0 0; } 22% { translate: 44px 0; } 40% { translate: 0 0; } }
+@keyframes fx-kick { 0%, 100% { rotate: 0deg; } 22% { rotate: -9deg; translate: 16px 0; } 42% { rotate: 0deg; translate: 0 0; } }
+@keyframes fx-knee { 0%, 100% { translate: 0 0; } 22% { translate: 46px -6px; } 42% { translate: 0 0; } }
+@keyframes fx-bag { 0%, 20%, 100% { rotate: 0deg; } 32% { rotate: -9deg; } 55% { rotate: 5deg; } 78% { rotate: -2deg; } }
+@keyframes fx-pow { 0%, 19% { opacity: 0; scale: .4; } 22% { opacity: 1; scale: 1.15; } 34% { opacity: 1; scale: 1; } 42%, 100% { opacity: 0; scale: .7; } }
+@keyframes fx-spin { to { rotate: 360deg; } }
+@keyframes fx-swing { 0%, 100% { rotate: -38deg; } 50% { rotate: 38deg; } }
+@keyframes fx-dot { from { opacity: 0; scale: 0; } }
+@keyframes fx-ring { 0% { opacity: .7; scale: .35; } 80%, 100% { opacity: 0; scale: 1; } }
+.fx-map .fx-ring { fill: none; stroke: var(--fx-c); stroke-width: 2; transform-box: fill-box; transform-origin: center; opacity: .35; }
+.fx-map .fx-dot { fill: var(--fx-c); stroke: #fff; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; transition: fill .25s; }
+.fx-map text { font: 600 9.5px/1 var(--mono, ui-monospace, monospace); letter-spacing: .06em; text-transform: uppercase; fill: #4A4744; }
+/* Practice free: six lab cards whose thumbnails play on hover or focus. */
+.fx-labs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.top .fx-lab { display: grid; gap: 3px; align-content: start; padding: 8px 8px 12px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); color: var(--ink); transition: border-color var(--t-quick), box-shadow var(--t-quick), translate var(--t-quick); }
+.top .fx-lab:hover, .top .fx-lab:focus-visible { border-color: var(--ink); box-shadow: 0 14px 24px -18px rgba(18, 20, 22, .55); translate: 0 -2px; }
+.fx-thumb { display: block; margin-bottom: 6px; border-radius: 12px; overflow: hidden; }
+.fx-thumb .fx-sc { border-radius: 12px; }
+.fx-lab strong { padding: 0 4px; font-size: 14.5px; line-height: 1.2; }
+.fx-lab small { padding: 0 4px; font-size: 12.5px; line-height: 1.35; color: var(--ink-3); }
+@media (max-width: 1180px) {
+  .mn-panel .fx-teach, .mn-panel .fx-guide { grid-template-columns: 236px minmax(0, 1fr) 250px; gap: 18px; }
+  .mn-panel .fx-free { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 18px; }
+  .mn-panel .fx-free .mn-side { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
+}
+/* Phone drawer: the same links as plain lists. Picks, scenes and thumbnails are desktop only. */
+.mm-body .mn-in.fx { grid-template-columns: 1fr; gap: 14px; padding: 4px 0 0; }
+.mm-body .fx-picks, .mm-body .fx-view, .mm-body .fx-thumb, .mm-body .fx-stage .mn-go, .mm-body .fx-stage .mn-fine { display: none; }
+.mm-body .fx-pane { display: block; animation: none; }
+.mm-body .fx-pane + .fx-pane { margin-top: 12px; }
+.mm-body .fx-labs { grid-template-columns: 1fr; gap: 6px; }
+.mm-body .fx-lab { min-height: 44px; padding: 10px 12px; }
+.mm-body .fx-open { display: inline-flex; min-height: 44px; align-items: center; }
+.mn-panel .mn-in.fx { flex: 1 1 auto; width: 100%; }
+.mm-body .fx .mn-sub { display: inline-flex; align-items: center; min-height: 44px; }
+.top .mm-all { min-height: 44px; }

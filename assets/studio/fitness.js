@@ -381,6 +381,24 @@ function mountPath() {
   document.addEventListener('click', (e) => { const g = e.target.closest && e.target.closest('[data-nf-gear]'); if (g) track('fit_tab', { detail: 'gear_' + g.dataset.nfGear }); });
 }
 
+// 12-pack stage: the dark panel shows the place whose card is hovered, focused or tapped, in that
+// gym's map colour. The panes are stacked in one grid cell, so the panel never changes height.
+function mountPackStage() {
+  document.querySelectorAll('[data-pk]').forEach((root) => {
+    const stage = root.querySelector('.pk-stage'), cards = [...root.querySelectorAll('[data-pk-card]')], panes = [...root.querySelectorAll('[data-pk-pane]')];
+    const show = (id) => {
+      cards.forEach((c) => { const on = c.dataset.pkCard === id; c.classList.toggle('pk-on', on); c.querySelector('.pk-pick').setAttribute('aria-pressed', String(on)); if (on) stage.style.setProperty('--pk-c', c.dataset.hg); });
+      panes.forEach((p) => p.classList.toggle('pk-on', p.dataset.pkPane === id));
+    };
+    cards.forEach((c) => {
+      const id = c.dataset.pkCard;
+      c.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') show(id); });
+      c.addEventListener('focusin', () => show(id));
+      c.addEventListener('click', (e) => { if (!e.target.closest('a')) show(id); });
+    });
+  });
+}
+
 // 12-pack pace: once or twice a week. Swaps the card copy and pips, and carries ?pace= into every
 // booking link in the packs section so the booking page opens with the same choice.
 function mountPace() {
@@ -951,6 +969,7 @@ function mountNear() {
 
 export function mountFitness() {
   mountPace();
+  mountPackStage();
   if (document.body.dataset.mode !== 'fitness') return;
   const form = $('#nf-form');
   if (form) mountForm(form);

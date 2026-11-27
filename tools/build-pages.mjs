@@ -41,7 +41,8 @@ const ld = (type, extra) => ({ '@context': 'https://schema.org', '@type': type, 
 
 // NJS Fitness: one coach entity shared by every fitness page.
 const COACH = {
-  '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', alternateName: ['Jiaming Song', 'Nathan Song'], jobTitle: 'Personal trainer',
+  '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', alternateName: ['Nathan Song', 'Jiaming Song'], givenName: 'Nathan', familyName: 'Song', jobTitle: ['Kickboxing coach', 'Boxing coach', 'Personal trainer'],
+  description: 'Nathan J. Song, also known as Nathan Song and Jiaming Song, is a kickboxing and boxing coach and personal trainer in Orange County and the Inland Empire, California.',
   url: SITE + '/fitness/coach',
   knowsAbout: ['Personal training', 'Muscle building', 'Fat loss', 'Steel club training', 'Steel mace training', 'Boxing', 'Kickboxing', 'Muay Thai', 'Yoga', 'Reformer Pilates'],
   areaServed: ['Brea, CA', 'Rancho Santa Margarita, CA', 'Corona, CA', 'Orange County, California', 'Inland Empire, California'],
@@ -210,8 +211,8 @@ export const PAGES = {
   'fit-pilates': fitPage('reformer-pilates', 'Reformer Pilates', 'Private Reformer Pilates in Orange County · NJS Fitness',
     'Private reformer Pilates sessions in Orange County with Nathan J. Song, who is completing his reformer certification. Core strength, alignment and control.', 'Reformer Pilates'),
   'fit-coach': {
-    ...fitPage('coach', 'About Nathan', 'Nathan J. Song (Jiaming Song), Personal Trainer in Orange County · NJS Fitness',
-      'Nathan J. Song, also known as Nathan Song and Jiaming Song: personal trainer in Orange County. Steel clubs and maces, kickboxing and yoga.', null),
+    ...fitPage('coach', 'About Nathan', 'Nathan J. Song (Jiaming Song): Kickboxing and Boxing Coach · NJS Fitness',
+      'Nathan J. Song, also known as Nathan Song and Jiaming Song: kickboxing and boxing coach and personal trainer in Orange County. See his weekly schedule and book.', null),
   },
   'fit-path': fitPage('path', 'The path', 'A Well-Rounded Body: Strength, Engine, Mobility, Control and Skill · NJS Fitness',
     'The five parts of a capable body and the training that builds each one: strength, conditioning, mobility, core control and striking skill, with a four-level ladder for each.', null),
@@ -246,7 +247,53 @@ const FOCUS_PAGE = { 'fit-muscle': 'muscle', 'fit-fatloss': 'fat-loss', 'fit-con
 for (const [key, id] of Object.entries(FOCUS_PAGE)) {
   PAGES[key].jsonld.push(ld('FAQPage', { mainEntity: PATH.focus[id].qa.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }));
 }
-PAGES['fit-coach'].jsonld = [ld('ProfilePage', { mainEntity: COACH }), crumbs('coach', 'About Nathan')];
+// The coach page: his week, built from the schedule the booking step reads, and plain answers about who he is.
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const coachWeek = () => [1, 2, 3, 4, 5, 6, 0].map((d) => ({ d, items: Object.keys(COACH_GYMS).map((id) => {
+  const g = COACH_GYMS[id]; const day = Object.assign({}, g, (g.byDay || {})[d]);
+  const set = g.sched.includes(d) ? Object.values(day.blocks || {}).map((b) => [b[1].split(' · ')[0], b[3] || (/classes/.test(b[1]) ? 'My classes' : 'My class')]) : [];
+  const all = set.concat((g.also || {})[d] || []);
+  return all.length ? { id, g, all, priv: g.sched.includes(d) } : null; }).filter(Boolean) }));
+const COACH_QA = [
+  ['Who is Nathan J. Song?', 'Nathan J. Song is a kickboxing and boxing coach and personal trainer in Orange County and the Inland Empire, California. He trains functional mobility and dynamic striking, with experience in fat loss and muscle building, and teaches steel clubs and maces.'],
+  ['Are Nathan Song and Jiaming Song the same coach?', 'Yes. Nathan J. Song is also known as Nathan Song and Jiaming Song. All three names are the same coach.'],
+  ['Where does Nathan J. Song coach?', 'He coaches at ' + Object.values(COACH_GYMS).map((g) => g.name === '9Round RSM' ? '9Round in Rancho Santa Margarita' : g.name).join(', ').replace(/, ([^,]*)$/, ' and $1') + ', and offers in-home sessions across Southern California and live sessions online.'],
+  ['When are his classes?', coachWeek().map((r) => WEEKDAYS[r.d] + ': ' + r.items.map((x) => x.g.name + ', ' + x.all.map((a) => a[0]).join(' and ')).join('; ') + '.').join(' ') + ' Times are Pacific. Private sessions run around the classes and on other days by request.'],
+  ['What does Nathan J. Song teach?', 'Private one-on-one training in boxing, kickboxing and Muay Thai, steel clubs and maces, muscle building, fat loss, conditioning, mobility and yoga, and reformer Pilates while he completes his certification.'],
+  ['How do I book a session?', 'Send a request at nathanjsong.com/fitness/book. Nothing is charged on the site, and he confirms by email. Training comes as a 12-pack of private sessions.'],
+];
+const renderCoachWeek = () => '<ol class="cv-week">' + coachWeek().map((r) => '<li class="cv-day"><h3>' + WEEKDAYS[r.d] + '</h3>' + r.items.map((x) =>
+  '<div class="cv-slot cv-' + x.id + '"><p class="cv-gym"><b>' + esc(x.g.name) + '</b><span>' + esc(x.g.region.split(' · ')[1] || x.g.region) + '</span></p><ul>' + x.all.map((a) => '<li><b>' + esc(a[0]) + '</b><span>' + esc(a[1]) + '</span></li>').join('') + '</ul>' +
+  '<a href="/fitness/book?pack=12&amp;loc=' + x.g.slug + '&amp;dow=' + r.d + '">' + (x.priv ? 'Book a private session' : 'Request a private session') + '<span class="sr"> on ' + WEEKDAYS[r.d] + ' at ' + esc(x.g.name) + '</span></a></div>').join('') + '</li>').join('') + '</ol>';
+// The 12-pack stage (2026-11-27): one table feeds the dark panel and the four place cards beside it.
+// A card that is hovered, focused or tapped swaps the panel to its place, in that gym's map colour.
+// [id, colour, dark colour for text on cream, kicker, [line one, the perk], sentence, price note, button, book link, about link, [badge number, badge unit], sessions, card title, card link words]
+const HOME_GX = '<svg class="nf-gx nf-gx-home" viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><clipPath id="gx-home"><circle cx="32" cy="32" r="27"/></clipPath></defs><circle class="gx-orbit" cx="32" cy="32" r="30.5" stroke="#FFC857" stroke-width="1.5" stroke-dasharray="2 5"/><circle cx="32" cy="32" r="27.5" fill="#1D2126" stroke="#FFC857" stroke-width="2.5"/><g clip-path="url(#gx-home)"><path d="M4 50h56v14H4z" fill="#2A2F36"/><rect x="40.500" y="14" width="5.500" height="11" rx="1" fill="#F4EFE9"/><path d="M14 51V30l18-15 18 15v21z" fill="#F4EFE9"/><path d="M10 32.500L32 14l22 18.500" stroke="#FFC857" stroke-width="3.600" stroke-linecap="round" stroke-linejoin="round"/><g class="gx-kb"><path d="M27.500 38a4.500 4.500 0 0 1 9 0" stroke="#121416" stroke-width="2.600" stroke-linecap="round"/><circle cx="32" cy="43" r="6.500" fill="#FFC857" stroke="#121416" stroke-width="1.200"/><circle cx="30" cy="41" r="1.600" fill="#fff" opacity=".75"/></g></g></svg>';
+const PACK_PLACES = [
+  ['brea', '#FF8A6B', '#B4472A', 'Brea · North OC', ['12 private sessions.', '3 years of gym membership.'], 'With class access, so you take my classes between sessions.', '12 private sessions', 'Start in Brea', 'loc=brea', 'where-brea', ['3', 'years'], 12, '3 years of gym membership', 'Book in Brea'],
+  ['rsm', '#7FD3C8', '#1B7268', 'Rancho Santa Margarita · 9Round', ['24 private half hours.', '1 year of 9Round membership.'], 'Unlimited 9Round workouts for the full year.', '24 sessions · 30 min', 'Start at 9Round', 'loc=rancho-santa-margarita', 'where-rsm', ['1', 'year'], 24, '1 year of 9Round membership', 'Book at 9Round'],
+  ['corona', '#B9A7F5', '#5B43C4', 'Corona · Inland Empire', ['12 private sessions.', '3 months of Club Studio access.'], 'Train at any Club Studio, with every class included.', '12 private sessions', 'Start in Corona', 'loc=corona&amp;dow=6', 'where-corona', ['3', 'months'], 12, '3 months of Club Studio access', 'Book in Corona'],
+  ['home', '#FFC857', '#8A5A00', 'Your place · Southern California', ['12 private sessions.', 'I bring the training to you.'], 'Home, garage gym, park or office. No commute, no excuses.', '12 sessions · $200 each', 'Start at your place', 'loc=in-home', 'where-home', ['$200', 'a session'], 12, 'In-home and on-site training', 'Book at your place'],
+];
+const packGx = (id, n) => (id === 'home' ? HOME_GX : HOME_ART[id][1]).replace('id="gx-' + id + '"', 'id="gx-' + id + '-pk' + n + '"').replace('url(#gx-' + id + ')', 'url(#gx-' + id + '-pk' + n + ')').replace(' data-gx="gx-' + id + '"', '');
+const packRing = (n) => { const f = (v) => v.toFixed(2); let t = ''; for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2 - Math.PI / 2, c = Math.cos(a), sn = Math.sin(a); t += '<path style="--i:' + i + '" d="M' + f(100 + 82 * c) + ' ' + f(100 + 82 * sn) + 'L' + f(100 + 94 * c) + ' ' + f(100 + 94 * sn) + '"/>'; } return '<svg class="pk-ring" viewBox="0 0 200 200" fill="none" stroke-linecap="round" stroke-width="' + (n > 12 ? 7 : 11) + '" aria-hidden="true">' + t + '</svg>'; };
+const renderPackStage = () => '<div class="pk" data-pk>' +
+  '<article class="pk-stage" aria-labelledby="p12" style="--pk-c:' + PACK_PLACES[0][1] + '">' +
+  '<div class="pk-top"><h3 id="p12">The 12-pack</h3><span class="nf-tag">Once a week · $2,400 at every place</span></div>' +
+  '<div class="pk-panes">' + PACK_PLACES.map(([id, hg, , k, h, p, note, btn, q, about, badge, n], i) => '<div class="pk-pane' + (i ? '' : ' pk-on') + '" data-pk-pane="' + id + '" style="--hg:' + hg + '">' +
+    '<div class="pk-txt"><p class="pk-k">' + k + '</p><p class="pk-h"><span>' + h[0] + '</span><b>' + h[1] + '</b></p><p class="pk-p">' + p + '</p>' +
+    '<ul class="pk-ul"><li>A plan built around your two goals</li><li>Your progress checked against week one</li></ul></div>' +
+    '<div class="pk-side"><div class="pk-art">' + packRing(n) + packGx(id, 's') + '<span class="pk-badge"><b>' + badge[0] + '</b><small>' + badge[1] + '</small></span></div><a class="pk-about" href="/fitness#' + about + '">How it works here</a></div>' +
+    '<div class="pk-buy"><p class="pk-price"><b>$2,400</b><span>' + note + '</span></p><div class="pk-go"><a class="nf-btn pk-btn" href="/fitness/book?pack=12&amp;' + q + '">' + btn + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><small><b>Pay nothing today.</b> I confirm by email.</small></div></div>' +
+    '</div>').join('') + '</div>' +
+  '<div class="pk-push"><p><b>Twice a week is the foundation.</b> Same pack, six weeks.</p><a href="/fitness/book?pack=12&amp;pace=2">Train twice a week</a></div>' +
+  '</article>' +
+  '<div class="pk-cards" role="group" aria-label="Pick where you train">' + PACK_PLACES.map(([id, hg, hgd, k, , , note, , q, , , , title, book], i) => '<article class="pk-card' + (i ? '' : ' pk-on') + '" data-pk-card="' + id + '" data-hg="' + hg + '" style="--hg:' + hg + ';--hgd:' + hgd + '">' +
+    '<button type="button" class="pk-pick" aria-pressed="' + (i ? 'false' : 'true') + '" aria-label="' + k.split(' · ')[0] + ': show what the 12-pack includes">' + packGx(id, 'c') + '</button>' +
+    '<div class="pk-c"><p class="pk-ck">' + k + '</p><h3>' + title + '</h3><p class="pk-cp"><b>$2,400</b><span>' + note + '</span></p><a class="pk-book" href="/fitness/book?pack=12&amp;' + q + '">' + book + '</a></div></article>').join('') + '</div></div>';
+const renderCoachQa = () => '<div class="nf-faq cv-faq">' + COACH_QA.map(([q, a]) => '<details><summary>' + esc(q) + '</summary><p>' + esc(a) + '</p></details>').join('') + '</div>';
+PAGES['fit-coach'].jsonld = [ld('ProfilePage', { name: 'Nathan J. Song', mainEntity: Object.assign({}, COACH, { workLocation: Object.values(COACH_GYMS).map((g) => ({ '@type': 'ExerciseGym', name: g.name, address: { '@type': 'PostalAddress', addressLocality: g.city, addressRegion: 'CA', addressCountry: 'US' } })) }) }),
+  ld('FAQPage', { mainEntity: COACH_QA.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }), crumbs('coach', 'About Nathan')];
 PAGES['fit-book'].jsonld = [crumbs('book', 'Book a time')];
 PAGES['fit-guides'].jsonld = [crumbs('guides', 'Guides')];
 PAGES['fit-near'].jsonld = [ld('BreadcrumbList', { itemListElement: [['Fitness', '/fitness'], ['Guides', '/fitness/guides'], ['Near me', '/fitness/guides/near-me']].map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE + path })) })];
@@ -861,6 +908,9 @@ function expand(text, seen = []) {
     if (m[1].startsWith('nf-qa-')) return renderQa(m[1].slice(6));
     if (m[1].startsWith('nf-gear-')) return renderGear(m[1].slice(8));
     if (m[1] === 'nf-near') return renderNear();
+    if (m[1] === 'nf-coach-week') return renderCoachWeek();
+    if (m[1] === 'nf-pack-stage') return renderPackStage();
+    if (m[1] === 'nf-coach-qa') return renderCoachQa();
     if (m[1] === 'nf-kinds') return '<ul class="nf-two-k">' + Object.keys(KIND_NAME).map((k) => '<li><a class="nf-top-' + k + '" href="/fitness/guides/near-me?show=' + k + '">' + kindJewel(k) + '<span><b>' + KIND_NAME[k] + '</b><small>' + ADDS[k] + '</small></span></a></li>').join('') + '</ul>';
     if (m[1].startsWith('nf-guide-')) return renderGuide(m[1].slice(9));
     if (m[1] === 'nf-path-wheel') return renderPathWheel();

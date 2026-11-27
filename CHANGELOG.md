@@ -4,6 +4,10 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-27
 
+- Coach page rebuilt for name search: title and description carry Nathan J. Song and Jiaming Song, a ProfilePage
+  and FAQPage in the JSON-LD, my week from `places.js` (seven days), a biography and quick answers.
+- 12-pack stage: the dark panel follows the place card that is hovered, focused or tapped, in that gym's map
+  colour, with the map emblems on the cards. Built from `PACK_PLACES` in `tools/build-pages.mjs`.
 - Fitness mega nav rebuilt around Jay as the source: Personal training, What I teach (three hubs), Nathan's guide,
   Practice free, About. Three panels are interactive (a pick swaps its pane and plays a scene). See
   `docs/session-2026-11-27-fitness-nav.md`.

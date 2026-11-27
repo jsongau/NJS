@@ -3,6 +3,7 @@
 // blocks: [kind, long label, length in hours, short label]. open: the hours a visitor can request.
 // days: the weekdays a place takes bookings (0 is Sunday). sched: the weekdays with set hours; on the
 // other days a visitor requests a part of the day and Jay replies with a time. region: the public label.
+// also: classes on a weekday with no set private hours (shown on the coach page's week, not in the booker).
 // at: [lat, lng] for the near-me map. These are city centres until Jay adds each street address.
 // Brea and Corona take bookings every day (2026-11-23). 9Round is Mon, Tue, Wed and Fri only.
 export const GYMS = {
@@ -19,6 +20,7 @@ export const GYMS = {
         2: { hours: [16, 17.25, 19.5], blocks: { 17.25: ['class', '5:15 to 6:15 PM · BOX, my class', 1, 'BOX class'] }, open: new Set([16, 19.5]) },
         6: { hours: [9.25, 10.5], blocks: { 9.25: ['class', '9:15 to 10:15 AM · BOX, my class', 1, 'BOX class'] }, open: new Set([10.5]) },
       },
+      also: { 0: [['8:30 AM', 'CS4 HIIT class'], ['9:30 AM', 'CS4 HIIT class']] },
       note: 'Private hours beside my BOX classes. Sunday mornings I teach CS4 HIIT here at 8:30 and 9:30.' },
 };
 

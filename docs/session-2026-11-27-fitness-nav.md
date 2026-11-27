@@ -57,3 +57,22 @@
   `/fitness#where-…`, not `#where-…`; a meta description over about 165 characters fails the title test.
 - Open: 5 or 7 days a week coaching (home says 5, coach page says 7). Waves 2 to 5: the NJS Studio · Fitness
   rename, name-led titles and descriptions, the three gym pages (need manager OKs), section-by-section copy.
+
+## Later the same day: coach page and the 12-pack stage
+
+- **Coach page.** Title "Nathan J. Song (Jiaming Song): Kickboxing and Boxing Coach". JSON-LD is a ProfilePage
+  whose Person carries `alternateName` (Nathan Song, Jiaming Song), job titles and the three gyms as
+  `workLocation`, plus a FAQPage. The week is generated from `places.js`, so the page and the booking step cannot
+  disagree. The schedule shows seven days, so the home tile now says 7 days a week (it said 5).
+- **Biography uses only facts already on the site.** Still needed from Jay: years coaching, background,
+  certifications with dates. Do not invent any.
+- **12-pack stage.** Jay: the dark panel "doesn't really do much" and was cut off. Now one row per place in
+  `PACK_PLACES` renders a pane (headline, ring of session ticks around the map emblem, price, a button named for
+  the place) and a card. Hover, focus or tap swaps the pane. Stacked panes keep the height fixed (Mary: no layout
+  shift). Height at 1190 wide is 488px, down from about 640.
+- Rejected: auto-cycling the panes (text changing while someone reads it), and tracking the pick (needs the event
+  name in three places; plan it with the other fitness events).
+- Trap: the map emblems carry clipPath ids; `packGx` renames them per use so one page never repeats an id.
+- The old `.nf-inc` and `.nf-pack` rules in `fitness.css` are now unused on the packs section. Remove them in a
+  clean-up pass after checking no other page uses them.
+- Next: event tracking for pack picks, menu picks and lab plays in `studio_events` (plan first).

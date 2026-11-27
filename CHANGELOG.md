@@ -2,6 +2,11 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-27
+
+- Combo Lab and Swing Lab: picking a combination or a swing threw an error and froze the fighter on the
+  first combo (button ids carry a `cl-` or `sl-` prefix the lookup did not strip). Fixed on all four pages.
+
 ## 2026-11-26
 
 - Breath Lab on `/fitness/reformer-pilates` (six moves) and `/fitness/mobility-and-yoga` (sixteen poses): hold to

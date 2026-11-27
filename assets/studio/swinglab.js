@@ -232,7 +232,7 @@ export function mountSwingLab() {
   }
   function setMove(i, byUser) {
     M = MOVES[i]; t = 0; trail = []; lastStep = -1; tapBoost = 0;
-    [...el('tabs').children].forEach((b) => b.setAttribute('aria-pressed', b.dataset.id === M.id)); el('m-level').textContent = LVL[M.level]; el('m-level').dataset.l = M.level;
+    [...el('tabs').children].forEach((b) => b.setAttribute('aria-pressed', b.dataset.id === 'sl-' + M.id)); el('m-level').textContent = LVL[M.level]; el('m-level').dataset.l = M.level;
     el('m-kind').textContent = M.kind; el('m-name').textContent = M.name; el('m-desc').textContent = M.desc;
     el('musc').innerHTML = Object.keys(M.musc).map((m) => '<li data-m="' + m + '"><i></i>' + m + '</li>').join('');
     el('steps').innerHTML = M.steps.map((s) => '<li><span><b>' + s[1] + '.</b> ' + s[2] + '</span></li>').join('');
@@ -254,7 +254,7 @@ export function mountSwingLab() {
     el('lib-n').textContent = list.length + (list.length === 1 ? ' movement' : ' movements');
     el('grips').innerHTML = GRIPS.map(([id, name]) => '<button type="button" class="xl-gchip" data-g="' + id + '" aria-pressed="' + (id === fGrip) + '">' + name + ' <b>' + (id === 'all' ? MOVES.length : MOVES.filter((m) => m.grip === id).length) + '</b></button>').join('');
   }
-  el('tabs').addEventListener('click', (e) => { const b = e.target.closest('.xl-tab'); if (b) setMove(MOVES.findIndex((m) => m.id === b.dataset.id), true); });
+  el('tabs').addEventListener('click', (e) => { const b = e.target.closest('.xl-tab'); if (b) setMove(MOVES.findIndex((m) => 'sl-' + m.id === b.dataset.id), true); });
   el('grips').addEventListener('click', (e) => { const b = e.target.closest('.xl-gchip'); if (!b) return; fGrip = b.dataset.g; library(); if (SFX) { SFX.unlock(); SFX.play('tick'); } });
   el('sort').addEventListener('change', (e) => { fSort = e.target.value; library(); });
   // Drag to move the weight yourself; a tap (no drag) throws one quick rep.

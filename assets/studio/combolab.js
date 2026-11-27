@@ -241,7 +241,7 @@ export function mountComboLab() {
   function idle() { if (frozen) return; clearTimeout(autoT); const gap = idx === 0 ? 1500 : 230; autoT = setTimeout(() => { if (Date.now() - userAt > 2200 && !seg && !queue.length) throwNext(false); else idle(); }, gap); }
   function setCombo(i, byUser) {
     M = C[i]; idx = 0; queue = []; seg = null; queue.push({ pose: 'guard', dur: 260, ease: 'io' });
-    [...el('tabs').children].forEach((b) => b.setAttribute('aria-pressed', b.dataset.id === M.id));
+    [...el('tabs').children].forEach((b) => b.setAttribute('aria-pressed', b.dataset.id === 'cl-' + M.id));
     el('m-kind').textContent = TNAME[M.type]; el('m-level').textContent = LVL[M.level]; el('m-name').textContent = M.name; el('m-why').textContent = M.why;
     el('seq').innerHTML = M.seq.map((c) => '<b><span>' + SHOT[c].n + '<small>' + SHOT[c].s + '</small></span></b>').join('');
     el('steps').innerHTML = M.seq.map((c) => '<li><span>' + SHOT[c].cue + '</span></li>').join('');
@@ -259,7 +259,7 @@ export function mountComboLab() {
     el('lib-n').textContent = list.length + ' combinations';
     el('grips').innerHTML = TYPES.filter(([id]) => id === 'all' || MODE_TYPES[mode].includes(id)).map(([id, name]) => '<button type="button" class="xl-gchip" data-g="' + id + '" aria-pressed="' + (id === fType) + '">' + name + ' <b>' + (id === 'all' ? pool.length : pool.filter((m) => m.type === id).length) + '</b></button>').join('');
   }
-  el('tabs').addEventListener('click', (e) => { const b = e.target.closest('.xl-tab'); if (b) { userAt = 0; setCombo(C.findIndex((m) => m.id === b.dataset.id), true); } });
+  el('tabs').addEventListener('click', (e) => { const b = e.target.closest('.xl-tab'); if (b) { userAt = 0; setCombo(C.findIndex((m) => 'cl-' + m.id === b.dataset.id), true); } });
   el('grips').addEventListener('click', (e) => { const b = e.target.closest('.xl-gchip'); if (!b) return; fType = b.dataset.g; library(); if (SFX) { SFX.unlock(); SFX.play('tick'); } });
   el('mode').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; mode = b.dataset.m; [...el('mode').children].forEach((x) => x.setAttribute('aria-pressed', x === b));
     fType = 'all'; applyMode(); library(); if (!MODE_TYPES[mode].includes(M.type)) setCombo(C.findIndex((m) => m.id === MODE_FIRST[mode])); if (SFX) { SFX.unlock(); SFX.play('tick'); } });

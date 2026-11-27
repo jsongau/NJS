@@ -2040,3 +2040,5 @@ h1, h2, h3 { text-wrap: balance; }
 .mn-panel .mn-in.fx { flex: 1 1 auto; width: 100%; }
 .mm-body .fx .mn-sub { display: inline-flex; align-items: center; min-height: 44px; }
 .top .mm-all { min-height: 44px; }
+
+.fx-stage .mn-kick { margin: 2px 4px -6px; }

@@ -174,7 +174,7 @@ function teachPanel() {
     '<div class="fx-picks"><p class="mn-hd">Three disciplines, one coach</p>' + HUBS.map(([id, , name, line, ic], i) => '<button type="button" class="fx-pick" data-fx-pick="' + id + '" aria-pressed="' + (i === 0) + '">' + jewel(ic) + '<span class="mn-txt"><strong>' + esc(name) + '</strong><small>' + esc(line) + '</small></span>' + arrow + '</button>').join('') + '</div>' +
     '<div class="fx-panes">' + HUBS.map(([id, href, name, , , pages], i) => '<div class="fx-pane' + (i === 0 ? ' on' : '') + '" data-fx-pane="' + id + '"><p class="mn-hd">' + esc(name) + '</p><ul>' + pages.map((x) => link(...x)).join('') + '</ul><a class="mn-sub fx-open" href="' + href + '">Open the ' + esc(name[0].toLowerCase() + name.slice(1)) + ' hub' + arrow + '</a></div>').join('') + '</div>' +
     '<aside class="fx-stage">' + [['strike', 'box'], ['clubs', 'clubs'], ['flow', 'yoga']].map(([id, sc], i) => '<div class="fx-view' + (i === 0 ? ' on' : '') + '" data-fx-view="' + id + '">' + SCENE[sc] + '</div>').join('') +
-    '<p class="mn-p"><b>Most trainers pick one.</b> I teach all three, one on one, and build your week from the mix.</p>' +
+    '<p class="mn-kick">From your head coach</p><p class="mn-p"><b>I coach what I practice.</b> Most trainers pick one discipline. I train all three, and I build your week from the mix.</p>' +
     '<a class="btn btn-lime mn-go" href="/fitness/book?pack=12">Book your first session</a><p class="mn-fine">Pay nothing today. I confirm by email.</p></aside></div>';
 }
 function guidePanel() {
@@ -185,14 +185,15 @@ function guidePanel() {
       guides.map(([href, t, s]) => link(href, 'pages', 'Guide: ' + t, s)).join('') + '</ul></div>').join('') +
     '<a class="mn-sub fx-open" href="/fitness/guides/near-me">Open the whole map' + arrow + '</a></div>' +
     '<aside class="fx-stage" style="--fx-c:' + ADDS[0][3] + '"><div class="fx-view on">' + SCENE.map + '</div>' +
-    '<p class="mn-p"><b>I would rather you train well than train only with me.</b> These are the studios near where I teach, and what each one adds.</p>' +
+    '<p class="mn-kick">From your head coach</p><p class="mn-p"><b>I want you out there exploring.</b> Train with me every week, add what your week is missing, and bring back what you learn. I build it into your plan.</p>' +
+    '<a class="btn btn-lime mn-go" href="/fitness/book?pack=12">Check in with me weekly</a>' +
     '<a class="mn-sub" href="/fitness/guides">See every gym guide' + arrow + '</a></aside></div>';
 }
 function freePanel() {
   return '<div class="mn-in fx fx-free" data-fx>' +
     '<div class="fx-labs-w"><p class="mn-hd">Six labs: tap, swing, breathe</p><div class="fx-labs">' + LABS.map(([href, sc, name, line]) => '<a class="fx-lab" href="' + href + '" data-fx-lab>' + '<span class="fx-thumb">' + SCENE[sc] + '</span><strong>' + esc(name) + '</strong><small>' + esc(line) + '</small></a>').join('') + '</div></div>' +
     '<div class="mn-col"><p class="mn-hd">Coach\'s notes</p><ul>' + NOTES.map((x) => link(...x)).join('') + '</ul></div>' +
-    '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">No gatekeeping</p><p class="mn-p"><b>Everything here is free.</b> Use it between sessions, or without ever booking one. The labs teach the rhythm; I teach the rest in person.</p>' +
+    '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">From your head coach</p><p class="mn-p"><b>Everything here is free. I don\'t gatekeep.</b> Practice between our sessions, then show me on the floor. I fix what a screen can\'t see.</p>' +
     '<a class="mn-sub" href="/fitness/path">See the whole path' + arrow + '</a></aside>' + mini('/fitness/book', 'cal', 'One on one', 'Book your first session', 'Pay nothing today') + '</div></div>';
 }
 const FIT_FILL = {
@@ -200,8 +201,8 @@ const FIT_FILL = {
   'f-teach': teachPanel,
   'f-guide': guidePanel,
   'f-free': freePanel,
-  'f-about': () => '<div class="mn-in mn-in-fit">' + fitCols('f-about') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">The coach</p>' +
-    '<p class="mn-p"><b>Nathan J. Song.</b> Three-time SHRED winner. I coach one on one at three gyms across North OC, South OC and the Inland Empire.</p>' +
+  'f-about': () => '<div class="mn-in mn-in-fit">' + fitCols('f-about') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">Your head coach</p>' +
+    '<p class="mn-p"><b>Nathan J. Song.</b> Three SHRED wins in a row, 400+ hours of yoga training, on the floor seven days a week. Strong mind, strong body.</p>' +
     '<a class="mn-sub" href="/fitness/coach">Read my story' + arrow + '</a></aside>' +
     mini('/fitness/book', 'cal', 'Start', 'Book your first session', 'Pay nothing today') + '</div></div>',
 };

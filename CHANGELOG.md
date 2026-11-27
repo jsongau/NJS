@@ -7,6 +7,7 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 - Fitness mega nav rebuilt around Jay as the source: Personal training, What I teach (three hubs), Nathan's guide,
   Practice free, About. Three panels are interactive (a pick swaps its pane and plays a scene). See
   `docs/session-2026-11-27-fitness-nav.md`.
+- Fitness menu wording: head-coach voice on the four side cards, each ending on the weekly session.
 - Combo Lab and Swing Lab: picking a combination or a swing threw an error and froze the fighter on the
   first combo (button ids carry a `cl-` or `sl-` prefix the lookup did not strip). Fixed on all four pages.
 

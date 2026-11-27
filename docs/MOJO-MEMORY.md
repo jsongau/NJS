@@ -6,6 +6,10 @@ win: no made-up scarcity, stats or testimonials.
 
 ## Rules
 
+- 2026-11-27 · **Head coach voice: send them out, call them back.** (Jay: glorify me better, so they still check
+  in with me every week.) Any line that points to another studio or a free tool is signed "From your head coach"
+  and ends on the weekly session: "Train with me every week, add what your week is missing, and bring back what
+  you learn." The button says the ritual: "Check in with me weekly". Proof is only what the coach page states.
 - 2026-11-23 · **The headline says the offer; the next line removes the biggest worry.** (Jay: the booking
   headline needed stronger conversion language.) `/fitness/book` went from "Pick a day. Pick a place. Train."
   (the steps) to "Book your first session. Pay nothing today." (the offer, then the reassurance). The steps

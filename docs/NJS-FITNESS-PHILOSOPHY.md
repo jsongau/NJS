@@ -17,6 +17,10 @@ Jay promotes other modalities and other studios on his own site, and that is the
 not gatekeep. Everything on the site still serves him. The generosity is what makes him the source: his name is on
 the guide, his voice is on every panel, and the free tools carry his teaching.
 
+- **Head coach.** Jay is the client's head coach: the one who sets the plan and sees them every week. Other
+  studios are assignments he hands out, not replacements. Every pointer outward ends by pointing back: explore,
+  bring back what you learn, check in with me weekly. Authority comes from true proof (three SHRED wins in a row,
+  400+ hours of yoga training, seven days a week on the floor), never from invented praise or follower counts.
 - The menu says it in his words: "What I teach", "Nathan's guide", "Practice free".
 - No discipline gets its own tab. Striking, clubs and maces, and yoga and Pilates are three hubs under What I teach.
 - Praise stays true: three disciplines, three gyms, three-time SHRED winner, free tools. No invented stats.

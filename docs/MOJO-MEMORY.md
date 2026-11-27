@@ -6,6 +6,10 @@ win: no made-up scarcity, stats or testimonials.
 
 ## Rules
 
+- 2026-11-27 · **Never compare Jay to other trainers.** (Jay: don't put down other trainers.) No "few trainers
+  offer", "most trainers", "rare". Say what he does: "my signature specialty", "I train all three".
+- 2026-11-27 · **Names are names.** Show Nathan J. Song, Nathan Song and Jiaming Song as plain names, with no "at
+  this gym" or "everywhere else" qualifier: that reads as two identities.
 - 2026-11-27 · **Never talk Jay down.** (Jay: get rid of stuff that downplays me.) No "one coach cannot cover",
   no "point you to the rest", no "without me". He is the head coach who sets the plan and assigns the rest. The
   one exception is a required disclosure: reformer Pilates stays "in certification" until he is certified.

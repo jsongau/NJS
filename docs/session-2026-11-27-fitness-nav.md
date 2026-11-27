@@ -39,3 +39,21 @@
 ## Next
 - Jay approves or edits tab names and the three side-card lines.
 - Plan: `/fitness/practice` hub page; then lab events in `studio_events`.
+
+## Later the same night: the offer, the voice and the coach card
+
+- 12-pack: one price at every place and in-home (in-home also shown per session). Corona includes 3 months of
+  access to any Club Studio with every class. Jay must confirm that promise with Club Studio.
+- Place cards: equal heights, price and link on one row, an animated emblem each (title belt, round timer, lanyard
+  pass, house and kettlebell), each linking to its card in Where I train.
+- Voice rules from Jay, now in `docs/MOJO-MEMORY.md` and the philosophy doc: never talk him down, never compare him
+  to other trainers, names shown as plain names (Nathan J. Song, Nathan Song, Jiaming Song), decisive wording.
+- Focus picker: tried uncapped, reverted the same night. Two goals for the first twelve weeks; more dilutes.
+- SHRED: off the hero, the home coach card text and the menu. It sits behind "My record" with a hover note, and
+  stays on the coach page.
+- Home coach card: new scene `partials/fitness/art/art-coach.html` (a jab then a cross, timed like a fighting-game
+  hit). The thumb is a tapered sleeve from the wrist; a webbing strap at its tip was tried and removed.
+- Traps: the pack cards also render on pages with no Where I train section, so their links must be
+  `/fitness#where-…`, not `#where-…`; a meta description over about 165 characters fails the title test.
+- Open: 5 or 7 days a week coaching (home says 5, coach page says 7). Waves 2 to 5: the NJS Studio · Fitness
+  rename, name-led titles and descriptions, the three gym pages (need manager OKs), section-by-section copy.

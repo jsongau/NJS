@@ -109,7 +109,7 @@ export function mountBooker() {
     // The booking panel carries the same button, so the next step is always in reach while it follows the page.
     const sn = $('#sum-next');
     if (sn) { sn.disabled = $('#next').disabled; sn.textContent = $('#next').textContent; }
-    $('#navnote').textContent = st.step === 0 ? (st.hour === null ? 'Pick a day, a place and a time.' : 'Next: your focus.') : st.step === 1 ? 'You can change your focus later.' : 'I confirm by email. Nothing is charged here.';
+    $('#navnote').textContent = st.step === 0 ? (st.hour === null ? 'Pick a day, a place and a time.' : 'Next: your focus.') : st.step === 1 ? 'Next: your details.' : 'I confirm by email. Nothing is charged here.';
     if ($('#sum-note')) $('#sum-note').textContent = $('#navnote').textContent;
     $$('.bk-steps button').forEach((b, i) => { b.toggleAttribute('aria-current', false); if (i === st.step) b.setAttribute('aria-current', 'step'); b.classList.toggle('bk-done', i < st.step); b.disabled = i > 0 && st.hour === null; });
     $$('.pane').forEach((p, i) => p.classList.toggle('bk-on', i === st.step));

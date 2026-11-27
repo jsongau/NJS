@@ -204,7 +204,8 @@ function mountForm(form) {
 }
 
 
-// Focus picker: up to two focus areas. Picking a third drops the oldest. The choice rides along to
+// Focus picker: two focus areas for the first twelve weeks; more would dilute the training (Jay, 2026-11-27).
+// Picking a third drops the oldest. The choice rides along to
 // /fitness/book as ?focus=a,b. Cards reveal as they scroll in; icons animate only while visible.
 const FOCUS_MAX = 2;
 function mountFocus() {
@@ -230,7 +231,7 @@ function mountFocus() {
     const href = '/fitness/book?pack=12' + (picked.length ? '&focus=' + picked.join(',') : '');
     go.setAttribute('href', href);
     if (fbar) fbar.dataset.n = picked.length;
-    if (!picked.length) { wheel(picked); sum.innerHTML = '<b>Pick up to two</b>Tap a card to add it to your plan.'; return; }
+    if (!picked.length) { wheel(picked); sum.innerHTML = '<b>Pick your two</b>The two goals that matter most to you. Twelve weeks, full focus.'; return; }
     const text = picked.map(name).join(' + ');
     sum.innerHTML = '<b>' + text + '</b>' + (wheel(picked) || 'Your 12-pack is built around ' + (picked.length === 1 ? 'this' : 'these') + '.');
     if (bar) { bar.innerHTML = '<b>' + text + '</b>Your 12-pack focus'; barGo.setAttribute('href', href); }

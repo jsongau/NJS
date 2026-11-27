@@ -41,7 +41,7 @@ const ld = (type, extra) => ({ '@context': 'https://schema.org', '@type': type, 
 
 // NJS Fitness: one coach entity shared by every fitness page.
 const COACH = {
-  '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', alternateName: 'Jiaming Song', jobTitle: 'Personal trainer',
+  '@type': 'Person', '@id': SITE + '/fitness#coach', name: 'Nathan J. Song', alternateName: ['Jiaming Song', 'Nathan Song'], jobTitle: 'Personal trainer',
   url: SITE + '/fitness/coach',
   knowsAbout: ['Personal training', 'Muscle building', 'Fat loss', 'Steel club training', 'Steel mace training', 'Boxing', 'Kickboxing', 'Muay Thai', 'Yoga', 'Reformer Pilates'],
   areaServed: ['Brea, CA', 'Rancho Santa Margarita, CA', 'Corona, CA', 'Orange County, California', 'Inland Empire, California'],
@@ -172,10 +172,10 @@ export const PAGES = {
   },
   fitness: {
     out: 'fitness/index.html', path: '/fitness', nav: null, mode: 'fitness',
-    title: 'Personal Trainer in Orange County · 12-Pack Training · NJS Fitness',
-    description: 'Personal training with Nathan J. Song in Brea, Rancho Santa Margarita and Corona: muscle building, fat loss, steel clubs and maces, kickboxing and yoga. Twelve private sessions.',
+    title: 'Nathan J. Song · Personal Trainer in Orange County · NJS Fitness',
+    description: 'Personal training with Nathan J. Song (Nathan Song, Jiaming Song): functional mobility, dynamic striking, fat loss and muscle building. Twelve private sessions.',
     og_title: 'NJS Fitness: a strong mind needs a strong body',
-    og_description: 'Twelve private sessions with a three-time SHRED winner. Book a time in Brea, Rancho Santa Margarita or Corona.',
+    og_description: 'Twelve private sessions with Nathan J. Song: functional mobility, dynamic striking, fat loss and muscle building. Book a time in Brea, Rancho Santa Margarita or Corona.',
     skip_href: '#packs', skip_text: 'Skip to the packs',
     jsonld: [
       ld('ProfilePage', { mainEntity: COACH }),
@@ -210,8 +210,8 @@ export const PAGES = {
   'fit-pilates': fitPage('reformer-pilates', 'Reformer Pilates', 'Private Reformer Pilates in Orange County · NJS Fitness',
     'Private reformer Pilates sessions in Orange County with Nathan J. Song, who is completing his reformer certification. Core strength, alignment and control.', 'Reformer Pilates'),
   'fit-coach': {
-    ...fitPage('coach', 'About Nathan', 'About Nathan J. Song, Personal Trainer in Orange County · NJS Fitness',
-      'Nathan J. Song is a personal trainer in Orange County: three-time SHRED winner, steel clubs and maces coach, kickboxing and yoga. Classes in Brea, Rancho Santa Margarita and Corona.', null),
+    ...fitPage('coach', 'About Nathan', 'Nathan J. Song (Jiaming Song), Personal Trainer in Orange County · NJS Fitness',
+      'Nathan J. Song, also known as Nathan Song and Jiaming Song: personal trainer in Orange County. Steel clubs and maces, kickboxing and yoga.', null),
   },
   'fit-path': fitPage('path', 'The path', 'A Well-Rounded Body: Strength, Engine, Mobility, Control and Skill · NJS Fitness',
     'The five parts of a capable body and the training that builds each one: strength, conditioning, mobility, core control and striking skill, with a four-level ladder for each.', null),
@@ -536,11 +536,11 @@ function renderQa(id) {
 }
 
 function renderFocus() {
-  const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" data-p="' + [PATH.focus[id].main].concat(PATH.focus[id].also).join(' ') + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '" aria-label="Learn more about ' + esc(name) + '">Learn more</a></li>';
+  const card = ([id, name, line, href], i) => '      <li class="nf-fc" style="--i:' + i + '"><button type="button" class="nf-fbtn" data-focus="' + id + '" data-p="' + [PATH.focus[id].main].concat(PATH.focus[id].also).join(' ') + '" aria-pressed="false"><span class="nf-fic">' + FI(FOCUS_ICONS[id]) + '</span><b>' + esc(name) + '</b><span>' + esc(line) + '</span><i class="nf-tick" aria-hidden="true"></i></button><a class="nf-flink" href="' + href + '" aria-label="Learn more about ' + esc(name) + '">See the plan</a></li>';
   return ['<section class="nf-sec" id="focus" aria-labelledby="focus-h">', '  <div class="wrap">',
-    '    <div class="nf-h"><div><p class="nf-k">Your focus</p><h2 id="focus-h"><span>Your 12 sessions,</span><span>your choice.</span></h2></div><p>Pick one or two things you want from your 12 sessions. I build every session around them. Change your mind later and we change the plan.</p></div>',
+    '    <div class="nf-h"><div><p class="nf-k">Your focus</p><h2 id="focus-h"><span>Two goals.</span><span>Twelve weeks.</span></h2></div><p>Pick the two goals that matter most to you. Twelve weeks on two goals gets results; spreading across five does not. I build every session around them, and you add more in your next pack.</p></div>',
     '    <ul class="nf-focus" data-nf-focus>', ...FOCUS.map(card), '    </ul>',
-    '    <div class="nf-fbar" data-nf-fbar data-n="0"><svg class="nf-mini" viewBox="-40 -40 80 80" aria-hidden="true" data-nf-mini><polygon points="' + PATH.pillars.map((_, k) => wpt(k, 30).map((n, j) => Math.round((n - WC[j]) * 10) / 10).join(',')).join(' ') + '"/>' + PATH.pillars.map(([pid, name], k) => { const [x, y] = wpt(k, 30); return '<circle data-pl="' + pid + '" data-name="' + name + '" cx="' + Math.round((x - WC[0]) * 10) / 10 + '" cy="' + Math.round((y - WC[1]) * 10) / 10 + '" r="7"/>'; }).join('') + '</svg><p data-nf-fsum><b>Pick up to two</b>Tap a card to add it to your plan.</p><a class="nf-btn nf-ink" href="/fitness/book?pack=12" data-nf-fgo>Build my 12-pack</a></div>',
+    '    <div class="nf-fbar" data-nf-fbar data-n="0"><svg class="nf-mini" viewBox="-40 -40 80 80" aria-hidden="true" data-nf-mini><polygon points="' + PATH.pillars.map((_, k) => wpt(k, 30).map((n, j) => Math.round((n - WC[j]) * 10) / 10).join(',')).join(' ') + '"/>' + PATH.pillars.map(([pid, name], k) => { const [x, y] = wpt(k, 30); return '<circle data-pl="' + pid + '" data-name="' + name + '" cx="' + Math.round((x - WC[0]) * 10) / 10 + '" cy="' + Math.round((y - WC[1]) * 10) / 10 + '" r="7"/>'; }).join('') + '</svg><p data-nf-fsum><b>Pick your two</b>The two goals that matter most to you. Twelve weeks, full focus.</p><a class="nf-btn nf-ink" href="/fitness/book?pack=12" data-nf-fgo>Build my 12-pack</a></div>',
     '  </div>', '</section>'].join('\n');
 }
 function renderFocusForm() {

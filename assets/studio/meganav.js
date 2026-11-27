@@ -115,7 +115,7 @@ const FIT = {
     ['Move', [['/fitness/mobility-and-yoga', 'loop', 'Mobility and yoga', 'Hips, back and shoulders that move freely'], ['/fitness/reformer-pilates', 'star', 'Reformer Pilates', "Core strength on the reformer. I'm in certification"], ['/fitness/yoga-and-pilates', 'team', 'Yoga and Pilates', 'Private sessions, on the mat or the reformer'], ['/fitness/personal-training', 'user', 'Personal training', 'One goal at a time, coached rep by rep'], ['/fitness/guides/near-me', 'pin', 'Studios near you', 'Yoga, Pilates and intervals for your own days']]],
   ],
   'f-about': [
-    ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Three-time SHRED winner, clubs and maces coach'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],
+    ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Functional mobility, dynamic striking, clubs and maces'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],
     ['Where I train', [['/fitness/book?loc=brea', 'pin', 'Brea', 'North OC'], ['/fitness/book?loc=rancho-santa-margarita', 'pin', 'Rancho Santa Margarita', 'South OC'], ['/fitness/book?loc=corona', 'pin', 'Corona', 'Inland Empire'], ['/fitness/book?loc=in-home', 'home', 'In-home training', 'Home, office or a park in Southern California']]],
   ],
 };
@@ -174,7 +174,7 @@ function teachPanel() {
     '<div class="fx-picks"><p class="mn-hd">Three disciplines, one coach</p>' + HUBS.map(([id, , name, line, ic], i) => '<button type="button" class="fx-pick" data-fx-pick="' + id + '" aria-pressed="' + (i === 0) + '">' + jewel(ic) + '<span class="mn-txt"><strong>' + esc(name) + '</strong><small>' + esc(line) + '</small></span>' + arrow + '</button>').join('') + '</div>' +
     '<div class="fx-panes">' + HUBS.map(([id, href, name, , , pages], i) => '<div class="fx-pane' + (i === 0 ? ' on' : '') + '" data-fx-pane="' + id + '"><p class="mn-hd">' + esc(name) + '</p><ul>' + pages.map((x) => link(...x)).join('') + '</ul><a class="mn-sub fx-open" href="' + href + '">Open the ' + esc(name[0].toLowerCase() + name.slice(1)) + ' hub' + arrow + '</a></div>').join('') + '</div>' +
     '<aside class="fx-stage">' + [['strike', 'box'], ['clubs', 'clubs'], ['flow', 'yoga']].map(([id, sc], i) => '<div class="fx-view' + (i === 0 ? ' on' : '') + '" data-fx-view="' + id + '">' + SCENE[sc] + '</div>').join('') +
-    '<p class="mn-kick">From your head coach</p><p class="mn-p"><b>I coach what I practice.</b> Most trainers pick one discipline. I train all three, and I build your week from the mix.</p>' +
+    '<p class="mn-kick">From your head coach</p><p class="mn-p"><b>I coach what I practice.</b> Striking, clubs and maces, yoga and Pilates. I train all three, and I build your week from the mix.</p>' +
     '<a class="btn btn-lime mn-go" href="/fitness/book?pack=12">Book your first session</a><p class="mn-fine">Pay nothing today. I confirm by email.</p></aside></div>';
 }
 function guidePanel() {
@@ -197,12 +197,12 @@ function freePanel() {
     '<a class="mn-sub" href="/fitness/path">See the whole path' + arrow + '</a></aside>' + mini('/fitness/book', 'cal', 'One on one', 'Book your first session', 'Pay nothing today') + '</div></div>';
 }
 const FIT_FILL = {
-  'f-pt': () => '<div class="mn-in mn-in-fit">' + fitCols('f-pt') + '<div class="mn-side">' + packCard + mini('/fitness#focus', 'search', 'Not sure?', 'Pick your focus', 'Choose one or two goals') + '</div></div>',
+  'f-pt': () => '<div class="mn-in mn-in-fit">' + fitCols('f-pt') + '<div class="mn-side">' + packCard + mini('/fitness#focus', 'search', 'Not sure?', 'Pick your focus', 'The two goals that matter most') + '</div></div>',
   'f-teach': teachPanel,
   'f-guide': guidePanel,
   'f-free': freePanel,
   'f-about': () => '<div class="mn-in mn-in-fit">' + fitCols('f-about') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">Your head coach</p>' +
-    '<p class="mn-p"><b>Nathan J. Song.</b> Three SHRED wins in a row, 400+ hours of yoga training, on the floor seven days a week. Strong mind, strong body.</p>' +
+    '<p class="mn-p"><b>Nathan J. Song.</b> Functional mobility and dynamic striking, with experience in fat loss and muscle building. 400+ hours of yoga training. Strong mind, strong body.</p>' +
     '<a class="mn-sub" href="/fitness/coach">Read my story' + arrow + '</a></aside>' +
     mini('/fitness/book', 'cal', 'Start', 'Book your first session', 'Pay nothing today') + '</div></div>',
 };

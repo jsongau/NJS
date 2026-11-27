@@ -11,6 +11,11 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
   any Club Studio with every class. Place cards share one height and keep price and link on one row.
   Each place card has its own animated emblem (title belt, round timer, lanyard pass, house and kettlebell); the
   emblem and the title link to that place in Where I train.
+- Fitness home: decisive wording; the focus picker stays at two goals, now framed as focus for the first twelve weeks;
+  in-home shows the per-session price; SHRED off the hero, the home coach card and the menu (it stays on the coach
+  page); the three names (Nathan J. Song, Nathan Song, Jiaming Song), shown as names with no qualifiers, in copy, titles and JSON-LD.
+- Home coach card rebuilt: a new striking scene (one cross landing, timed like a fighting-game hit), names as
+  chips, booking as the main button.
 - Copy sweep: two lines that talked Jay down (fitness home, near-me map) rewritten in the head-coach voice.
 - Fitness menu wording: head-coach voice on the four side cards, each ending on the weekly session.
 - Combo Lab and Swing Lab: picking a combination or a swing threw an error and froze the fighter on the

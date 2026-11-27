@@ -2293,3 +2293,42 @@ article.nf-tile:active, article.nf-tile:hover { transform: none; border-color: v
 @media (min-width: 1000px) { .bl-moves { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); margin: 18px 0 0; padding: 0; overflow: visible; } .bl-moves li { min-width: 0; } .bl-moves svg { width: 100%; max-width: 108px; } }
 @media (prefers-reduced-motion: reduce) { .bl-sec * { transition: none !important; } }
 @media (min-width: 1000px) { .bl-sec[data-bl="reformer"] .bl-moves { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+/* Pack cards (Mary, 2026-11-27): beside the 12-pack the four place cards share one height, so both columns end on
+   the same line; each card keeps its price and its link on one bottom row. */
+@media (min-width: 720px) { .nf-incs { grid-auto-rows: 1fr; align-content: stretch; } }
+.nf-inc > div { align-content: flex-start; height: 100%; }
+.nf-inc > div > .nf-inc-p, .nf-inc > div > .nf-more { margin-top: auto; padding-top: 8px; align-self: flex-end; }
+@media (min-width: 1100px) { .nf-inc > div > .nf-inc-p { white-space: nowrap; } }
+
+/* Pack icons (Goldsmith, 2026-11-27): one emblem per place, each with its own small motion. The icon and the card
+   title link to that place in Where I train. */
+.nf-inc-a { display: block; width: 52px; height: 52px; border-radius: 14px; }
+.nf-inc-a:focus-visible { outline: 3px solid var(--signal, #FF8A6B); outline-offset: 3px; }
+.nf-inc h3 a { color: inherit; text-decoration: none; }
+.nf-inc h3 a:hover, .nf-inc h3 a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.nf-place h3[id^="where-"] { scroll-margin-top: 190px; }
+.nf-place:has(h3[id^="where-"]:target) { border-color: var(--ink); box-shadow: 0 18px 40px -26px rgba(18, 20, 22, .4); }
+.inc-shade { fill: #E0563A; opacity: .5; }
+.inc-plate { transform-origin: 32px 33px; }
+.inc-hand { transform-origin: 32px 37px; }
+.inc-swing { transform-origin: 32px 3px; }
+.inc-kb { transform-origin: 32px 39px; }
+.inc-tw { transform-box: fill-box; transform-origin: center; }
+.inc-puff { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .inc-plate { animation: inc-pulse 2.6s ease-in-out infinite; }
+  .inc-hand { animation: inc-spin 4.5s linear infinite; }
+  .inc-swing { animation: inc-sway 3s ease-in-out infinite; }
+  .inc-kb { animation: inc-rock 1.9s ease-in-out infinite; }
+  .inc-tw { animation: inc-tw 2.4s ease-in-out infinite; }
+  .inc-puff { animation: inc-puff 2.2s ease-out infinite; }
+  .nf-inc:hover .inc-hand { animation-duration: 1.2s; }
+  .nf-inc:hover .inc-swing, .nf-inc:hover .inc-kb { animation-duration: 1s; }
+}
+@keyframes inc-pulse { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
+@keyframes inc-spin { to { rotate: 360deg; } }
+@keyframes inc-sway { 0%, 100% { rotate: -7deg; } 50% { rotate: 7deg; } }
+@keyframes inc-rock { 0%, 100% { rotate: -16deg; } 50% { rotate: 16deg; } }
+@keyframes inc-tw { 0%, 100% { scale: .35; opacity: .2; } 50% { scale: 1; opacity: 1; } }
+@keyframes inc-puff { 0% { opacity: 0; translate: 0 6px; scale: .6; } 25% { opacity: .9; } 100% { opacity: 0; translate: 4px -7px; scale: 1.5; } }

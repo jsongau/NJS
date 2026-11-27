@@ -7,6 +7,11 @@ One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 - Fitness mega nav rebuilt around Jay as the source: Personal training, What I teach (three hubs), Nathan's guide,
   Practice free, About. Three panels are interactive (a pick swaps its pane and plays a scene). See
   `docs/session-2026-11-27-fitness-nav.md`.
+- 12-pack: Corona and in-home now the same pack price as Brea and 9Round; Corona includes 3 months of access to
+  any Club Studio with every class. Place cards share one height and keep price and link on one row.
+  Each place card has its own animated emblem (title belt, round timer, lanyard pass, house and kettlebell); the
+  emblem and the title link to that place in Where I train.
+- Copy sweep: two lines that talked Jay down (fitness home, near-me map) rewritten in the head-coach voice.
 - Fitness menu wording: head-coach voice on the four side cards, each ending on the weekly session.
 - Combo Lab and Swing Lab: picking a combination or a swing threw an error and froze the fighter on the
   first combo (button ids carry a `cl-` or `sl-` prefix the lookup did not strip). Fixed on all four pages.

@@ -6,6 +6,9 @@ win: no made-up scarcity, stats or testimonials.
 
 ## Rules
 
+- 2026-11-27 · **Never talk Jay down.** (Jay: get rid of stuff that downplays me.) No "one coach cannot cover",
+  no "point you to the rest", no "without me". He is the head coach who sets the plan and assigns the rest. The
+  one exception is a required disclosure: reformer Pilates stays "in certification" until he is certified.
 - 2026-11-27 · **Head coach voice: send them out, call them back.** (Jay: glorify me better, so they still check
   in with me every week.) Any line that points to another studio or a free tool is signed "From your head coach"
   and ends on the weekly session: "Train with me every week, add what your week is missing, and bring back what

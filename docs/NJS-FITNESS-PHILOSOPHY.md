@@ -6,10 +6,10 @@ corrects it, and his corrections win.
 
 ## The one line
 
-**I train you, and I give you the tools to keep learning without me.**
+**I train you, and I give you the tools to keep learning between our sessions.**
 
-A coach who only sells sessions keeps you dependent. This site does both jobs: it books the sessions, and it
-hands over what a client needs on the days Jay is not in the room.
+Jay is the head coach. The site books the sessions, and it hands over his map, his guides and his free tools for
+the days between them, so every day of the week still runs through him.
 
 ## No gatekeeping (added 2026-11-27, from Jay)
 
@@ -39,8 +39,9 @@ Train with him at the one nearest you. Everything else on the site sits around t
 
 ## The well-rounded athlete: five pillars
 
-Strength, engine, mobility, control, skill (`partials/fitness/path.json`, `/fitness/path`). No single gym and no
-single coach covers all five well. The site says so, and points to what fills the gap:
+Strength, engine, mobility, control, skill (`partials/fitness/path.json`, `/fitness/path`). Jay is the head
+coach: he sets the plan across all five and assigns what to add between sessions. Never write that a coach
+"cannot cover" something, or anything else that talks him down (Jay, 2026-11-27). Say what he assigns:
 
 | You train with Jay | Add nearby | It adds |
 |---|---|---|

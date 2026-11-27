@@ -1951,3 +1951,12 @@ h1, h2, h3 { text-wrap: balance; }
 @media (max-width: 1023px) { button.fm-chip-btn { min-height: 44px; } main input:not([type="range"]):not([type="checkbox"]):not([type="radio"]) { min-width: 44px; } }
 @media (max-width: 349px) { .top .wrap { gap: 5px; padding-left: 12px; padding-right: 12px; } .top .wrap > .mode a { padding: 0 6px; } }
 @media (max-width: 349px) { .top .wrap > .mode a { padding: 0 4px; font-size: 11.5px; } .top nav .mn-cta { padding: 10px 8px; font-size: 13px; } .top .wrap { gap: 4px; } }
+
+/* Fitness mega nav, Train on your own (2026-11-26): the map, guides, notes and the labs. Layout 'four' adds a
+   fourth column; under 1181px the side cards drop below the columns. */
+.mn-in-own.mn-own-four { grid-template-columns: repeat(4, minmax(0, 1fr)) 280px; gap: 22px; }
+@media (max-width: 1180px) {
+  .mn-panel .mn-in-own.mn-own-four { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  .mn-panel .mn-in-own.mn-own-four .mn-side { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
+}
+.mm-body .mn-in-own.mn-own-four { grid-template-columns: 1fr; }

@@ -19,6 +19,7 @@ import { mountFitness } from './fitness.js';
 import { mountBooker } from './booker.js';
 import { mountSwingLab } from './swinglab.js';
 import { mountComboLab } from './combolab.js';
+import { mountBreathLab } from './breathlab.js';
 
 const BASE = '/assets/studio/data/';
 
@@ -147,6 +148,7 @@ async function boot() {
   mountFitness();
   mountSwingLab();
   mountComboLab();
+  mountBreathLab();
   mountBooker();
   clock();
   // Logo: the j dot hops once on arrival (CSS); hovering the header logo snaps the S straight

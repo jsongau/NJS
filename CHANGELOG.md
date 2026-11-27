@@ -2,6 +2,13 @@
 
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
+## 2026-11-26
+
+- Breath Lab on `/fitness/reformer-pilates` (six moves) and `/fitness/mobility-and-yoga` (sixteen poses): hold to
+  exhale, let go to inhale, six reps on the breath complete a move, booking card after two. Train on your own gains a
+  Play and practice column with all six labs; the phone drawer no longer repeats the Business | Fitness switch.
+  See `docs/session-2026-11-26-breath-lab.md`.
+
 ## 2026-11-24
 
 - `/fitness/guides/near-me` — Three home gyms lead the page: UFC Gym Brea, 9Round RSM and Club Studio Corona,

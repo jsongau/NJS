@@ -104,6 +104,8 @@ function workPanel(projects) {
 
 // ===== Fitness panels (2026-11-23). Same parts as the Business panels. Link lines reuse the approved
 // focus lines from partials/fitness/focus.json and the note titles; regions only, no gym names.
+// Train on your own: 'four' keeps two coach's notes beside the labs; 'three' leaves the notes to the About tab.
+const OWN_LAYOUT = 'three';
 const FIT = {
   'f-pt': [
     ['Build', [['/fitness/muscle-building', 'fitness', 'Muscle building', 'Get stronger and add size where you want it'], ['/fitness/fat-loss', 'chart', 'Fat loss', 'Lose fat and keep the muscle you have'], ['/fitness/conditioning', 'bolt', 'Conditioning', 'Rounds and intervals that raise your engine'], ['/fitness/shoulder-strength', 'mark', 'Shoulder strength', 'Strong, mobile shoulders']]],
@@ -120,7 +122,8 @@ const FIT = {
   'f-guides': [
     ['The map', [['/fitness/guides/near-me', 'pin', 'Studios near me', 'Every place on one map, by distance'], ['/fitness/guides/near-me?show=yoga&area=Brea', 'kx-yoga', 'Yoga near Brea', 'Adds mobility to your week'], ['/fitness/guides/near-me?show=pilates&area=Rancho+Santa+Margarita', 'kx-pilates', 'Pilates near Rancho Santa Margarita', 'Adds control'], ['/fitness/guides/near-me?show=run&area=Corona', 'kx-run', 'Intervals near Corona', 'Adds engine']]],
     ['Gym guides', [['/fitness/guides/boxing-gyms-socal', 'kx-strike', 'Boxing gyms', 'Across LA, OC and the IE'], ['/fitness/guides/kickboxing-gyms-socal', 'kx-strike', 'Kickboxing and Muay Thai gyms', 'Across LA, OC and the IE'], ['/fitness/guides/reformer-pilates-studios-socal', 'kx-pilates', 'Reformer Pilates studios', 'Across LA, OC and the IE'], ['/fitness/guides/yoga-studios-socal', 'kx-yoga', 'Yoga studios', 'Hot and not heated']]],
-    ["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe'], ['/fitness/notes/recovery-room', 'star', 'The recovery room', "What's worth it, ranked by evidence"], ['/fitness/path', 'chart', 'The path', 'What getting better looks like']]],
+    ...(OWN_LAYOUT === 'four' ? [["Coach's notes", [['/fitness/notes/warm-up', 'check', 'Warm-up', 'Ten minutes, four parts'], ['/fitness/notes/band-workouts', 'pages', 'A full band workout', 'Six moves, head to toe']]]] : []),
+    ['Play and practice', [['/fitness/boxing#combo-lab', 'kx-strike', 'Combo Lab: boxing', 'Throw each combo, one shot per tap'], ['/fitness/kickboxing#combo-lab', 'kx-strike', 'Combo Lab: kickboxing', 'Punches, kicks and knees'], ['/fitness/muay-thai#combo-lab', 'kx-strike', 'Combo Lab: Muay Thai', 'Teeps, elbows, knees and the clinch'], ['/fitness/clubs-and-maces#swing-lab', 'mark', 'Swing Lab', 'Eighteen club and mace swings'], ['/fitness/mobility-and-yoga#breath-lab', 'kx-yoga', 'Yoga breath game', 'Sixteen poses, on the breath'], ['/fitness/reformer-pilates#breath-lab', 'kx-pilates', 'Pilates breath game', 'Six reformer moves, on the breath']]],
   ],
   'f-about': [
     ['The coach', [['/fitness/coach', 'user', 'About Nathan', 'Three-time SHRED winner, clubs and maces coach'], ['/fitness/path', 'chart', 'The path', 'Strength, engine, mobility, control and skill'], ['/fitness#faq', 'msg', 'Questions', 'Membership, mixing focuses, how you pay']]],
@@ -143,7 +146,7 @@ const FIT_FILL = {
     '<p class="mn-p">Rotation, stability and strength for your shoulders. I teach steel clubs and maces one on one, in person or over live video.</p>' +
     '<a class="mn-sub" href="/fitness/clubs-and-maces">See how a session runs' + arrow + '</a></aside>' +
     mini('/fitness/book?loc=online&focus=shoulders', 'cal', 'Live video', 'Learn it online', 'Good for clubs and maces technique') + '</div></div>',
-  'f-guides': () => '<div class="mn-in mn-in-studio">' + fitCols('f-guides') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">How to use this site</p>' +
+  'f-guides': () => '<div class="mn-in mn-in-studio mn-in-own mn-own-' + OWN_LAYOUT + '">' + fitCols('f-guides') + '<div class="mn-side"><aside class="mn-feat"><p class="mn-kick">How to use this site</p>' +
     '<p class="mn-p"><b>I train you, and I give you the tools to keep learning.</b> Sessions with me, then a map, guides and notes for the days you train alone.</p>' +
     '<a class="mn-sub" href="/fitness/path">See the whole path' + arrow + '</a></aside>' +
     mini('/fitness/book', 'cal', 'One on one', 'Book your first session', 'Pay nothing today') + '</div></div>',
@@ -256,11 +259,12 @@ function mountPhoneMap(fill, fit) {
   if (!menu) return;
   const groups = fit ? FIT_GROUPS : [['agents', 'AI agents', '/crew#agents'], ['plans', 'Plans', '/plans'], ['build', 'Build a project', '/build'], ['work', 'Delivered', '/work'], ['studio', 'Studio', '/care']];
   const cta = menu.querySelector('.btn');
-  // Fitness keeps the Business or Fitness switch and a link home at the top of the drawer.
-  const mode = fit ? menu.querySelector('.mode-m') : null;
+  // Fitness keeps a link home at the top of the drawer. The Business or Fitness switch stays in the header at every
+  // width, so the drawer does not repeat it.
+  const home = fit;
   menu.innerHTML = groups.map(([id, label, href]) => '<details class="mm-g mm-' + id + '"><summary>' + esc(label) + (id === 'agents' ? ' <span class="mn-new">New</span>' : '') + caret + '</summary>' +
     '<div class="mm-body">' + fill[id]() + '<a class="mm-all" href="' + href + '">Open ' + esc(label) + arrow + '</a></div></details>').join('');
-  if (mode) { menu.insertAdjacentHTML('afterbegin', '<a class="mm-home" href="/fitness">Fitness home</a>'); menu.prepend(mode); }
+  if (home) menu.insertAdjacentHTML('afterbegin', '<a class="mm-home" href="/fitness">Fitness home</a>');
   if (cta) menu.appendChild(cta);
   menu.addEventListener('toggle', (e) => {
     if (e.target.open) $$('details.mm-g', menu).forEach((d) => { if (d !== e.target) d.open = false; });

@@ -3,7 +3,7 @@
 One line per working day. Detail lives in `docs/session-YYYY-MM-DD-*.md`.
 
 ## 2026-11-27
-
+- Funnels: a third template, the gym free-week funnel (`/funnels/gym-free-week`, made-up gym, sends nothing), on the hub and in the Studio menu.
 - Coach page rebuilt for name search: title and description carry Nathan J. Song and Jiaming Song, a ProfilePage
   and FAQPage in the JSON-LD, my week from `places.js` (seven days), a biography and quick answers.
 - 12-pack stage: the dark panel follows the place card that is hovered, focused or tapped, in that gym's map
